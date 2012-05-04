@@ -58,12 +58,6 @@ struct DB_View_%s : public DB_View
 ''' % (self._table, self._table, self._table)
         
         s += '''
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
-'''
-        s += '''
     bool ensure(wxSQLite3Database* db) const
     {
         if (exists(db)) return true;
@@ -496,6 +490,11 @@ struct DB_View
     wxString query() const { return this->query_; }
     virtual size_t num_columns() const = 0;
     virtual wxString name() const = 0;
+
+    bool exists(wxSQLite3Database* db) const
+    {
+       return db->TableExists(this->name()); 
+    }
 };
 '''
    
