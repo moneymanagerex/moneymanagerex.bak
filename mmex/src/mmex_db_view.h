@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-04 20:01:11.923989.
+ *          AUTO GENERATED at 2012-05-04 20:20:53.294847.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -37,7 +37,9 @@ struct DB_View
 
 struct DB_View_ACCOUNTLIST_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_ACCOUNTLIST_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_ACCOUNTLIST_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -395,9 +397,9 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -421,9 +423,9 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -449,7 +451,9 @@ static DB_View_ACCOUNTLIST_V1 ACCOUNTLIST_V1;
 
 struct DB_View_ASSETS_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_ASSETS_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_ASSETS_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -757,9 +761,9 @@ struct DB_View_ASSETS_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -783,9 +787,9 @@ struct DB_View_ASSETS_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -811,7 +815,9 @@ static DB_View_ASSETS_V1 ASSETS_V1;
 
 struct DB_View_BILLSDEPOSITS_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_BILLSDEPOSITS_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_BILLSDEPOSITS_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -1217,9 +1223,9 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -1243,9 +1249,9 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -1271,7 +1277,9 @@ static DB_View_BILLSDEPOSITS_V1 BILLSDEPOSITS_V1;
 
 struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_BUDGETSPLITTRANSACTIONS_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_BUDGETSPLITTRANSACTIONS_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -1551,9 +1559,9 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -1577,9 +1585,9 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -1605,7 +1613,9 @@ static DB_View_BUDGETSPLITTRANSACTIONS_V1 BUDGETSPLITTRANSACTIONS_V1;
 
 struct DB_View_BUDGETTABLE_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_BUDGETTABLE_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_BUDGETTABLE_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -1895,9 +1905,9 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -1921,9 +1931,9 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -1949,7 +1959,9 @@ static DB_View_BUDGETTABLE_V1 BUDGETTABLE_V1;
 
 struct DB_View_BUDGETYEAR_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_BUDGETYEAR_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_BUDGETYEAR_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -2195,9 +2207,9 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -2221,9 +2233,9 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -2249,7 +2261,9 @@ static DB_View_BUDGETYEAR_V1 BUDGETYEAR_V1;
 
 struct DB_View_CATEGORY_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_CATEGORY_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_CATEGORY_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -2495,9 +2509,9 @@ struct DB_View_CATEGORY_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -2521,9 +2535,9 @@ struct DB_View_CATEGORY_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -2549,7 +2563,9 @@ static DB_View_CATEGORY_V1 CATEGORY_V1;
 
 struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_CHECKINGACCOUNT_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_CHECKINGACCOUNT_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -2923,9 +2939,9 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -2949,9 +2965,9 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -2977,7 +2993,9 @@ static DB_View_CHECKINGACCOUNT_V1 CHECKINGACCOUNT_V1;
 
 struct DB_View_CURRENCYFORMATS_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_CURRENCYFORMATS_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_CURRENCYFORMATS_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -3315,9 +3333,9 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -3341,9 +3359,9 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -3369,7 +3387,9 @@ static DB_View_CURRENCYFORMATS_V1 CURRENCYFORMATS_V1;
 
 struct DB_View_INFOTABLE_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_INFOTABLE_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_INFOTABLE_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -3625,9 +3645,9 @@ struct DB_View_INFOTABLE_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -3651,9 +3671,9 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -3679,7 +3699,9 @@ static DB_View_INFOTABLE_V1 INFOTABLE_V1;
 
 struct DB_View_PAYEE_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_PAYEE_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_PAYEE_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -3947,9 +3969,9 @@ struct DB_View_PAYEE_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -3973,9 +3995,9 @@ struct DB_View_PAYEE_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -4001,7 +4023,9 @@ static DB_View_PAYEE_V1 PAYEE_V1;
 
 struct DB_View_SETTING_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_SETTING_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_SETTING_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -4257,9 +4281,9 @@ struct DB_View_SETTING_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -4283,9 +4307,9 @@ struct DB_View_SETTING_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -4311,7 +4335,9 @@ static DB_View_SETTING_V1 SETTING_V1;
 
 struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_SPLITTRANSACTIONS_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_SPLITTRANSACTIONS_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -4591,9 +4617,9 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -4617,9 +4643,9 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -4645,7 +4671,9 @@ static DB_View_SPLITTRANSACTIONS_V1 SPLITTRANSACTIONS_V1;
 
 struct DB_View_STOCK_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_STOCK_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_STOCK_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -4987,9 +5015,9 @@ struct DB_View_STOCK_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -5013,9 +5041,9 @@ struct DB_View_STOCK_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
@@ -5041,7 +5069,9 @@ static DB_View_STOCK_V1 STOCK_V1;
 
 struct DB_View_SUBCATEGORY_V1 : public DB_View
 {
+    struct Data;
     typedef DB_View_SUBCATEGORY_V1 Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_SUBCATEGORY_V1() {}
 
     bool exists(wxSQLite3Database* db) const
@@ -5298,9 +5328,9 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
     }
 
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -5324,9 +5354,9 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         return result;
     }
 
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
