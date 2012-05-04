@@ -25,9 +25,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <wx/log.h>
 //----------------------------------------------------------------------------
 
-namespace
-{
-
 struct TestData
 {
 	TestData(int i, wxString n): id(i), name(n) {}
@@ -43,8 +40,6 @@ void dumpDates(wxString mgs, wxDateTime dateStart, wxDateTime dateEnd)
 	wxLogDebug((dateEnd.FormatISODate() + wxT('-') + dateEnd.FormatISOTime()).c_str());
 	wxLogDebug(wxT("\n"));
 }
-
-} // namespace
 
 //----------------------------------------------------------------------------
 
