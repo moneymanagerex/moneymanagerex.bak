@@ -51,7 +51,9 @@ class DB_View:
         s = '''
 struct DB_View_%s : public DB_View
 {
+    struct Data;
     typedef DB_View_%s Self;
+    typedef std::vector<Self::Data> Data_Set;
     ~DB_View_%s() {}
 ''' % (self._table, self._table, self._table)
         
@@ -382,9 +384,9 @@ struct DB_View_%s : public DB_View
 
         s +='''
     template<class C, class V>
-    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    Data_Set find(wxSQLite3Database* db, const V& v)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             C c;
@@ -410,9 +412,9 @@ struct DB_View_%s : public DB_View
 ''' % self._table
 
         s +='''
-    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::vector<Self::Data> result;
+        Data_Set result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
