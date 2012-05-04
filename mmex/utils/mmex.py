@@ -82,7 +82,7 @@ struct DB_View_%s : public DB_View
 
         for field in self._fields:
             s += '''
-    struct %s {};''' % field['name']
+    struct %s { wxString name() const { return wxT("%s"); } };''' % (field['name'], field['name'])
 
         s += '''
     enum COLUMN
@@ -379,6 +379,35 @@ struct DB_View_%s : public DB_View
         return entity;
     }
 ''' % (self._primay_key, self._table)
+
+        s +='''
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+''' % self._table
 
         s +='''
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)

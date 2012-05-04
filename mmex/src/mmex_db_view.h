@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-04-19 07:56:34.275130.
+ *          AUTO GENERATED at 2012-05-04 20:01:11.923989.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -62,19 +62,19 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         return true;
     }
 
-    struct ACCOUNTID {};
-    struct ACCOUNTNAME {};
-    struct ACCOUNTTYPE {};
-    struct ACCOUNTNUM {};
-    struct STATUS {};
-    struct NOTES {};
-    struct HELDAT {};
-    struct WEBSITE {};
-    struct CONTACTINFO {};
-    struct ACCESSINFO {};
-    struct INITIALBAL {};
-    struct FAVORITEACCT {};
-    struct CURRENCYID {};
+    struct ACCOUNTID { wxString name() const { return wxT("ACCOUNTID"); } };
+    struct ACCOUNTNAME { wxString name() const { return wxT("ACCOUNTNAME"); } };
+    struct ACCOUNTTYPE { wxString name() const { return wxT("ACCOUNTTYPE"); } };
+    struct ACCOUNTNUM { wxString name() const { return wxT("ACCOUNTNUM"); } };
+    struct STATUS { wxString name() const { return wxT("STATUS"); } };
+    struct NOTES { wxString name() const { return wxT("NOTES"); } };
+    struct HELDAT { wxString name() const { return wxT("HELDAT"); } };
+    struct WEBSITE { wxString name() const { return wxT("WEBSITE"); } };
+    struct CONTACTINFO { wxString name() const { return wxT("CONTACTINFO"); } };
+    struct ACCESSINFO { wxString name() const { return wxT("ACCESSINFO"); } };
+    struct INITIALBAL { wxString name() const { return wxT("INITIALBAL"); } };
+    struct FAVORITEACCT { wxString name() const { return wxT("FAVORITEACCT"); } };
+    struct CURRENCYID { wxString name() const { return wxT("CURRENCYID"); } };
     enum COLUMN
     {
         COL_ACCOUNTID = 0
@@ -394,6 +394,33 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -447,14 +474,14 @@ struct DB_View_ASSETS_V1 : public DB_View
         return true;
     }
 
-    struct ASSETID {};
-    struct STARTDATE {};
-    struct ASSETNAME {};
-    struct VALUE {};
-    struct VALUECHANGE {};
-    struct NOTES {};
-    struct VALUECHANGERATE {};
-    struct ASSETTYPE {};
+    struct ASSETID { wxString name() const { return wxT("ASSETID"); } };
+    struct STARTDATE { wxString name() const { return wxT("STARTDATE"); } };
+    struct ASSETNAME { wxString name() const { return wxT("ASSETNAME"); } };
+    struct VALUE { wxString name() const { return wxT("VALUE"); } };
+    struct VALUECHANGE { wxString name() const { return wxT("VALUECHANGE"); } };
+    struct NOTES { wxString name() const { return wxT("NOTES"); } };
+    struct VALUECHANGERATE { wxString name() const { return wxT("VALUECHANGERATE"); } };
+    struct ASSETTYPE { wxString name() const { return wxT("ASSETTYPE"); } };
     enum COLUMN
     {
         COL_ASSETID = 0
@@ -729,6 +756,33 @@ struct DB_View_ASSETS_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -782,23 +836,23 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         return true;
     }
 
-    struct BDID {};
-    struct ACCOUNTID {};
-    struct TOACCOUNTID {};
-    struct PAYEEID {};
-    struct TRANSCODE {};
-    struct TRANSAMOUNT {};
-    struct STATUS {};
-    struct TRANSACTIONNUMBER {};
-    struct NOTES {};
-    struct CATEGID {};
-    struct SUBCATEGID {};
-    struct TRANSDATE {};
-    struct FOLLOWUPID {};
-    struct TOTRANSAMOUNT {};
-    struct REPEATS {};
-    struct NEXTOCCURRENCEDATE {};
-    struct NUMOCCURRENCES {};
+    struct BDID { wxString name() const { return wxT("BDID"); } };
+    struct ACCOUNTID { wxString name() const { return wxT("ACCOUNTID"); } };
+    struct TOACCOUNTID { wxString name() const { return wxT("TOACCOUNTID"); } };
+    struct PAYEEID { wxString name() const { return wxT("PAYEEID"); } };
+    struct TRANSCODE { wxString name() const { return wxT("TRANSCODE"); } };
+    struct TRANSAMOUNT { wxString name() const { return wxT("TRANSAMOUNT"); } };
+    struct STATUS { wxString name() const { return wxT("STATUS"); } };
+    struct TRANSACTIONNUMBER { wxString name() const { return wxT("TRANSACTIONNUMBER"); } };
+    struct NOTES { wxString name() const { return wxT("NOTES"); } };
+    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
+    struct TRANSDATE { wxString name() const { return wxT("TRANSDATE"); } };
+    struct FOLLOWUPID { wxString name() const { return wxT("FOLLOWUPID"); } };
+    struct TOTRANSAMOUNT { wxString name() const { return wxT("TOTRANSAMOUNT"); } };
+    struct REPEATS { wxString name() const { return wxT("REPEATS"); } };
+    struct NEXTOCCURRENCEDATE { wxString name() const { return wxT("NEXTOCCURRENCEDATE"); } };
+    struct NUMOCCURRENCES { wxString name() const { return wxT("NUMOCCURRENCES"); } };
     enum COLUMN
     {
         COL_BDID = 0
@@ -1162,6 +1216,33 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -1215,11 +1296,11 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         return true;
     }
 
-    struct SPLITTRANSID {};
-    struct TRANSID {};
-    struct CATEGID {};
-    struct SUBCATEGID {};
-    struct SPLITTRANSAMOUNT {};
+    struct SPLITTRANSID { wxString name() const { return wxT("SPLITTRANSID"); } };
+    struct TRANSID { wxString name() const { return wxT("TRANSID"); } };
+    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
+    struct SPLITTRANSAMOUNT { wxString name() const { return wxT("SPLITTRANSAMOUNT"); } };
     enum COLUMN
     {
         COL_SPLITTRANSID = 0
@@ -1469,6 +1550,33 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -1522,12 +1630,12 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         return true;
     }
 
-    struct BUDGETENTRYID {};
-    struct BUDGETYEARID {};
-    struct CATEGID {};
-    struct SUBCATEGID {};
-    struct PERIOD {};
-    struct AMOUNT {};
+    struct BUDGETENTRYID { wxString name() const { return wxT("BUDGETENTRYID"); } };
+    struct BUDGETYEARID { wxString name() const { return wxT("BUDGETYEARID"); } };
+    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
+    struct PERIOD { wxString name() const { return wxT("PERIOD"); } };
+    struct AMOUNT { wxString name() const { return wxT("AMOUNT"); } };
     enum COLUMN
     {
         COL_BUDGETENTRYID = 0
@@ -1786,6 +1894,33 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -1839,8 +1974,8 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         return true;
     }
 
-    struct BUDGETYEARID {};
-    struct BUDGETYEARNAME {};
+    struct BUDGETYEARID { wxString name() const { return wxT("BUDGETYEARID"); } };
+    struct BUDGETYEARNAME { wxString name() const { return wxT("BUDGETYEARNAME"); } };
     enum COLUMN
     {
         COL_BUDGETYEARID = 0
@@ -2059,6 +2194,33 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -2112,8 +2274,8 @@ struct DB_View_CATEGORY_V1 : public DB_View
         return true;
     }
 
-    struct CATEGID {};
-    struct CATEGNAME {};
+    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    struct CATEGNAME { wxString name() const { return wxT("CATEGNAME"); } };
     enum COLUMN
     {
         COL_CATEGID = 0
@@ -2332,6 +2494,33 @@ struct DB_View_CATEGORY_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -2385,20 +2574,20 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         return true;
     }
 
-    struct TRANSID {};
-    struct ACCOUNTID {};
-    struct TOACCOUNTID {};
-    struct PAYEEID {};
-    struct TRANSCODE {};
-    struct TRANSAMOUNT {};
-    struct STATUS {};
-    struct TRANSACTIONNUMBER {};
-    struct NOTES {};
-    struct CATEGID {};
-    struct SUBCATEGID {};
-    struct TRANSDATE {};
-    struct FOLLOWUPID {};
-    struct TOTRANSAMOUNT {};
+    struct TRANSID { wxString name() const { return wxT("TRANSID"); } };
+    struct ACCOUNTID { wxString name() const { return wxT("ACCOUNTID"); } };
+    struct TOACCOUNTID { wxString name() const { return wxT("TOACCOUNTID"); } };
+    struct PAYEEID { wxString name() const { return wxT("PAYEEID"); } };
+    struct TRANSCODE { wxString name() const { return wxT("TRANSCODE"); } };
+    struct TRANSAMOUNT { wxString name() const { return wxT("TRANSAMOUNT"); } };
+    struct STATUS { wxString name() const { return wxT("STATUS"); } };
+    struct TRANSACTIONNUMBER { wxString name() const { return wxT("TRANSACTIONNUMBER"); } };
+    struct NOTES { wxString name() const { return wxT("NOTES"); } };
+    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
+    struct TRANSDATE { wxString name() const { return wxT("TRANSDATE"); } };
+    struct FOLLOWUPID { wxString name() const { return wxT("FOLLOWUPID"); } };
+    struct TOTRANSAMOUNT { wxString name() const { return wxT("TOTRANSAMOUNT"); } };
     enum COLUMN
     {
         COL_TRANSID = 0
@@ -2733,6 +2922,33 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -2786,17 +3002,17 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         return true;
     }
 
-    struct CURRENCYID {};
-    struct CURRENCYNAME {};
-    struct PFX_SYMBOL {};
-    struct SFX_SYMBOL {};
-    struct DECIMAL_POINT {};
-    struct GROUP_SEPARATOR {};
-    struct UNIT_NAME {};
-    struct CENT_NAME {};
-    struct SCALE {};
-    struct BASECONVRATE {};
-    struct CURRENCY_SYMBOL {};
+    struct CURRENCYID { wxString name() const { return wxT("CURRENCYID"); } };
+    struct CURRENCYNAME { wxString name() const { return wxT("CURRENCYNAME"); } };
+    struct PFX_SYMBOL { wxString name() const { return wxT("PFX_SYMBOL"); } };
+    struct SFX_SYMBOL { wxString name() const { return wxT("SFX_SYMBOL"); } };
+    struct DECIMAL_POINT { wxString name() const { return wxT("DECIMAL_POINT"); } };
+    struct GROUP_SEPARATOR { wxString name() const { return wxT("GROUP_SEPARATOR"); } };
+    struct UNIT_NAME { wxString name() const { return wxT("UNIT_NAME"); } };
+    struct CENT_NAME { wxString name() const { return wxT("CENT_NAME"); } };
+    struct SCALE { wxString name() const { return wxT("SCALE"); } };
+    struct BASECONVRATE { wxString name() const { return wxT("BASECONVRATE"); } };
+    struct CURRENCY_SYMBOL { wxString name() const { return wxT("CURRENCY_SYMBOL"); } };
     enum COLUMN
     {
         COL_CURRENCYID = 0
@@ -3098,6 +3314,33 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -3151,9 +3394,9 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         return true;
     }
 
-    struct INFOID {};
-    struct INFONAME {};
-    struct INFOVALUE {};
+    struct INFOID { wxString name() const { return wxT("INFOID"); } };
+    struct INFONAME { wxString name() const { return wxT("INFONAME"); } };
+    struct INFOVALUE { wxString name() const { return wxT("INFOVALUE"); } };
     enum COLUMN
     {
         COL_INFOID = 0
@@ -3381,6 +3624,33 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -3434,10 +3704,10 @@ struct DB_View_PAYEE_V1 : public DB_View
         return true;
     }
 
-    struct PAYEEID {};
-    struct PAYEENAME {};
-    struct CATEGID {};
-    struct SUBCATEGID {};
+    struct PAYEEID { wxString name() const { return wxT("PAYEEID"); } };
+    struct PAYEENAME { wxString name() const { return wxT("PAYEENAME"); } };
+    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
     enum COLUMN
     {
         COL_PAYEEID = 0
@@ -3676,6 +3946,33 @@ struct DB_View_PAYEE_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -3729,9 +4026,9 @@ struct DB_View_SETTING_V1 : public DB_View
         return true;
     }
 
-    struct SETTINGID {};
-    struct SETTINGNAME {};
-    struct SETTINGVALUE {};
+    struct SETTINGID { wxString name() const { return wxT("SETTINGID"); } };
+    struct SETTINGNAME { wxString name() const { return wxT("SETTINGNAME"); } };
+    struct SETTINGVALUE { wxString name() const { return wxT("SETTINGVALUE"); } };
     enum COLUMN
     {
         COL_SETTINGID = 0
@@ -3959,6 +4256,33 @@ struct DB_View_SETTING_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -4012,11 +4336,11 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         return true;
     }
 
-    struct SPLITTRANSID {};
-    struct TRANSID {};
-    struct CATEGID {};
-    struct SUBCATEGID {};
-    struct SPLITTRANSAMOUNT {};
+    struct SPLITTRANSID { wxString name() const { return wxT("SPLITTRANSID"); } };
+    struct TRANSID { wxString name() const { return wxT("TRANSID"); } };
+    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
+    struct SPLITTRANSAMOUNT { wxString name() const { return wxT("SPLITTRANSAMOUNT"); } };
     enum COLUMN
     {
         COL_SPLITTRANSID = 0
@@ -4266,6 +4590,33 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -4319,17 +4670,17 @@ struct DB_View_STOCK_V1 : public DB_View
         return true;
     }
 
-    struct STOCKID {};
-    struct HELDAT {};
-    struct PURCHASEDATE {};
-    struct STOCKNAME {};
-    struct SYMBOL {};
-    struct NUMSHARES {};
-    struct PURCHASEPRICE {};
-    struct NOTES {};
-    struct CURRENTPRICE {};
-    struct VALUE {};
-    struct COMMISSION {};
+    struct STOCKID { wxString name() const { return wxT("STOCKID"); } };
+    struct HELDAT { wxString name() const { return wxT("HELDAT"); } };
+    struct PURCHASEDATE { wxString name() const { return wxT("PURCHASEDATE"); } };
+    struct STOCKNAME { wxString name() const { return wxT("STOCKNAME"); } };
+    struct SYMBOL { wxString name() const { return wxT("SYMBOL"); } };
+    struct NUMSHARES { wxString name() const { return wxT("NUMSHARES"); } };
+    struct PURCHASEPRICE { wxString name() const { return wxT("PURCHASEPRICE"); } };
+    struct NOTES { wxString name() const { return wxT("NOTES"); } };
+    struct CURRENTPRICE { wxString name() const { return wxT("CURRENTPRICE"); } };
+    struct VALUE { wxString name() const { return wxT("VALUE"); } };
+    struct COMMISSION { wxString name() const { return wxT("COMMISSION"); } };
     enum COLUMN
     {
         COL_STOCKID = 0
@@ -4635,6 +4986,33 @@ struct DB_View_STOCK_V1 : public DB_View
         return entity;
     }
 
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         std::vector<Self::Data> result;
@@ -4688,9 +5066,9 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         return true;
     }
 
-    struct SUBCATEGID {};
-    struct SUBCATEGNAME {};
-    struct CATEGID {};
+    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
+    struct SUBCATEGNAME { wxString name() const { return wxT("SUBCATEGNAME"); } };
+    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
     enum COLUMN
     {
         COL_SUBCATEGID = 0
@@ -4917,6 +5295,33 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         }
  
         return entity;
+    }
+
+    template<class C, class V>
+    std::vector<Self::Data> find(wxSQLite3Database* db, const V& v)
+    {
+        std::vector<Self::Data> result;
+        try
+        {
+            C c;
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
     }
 
     std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
