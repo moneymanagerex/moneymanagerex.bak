@@ -6,12 +6,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -30,27 +30,28 @@
 #define SYMBOL_MMOPTIONSDIALOG_POSITION wxDefaultPosition
 
 class mmOptionsDialog: public wxDialog
-{    
+{
     DECLARE_DYNAMIC_CLASS( mmOptionsDialog )
     DECLARE_EVENT_TABLE()
 
 public:
     mmOptionsDialog( );
     mmOptionsDialog( mmCoreDB* db, wxSQLite3Database* inidb,
-        wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_MMOPTIONSDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_MMOPTIONSDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_MMOPTIONSDIALOG_SIZE, 
+        wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_MMOPTIONSDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_MMOPTIONSDIALOG_POSITION,
+        const wxSize& size = SYMBOL_MMOPTIONSDIALOG_SIZE,
         long style = SYMBOL_MMOPTIONSDIALOG_STYLE );
     ~mmOptionsDialog( );
-    
+
     /// Saves the updated System Options to the appropriate databases.
     void SaveNewSystemSettings();
-    
+
     /// Returns the value of the dialog setting;
     bool GetUpdateCurrencyRateSetting();
 
     bool RequiresRestart() { return restartRequired_; }
+    bool AppliedChanges() { return changesApplied_; }
 
 private:
     /// System database access variables
@@ -60,10 +61,10 @@ private:
 
     /// Dialog specific controls
     wxImageList* m_imageList;
-    wxComboBox* choiceDateFormat_;
+    wxChoice* choiceDateFormat_;
     wxChoice* choiceVisible_;
     wxChoice* choiceTransVisible_;
-	wxChoice* choiceFontSize_;
+    wxChoice* choiceFontSize_;
     wxChoice* monthSelection_;
 
     /// set colour variables.
@@ -86,6 +87,7 @@ private:
     wxCheckBox* cbIgnoreFutureTransactions_;
 
     bool restartRequired_;
+    bool changesApplied_;
     int currencyId_;
     wxString dateFormat_;
     wxString currentLanguage_;
@@ -94,10 +96,10 @@ private:
     wxArrayString viewAccountStrings(bool translated, wxString input_string, int& row_id);
 
     /// Dialog Creation - Used by constructor
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_MMOPTIONSDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_MMOPTIONSDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_MMOPTIONSDIALOG_SIZE, 
+    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_MMOPTIONSDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_MMOPTIONSDIALOG_POSITION,
+        const wxSize& size = SYMBOL_MMOPTIONSDIALOG_SIZE,
         long style = SYMBOL_MMOPTIONSDIALOG_STYLE );
 
     void CreateControls();
@@ -105,7 +107,7 @@ private:
     void OnCurrency(wxCommandEvent& event);
     void OnDateFormatChanged(wxCommandEvent& event);
     void OnLanguageChanged(wxCommandEvent& event);
-    
+
     /// Colour Changing events
     void OnNavTreeColorChanged(wxCommandEvent& event);
     void OnAlt0Changed(wxCommandEvent& event);
@@ -115,8 +117,8 @@ private:
     void OnListDetailsColors(wxCommandEvent& event);
     void OnListFutureDates(wxCommandEvent& event);
     void OnRestoreDefaultColors(wxCommandEvent& event);
-   
-	void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
+
+    void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
     bool GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState);
 
     void OnDelimiterSelectedU(wxCommandEvent& event);
@@ -128,7 +130,7 @@ private:
     void SaveViewTransactionOptions();
     void SaveFinancialYearStart();
     void SaveStocksUrl();
-	
+
     void SaveGeneralPanelSettings();
     void SaveViewPanelSettings();
     void SaveColourPanelSettings();

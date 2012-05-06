@@ -36,13 +36,13 @@ enum
     ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON4,
     ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB4,
     ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4,
+    ID_DIALOG_OPTIONS_RESTART_REQUIRED,
 };
 
 IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT, mmOptionsDialog::OnDateFormatChanged)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
 
     /// Colour Changing events
@@ -80,7 +80,8 @@ mmOptionsDialog::mmOptionsDialog( mmCoreDB* core, wxSQLite3Database* inidb,
                                  wxWindow* parent, wxWindowID id,
                                  const wxString& caption,
                                  const wxPoint& pos, const wxSize& size, long style )
-                                 : core_(core), inidb_(inidb), db_(core->db_.get()), restartRequired_(false)
+                                 : core_(core), inidb_(inidb), db_(core->db_.get()),
+                                 restartRequired_(false), changesApplied_(false)
 {
     Create(parent, id, caption, pos, size, style);
 }
@@ -231,23 +232,32 @@ void mmOptionsDialog::CreateControls()
     dateFormatStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid);
 
     wxArrayString itemChoice7Strings = itemChoiceStrings();
+    wxArrayString DateFormat = DateFormats();
+    wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    size_t i=0;
+    for(i; i<DateFormat.Count(); i++)
+    {
+        if(default_date_format == DateFormat[i])
+            break;
+    }
 
-    choiceDateFormat_ = new wxComboBox(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT, wxT(""),
-        wxDefaultPosition, wxSize(140, -1), itemChoice7Strings);
+    choiceDateFormat_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT,
+        wxDefaultPosition, wxSize(140, -1), itemChoice7Strings, 0);
+    choiceDateFormat_->SetSelection(i);
     dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
-    choiceDateFormat_->SetValue(FormatDate2DisplayDate(dateFormat_));
+    choiceDateFormat_->Connect(ID_DIALOG_OPTIONS_DATE_FORMAT, wxEVT_COMMAND_CHOICE_SELECTED,
+                               wxCommandEventHandler(mmOptionsDialog::OnDateFormatChanged), NULL, this);
 
-    wxButton* setFormatButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT,
-        _("Set"), wxDefaultPosition, wxDefaultSize, 0);
-    dateFormatSettingStaticBoxSizerGrid->Add(setFormatButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-
+    wxStaticText* restartText = new wxStaticText( generalPanel, ID_DIALOG_OPTIONS_RESTART_REQUIRED,
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0);
     wxStaticText* sampleDateExampleText = new wxStaticText( generalPanel, wxID_ANY,
         _("New date format sample:"), wxDefaultPosition, wxDefaultSize, 0);
     wxStaticText* sampleDateText = new wxStaticText(generalPanel, ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE,
         wxT("redefined elsewhere"), wxDefaultPosition, wxDefaultSize, 0);
-    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, 0, wxALIGN_LEFT|wxALL, 5);
-    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, 0, wxALIGN_LEFT|wxALL, 5);
+    dateFormatSettingStaticBoxSizerGrid->Add(restartText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     sampleDateText->SetLabel(wxDateTime::Now().Format(dateFormat_));
 
     // Financial Year Settings
@@ -488,61 +498,61 @@ void mmOptionsDialog::CreateControls()
         _("Nav Tree"), wxDefaultPosition, wxSize(150,-1), 0);
     navTreeButton->SetToolTip(_("Specify the color for the nav tree"));
     navTreeButton->SetBackgroundColour(mmColors::navTreeBkColor);
-    colourPanelSizerGrid->Add(navTreeStaticText, 0, wxALIGN_LEFT, 5);
-    colourPanelSizerGrid->Add(navTreeButton, 0, wxALIGN_LEFT, 5);
+    colourPanelSizerGrid->Add(navTreeStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(navTreeButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 
     wxStaticText* listBackgroundStaticText = new wxStaticText( colourPanel, wxID_STATIC, _("List Background"));
     wxButton* listBackgroundButton = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK,
         _("List Background"), wxDefaultPosition, navTreeButton->GetSize(), 0 );
     listBackgroundButton->SetToolTip(_("Specify the color for the list background"));
     listBackgroundButton->SetBackgroundColour(mmColors::listBackColor);
-    colourPanelSizerGrid->Add(listBackgroundStaticText, 0, wxALIGN_LEFT, 5);
-    colourPanelSizerGrid->Add(listBackgroundButton, 0, wxALIGN_LEFT, 5);
+    colourPanelSizerGrid->Add(listBackgroundStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listBackgroundButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 
     wxStaticText* listRowZeroStaticText = new wxStaticText(colourPanel, wxID_STATIC, _("List Row 0"));
     wxButton* listRowZeroButton = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0,
         _("List Row 0"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     listRowZeroButton->SetToolTip(_("Specify the color for the list row 0"));
     listRowZeroButton->SetBackgroundColour(mmColors::listAlternativeColor0);
-    colourPanelSizerGrid->Add(listRowZeroStaticText, 0, wxALIGN_LEFT, 5);
-    colourPanelSizerGrid->Add(listRowZeroButton, 0, wxALIGN_LEFT, 5);
+    colourPanelSizerGrid->Add(listRowZeroStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listRowZeroButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 
     wxStaticText* listRowOneStaticText = new wxStaticText( colourPanel, wxID_STATIC, _("List Row 1"));
     wxButton* listRowOneButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1,
         _("List Row 1"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     listRowOneButton->SetToolTip(_("Specify the color for the list row 1"));
     listRowOneButton->SetBackgroundColour(mmColors::listAlternativeColor1);
-    colourPanelSizerGrid->Add(listRowOneStaticText, 0, wxALIGN_LEFT, 5);
-    colourPanelSizerGrid->Add(listRowOneButton, 0, wxALIGN_LEFT, 5);
+    colourPanelSizerGrid->Add(listRowOneStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listRowOneButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 
     wxStaticText* listBorderSaticText = new wxStaticText( colourPanel, wxID_STATIC, _("List Border"));
     wxButton* listBorderButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER,
         _("List Border"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     listBorderButton->SetToolTip(_("Specify the color for the list Border"));
     listBorderButton->SetBackgroundColour(mmColors::listBorderColor);
-    colourPanelSizerGrid->Add(listBorderSaticText, 0, wxALIGN_LEFT, 5);
-    colourPanelSizerGrid->Add(listBorderButton, 0, wxALIGN_LEFT, 5);
+    colourPanelSizerGrid->Add(listBorderSaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listBorderButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 
     wxStaticText* listDetailsStaticText = new wxStaticText( colourPanel, wxID_STATIC, _("List Details"));
     wxButton* listDetailsButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS,
         _("List Details"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     listDetailsButton->SetToolTip(_("Specify the color for the list details"));
     listDetailsButton->SetBackgroundColour(mmColors::listDetailsPanelColor);
-    colourPanelSizerGrid->Add(listDetailsStaticText, 0, wxALIGN_LEFT, 5);
-    colourPanelSizerGrid->Add(listDetailsButton, 0, wxALIGN_LEFT, 5);
+    colourPanelSizerGrid->Add(listDetailsStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listDetailsButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 
     wxStaticText* futureTransStaticText = new wxStaticText( colourPanel, wxID_STATIC, _("Future Transactions"));
     wxButton* futureTransButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES,
         _("Future Transactions"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     futureTransButton->SetToolTip(_("Specify the color for future transactions"));
     futureTransButton->SetBackgroundColour(mmColors::listFutureDateColor);
-    colourPanelSizerGrid->Add(futureTransStaticText, 0, wxALIGN_LEFT, 5);
-    colourPanelSizerGrid->Add(futureTransButton, 0, wxALIGN_LEFT, 5);
+    colourPanelSizerGrid->Add(futureTransStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(futureTransButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
 
     wxButton* restoreDefaultButton = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT,
         _("Restore Defaults"), wxDefaultPosition, wxDefaultSize, 0);
     restoreDefaultButton->SetToolTip(_("Restore Default Colors"));
-    colourPanelSizer->Add(restoreDefaultButton, 0, wxALIGN_LEFT|wxALL, 5);
+    colourPanelSizer->Add(restoreDefaultButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     /*********************************************************************************************
      Others Panel
@@ -556,7 +566,10 @@ void mmOptionsDialog::CreateControls()
     transSettingsStaticBox->SetFont(staticBoxFontSetting);
 
     wxStaticBoxSizer* transSettingsStaticBoxSizer = new wxStaticBoxSizer(transSettingsStaticBox, wxVERTICAL);
-    othersPanelSizer->Add(transSettingsStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    othersPanelSizer->Add(transSettingsStaticBoxSizer, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 10);
+
+    wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(5,2,5,5);
+    transSettingsStaticBoxSizer->Add(newTransflexGridSizer);
 
     //  Default Date
     wxStaticText* dateStaticText = new wxStaticText(othersPanel, wxID_STATIC,
@@ -567,16 +580,20 @@ void mmOptionsDialog::CreateControls()
     defaultValues_.Add(_("Last Used"));
 
     wxChoice* defaultDateChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE,
-        wxDefaultPosition, wxSize(140, -1), defaultValues_);
+        wxDefaultPosition, wxSize(180, -1), defaultValues_);
     defaultDateChoice->SetSelection(mmIniOptions::instance().transDateDefault_);
+    newTransflexGridSizer->Add(dateStaticText,       0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(defaultDateChoice,    0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //  Default Payee
     wxStaticText* payeeStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Payee:"), wxDefaultPosition, wxDefaultSize);
 
     wxChoice* defaultPayeeChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
-        wxDefaultPosition, wxSize(140, -1), defaultValues_);
+        wxDefaultPosition, defaultDateChoice->GetSize(), defaultValues_);
     defaultPayeeChoice->SetSelection(mmIniOptions::instance().transPayeeSelectionNone_);
+    newTransflexGridSizer->Add(payeeStaticText,      0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(defaultPayeeChoice,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //  Default Category
     wxStaticText* categoryStaticText = new wxStaticText(othersPanel, wxID_STATIC,
@@ -588,6 +605,8 @@ void mmOptionsDialog::CreateControls()
     wxChoice* defaultCategoryChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
         wxDefaultPosition, defaultPayeeChoice->GetSize(), defaultValues_);
     defaultCategoryChoice->SetSelection(mmIniOptions::instance().transCategorySelectionNone_);
+    newTransflexGridSizer->Add(categoryStaticText,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(defaultCategoryChoice,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //  Default Status
     wxStaticText* statusStaticText = new wxStaticText(othersPanel, wxID_STATIC,
@@ -601,17 +620,9 @@ void mmOptionsDialog::CreateControls()
     choiceStatusStrings.Add(_("Duplicate"));
 
     wxChoice* defaultStatusChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
-        wxDefaultPosition, defaultPayeeChoice->GetSize(), choiceStatusStrings);
+        wxDefaultPosition, defaultDateChoice->GetSize(), choiceStatusStrings);
     defaultStatusChoice->SetSelection(mmIniOptions::instance().transStatusReconciled_);
 
-    wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(3,2,0,0);
-    transSettingsStaticBoxSizer->Add(newTransflexGridSizer);
-    newTransflexGridSizer->Add(dateStaticText,       0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(defaultDateChoice,    0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(payeeStaticText,      0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(defaultPayeeChoice,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(categoryStaticText,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(defaultCategoryChoice,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     newTransflexGridSizer->Add(statusStaticText,     0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     newTransflexGridSizer->Add(defaultStatusChoice,  0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -769,27 +780,15 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 {
-    wxString newFormat = choiceDateFormat_->GetValue();
-    if (newFormat == DisplayDate2FormatDate(newFormat)) // Not a predefined format
-    {
-        choiceDateFormat_->SetValue(FormatDate2DisplayDate(mmex::DEFDATEFORMAT));
-        return;
-    }
+    dateFormat_ = DisplayDate2FormatDate(choiceDateFormat_->GetStringSelection());
 
-    try // setting the date to the new format to ensure it works.
-    {
-        wxDateTime::Now().Format(DisplayDate2FormatDate(newFormat));
-    }
-    catch(...)
-    {
-        choiceDateFormat_->SetValue(FormatDate2DisplayDate(mmex::DEFDATEFORMAT));
-        return;
-    }
+    wxStaticText* restart_required = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_RESTART_REQUIRED);
+    restart_required->SetLabel(_("Requires MMEX Restart"));
 
-    dateFormat_ = DisplayDate2FormatDate(newFormat);
     wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
-    st->SetLabel(wxDateTime::Now().Format(dateFormat_) + _(" : Requires MMEX Restart"));
+    st->SetLabel(wxDateTime::Now().Format(dateFormat_));
     restartRequired_ = true;
+    changesApplied_ = true;
 }
 
 void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& /*event*/)
