@@ -54,6 +54,8 @@ struct DB_View_%s : public DB_View
     struct Data;
     typedef DB_View_%s Self;
     typedef std::vector<Self::Data> Data_Set;
+    typedef std::map<int, Self::Data> Cache;
+    Cache cache_;
     ~DB_View_%s() {}
 ''' % (self._table, self._table, self._table)
         
@@ -474,6 +476,7 @@ if __name__ == '__main__':
     
     code +='''
 #include <vector>
+#include <map>
 
 class wxString;
 class wxSQLite3Statement;
