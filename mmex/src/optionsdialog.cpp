@@ -580,7 +580,7 @@ void mmOptionsDialog::CreateControls()
     defaultValues_.Add(_("Last Used"));
 
     wxChoice* defaultDateChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE,
-        wxDefaultPosition, wxSize(180, -1), defaultValues_);
+        wxDefaultPosition, wxSize(140, -1), defaultValues_);
     defaultDateChoice->SetSelection(mmIniOptions::instance().transDateDefault_);
     newTransflexGridSizer->Add(dateStaticText,       0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     newTransflexGridSizer->Add(defaultDateChoice,    0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
