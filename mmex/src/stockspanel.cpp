@@ -23,6 +23,9 @@
 #include "mmyahoo.h"
 #include "yahoosettingsdialog.h"
 
+#include "mmex_db_view.h"
+#include <boost/foreach.hpp>
+
 /* Include XPM Support */
 #include "../resources/uparrow.xpm"
 #include "../resources/downarrow_red.xpm"
@@ -107,7 +110,7 @@ bool mmStocksPanel::Create(wxWindow *parent,
     // m_LED->SetTimerInterval(m_LED->GetTimerInterval()/2);
 
     StatusRefreshTimer_ = new wxTimer(this,ID_TIMER_REFRESH_STOCK);
-    StatusRefreshTimer_->Start(250, wxTIMER_CONTINUOUS);
+    StatusRefreshTimer_->Start(1250, wxTIMER_CONTINUOUS);
 
     DownloadScheduleTimer_ = new wxTimer(this, ID_TIMER_SCHEDULE_STOCK);
     DownloadScheduleTimer_->Start(yahoo_->UpdateIntervalMinutes_ * 60000, wxTIMER_CONTINUOUS);
@@ -654,65 +657,60 @@ void mmStocksPanel::OrderQuoteRefresh(void)
      *                                                                                                              *
      ****************************************************************************************************************/
 
-    wxString YSymbols;
-    wxSortedArrayString symbolarray;
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select distinct UPPER (SYMBOL) as SYMBOL from STOCK_V1");
-    while (q1.NextRow())
-    {
-        symbolarray.Add( q1.GetString(wxT("SYMBOL")));
-    }
-    q1.Finalize();
-
-    if(symbolarray.GetCount() < 1)
+    std::vector<DB_View_STOCK_V1::Data> all_stocks = STOCK_V1.all(db_);
+    if (all_stocks.empty())
         return;
 
-    YSymbols = symbolarray.Item(0)+yahoo_->Suffix_;
-    for (size_t i = 1; i < symbolarray.GetCount(); i++)
+    wxString suffix, site;
+    wxSortedArrayString symbols_array;
+
+    suffix = yahoo_->Suffix_.Upper();
+    bool suffix_available = !suffix.IsEmpty();
+
+    BOOST_FOREACH(const DB_View_STOCK_V1::Data &stocks, all_stocks)
     {
-        YSymbols = YSymbols+wxT("+")+symbolarray.Item(i)+yahoo_->Suffix_;
+        if (wxNOT_FOUND == symbols_array.Index(stocks.SYMBOL)) {
+            symbols_array.Add(stocks.SYMBOL.Upper());
+            site << stocks.SYMBOL.Upper() << suffix << wxT("+");
+        }
     }
+    site.RemoveLast(1);
+    //Sample:
     //http://finance.yahoo.com/d/quotes.csv?s=SBER03.ME&f=sl1n&e=.csv
-    wxString site = wxString::Format(wxT("http://%s/d/quotes.csv?s=%s&f=%s&e=.csv"),
-                                     yahoo_->Server_.c_str(), YSymbols.c_str(), yahoo_->CSVColumns_.c_str());
+    site = wxString() << wxT("http://") << yahoo_->Server_ << wxT("/d/quotes.csv?s=") << site;
+    site << wxT("&f=") << yahoo_->CSVColumns_ << wxT("&e=.csv");
 
-    wxURL url(site);
-    if (url.GetError()!=wxURL_NOERR)
-    {
-        mmShowErrorMessage(this, _("Unable to connect!"), _("Stock Download"));
-        return;
-    }
-    url.GetProtocol().SetTimeout(10); // 10 secs
-    unsigned char buf[16084];
-    wxInputStream* in_stream = url.GetInputStream();
-    if (!in_stream)
-    {
-        mmShowErrorMessage(this, _("Unable to connect!"), _("Stock Download"));
-        return;
-    }
-    in_stream->Read(buf, 16084);
-    size_t bytes_read=in_stream->LastRead();
-    delete in_stream;
-    buf[bytes_read] = '\0';
-    wxString quotes = wxString::FromAscii((const char *)buf);
+wxSafeShowMessage(wxT(""), site);
 
     yahoo_->StocksRefreshStatus_ = mmYahoo::DS_INPROGRESS;
 
+    int err_code = 0;
+    wxString quotes = site_content(site, err_code);
+    if (err_code != 0)
+    {
+        mmShowErrorMessage(this, _("Unable to connect!"), _("Stock Download"));
+        return;
+    }
+
+wxSafeShowMessage(wxT(""), quotes);
+
+    wxString StockSymbol, dName;
+    double dPrice = 0;
+
+    std::map<wxString, double> stocks_data;
+
     // Break it up into lines
     wxStringTokenizer tkz(quotes, wxT("\r\n"));
-
-    wxString StockSymbolWithSuffix, dName;
-    double dPrice = 0;
-    db_->Begin();
     while (tkz.HasMoreTokens())
     {
         wxString csvline = tkz.GetNextToken();
 
         /*** Grab the relevant bits (for now only the symbol and the current price) */
-        wxStringTokenizer csvsimple(csvline,wxT("\","),wxTOKEN_STRTOK);
+        wxStringTokenizer csvsimple(csvline,wxT(",\""),wxTOKEN_STRTOK);
         if (csvsimple.HasMoreTokens())
         {
-            StockSymbolWithSuffix = csvsimple.GetNextToken();
+            StockSymbol = csvsimple.GetNextToken();
+            if (suffix_available) StockSymbol.Replace(suffix, wxT(""));
             if (csvsimple.HasMoreTokens())
             {
                 csvsimple.GetNextToken().ToDouble(&dPrice);
@@ -727,68 +725,16 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         else
             yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
 
-        /****** Update all that match this symbol ******/
-        // wxString Suffix_ = mmDBWrapper::getINISettingValue(inidb_,wxT("HTTP_YAHOO_SUFFIX"), wxT(".AX"));
-        wxString StockSymbolNoSuffix;
-        if (yahoo_->Suffix_.IsEmpty())
-        {
-            StockSymbolNoSuffix = wxString(StockSymbolWithSuffix.c_str());
-        }
-        else
-        {
-            if (!StockSymbolWithSuffix.EndsWith(yahoo_->Suffix_.GetData(), &StockSymbolNoSuffix))
-            {
-                wxSafeShowMessage(wxT("Big Oops"),wxT("How did I get here?"));
-            }
-        }
+        stocks_data.insert(std::pair<wxString, double>(StockSymbol, dPrice));
+    }
 
-        //**** HACK HACK HACK
-        // Note:
-        // 1. If the share is a UK share (e.g. HSBA.L), its downloaded value in pence
-        // 2. If the share is not a UK share (e.g. 0005.HK) while we are using UK Yahoo finance, we do not need
-        //    to modify the price
+    //for debuging
+    for (std::map<wxString, double, wxString>::const_iterator it = stocks_data.begin();
+                it != stocks_data.end();
+                ++ it) {
+        wxSafeShowMessage(it->first, wxString()<<it->second );
+    }
 
-        //// UK finance apparently downloads values in pence
-        //if (!yahoo_->Server_.CmpNoCase(wxT("uk.finance.yahoo.com")))
-        //    dPrice = dPrice / 100;
-        //// ------------------
-        if(StockSymbolNoSuffix.Find(wxT(".L")) != wxNOT_FOUND)
-            dPrice = dPrice / 100;
-
-        static const char sql[] =
-        "select STOCKID, "
-               "CURRENTPRICE, "
-               "NUMSHARES, "
-               "STOCKNAME "
-        "from STOCK_V1 "
-        "where UPPER(SYMBOL) = ?";
-
-        typedef std::vector<mmStockTransactionHolder> vec_t;
-        vec_t stockVec;
-
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
-        st.Bind(1, StockSymbolNoSuffix.Upper());
-
-        wxSQLite3ResultSet q1 = st.ExecuteQuery();
-
-        while (q1.NextRow())
-        {
-            mmStockTransactionHolder sh;
-
-            sh.id_ = q1.GetInt(wxT("STOCKID"));
-            sh.numShares_ = q1.GetDouble(wxT("NUMSHARES"));
-            // If the stock's symbol is not found, Yahoo CSV will return 0 for the current price.
-            // Therefore, we assume the current price of all existing stock's symbols are greater
-            // than zero and we will not update any stock if its curreny price is zero.
-            if(dPrice == 0 || sh.numShares_<0.0) dPrice = q1.GetDouble(wxT("CURRENTPRICE"));
-            sh.shareName_ = q1.GetString (wxT ("STOCKNAME"));
-            if (sh.shareName_.IsEmpty()) sh.shareName_ = dName;
-
-            sh.currentPrice_ = dPrice;
-            sh.value_ = sh.numShares_ * dPrice;
-            stockVec.push_back(sh);
-        }
-        st.Finalize();
 
         // --
         static const char sql_upd[] =
@@ -796,21 +742,44 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         "SET CURRENTPRICE = ?, VALUE = ?, STOCKNAME = ? "
         "WHERE STOCKID = ?";
 
+
+    db_->Begin();
+    wxSQLite3Statement st = db_->PrepareStatement(sql_upd);
+    BOOST_FOREACH(const DB_View_STOCK_V1::Data &stocks, all_stocks)
+    {
+            mmStockTransactionHolder sh;
+
+            sh.id_ = stocks.STOCKID;
+            sh.symbol_ = stocks.SYMBOL.Upper();
+            sh.numShares_ = stocks.NUMSHARES;
+            // If the stock's symbol is not found, Yahoo CSV will return 0 for the current price.
+            // Therefore, we assume the current price of all existing stock's symbols are greater
+            // than zero and we will not update any stock if its curreny price is zero.
+            if(stocks_data.find(sh.symbol_)->second <= 0.000001 || sh.numShares_<=0.0)
+                sh.currentPrice_ = stocks.CURRENTPRICE;
+            else
+                sh.currentPrice_ = stocks_data.find(sh.symbol_)->second;
+
+            sh.shareName_ = stocks.STOCKNAME;
+            //if (sh.shareName_.IsEmpty()) sh.shareName_ = dName;
+
+            sh.value_ = sh.numShares_ * sh.currentPrice_;
+
         st = db_->PrepareStatement(sql_upd);
 
-        for (vec_t::const_iterator i = stockVec.begin(); i != stockVec.end(); ++i)
-        {
-            st.Bind(1, i->currentPrice_);
-            st.Bind(2, i->value_);
-            st.Bind(3, i->shareName_);
-            st.Bind(4, i->id_);
+            st.Bind(1, sh.currentPrice_);
+            st.Bind(2, sh.value_);
+            st.Bind(3, sh.shareName_);
+            st.Bind(4, sh.id_);
+
+wxSafeShowMessage(wxString()<< sh.id_ <<wxT("=") <<sh.currentPrice_ <<wxT("=") << stocks_data.find(sh.symbol_)->second, sh.shareName_);
 
             st.ExecuteUpdate();
             st.Reset();
-        }
 
         st.Finalize();
     }
+
     db_->Commit();
 
     // Now refresh the display
