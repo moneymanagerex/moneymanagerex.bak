@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-06 21:02:12.923258.
+ *          AUTO GENERATED at 2012-05-07 10:45:36.186937.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -38,6 +38,16 @@ struct DB_View
     bool exists(wxSQLite3Database* db) const
     {
        return db->TableExists(this->name()); 
+    }
+
+    void begin(wxSQLite3Database* db) const
+    {
+        db->Begin();
+    }
+
+    void commit(wxSQLite3Database* db) const
+    {
+        db->Commit();
     }
 };
 
