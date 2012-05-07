@@ -498,6 +498,16 @@ struct DB_View
     {
        return db->TableExists(this->name()); 
     }
+
+    void begin(wxSQLite3Database* db) const
+    {
+        db->Begin();
+    }
+
+    void commit(wxSQLite3Database* db) const
+    {
+        db->Commit();
+    }
 };
 '''
    
