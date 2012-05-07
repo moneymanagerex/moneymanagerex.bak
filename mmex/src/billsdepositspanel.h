@@ -73,6 +73,9 @@ private:
     wxListItemAttr attr2_; // style2
     mmBillsDepositsPanel* cp_;
     long selectedIndex_;
+
+    int LastSelected(int transID);
+    void RefreshList();
 };
 
 /* Holds a single transaction */

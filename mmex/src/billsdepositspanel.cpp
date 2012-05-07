@@ -516,6 +516,42 @@ void billsDepositsListCtrl::OnListKeyDown(wxListEvent& event)
     }
 }
 
+int billsDepositsListCtrl::LastSelected(int transID)
+{
+    int foundIndex = -1;
+    int id = 0;
+    bool searching = true;
+    while (searching && (id < (int)cp_->trans_.size()))
+    {
+        if (cp_->trans_[id].id_ == transID)
+        {
+            searching = false;
+            foundIndex = id;
+        }
+        ++ id;
+    }
+
+    return foundIndex;
+}
+
+void billsDepositsListCtrl::RefreshList()
+{
+    int refID = cp_->trans_[selectedIndex_].id_;
+    cp_->initVirtualListControl();
+    RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+    int newIndex = LastSelected(refID);
+    if (newIndex < 0)      // item deleted from list.
+        ++ selectedIndex_; // Advance to next item in list
+    else                   // set the new position in the list.
+        selectedIndex_ = newIndex;   
+
+    // Ensure item is within range.
+    if (selectedIndex_ > (int)(cp_->trans_.size() - 1))
+        selectedIndex_ = cp_->trans_.size() - 1;
+
+    cp_->updateBottomPanelData(selectedIndex_);
+}
+
 void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
 {
     mmBDDialog dlg(cp_->db_, cp_->core_, 0, false, false, this );
@@ -534,8 +570,7 @@ void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
     mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
     {
-        cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+        RefreshList();
     }
 }
 
@@ -569,8 +604,7 @@ void billsDepositsListCtrl::OnEnterBDTransaction(wxCommandEvent& /*event*/)
     mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, false, true, this );
     if ( dlg.ShowModal() == wxID_OK )
     {
-        cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+        RefreshList();
     }
 }
 
@@ -579,8 +613,7 @@ void billsDepositsListCtrl::OnSkipBDTransaction(wxCommandEvent& /*event*/)
     if (selectedIndex_ == -1 || !cp_->db_) return;
 
     mmDBWrapper::completeBDInSeries(cp_->db_, cp_->trans_[selectedIndex_].id_);
-    cp_->initVirtualListControl();
-    RefreshItems(0, ((int)cp_->trans_.size()) -1);
+    RefreshList();
 }
 
 void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
@@ -593,8 +626,7 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
     mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
     {
-        cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+        RefreshList();
     }
 }
 
@@ -606,6 +638,11 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 
     if (selIndex !=-1)
     {
+        wxListItem selectedItem;
+        selectedItem.SetId(selIndex);
+        listCtrlAccount_->GetItem(selectedItem);
+        listCtrlAccount_->SetItemState(selectedItem, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED);
+
         wxString addInfo;
         addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == wxT ("") ? wxT ("") : wxT (":") + trans_[selIndex].subcategoryStr_);
         stm->SetLabel(addInfo);
