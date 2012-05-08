@@ -1132,3 +1132,28 @@ wxArrayString itemChoiceStrings() {
 
     return itemChoice7Strings;
 }
+
+int site_content(wxString site, wxString& output)
+{
+    int err_code = 0;
+    wxURL url(site);
+    if (url.GetError() == wxURL_NOERR) {
+        url.GetProtocol().SetTimeout(10); // 10 secs
+        unsigned char buf[16084];
+        wxInputStream* in_stream = url.GetInputStream();
+        if (in_stream) {
+            in_stream->Read(buf, 16084);
+            size_t bytes_read=in_stream->LastRead();
+            delete in_stream;
+            buf[bytes_read] = '\0';
+            output = wxString::FromAscii((const char *)buf);
+        } else {
+            err_code = 2;
+            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxICON_WARNING);
+        }
+    } else {
+        err_code = 1;
+        wxMessageBox(_("Unable to connect!"), _("Error"), wxICON_WARNING);
+    }
+    return err_code;
+}
