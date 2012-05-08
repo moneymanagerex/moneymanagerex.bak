@@ -667,11 +667,11 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     suffix = yahoo_->Suffix_.Upper();
     bool suffix_available = !suffix.IsEmpty();
 
-    BOOST_FOREACH(const DB_View_STOCK_V1::Data &stocks, all_stocks)
+    BOOST_FOREACH(const DB_View_STOCK_V1::Data &stock, all_stocks)
     {
-        if (wxNOT_FOUND == symbols_array.Index(stocks.SYMBOL.Upper())) {
-            symbols_array.Add(stocks.SYMBOL.Upper());
-            site << stocks.SYMBOL.Upper() << suffix << wxT("+");
+        if (wxNOT_FOUND == symbols_array.Index(stock.SYMBOL.Upper())) {
+            symbols_array.Add(stock.SYMBOL.Upper());
+            site << stock.SYMBOL.Upper() << suffix << wxT("+");
         }
     }
     site.RemoveLast(1);
