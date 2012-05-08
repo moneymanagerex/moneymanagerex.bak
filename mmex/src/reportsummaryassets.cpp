@@ -53,7 +53,7 @@ wxString mmReportSummaryAssets::getHTMLText()
 
     double assetBalance = 0.0;
     wxString assetBalanceStr;
-    std::vector<DB_View_ASSETS_V1::Data> all_assets = ASSETS_V1.all(db_);
+    DB_View_ASSETS_V1::Data_Set all_assets = ASSETS_V1.all(db_);
     BOOST_FOREACH(const DB_View_ASSETS_V1::Data &asset, all_assets)
     {
         double value = mmDBWrapper::getAssetValue(db_, asset.ASSETID);
