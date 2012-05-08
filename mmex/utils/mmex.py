@@ -490,7 +490,7 @@ struct DB_View
     DB_View() {};
     virtual ~DB_View() {};
     wxString query_;
-    wxString query() const { return this->query_; }
+    virtual wxString query() const { return this->query_; }
     virtual size_t num_columns() const = 0;
     virtual wxString name() const = 0;
 
@@ -499,12 +499,12 @@ struct DB_View
        return db->TableExists(this->name()); 
     }
 
-    void begin(wxSQLite3Database* db) const
+    virtual void begin(wxSQLite3Database* db) const
     {
         db->Begin();
     }
 
-    void commit(wxSQLite3Database* db) const
+    virtual void commit(wxSQLite3Database* db) const
     {
         db->Commit();
     }
