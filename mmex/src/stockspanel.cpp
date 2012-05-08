@@ -657,7 +657,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
      *                                                                                                              *
      ****************************************************************************************************************/
 
-    std::vector<DB_View_STOCK_V1::Data> all_stocks = STOCK_V1.all(db_);
+    DB_View_STOCK_V1::Data_Set all_stocks = STOCK_V1.all(db_);
     if (all_stocks.empty())
         return;
 
