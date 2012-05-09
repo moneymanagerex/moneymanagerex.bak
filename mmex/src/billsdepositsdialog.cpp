@@ -1013,13 +1013,6 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 
     if (!edit_ && !enterOccur_)
     {
-        static const char sql[] = 
-        "insert into BILLSDEPOSITS_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, "
-          "TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,"
-          "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, "
-          "NEXTOCCURRENCEDATE, NUMOCCURRENCES) "
-        "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ?, ?, ?, ? )";
-        
         DB_View_BILLSDEPOSITS_V1::Data* billsdeposit = BILLSDEPOSITS_V1.create();
         billsdeposit->ACCOUNTID = fromAccountID;
         billsdeposit->TOACCOUNTID = toAccountID;
@@ -1058,70 +1051,50 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     }
     else if (edit_)
     {
-        static const char sql[] = 
-        "update BILLSDEPOSITS_V1 "
-        "SET ACCOUNTID=?, TOACCOUNTID=?, PAYEEID=?, TRANSCODE=?,"
-            "TRANSAMOUNT=?, STATUS=?, TRANSACTIONNUMBER=?, NOTES=?,"
-            "CATEGID=?, SUBCATEGID=?, TRANSDATE=?, TOTRANSAMOUNT=?, REPEATS=?, "
-            "NEXTOCCURRENCEDATE=?, NUMOCCURRENCES=? "
-        "WHERE BDID=?";
+        DB_View_BILLSDEPOSITS_V1::Data* billsdeposit = BILLSDEPOSITS_V1.get(bdID_, db_);
+        if (!billsdeposit) 
+            return;
+        billsdeposit->ACCOUNTID = fromAccountID;
+        billsdeposit->TOACCOUNTID = toAccountID;
+        billsdeposit->PAYEEID = payeeID_;
+        billsdeposit->TRANSCODE = transCode;
+        billsdeposit->TRANSAMOUNT = amount;
+        billsdeposit->STATUS = status;
+        billsdeposit->TRANSACTIONNUMBER = transNum;
+        billsdeposit->NOTES = notes;
+        billsdeposit->CATEGID = categID_;
+        billsdeposit->SUBCATEGID = subcategID_;
+        billsdeposit->TRANSDATE = date1;
+        billsdeposit->TOTRANSAMOUNT = toTransAmount_;
+        billsdeposit->REPEATS = repeats;
+        billsdeposit->NEXTOCCURRENCEDATE = nextOccurDate;
+        billsdeposit->NUMOCCURRENCES = numRepeats;
 
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
+        if (!billsdeposit->save(db_))
+            return;
 
-        int i = 0;
-        st.Bind(++i, accountID_);
-        st.Bind(++i, toAccountID);
-        st.Bind(++i, payeeID_);
-        st.Bind(++i, transCode);
-        st.Bind(++i, amount);
-        st.Bind(++i, status);
-        st.Bind(++i, transNum);
-        st.Bind(++i, notes);
-        st.Bind(++i, categID_);
-        st.Bind(++i, subcategID_);
-        st.Bind(++i, date1);
-        st.Bind(++i, toTransAmount_);
-        st.Bind(++i, repeats);
-        st.Bind(++i, nextOccurDate);
-        st.Bind(++i, numRepeats);
-        st.Bind(++i, bdID_);
-
-        wxASSERT(st.GetParamCount() == i);
-
-        st.ExecuteUpdate();
-        st.Finalize();
+        int transID = billsdeposit->id();
 
         // --
-
-        st = db_->PrepareStatement("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = ?");    
+        wxSQLite3Statement st = db_->PrepareStatement("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = ?");    
         st.Bind(1, bdID_);
         st.ExecuteUpdate();
         st.Finalize();
 
         // --
-
-        static const char sql_ins[] = 
-        "insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
-        "values (?, ?, ?, ?)";
-
-        st = db_->PrepareStatement(sql_ins);
-        
         for (size_t i = 0; i < split_->numEntries(); ++i)
         {
             mmSplitTransactionEntry &r = *split_->entries_[i];
 
-            st.Bind(1, bdID_);
-            st.Bind(2, r.categID_);
-            st.Bind(3, r.subCategID_);
-            st.Bind(4, r.splitAmount_);
-            
-            st.ExecuteUpdate();
-            r.splitEntryID_ = db_->GetLastRowId().ToLong();
-            
-            st.Reset();
-        }
+            DB_View_BUDGETSPLITTRANSACTIONS_V1::Data* budgetsplittransaction = BUDGETSPLITTRANSACTIONS_V1.create();
+            budgetsplittransaction->TRANSID = transID;
+            budgetsplittransaction->CATEGID = r.categID_;
+            budgetsplittransaction->SUBCATEGID = r.subCategID_;
+            budgetsplittransaction->SPLITTRANSAMOUNT = r.splitAmount_;
 
-        st.Finalize();
+            if (budgetsplittransaction->save(db_))
+                r.splitEntryID_ = budgetsplittransaction->id();
+        }
     }
     else if (enterOccur_)
     {
