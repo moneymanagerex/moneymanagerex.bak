@@ -133,7 +133,6 @@ wxString getLastDbPath(wxSQLite3Database *db, const wxString &defaultVal = wxGet
 void setLastDbPath(wxSQLite3Database *db, const wxString &path);
 
 /* Stocks API */
-void deleteStockInvestment(wxSQLite3Database* db, int stockID);
 double getStockInvestmentBalance(wxSQLite3Database* db, double& invested);
 double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, bool convertToBase, double& originalVal);
 
