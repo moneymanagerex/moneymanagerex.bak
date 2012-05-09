@@ -367,6 +367,13 @@ struct DB_View_%s : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE %s = ?"));
         try

@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-09 09:46:08.908926.
+ *          AUTO GENERATED at 2012-05-09 09:56:27.378191.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -397,6 +397,13 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE ACCOUNTID = ?"));
         try
@@ -769,6 +776,13 @@ struct DB_View_ASSETS_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE ASSETID = ?"));
         try
@@ -1239,6 +1253,13 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE BDID = ?"));
         try
@@ -1583,6 +1604,13 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE SPLITTRANSID = ?"));
         try
@@ -1937,6 +1965,13 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE BUDGETENTRYID = ?"));
         try
@@ -2247,6 +2282,13 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE BUDGETYEARID = ?"));
         try
@@ -2557,6 +2599,13 @@ struct DB_View_CATEGORY_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE CATEGID = ?"));
         try
@@ -2995,6 +3044,13 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE TRANSID = ?"));
         try
@@ -3397,6 +3453,13 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE CURRENCYID = ?"));
         try
@@ -3717,6 +3780,13 @@ struct DB_View_INFOTABLE_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE INFOID = ?"));
         try
@@ -4049,6 +4119,13 @@ struct DB_View_PAYEE_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE PAYEEID = ?"));
         try
@@ -4369,6 +4446,13 @@ struct DB_View_SETTING_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE SETTINGID = ?"));
         try
@@ -4713,6 +4797,13 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE SPLITTRANSID = ?"));
         try
@@ -5119,6 +5210,13 @@ struct DB_View_STOCK_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE STOCKID = ?"));
         try
@@ -5440,6 +5538,13 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
     
     Self::Data* get(int id, wxSQLite3Database* db)
     {
+        for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+        {
+            Self::Data* entity = *it;
+            if (entity->id() == id) 
+                return entity;
+        }
+
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE SUBCATEGID = ?"));
         try
