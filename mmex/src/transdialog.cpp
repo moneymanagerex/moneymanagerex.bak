@@ -813,11 +813,10 @@ wxString mmTransDialog::getMostFrequentlyUsedCategory()
               " ca.categid, ca.subcategid "
         "from CHECKINGACCOUNT_V1 ca "
             " left join CATEGORY_V1 cat on cat.CATEGID = ca.CATEGID"
-            " left join SUBCATEGORY_V1 sc"
-            " on sc.CATEGID = ca.CATEGID and sc.SUBCATEGID = ca.SUBCATEGID "
+            " left join SUBCATEGORY_V1 sc on sc.CATEGID = ca.CATEGID and sc.SUBCATEGID = ca.SUBCATEGID "
         "where ca.transcode = 'Transfer' and ca.accountid = ? or ca.toaccountid = ? "
-        "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
-        "order by ca.transdate desc, ca.transid desc, c desc "
+        "group by ca.categid, ca.subcategid "
+        "order by c desc "
         "limit 1";
 
     wxSQLite3Statement st = db_->PrepareStatement(sql);
@@ -860,13 +859,11 @@ wxString mmTransDialog::getMostFrequentlyUsedPayee(wxString& categString)
               " ca.payeeid, p.payeename PAYEENAME "
         "from CHECKINGACCOUNT_V1 ca, payee_v1 p "
             " left join CATEGORY_V1 cat on cat.CATEGID = ca.CATEGID "
-            " left join SUBCATEGORY_V1 sc on "
-                " sc.CATEGID = ca.CATEGID and sc.SUBCATEGID = ca.SUBCATEGID "
-        "where ca.payeeid=p.payeeid and "
-             " ca.transcode<>'Transfer' and "
-             " ca.accountid = ? "
-        "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
-        "order by ca.transdate desc, ca.transid desc, c desc "
+            " left join SUBCATEGORY_V1 sc on sc.CATEGID = ca.CATEGID and sc.SUBCATEGID = ca.SUBCATEGID "
+        "where ca.payeeid = p.payeeid and "
+             " ca.transcode<>'Transfer' and ca.accountid = ? "
+        "group by ca.payeeid, ca.categid, ca.subcategid "
+        "order by c desc "
         "limit 1";
 
     wxSQLite3Statement st = db_->PrepareStatement(sql);
