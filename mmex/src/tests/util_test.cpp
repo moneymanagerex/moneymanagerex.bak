@@ -328,7 +328,7 @@ TEST(formatDoubleToCurrency2)
 
 TEST(formatDoubleToCurrency3)
 {
-        double val = 0.0099;
+    double val = 0.0099;
 	wxString s;
 
 	mmex::formatDoubleToCurrency(val, s);
