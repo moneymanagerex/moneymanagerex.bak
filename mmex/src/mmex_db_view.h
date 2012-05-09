@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-09 07:33:40.555831.
+ *          AUTO GENERATED at 2012-05-09 09:46:08.908926.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -56,9 +56,12 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
     struct Data;
     typedef DB_View_ACCOUNTLIST_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_ACCOUNTLIST_V1() {}
+    ~DB_View_ACCOUNTLIST_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -291,6 +294,8 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -309,7 +314,9 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -399,7 +406,10 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -468,9 +478,12 @@ struct DB_View_ASSETS_V1 : public DB_View
     struct Data;
     typedef DB_View_ASSETS_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_ASSETS_V1() {}
+    ~DB_View_ASSETS_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -658,6 +671,8 @@ struct DB_View_ASSETS_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -676,7 +691,9 @@ struct DB_View_ASSETS_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -761,7 +778,10 @@ struct DB_View_ASSETS_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -830,9 +850,12 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
     struct Data;
     typedef DB_View_BILLSDEPOSITS_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_BILLSDEPOSITS_V1() {}
+    ~DB_View_BILLSDEPOSITS_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -1109,6 +1132,8 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -1127,7 +1152,9 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -1221,7 +1248,10 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -1290,9 +1320,12 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
     struct Data;
     typedef DB_View_BUDGETSPLITTRANSACTIONS_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_BUDGETSPLITTRANSACTIONS_V1() {}
+    ~DB_View_BUDGETSPLITTRANSACTIONS_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -1455,6 +1488,8 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -1473,7 +1508,9 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -1555,7 +1592,10 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -1624,9 +1664,12 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
     struct Data;
     typedef DB_View_BUDGETTABLE_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_BUDGETTABLE_V1() {}
+    ~DB_View_BUDGETTABLE_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -1798,6 +1841,8 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -1816,7 +1861,9 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -1899,7 +1946,10 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -1968,9 +2018,12 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
     struct Data;
     typedef DB_View_BUDGETYEAR_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_BUDGETYEAR_V1() {}
+    ~DB_View_BUDGETYEAR_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -2102,6 +2155,8 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -2120,7 +2175,9 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -2199,7 +2256,10 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -2268,9 +2328,12 @@ struct DB_View_CATEGORY_V1 : public DB_View
     struct Data;
     typedef DB_View_CATEGORY_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_CATEGORY_V1() {}
+    ~DB_View_CATEGORY_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -2402,6 +2465,8 @@ struct DB_View_CATEGORY_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -2420,7 +2485,9 @@ struct DB_View_CATEGORY_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -2499,7 +2566,10 @@ struct DB_View_CATEGORY_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -2568,9 +2638,12 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
     struct Data;
     typedef DB_View_CHECKINGACCOUNT_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_CHECKINGACCOUNT_V1() {}
+    ~DB_View_CHECKINGACCOUNT_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -2818,6 +2891,8 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -2836,7 +2911,9 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -2927,7 +3004,10 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -2996,9 +3076,12 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
     struct Data;
     typedef DB_View_CURRENCYFORMATS_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_CURRENCYFORMATS_V1() {}
+    ~DB_View_CURRENCYFORMATS_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -3213,6 +3296,8 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -3231,7 +3316,9 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -3319,7 +3406,10 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -3388,9 +3478,12 @@ struct DB_View_INFOTABLE_V1 : public DB_View
     struct Data;
     typedef DB_View_INFOTABLE_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_INFOTABLE_V1() {}
+    ~DB_View_INFOTABLE_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -3531,6 +3624,8 @@ struct DB_View_INFOTABLE_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -3549,7 +3644,9 @@ struct DB_View_INFOTABLE_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -3629,7 +3726,10 @@ struct DB_View_INFOTABLE_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -3698,9 +3798,12 @@ struct DB_View_PAYEE_V1 : public DB_View
     struct Data;
     typedef DB_View_PAYEE_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_PAYEE_V1() {}
+    ~DB_View_PAYEE_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -3852,6 +3955,8 @@ struct DB_View_PAYEE_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -3870,7 +3975,9 @@ struct DB_View_PAYEE_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -3951,7 +4058,10 @@ struct DB_View_PAYEE_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -4020,9 +4130,12 @@ struct DB_View_SETTING_V1 : public DB_View
     struct Data;
     typedef DB_View_SETTING_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_SETTING_V1() {}
+    ~DB_View_SETTING_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -4163,6 +4276,8 @@ struct DB_View_SETTING_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -4181,7 +4296,9 @@ struct DB_View_SETTING_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -4261,7 +4378,10 @@ struct DB_View_SETTING_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -4330,9 +4450,12 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
     struct Data;
     typedef DB_View_SPLITTRANSACTIONS_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_SPLITTRANSACTIONS_V1() {}
+    ~DB_View_SPLITTRANSACTIONS_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -4495,6 +4618,8 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -4513,7 +4638,9 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -4595,7 +4722,10 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -4664,9 +4794,12 @@ struct DB_View_STOCK_V1 : public DB_View
     struct Data;
     typedef DB_View_STOCK_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_STOCK_V1() {}
+    ~DB_View_STOCK_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -4885,6 +5018,8 @@ struct DB_View_STOCK_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -4903,7 +5038,9 @@ struct DB_View_STOCK_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -4991,7 +5128,10 @@ struct DB_View_STOCK_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
@@ -5060,9 +5200,12 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
     struct Data;
     typedef DB_View_SUBCATEGORY_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_SUBCATEGORY_V1() {}
+    ~DB_View_SUBCATEGORY_V1() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -5204,6 +5347,8 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 
     enum
@@ -5222,7 +5367,9 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
 
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 
     bool save(Self::Data* entity, wxSQLite3Database* db)
@@ -5302,7 +5449,10 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
