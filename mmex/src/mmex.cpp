@@ -64,6 +64,7 @@
 #include "customreportindex.h"
 #include "customreportdialog.h"
 #include <boost/version.hpp>
+#include "mmyahoo.h"
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -132,6 +133,8 @@
 #include <boost/scoped_array.hpp>
 #include <string>
 //----------------------------------------------------------------------------
+#include "mmex_db_view.h"
+#include <boost/foreach.hpp>
 
 namespace
 {
@@ -3602,22 +3605,11 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 
     // Access current version details page
     wxString site = wxT("http://www.codelathe.com/mmex/version.html");
-    wxURL url(site);
 
-    unsigned char buf[1024];
-    boost::scoped_ptr<wxInputStream> in_stream(url.GetInputStream());
-    if (!in_stream)
-    {
-        versionDetails << _("Unable to connect!");
-        wxMessageBox(versionDetails, _("MMEX System Information Check"));
+    wxString page;
+    if (site_content(site, page) != 0)
         return;
-    }
-    in_stream->Read(buf, 1024);
-    //size_t bytes_read=in_stream->LastRead();
-    in_stream.reset();
-    buf[53] = '\0';
-
-    wxString page = wxString::FromAscii((const char *)buf);
+        
     /*************************************************************************
         Expected format of the string from the internet. Version: 0.9.8.0
         page = wxT("x.x.x.x - Win: w.w.w.w - Unix: u.u.u.u - Mac: m.m.m.m");
@@ -3657,7 +3649,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     }
 
     wxString urlString = wxT("http://www.codelathe.com/mmex");
-    versionDetails << wxT("\n\n") << _("Proceed to website: ") << urlString;
+    versionDetails << wxT("\n\n") << _("Proceed to website: ") << urlString << wxT("     ");
     if (wxMessageBox(versionDetails, _("MMEX System Information Check"), style) == wxOK)
         wxLaunchDefaultBrowser(urlString);
 }
@@ -3665,177 +3657,106 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 {
-    wxArrayString   currency_name, currency_rate;
-    double          *rate_ptr, rate_value, base_rate;
-
-    // we will get latest currency rate data from European Central Bank
-    wxString site = wxT("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
-
-    if (!m_core)
-    {
-       wxMessageBox(_("No database!"), _("Update Currency Rate"), wxICON_WARNING);
-       return;
-    }
-
-    wxURL url(site);
-
-    wxInputStream* in_stream = url.GetInputStream();
-
-    if (!in_stream)
-    {
-        wxMessageBox(_("Unable to connect!"), _("Update Currency Rate"), wxICON_WARNING);
+    std::vector<DB_View_CURRENCYFORMATS_V1::Data> all_currency = CURRENCYFORMATS_V1.all(m_core->db_.get());
+    if (all_currency.empty())
         return;
-    }
 
-    wxXmlDocument doc;
-
-    if(!doc.Load(*in_stream))
-    {
-        wxMessageBox(_("Cannot get data from WWW!"), _("Update Currency Rate"), wxICON_WARNING);
-        return;
-    }
-
-    // decode received XML data
-    if(doc.GetRoot()->GetName() != wxT("gesmes:Envelope"))
-    {
-        wxMessageBox(_("Incorrect XML data (#1)!"), _("Update Currency Rate"), wxICON_WARNING);
-        return;
-    }
-
-    wxXmlNode *root_child = doc.GetRoot()->GetChildren();
-
-    while(root_child)
-    {
-        if(root_child->GetName() == wxT("gesmes:subject"))
-        {
-            if(root_child->GetNodeContent() != wxT("Reference rates"))
-            {
-                wxMessageBox(_("Incorrect XML data (#2)!"), _("Update Currency Rate"), wxICON_WARNING);
-                return;
-            }
-        }
-        else if (root_child->GetName() == wxT("gesmes:Sender"))
-        {
-            wxXmlNode *sender_child = root_child->GetChildren();
-
-            if(!sender_child)
-            {
-                wxMessageBox(_("Incorrect XML data (#3)!"), _("Update Currency Rate"), wxICON_WARNING);
-                return;
-            }
-
-            if(sender_child->GetName() != wxT("gesmes:name"))
-            {
-                wxMessageBox(_("Incorrect XML data (#4)!"), _("Update Currency Rate"), wxICON_WARNING);
-                return;
-            }
-
-            if(sender_child->GetNodeContent() != wxT("European Central Bank"))
-            {
-                wxMessageBox(_("Incorrect XML data (#5)!"), _("Update Currency Rate"), wxICON_WARNING);
-                return;
-            }
-        }
-        else if (root_child->GetName() == wxT("Cube"))
-        {
-            wxXmlNode *cube_lv1_child = root_child->GetChildren();
-
-            if(!cube_lv1_child)
-            {
-                wxMessageBox(_("Incorrect XML data (#6)!"), _("Update Currency Rate"), wxICON_WARNING);
-                return;
-            }
-
-            if(cube_lv1_child->GetName() != wxT("Cube"))
-            {
-                wxMessageBox(_("Incorrect XML data (#7)!"), _("Update Currency Rate"), wxICON_WARNING);
-                return;
-            }
-
-            wxXmlNode *cube_lv2_child = cube_lv1_child->GetChildren();
-
-            // set default base currency and its rate
-            currency_name.Add(wxT("EUR"));
-            currency_rate.Add(wxT("1.0"));
-
-            while(cube_lv2_child)
-            {
-                wxString name = cube_lv2_child->GetPropVal(wxT("currency"), wxGetEmptyString());
-                wxString rate = cube_lv2_child->GetPropVal(wxT("rate"), wxT("1"));
-
-                currency_name.Add(name);
-                currency_rate.Add(rate);
-
-                cube_lv2_child = cube_lv2_child->GetNext();
-            }
-        }
-        root_child = root_child->GetNext();
-    }
-
-    // Get base currency and the adjust currency rate for each currency
-    rate_ptr = new double[currency_rate.GetCount()];
-
+    wxString site;
+    wxSortedArrayString symbols_array;
     int currencyID = mmDBWrapper::getBaseCurrencySettings(m_core->db_.get());
     wxString base_symbol = mmDBWrapper::getCurrencySymbol(m_core->db_.get(), currencyID);
-    base_rate = 0;
 
-    for(int i=0; i<(int)currency_rate.GetCount(); i++)
-    {
-        if(currency_rate[i].ToDouble(&rate_value) == false)
-        {
-            rate_ptr[i] = 1.0;
-        } else
-        {
-            rate_ptr[i] = rate_value;
-            if(currency_name[i] == base_symbol)
-                base_rate = rate_value;
-        }
-    }
-
-    if(base_rate == 0)
+    if(base_symbol.IsEmpty())
     {
         wxMessageBox(_("Could not find base currency symbol!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
 
-    // Note:
-    // Suppose currency Y / currency X = Y / X and currency Z / currency X = Z / X, then
-    // currency Z / currency Y = Z / Y
-    // Therefore, if currency X is EUR and currency Y is the base currency,
-    // currency Y : currency Z = base_rate / rate of Z : 1
-    for(int i = 0; i<(int)currency_rate.GetCount(); i++)
-        rate_ptr[i] = base_rate / rate_ptr[i];
-
-    // update currency rates
-
-    wxString msg = _("Currency rate updated");
-    msg << wxT("\n\n");
-
-    m_db->Begin();
-    for (int idx = 0; idx < (int)m_core->currencyList_.currencies_.size(); idx++)
+    BOOST_FOREACH(const DB_View_CURRENCYFORMATS_V1::Data &currency, all_currency)
     {
-        wxString currencySymbol  = m_core->currencyList_.currencies_[idx]->currencySymbol_;
-
-        for(int i = 0; i<(int)currency_name.GetCount(); i++)
-        {
-            if(currency_name[i] == currencySymbol)
-            {
-                double rate = m_core->currencyList_.currencies_[idx]->baseConv_ ;
-                if (rate != rate_ptr[i])
-                msg << currencySymbol << wxT(" : ") << rate << wxT(" -> ") << rate_ptr[i] << wxT("\n");
-
-                m_core->currencyList_.currencies_[idx]->baseConv_ = rate_ptr[i];
-                m_core->currencyList_.updateCurrency(m_core->currencyList_.currencies_[idx]);
+        wxString currency_symbol = currency.CURRENCY_SYMBOL.Upper();
+        if (!currency_symbol.IsEmpty()) {
+            if (wxNOT_FOUND == symbols_array.Index(currency_symbol) &&
+                    base_symbol != currency_symbol) {
+                symbols_array.Add(currency_symbol);
+                site << currency.CURRENCY_SYMBOL.Upper() << base_symbol << wxT("=X+");
             }
-        } // for i loop
+        }
     }
-    m_db->Commit();
+    site.RemoveLast(1);
 
-    delete[] rate_ptr;
+    mmYahoo* yahoo_ = new mmYahoo(m_inidb.get(), m_core->db_.get());
+
+    //Sample:
+    //http://finance.yahoo.com/d/quotes.csv?s=EURUSD=X+RUBUSD=X&f=sl1n&e=.csv
+    site = wxString() << wxT("http://") << yahoo_->Server_
+            << wxT("/d/quotes.csv?s=") << site;
+    site << wxT("&f=") << yahoo_->CSVColumns_ << wxT("&e=.csv");
+
+    wxString rates;
+    if (site_content(site, rates) != 0)
+        return;
+
+    wxString CurrencySymbol, dName;
+    double dRate = 0;
+
+    std::map<wxString, std::pair<double, wxString> > currency_data;
+
+    // Break it up into lines
+    wxStringTokenizer tkz(rates, wxT("\r\n"));
+
+    while (tkz.HasMoreTokens())
+    {
+        wxString csvline = tkz.GetNextToken();
+
+        /*** Grab the relevant bits (for now only the symbol and the current price) */
+        wxStringTokenizer csvsimple(csvline,wxT("\","),wxTOKEN_STRTOK);
+        if (csvsimple.HasMoreTokens())
+        {
+            CurrencySymbol = csvsimple.GetNextToken();
+            if (csvsimple.HasMoreTokens())
+            {
+                csvsimple.GetNextToken().ToDouble(&dRate);
+                if (csvsimple.HasMoreTokens())
+                    dName = csvsimple.GetNextToken();
+            }
+        }
+        currency_data.insert(std::make_pair(CurrencySymbol, std::make_pair(dRate, dName)));
+    }
+
+    CURRENCYFORMATS_V1.begin(m_core->db_.get());
+
+    wxString msg = wxT("");
+    BOOST_FOREACH(DB_View_CURRENCYFORMATS_V1::Data &currency, all_currency)
+    {
+        wxString currency_symbol = currency.CURRENCY_SYMBOL.Upper();
+        if (!currency_symbol.IsEmpty() && base_symbol != currency_symbol) {
+            wxString currency_symbols_pair = currency_symbol + base_symbol + wxT("=X");
+
+            std::pair<double, wxString> data = currency_data[currency_symbols_pair];
+
+            double rate = data.first;
+
+            msg << currency_symbol << wxT(" : ") << currency.BASECONVRATE << wxT("\t -> \t") << rate << wxT("\n");
+
+            if (rate > 0.000001)
+                currency.BASECONVRATE = rate;
+
+            // store into db
+            if (currency.save(m_core->db_.get())) {
+                for (int idx = 0; idx < (int)m_core->currencyList_.currencies_.size(); idx++)
+                {
+                    wxString currencySymbol  = m_core->currencyList_.currencies_[idx]->currencySymbol_;
+                    if (currencySymbol == currency_symbol)
+                        m_core->currencyList_.currencies_[idx]->baseConv_ = rate;
+                }
+            }
+        }
+    }
+
+    CURRENCYFORMATS_V1.commit(m_core->db_.get());
 
     wxMessageDialog msgDlg(this, msg, _("Currency rate updated"));
-
-    //fileviewer(wxT(""), this).ShowModal();
     msgDlg.ShowModal();
 
     createHomePage();
