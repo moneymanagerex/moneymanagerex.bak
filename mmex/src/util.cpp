@@ -25,7 +25,6 @@
 #include "mmcoredb.h"
 #include "paths.h"
 #include "platfdep.h"
-#include <sstream>
 //----------------------------------------------------------------------------
 #include <wx/sound.h>
 #include <boost/shared_ptr.hpp>
