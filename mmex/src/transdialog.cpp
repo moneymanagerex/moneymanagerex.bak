@@ -915,10 +915,7 @@ wxString mmTransDialog::getLastTrxDate()
         "select max(ca.transdate) as LASTDATE "
         "from CHECKINGACCOUNT_V1 ca "
         "where ca.transdate <= date ('now','localtime') "
-        "and ca.accountid = ? "
-        "group by ca.transdate "
-        "order by ca.transdate desc "
-        "limit 1";
+        "and ca.accountid = ? ";
 
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     st.Bind(1, accountID_);
