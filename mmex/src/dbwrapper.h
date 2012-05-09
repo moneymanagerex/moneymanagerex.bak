@@ -138,7 +138,6 @@ double getStockInvestmentBalance(wxSQLite3Database* db, double& invested);
 double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, bool convertToBase, double& originalVal);
 
 /* Assets API */
-void deleteAsset(wxSQLite3Database* db, int assetID);
 double getAssetBalance(wxSQLite3Database* db);
 double getAssetValue(const DB_View_ASSETS_V1::Data& asset);
 
