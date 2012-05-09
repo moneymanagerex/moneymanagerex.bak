@@ -54,9 +54,12 @@ struct DB_View_%s : public DB_View
     struct Data;
     typedef DB_View_%s Self;
     typedef std::vector<Self::Data> Data_Set;
-    typedef std::map<int, Self::Data> Cache;
+    typedef std::vector<Self::Data*> Cache;
     Cache cache_;
-    ~DB_View_%s() {}
+    ~DB_View_%s() 
+    {
+        std::for_each(cache_.begin(), cache_.end(), std::mem_fun(&Data::destroy));
+    }
 ''' % (self._table, self._table, self._table)
         
         s += '''
@@ -253,6 +256,8 @@ struct DB_View_%s : public DB_View
             
             return view_->remove(this, db);
         }
+
+        void destroy() { delete this; }
     };
 '''
         s +='''
@@ -278,7 +283,9 @@ struct DB_View_%s : public DB_View
         s +='''
     Self::Data* create()
     {
-        return new Self::Data(this);
+        Self::Data* entity = new Self::Data(this);
+        cache_.push_back(entity);
+        return entity;
     }
 '''
         s +='''
@@ -369,7 +376,10 @@ struct DB_View_%s : public DB_View
 
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
             if(q.NextRow())
+            {
                 entity = new Self::Data(q, this);
+                cache_.push_back(entity);
+            }
             stmt.Finalize();
         }
         catch(const wxSQLite3Exception &e) 
