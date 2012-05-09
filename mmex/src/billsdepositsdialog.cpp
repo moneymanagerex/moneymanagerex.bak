@@ -1020,55 +1020,41 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
           "NEXTOCCURRENCEDATE, NUMOCCURRENCES) "
         "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ?, ?, ?, ? )";
         
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
-        
-        int i = 0;
-        st.Bind(++i, fromAccountID);
-        st.Bind(++i, toAccountID);
-        st.Bind(++i, payeeID_);
-        st.Bind(++i, transCode);
-        st.Bind(++i, amount);
-        st.Bind(++i, status);
-        st.Bind(++i, transNum);
-        st.Bind(++i, notes);
-        st.Bind(++i, categID_);
-        st.Bind(++i, subcategID_);
-        st.Bind(++i, date1);
-        st.Bind(++i, toTransAmount_);
-        st.Bind(++i, repeats);
-        st.Bind(++i, nextOccurDate);
-        st.Bind(++i, numRepeats);
+        DB_View_BILLSDEPOSITS_V1::Data* billsdeposit = BILLSDEPOSITS_V1.create();
+        billsdeposit->ACCOUNTID = fromAccountID;
+        billsdeposit->TOACCOUNTID = toAccountID;
+        billsdeposit->PAYEEID = payeeID_;
+        billsdeposit->TRANSCODE = transCode;
+        billsdeposit->TRANSAMOUNT = amount;
+        billsdeposit->STATUS = status;
+        billsdeposit->TRANSACTIONNUMBER = transNum;
+        billsdeposit->NOTES = notes;
+        billsdeposit->CATEGID = categID_;
+        billsdeposit->SUBCATEGID = subcategID_;
+        billsdeposit->TRANSDATE = date1;
+        billsdeposit->TOTRANSAMOUNT = toTransAmount_;
+        billsdeposit->REPEATS = repeats;
+        billsdeposit->NEXTOCCURRENCEDATE = nextOccurDate;
+        billsdeposit->NUMOCCURRENCES = numRepeats;
 
-        wxASSERT(st.GetParamCount() == i);
+        if (!billsdeposit->save(db_))
+            return;
 
-        st.ExecuteUpdate();
-        int transID = db_->GetLastRowId().ToLong();
-        st.Finalize();
-        
-        // --
-
-        static const char sql_ins[] = 
-        "insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
-        "values (?, ?, ?, ?)";
-
-        st = db_->PrepareStatement(sql_ins);
+        int transID = billsdeposit->id();
 
         for (size_t i = 0; i < split_->numEntries(); ++i)
         {
             mmSplitTransactionEntry &r = *split_->entries_[i];
 
-            st.Bind(1, transID);
-            st.Bind(2, r.categID_);
-            st.Bind(3, r.subCategID_);
-            st.Bind(4, r.splitAmount_);
+            DB_View_BUDGETSPLITTRANSACTIONS_V1::Data* budgetsplittransaction = BUDGETSPLITTRANSACTIONS_V1.create();
+            budgetsplittransaction->TRANSID = transID;
+            budgetsplittransaction->CATEGID = r.categID_;
+            budgetsplittransaction->SUBCATEGID = r.subCategID_;
+            budgetsplittransaction->SPLITTRANSAMOUNT = r.splitAmount_;
 
-            st.ExecuteUpdate();
-            r.splitEntryID_ = db_->GetLastRowId().ToLong();
-            
-            st.Reset();
+            if (budgetsplittransaction->save(db_))
+                r.splitEntryID_ = budgetsplittransaction->id();
         }
-
-        st.Finalize();
     }
     else if (edit_)
     {
