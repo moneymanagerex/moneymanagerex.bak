@@ -235,7 +235,7 @@ void mmAssetsPanel::initVirtualListControl()
         mmAssetHolder th;
 
         th.id_= asset.ASSETID;
-        th.value_ = mmDBWrapper::getAssetValue(db_, asset.ASSETID);
+        th.value_ = mmDBWrapper::getAssetValue(asset);
         th.assetName_ = asset.ASSETNAME;
 
         wxString dateString = asset.STARTDATE;

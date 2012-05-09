@@ -21,6 +21,7 @@
 #define _MM_EX_DBWRAPPER_H_
 //----------------------------------------------------------------------------
 #include "defs.h"
+#include "mmex_db_view.h"
 //----------------------------------------------------------------------------
 #include <boost/shared_ptr.hpp>
 //----------------------------------------------------------------------------
@@ -139,7 +140,7 @@ double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, bool conv
 /* Assets API */
 void deleteAsset(wxSQLite3Database* db, int assetID);
 double getAssetBalance(wxSQLite3Database* db);
-double getAssetValue(wxSQLite3Database* db, int assetID);
+double getAssetValue(const DB_View_ASSETS_V1::Data& asset);
 
 
 //----------------------------------------------------------------------------
