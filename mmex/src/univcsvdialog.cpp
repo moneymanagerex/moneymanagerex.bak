@@ -262,7 +262,7 @@ void mmUnivCSVDialog::CreateControls()
     wxArrayString DateFormat = DateFormats();
     wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     size_t i=0;
-    for(i; i<DateFormat.Count(); i++)
+    for(; i<DateFormat.Count(); i++)
     {
         if(default_date_format == DateFormat[i])
             break;
