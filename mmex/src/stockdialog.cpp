@@ -361,64 +361,23 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
 
     double cValue = cPrice * numShares;
 
-    if (!edit_)
-    {
-        static const char sql[]  = 
-        "insert into STOCK_V1 ( "
-          "HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, "
-          "NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, "
-          "VALUE, COMMISSION "
-        " ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
+    DB_View_STOCK_V1::Data* stock = STOCK_V1.get(stockID_, db_);
+    if (! stock)
+        stock = STOCK_V1.create();
 
-        int i = 0;
-        st.Bind(++i, accountID_);
-        st.Bind(++i, pdate);
-        st.Bind(++i, stockName);
-        st.Bind(++i, stockSymbol);
-        st.Bind(++i, numShares);
-        st.Bind(++i, pPrice);
-        st.Bind(++i, notes);
-        st.Bind(++i, cPrice);
-        st.Bind(++i, cValue);
-        st.Bind(++i, commission);
+    stock->HELDAT = accountID_;
+    stock->PURCHASEDATE = pdate;
+    stock->STOCKNAME = stockName;
+    stock->SYMBOL = stockSymbol;
+    stock->NUMSHARES = numShares;
+    stock->PURCHASEPRICE = pPrice;
+    stock->NOTES = notes;
+    stock->CURRENTPRICE = cPrice;
+    stock->VALUE = cValue;
+    stock->COMMISSION = commission;
 
-        wxASSERT(st.GetParamCount() == i);
-
-        st.ExecuteUpdate();
-        st.Finalize();
-    }
-    else 
-    {
-        static const char sql[]  = 
-        "update STOCK_V1 "
-        "SET HELDAT=?, PURCHASEDATE=?, STOCKNAME=?, SYMBOL=?, "
-            "NUMSHARES=?, PURCHASEPRICE=?, NOTES=?, CURRENTPRICE=?, "
-            "VALUE=?, COMMISSION=? "
-        "WHERE STOCKID = ?";
-
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
-
-        int i = 0;
-        st.Bind(++i, accountID_);
-        st.Bind(++i, pdate);
-        st.Bind(++i, stockName);
-        st.Bind(++i, stockSymbol);
-        st.Bind(++i, numShares);
-        st.Bind(++i, pPrice);
-        st.Bind(++i, notes);
-        st.Bind(++i, cPrice);
-        st.Bind(++i, cValue);
-        st.Bind(++i, commission);
-        st.Bind(++i, stockID_);
-
-        wxASSERT(st.GetParamCount() == i);
-
-        st.ExecuteUpdate();
-        st.Finalize();
-    }
-
+    stock->save(db_);
+    
     EndModal(wxID_OK);
 }
 
