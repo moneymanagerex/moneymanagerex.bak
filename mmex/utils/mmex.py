@@ -494,6 +494,7 @@ if __name__ == '__main__':
     code +='''
 #include <vector>
 #include <map>
+#include <algorithm>
 
 class wxString;
 class wxSQLite3Statement;
