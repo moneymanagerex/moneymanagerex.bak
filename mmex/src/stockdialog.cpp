@@ -23,6 +23,7 @@
 #include "currencydialog.h"
 #include "defs.h"
 #include "paths.h"
+#include "mmex_db_view.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmStockDialog, wxDialog )
 
@@ -76,52 +77,43 @@ bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 
 void mmStockDialog::dataToControls()
 {
-    static const char sql[] = 
-    "select HELDAT, STOCKNAME, SYMBOL, NOTES, PURCHASEDATE, NUMSHARES, VALUE, PURCHASEPRICE, CURRENTPRICE, COMMISSION "
-    "from STOCK_V1 "
-    "where STOCKID = ?";
+    DB_View_STOCK_V1::Data* stock = STOCK_V1.get(stockID_, db_);
+    if (! stock)
+        return;
 
-    wxSQLite3Statement st = db_->PrepareStatement(sql); 
-    st.Bind(1, stockID_);
+    heldAt_->SetLabel(core_->getAccountName(stock->HELDAT));
+    accountID_ = stock->HELDAT;
+    stockName_->SetValue(stock->STOCKNAME);
+    stockSymbol_->SetValue(stock->SYMBOL);
+    notes_->SetValue(stock->NOTES);
 
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        heldAt_->SetLabel(core_->getAccountName(q1.GetInt(wxT("HELDAT"))));
-        accountID_ = q1.GetInt(wxT("HELDAT"));
-        stockName_->SetValue(q1.GetString(wxT("STOCKNAME")));
-        stockSymbol_->SetValue(q1.GetString(wxT("SYMBOL")));
-        notes_->SetValue(q1.GetString(wxT("NOTES")));
+    wxString dateString = stock->PURCHASEDATE;
+    wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+    wxString dt = mmGetDateForDisplay(db_, dtdt);
+    dpc_->SetValue(dtdt);
 
-        wxString dateString = q1.GetString(wxT("PURCHASEDATE"));
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-        wxString dt = mmGetDateForDisplay(db_, dtdt);
-        dpc_->SetValue(dtdt);
-
-        double numShares = q1.GetDouble(wxT("NUMSHARES"));
-        wxString numSharesString;
-        //I wish see integer if it integer else double
-        if ((numShares - static_cast<long>(numShares)) != 0.0 )
-            numSharesString=wxString::Format(wxT("%0.4f"),numShares);
-        else 
-            numSharesString <<  static_cast<long>(numShares);
-        
-        numShares_->SetValue(numSharesString);
-
-        wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), dispAmount);
-        valueInvestment_->SetLabel(dispAmount);
+    double numShares = stock->NUMSHARES;
+    wxString numSharesString;
+    //I wish see integer if it integer else double
+    if ((numShares - static_cast<long>(numShares)) != 0.0 )
+        numSharesString=wxString::Format(wxT("%0.4f"),numShares);
+    else 
+        numSharesString <<  static_cast<long>(numShares);
     
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("PURCHASEPRICE")), dispAmount);
-        purchasePrice_->SetValue(dispAmount);
+    numShares_->SetValue(numSharesString);
 
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("CURRENTPRICE")), dispAmount);
-        currentPrice_->SetValue(dispAmount);
+    wxString dispAmount;
+    mmex::formatDoubleToCurrencyEdit(stock->VALUE, dispAmount);
+    valueInvestment_->SetLabel(dispAmount);
 
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("COMMISSION")), dispAmount);
-        commission_->SetValue(dispAmount);
-    }
-    st.Finalize();
+    mmex::formatDoubleToCurrencyEdit(stock->PURCHASEPRICE, dispAmount);
+    purchasePrice_->SetValue(dispAmount);
+
+    mmex::formatDoubleToCurrencyEdit(stock->CURRENTPRICE, dispAmount);
+    currentPrice_->SetValue(dispAmount);
+
+    mmex::formatDoubleToCurrencyEdit(stock->COMMISSION, dispAmount);
+    commission_->SetValue(dispAmount);
 }
 
 void mmStockDialog::fillControls()
