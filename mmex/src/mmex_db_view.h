@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-09 17:41:32.000733.
+ *          AUTO GENERATED at 2012-05-09 18:41:14.943214.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -374,6 +374,18 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -753,6 +765,18 @@ struct DB_View_ASSETS_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -1230,6 +1254,18 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -1581,6 +1617,18 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -1942,6 +1990,18 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -2259,6 +2319,18 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -2576,6 +2648,18 @@ struct DB_View_CATEGORY_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -3021,6 +3105,18 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -3430,6 +3526,18 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -3757,6 +3865,18 @@ struct DB_View_INFOTABLE_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -4096,6 +4216,18 @@ struct DB_View_PAYEE_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -4423,6 +4555,18 @@ struct DB_View_SETTING_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -4774,6 +4918,18 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -5187,6 +5343,18 @@ struct DB_View_STOCK_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -5515,6 +5683,18 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 

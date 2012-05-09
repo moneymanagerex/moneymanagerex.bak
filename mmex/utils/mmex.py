@@ -341,6 +341,18 @@ struct DB_View_%s : public DB_View
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
+
+            Cache c;
+            for(Cache::iterator it = cache_.begin(); it != cache_.end(); ++ it)
+            {
+                Self::Data* entity = *it;
+                if (entity->id() == id) 
+                    delete entity;
+                else 
+                    c.push_back(entity);
+            }
+            cache_.clear();
+            cache_.swap(c);
         }
         catch(const wxSQLite3Exception &e) 
         { 
