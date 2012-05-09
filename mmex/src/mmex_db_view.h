@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-09 09:56:27.378191.
+ *          AUTO GENERATED at 2012-05-09 17:41:32.000733.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -20,6 +20,7 @@
 
 #include <vector>
 #include <map>
+#include <algorithm>
 
 class wxString;
 class wxSQLite3Statement;
