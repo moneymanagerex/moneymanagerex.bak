@@ -947,7 +947,7 @@ void stocksListCtrl::OnDeleteStocks(wxCommandEvent& /*event*/)
                            _("Confirm Stock Investment Deletion"),wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        mmDBWrapper::deleteStockInvestment(cp_->db_, cp_->trans_[selectedIndex_].id_);
+        STOCK_V1.remove(cp_->trans_[selectedIndex_].id_, cp_->db_);
         DeleteItem(selectedIndex_);
         cp_->initVirtualListControl();
         if (cp_->trans_.size() == 0) selectedIndex_ = -1;

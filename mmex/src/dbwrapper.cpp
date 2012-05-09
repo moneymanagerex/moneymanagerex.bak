@@ -1798,22 +1798,6 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
     }
 }
 
-void mmDBWrapper::deleteStockInvestment(wxSQLite3Database* db, int stockID)
-{
-    try {
-        wxSQLite3Statement st = db->PrepareStatement("delete from STOCK_V1 where STOCKID = ?");
-        st.Bind(1, stockID);
-        st.ExecuteUpdate();
-        st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Function::deleteStockInvestment: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Delete Stock Investment. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
 double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, double& invested)
 {
     static const char sql[] =
