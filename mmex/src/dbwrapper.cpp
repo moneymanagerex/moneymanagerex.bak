@@ -22,9 +22,9 @@
 #include "guiid.h"
 #include "paths.h"
 #include "constants.h"
-#include "mmex_db_view.h"
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
+#include <boost/foreach.hpp>
 #include <string>
 //----------------------------------------------------------------------------
 #include <sqlite3.h>
@@ -1900,110 +1900,76 @@ double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
 {
     double balance = 0.0;
 
-    wxSQLite3ResultSet q1 = db->ExecuteQuery("select ASSETID from ASSETS_V1");
-
-    while (q1.NextRow())
-    {
-        int assetID = q1.GetInt(wxT("ASSETID"));
-        balance += getAssetValue(db, assetID);
-    }
-    q1.Finalize();
+    DB_View_ASSETS_V1::Data_Set all_assets = ASSETS_V1.all(db);
+    BOOST_FOREACH(const DB_View_ASSETS_V1::Data &asset, all_assets)
+        balance += getAssetValue(asset);
 
     return balance;
 }
 
-double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
+double mmDBWrapper::getAssetValue(const DB_View_ASSETS_V1::Data& asset)
 {
-    static const char sql[] =
-    "select VALUECHANGE, "
-           "VALUE, "
-           "VALUECHANGERATE, "
-           "date(STARTDATE, 'localtime') as STARTDATE "
-    "from ASSETS_V1 "
-    "where ASSETID = ?";
-
     double assetValue = 0.0;
 
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, assetID);
+    double value = asset.VALUE;
+    double valueChangeRate = asset.VALUECHANGERATE;
+    wxDateTime startDate = mmGetStorageStringAsDate(asset.STARTDATE);
+    wxDateTime todayDate = wxDateTime::Now();
 
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-
-    if (q1.NextRow())
+    if (asset.VALUECHANGE == wxT("None"))
+        assetValue = asset.VALUE;
+    else if (asset.VALUECHANGE == wxT("Appreciates"))
     {
-        wxString valChange = q1.GetString(wxT("VALUECHANGE"));
-        double value = q1.GetDouble(wxT("VALUE"));
-        double valueChangeRate = q1.GetDouble(wxT("VALUECHANGERATE"));
-        wxString startDateStr = q1.GetString(wxT("STARTDATE"));
-        wxDateTime startDate = mmGetStorageStringAsDate(startDateStr);
-        wxDateTime todayDate = wxDateTime::Now();
-
-        if (valChange == wxT("None"))
-            assetValue = value;
-        else if (valChange == wxT("Appreciates"))
+        if (todayDate > startDate)
         {
-            if (todayDate > startDate)
+            int numYears = todayDate.GetYear() - startDate.GetYear();
+
+            int numMonths = todayDate.GetMonth() - startDate.GetMonth();
+            int numDays   = todayDate.GetDay() - startDate.GetDay();
+            if ( (numMonths >= 0 ) && (numDays < 0) )   numMonths --;
+            if ( (numYears > 0 )   && (numMonths < 0 )) numYears -- ;
+
+            if (numYears > 0)
             {
-                int numYears = todayDate.GetYear() - startDate.GetYear();
-
-//              improve the accuracy of number of years calculation
-                int numMonths = todayDate.GetMonth() - startDate.GetMonth();
-                int numDays   = todayDate.GetDay() - startDate.GetDay();
-                if ( (numMonths >= 0 ) && (numDays < 0) )   numMonths --;
-                if ( (numYears > 0 )   && (numMonths < 0 )) numYears -- ;
-
-                if (numYears > 0)
+                while (numYears > 0)
                 {
-//                  double appreciation = numYears * valueChangeRate * value / 100;
-//                  assetValue = value + appreciation;
-
-//                  Calculation changed to compound interest.
-                    while (numYears > 0)
-                    {
-                        double appreciation = valueChangeRate * value / 100;
-                        assetValue = value + appreciation;
-                        value = assetValue;
-                        numYears --;
-                    }
+                    double appreciation = valueChangeRate * value / 100;
+                    assetValue = value + appreciation;
+                    value = assetValue;
+                    numYears --;
                 }
-                else
-                     assetValue = value;
             }
             else
-                assetValue = value;
+                 assetValue = value;
         }
-        else if (valChange == wxT("Depreciates"))
+        else
+            assetValue = value;
+    }
+    else if (asset.VALUECHANGE == wxT("Depreciates"))
+    {
+        if (todayDate > startDate)
         {
-            if (todayDate > startDate)
+            int numYears = todayDate.GetYear() - startDate.GetYear();
+            if (numYears > 0)
             {
-                int numYears = todayDate.GetYear() - startDate.GetYear();
-                if (numYears > 0)
+                while (numYears > 0)
                 {
-//                  double depreciation = numYears * valueChangeRate * value / 100;
-//                  assetValue = value - depreciation;
-
-//                  Calculation changed to compound interest.
-                    while (numYears > 0)
-                    {
-                        double depreciation = valueChangeRate * value / 100;
-                        assetValue = value - depreciation;
-                        value = assetValue;
-                        numYears --;
-                    }
+                    double depreciation = valueChangeRate * value / 100;
+                    assetValue = value - depreciation;
+                    value = assetValue;
+                    numYears --;
                 }
-                else
-                    assetValue = value;
             }
             else
                 assetValue = value;
         }
         else
-        {
-            wxASSERT(false);
-        }
+            assetValue = value;
     }
-
-    st.Finalize();
+    else
+    {
+        wxASSERT(false);
+    }
 
     return assetValue;
 }
