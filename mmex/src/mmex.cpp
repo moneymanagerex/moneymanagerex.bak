@@ -131,7 +131,6 @@
 #include <wx/xml/xml.h>
 //----------------------------------------------------------------------------
 #include <boost/scoped_array.hpp>
-#include <string>
 //----------------------------------------------------------------------------
 #include "mmex_db_view.h"
 #include <boost/foreach.hpp>
