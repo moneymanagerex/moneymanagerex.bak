@@ -1880,22 +1880,6 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
     return balance * convRate;
 }
 
-void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
-{
-    try {
-        wxSQLite3Statement st = db->PrepareStatement("delete from ASSETS_V1 where ASSETID = ?");
-        st.Bind(1, assetID);
-        st.ExecuteUpdate();
-        st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Function::deleteAsset: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("delete from ASSETS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
 double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
 {
     double balance = 0.0;
