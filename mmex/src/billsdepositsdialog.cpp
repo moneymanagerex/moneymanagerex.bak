@@ -26,6 +26,7 @@
 #include "splittransactionsdialog.h"
 #include "defs.h"
 #include "paths.h"
+#include "mmex_db_view.h"
 
 #include <limits>
 
@@ -122,138 +123,121 @@ bool mmBDDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 void mmBDDialog::dataToControls()
 {
-    static const char billsdepositsSql[] = 
-    
-        "select BDID, ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, "
-        "SUBCATEGID, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, NUMOCCURRENCES, "
-        "NEXTOCCURRENCEDATE, date(TRANSDATE, 'localtime') as TRANSDATE "
-        "from BILLSDEPOSITS_V1 where BDID = ? ";
-        // Removed "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
-        // because causing problems with some systems and in different time zones
-    
-    wxSQLite3Statement st = db_->PrepareStatement(billsdepositsSql);
-    st.Bind(1, bdID_);
+    DB_View_BILLSDEPOSITS_V1::Data* billsdeposit = BILLSDEPOSITS_V1.get(bdID_, db_);
+    if (!billsdeposit) 
+        return;
+    categID_ = billsdeposit->CATEGID;
+    subcategID_ = billsdeposit->SUBCATEGID;
 
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    wxString transNumString = billsdeposit->TRANSACTIONNUMBER;
+    wxString statusString  = billsdeposit->STATUS;
+    wxString notesString  = billsdeposit->NOTES;
+    wxString transTypeString = billsdeposit->TRANSCODE;
+    double transAmount = billsdeposit->TRANSAMOUNT;
+    toTransAmount_ = billsdeposit->TOTRANSAMOUNT;
     
-    if (q1.NextRow())
+    choiceStatus_->SetSelection(getTransformedTrxStatus(statusString));
+
+    wxString nextOccurrString = billsdeposit->NEXTOCCURRENCEDATE;
+    int numRepeatStr = billsdeposit->NUMOCCURRENCES;
+    if (numRepeatStr > 0)
+        textNumRepeats_->SetValue(wxString::Format(wxT("%d"), numRepeatStr));
+
+    wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
+    wxString dtnostr = mmGetDateForDisplay(db_, dtno);
+    dpcbd_->SetValue(dtno);
+    dpc_->SetValue(dtno);
+    calendarCtrl_->SetDate (dtno);
+    
+    int repeatSel = billsdeposit->REPEATS;
+    // Have used repeatSel to multiplex auto repeat fields.
+    if (repeatSel >= BD_REPEATS_MULTIPLEX_BASE)
     {
-        categID_ = q1.GetInt(wxT("CATEGID"));
-        subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
+        repeatSel -= BD_REPEATS_MULTIPLEX_BASE;
+        autoExecuteUserAck_ = true;
+        itemCheckBoxAutoExeUserAck_->SetValue(true);
+        itemCheckBoxAutoExeSilent_->Enable(true);
 
-        wxString transNumString = q1.GetString(wxT("TRANSACTIONNUMBER"));
-        wxString statusString  = q1.GetString(wxT("STATUS"));
-        wxString notesString  = q1.GetString(wxT("NOTES"));
-        wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
-        double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
-        toTransAmount_ = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-        
-        choiceStatus_->SetSelection(getTransformedTrxStatus(statusString));
-
-        wxString nextOccurrString = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
-        wxString numRepeatStr  = q1.GetString(wxT("NUMOCCURRENCES"));
-        if (numRepeatStr != wxT("-1"))
-            textNumRepeats_->SetValue(numRepeatStr);
-
-        wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
-        wxString dtnostr = mmGetDateForDisplay(db_, dtno);
-        dpcbd_->SetValue(dtno);
-        dpc_->SetValue(dtno);
-        calendarCtrl_->SetDate (dtno);
-        
-        int repeatSel = q1.GetInt(wxT("REPEATS"));
-        // Have used repeatSel to multiplex auto repeat fields.
         if (repeatSel >= BD_REPEATS_MULTIPLEX_BASE)
         {
             repeatSel -= BD_REPEATS_MULTIPLEX_BASE;
-            autoExecuteUserAck_ = true;
-            itemCheckBoxAutoExeUserAck_->SetValue(true);
-            itemCheckBoxAutoExeSilent_->Enable(true);
-
-            if (repeatSel >= BD_REPEATS_MULTIPLEX_BASE)
-            {
-                repeatSel -= BD_REPEATS_MULTIPLEX_BASE;
-                autoExecuteSilent_ = true;
-                itemCheckBoxAutoExeSilent_->SetValue(true);
-            }
-        }
-
-        itemRepeats_->SetSelection(repeatSel);
-        setRepeatDetails();
-        if (repeatSel == 0) // if none
-            textNumRepeats_->SetValue(wxT(""));
-        
-        if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
-            choiceTrans_->SetSelection(DEF_WITHDRAWAL);
-        else if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
-            choiceTrans_->SetSelection(DEF_DEPOSIT);
-        else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
-            choiceTrans_->SetSelection(DEF_TRANSFER);
-        updateControlsForTransType();
-
-        payeeID_ = q1.GetInt(wxT("PAYEEID"));
-        toID_ = q1.GetInt(wxT("TOACCOUNTID"));
-        accountID_ = q1.GetInt(wxT("ACCOUNTID"));
-        wxString accountName = core_->getAccountName(accountID_);
-        itemAccountName_->SetLabel(accountName);
-
-        split_->loadFromBDDB(core_, bdID_);
-
-        if (split_->numEntries() > 0)
-        {
-            bCategory_->SetLabel(_("Split Category"));
-            cSplit_->SetValue(true);
-        }
-        else
-        {
-            wxString catName = core_->getCategoryName(categID_);
-            wxString categString = catName;
-            categoryName_ = categString;
-
-            if (subcategID_ != -1)
-            {
-                subCategoryName_ = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
-                categString += wxT(" : ");
-                categString += subCategoryName_;
-            }
-            bCategory_->SetLabel(categString);
-        }
-
-        textNotes_->SetValue(notesString);
-        textNumber_->SetValue(transNumString);
-
-        if (split_->numEntries() > 0)
-        {
-            transAmount = split_->getTotalSplits();
-            textAmount_->Enable(false);
-        }
-        wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(transAmount, dispAmount);
-        textAmount_->SetValue(dispAmount);
-
-        wxString payeeString = core_->getPayeeName(payeeID_);
-        bPayee_->SetLabel(payeeString);
-        
-        if (transTypeString == TRANS_TYPE_TRANSFER_STR)
-        {
-            wxString fromAccount = core_->getAccountName(accountID_);
-            wxString toAccount = core_->getAccountName(toID_);
-
-            bPayee_->SetLabel(fromAccount);
-            bTo_->SetLabel(toAccount);
-            payeeID_ = accountID_;
-
-            // When editing an advanced transaction record, we do not reset the toTransAmount_
-            if ((edit_ || enterOccur_) && (toTransAmount_ != transAmount))
-            {
-                cAdvanced_->SetValue(true);
-                SetAdvancedTransferControls(true);
-            }
+            autoExecuteSilent_ = true;
+            itemCheckBoxAutoExeSilent_->SetValue(true);
         }
     }
+
+    itemRepeats_->SetSelection(repeatSel);
+    setRepeatDetails();
+    if (repeatSel == 0) // if none
+        textNumRepeats_->SetValue(wxT(""));
     
-    st.Finalize();
-    st.Reset();
+    if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
+        choiceTrans_->SetSelection(DEF_WITHDRAWAL);
+    else if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
+        choiceTrans_->SetSelection(DEF_DEPOSIT);
+    else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
+        choiceTrans_->SetSelection(DEF_TRANSFER);
+    updateControlsForTransType();
+
+    payeeID_ = billsdeposit->PAYEEID;
+    toID_ = billsdeposit->TOACCOUNTID;
+    accountID_ = billsdeposit->ACCOUNTID;
+    wxString accountName = core_->getAccountName(accountID_);
+    itemAccountName_->SetLabel(accountName);
+
+    split_->loadFromBDDB(core_, bdID_);
+
+    if (split_->numEntries() > 0)
+    {
+        bCategory_->SetLabel(_("Split Category"));
+        cSplit_->SetValue(true);
+    }
+    else
+    {
+        wxString catName = core_->getCategoryName(categID_);
+        wxString categString = catName;
+        categoryName_ = categString;
+
+        if (subcategID_ != -1)
+        {
+            subCategoryName_ = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
+            categString += wxT(" : ");
+            categString += subCategoryName_;
+        }
+        bCategory_->SetLabel(categString);
+    }
+
+    textNotes_->SetValue(notesString);
+    textNumber_->SetValue(transNumString);
+
+    if (split_->numEntries() > 0)
+    {
+        transAmount = split_->getTotalSplits();
+        textAmount_->Enable(false);
+    }
+    wxString dispAmount;
+    mmex::formatDoubleToCurrencyEdit(transAmount, dispAmount);
+    textAmount_->SetValue(dispAmount);
+
+    wxString payeeString = core_->getPayeeName(payeeID_);
+    bPayee_->SetLabel(payeeString);
+    
+    if (transTypeString == TRANS_TYPE_TRANSFER_STR)
+    {
+        wxString fromAccount = core_->getAccountName(accountID_);
+        wxString toAccount = core_->getAccountName(toID_);
+
+        bPayee_->SetLabel(fromAccount);
+        bTo_->SetLabel(toAccount);
+        payeeID_ = accountID_;
+
+        // When editing an advanced transaction record, we do not reset the toTransAmount_
+        if ((edit_ || enterOccur_) && (toTransAmount_ != transAmount))
+        {
+            cAdvanced_->SetValue(true);
+            SetAdvancedTransferControls(true);
+        }
+    }
 }
 
 void mmBDDialog::CreateControls()
