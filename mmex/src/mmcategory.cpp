@@ -19,6 +19,7 @@
 
 #include "mmcategory.h"
 #include "dbwrapper.h"
+#include "mmex_db_view.h"
 
 bool mmCategoryList::categoryExists(const wxString& categoryName) const
 {
@@ -52,14 +53,16 @@ wxString mmCategoryList::getCategoryName(int id) const
     return wxEmptyString;
 }
 
-int mmCategoryList::addCategory(const wxString& category)
+int mmCategoryList::addCategory(const wxString& name)
 {
-    int cID = -1;
+    DB_View_CATEGORY_V1::Data* category = CATEGORY_V1.create();
+    category->CATEGNAME = name;
+    if(!category->save(db_.get()))
+        return -1;
 
-    mmDBWrapper::addCategory(db_.get(), category);
-    cID = (db_->GetLastRowId()).ToLong();
+    int cID = category->id();
 
-    boost::shared_ptr<mmCategory> pCategory(new mmCategory(cID, category));
+    boost::shared_ptr<mmCategory> pCategory(new mmCategory(cID, name));
     entries_.push_back(pCategory);
 
     return cID;

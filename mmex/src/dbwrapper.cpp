@@ -879,25 +879,6 @@ bool mmDBWrapper::updateCategory(wxSQLite3Database* db, int categID,
 
 }
 
-bool mmDBWrapper::addCategory(wxSQLite3Database* db, const wxString &newName)
-{
-    int rows_affected = 0;
-
-    try {
-        wxSQLite3Statement st = db->PrepareStatement("insert into CATEGORY_V1 (CATEGNAME) values (?)");
-        st.Bind(1, newName);
-        rows_affected = st.ExecuteUpdate();
-        st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::addCategory: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("insert into CATEGORY_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-    return rows_affected == 1;
-}
-
 bool mmDBWrapper::addSubCategory(wxSQLite3Database* db, int categID, const wxString &newName)
 {
     static const char sql[] =
