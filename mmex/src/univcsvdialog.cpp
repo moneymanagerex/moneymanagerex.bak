@@ -21,6 +21,7 @@
 #include "fileviewerdialog.h"
 #include "paths.h"
 #include "platfdep.h"
+#include "dbwrapper.h" //XXX
 
 IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVDialog, wxDialog)
 

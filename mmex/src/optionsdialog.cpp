@@ -21,6 +21,7 @@
 #include "defs.h"
 #include "maincurrencydialog.h"
 #include "util.h"
+#include "dbwrapper.h"
 #include <wx/colordlg.h>
 #include <wx/combobox.h>
 #include "mmgraphgenerator.h"

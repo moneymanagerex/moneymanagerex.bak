@@ -17,6 +17,10 @@
 #include "mmtransaction.h"
 #include "util.h"
 #include "mmcoredb.h"
+#include "dbwrapper.h"
+#include "mmcategory.h"
+#include "mmpayee.h"
+#include "mmcurrency.h"
 
 void mmSplitTransactionEntries::addSplit(boost::shared_ptr<mmSplitTransactionEntry> split)
 {

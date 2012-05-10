@@ -27,7 +27,6 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "dbwrapper.h"
 
 class wxSpinCtrl;
 

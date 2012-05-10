@@ -20,6 +20,8 @@
 #include "relocatepayeedialog.h"
 #include "paths.h"
 #include "payeedialog.h"
+#include "dbwrapper.h"
+#include "mmcoredb.h"
 #include "wx/statline.h"
 
 IMPLEMENT_DYNAMIC_CLASS( relocatePayeeDialog, wxDialog )

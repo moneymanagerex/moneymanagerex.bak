@@ -27,8 +27,7 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "mmcoredb.h"
-#include "dbwrapper.h"
+class mmCoreDB;
 
 enum { 
     ID_DIALOG_CURRENCY = wxID_HIGHEST + 1,

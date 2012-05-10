@@ -20,6 +20,7 @@
 #include "wx/datectrl.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 #include "currencydialog.h"
 #include "defs.h"
 #include "paths.h"

@@ -13,6 +13,7 @@
 #include "splitdetailsdialog.h"
 #include "categdialog.h"
 #include "util.h"
+#include "dbwrapper.h" //XXX
 
 IMPLEMENT_DYNAMIC_CLASS( SplitDetailDialog, wxDialog )
 

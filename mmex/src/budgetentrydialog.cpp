@@ -17,6 +17,8 @@
  ********************************************************/
 
 #include "budgetentrydialog.h"
+#include "dbwrapper.h"
+#include "mmcoredb.h"
 #include "util.h"
 #include "defs.h"
 #include "paths.h"

@@ -17,14 +17,17 @@
 #ifndef _MM_EX_MMTRANSACTION_H_
 #define _MM_EX_MMTRANSACTION_H_
 
-#include "boost/shared_ptr.hpp"
-#include "dbwrapper.h"
-#include "mmcategory.h"
-#include "mmpayee.h"
-#include "mmcurrency.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <map>
+#include <vector>
+#include "defs.h"
 
 class mmCoreDB;
+class mmCategory;
+class mmPayee;
+class mmCurrency;
+class wxSQLite3Database;
 
 class mmTransaction
 {

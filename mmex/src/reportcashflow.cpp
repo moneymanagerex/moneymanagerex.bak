@@ -3,6 +3,7 @@
 #include "defs.h"
 #include "htmlbuilder.h"
 #include "util.h"
+#include "dbwrapper.h"
 #include "mmex.h"
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, const wxArrayString* accountArray) : 

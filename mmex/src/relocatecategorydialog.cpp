@@ -19,6 +19,8 @@
 
 #include "relocatecategorydialog.h"
 #include "paths.h"
+#include "dbwrapper.h"
+#include "mmcoredb.h"
 #include "categdialog.h"
 #include "wx/statline.h"
 
