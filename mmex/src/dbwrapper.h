@@ -68,7 +68,6 @@ wxString getCurrencySymbol(wxSQLite3Database* db, int currencyID);
 /* Upgrading to new DBs */
 bool checkDBVersion(wxSQLite3Database* db);
 
-void addBudgetYear(wxSQLite3Database* db, const wxString &year);
 bool copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYear);
 int getBudgetYearID(wxSQLite3Database* db, const wxString &year);
 int getTransactionNumber(wxSQLite3Database* db, int accountID);

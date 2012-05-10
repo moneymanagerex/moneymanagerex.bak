@@ -1336,23 +1336,6 @@ wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& p
     return flist;
 }
 
-
-void mmDBWrapper::addBudgetYear(wxSQLite3Database* db, const wxString &year)
-{
-    try {
-        wxSQLite3Statement st = db->PrepareStatement("insert into BUDGETYEAR_V1 (BUDGETYEARNAME) values (?)");
-        st.Bind(1, year);
-        st.ExecuteUpdate();
-        st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Function::addBudgetYear: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Add Budget Year. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
 int mmDBWrapper::getBudgetYearID(wxSQLite3Database* db, const wxString &year)
 {
     int budgetYearID = -1;
