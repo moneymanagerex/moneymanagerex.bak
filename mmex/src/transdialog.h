@@ -28,10 +28,12 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "mmcoredb.h"
-#include<wx/spinbutt.h>
+#include <wx/spinbutt.h>
+#include <boost/shared_ptr.hpp>
 
 class wxDatePickerCtrl;
+class mmCoreDB;
+class mmSplitTransactionEntries;
 
 class mmTransDialog : public wxDialog
 {    

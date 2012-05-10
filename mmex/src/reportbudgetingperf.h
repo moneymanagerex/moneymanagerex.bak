@@ -20,7 +20,6 @@
 #define _MM_EX_REPORTBUDGETING_PERFORMANCE_H_
 
 #include "reportbudget.h"
-#include "mmcoredb.h"
 
 class mmReportBudgetingPerformance : public mmReportBudget
 {

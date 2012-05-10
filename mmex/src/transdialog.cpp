@@ -18,14 +18,14 @@
  ********************************************************/
 
 #include "transdialog.h"
-#include "wx/datectrl.h"
-#include "wx/dateevt.h"
+#include <wx/datectrl.h>
+#include <wx/dateevt.h>
 #include "categdialog.h"
 #include "payeedialog.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 #include "splittransactionsdialog.h"
-#include "defs.h"
 #include "paths.h"
 #include <wx/event.h>
 #include <wx/choice.h>

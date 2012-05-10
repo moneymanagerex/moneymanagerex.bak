@@ -22,7 +22,6 @@
 #include "mmpanelbase.h"
 #include "guiid.h"
 #include "defs.h"
-#include "mmcoredb.h"
 
 class mmGUIFrame;
 class mmHTMLBuilder;

@@ -14,6 +14,7 @@
 #include "categdialog.h"
 #include "util.h"
 #include "dbwrapper.h" //XXX
+#include "mmcoredb.h"
 
 IMPLEMENT_DYNAMIC_CLASS( SplitDetailDialog, wxDialog )
 

@@ -22,6 +22,7 @@
 #include "paths.h"
 #include "platfdep.h"
 #include "dbwrapper.h" //XXX
+#include "mmcoredb.h"
 
 IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVDialog, wxDialog)
 

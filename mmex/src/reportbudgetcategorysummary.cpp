@@ -26,7 +26,6 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include "mmcoredb.h"
 #include "budgetingpanel.h"
 #include "mmex.h"
 

@@ -24,7 +24,6 @@
 #include "defs.h"
 #include "wx/wxprec.h"
 #include "util.h"
-#include "mmcoredb.h"
 
 class wxListCtrl;
 class wxListEvent;

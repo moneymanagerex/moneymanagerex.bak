@@ -31,6 +31,7 @@
 #include "defs.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 #include "categdialog.h"
 #include "payeedialog.h"
 #include "paths.h"

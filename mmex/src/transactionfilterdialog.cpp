@@ -22,6 +22,7 @@
 #include "payeedialog.h"
 #include "categdialog.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 
 IMPLEMENT_DYNAMIC_CLASS( TransFilterDialog, wxDialog )
 

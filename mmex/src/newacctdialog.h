@@ -27,7 +27,8 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "mmcoredb.h"
+
+class mmCoreDB;
 
 class mmNewAcctDialog : public wxDialog
 {    

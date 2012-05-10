@@ -21,7 +21,8 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "mmcoredb.h"
+#include <vector>
+#include <map>
 
 #define SYMBOL_UNIVCSVDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_UNIVCSVDIALOG_TITLE _("Universal CSV Dialog")
@@ -56,6 +57,8 @@ enum {
     ID_FILE_NAME,
     SYMBOL_UNIVCSVDIALOG_IDNAME,
 };
+
+class mmCoreDB;
 
 class mmUnivCSVDialog: public wxDialog
 {

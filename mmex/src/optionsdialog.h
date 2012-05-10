@@ -21,13 +21,16 @@
 #define _MM_EX_OPTIONSDIALOG_H_
 
 #include "guiid.h"
-#include "mmcoredb.h"
+#include "defs.h"
 
 #define SYMBOL_MMOPTIONSDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_MMOPTIONSDIALOG_TITLE _("New MMEX Options")
 #define SYMBOL_MMOPTIONSDIALOG_IDNAME ID_DIALOG_OPTIONS
 #define SYMBOL_MMOPTIONSDIALOG_SIZE wxSize(500, 400)
 #define SYMBOL_MMOPTIONSDIALOG_POSITION wxDefaultPosition
+
+class mmCoreDB;
+class wxSQLite3Database;
 
 class mmOptionsDialog: public wxDialog
 {

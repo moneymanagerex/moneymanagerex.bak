@@ -18,6 +18,7 @@
 
 #include "newacctdialog.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 #include "maincurrencydialog.h"
 #include "defs.h"
 #include "util.h"
