@@ -82,7 +82,7 @@ void loadCurrencies(wxSQLite3Database* db)
             st.Bind(++i, rs.GetString(wxT("GROUP_SEPARATOR")));
             st.Bind(++i, rs.GetString(wxT("UNIT_NAME")));
             st.Bind(++i, rs.GetString(wxT("CENT_NAME")));
-            st.Bind(++i, rs.GetDouble(wxT("SCALE")));
+            st.Bind(++i, rs.GetInt(wxT("SCALE")));
             st.Bind(++i, rs.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE));
 
             wxASSERT(st.GetParamCount() == i);
@@ -697,7 +697,7 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         wxString grp = q1.GetString(wxT("GROUP_SEPARATOR"));
         wxString unit = q1.GetString(wxT("UNIT_NAME"));
         wxString cent = q1.GetString(wxT("CENT_NAME"));
-        double scaleDl = q1.GetDouble(wxT("SCALE"));
+        int scaleDl = q1.GetInt(wxT("SCALE"));
         wxString currencySymbol = q1.GetString(wxT("CURRENCY_SYMBOL"));
 
         wxChar decChar = 0;
