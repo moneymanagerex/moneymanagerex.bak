@@ -27,7 +27,6 @@
 #include "assetspanel.h"
 #include "univcsvdialog.h"
 #include "htmlbuilder.h"
-#include "reportbase.h"
 #include "reportsummary.h"
 #include "reportcategexp.h"
 #include "reportpayee.h"
@@ -134,6 +133,8 @@
 //----------------------------------------------------------------------------
 #include "mmex_db_view.h"
 #include <boost/foreach.hpp>
+
+class mmPrintableBase;
 
 namespace
 {
