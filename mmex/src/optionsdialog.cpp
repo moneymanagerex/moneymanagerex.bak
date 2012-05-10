@@ -36,13 +36,13 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
 
     /// Colour Changing events
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, mmOptionsDialog::OnNavTreeColorChanged)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0, mmOptionsDialog::OnAlt0Changed)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1, mmOptionsDialog::OnAlt1Changed)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK, mmOptionsDialog::OnListBackgroundChanged)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER, mmOptionsDialog::OnListBorderChanged)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, mmOptionsDialog::OnListDetailsColors)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES, mmOptionsDialog::OnListFutureDates)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, mmOptionsDialog::OnColorChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0, mmOptionsDialog::OnColorChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1, mmOptionsDialog::OnColorChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK, mmOptionsDialog::OnColorChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER, mmOptionsDialog::OnColorChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, mmOptionsDialog::OnColorChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES, mmOptionsDialog::OnColorChanged)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT, mmOptionsDialog::OnRestoreDefaultColors)
 
     EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA, mmOptionsDialog::OnDelimiterSelectedC)
@@ -781,115 +781,74 @@ void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
     changesApplied_ = true;
 }
 
-void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& /*event*/)
+void mmOptionsDialog::OnColorChanged(wxCommandEvent& event)
 {
+    int id = event.GetId();
+
+    wxColour col;
     wxColourData data;
     data.SetChooseFull(true);
-    data.SetColour(navTreeBkColor_);
 
     wxColourDialog dialog(this);
     if (dialog.ShowModal() == wxID_OK)
     {
-        wxColour col = dialog.GetColourData().GetColour();
-        navTreeBkColor_ = col;
-        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE);
+        wxButton* bn = (wxButton*)FindWindow(id);
+        
+        switch(id)
+        {
+            case ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE :
+            {
+                data.SetColour(navTreeBkColor_);
+                col = dialog.GetColourData().GetColour();
+                navTreeBkColor_ = col;
+                break;
+            }
+            case ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0 :
+            {
+                data.SetColour(listAlternativeColor0_);
+                col = dialog.GetColourData().GetColour();
+                listAlternativeColor0_ = col;
+                break;
+            }
+            case ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1 :
+            {
+                data.SetColour(listAlternativeColor1_);
+                col = dialog.GetColourData().GetColour();
+                listAlternativeColor1_ = col;
+                break;
+            }
+            case ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK :
+            {
+                data.SetColour(listBackColor_);
+                col = dialog.GetColourData().GetColour();
+                listBackColor_ = col;
+                break;
+            }
+            case ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER :
+            {
+                data.SetColour(listBorderColor_);
+                col = dialog.GetColourData().GetColour();
+                listBorderColor_ = col;
+                break;
+            }
+            case ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS :
+            {
+                data.SetColour(listDetailsPanelColor_);
+                col = dialog.GetColourData().GetColour();
+                listDetailsPanelColor_ = col;
+                break;
+            }
+            case ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES :
+            {
+                data.SetColour(listFutureDateColor_);
+                col = dialog.GetColourData().GetColour();
+                listFutureDateColor_ = col;
+                break;
+            }
+            wxASSERT(false);
+        }
         bn->SetBackgroundColour(col);
-    }
-}
-
-void mmOptionsDialog::OnAlt0Changed(wxCommandEvent& /*event*/)
-{
-    wxColourData data;
-    data.SetChooseFull(true);
-    data.SetColour(listAlternativeColor0_);
-
-    wxColourDialog dialog(this);
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxColour col = dialog.GetColourData().GetColour();
-        listAlternativeColor0_ = col;
-        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0);
-        bn->SetBackgroundColour(col);
-    }
-}
-
-void mmOptionsDialog::OnAlt1Changed(wxCommandEvent& /*event*/)
-{
-    wxColourData data;
-    data.SetChooseFull(true);
-    data.SetColour(listAlternativeColor1_);
-
-    wxColourDialog dialog(this);
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxColour col = dialog.GetColourData().GetColour();
-        listAlternativeColor1_ = col;
-        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1);
-        bn->SetBackgroundColour(col);
-    }
-}
-
-void mmOptionsDialog::OnListBackgroundChanged(wxCommandEvent& /*event*/)
-{
-    wxColourData data;
-    data.SetChooseFull(true);
-    data.SetColour(listBackColor_);
-
-    wxColourDialog dialog(this);
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxColour col = dialog.GetColourData().GetColour();
-        listBackColor_ = col;
-        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK);
-        bn->SetBackgroundColour(col);
-    }
-}
-
-void mmOptionsDialog::OnListBorderChanged(wxCommandEvent& /*event*/)
-{
-    wxColourData data;
-    data.SetChooseFull(true);
-    data.SetColour(listBorderColor_);
-
-    wxColourDialog dialog(this);
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxColour col = dialog.GetColourData().GetColour();
-        listBorderColor_ = col;
-        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER);
-        bn->SetBackgroundColour(col);
-    }
-}
-
-void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& /*event*/)
-{
-    wxColourData data;
-    data.SetChooseFull(true);
-    data.SetColour(listDetailsPanelColor_);
-
-    wxColourDialog dialog(this);
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxColour col = dialog.GetColourData().GetColour();
-        listDetailsPanelColor_ = col;
-        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS);
-        bn->SetBackgroundColour(col);
-    }
-}
-
-void  mmOptionsDialog::OnListFutureDates(wxCommandEvent& /*event*/)
-{
-    wxColourData data;
-    data.SetChooseFull(true);
-    data.SetColour(listFutureDateColor_);
-
-    wxColourDialog dialog(this);
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxColour col = dialog.GetColourData().GetColour();
-        listFutureDateColor_ = col;
-        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES);
-        bn->SetBackgroundColour(col);
+        bn->SetLabel(col.GetAsString(wxC2S_HTML_SYNTAX));
     }
 }
 

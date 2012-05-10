@@ -172,13 +172,7 @@ private:
     void OnLanguageChanged(wxCommandEvent& event);
 
     /// Colour Changing events
-    void OnNavTreeColorChanged(wxCommandEvent& event);
-    void OnAlt0Changed(wxCommandEvent& event);
-    void OnAlt1Changed(wxCommandEvent& event);
-    void OnListBackgroundChanged(wxCommandEvent& event);
-    void OnListBorderChanged(wxCommandEvent& event);
-    void OnListDetailsColors(wxCommandEvent& event);
-    void OnListFutureDates(wxCommandEvent& event);
+    void OnColorChanged(wxCommandEvent& event);
     void OnRestoreDefaultColors(wxCommandEvent& event);
 
     void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
