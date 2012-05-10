@@ -193,6 +193,7 @@ private:
     void SaveColourPanelSettings();
     void SaveOthersPanelSettings();
     void SaveImportExportPanelSettings();
+    void OnOk(wxCommandEvent& /*event*/);
 };
 
 #endif

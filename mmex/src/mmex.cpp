@@ -3498,7 +3498,7 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
     if (!m_db.get() || !m_inidb) return;
 
     mmOptionsDialog systemOptions(m_core.get(), m_inidb.get(), this);
-    if (systemOptions.ShowModal() == wxID_OK)
+    if (systemOptions.ShowModal() == wxID_OK && systemOptions.AppliedChanges())
     {
         systemOptions.SaveNewSystemSettings();
         // enable or disable online update currency rate
