@@ -2,7 +2,6 @@
 
 #include "defs.h"
 #include "htmlbuilder.h"
-#include "reportbase.h"
 #include "util.h"
 #include "mmgraphpie.h"
 #include "reportbudget.h"

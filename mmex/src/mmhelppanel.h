@@ -23,7 +23,6 @@
 #include "mmpanelbase.h"
 #include "guiid.h"
 #include "defs.h"
-#include "reportbase.h"
 
 class wxHtmlWindow;
 class mmGUIFrame;
