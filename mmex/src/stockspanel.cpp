@@ -17,7 +17,6 @@
  ********************************************************/
 
 #include "stockspanel.h"
-#include "util.h"
 #include "dbwrapper.h"
 #include "stockdialog.h"
 #include "mmyahoo.h"
