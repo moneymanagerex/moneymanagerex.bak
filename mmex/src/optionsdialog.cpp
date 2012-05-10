@@ -29,17 +29,6 @@
 #include <wx/statline.h>
 #include <limits>
 
-enum
-{
-    ID_BOOK_PANEL_EXP_IMP = wxID_HIGHEST + 1,
-    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4,
-    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4,
-    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON4,
-    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB4,
-    ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4,
-    ID_DIALOG_OPTIONS_RESTART_REQUIRED,
-};
-
 IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
@@ -56,10 +45,10 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES, mmOptionsDialog::OnListFutureDates)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT, mmOptionsDialog::OnRestoreDefaultColors)
 
-    EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4, mmOptionsDialog::OnDelimiterSelectedC)
-    EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON4, mmOptionsDialog::OnDelimiterSelectedS)
-    EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB4, mmOptionsDialog::OnDelimiterSelectedT)
-    EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4, mmOptionsDialog::OnDelimiterSelectedU)
+    EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA, mmOptionsDialog::OnDelimiterSelectedC)
+    EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON, mmOptionsDialog::OnDelimiterSelectedS)
+    EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB, mmOptionsDialog::OnDelimiterSelectedT)
+    EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER, mmOptionsDialog::OnDelimiterSelectedU)
 END_EVENT_TABLE()
 
 #include "../resources/main-setup.xpm"
@@ -686,37 +675,37 @@ void mmOptionsDialog::CreateControls()
 
     wxString delimiter = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
 
-    wxRadioButton* delimiterRadioButtonU4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4, _("User Defined"), wxDefaultPosition, wxDefaultSize, 0);
-    wxRadioButton* delimiterRadioButtonC4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4, _("Comma"), wxDefaultPosition, wxDefaultSize, 0);
-    if (delimiter == wxT(",")) delimiterRadioButtonC4 ->SetValue(true);
+    wxRadioButton* delimiterRadioButtonU = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER,
+        _("User Defined"), wxDefaultPosition, wxDefaultSize, 0);
+    wxRadioButton* delimiterRadioButtonC = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA,
+        _("Comma"), wxDefaultPosition, wxDefaultSize, 0);
+    if (delimiter == wxT(",")) delimiterRadioButtonC ->SetValue(true);
 
-    wxRadioButton* delimiterRadioButtonS4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON4, _("Semicolon"), wxDefaultPosition, wxDefaultSize, 0);
-    if (delimiter == wxT(";")) delimiterRadioButtonS4 ->SetValue(true);
+    wxRadioButton* delimiterRadioButtonS = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON,
+        _("Semicolon"), wxDefaultPosition, wxDefaultSize, 0);
+    if (delimiter == wxT(";")) delimiterRadioButtonS ->SetValue(true);
 
-    wxRadioButton* delimiterRadioButtonT4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB4, _("TAB"), wxDefaultPosition, wxDefaultSize, 0);
-    if (delimiter == wxT("\t")) delimiterRadioButtonT4 ->SetValue(true);
+    wxRadioButton* delimiterRadioButtonT = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB,
+        _("TAB"), wxDefaultPosition, wxDefaultSize, 0);
+    if (delimiter == wxT("\t")) delimiterRadioButtonT ->SetValue(true);
 
-    wxTextCtrl* textDelimiter4 = new wxTextCtrl( importExportPanel, ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4, delimiter, wxDefaultPosition, wxDefaultSize, 0);
-    textDelimiter4->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
-    textDelimiter4->SetMaxLength(2);
+    wxTextCtrl* textDelimiter = new wxTextCtrl( importExportPanel, ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER, delimiter, wxDefaultPosition, wxDefaultSize, 0);
+    textDelimiter->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
+    textDelimiter->SetMaxLength(2);
     if (delimiter == wxT("\t") || delimiter == wxT(",") || delimiter == wxT(";"))
     {
-        textDelimiter4->Enable(false);
+        textDelimiter->Enable(false);
     }
     else
     {
-        delimiterRadioButtonU4->SetValue(true);
+        delimiterRadioButtonU->SetValue(true);
     }
-    radioButtonSizer->Add(delimiterRadioButtonC4, 0, wxALIGN_LEFT|wxALL, 5);
-    radioButtonSizer->Add(delimiterRadioButtonS4, 0, wxALIGN_LEFT|wxALL, 5);
-    radioButtonSizer->Add(delimiterRadioButtonT4, 0, wxALIGN_LEFT|wxALL, 5);
+    radioButtonSizer->Add(delimiterRadioButtonC, 0, wxALIGN_LEFT|wxALL, 5);
+    radioButtonSizer->Add(delimiterRadioButtonS, 0, wxALIGN_LEFT|wxALL, 5);
+    radioButtonSizer->Add(delimiterRadioButtonT, 0, wxALIGN_LEFT|wxALL, 5);
 
-    userDefinedSizer->Add(delimiterRadioButtonU4, 0, wxALIGN_LEFT|wxALL, 5);
-    userDefinedSizer->Add(textDelimiter4, 0, wxALIGN_LEFT|wxLEFT, 5);
-
-// temporarily hide from interface because the user defined CSV delimiter as this is not supported by the universal CSV dialog.
-//    delimiterRadioButtonU4->Hide();
-//    textDelimiter4->Hide();
+    userDefinedSizer->Add(delimiterRadioButtonU, 0, wxALIGN_LEFT|wxALL, 5);
+    userDefinedSizer->Add(textDelimiter, 0, wxALIGN_LEFT|wxLEFT, 5);
 
    /**********************************************************************************************
     Setting up the notebook with the 5 pages
@@ -965,27 +954,27 @@ bool mmOptionsDialog::GetIniDatabaseCheckboxValue(wxString dbField, bool default
 
 void mmOptionsDialog::OnDelimiterSelectedU(wxCommandEvent& /*event*/)
 {
-    wxStaticText* d = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4);
+    wxStaticText* d = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER);
     d ->Enable(true);
 }
 
 void mmOptionsDialog::OnDelimiterSelectedC(wxCommandEvent& /*event*/)
 {
-    wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4);
+    wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER);
     st ->Enable(false);
     st ->SetValue(wxT(","));
 }
 
 void mmOptionsDialog::OnDelimiterSelectedS(wxCommandEvent& /*event*/)
 {
-    wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4);
+    wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER);
     st ->Enable(false);
     st ->SetValue(wxT(";"));
 }
 
 void mmOptionsDialog::OnDelimiterSelectedT(wxCommandEvent& /*event*/)
 {
-    wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4);
+    wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER);
     st ->Enable(false);
     st ->SetValue(wxT("\t"));
 }
@@ -1172,7 +1161,7 @@ void mmOptionsDialog::SaveOthersPanelSettings()
 
 void mmOptionsDialog::SaveImportExportPanelSettings()
 {
-    wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4);
+    wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER);
     wxString delim = st->GetValue();
     if (!delim.IsEmpty()) mmDBWrapper::setInfoSettingValue(db_, wxT("DELIMITER"), delim);
 }
