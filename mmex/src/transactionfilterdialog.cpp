@@ -21,6 +21,7 @@
 #include "util.h"
 #include "payeedialog.h"
 #include "categdialog.h"
+#include "dbwrapper.h"
 
 IMPLEMENT_DYNAMIC_CLASS( TransFilterDialog, wxDialog )
 

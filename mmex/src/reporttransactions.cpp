@@ -26,6 +26,7 @@
 #include "mmcheckingpanel.h"
 #include "mmtransaction.h"
 #include "reportbudget.h"
+#include "dbwrapper.h" //XXX
 
 mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
     mmCoreDB* core, int refAccountID, wxString refAccountStr, mmFilterTransactionsDialog* transDialog)

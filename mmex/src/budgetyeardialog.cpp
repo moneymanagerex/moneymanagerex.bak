@@ -18,6 +18,7 @@
 
 #include "budgetyeardialog.h"
 #include "budgetyearentrydialog.h"
+#include "dbwrapper.h"
 #include "util.h"
 #include "defs.h"
 #include "paths.h"

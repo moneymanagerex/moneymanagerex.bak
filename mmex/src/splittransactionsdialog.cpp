@@ -15,6 +15,7 @@
 #include "splittransactionsdialog.h"
 #include "splitdetailsdialog.h"
 #include "util.h"
+#include "dbwrapper.h" //XXX
 #include <wx/statline.h>
 
 /*!

@@ -18,14 +18,16 @@
 #ifndef _MM_EX_RECENTFILES_H_
 #define _MM_EX_RECENTFILES_H_
 
-#include "dbwrapper.h"
-
 /******************************************************************************
  Class: RecentDatabaseFiles
 
  Note:  For generic use, the number saved is one less that the specified size.
         The 0 element is not saved by this list.
 *******************************************************************************/
+#include "defs.h"
+
+class wxSQLite3Database;
+
 class RecentDatabaseFiles
 {
 public:

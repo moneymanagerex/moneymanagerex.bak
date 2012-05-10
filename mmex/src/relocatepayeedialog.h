@@ -28,9 +28,8 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "dbwrapper.h"
-#include "mmcoredb.h"
 
+class mmCoreDB;
 class relocatePayeeDialog : public wxDialog
 {
     DECLARE_DYNAMIC_CLASS( relocatePayeeDialog )

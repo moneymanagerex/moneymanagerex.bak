@@ -18,6 +18,8 @@
 
 #include "maincurrencydialog.h"
 #include "currencydialog.h"
+#include "mmcoredb.h"
+#include "dbwrapper.h"
 #include "util.h"
 #include "defs.h"
 #include "paths.h"

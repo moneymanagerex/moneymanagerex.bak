@@ -27,9 +27,8 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "dbwrapper.h"
-#include "mmcoredb.h"
 
+class mmCoreDB;
 class mmBudgetEntryDialog : public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS( mmBudgetEntryDialog )

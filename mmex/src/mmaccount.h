@@ -20,12 +20,10 @@
 #define _MM_EX_MMACCOUNT_H_
 
 #include <vector>
-#include <boost/shared_ptr.hpp>
-
+#include <boost/weak_ptr.hpp>
 #include "defs.h"
-#include "dbwrapper.h"
-#include "mmcurrency.h"
-#include "mmtransaction.h"
+
+class mmCurrency;
 
 class mmAccount
 {

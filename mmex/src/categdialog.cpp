@@ -17,6 +17,7 @@
  ********************************************************/
 
 #include "categdialog.h"
+#include "mmcoredb.h"
 #include "util.h"
 #include "defs.h"
 #include "paths.h"

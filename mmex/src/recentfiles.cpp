@@ -17,6 +17,7 @@
  *************************************************************************/
 
 #include "recentfiles.h"
+#include "dbwrapper.h"
 #include "guiid.h"
 
 RecentDatabaseFiles::RecentDatabaseFiles(wxSQLite3Database* ini_db, int listSize, wxString dbIndexName)

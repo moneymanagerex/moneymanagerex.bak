@@ -18,7 +18,9 @@
 
 #include "mmaccount.h"
 #include "mmcoredb.h"
+#include "dbwrapper.h"
 #include "util.h"
+#include "mmcurrency.h"
 
 mmAccount::mmAccount(wxSQLite3ResultSet& q1)
 {

@@ -27,8 +27,7 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "dbwrapper.h"
-#include "mmcoredb.h"
+class mmCoreDB;
 
 class mmTreeItemCateg : public wxTreeItemData
 {
