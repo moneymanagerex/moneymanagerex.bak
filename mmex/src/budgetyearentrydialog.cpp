@@ -23,7 +23,7 @@
 #include "defs.h"
 #include "paths.h"
 #include <wx/spinctrl.h>
-#include <wx/statline.h>
+#include "mmex_db_view.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetYearEntryDialog, wxDialog )
 
@@ -157,7 +157,9 @@ void mmBudgetYearEntryDialog::OnOk(wxCommandEvent& /*event*/)
     }
     else
     {
-        mmDBWrapper::addBudgetYear(db_, currYearText);
+        DB_View_BUDGETYEAR_V1::Data* budget_year = BUDGETYEAR_V1.create();
+        budget_year->BUDGETYEARNAME = currYearText;
+        budget_year->save(db_);
         if (baseYear != wxT("None"))
         {
             int baseYearID = mmDBWrapper::getBudgetYearID(db_, baseYear);
