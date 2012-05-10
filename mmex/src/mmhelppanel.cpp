@@ -20,7 +20,6 @@
 #include "mmhelppanel.h"
 #include "util.h"
 #include "htmlbuilder.h"
-#include "reportbase.h"
 #include "paths.h"
 #include "constants.h"
 #include "mmex.h"

@@ -23,7 +23,6 @@
 
 #include "defs.h"
 #include "htmlbuilder.h"
-#include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
 #include "budgetingpanel.h"
