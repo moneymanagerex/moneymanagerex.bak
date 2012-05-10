@@ -1546,23 +1546,6 @@ void mmDBWrapper::addBudgetEntry(wxSQLite3Database* db, int budgetYearID,
     }
 }
 
-void mmDBWrapper::deleteBudgetEntry(wxSQLite3Database* db, int budgetEntryID)
-{
-    try {
-        wxSQLite3Statement st = db->PrepareStatement("delete from BUDGETTABLE_V1 where BUDGETENTRYID = ?");
-        st.Bind(1, budgetEntryID);
-
-        st.ExecuteUpdate();
-        st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Function::deleteBudgetEntry: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("delete from BUDGETTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
 void mmDBWrapper::updateBudgetEntry(wxSQLite3Database* db,
         int budgetYearID, int categID, int subCategID,
                                 const wxString& period, double amount)
