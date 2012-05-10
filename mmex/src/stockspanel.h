@@ -20,15 +20,14 @@
 #define _MM_EX_STOCKSPANEL_H_
 
 #include "mmpanelbase.h"
-#include "guiid.h"
 #include "util.h"
 #include "led.h"
 #include <wx/tglbtn.h>
-#include "mmyahoo.h"
 
 class wxListCtrl;
 class wxListEvent;
 class mmStocksPanel;
+class mmYahoo;
 
 /* Custom ListCtrl class that implements virtual LC style */
 class stocksListCtrl: public wxListCtrl
