@@ -846,6 +846,7 @@ void mmOptionsDialog::OnColorChanged(wxCommandEvent& event)
                 listFutureDateColor_ = col;
                 break;
             }
+            default:
             wxASSERT(false);
         }
         bn->SetBackgroundColour(col);
