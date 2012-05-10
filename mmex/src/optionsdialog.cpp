@@ -785,6 +785,7 @@ void mmOptionsDialog::OnColorChanged(wxCommandEvent& event)
 {
     int id = event.GetId();
 
+    wxString label;
     wxColour col;
     wxColourData data;
     data.SetChooseFull(true);
@@ -848,42 +849,51 @@ void mmOptionsDialog::OnColorChanged(wxCommandEvent& event)
             wxASSERT(false);
         }
         bn->SetBackgroundColour(col);
-        bn->SetLabel(col.GetAsString(wxC2S_HTML_SYNTAX));
+        label = bn->GetLabel()+wxT("*");
+        label.Replace(wxT("****"), wxT("***"));
+        bn->SetLabel(label);
     }
 }
 
 void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& /*event*/)
 {
     // set the new colours to the default colours
-    navTreeBkColor_ = wxColour(255, 255, 255);
+    navTreeBkColor_ = wxColour(wxT("WHITE"));
     listAlternativeColor0_ = wxColour(225, 237, 251);
-    listAlternativeColor1_ = wxColour(255, 255, 255);
-    listBackColor_ = wxColour(255, 255, 255);
-    listBorderColor_ = wxColour(0, 0, 0);
+    listAlternativeColor1_ = wxColour(wxT("WHITE"));
+    listBackColor_ = wxColour(wxT("WHITE"));
+    listBorderColor_ = wxColour(wxT("BLACK"));
     listDetailsPanelColor_ = wxColour(244, 247, 251);
     listFutureDateColor_ = wxColour(116, 134, 168);
 
     // Display the original colours to the user
     wxButton* bn1 = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE);
     bn1->SetBackgroundColour(navTreeBkColor_);
+    bn1->SetLabel(_("Nav Tree"));
 
     wxButton* bn2 = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0);
     bn2->SetBackgroundColour(listAlternativeColor0_);
+    bn2->SetLabel(_("List Row 0"));
 
     wxButton* bn3 = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1);
     bn3->SetBackgroundColour(listAlternativeColor1_);
+    bn3->SetLabel(_("List Row 1"));
 
     wxButton* bn4 = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK);
     bn4->SetBackgroundColour(listBackColor_);
+    bn4->SetLabel(_("List Background"));
 
     wxButton* bn5 = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER);
     bn5->SetBackgroundColour(listBorderColor_);
+    bn5->SetLabel(_("List Border"));
 
     wxButton* bn6 = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS);
     bn6->SetBackgroundColour(listDetailsPanelColor_);
+    bn6->SetLabel(_("List Details"));
 
     wxButton* bn7 = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES);
     bn7->SetBackgroundColour(listFutureDateColor_);
+    bn7->SetLabel(_("Future Transactions"));
 }
 
 void mmOptionsDialog::SetIniDatabaseCheckboxValue(wxString dbField, bool dbState)
