@@ -16,6 +16,8 @@
 #include "splitdetailsdialog.h"
 #include "util.h"
 #include "dbwrapper.h" //XXX
+#include "mmcoredb.h"
+#include "mmtransaction.h"
 #include <wx/statline.h>
 
 /*!

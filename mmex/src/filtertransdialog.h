@@ -18,10 +18,10 @@
 #pragma interface "filtertransdialog.cpp"
 #endif
 
-#include "wx/datectrl.h"
-#include "guiid.h"
-#include "mmcheckingpanel.h"
-#include "mmcoredb.h"
+#include <wx/datectrl.h>
+#include "defs.h"
+#include <boost/shared_ptr.hpp>
+#include <vector>
 
 #define ID_MYDIALOG9 10095
 #define SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
@@ -58,6 +58,10 @@
 #ifndef wxFIXED_MINSIZE
 #define wxFIXED_MINSIZE 0
 #endif
+
+class mmCoreDB;
+class mmBankTransaction;
+class wxSQLite3Database;
 
 class mmFilterTransactionsDialog: public wxDialog
 {    

@@ -20,7 +20,6 @@
 ////@begin includes
 #include "guiid.h"
 #include "defs.h"
-#include "mmcoredb.h"
 ////@end includes
 
 
@@ -55,6 +54,8 @@
 /*!
  * SplitDetailDialog class declaration
  */
+
+class mmCoreDB;
 
 class SplitDetailDialog: public wxDialog
 {    

@@ -23,6 +23,7 @@
 #include "payeedialog.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 #include "splittransactionsdialog.h"
 #include "defs.h"
 #include "paths.h"

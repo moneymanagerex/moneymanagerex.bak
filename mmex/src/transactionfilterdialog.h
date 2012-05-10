@@ -21,12 +21,14 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "mmcoredb.h"
 
 #define SYMBOL_TRANSACTIONFILTERDIALOG_TITLE _("MMEX Account View: Transaction Filter")
 #define SYMBOL_TRANSACTIONFILTERDIALOG_POSITION wxDefaultPosition
 #define SYMBOL_TRANSACTIONFILTERDIALOG_SIZE wxSize(355, 300)
 #define SYMBOL_TRANSACTIONFILTERDIALOG_STYLE wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX
+
+class mmCoreDB;
+class mmBankTransaction;
 
 class TransFilterDialog : public wxDialog
 {

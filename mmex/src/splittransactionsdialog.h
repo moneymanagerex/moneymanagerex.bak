@@ -19,20 +19,9 @@
 #ifndef _MM_EX_SPLITTRANSACTIONDIALOG_H_
 #define _MM_EX_SPLITTRANSACTIONDIALOG_H_
 
-#include "wx/listctrl.h"
 #include "guiid.h"
 #include "defs.h"
-#include "mmcoredb.h"
-#include "mmtransaction.h"
 ////@end includes
-
-/*!
- * Forward declarations
- */
-
-////@begin forward declarations
-class wxListCtrl;
-////@end forward declarations
 
 /*!
  * Control identifiers
@@ -65,6 +54,9 @@ class wxListCtrl;
 /*!
  * SplitTransactionDialog class declaration
  */
+
+class mmCoreDB;
+class mmSplitTransactionEntries;
 
 class SplitTransactionDialog: public wxDialog
 {    
