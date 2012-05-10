@@ -28,8 +28,8 @@
 #define _MM_EX_REPORTINCEXPENSESFINANCIALPERIOD_H_
 
 #include "reportbase.h"
-#include "mmex.h"
 
+class mmGUIFrame;
 class mmReportIncExpensesOverFinancialPeriod : public mmPrintableBase 
 {
 public:

@@ -2,8 +2,8 @@
 
 #include "defs.h"
 #include "htmlbuilder.h"
-#include "reportbase.h"
 #include "util.h"
+#include "mmex.h"
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, const wxArrayString* accountArray) : 
     mmPrintableBase(core)

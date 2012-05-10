@@ -23,6 +23,7 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmex.h"
 
 mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame) : 
 	mmPrintableBase(core),

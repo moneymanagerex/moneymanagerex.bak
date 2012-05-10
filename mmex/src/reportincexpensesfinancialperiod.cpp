@@ -28,11 +28,10 @@
 
 #include "defs.h"
 #include "htmlbuilder.h"
-#include "reportbase.h"
 #include "util.h"
-#include "dbwrapper.h"
 #include "budgetingpanel.h"
 #include "reportbudget.h"
+#include "mmex.h"
 
 mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmGUIFrame* frame, mmCoreDB* core, int year):
     mmPrintableBase(core),
