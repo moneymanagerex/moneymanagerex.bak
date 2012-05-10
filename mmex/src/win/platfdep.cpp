@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
 
-namespace 
+namespace
 {
 
 /*
@@ -32,16 +32,16 @@ wxFileName GetInstallDir()
 {
     const wxStandardPathsBase &p = wxStandardPaths::Get();
     wxFileName fname(p.GetExecutablePath());
-    
+
     const wxArrayString &dirs = fname.GetDirs();
 
     if (dirs.Last().Upper() == wxT("BIN")) // bin\mmex.exe
         fname.RemoveLastDir();
-    
+
     return fname;
 }
 
-} // namespace 
+} // namespace
 
 //----------------------------------------------------------------------------
 
@@ -62,7 +62,7 @@ wxFileName mmex::GetResourceDir()
 {
     static wxFileName fname;
 
-    if (!fname.IsOk()) 
+    if (!fname.IsOk())
     {
         fname = GetSharedDir();
         fname.AppendDir(wxT("res"));
