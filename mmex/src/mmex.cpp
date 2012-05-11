@@ -675,7 +675,7 @@ void mmGUIFrame::processPendingEvents()
 
 //----------------------------------------------------------------------------
 // returns a wxTreeItemID for the accountName in the navtree section.
-wxTreeItemId mmGUIFrame::getTreeItemfor(wxTreeItemId itemID, const wxString& accountName) const
+wxTreeItemId mmGUIFrame::getTreeItemfor(const wxTreeItemId& itemID, const wxString& accountName) const
 {
     wxTreeItemIdValue treeDummyValue;
     wxTreeItemId navTreeID = navTreeCtrl_->GetFirstChild(itemID, treeDummyValue);
@@ -692,7 +692,7 @@ wxTreeItemId mmGUIFrame::getTreeItemfor(wxTreeItemId itemID, const wxString& acc
 }
 
 //----------------------------------------------------------------------------
-bool mmGUIFrame::setAccountInSection(wxString sectionName, wxString accountName)
+bool mmGUIFrame::setAccountInSection(const wxString& sectionName, const wxString& accountName)
 {
     bool accountNotFound = true;
     wxTreeItemId rootItem = getTreeItemfor(navTreeCtrl_->GetRootItem(), sectionName );
@@ -714,7 +714,7 @@ bool mmGUIFrame::setAccountInSection(wxString sectionName, wxString accountName)
 }
 
 //----------------------------------------------------------------------------
-bool mmGUIFrame::setNavTreeSection( wxString sectionName)
+bool mmGUIFrame::setNavTreeSection(const wxString& sectionName)
 {
     bool accountNotFound = true;
     wxTreeItemId rootItem = getTreeItemfor(navTreeCtrl_->GetRootItem(), sectionName );
@@ -731,7 +731,7 @@ bool mmGUIFrame::setNavTreeSection( wxString sectionName)
 }
 
 //----------------------------------------------------------------------------
-void mmGUIFrame::setAccountNavTreeSection(wxString accountName)
+void mmGUIFrame::setAccountNavTreeSection(const wxString& accountName)
 {
     if ( setAccountInSection(_("Bank Accounts"), accountName))
         if (setAccountInSection(_("Term Accounts"), accountName))
@@ -3538,7 +3538,7 @@ void mmGUIFrame::OnHelp(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-bool mmGUIFrame::IsUpdateAvailable(wxString page)
+bool mmGUIFrame::IsUpdateAvailable(const wxString& page)
 {
     wxStringTokenizer tkz(page, wxT('.'), wxTOKEN_RET_EMPTY_ALL);
     int numTokens = (int)tkz.CountTokens();
@@ -4586,7 +4586,7 @@ void mmGUIApp::OnFatalException()
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
+void mmGUIFrame::SetDatabaseFile(const wxString& dbFileName, bool newDatabase)
 {
     autoRepeatTransactionsTimer_.Stop();
     wxProgressDialog *progress = NULL;
@@ -4625,7 +4625,7 @@ void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
     }
 }
 
-void mmGUIFrame::BackupDatabase(wxString filename, bool updateRequired)
+void mmGUIFrame::BackupDatabase(const wxString& filename, bool updateRequired)
 {
     wxFileName fn(filename);
     if (!fn.IsOk()) return;

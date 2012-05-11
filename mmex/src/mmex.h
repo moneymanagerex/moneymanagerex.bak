@@ -106,8 +106,8 @@ public:
 
     wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false) const;
 
-    void setAccountNavTreeSection(wxString accountName); 
-    bool setNavTreeSection( wxString sectionName);
+    void setAccountNavTreeSection(const wxString& accountName); 
+    bool setNavTreeSection(const wxString& sectionName);
 
 private:
     /* handles to the DB Abstraction */
@@ -143,8 +143,8 @@ private:
     mmTreeItemData* selectedItemData_;
     wxMenuItem* menuItemOnlineUpdateCurRate_; // Menu Item for Disabling Item
 
-    wxTreeItemId getTreeItemfor(wxTreeItemId itemID, const wxString& accountName) const;
-    bool setAccountInSection(wxString sectionName, wxString accountName);
+    wxTreeItemId getTreeItemfor(const wxTreeItemId& itemID, const wxString& accountName) const;
+    bool setAccountInSection(const wxString& sectionName, const wxString& accountName);
 
     /* Custom Reports */
     customSQLReportIndex* custRepIndex_;
@@ -273,7 +273,7 @@ private:
     void OnDeleteCustomSqlReport(wxCommandEvent& event);
     void OnPopupDeleteCustomSqlReport(wxCommandEvent& event);
 
-    bool IsUpdateAvailable(wxString page);
+    bool IsUpdateAvailable(const wxString& page);
     void processPendingEvents();
 
     /* Recent Files */
@@ -288,9 +288,9 @@ private:
     void OnClearRecentFiles(wxCommandEvent& /*event*/) { recentFiles_->clearRecentList(); }
 
     /** Sets the database to the new database selected by the user */
-    void SetDatabaseFile(wxString dbFileName, bool newDatabase = false);
+    void SetDatabaseFile(const wxString& dbFileName, bool newDatabase = false);
     /// Make a dated copy of the database. Keep only the last 4 copies.
-    void BackupDatabase(wxString filename, bool updateRequired = false);
+    void BackupDatabase(const wxString& filename, bool updateRequired = false);
 
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()
