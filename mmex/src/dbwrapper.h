@@ -99,8 +99,7 @@ int getSubCategoryID(wxSQLite3Database* db, int categID, const wxString &name);
 wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
 
 /* Transactions API */
-bool updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
-	const wxString& status);
+bool updateTransactionWithStatus(wxSQLite3Database &db, int transID, const wxString& status);
 bool deleteTransaction(wxSQLite3Database* db, int transID);
 wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID);
 
