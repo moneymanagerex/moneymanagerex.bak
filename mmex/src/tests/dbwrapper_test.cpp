@@ -157,7 +157,7 @@ TEST(addBudgetYear)
     int year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
     CHECK(year_id == -1);
 
-    mmDBWrapper::addBudgetYear(&db, g_BudgetYear);
+//    mmDBWrapper::addBudgetYear(&db, g_BudgetYear);
 
     year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
     CHECK(year_id > 0);
@@ -224,7 +224,7 @@ TEST(copyBudgetYear)
     // --
 
     wxString new_year = g_BudgetYear + g_BudgetYear;
-    mmDBWrapper::addBudgetYear(&db, new_year);
+//    mmDBWrapper::addBudgetYear(&db, new_year);
     
     int new_year_id = mmDBWrapper::getBudgetYearID(&db, new_year);
     CHECK(new_year_id > 0);
