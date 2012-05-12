@@ -75,10 +75,14 @@ int mmCategoryList::getSubCategoryID(int parentID, const wxString& subCategoryNa
 
 int mmCategoryList::addSubCategory(int parentID, const wxString& text)
 {
-    int cID = -1;
+    DB_View_SUBCATEGORY_V1::Data* sub_category = SUBCATEGORY_V1.create();
+    sub_category->CATEGID = parentID;
+    sub_category->SUBCATEGNAME = text;
+    
+    if (!sub_category->save(db_.get()))
+        return -1;
 
-    mmDBWrapper::addSubCategory(db_.get(), parentID, text);
-    cID = (db_->GetLastRowId()).ToLong();
+    int cID = sub_category->id();
 
     boost::shared_ptr<mmCategory> categ = getCategorySharedPtr(parentID, -1);
     
