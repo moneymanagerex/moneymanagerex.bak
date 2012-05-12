@@ -415,14 +415,13 @@ struct DB_View_%s : public DB_View
 ''' % (self._primay_key, self._table)
 
         s +='''
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
