@@ -25,6 +25,7 @@
 #include "defs.h"
 #include "paths.h"
 #include "mmex_db_view.h"
+#include <boost/foreach.hpp>
 
 IMPLEMENT_DYNAMIC_CLASS( mmStockDialog, wxDialog )
 
@@ -242,21 +243,12 @@ void mmStockDialog::CreateControls()
 
 void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
 {
-    static const char sql[] = 
-    "select ACCOUNTNAME "
-    "from ACCOUNTLIST_V1 "
-    "where ACCOUNTTYPE = 'Investment' "
-    "order by ACCOUNTNAME";
-
     wxArrayString as;
-    
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    while (q1.NextRow())
-    {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    }
-    q1.Finalize();
-    
+
+    DB_View_ACCOUNTLIST_V1::Data_Set all_accounts = ACCOUNTLIST_V1.find(db_, DB_View_ACCOUNTLIST_V1::COL_ACCOUNTTYPE, wxT("Investment"));
+    BOOST_FOREACH(const DB_View_ACCOUNTLIST_V1::Data &account, all_accounts)
+        as.Add(account.ACCOUNTNAME);
+
     wxSingleChoiceDialog scd(0, _("Choose Investment Account"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
     {
