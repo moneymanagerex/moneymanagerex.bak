@@ -589,21 +589,11 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
 
 void mmDBWrapper::loadSettings(int accountID, wxSQLite3Database* db)
 {
-    wxSQLite3Statement st = db->PrepareStatement("select CURRENCYID "
-                                                 "from ACCOUNTLIST_V1 "
-                                                 "where ACCOUNTID = ?"
-                                                );
-
-    st.Bind(1, accountID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
+    DB_View_ACCOUNTLIST_V1::Data* account = ACCOUNTLIST_V1.get(accountID, db);
+    if (account)
     {
-        int currencyID = q1.GetInt(wxT("CURRENCYID"));
-        loadSettings(db, currencyID);
+        loadSettings(db, account->CURRENCYID);
     }
-
-    st.Finalize();
 }
 
 int mmDBWrapper::getBaseCurrencySettings(wxSQLite3Database* db)
