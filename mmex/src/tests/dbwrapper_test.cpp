@@ -157,7 +157,9 @@ TEST(addBudgetYear)
     int year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
     CHECK(year_id == -1);
 
-//    mmDBWrapper::addBudgetYear(&db, g_BudgetYear);
+    DB_View_BUDGETYEAR_V1::Data* budget_year = BUDGETYEAR_V1.create();
+    budget_year->BUDGETYEARNAME = g_BudgetYear;
+    budget_year->save(&db);
 
     year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
     CHECK(year_id > 0);
@@ -224,7 +226,10 @@ TEST(copyBudgetYear)
     // --
 
     wxString new_year = g_BudgetYear + g_BudgetYear;
-//    mmDBWrapper::addBudgetYear(&db, new_year);
+
+    DB_View_BUDGETYEAR_V1::Data* budget_year = BUDGETYEAR_V1.create();
+    budget_year->BUDGETYEARNAME = new_year;
+    budget_year->save(&db);
     
     int new_year_id = mmDBWrapper::getBudgetYearID(&db, new_year);
     CHECK(new_year_id > 0);
@@ -265,7 +270,6 @@ TEST(addSubCategory)
 {
     wxSQLite3Database &db = getDb();
 
-    DB_View_CATEGORY_V1::CATEGNAME c;
     std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
     CHECK(categories.size() > 0);
 
