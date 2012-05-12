@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-10 10:34:59.379272.
+ *          AUTO GENERATED at 2012-05-12 16:45:53.746599.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -3242,7 +3242,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE CURRENCYFORMATS_V1(CURRENCYID integer primary key, CURRENCYNAME TEXT NOT NULL, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT, DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT, UNIT_NAME TEXT, CENT_NAME TEXT, SCALE numeric, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT)"));
+            db->ExecuteUpdate(wxT("CREATE TABLE CURRENCYFORMATS_V1(CURRENCYID integer primary key, CURRENCYNAME TEXT NOT NULL, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT, DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT, UNIT_NAME TEXT, CENT_NAME TEXT, SCALE integer, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT)"));
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -3347,7 +3347,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         wxString GROUP_SEPARATOR;
         wxString UNIT_NAME;
         wxString CENT_NAME;
-        double SCALE;
+        int SCALE;
         double BASECONVRATE;
         wxString CURRENCY_SYMBOL;
         int id() const { return CURRENCYID; }
@@ -3358,7 +3358,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
             view_ = view;
         
             CURRENCYID = -1;
-            SCALE = 0.0;
+            SCALE = -1;
             BASECONVRATE = 0.0;
         }
 
@@ -3374,7 +3374,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
             GROUP_SEPARATOR = q.GetString(wxT("GROUP_SEPARATOR"));
             UNIT_NAME = q.GetString(wxT("UNIT_NAME"));
             CENT_NAME = q.GetString(wxT("CENT_NAME"));
-            SCALE = q.GetDouble(wxT("SCALE"));
+            SCALE = q.GetInt(wxT("SCALE"));
             BASECONVRATE = q.GetDouble(wxT("BASECONVRATE"));
             CURRENCY_SYMBOL = q.GetString(wxT("CURRENCY_SYMBOL"));
         }

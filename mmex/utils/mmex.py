@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # vi:tabstop=4:expandtab:shiftwidth=4:softtabstop=4:autoindent:smarttab
+'''
+Script to generate src/mmex_db_view.h
+Usage: python mmex.py path_to_sql_file
+'''
 
 import sys
 import datetime
@@ -474,14 +478,22 @@ static DB_View_%s %s;
 
 if __name__ == '__main__':
     
-    conn, cur = None, None
+    conn, cur, sql_file = None, None, None
     try:
-        conn = sqlite3.connect(sys.argv[1])
+        sql_file = sys.argv[1]
+        conn = sqlite3.connect(":memory:")
         conn.row_factory = sqlite3.Row 
         cur = conn.cursor()
     except:
-        pass
+        print __doc__
+        sys.exit(1)
 
+    sql = ""
+    for line in open(sql_file, 'rb'):
+        sql = sql + line;
+
+    cur.executescript(sql)
+    
     code =  '''// -*- C++ -*-
 //=============================================================================
 /**
@@ -550,5 +562,6 @@ struct DB_View
 #endif // 
 '''
 
+    conn.close()
     print code
 
