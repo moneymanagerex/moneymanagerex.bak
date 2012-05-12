@@ -284,15 +284,19 @@ TEST(addSubCategory)
 }
 //----------------------------------------------------------------------------
 
-/*
+
 TEST(getCategoryID)
 {
     wxSQLite3Database &db = getDb();
 
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
+    int cat_id = -1;
+    if (categories.size() > 0) cat_id = categories[0].CATEGID;
     CHECK(cat_id > 0);
 
-    cat_id = mmDBWrapper::getCategoryID(&db, wxT("unknown category"));
+    categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, wxT("unknown category"));
+    cat_id = -1;
+    if (categories.size() > 0) cat_id = categories[0].CATEGID;
     CHECK(cat_id == -1);
 }
 //----------------------------------------------------------------------------
@@ -301,16 +305,24 @@ TEST(getSubCategoryID)
 {
     wxSQLite3Database &db = getDb();
 
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
+    int cat_id = -1;
+    if (categories.size() > 0) cat_id = categories[0].CATEGID;
     CHECK(cat_id > 0);
 
-    int sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
-    CHECK(sc_id > 0);
+    std::vector<DB_View_SUBCATEGORY_V1::Data> sub_categories = SUBCATEGORY_V1.find(&db, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, g_SubCategName);
+    int subcat_id = -1;
+    if (sub_categories.size() > 0) subcat_id = sub_categories[0].SUBCATEGID;
+    CHECK(cat_id > 0);
 
-    sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, wxT("unknown subcategory"));
-    CHECK(sc_id == -1);
+    sub_categories = SUBCATEGORY_V1.find(&db, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, wxT("unknown subcategory"));
+    subcat_id = -1;
+    if (sub_categories.size() > 0) subcat_id = sub_categories[0].SUBCATEGID;
+    CHECK(cat_id > 0);
 }
 //----------------------------------------------------------------------------
+
+/*
 
 TEST(getCategoryName)
 {
