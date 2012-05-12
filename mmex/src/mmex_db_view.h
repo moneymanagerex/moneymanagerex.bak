@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-12 16:45:53.746599.
+ *          AUTO GENERATED at 2012-05-12 20:48:08.030928.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -440,14 +440,13 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -831,14 +830,13 @@ struct DB_View_ASSETS_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -1320,14 +1318,13 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -1683,14 +1680,13 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -2056,14 +2052,13 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -2385,14 +2380,13 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -2714,14 +2708,13 @@ struct DB_View_CATEGORY_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -3171,14 +3164,13 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -3592,14 +3584,13 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -3931,14 +3922,13 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -4282,14 +4272,13 @@ struct DB_View_PAYEE_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -4621,14 +4610,13 @@ struct DB_View_SETTING_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -4984,14 +4972,13 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -5409,14 +5396,13 @@ struct DB_View_STOCK_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -5749,14 +5735,13 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         return entity;
     }
 
-    template<class C, class V>
-    Data_Set find(wxSQLite3Database* db, const V& v)
+    template<class V>
+    Data_Set find(wxSQLite3Database* db, COLUMN col, const V& v)
     {
         Data_Set result;
         try
         {
-            C c;
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + c.name() + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 

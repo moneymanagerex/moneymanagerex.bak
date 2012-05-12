@@ -266,7 +266,7 @@ TEST(addSubCategory)
     wxSQLite3Database &db = getDb();
 
     DB_View_CATEGORY_V1::CATEGNAME c;
-    std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find<DB_View_CATEGORY_V1::CATEGNAME, wxString>(&db, g_CategName);
+    std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
     CHECK(categories.size() > 0);
 
     int cat_id = categories[0].CATEGID;
