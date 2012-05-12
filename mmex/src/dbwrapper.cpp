@@ -662,33 +662,17 @@ void mmDBWrapper::loadBaseCurrencySettings(wxSQLite3Database* db)
 
 void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
 {
-    static const char sql[] =
-    "select PFX_SYMBOL, "
-           "SFX_SYMBOL, "
-           "DECIMAL_POINT, "
-           "GROUP_SEPARATOR, "
-           "UNIT_NAME, "
-           "CENT_NAME, "
-           "SCALE, "
-           "CURRENCY_SYMBOL "
-    "from CURRENCYFORMATS_V1 "
-    "where CURRENCYID = ?";
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, currencyID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-
-    if (q1.NextRow()) {
-
-        wxString pfxSymbol = q1.GetString(wxT("PFX_SYMBOL"));
-        wxString sfxSymbol = q1.GetString(wxT("SFX_SYMBOL"));
-        wxString dec = q1.GetString(wxT("DECIMAL_POINT"));
-        wxString grp = q1.GetString(wxT("GROUP_SEPARATOR"));
-        wxString unit = q1.GetString(wxT("UNIT_NAME"));
-        wxString cent = q1.GetString(wxT("CENT_NAME"));
-        int scaleDl = q1.GetInt(wxT("SCALE"));
-        wxString currencySymbol = q1.GetString(wxT("CURRENCY_SYMBOL"));
+    DB_View_CURRENCYFORMATS_V1::Data* currency = CURRENCYFORMATS_V1.get(currencyID, db);
+    if (currency) 
+    {
+        wxString pfxSymbol = currency->PFX_SYMBOL;
+        wxString sfxSymbol = currency->SFX_SYMBOL;
+        wxString dec = currency->DECIMAL_POINT;
+        wxString grp = currency->GROUP_SEPARATOR;
+        wxString unit = currency->UNIT_NAME;
+        wxString cent = currency->CENT_NAME;
+        int scaleDl = currency->SCALE;
+        wxString currencySymbol = currency->CURRENCY_SYMBOL;
 
         wxChar decChar = 0;
         wxChar grpChar = 0;
@@ -702,12 +686,7 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         }
 
         mmex::CurrencyFormatter::instance().loadSettings(pfxSymbol, sfxSymbol, decChar, grpChar, unit, cent, scaleDl);
-
-    } else {
-        wxASSERT(true);
     }
-
-    st.Finalize();
 }
 
 bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categID)
