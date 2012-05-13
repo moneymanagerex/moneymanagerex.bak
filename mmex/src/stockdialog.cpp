@@ -247,24 +247,19 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
     DB_View_ACCOUNTLIST_V1::Data_Set all_accounts = ACCOUNTLIST_V1.find(db_, DB_View_ACCOUNTLIST_V1::COL_ACCOUNTTYPE, wxT("Investment"));
 
     wxArrayString account_names;
-    int* account_ids = new int[all_accounts.size()];
 
     BOOST_FOREACH(const DB_View_ACCOUNTLIST_V1::Data &account, all_accounts)
     {
-        account_ids[account_names.size()] = account.id();
         account_names.Add(account.ACCOUNTNAME);
     }
 
-    wxSingleChoiceDialog scd(0, _("Choose Investment Account"), _("Select Account"), account_names, (char**)account_ids);
+    wxSingleChoiceDialog scd(0, _("Choose Investment Account"), _("Select Account"), account_names);
     if (scd.ShowModal() == wxID_OK)
     {
         wxString acctName = scd.GetStringSelection();
-        //accountID_ = core_->getAccountID(acctName);
-        accountID_ = int(scd.GetSelectionClientData());
+        accountID_ = core_->getAccountID(acctName);
         heldAt_->SetLabel(acctName);
     }
-
-    delete []account_ids;
 }
 
 void mmStockDialog::OnCancel(wxCommandEvent& /*event*/)
