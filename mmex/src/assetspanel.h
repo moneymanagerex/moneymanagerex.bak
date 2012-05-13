@@ -55,9 +55,9 @@ private:
     long m_selectedIndex;
 
     /* required overrides for virtual style list control */
-    virtual wxString OnGetItemText(long item, long column) const;
-    virtual int OnGetItemImage(long item) const;
-    virtual wxListItemAttr *OnGetItemAttr(long item) const;
+    wxString OnGetItemText(long item, long column) const;
+    int OnGetItemImage(long item) const;
+    wxListItemAttr *OnGetItemAttr(long item) const;
 
     void OnItemRightClick(wxListEvent& event);
     void OnListItemActivated(wxListEvent& event);
