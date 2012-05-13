@@ -25,7 +25,6 @@
 //----------------------------------------------------------------------------
 #include <wx/event.h>
 #include <algorithm>
-#include <vector>
 #include <boost/unordered_map.hpp>
 #include <wx/srchctrl.h>
 
