@@ -394,7 +394,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
 
     if (!cat_exist)
     {
-        std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.all(db);
+        DB_View_CATEGORY_V1::Data_Set categories = CATEGORY_V1.all(db);
         if (categories.empty()) createDefaultCategories(db);
     }
 }
