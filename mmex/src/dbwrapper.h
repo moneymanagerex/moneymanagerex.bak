@@ -94,7 +94,6 @@ wxArrayString filterPayees(wxSQLite3Database* db, const wxString& patt);
 bool deleteCategoryWithConstraints(wxSQLite3Database* db, int categID);
 bool deleteSubCategoryWithConstraints(wxSQLite3Database* db, int categID, int subcategID);
 bool updateCategory(wxSQLite3Database* db, int categID, int subcategID, const wxString &newName);
-int getSubCategoryID(wxSQLite3Database* db, int categID, const wxString &name);
 wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
 
 /* Transactions API */
