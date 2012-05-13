@@ -264,7 +264,12 @@ wxString mmAssetsPanel::getItem(long item, long column)
     if (column == COL_NAME)  return asset.ASSETNAME;
     if (column == COL_TYPE)  return wxGetTranslation(asset.ASSETTYPE);
     if (column == COL_VALUE) return asset.to_string(DB_View_ASSETS_V1::COL_VALUE); // TODO
-    if (column == COL_DATE)  return asset.STARTDATE; // TODO
+    if (column == COL_DATE)  
+    {
+        wxDateTime dt;
+        dt.ParseDate(asset.STARTDATE);
+        return dt.Format(mmOptions::instance().dateFormat);
+    }
     if (column == COL_NOTES) return asset.NOTES;
 
     return wxGetEmptyString();
