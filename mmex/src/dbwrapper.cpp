@@ -387,8 +387,17 @@ void mmDBWrapper::createPayeeV1Table(wxSQLite3Database* db)
 
 void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
 {
+    bool cat_exist = CATEGORY_V1.exists(db);
+    
     CATEGORY_V1.ensure(db);
     SUBCATEGORY_V1.ensure(db);
+
+    if (!cat_exist)
+    {
+        std::vector<DB_View_CATEGORY_V1::Data> categories;
+        categories = CATEGORY_V1.all(db);
+        if (categories.size() == 0) createDefaultCategories(db);
+    }
 }
 
 /*
