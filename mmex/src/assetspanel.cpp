@@ -263,7 +263,13 @@ wxString mmAssetsPanel::getItem(long item, long column)
 
     if (column == COL_NAME)  return asset.ASSETNAME;
     if (column == COL_TYPE)  return wxGetTranslation(asset.ASSETTYPE);
-    if (column == COL_VALUE) return asset.to_string(DB_View_ASSETS_V1::COL_VALUE); // TODO
+    if (column == COL_VALUE) 
+    {
+        double val = mmDBWrapper::getAssetValue(asset);
+        wxString val_str;
+        mmex::formatDoubleToCurrencyEdit(val, val_str);
+        return val_str;
+    }
     if (column == COL_DATE)  
     {
         wxDateTime dt;
