@@ -63,7 +63,6 @@ void createStockV1Table(wxSQLite3Database* db);
 void createAssetsV1Table(wxSQLite3Database* db);
 void createSplitTransactionsV1Table(wxSQLite3Database* db);
 void createAllDataView(wxSQLite3Database* db);
-wxString getCurrencySymbol(wxSQLite3Database* db, int currencyID);
 
 /* Upgrading to new DBs */
 bool checkDBVersion(wxSQLite3Database* db);
