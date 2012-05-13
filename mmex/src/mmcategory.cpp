@@ -70,7 +70,9 @@ int mmCategoryList::addCategory(const wxString& name)
 
 int mmCategoryList::getSubCategoryID(int parentID, const wxString& subCategoryName) const
 {
-    return mmDBWrapper::getSubCategoryID(db_.get(), parentID, subCategoryName);
+    DB_View_SUBCATEGORY_V1::Data_Set sub_category = SUBCATEGORY_V1.find(db_.get(), DB_View_SUBCATEGORY_V1::COL_CATEGID, parentID, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, subCategoryName, true); 
+
+    return sub_category.empty() ? -1: sub_category[0].SUBCATEGID;
 }
 
 int mmCategoryList::addSubCategory(int parentID, const wxString& text)

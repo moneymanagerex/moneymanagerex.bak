@@ -443,6 +443,39 @@ struct DB_View_%s : public DB_View
 ''' % self._table
 
         s +='''
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+''' % self._table
+
+        s +='''
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
