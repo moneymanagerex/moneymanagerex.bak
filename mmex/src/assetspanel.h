@@ -21,6 +21,7 @@
 #include "util.h"
 
 #include <boost/scoped_ptr.hpp>
+#include "mmex_db_view.h"
 
 class wxListCtrl;
 class wxListEvent;
@@ -66,20 +67,6 @@ private:
     void doRefreshItems();
 };
 
-/* Holds a single transaction */
-struct mmAssetHolder: public mmHolderBase
-{
-    wxString assetName_;
-    wxString assetType_;
-    wxString valueChangeStr_;
-    wxString assetDate_;
-    wxString assetNotes_;
-    wxString assetValueChange_;
-    wxString asset_notes_;
-
-    double valueChange_;
-};
-
 class mmAssetsPanel : public mmPanelBase
 {
     DECLARE_EVENT_TABLE()
@@ -93,13 +80,12 @@ public:
 
     wxString getItem(long item, long column);
     wxSQLite3Database* getDb() const { return db_; }
-    const std::vector<mmAssetHolder>& getTrans() const { return m_trans; }
     void updateExtraAssetData(int selIndex);
+    DB_View_ASSETS_V1::Data_Set all_assets_;
 
 private:
     assetsListCtrl* m_listCtrlAssets;
     boost::scoped_ptr<wxImageList> m_imageList;
-    std::vector<mmAssetHolder> m_trans;
 
     bool Create(wxWindow *parent, wxWindowID winid, const wxPoint& pos, const wxSize& size, long style, const wxString &name);
     void CreateControls();
