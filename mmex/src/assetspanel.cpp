@@ -18,7 +18,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "assetdialog.h"
-#include "mmex_db_view.h"
 #include <boost/foreach.hpp>
 
 /* Include XPM Support */
@@ -84,8 +83,8 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
     GetSizer()->SetSizeHints(this);
     
     initVirtualListControl();
-    if (!m_trans.empty()) 
-        m_listCtrlAssets->EnsureVisible(static_cast<long>(m_trans.size()) - 1);
+    if (!all_assets_.empty())
+        m_listCtrlAssets->EnsureVisible(all_assets_.size() - 1);
 
     Thaw();
     return true;
@@ -214,9 +213,6 @@ void mmAssetsPanel::CreateControls()
 
 void mmAssetsPanel::initVirtualListControl()
 {
-    /* Clear all the records */
-    m_trans.clear();
-
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
     double total = mmDBWrapper::getAssetBalance(db_);
@@ -227,36 +223,9 @@ void mmAssetsPanel::initVirtualListControl()
     wxString lbl  = wxString::Format(_("Total: %s"), balance.c_str());
     header->SetLabel(lbl);
 
-    long count = 0;
-
-    DB_View_ASSETS_V1::Data_Set all_assets = ASSETS_V1.all(db_);
-    BOOST_FOREACH(const DB_View_ASSETS_V1::Data &asset, all_assets)
-    {
-        mmAssetHolder th;
-
-        th.id_= asset.ASSETID;
-        th.value_ = mmDBWrapper::getAssetValue(asset);
-        th.assetName_ = asset.ASSETNAME;
-
-        wxString dateString = asset.STARTDATE;
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-        th.assetDate_ = mmGetDateForDisplay(db_, dtdt);
-     
-        th.assetType_ =  wxGetTranslation(asset.ASSETTYPE); // string should be marked for translation
-        th.assetValueChange_ =  wxGetTranslation(asset.VALUECHANGE); 
-
-        th.assetNotes_ = asset.NOTES;
-
-        th.valueChange_ = asset.VALUECHANGERATE;
-
-        mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
-        mmex::formatDoubleToCurrencyEdit(th.valueChange_, th.valueChangeStr_);
-
-        m_trans.push_back(th);
-        ++ count;
-    }
-
-    m_listCtrlAssets->SetItemCount(count);
+    all_assets_.clear();
+    all_assets_ = ASSETS_V1.all(db_);
+    m_listCtrlAssets->SetItemCount(all_assets_.size());
 }
 
 void mmAssetsPanel::OnDeleteAsset(wxCommandEvent& event)
@@ -290,11 +259,13 @@ void assetsListCtrl::OnItemRightClick(wxListEvent& event)
 
 wxString mmAssetsPanel::getItem(long item, long column)
 {
-    if (column == COL_NAME)  return m_trans[item].assetName_;
-    if (column == COL_TYPE)  return m_trans[item].assetType_;
-    if (column == COL_VALUE) return m_trans[item].valueStr_;
-    if (column == COL_DATE)  return m_trans[item].assetDate_;
-    if (column == COL_NOTES) return m_trans[item].assetNotes_;
+    const DB_View_ASSETS_V1::Data& asset = all_assets_.at(item);
+
+    if (column == COL_NAME)  return asset.ASSETNAME;
+    if (column == COL_TYPE)  return wxGetTranslation(asset.ASSETTYPE);
+    if (column == COL_VALUE) return asset.to_string(DB_View_ASSETS_V1::COL_VALUE); // TODO
+    if (column == COL_DATE)  return asset.STARTDATE; // TODO
+    if (column == COL_NOTES) return asset.NOTES;
 
     return wxGetEmptyString();
 }
@@ -321,15 +292,16 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS);
     wxStaticText* stm = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS_MINI);
-    if (selIndex > -1)
+    if (selIndex > -1 && selIndex < all_assets_.size())
     {
+        const DB_View_ASSETS_V1::Data& asset = all_assets_.at(selIndex);
         enableEditDeleteButtons(true);
         wxString miniInfo;
         wxString infoStr;
-        infoStr = m_trans[selIndex].assetNotes_;
-        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << m_trans[selIndex].assetValueChange_ ;
-        if (m_trans[selIndex].assetValueChange_ != _("None"))
-            miniInfo<< wxT(" = ") << m_trans[selIndex].valueChange_ << wxT("%");
+        infoStr = asset.NOTES;
+        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << asset.VALUECHANGE;
+        if (asset.VALUECHANGE != _("None"))
+            miniInfo<< wxT(" = ") << asset.VALUECHANGERATE << wxT("%");
         st->SetLabel(infoStr);
         stm->SetLabel(miniInfo);
     }
@@ -386,19 +358,20 @@ void assetsListCtrl::doRefreshItems()
 {
     m_cp->initVirtualListControl();
 
-    long cnt = static_cast<long>(m_cp->getTrans().size());
+    long cnt = static_cast<long>(m_cp->all_assets_.size());
     RefreshItems(0, cnt > 0 ? --cnt : 0);
 }
  
 void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex == -1)    return;
-    if (m_cp->getTrans().empty()) return;
+    if (m_cp->all_assets_.empty()) return;
 
     wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"), _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES) 
     {
-        ASSETS_V1.remove(m_cp->getTrans()[m_selectedIndex].id_, m_cp->getDb());
+        DB_View_ASSETS_V1::Data& asset = m_cp->all_assets_[m_selectedIndex];
+        asset.remove(m_cp->getDb());
         DeleteItem(m_selectedIndex);
         m_cp->initVirtualListControl();
         
@@ -414,7 +387,8 @@ void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex == -1)     return;
 
-    mmAssetDialog dlg(this, m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].id_, true);
+    const DB_View_ASSETS_V1::Data& asset = m_cp->all_assets_.at(m_selectedIndex);
+    mmAssetDialog dlg(this, m_cp->getDb(), asset.id(), true);
 
     if (dlg.ShowModal() == wxID_OK) doRefreshItems();
 }
@@ -423,7 +397,8 @@ void assetsListCtrl::OnListItemActivated(wxListEvent& event)
 {
     m_selectedIndex = event.GetIndex();
 
-    mmAssetDialog dlg(this, m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].id_, true);
+    const DB_View_ASSETS_V1::Data& asset = m_cp->all_assets_.at(m_selectedIndex);
+    mmAssetDialog dlg(this, m_cp->getDb(), asset.id(), true);
 
     if (dlg.ShowModal() == wxID_OK) doRefreshItems();
 }
