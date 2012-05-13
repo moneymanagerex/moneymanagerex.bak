@@ -789,7 +789,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_MINI);
-    if (selIndex > -1)
+    if ((selIndex > -1) && (m_trans.size() > 0))
     {
         enableEditDeleteButtons(true);
         st->SetLabel(m_trans[selIndex]->notes_);
