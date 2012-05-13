@@ -134,10 +134,16 @@ TEST(getCurrencySymbol)
 {
     wxSQLite3Database &db = getDb();
 
-    wxString s = mmDBWrapper::getCurrencySymbol(&db, 1);
+    wxString s;
+    DB_View_CURRENCYFORMATS_V1::Data* currency = CURRENCYFORMATS_V1.get(1, &db);
+    if (currency)
+        s = currency->CURRENCY_SYMBOL;
     CHECK(s == L"USD");
 
-    s = mmDBWrapper::getCurrencySymbol(&db, 0);
+    s = wxEmptyString;
+    currency = CURRENCYFORMATS_V1.get(0, &db);
+    if (currency)
+        s = currency->CURRENCY_SYMBOL;
     CHECK(s.empty());
 }
 //----------------------------------------------------------------------------
@@ -270,7 +276,7 @@ TEST(addSubCategory)
 {
     wxSQLite3Database &db = getDb();
 
-    std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
+    DB_View_CATEGORY_V1::Data_Set categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
     CHECK(categories.size() > 0);
 
     int cat_id = categories[0].CATEGID;
@@ -289,7 +295,7 @@ TEST(getCategoryID)
 {
     wxSQLite3Database &db = getDb();
 
-    std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
+    DB_View_CATEGORY_V1::Data_Set categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
     int cat_id = -1;
     if (categories.size() > 0) cat_id = categories[0].CATEGID;
     CHECK(cat_id > 0);
@@ -305,12 +311,12 @@ TEST(getSubCategoryID)
 {
     wxSQLite3Database &db = getDb();
 
-    std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
+    DB_View_CATEGORY_V1::Data_Set categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
     int cat_id = -1;
     if (categories.size() > 0) cat_id = categories[0].CATEGID;
     CHECK(cat_id > 0);
 
-    std::vector<DB_View_SUBCATEGORY_V1::Data> sub_categories = SUBCATEGORY_V1.find(&db, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, g_SubCategName);
+    DB_View_SUBCATEGORY_V1::Data_Set sub_categories = SUBCATEGORY_V1.find(&db, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, g_SubCategName);
     int subcat_id = -1;
     if (sub_categories.size() > 0) subcat_id = sub_categories[0].SUBCATEGID;
     CHECK(cat_id > 0);

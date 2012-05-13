@@ -3657,7 +3657,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 {
-    std::vector<DB_View_CURRENCYFORMATS_V1::Data> all_currency = CURRENCYFORMATS_V1.all(m_core->db_.get());
+    DB_View_CURRENCYFORMATS_V1::Data_Set all_currency = CURRENCYFORMATS_V1.all(m_core->db_.get());
     if (all_currency.empty())
         return;
 
