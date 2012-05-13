@@ -394,9 +394,8 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
 
     if (!cat_exist)
     {
-        std::vector<DB_View_CATEGORY_V1::Data> categories;
-        categories = CATEGORY_V1.all(db);
-        if (categories.size() == 0) createDefaultCategories(db);
+        std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.all(db);
+        if (categories.empty()) createDefaultCategories(db);
     }
 }
 
@@ -859,25 +858,12 @@ bool mmDBWrapper::updateCategory(wxSQLite3Database* db, int categID,
 
 wxString mmDBWrapper::getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID)
 {
-    static const char sql[] =
-    "select SUBCATEGNAME "
-    "from SUBCATEGORY_V1 "
-    "where CATEGID = ? and "
-          "SUBCATEGID = ?";
-
+    DB_View_SUBCATEGORY_V1::Data_Set sub_category = SUBCATEGORY_V1.find(db
+            , DB_View_SUBCATEGORY_V1::COL_CATEGID, categID
+            , DB_View_SUBCATEGORY_V1::COL_SUBCATEGID, subcategID
+            );
     wxString name;
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, categID);
-    st.Bind(2, subcategID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        name = q1.GetString(wxT("SUBCATEGNAME"));
-    }
-
-    st.Finalize();
+    if (!sub_category.empty()) name = sub_category[0].SUBCATEGNAME;
 
     return name;
 }
