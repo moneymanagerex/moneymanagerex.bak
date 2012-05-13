@@ -34,7 +34,6 @@ IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(wxID_OK, mmOptionsDialog::OnOk)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
 
     /// Colour Changing events
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, mmOptionsDialog::OnColorChanged)
@@ -193,6 +192,9 @@ void mmOptionsDialog::CreateControls()
         currentLanguage_.Left(1).Upper() + currentLanguage_.SubString(1,currentLanguage_.Len()),
         wxDefaultPosition, wxSize(150, -1), 0);
     languageButton->SetToolTip(_("Specify the language to use"));
+    languageButton->Connect(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, wxEVT_COMMAND_BUTTON_CLICKED,
+                            wxCommandEventHandler(mmOptionsDialog::OnLanguageChanged), NULL, this);
+
     languageStaticBoxSizer->Add(languageButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     // Currency Settings
@@ -742,15 +744,20 @@ void mmOptionsDialog::CreateControls()
 
 void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
 {
-    wxString lang = mmSelectLanguage(this, inidb_, true, false);
-    if (lang.empty()) return;
-
-    // Advisable to restart GUI when user acknowledges the change.
-    restartRequired_ = true;
-
     wxButton *btn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     wxASSERT(btn);
-    btn->SetLabel(lang.Left(1).Upper() + lang.SubString(1,lang.Len()));
+    //Disable parent window (bug fix for GTK)
+    this->Disable();
+
+    wxString lang = mmSelectLanguage(this, inidb_, true, false);
+    if (!lang.empty()) {
+
+        // Advisable to restart GUI when user acknowledges the change.
+        restartRequired_ = true;
+
+        btn->SetLabel(lang.Left(1).Upper() + lang.SubString(1,lang.Len()));
+    }
+    this->Enable();
 }
 
 void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
