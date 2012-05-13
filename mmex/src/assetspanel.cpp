@@ -297,17 +297,15 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
         const DB_View_ASSETS_V1::Data& asset = all_assets_.at(selIndex);
         enableEditDeleteButtons(true);
         wxString miniInfo;
-        wxString infoStr;
-        infoStr = asset.NOTES;
         miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << asset.VALUECHANGE;
         if (asset.VALUECHANGE != _("None"))
             miniInfo<< wxT(" = ") << asset.VALUECHANGERATE << wxT("%");
-        st->SetLabel(infoStr);
+        st->SetLabel(asset.NOTES);
         stm->SetLabel(miniInfo);
     }
     else
     {
-        stm -> SetLabel(wxT(""));
+        stm->SetLabel(wxT(""));
         st->SetLabel(Tips(TIPS_ASSETS));
         enableEditDeleteButtons(false);
     }
@@ -357,9 +355,7 @@ void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
 void assetsListCtrl::doRefreshItems()
 {
     m_cp->initVirtualListControl();
-
-    long cnt = static_cast<long>(m_cp->all_assets_.size());
-    RefreshItems(0, cnt > 0 ? --cnt : 0);
+    RefreshItems(0, m_cp->all_assets_.empty() ? 0: m_cp->all_assets_.size() - 1);
 }
  
 void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
