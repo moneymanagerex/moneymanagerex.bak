@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-12 20:48:08.030928.
+ *          AUTO GENERATED at 2012-05-13 11:07:00.169563.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -466,6 +466,37 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         return result;
     }
 
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
@@ -838,6 +869,37 @@ struct DB_View_ASSETS_V1 : public DB_View
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
             while(q.NextRow())
@@ -1344,6 +1406,37 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         return result;
     }
 
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
@@ -1688,6 +1781,37 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
             while(q.NextRow())
@@ -2078,6 +2202,37 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         return result;
     }
 
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
@@ -2406,6 +2561,37 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         return result;
     }
 
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
@@ -2716,6 +2902,37 @@ struct DB_View_CATEGORY_V1 : public DB_View
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
             while(q.NextRow())
@@ -3190,6 +3407,37 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         return result;
     }
 
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
@@ -3610,6 +3858,37 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         return result;
     }
 
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
@@ -3930,6 +4209,37 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
             while(q.NextRow())
@@ -4298,6 +4608,37 @@ struct DB_View_PAYEE_V1 : public DB_View
         return result;
     }
 
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
@@ -4618,6 +4959,37 @@ struct DB_View_SETTING_V1 : public DB_View
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
             while(q.NextRow())
@@ -4980,6 +5352,37 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
             while(q.NextRow())
@@ -5422,6 +5825,37 @@ struct DB_View_STOCK_V1 : public DB_View
         return result;
     }
 
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
     Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
         Data_Set result;
@@ -5743,6 +6177,37 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
             stmt.Bind(1, v);
+            wxSQLite3ResultSet q = stmt.ExecuteQuery();
+
+            while(q.NextRow())
+            {
+                Self::Data entity(q, this);
+                result.push_back(entity);
+            }
+
+            q.Finalize();
+        }
+        catch(const wxSQLite3Exception &e) 
+        { 
+            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+        }
+
+        return result;
+    }
+
+    template<class V1, class V2>
+    Data_Set find(wxSQLite3Database* db, COLUMN col1, const V1& v1, COLUMN col2, const V2& v2, bool op_and = true)
+    {
+        Data_Set result;
+        try
+        {
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                                                                + column_to_name(col1) + wxT(" = ? ")
+                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
+                                                                + column_to_name(col2) + wxT(" = ?")
+                                                                );
+            stmt.Bind(1, v1);
+            stmt.Bind(2, v2);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
             while(q.NextRow())
