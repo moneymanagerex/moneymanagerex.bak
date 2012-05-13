@@ -988,28 +988,6 @@ wxString mmDBWrapper::getPayee(wxSQLite3Database* db, int payeeID, int& categID,
     return payeeName;
 }
 
-wxString mmDBWrapper::getCurrencySymbol(wxSQLite3Database* db, int currencyID)
-{
-    wxString symbol;
-
-    wxSQLite3Statement st = db->PrepareStatement("select CURRENCY_SYMBOL "
-                                                 "from CURRENCYFORMATS_V1 "
-                                                 "where CURRENCYID = ?"
-                                                );
-
-    st.Bind(1, currencyID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        symbol = q1.GetString(wxT("CURRENCY_SYMBOL"));
-    }
-
-    st.Finalize();
-
-    return symbol;
-}
-
 double mmDBWrapper::getCurrencyBaseConvRateForId(wxSQLite3Database* db, int currencyID)
 {
     double rate = g_defBASECONVRATE;

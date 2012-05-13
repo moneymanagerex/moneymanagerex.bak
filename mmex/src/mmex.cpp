@@ -3664,7 +3664,9 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     wxString site;
     wxSortedArrayString symbols_array;
     int currencyID = mmDBWrapper::getBaseCurrencySettings(m_core->db_.get());
-    wxString base_symbol = mmDBWrapper::getCurrencySymbol(m_core->db_.get(), currencyID);
+    wxString base_symbol;
+    DB_View_CURRENCYFORMATS_V1::Data* base_currency = CURRENCYFORMATS_V1.get(currencyID, m_core->db_.get());
+    if (base_currency) base_symbol = base_currency->CURRENCY_SYMBOL;
 
     if(base_symbol.IsEmpty())
     {
