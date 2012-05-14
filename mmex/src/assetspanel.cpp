@@ -24,8 +24,7 @@
 #include "../resources/assets.xpm"
 enum 
 { 
-  IDC_PANEL_STOCKS_LISTCTRL = wxID_HIGHEST + 1,
-  IDC_PANEL_ASSETS_LISTCTRL,
+  IDC_PANEL_ASSETS_LISTCTRL = wxID_HIGHEST + 1,
   IDC_PANEL_CHECKING_STATIC_BALHEADER,
   IDC_PANEL_CHECKING_STATIC_BAL,
   MENU_TREEPOPUP_NEW,
@@ -52,10 +51,10 @@ BEGIN_EVENT_TABLE(mmAssetsPanel, wxPanel)
 END_EVENT_TABLE()
 /*******************************************************/
 BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
-    EVT_LIST_ITEM_ACTIVATED(IDC_PANEL_STOCKS_LISTCTRL,   assetsListCtrl::OnListItemActivated)
-    EVT_LIST_ITEM_RIGHT_CLICK(IDC_PANEL_STOCKS_LISTCTRL, assetsListCtrl::OnItemRightClick)
-    EVT_LIST_ITEM_SELECTED(IDC_PANEL_STOCKS_LISTCTRL,    assetsListCtrl::OnListItemSelected)
-    EVT_LIST_ITEM_DESELECTED(IDC_PANEL_STOCKS_LISTCTRL,    assetsListCtrl::OnListItemDeselected)
+    EVT_LIST_ITEM_ACTIVATED(IDC_PANEL_ASSETS_LISTCTRL,   assetsListCtrl::OnListItemActivated)
+    EVT_LIST_ITEM_RIGHT_CLICK(IDC_PANEL_ASSETS_LISTCTRL, assetsListCtrl::OnItemRightClick)
+    EVT_LIST_ITEM_SELECTED(IDC_PANEL_ASSETS_LISTCTRL,    assetsListCtrl::OnListItemSelected)
+    EVT_LIST_ITEM_DESELECTED(IDC_PANEL_ASSETS_LISTCTRL,    assetsListCtrl::OnListItemDeselected)
         
     EVT_MENU(MENU_TREEPOPUP_NEW, assetsListCtrl::OnNewAsset)
     EVT_MENU(MENU_TREEPOPUP_EDIT, assetsListCtrl::OnEditAsset)
@@ -145,7 +144,7 @@ void mmAssetsPanel::CreateControls()
     m_imageList->Add(wxBitmap(assets_xpm));
 
     m_listCtrlAssets = new assetsListCtrl( this, itemSplitterWindow10, 
-        IDC_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
+        IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     //m_listCtrlAssets->SetBackgroundColour(mmColors::listDetailsPanelColor);
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
