@@ -423,7 +423,7 @@ struct DB_View_%s : public DB_View
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
                 + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY") + column_to_name(col)
+                + wxT(" ORDER BY ") + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
