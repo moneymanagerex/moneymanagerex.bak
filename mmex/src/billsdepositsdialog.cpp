@@ -577,6 +577,11 @@ void mmBDDialog::OnCancel(wxCommandEvent& /*event*/)
 void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
 {
     wxArrayString as = core_->getAccountsName();
+
+    //Disable parent window (bug fix for GTK)
+#ifdef __WXGTK__
+    this->Disable();
+#endif
     
     wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
@@ -585,6 +590,9 @@ void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
         accountID_ = core_->getAccountID(acctName);
         itemAccountName_->SetLabel(acctName);
     }
+#ifdef __WXGTK__
+    this->Enable();
+#endif
 }
 
 void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)

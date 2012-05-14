@@ -252,7 +252,10 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
     {
         account_names.Add(account.ACCOUNTNAME);
     }
-
+    //Disable parent window (bug fix for GTK)
+#ifdef __WXGTK__
+    this->Disable();
+#endif
     wxSingleChoiceDialog scd(0, _("Choose Investment Account"), _("Select Account"), account_names);
     if (scd.ShowModal() == wxID_OK)
     {
@@ -260,6 +263,9 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
         accountID_ = core_->getAccountID(acctName);
         heldAt_->SetLabel(acctName);
     }
+#ifdef __WXGTK__
+    this->Enable();
+#endif
 }
 
 void mmStockDialog::OnCancel(wxCommandEvent& /*event*/)

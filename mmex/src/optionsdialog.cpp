@@ -747,7 +747,9 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
     wxButton *btn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     wxASSERT(btn);
     //Disable parent window (bug fix for GTK)
+#ifdef __WXGTK__
     this->Disable();
+#endif
 
     wxString lang = mmSelectLanguage(this, inidb_, true, false);
     if (!lang.empty()) {
@@ -757,7 +759,9 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
 
         btn->SetLabel(lang.Left(1).Upper() + lang.SubString(1,lang.Len()));
     }
+#ifdef __WXGTK__
     this->Enable();
+#endif
 }
 
 void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
