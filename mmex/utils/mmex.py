@@ -481,12 +481,12 @@ struct DB_View_%s : public DB_View
 ''' % self._table
 
         s +='''
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {

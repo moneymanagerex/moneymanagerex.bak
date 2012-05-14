@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-14 16:12:37.688909.
+ *          AUTO GENERATED at 2012-05-14 16:54:07.811707.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -502,12 +502,12 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -928,12 +928,12 @@ struct DB_View_ASSETS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -1452,12 +1452,12 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -1850,12 +1850,12 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -2258,12 +2258,12 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -2622,12 +2622,12 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -2986,12 +2986,12 @@ struct DB_View_CATEGORY_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -3478,12 +3478,12 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -3934,12 +3934,12 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -4308,12 +4308,12 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -4694,12 +4694,12 @@ struct DB_View_PAYEE_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -5068,12 +5068,12 @@ struct DB_View_SETTING_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -5466,12 +5466,12 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -5926,12 +5926,12 @@ struct DB_View_STOCK_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {
@@ -6301,12 +6301,12 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0), bool asc = true)
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC ")));
 
             while(q.NextRow())
             {

@@ -55,6 +55,7 @@ BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
     EVT_LIST_ITEM_RIGHT_CLICK(IDC_PANEL_ASSETS_LISTCTRL, assetsListCtrl::OnItemRightClick)
     EVT_LIST_ITEM_SELECTED(IDC_PANEL_ASSETS_LISTCTRL,    assetsListCtrl::OnListItemSelected)
     EVT_LIST_ITEM_DESELECTED(IDC_PANEL_ASSETS_LISTCTRL,    assetsListCtrl::OnListItemDeselected)
+    EVT_LIST_COL_CLICK(IDC_PANEL_ASSETS_LISTCTRL,       assetsListCtrl::OnColClick)
         
     EVT_MENU(MENU_TREEPOPUP_NEW, assetsListCtrl::OnNewAsset)
     EVT_MENU(MENU_TREEPOPUP_EDIT, assetsListCtrl::OnEditAsset)
@@ -81,7 +82,7 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
     
-    initVirtualListControl();
+    initVirtualListControl(0, true);
     if (!all_assets_.empty())
         m_listCtrlAssets->EnsureVisible(all_assets_.size() - 1);
 
@@ -210,7 +211,7 @@ void mmAssetsPanel::CreateControls()
     updateExtraAssetData(-1);
 }
 
-void mmAssetsPanel::initVirtualListControl()
+void mmAssetsPanel::initVirtualListControl(int col, bool asc)
 {
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
@@ -223,7 +224,13 @@ void mmAssetsPanel::initVirtualListControl()
     header->SetLabel(lbl);
 
     all_assets_.clear();
-    all_assets_ = ASSETS_V1.all(db_);
+    DB_View_ASSETS_V1::COLUMN column = DB_View_ASSETS_V1::COL_ASSETID;
+    if (col == COL_NAME) column = DB_View_ASSETS_V1::COL_ASSETNAME;
+    else if (col == COL_TYPE) column = DB_View_ASSETS_V1::COL_ASSETTYPE;
+    else if (col == COL_VALUE) column = DB_View_ASSETS_V1::COL_VALUE;
+    else if (col == COL_DATE) column = DB_View_ASSETS_V1::COL_STARTDATE;
+    else if (col == COL_NOTES) column = DB_View_ASSETS_V1::COL_NOTES;
+    all_assets_ = ASSETS_V1.all(db_, column, asc);
     m_listCtrlAssets->SetItemCount(all_assets_.size());
 }
 
@@ -364,7 +371,7 @@ void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
 
 void assetsListCtrl::doRefreshItems()
 {
-    m_cp->initVirtualListControl();
+    m_cp->initVirtualListControl(m_selected_col, m_asc);
     RefreshItems(0, m_cp->all_assets_.empty() ? 0: m_cp->all_assets_.size() - 1);
 }
  
@@ -379,7 +386,7 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
         DB_View_ASSETS_V1::Data& asset = m_cp->all_assets_[m_selectedIndex];
         asset.remove(m_cp->getDb());
         DeleteItem(m_selectedIndex);
-        m_cp->initVirtualListControl();
+        m_cp->initVirtualListControl(m_selected_col, m_asc);
         
         //if (m_cp->getTrans().empty()) //after delition of asset - index and extra panel should be erased
         {
@@ -387,6 +394,15 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
             m_cp->updateExtraAssetData(m_selectedIndex);
         }
     }
+}
+
+void assetsListCtrl::OnColClick(wxListEvent& event)
+{
+    m_asc = !m_asc;
+    if(0 <= event.GetColumn() && event.GetColumn() < COL_MAX)
+        m_selected_col = event.GetColumn();
+
+    doRefreshItems();
 }
 
 void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)

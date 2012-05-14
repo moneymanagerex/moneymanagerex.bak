@@ -37,22 +37,27 @@ public:
     assetsListCtrl(mmAssetsPanel* cp, wxWindow *parent,
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
-        : wxListCtrl(parent, id, pos, size, style),
-        m_attr1(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
-        m_attr2(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
-        m_cp(cp),
-        m_selectedIndex(-1)
+        : wxListCtrl(parent, id, pos, size, style)
+        , m_attr1(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont)
+        , m_attr2(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont)
+        , m_cp(cp)
+        , m_selectedIndex(-1)
+        , m_selected_col(0)
+        , m_asc(true)
     {}
 
     void OnNewAsset(wxCommandEvent& event);
     void OnEditAsset(wxCommandEvent& event);
     void OnDeleteAsset(wxCommandEvent& event);
+    void OnColClick(wxListEvent& event);
 
 private:
     wxListItemAttr m_attr1; // style1
     wxListItemAttr m_attr2; // style2
     mmAssetsPanel* m_cp;
     long m_selectedIndex;
+    int  m_selected_col;
+    bool m_asc;
 
     /* required overrides for virtual style list control */
     wxString OnGetItemText(long item, long column) const;
@@ -76,7 +81,7 @@ public:
    ~mmAssetsPanel();
 
     void enableEditDeleteButtons(bool enable);
-    void initVirtualListControl();
+    void initVirtualListControl(int col, bool asc);
 
     wxString getItem(long item, long column);
     wxSQLite3Database* getDb() const { return db_; }
