@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-13 11:07:00.169563.
+ *          AUTO GENERATED at 2012-05-14 16:12:37.688909.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -446,7 +446,10 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -476,6 +479,8 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -497,12 +502,12 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -867,7 +872,10 @@ struct DB_View_ASSETS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -897,6 +905,8 @@ struct DB_View_ASSETS_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -918,12 +928,12 @@ struct DB_View_ASSETS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -1386,7 +1396,10 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -1416,6 +1429,8 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -1437,12 +1452,12 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -1779,7 +1794,10 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -1809,6 +1827,8 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -1830,12 +1850,12 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -2182,7 +2202,10 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -2212,6 +2235,8 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -2233,12 +2258,12 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -2541,7 +2566,10 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -2571,6 +2599,8 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -2592,12 +2622,12 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -2900,7 +2930,10 @@ struct DB_View_CATEGORY_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -2930,6 +2963,8 @@ struct DB_View_CATEGORY_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -2951,12 +2986,12 @@ struct DB_View_CATEGORY_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -3387,7 +3422,10 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -3417,6 +3455,8 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -3438,12 +3478,12 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -3838,7 +3878,10 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -3868,6 +3911,8 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -3889,12 +3934,12 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -4207,7 +4252,10 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -4237,6 +4285,8 @@ struct DB_View_INFOTABLE_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -4258,12 +4308,12 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -4588,7 +4638,10 @@ struct DB_View_PAYEE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -4618,6 +4671,8 @@ struct DB_View_PAYEE_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -4639,12 +4694,12 @@ struct DB_View_PAYEE_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -4957,7 +5012,10 @@ struct DB_View_SETTING_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -4987,6 +5045,8 @@ struct DB_View_SETTING_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -5008,12 +5068,12 @@ struct DB_View_SETTING_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -5350,7 +5410,10 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -5380,6 +5443,8 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -5401,12 +5466,12 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -5805,7 +5870,10 @@ struct DB_View_STOCK_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -5835,6 +5903,8 @@ struct DB_View_STOCK_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -5856,12 +5926,12 @@ struct DB_View_STOCK_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
@@ -6175,7 +6245,10 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") + column_to_name(col) + wxT(" = ?"));
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
+                + column_to_name(col) + wxT(" = ?")
+                + wxT(" ORDER BY") + column_to_name(col)
+                );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
 
@@ -6205,6 +6278,8 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
                                                                 + column_to_name(col1) + wxT(" = ? ")
                                                                 + (op_and ? wxT(" AND ") : wxT(" OR "))
                                                                 + column_to_name(col2) + wxT(" = ?")
+                                                                + wxT(" ORDER BY ") + column_to_name(col1)
+                                                                + wxT(",") + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -6226,12 +6301,12 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         return result;
     }
 
-    Data_Set all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
+    Data_Set all(wxSQLite3Database* db, COLUMN col = COLUMN(0))
     {
         Data_Set result;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col));
 
             while(q.NextRow())
             {
