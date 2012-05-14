@@ -127,6 +127,14 @@ TEST(initDB)
 
     ok = db.TableExists(wxT("ACCOUNTLIST_V1"));
     CHECK(ok);
+
+    ok = db.TableExists(wxT("CATEGORY_V1"));
+    CHECK(ok);
+    CHECK(!CATEGORY_V1.all(&db).empty());
+
+    ok = db.TableExists(wxT("SUBCATEGORY_V1"));
+    CHECK(ok);
+    CHECK(!SUBCATEGORY_V1.all(&db).empty());
 }
 //----------------------------------------------------------------------------
 
