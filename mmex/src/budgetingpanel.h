@@ -25,13 +25,12 @@
 #include "wx/wxprec.h"
 #include "util.h"
 
-class wxListCtrl;
 class wxListEvent;
 class mmBudgetingPanel;
 class mmGUIFrame;
 
 /* Custom ListCtrl class that implements virtual LC style */
-class budgetingListCtrl: public wxListCtrl
+class budgetingListCtrl: public mmListCtrl
 {
     DECLARE_NO_COPY_CLASS(budgetingListCtrl)
     DECLARE_EVENT_TABLE()
@@ -40,7 +39,7 @@ public:
     budgetingListCtrl(mmBudgetingPanel* cp, wxWindow *parent,
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
-        : wxListCtrl(parent, id, pos, size, style),
+        : mmListCtrl(parent, id, pos, size, style),
         attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
         attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
         attr3_(mmColors::listAlternativeColor1, mmColors::listFutureDateColor, wxNullFont),

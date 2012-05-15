@@ -36,7 +36,7 @@ BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)
     EVT_BUTTON(wxID_IGNORE,  mmBillsDepositsPanel::OnSkipBDTransaction)
 END_EVENT_TABLE()
 /*******************************************************/
-BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
+BEGIN_EVENT_TABLE(billsDepositsListCtrl, mmListCtrl)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_BD_LISTCTRL,   billsDepositsListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_BD_LISTCTRL, billsDepositsListCtrl::OnItemRightClick)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_BD_LISTCTRL,    billsDepositsListCtrl::OnListItemSelected)

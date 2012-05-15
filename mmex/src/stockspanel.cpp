@@ -60,7 +60,7 @@ BEGIN_EVENT_TABLE(mmStocksPanel, wxPanel)
     EVT_TIMER(ID_TIMER_SCHEDULE_STOCK,      mmStocksPanel::OnScheduleTimer)
 END_EVENT_TABLE()
 /*******************************************************/
-BEGIN_EVENT_TABLE(stocksListCtrl, wxListCtrl)
+BEGIN_EVENT_TABLE(stocksListCtrl, mmListCtrl)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_STOCKS_LISTCTRL,   stocksListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_STOCKS_LISTCTRL, stocksListCtrl::OnItemRightClick)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_STOCKS_LISTCTRL,    stocksListCtrl::OnListItemSelected)
