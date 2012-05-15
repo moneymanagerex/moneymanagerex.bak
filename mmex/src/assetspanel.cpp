@@ -50,7 +50,7 @@ BEGIN_EVENT_TABLE(mmAssetsPanel, wxPanel)
     EVT_BUTTON(wxID_DELETE, mmAssetsPanel::OnDeleteAsset)
 END_EVENT_TABLE()
 /*******************************************************/
-BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
+BEGIN_EVENT_TABLE(assetsListCtrl, mmListCtrl)
     EVT_LIST_ITEM_ACTIVATED(IDC_PANEL_ASSETS_LISTCTRL,   assetsListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(IDC_PANEL_ASSETS_LISTCTRL, assetsListCtrl::OnItemRightClick)
     EVT_LIST_ITEM_SELECTED(IDC_PANEL_ASSETS_LISTCTRL,    assetsListCtrl::OnListItemSelected)

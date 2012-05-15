@@ -25,12 +25,28 @@
 #include "mmcoredb.h"
 //----------------------------------------------------------------------------
 class wxSQLite3Database;
+class wxListCtrl;
 
 struct mmHolderBase
 {
     int id_;
     wxString valueStr_;
     double value_;
+};
+
+class mmListCtrl : public wxListCtrl
+{
+public:
+    mmListCtrl(wxWindow* parent, wxWindowID id
+        , const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize
+        , long style = wxLC_ICON
+        , const wxValidator& validator = wxDefaultValidator
+        , const wxString& name = wxListCtrlNameStr)
+        : wxListCtrl(parent, id, pos, size, style, validator, name)
+    {}
+
+    virtual ~mmListCtrl() 
+    {}
 };
 
 class mmPanelBase : public wxPanel

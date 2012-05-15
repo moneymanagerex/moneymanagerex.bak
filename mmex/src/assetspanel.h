@@ -23,12 +23,11 @@
 #include <boost/scoped_ptr.hpp>
 #include "mmex_db_view.h"
 
-class wxListCtrl;
 class wxListEvent;
 class mmAssetsPanel;
 
 /* Custom ListCtrl class that implements virtual LC style */
-class assetsListCtrl: public wxListCtrl
+class assetsListCtrl: public mmListCtrl
 {
     DECLARE_NO_COPY_CLASS(assetsListCtrl)
     DECLARE_EVENT_TABLE()
@@ -37,7 +36,7 @@ public:
     assetsListCtrl(mmAssetsPanel* cp, wxWindow *parent,
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
-        : wxListCtrl(parent, id, pos, size, style)
+        : mmListCtrl(parent, id, pos, size, style)
         , m_attr1(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont)
         , m_attr2(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont)
         , m_cp(cp)
