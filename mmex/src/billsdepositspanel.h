@@ -25,12 +25,11 @@
 #include "wx/wxprec.h"
 #include "util.h"
 
-class wxListCtrl;
 class wxListEvent;
 class mmBillsDepositsPanel;
 
 /* Custom ListCtrl class that implements virtual LC style */
-class billsDepositsListCtrl: public wxListCtrl
+class billsDepositsListCtrl: public mmListCtrl
 {
     DECLARE_NO_COPY_CLASS(billsDepositsListCtrl)
     DECLARE_EVENT_TABLE()
@@ -39,7 +38,7 @@ public:
     billsDepositsListCtrl(mmBillsDepositsPanel* cp, wxWindow *parent,
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
-        : wxListCtrl(parent, id, pos, size, style),
+        : mmListCtrl(parent, id, pos, size, style),
         attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
         attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
         cp_(cp),
