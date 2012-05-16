@@ -26,8 +26,6 @@
 #include <boost/foreach.hpp>
 
 /*******************************************************/
-namespace
-{
 enum
 {
     ID_PANEL_STOCKS_STATIC_DETAILS = 0,
@@ -45,7 +43,7 @@ enum EColumn
     COL_NOTES,
     COL_MAX, // number of columns
 };
-}
+
 BEGIN_EVENT_TABLE(mmStocksPanel, wxPanel)
     EVT_BUTTON(wxID_NEW,         mmStocksPanel::OnNewStocks)
     EVT_BUTTON(wxID_EDIT,        mmStocksPanel::OnEditStocks)
@@ -888,12 +886,6 @@ int stocksListCtrl::OnGetItemImage(long item) const
 {
     if (cp_->trans_[item].gainLoss_ > 0) return ICON_DESC;
     return ICON_ASC;
-}
-
-wxListItemAttr* stocksListCtrl::OnGetItemAttr(long item) const
-{
-    /* Returns the alternating background pattern */
-    return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
 }
 
 void stocksListCtrl::OnListKeyDown(wxListEvent& event)

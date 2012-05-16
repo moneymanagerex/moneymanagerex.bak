@@ -493,12 +493,6 @@ int billsDepositsListCtrl::OnGetItemImage(long item) const
     return -1;
 }
 
-wxListItemAttr* billsDepositsListCtrl::OnGetItemAttr(long item) const
-{
-    /* Returns the alternating background pattern */
-    return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
-}
-
 void billsDepositsListCtrl::OnListKeyDown(wxListEvent& event)
 {
   switch ( event.GetKeyCode() )

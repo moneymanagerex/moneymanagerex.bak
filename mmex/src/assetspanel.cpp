@@ -342,12 +342,6 @@ int assetsListCtrl::OnGetItemImage(long /*item*/) const
     return this->m_imageList->GetImageCount() - 1; // last one
 }
 
-wxListItemAttr* assetsListCtrl::OnGetItemAttr(long item) const
-{
-    /* Returns the alternating background pattern */
-    return item % 2 ? (wxListItemAttr *)&m_attr2 : (wxListItemAttr *)&m_attr1;
-}
-
 void assetsListCtrl::OnListKeyDown(wxListEvent& event)
 {
     if (event.GetKeyCode() == WXK_DELETE) 

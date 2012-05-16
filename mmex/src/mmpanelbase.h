@@ -23,6 +23,7 @@
 #include <wx/panel.h>
 #include <wx/string.h>
 #include "mmcoredb.h"
+#include "util.h" // XXX
 //----------------------------------------------------------------------------
 /* Include XPM Support */
 #include "../resources/exefile.xpm"
@@ -74,6 +75,8 @@ public:
         , const wxString& name = wxListCtrlNameStr)
         : wxListCtrl(parent, id, pos, size, style, validator, name)
         , m_imageList(new wxImageList(16, 16))
+        , m_attr1(new wxListItemAttr(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont))
+        , m_attr2(new wxListItemAttr(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont))
     {
         m_imageList->Add(wxBitmap(reconciled_xpm));
         m_imageList->Add(wxBitmap(void_xpm));
@@ -91,21 +94,21 @@ public:
 
     virtual ~mmListCtrl() 
     {
-        if (m_imageList)
-        {
-            delete m_imageList;
-            m_imageList = 0;
-        }
+        if (m_imageList) delete m_imageList;
+        if (m_attr1) delete m_attr1;
+        if (m_attr2) delete m_attr2;
     }
 
 public:
     wxImageList* m_imageList;
+    wxListItemAttr* m_attr1;
+    wxListItemAttr* m_attr2;
     std::vector<int> m_columns;
     std::vector<wxString> m_column_headers;
     std::vector<int> m_column_width;
 
 public:
-    void SetColumnImage(int col, int image)
+    virtual void SetColumnImage(int col, int image)
     {
         for (int i = 0; i < GetColumnCount(); ++i)
         {
@@ -118,6 +121,10 @@ public:
 
             SetColumn(i, item);
         }
+    }
+    virtual wxListItemAttr* OnGetItemAttr(long item) const
+    {
+        return item % 2 ? m_attr2 : m_attr1;
     }
 };
 

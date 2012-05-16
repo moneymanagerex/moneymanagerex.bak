@@ -61,7 +61,6 @@ private:
     /* required overrides for virtual style list control */
     wxString OnGetItemText(long item, long column) const;
     int OnGetItemImage(long item) const;
-    wxListItemAttr *OnGetItemAttr(long item) const;
 
     void OnItemRightClick(wxListEvent& event);
     void OnListItemActivated(wxListEvent& event);
