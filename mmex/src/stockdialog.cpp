@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -41,8 +41,8 @@ mmStockDialog::mmStockDialog( )
 }
 
 mmStockDialog::mmStockDialog(wxSQLite3Database* db, mmCoreDB* core, int stockID, bool edit,
-                             int accountID, wxWindow* parent, wxWindowID id, 
-                             const wxString& caption, const wxPoint& pos, 
+                             int accountID, wxWindow* parent, wxWindowID id,
+                             const wxString& caption, const wxPoint& pos,
                              const wxSize& size, long style )
 {
     db_ = db;
@@ -54,7 +54,7 @@ mmStockDialog::mmStockDialog(wxSQLite3Database* db, mmCoreDB* core, int stockID,
     mmDBWrapper::loadBaseCurrencySettings(db_);
 }
 
-bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, 
+bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
                            const wxPoint& pos, const wxSize& size, long style )
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
@@ -65,7 +65,7 @@ bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     GetSizer()->SetSizeHints(this);
 
     SetIcon(mmex::getProgramIcon());
-    
+
     fillControls();
 
     if (edit_)
@@ -99,9 +99,9 @@ void mmStockDialog::dataToControls()
     //I wish see integer if it integer else double
     if ((numShares - static_cast<long>(numShares)) != 0.0 )
         numSharesString=wxString::Format(wxT("%0.4f"),numShares);
-    else 
+    else
         numSharesString <<  static_cast<long>(numShares);
-    
+
     numShares_->SetValue(numSharesString);
 
     wxString dispAmount;
@@ -120,11 +120,11 @@ void mmStockDialog::dataToControls()
 
 void mmStockDialog::fillControls()
 {
-    
+
 }
 
 void mmStockDialog::CreateControls()
-{    
+{
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     this->SetSizer(itemBoxSizer2);
 
@@ -158,11 +158,11 @@ void mmStockDialog::CreateControls()
     heldAt_->SetToolTip(_("Enter the name of the financial institution where the investment is held"));
     if (accountID_ > -1)
         heldAt_->SetLabel(core_->getAccountName(accountID_));
-    
+
     //Date
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel5, wxID_STATIC, _("Date"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-    
+
     dpc_ = new wxDatePickerCtrl( itemPanel5, ID_DPC_STOCK_PDATE, wxDefaultDateTime, wxDefaultPosition, wxSize(120, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     itemFlexGridSizer6->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dpc_->SetToolTip(_("Specify the purchase date of the stock investment"));
@@ -176,8 +176,8 @@ void mmStockDialog::CreateControls()
     itemFlexGridSizer6->Add(stockSymbol_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     stockSymbol_->SetToolTip(_("Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"));
     //
-    
-    wxStaticText* itemStaticText15 = new wxStaticText( itemPanel5, wxID_STATIC, _("Number of Shares"), 
+
+    wxStaticText* itemStaticText15 = new wxStaticText( itemPanel5, wxID_STATIC, _("Number of Shares"),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -193,7 +193,7 @@ void mmStockDialog::CreateControls()
     itemFlexGridSizer6->Add(purchasePrice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     purchasePrice_->SetToolTip(_("Enter purchase price for each stock"));
 
-    wxStaticText* itemStaticText21 = new wxStaticText( itemPanel5, wxID_STATIC, _("Current Price"), 
+    wxStaticText* itemStaticText21 = new wxStaticText( itemPanel5, wxID_STATIC, _("Current Price"),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText21, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -201,7 +201,7 @@ void mmStockDialog::CreateControls()
     itemFlexGridSizer6->Add(currentPrice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     currentPrice_->SetToolTip(_("Enter current stock price"));
 
-    wxStaticText* itemStaticText211 = new wxStaticText( itemPanel5, wxID_STATIC, _("Commission"), 
+    wxStaticText* itemStaticText211 = new wxStaticText( itemPanel5, wxID_STATIC, _("Commission"),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText211, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -243,7 +243,7 @@ void mmStockDialog::CreateControls()
 
 void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
 {
-    
+
     DB_View_ACCOUNTLIST_V1::Data_Set all_accounts = ACCOUNTLIST_V1.find(db_, DB_View_ACCOUNTLIST_V1::COL_ACCOUNTTYPE, wxT("Investment"));
 
     wxArrayString account_names;
@@ -252,10 +252,7 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
     {
         account_names.Add(account.ACCOUNTNAME);
     }
-    //Disable parent window (bug fix for GTK)
-#ifdef __WXGTK__
-    this->Disable();
-#endif
+
     wxSingleChoiceDialog scd(0, _("Choose Investment Account"), _("Select Account"), account_names);
     if (scd.ShowModal() == wxID_OK)
     {
@@ -263,9 +260,6 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
         accountID_ = core_->getAccountID(acctName);
         heldAt_->SetLabel(acctName);
     }
-#ifdef __WXGTK__
-    this->Enable();
-#endif
 }
 
 void mmStockDialog::OnCancel(wxCommandEvent& /*event*/)
@@ -283,8 +277,8 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
         wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
         //wxString paddedURL = wxT("\"") + stockURL + wxT("\"");
         //wxString httpString = wxString::Format(paddedURL, stockSymbol);
-        //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL ); 
-    
+        //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL );
+
         int yahooSite = stockURL.Find(wxT("yahoo"));
         if ( yahooSite != wxNOT_FOUND )
         {
@@ -304,14 +298,14 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
 void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString pdate = dpc_->GetValue().FormatISODate();
-    
+
     if (accountID_ == -1)
     {
         mmShowErrorMessageInvalid(this, _("Held At"));
         return;
     }
     wxString heldAt =  core_->getAccountName(accountID_);
-        
+
     wxString stockName = stockName_->GetValue();
     wxString stockSymbol = stockSymbol_->GetValue();
     wxString notes       = notes_->GetValue();
@@ -322,7 +316,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
         mmShowErrorMessageInvalid(this, _("Num Shares"));
         return;
     }
-    
+
      double numShares = 0;
      if (!numSharesStr.ToDouble(&numShares) /*|| (numShares = 0.0)*/)
     {
@@ -343,17 +337,17 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
         mmShowErrorMessage(this, _("Invalid purchase price entered "), _("Error"));
         return;
     }
-    
+
     wxString currentPriceStr = currentPrice_->GetValue().Trim();
     double cPrice;
     if (!mmex::formatCurrencyToDouble(currentPriceStr, cPrice) || (cPrice < 0.0))
     {
-        //mmShowErrorMessage(this, _("Invalid current price entered "), _("Error"));        
+        //mmShowErrorMessage(this, _("Invalid current price entered "), _("Error"));
         //return;
         // we assume current price = purchase price
         cPrice = pPrice;
     }
-    
+
     wxString commissionStr = commission_->GetValue().Trim();
     double commission;
     if (!mmex::formatCurrencyToDouble(commissionStr, commission) || (commission < 0.0))
@@ -380,7 +374,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     stock->COMMISSION = commission;
 
     stock->save(db_);
-    
+
     EndModal(wxID_OK);
 }
 
