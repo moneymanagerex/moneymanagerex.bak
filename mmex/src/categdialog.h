@@ -26,6 +26,7 @@
 #define SYMBOL_CATEGDIALOG_POSITION wxDefaultPosition
 
 #include "guiid.h"
+#include "mmcategory.h"
 #include "defs.h"
 class mmCoreDB;
 
@@ -85,7 +86,7 @@ private:
     wxTreeItemId selectedItemId_;
     wxTreeItemId root_;
     bool bEnableSelect_;
-    void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true);
+    void showCategDialogDeleteError(int error_code, bool category = true);
     wxTreeItemId getTreeItemFor(wxTreeItemId itemID, wxString itemText);
 
 public:

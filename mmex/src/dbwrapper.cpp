@@ -388,7 +388,7 @@ void mmDBWrapper::createPayeeV1Table(wxSQLite3Database* db)
 void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
 {
     bool cat_exist = CATEGORY_V1.exists(db);
-    
+
     CATEGORY_V1.ensure(db);
     SUBCATEGORY_V1.ensure(db);
 
@@ -671,7 +671,7 @@ void mmDBWrapper::loadBaseCurrencySettings(wxSQLite3Database* db)
 void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
 {
     DB_View_CURRENCYFORMATS_V1::Data* currency = CURRENCYFORMATS_V1.get(currencyID, db);
-    if (currency) 
+    if (currency)
     {
         wxString pfxSymbol = currency->PFX_SYMBOL;
         wxString sfxSymbol = currency->SFX_SYMBOL;
@@ -694,124 +694,6 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         }
 
         mmex::CurrencyFormatter::instance().loadSettings(pfxSymbol, sfxSymbol, decChar, grpChar, unit, cent, scaleDl);
-    }
-}
-
-bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categID)
-{
-    try{
-        static const char sql[] =
-        "select 1 "
-        "from ( select CATEGID from CHECKINGACCOUNT_V1 "
-               "union all "
-               "select CATEGID from SPLITTRANSACTIONS_V1 "
-               "union all "
-               "select CATEGID from BUDGETSPLITTRANSACTIONS_V1 "
-             ") "
-        "where CATEGID = ? "
-        "limit 1"; // return only one row
-
-        {
-            wxSQLite3Statement st = db->PrepareStatement(sql);
-            st.Bind(1, categID);
-
-            wxSQLite3ResultSet q1 = st.ExecuteQuery();
-            bool found = q1.NextRow();
-            st.Finalize();
-
-            if (found)
-            {
-                return false;
-            }
-        }
-
-        // --
-
-        static const char* sql_del[] =
-        {
-            "delete from SUBCATEGORY_V1     where CATEGID = ?",
-            "delete from CATEGORY_V1        where CATEGID = ?",
-            "delete from BUDGETTABLE_V1     WHERE CATEGID = ?",
-            "update PAYEE_V1 set CATEGID=-1 WHERE CATEGID = ?",
-            0
-        };
-
-        for (int i = 0; sql_del[i]; ++i)
-        {
-            wxSQLite3Statement st = db->PrepareStatement(sql_del[i]);
-            st.Bind(1, categID);
-            st.ExecuteUpdate();
-            st.Finalize();
-        }
-
-        mmOptions::instance().databaseUpdated_ = true;
-        return true;
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::deleteCategoryWithConstraints: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Delete Category with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-        return false;
-    }
-}
-
-bool mmDBWrapper::deleteSubCategoryWithConstraints(wxSQLite3Database* db, int categID, int subcategID)
-{
-    try {
-        static const char sql[] =
-        "select 1 "
-        "from ( select CATEGID, SUBCATEGID from CHECKINGACCOUNT_V1 "
-               "union all "
-               "select CATEGID, SUBCATEGID from SPLITTRANSACTIONS_V1 "
-               "union all "
-               "select CATEGID, SUBCATEGID from BUDGETSPLITTRANSACTIONS_V1 "
-             ") "
-        "where CATEGID = ? and SUBCATEGID = ? "
-        "limit 1"; // return only one row
-
-        {
-            wxSQLite3Statement st = db->PrepareStatement(sql);
-            st.Bind(1, categID);
-            st.Bind(2, subcategID);
-
-            wxSQLite3ResultSet q1 = st.ExecuteQuery();
-            bool found = q1.NextRow();
-            st.Finalize();
-
-            if (found)
-            {
-                return false;
-            }
-        }
-
-        // --
-
-        static const char* sql_del[] =
-        {
-            "delete from SUBCATEGORY_V1 where CATEGID=? AND SUBCATEGID=?",
-            "delete from BUDGETTABLE_V1 WHERE CATEGID=? AND SUBCATEGID=?",
-
-            "update PAYEE_V1 set CATEGID = -1, SUBCATEGID = -1 "
-                                       "WHERE CATEGID=? AND SUBCATEGID=?",
-            0
-        };
-
-        for (int i = 0; sql_del[i]; ++i)
-        {
-            wxSQLite3Statement st = db->PrepareStatement(sql_del[i]);
-            st.Bind(1, categID);
-            st.Bind(2, subcategID);
-
-            st.ExecuteUpdate();
-            st.Finalize();
-        }
-
-        mmOptions::instance().databaseUpdated_ = true;
-        return true;
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::deleteSubCategoryWithConstraints: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Delete SubCategory with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-        return false;
     }
 }
 

@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -31,7 +31,7 @@
 class wxSQLite3Database;
 //----------------------------------------------------------------------------
 
-/** 
+/**
    mmCoreDB encapsulates most of the work in translating between
    the SQLite DB and the C++ datastructures used by MMEX
 */
@@ -70,8 +70,8 @@ public:
     boost::shared_ptr<mmCategory> getCategorySharedPtr(int category, int subcategory) const { return categoryList_.getCategorySharedPtr(category, subcategory); }
     int addCategory(const wxString& category) { return categoryList_.addCategory(category); }
     int addSubCategory(int parentID, const wxString& text) { return categoryList_.addSubCategory(parentID, text); }
-    bool deleteCategory(int categID) { return categoryList_.deleteCategory(categID); }
-    bool deleteSubCategory(int categID, int subCategID) { return categoryList_.deleteSubCategory(categID, subCategID); }
+    int deleteCategory(int categID) { return categoryList_.deleteCategory(categID); }
+    int deleteSubCategory(int categID, int subCategID) { return categoryList_.deleteSubCategory(categID, subCategID); }
     bool updateCategory(int categID, int subCategID, const wxString& text) { return categoryList_.updateCategory(categID, subCategID, text); }
     wxString getCategoryName(int id) const { return categoryList_.getCategoryName(id); }
     wxString GetCategoryString(int categID) const { return categoryList_.GetCategoryString(categID); }
@@ -114,14 +114,14 @@ public:
         return bTransactionList_.getTransactionStats(accountID, number, ignoreDate, dtBegin, dtEnd, ignoreFuture);
     }
     double getBalance(int accountID, bool ignoreFuture = false) const { return bTransactionList_.getBalance(accountID, ignoreFuture); }
-    bool   getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false) const 
-    { 
-        return bTransactionList_.getDailyBalance(accountID, daily_balance, ignoreFuture); 
+    bool   getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false) const
+    {
+        return bTransactionList_.getDailyBalance(accountID, daily_balance, ignoreFuture);
     }
     double getReconciledBalance(int accountID, bool ignoreFuture = false) const { return bTransactionList_.getReconciledBalance(accountID, ignoreFuture); }
     int    countFollowupTransactions() const { return bTransactionList_.countFollowupTransactions(); }
 
-public: 
+public:
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
 
    boost::shared_ptr<wxSQLite3Database> db_;

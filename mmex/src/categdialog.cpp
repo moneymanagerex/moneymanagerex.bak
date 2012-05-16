@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -43,21 +43,21 @@ mmCategDialog::mmCategDialog( )
 }
 
 mmCategDialog::mmCategDialog(mmCoreDB* core,
-                             wxWindow* parent, bool bEnableSelect, 
-                             wxWindowID id, const wxString& caption, 
+                             wxWindow* parent, bool bEnableSelect,
+                             wxWindowID id, const wxString& caption,
                              const wxPoint& pos, const wxSize& size, long style )
 {
     // Initialize fields in constructor
     core_ = core;
-    categID_ = -1;         
+    categID_ = -1;
     subcategID_ = -1;
     selectedItemId_ = 0;
     bEnableSelect_ = bEnableSelect;
     Create(parent, id, caption, pos, size, style);
 }
 
-bool mmCategDialog::Create( wxWindow* parent, wxWindowID id, 
-                           const wxString& caption, const wxPoint& pos, 
+bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
+                           const wxString& caption, const wxPoint& pos,
                            const wxSize& size, long style )
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
@@ -68,7 +68,7 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->SetSizeHints(this);
 
     SetIcon(mmex::getProgramIcon());
-    
+
     fillControls();
 
     Centre();
@@ -89,15 +89,15 @@ void mmCategDialog::fillControls()
     {
         const boost::shared_ptr<mmCategory> category = *it;
         wxTreeItemId maincat = treeCtrl_->AppendItem(root_, category->categName_);
-        treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));  
+        treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));
 
-        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin(); 
+        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
                 cit != category->children_.end();
                 ++ cit)
         {
             const boost::shared_ptr<mmCategory> sub_category = *cit;
             wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, sub_category->categName_);
-            treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(category->categID_, sub_category->categID_)); 
+            treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(category->categID_, sub_category->categID_));
 
             if (categID_ == category->categID_ && subcategID_ == sub_category->categID_)
                 selectedItemId_ = subcat;
@@ -105,7 +105,7 @@ void mmCategDialog::fillControls()
 
         treeCtrl_->SortChildren(maincat);
         //Do not expand categories is nice
-        //TODO: May be users will want parameter for this  
+        //TODO: May be users will want parameter for this
         //treeCtrl_->Expand(maincat);
     }
 
@@ -119,7 +119,7 @@ void mmCategDialog::fillControls()
     wxButton* deleteButton = (wxButton*)FindWindow(wxID_REMOVE);
 
     treeCtrl_->SelectItem(selectedItemId_);
-    
+
     textCtrl->SetValue(wxT (""));
     selectButton->Disable();
     deleteButton->Disable();
@@ -128,7 +128,7 @@ void mmCategDialog::fillControls()
 }
 
 void mmCategDialog::CreateControls()
-{    
+{
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
@@ -136,17 +136,17 @@ void mmCategDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
 #if defined (__WXGTK__) || defined (__WXMAC__)
-    treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS, 
+    treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS,
         wxDefaultPosition, wxSize(200, 380));
 #else
-    treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS, 
-        wxDefaultPosition, wxSize(200, 380), wxTR_SINGLE 
-        | wxTR_HAS_BUTTONS 
+    treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS,
+        wxDefaultPosition, wxSize(200, 380), wxTR_SINGLE
+        | wxTR_HAS_BUTTONS
         | wxTR_ROW_LINES );
 #endif
     itemBoxSizer3->Add(treeCtrl_, 1, wxGROW|wxALL, 1);
 
-    wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( this, 
+    wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( this,
         ID_DIALOG_CATEG_TEXTCTRL_CATNAME, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemTextCtrl6, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemTextCtrl6->SetToolTip(_("Enter the name of the category to add or edit here"));
@@ -154,17 +154,17 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( this, wxID_ADD, 
+    wxButton* itemButton7 = new wxButton( this, wxID_ADD,
         _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
      itemButton7->SetToolTip(_("Add a new category"));
 
-    wxButton* itemButton71 = new wxButton( this, wxID_EDIT, 
+    wxButton* itemButton71 = new wxButton( this, wxID_EDIT,
         _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton71, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton71->SetToolTip(_("Edit the name of an existing category"));
-    
-    wxButton* itemButton8 = new wxButton( this, wxID_REMOVE, 
+
+    wxButton* itemButton8 = new wxButton( this, wxID_REMOVE,
         _("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton8->SetToolTip(_("Delete an existing category. The category cannot be used by existing transactions."));
@@ -172,11 +172,11 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton11 = new wxButton( this, wxID_OK, 
+    wxButton* itemButton11 = new wxButton( this, wxID_OK,
         _("&Select"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(itemButton11, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton11->SetToolTip(_("Select the currently selected category as the selected category for the transaction"));
-    
+
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer9->Add(itemCancelButton);
@@ -187,7 +187,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
     if (mmIniOptions::instance().disableCategoryModify_)
         return;
 
-    wxTextCtrl* textCtrl;  
+    wxTextCtrl* textCtrl;
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_CATEG_TEXTCTRL_CATNAME);
     wxString text = textCtrl->GetValue();
     if (text == wxT(""))
@@ -195,7 +195,6 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
         wxString errMsg = _("Category cannot be empty");
         errMsg << wxT("          ");  // added to adjust dialog size
         wxMessageBox(errMsg, _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
-//      mmShowErrorMessage(this, _("Category cannot be empty"), _("Error"));
         return;
     }
 
@@ -206,7 +205,6 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
             wxString errMsg = _("Category with same name exists");
             errMsg << wxT("\n\n") << _("Tip: If category added now, check bottom of list.\nCategory will be in sorted order next time dialog appears");
             wxMessageBox(errMsg, _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
-//          mmShowErrorMessage(this, _("Category with same name exists"), _("Error"));
             return;
         }
         int categID = core_->addCategory(text);
@@ -217,17 +215,16 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
 
         return;
     }
-    
+
     mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>(treeCtrl_->GetItemData(selectedItemId_));
     int categID = iData->getCategID();
     int subcategID = iData->getSubCategID();
     if (subcategID == -1) // not subcateg
     {
         if (core_->getSubCategoryID(categID, text) != -1)
-        {   
+        {
             wxMessageBox(_("Sub Category with same name exists"),
                 _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
-//          mmShowErrorMessage(this, _("Sub Category with same name exists"), _("Error"));
             return;
         }
         int subcategID = core_->addSubCategory(categID, text);
@@ -237,36 +234,43 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
         treeCtrl_->Expand(selectedItemId_);
         return;
     }
-    
+
     wxMessageBox(_("Invalid Parent Category. Choose Root or Main Category node."),
         _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
-//  mmShowErrorMessage(this, _("Invalid Parent Category. Choose Root or Main Category node."),
-//                             _("Error adding Category"));
  }
- 
-void mmCategDialog::showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category)
+
+void mmCategDialog::showCategDialogDeleteError(int error_code, bool category)
 {
-    deleteCategoryErrMsg << wxT("\n\n") << _("Tip: Change all transactions using this ");
-    wxString categoryStr    = _("Category");
-    wxString subCategoryStr = _("Sub-Category");
+    if (error_code == wxID_OK) return;
 
+    wxString error_message;
+    switch (error_code)
+    {
+    case  ERR_CAT_USED1 : error_message = _("Category is used in one of the accounts."); break;
+    case  ERR_CAT_USED2 : error_message = _("Category is used as split in one of the accounts."); break;
+    case  ERR_CAT_USED3: error_message = _("Category is used in one of the repeating transactions."); break;
+    case  ERR_CAT_USED4 : error_message = _("Category is used as split in one of the repeating transactions."); break;
+    case  ERR_CAT_USED5 : error_message = _("Error"); break;
+    case  ERR_SUBCAT_USED1 : error_message = _("Sub-Category is used in one of the accounts."); break;
+    case  ERR_SUBCAT_USED2 : error_message = _("Sub-Category is used as split in one of the accounts."); break;
+    case  ERR_SUBCAT_USED3 : error_message = _("Sub-Category is used in one of the repeating transactions."); break;
+    case  ERR_SUBCAT_USED4 : error_message = _("Sub-Category is used as split in one of the repeating transactions."); break;
+
+    default:
+    wxASSERT(false);
+    }
+
+    error_message << wxT("\n\n");
     if (category)
-        deleteCategoryErrMsg << categoryStr;
+        error_message << _("Tip: Change all transactions using this category  to\nanother category using the relocate command:");
     else
-        deleteCategoryErrMsg << subCategoryStr;
+        error_message << _("Tip: Change all transactions using this subcategory  to\nanother subcategory using the relocate command:");
 
-    deleteCategoryErrMsg << _(" to\nanother ");
+    error_message << wxT("\n\n") << _("Tools -> Relocation of -> Categories");
 
-    if (category)
-        deleteCategoryErrMsg << categoryStr;
-    else
-        deleteCategoryErrMsg << subCategoryStr;
-    
-    deleteCategoryErrMsg << _(" using the relocate command:") << wxT("\n\n") << _("Tools -> Relocation of -> Categories");
-
-    wxMessageBox(deleteCategoryErrMsg,_("Organise Categories: Delete Error"),wxOK|wxICON_ERROR);
+    wxMessageBox(error_message, wxString() << _("Organise Categories: Delete Error"), wxOK|wxICON_WARNING);
 }
- 
+
 void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
 {
     if (mmIniOptions::instance().disableCategoryModify_)
@@ -277,24 +281,24 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
         return;
     }
 
-    mmTreeItemCateg* iData 
+    mmTreeItemCateg* iData
         = dynamic_cast<mmTreeItemCateg*>(treeCtrl_->GetItemData(selectedItemId_));
     int categID = iData->getCategID();
     int subcategID = iData->getSubCategID();
 
     if (subcategID == -1)
     {
-        if (!core_->deleteCategory(categID))
-        {
-            showCategDialogDeleteError(_("Category in use."));
+        int error_code = core_->deleteCategory(categID);
+        if (error_code != wxID_OK) {
+            showCategDialogDeleteError(error_code);
             return;
         }
     }
     else
     {
-        if (!core_->deleteSubCategory(categID, subcategID))
-        {
-            showCategDialogDeleteError(_("Sub-Category in use."), false);
+        int error_code = core_->deleteSubCategory(categID, subcategID);
+        if (error_code != wxID_OK) {
+            showCategDialogDeleteError(error_code, false);
             return;
         }
     }
@@ -326,7 +330,7 @@ void mmCategDialog::OnDoubleClicked(wxTreeEvent& /*event*/)
         subcategID_ = iData->getSubCategID();
         EndModal(wxID_OK);
     }
-    else 
+    else
         return;
 }
 
@@ -375,7 +379,7 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
         editButton->Enable();
         if (subcategID != -1)
         {
-            // this is a sub categ, cannot add 
+            // this is a sub categ, cannot add
             addButton->Disable();
         }
         else
@@ -400,18 +404,17 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
         (treeCtrl_->GetItemData(selectedItemId_));
     int categID = iData->getCategID();
     int subcategID = iData->getSubCategID();
-    
+
     if (!core_->updateCategory(categID, subcategID, text))
     {
         wxString errMsg = _("Update Failed");
         errMsg << wxT("          ");  // added to adjust dialog size
         wxMessageBox(errMsg, _("Organise Categories"),wxOK|wxICON_ERROR);
-//      mmShowErrorMessage(this, _("Update Failed"), _("Error"));
         return;
     }
 
     core_->bTransactionList_.updateAllTransactionsForCategory(core_, categID, subcategID);
-    
+
     treeCtrl_->SetItemText(selectedItemId_, text);
 }
 
@@ -450,4 +453,3 @@ void mmCategDialog::setTreeSelection(wxString catName, wxString subCatName)
         }
     }
 }
-

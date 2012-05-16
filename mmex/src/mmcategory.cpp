@@ -6,12 +6,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -20,6 +20,7 @@
 #include "mmcategory.h"
 #include "dbwrapper.h"
 #include "mmex_db_view.h"
+#include "util.h"
 
 bool mmCategoryList::categoryExists(const wxString& categoryName) const
 {
@@ -70,7 +71,7 @@ int mmCategoryList::addCategory(const wxString& name)
 
 int mmCategoryList::getSubCategoryID(int parentID, const wxString& subCategoryName) const
 {
-    DB_View_SUBCATEGORY_V1::Data_Set sub_category = SUBCATEGORY_V1.find(db_.get(), DB_View_SUBCATEGORY_V1::COL_CATEGID, parentID, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, subCategoryName, true); 
+    DB_View_SUBCATEGORY_V1::Data_Set sub_category = SUBCATEGORY_V1.find(db_.get(), DB_View_SUBCATEGORY_V1::COL_CATEGID, parentID, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, subCategoryName, true);
 
     return sub_category.empty() ? -1: sub_category[0].SUBCATEGID;
 }
@@ -80,18 +81,18 @@ int mmCategoryList::addSubCategory(int parentID, const wxString& text)
     DB_View_SUBCATEGORY_V1::Data* sub_category = SUBCATEGORY_V1.create();
     sub_category->CATEGID = parentID;
     sub_category->SUBCATEGNAME = text;
-    
+
     if (!sub_category->save(db_.get()))
         return -1;
 
     int cID = sub_category->id();
 
     boost::shared_ptr<mmCategory> categ = getCategorySharedPtr(parentID, -1);
-    
+
     boost::shared_ptr<mmCategory> subCateg(new mmCategory(cID, text));
     subCateg->parent_ = categ;
     categ->children_.push_back(subCateg);
-    
+
     return cID;
 }
 
@@ -122,9 +123,10 @@ boost::shared_ptr<mmCategory> mmCategoryList::getCategorySharedPtr(int category,
     return categ;
 }
 
-bool mmCategoryList::deleteCategory(int categID)
+int mmCategoryList::deleteCategory(int categID)
 {
-    if (mmDBWrapper::deleteCategoryWithConstraints(db_.get(), categID))
+    int error_code = mmCategoryList::deleteCategoryWithConstraints(categID);
+    if (error_code == wxID_OK)
     {
         std::vector <boost::shared_ptr<mmCategory> >::iterator Iter;
         for ( Iter = entries_.begin( ) ; Iter != entries_.end( ) ; Iter++ )
@@ -132,17 +134,18 @@ bool mmCategoryList::deleteCategory(int categID)
             if ((*Iter)->categID_ == categID)
             {
                 entries_.erase(Iter);
-                return true;
+                return wxID_OK;
             }
         }
     }
 
-    return false;
+    return error_code;
 }
 
-bool mmCategoryList::deleteSubCategory(int categID, int subCategID)
+int mmCategoryList::deleteSubCategory(int categID, int subCategID)
 {
-    if (mmDBWrapper::deleteSubCategoryWithConstraints(db_.get(), categID, subCategID))
+    int error_code = mmCategoryList::deleteSubCategoryWithConstraints(categID, subCategID);
+    if (error_code == wxID_OK)
     {
         boost::shared_ptr<mmCategory> categ = getCategorySharedPtr(categID, subCategID);
         boost::shared_ptr<mmCategory> parent = categ->parent_.lock();
@@ -154,12 +157,12 @@ bool mmCategoryList::deleteSubCategory(int categID, int subCategID)
             if ((*Iter)->categID_ == subCategID)
             {
                 parent->children_.erase(Iter);
-                return true;
+                return wxID_OK;
             }
         }
     }
 
-    return false;
+    return error_code;
 }
 
 bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString& text)
@@ -216,3 +219,119 @@ wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID) cons
         category<< wxT(":") << subCategory;
     return category;
 }
+
+int mmCategoryList::deleteCategoryWithConstraints(int categID)
+{
+    DB_View_CHECKINGACCOUNT_V1::Data_Set all_trans =
+        CHECKINGACCOUNT_V1.find(db_.get(), DB_View_CHECKINGACCOUNT_V1 ::COL_CATEGID, categID);
+    if (!all_trans.empty()) // transactions existing
+        return ERR_CAT_USED1; //error code more than zero
+
+    DB_View_SPLITTRANSACTIONS_V1::Data_Set all_splittrans =
+        SPLITTRANSACTIONS_V1.find(db_.get(), DB_View_SPLITTRANSACTIONS_V1::COL_CATEGID, categID);
+    if (!all_splittrans.empty()) // split transactions existing
+        return ERR_CAT_USED2;
+
+    DB_View_BILLSDEPOSITS_V1::Data_Set all_bills =
+        BILLSDEPOSITS_V1.find(db_.get(), DB_View_BILLSDEPOSITS_V1::COL_CATEGID, categID);
+    if (!all_bills.empty()) // repeating transactions existing
+        return ERR_CAT_USED3;
+
+    DB_View_BUDGETSPLITTRANSACTIONS_V1::Data_Set all_budget_splittrans =
+        BUDGETSPLITTRANSACTIONS_V1.find(db_.get(), DB_View_BUDGETSPLITTRANSACTIONS_V1::COL_CATEGID, categID);
+    if (!all_budget_splittrans.empty()) // repeating transactions existing
+        return ERR_CAT_USED4;
+
+    try{
+        static const char* sql_del[] =
+        {
+            "delete from SUBCATEGORY_V1     where CATEGID = ?",
+            "delete from CATEGORY_V1        where CATEGID = ?",
+            "delete from BUDGETTABLE_V1     WHERE CATEGID = ?",
+            "update PAYEE_V1 set CATEGID=-1 WHERE CATEGID = ?",
+            0
+        };
+
+        for (int i = 0; sql_del[i]; ++i)
+        {
+            wxSQLite3Statement st = db_.get()->PrepareStatement(sql_del[i]);
+            st.Bind(1, categID);
+            st.ExecuteUpdate();
+            st.Finalize();
+        }
+
+        mmOptions::instance().databaseUpdated_ = true;
+        return wxID_OK;
+
+    } catch(const wxSQLite3Exception& e)
+    {
+        wxLogDebug(wxT("Database::deleteCategoryWithConstraints: Exception"), e.GetMessage().c_str());
+        wxLogError(wxT("Delete Category with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        return ERR_CAT_USED5;
+    }
+}
+
+int mmCategoryList::deleteSubCategoryWithConstraints(int categID, int subcategID)
+{
+    DB_View_CHECKINGACCOUNT_V1::Data_Set all_trans =
+        CHECKINGACCOUNT_V1.find(db_.get()
+            , DB_View_CHECKINGACCOUNT_V1 ::COL_CATEGID, categID
+            , DB_View_CHECKINGACCOUNT_V1 ::COL_SUBCATEGID, subcategID);
+    if (!all_trans.empty()) // transactions existing
+        return ERR_SUBCAT_USED1;
+
+    DB_View_SPLITTRANSACTIONS_V1::Data_Set all_splittrans =
+        SPLITTRANSACTIONS_V1.find(db_.get()
+            , DB_View_SPLITTRANSACTIONS_V1::COL_CATEGID, categID
+            , DB_View_SPLITTRANSACTIONS_V1::COL_SUBCATEGID, subcategID);
+    if (!all_splittrans.empty()) // split transactions existing
+        return ERR_SUBCAT_USED2;
+
+    DB_View_BILLSDEPOSITS_V1::Data_Set all_bills =
+        BILLSDEPOSITS_V1.find(db_.get()
+            , DB_View_BILLSDEPOSITS_V1::COL_CATEGID, categID
+            , DB_View_BILLSDEPOSITS_V1::COL_SUBCATEGID, subcategID);
+    if (!all_bills.empty()) // repeating transactions existing
+        return ERR_SUBCAT_USED3;
+
+    DB_View_BUDGETSPLITTRANSACTIONS_V1::Data_Set all_budget_splittrans =
+        BUDGETSPLITTRANSACTIONS_V1.find(db_.get()
+            , DB_View_BUDGETSPLITTRANSACTIONS_V1::COL_CATEGID, categID
+            , DB_View_BUDGETSPLITTRANSACTIONS_V1::COL_SUBCATEGID, subcategID);
+    if (!all_budget_splittrans.empty()) // repeating transactions existing
+        return ERR_SUBCAT_USED4;
+
+        try {
+
+        static const char* sql_del[] =
+        {
+            "delete from SUBCATEGORY_V1 where CATEGID=? AND SUBCATEGID=?",
+            "delete from BUDGETTABLE_V1 WHERE CATEGID=? AND SUBCATEGID=?",
+
+            "update PAYEE_V1 set CATEGID = -1, SUBCATEGID = -1 "
+                                       "WHERE CATEGID=? AND SUBCATEGID=?",
+            0
+        };
+
+        for (int i = 0; sql_del[i]; ++i)
+        {
+            wxSQLite3Statement st = db_.get()->PrepareStatement(sql_del[i]);
+            st.Bind(1, categID);
+            st.Bind(2, subcategID);
+
+            st.ExecuteUpdate();
+            st.Finalize();
+        }
+
+        mmOptions::instance().databaseUpdated_ = true;
+        return wxID_OK;
+
+    } catch(const wxSQLite3Exception& e)
+    {
+        wxLogDebug(wxT("Database::deleteSubCategoryWithConstraints: Exception"), e.GetMessage().c_str());
+        wxLogError(wxT("Delete SubCategory with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        return ERR_CAT_USED5;
+    }
+}
+
+
