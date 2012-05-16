@@ -22,10 +22,6 @@
 #include "mmyahoo.h"
 #include "yahoosettingsdialog.h"
 
-/* Include XPM Support */
-#include "../resources/uparrow.xpm"
-#include "../resources/downarrow_red.xpm"
-
 #include "mmex_db_view.h"
 #include <boost/foreach.hpp>
 
