@@ -24,18 +24,6 @@
 #include "mmex.h"
 #include "reportbudget.h"
 
-/*******************************************************/
-/* Include XPM Support */
-#include "../resources/exefile.xpm"
-#include "../resources/flag.xpm"
-#include "../resources/void.xpm"
-#include "../resources/reconciled.xpm"
-#include "../resources/unreconciled.xpm"
-#include "../resources/uparrow.xpm"
-#include "../resources/downarrow.xpm"
-#include "../resources/rightarrow.xpm"
-#include "../resources/empty.xpm"
-/*******************************************************/
 BEGIN_EVENT_TABLE(mmBudgetingPanel, wxPanel)
     EVT_LEFT_DOWN( mmBudgetingPanel::OnMouseLeftDown ) 
 

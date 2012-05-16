@@ -24,8 +24,38 @@
 #include <wx/string.h>
 #include "mmcoredb.h"
 //----------------------------------------------------------------------------
+/* Include XPM Support */
+#include "../resources/exefile.xpm"
+#include "../resources/flag.xpm"
+#include "../resources/void.xpm"
+#include "../resources/reconciled.xpm"
+#include "../resources/unreconciled.xpm"
+#include "../resources/uparrow.xpm"
+#include "../resources/downarrow.xpm"
+#include "../resources/rightarrow.xpm"
+#include "../resources/duplicate.xpm"
+#include "../resources/trans_from.xpm"
+#include "../resources/trans_into.xpm"
+#include "../resources/tipicon.xpm"
+#include "../resources/empty.xpm"
+//----------------------------------------------------------------------------
+
 class wxSQLite3Database;
 class wxListCtrl;
+
+enum EIcons
+{
+    ICON_RECONCILED,
+    ICON_VOID,
+    ICON_FOLLOWUP,
+    ICON_NONE,
+    ICON_DESC,
+    ICON_ASC,
+    ICON_DUPLICATE,
+    ICON_TRANS_WITHDRAWAL,
+    ICON_TRANS_DEPOSIT,
+    ICON_TRANS_TRANSFER
+};
 
 struct mmHolderBase
 {
@@ -43,10 +73,43 @@ public:
         , const wxValidator& validator = wxDefaultValidator
         , const wxString& name = wxListCtrlNameStr)
         : wxListCtrl(parent, id, pos, size, style, validator, name)
-    {}
+        , m_imageList(new wxImageList(16, 16))
+    {
+        m_imageList->Add(wxBitmap(reconciled_xpm));
+        m_imageList->Add(wxBitmap(void_xpm));
+        m_imageList->Add(wxBitmap(flag_xpm));
+        m_imageList->Add(wxBitmap(unreconciled_xpm));
+        m_imageList->Add(wxBitmap(uparrow_xpm));
+        m_imageList->Add(wxBitmap(downarrow_xpm));
+        m_imageList->Add(wxBitmap(duplicate_xpm));
+        m_imageList->Add(wxBitmap(trans_from_xpm));
+        m_imageList->Add(wxBitmap(trans_into_xpm));
+        //m_imageList->Add(wxBitmap(trans_transfer_xpm));
+        
+        SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
+    }
 
     virtual ~mmListCtrl() 
-    {}
+    {
+        if (m_imageList)
+        {
+            delete m_imageList;
+            m_imageList = 0;
+        }
+    }
+
+public:
+    wxImageList* m_imageList;
+
+public:
+    void setColumnImage(int col, int image)
+    {
+        wxListItem item;
+        item.SetMask(wxLIST_MASK_IMAGE);
+        item.SetImage(image);
+
+        SetColumn(col, item);
+    }
 };
 
 class mmPanelBase : public wxPanel

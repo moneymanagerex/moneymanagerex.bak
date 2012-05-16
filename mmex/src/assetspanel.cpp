@@ -230,6 +230,8 @@ void mmAssetsPanel::initVirtualListControl(int col, bool asc)
     else if (col == COL_VALUE) column = DB_View_ASSETS_V1::COL_VALUE;
     else if (col == COL_DATE) column = DB_View_ASSETS_V1::COL_STARTDATE;
     else if (col == COL_NOTES) column = DB_View_ASSETS_V1::COL_NOTES;
+
+    m_listCtrlAssets->setColumnImage(col, asc ? ICON_ASC : ICON_DESC);
     all_assets_ = ASSETS_V1.all(db_, column, asc);
     m_listCtrlAssets->SetItemCount(all_assets_.size());
 }

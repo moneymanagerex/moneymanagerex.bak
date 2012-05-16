@@ -29,21 +29,7 @@
 #include <wx/srchctrl.h>
 
 //----------------------------------------------------------------------------
-/* Include XPM Support */
-#include "../resources/exefile.xpm"
-#include "../resources/flag.xpm"
-#include "../resources/void.xpm"
-#include "../resources/reconciled.xpm"
-#include "../resources/unreconciled.xpm"
-#include "../resources/uparrow.xpm"
-#include "../resources/downarrow.xpm"
-#include "../resources/rightarrow.xpm"
-#include "../resources/duplicate.xpm"
-#include "../resources/trans_from.xpm"
-#include "../resources/trans_into.xpm"
-#include "../resources/tipicon.xpm"
-//----------------------------------------------------------------------------
-
+//
 namespace
 {
 
@@ -60,21 +46,6 @@ enum EColumn
     COL_NOTES,
     COL_MAX, // number of columns
     COL_DEF_SORT = COL_DATE_OR_TRANSACTION_ID
-};
-//----------------------------------------------------------------------------
-
-enum EIcons
-{
-    ICON_RECONCILED,
-    ICON_VOID,
-    ICON_FOLLOWUP,
-    ICON_NONE,
-    ICON_DESC,
-    ICON_ASC,
-    ICON_DUPLICATE,
-    ICON_TRANS_WITHDRAWAL,
-    ICON_TRANS_DEPOSIT,
-    ICON_TRANS_TRANSFER
 };
 //----------------------------------------------------------------------------
 EColumn g_sortcol = COL_DEF_SORT; // index of column to sort
