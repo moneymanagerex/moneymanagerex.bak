@@ -74,7 +74,7 @@ mmStocksPanel::mmStocksPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, mm
                              wxWindow *parent,
                              wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
                              const wxString& name)
-        : mmPanelBase(db, inidb, core), m_imageList(0), accountID_(accountID)
+        : mmPanelBase(db, inidb, core), accountID_(accountID)
 {
     Create(parent, winid, pos, size, style, name);
 }
@@ -116,8 +116,6 @@ bool mmStocksPanel::Create(wxWindow *parent,
 
 mmStocksPanel::~mmStocksPanel()
 {
-    if (m_imageList) delete m_imageList;
-
     if (DownloadScheduleTimer_)
     {
         DownloadScheduleTimer_->Stop();
@@ -203,16 +201,10 @@ void mmStocksPanel::CreateControls()
             ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(100, 100),
             wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER);
 
-    wxSize imageSize(16, 16);
-    m_imageList = new wxImageList(imageSize.GetWidth(), imageSize.GetHeight());
-    m_imageList->Add(wxBitmap(uparrow_xpm));
-    m_imageList->Add(wxBitmap(downarrow_xpm));
-
     listCtrlAccount_ = new stocksListCtrl(this, itemSplitterWindow10,
                                            ID_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
                                            wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
     //listCtrlAccount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
-    listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(COL_DATE, _("Purchase Date"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
@@ -894,9 +886,8 @@ void mmStocksPanel::enableEditDeleteButtons(bool en)
 
 int stocksListCtrl::OnGetItemImage(long item) const
 {
-    /* Returns the icon to be shown for each entry */
-    if (cp_->trans_[item].gainLoss_ > 0) return 0;
-    return 1;
+    if (cp_->trans_[item].gainLoss_ > 0) return ICON_DESC;
+    return ICON_ASC;
 }
 
 wxListItemAttr* stocksListCtrl::OnGetItemAttr(long item) const

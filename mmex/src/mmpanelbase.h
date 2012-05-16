@@ -100,6 +100,9 @@ public:
 
 public:
     wxImageList* m_imageList;
+    std::vector<int> m_columns;
+    std::vector<wxString> m_column_headers;
+    std::vector<int> m_column_width;
 
 public:
     void SetColumnImage(int col, int image)
