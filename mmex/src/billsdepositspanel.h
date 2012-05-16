@@ -39,8 +39,6 @@ public:
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
         : mmListCtrl(parent, id, pos, size, style),
-        attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
-        attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
         cp_(cp),
         selectedIndex_(-1)
     {}
@@ -65,8 +63,6 @@ public:
     void OnSkipBDTransaction(wxCommandEvent& event);
 
 private:
-    wxListItemAttr attr1_; // style1
-    wxListItemAttr attr2_; // style2
     mmBillsDepositsPanel* cp_;
     long selectedIndex_;
 

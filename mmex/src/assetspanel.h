@@ -37,8 +37,6 @@ public:
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
         : mmListCtrl(parent, id, pos, size, style)
-        , m_attr1(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont)
-        , m_attr2(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont)
         , m_cp(cp)
         , m_selectedIndex(-1)
         , m_selected_col(0)
@@ -51,8 +49,6 @@ public:
     void OnColClick(wxListEvent& event);
 
 private:
-    wxListItemAttr m_attr1; // style1
-    wxListItemAttr m_attr2; // style2
     mmAssetsPanel* m_cp;
     long m_selectedIndex;
     int  m_selected_col;
