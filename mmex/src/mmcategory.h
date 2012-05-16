@@ -6,12 +6,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -20,6 +20,15 @@
 #ifndef _MM_EX_MMCATEGORY_H_
 #define _MM_EX_MMCATEGORY_H_
 
+#define ERR_CAT_USED1 101
+#define ERR_CAT_USED2 102
+#define ERR_CAT_USED3 103
+#define ERR_CAT_USED4 104
+#define ERR_CAT_USED5 105
+#define ERR_SUBCAT_USED1 111
+#define ERR_SUBCAT_USED2 112
+#define ERR_SUBCAT_USED3 113
+#define ERR_SUBCAT_USED4 114
 #include "defs.h"
 
 #include <boost/weak_ptr.hpp>
@@ -27,7 +36,7 @@
 
 class mmCategory
 {
-public: 
+public:
     mmCategory(int id, const wxString& name): categID_(id), categName_(name) {}
     ~mmCategory() {}
 
@@ -54,9 +63,12 @@ public:
 
     int addCategory(const wxString& category);
     int addSubCategory(int parentID, const wxString& text);
-    
-    bool deleteCategory(int categID);
-    bool deleteSubCategory(int categID, int subCategID);
+
+    int deleteCategory(int categID);
+    int deleteSubCategory(int categID, int subCategID);
+    int deleteCategoryWithConstraints(int categID);
+    int deleteSubCategoryWithConstraints(int categID, int subcategID);
+
     bool updateCategory(int categID, int subCategID, const wxString& text);
     wxString GetCategoryString(int categID) const;
     wxString GetSubCategoryString(int categID, int subCategID) const;
@@ -66,7 +78,7 @@ public:
     std::vector< boost::shared_ptr<mmCategory> > entries_;
     typedef std::vector< boost::shared_ptr<mmCategory> >::const_iterator const_iterator;
     std::pair<const_iterator, const_iterator> range() const { return std::make_pair(entries_.begin(), entries_.end()); }
-   
+
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
 };

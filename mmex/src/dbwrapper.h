@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -34,7 +34,7 @@ const wxString ACCOUNT_TYPE_BANK  = wxT("Checking");
 const wxString ACCOUNT_TYPE_TERM  = wxT("Term");
 const wxString ACCOUNT_TYPE_STOCK = wxT("Investment");
 
-const wxString TRANS_TYPE_WITHDRAWAL_STR   = wxT("Withdrawal");   
+const wxString TRANS_TYPE_WITHDRAWAL_STR   = wxT("Withdrawal");
 const wxString TRANS_TYPE_DEPOSIT_STR      = wxT("Deposit");
 const wxString TRANS_TYPE_TRANSFER_STR     = wxT("Transfer");
 
@@ -48,7 +48,7 @@ namespace mmDBWrapper
 boost::shared_ptr<wxSQLite3Database> Open(const wxString &dbpath, const wxString &key = wxGetEmptyString());
 
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
-    
+
 /* Creating new DBs */
 void initDB(wxSQLite3Database* db, wxProgressDialog* pgd);
 void createInfoV1Table(wxSQLite3Database* db);
@@ -78,7 +78,7 @@ bool deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName);
 void addBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, const wxString& period, double amount);
 void updateBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, const wxString& period, double amout);
 bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, wxString& period, double& amt);
-    
+
 
 /* Account API */
 void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
@@ -88,10 +88,8 @@ wxString getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcate
 bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
 bool deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID);
 wxArrayString filterPayees(wxSQLite3Database* db, const wxString& patt);
-	
+
 /* Category Table API */
-bool deleteCategoryWithConstraints(wxSQLite3Database* db, int categID);
-bool deleteSubCategoryWithConstraints(wxSQLite3Database* db, int categID, int subcategID);
 bool updateCategory(wxSQLite3Database* db, int categID, int subcategID, const wxString &newName);
 wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
 
@@ -135,14 +133,14 @@ double getAssetValue(const DB_View_ASSETS_V1::Data& asset);
 
 
 //----------------------------------------------------------------------------
-    
+
 } // namespace mmDBWrapper
 
 //----------------------------------------------------------------------------
 
 inline void mmDBWrapper::setLastDbPath(wxSQLite3Database *db, const wxString &path)
 {
-	setINISettingValue(db, wxT("LASTFILENAME"), path);
+    setINISettingValue(db, wxT("LASTFILENAME"), path);
 }
 //----------------------------------------------------------------------------
 #endif // _MM_EX_DBWRAPPER_H_
