@@ -145,7 +145,6 @@ public:
 
 public:
     stocksListCtrl* listCtrlAccount_;
-    wxImageList* m_imageList;
     int accountID_;
     /************************************************************/
     // Greg Newton
