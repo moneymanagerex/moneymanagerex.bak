@@ -89,7 +89,6 @@ public:
 
 private:
     assetsListCtrl* m_listCtrlAssets;
-    boost::scoped_ptr<wxImageList> m_imageList;
 
     bool Create(wxWindow *parent, wxWindowID winid, const wxPoint& pos, const wxSize& size, long style, const wxString &name);
     void CreateControls();

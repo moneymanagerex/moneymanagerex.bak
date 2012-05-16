@@ -102,13 +102,19 @@ public:
     wxImageList* m_imageList;
 
 public:
-    void setColumnImage(int col, int image)
+    void SetColumnImage(int col, int image)
     {
-        wxListItem item;
-        item.SetMask(wxLIST_MASK_IMAGE);
-        item.SetImage(image);
+        for (int i = 0; i < GetColumnCount(); ++i)
+        {
+            wxListItem item;
+            item.SetMask(wxLIST_MASK_IMAGE);
+            if (i == col)
+                item.SetImage(image);
+            else
+                item.SetImage(-1);
 
-        SetColumn(col, item);
+            SetColumn(i, item);
+        }
     }
 };
 
