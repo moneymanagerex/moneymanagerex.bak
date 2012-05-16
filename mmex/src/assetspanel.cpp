@@ -140,15 +140,11 @@ void mmAssetsPanel::CreateControls()
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( this, IDC_PANEL_CHECKING_STATIC_BAL,
         wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
-    wxSize imageSize(16, 16);
-    m_imageList.reset(new wxImageList(imageSize.GetWidth(), imageSize.GetHeight()));
-    m_imageList->Add(wxBitmap(assets_xpm));
-
     m_listCtrlAssets = new assetsListCtrl( this, itemSplitterWindow10, 
         IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    //m_listCtrlAssets->SetBackgroundColour(mmColors::listDetailsPanelColor);
-    m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
+    m_listCtrlAssets->m_imageList->Add(wxBitmap(assets_xpm));
+
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"), wxLIST_FORMAT_RIGHT);
     m_listCtrlAssets->InsertColumn(COL_TYPE, _("Type"), wxLIST_FORMAT_RIGHT);
     m_listCtrlAssets->InsertColumn(COL_VALUE, _("Value"), wxLIST_FORMAT_RIGHT);
@@ -231,7 +227,7 @@ void mmAssetsPanel::initVirtualListControl(int col, bool asc)
     else if (col == COL_DATE) column = DB_View_ASSETS_V1::COL_STARTDATE;
     else if (col == COL_NOTES) column = DB_View_ASSETS_V1::COL_NOTES;
 
-    m_listCtrlAssets->setColumnImage(col, asc ? ICON_ASC : ICON_DESC);
+    m_listCtrlAssets->SetColumnImage(col, asc ? ICON_ASC : ICON_DESC);
     all_assets_ = ASSETS_V1.all(db_, column, asc);
     m_listCtrlAssets->SetItemCount(all_assets_.size());
 }
@@ -343,7 +339,7 @@ void mmAssetsPanel::enableEditDeleteButtons(bool enable)
 
 int assetsListCtrl::OnGetItemImage(long /*item*/) const
 {
-    return 0; // Returns the icon to be shown for each entry
+    return this->m_imageList->GetImageCount() - 1; // last one
 }
 
 wxListItemAttr* assetsListCtrl::OnGetItemAttr(long item) const
