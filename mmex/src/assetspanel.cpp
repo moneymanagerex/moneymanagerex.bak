@@ -144,13 +144,7 @@ void mmAssetsPanel::CreateControls()
         IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     m_listCtrlAssets->m_imageList->Add(wxBitmap(assets_xpm));
-
-    m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"), wxLIST_FORMAT_RIGHT);
-    m_listCtrlAssets->InsertColumn(COL_TYPE, _("Type"), wxLIST_FORMAT_RIGHT);
-    m_listCtrlAssets->InsertColumn(COL_VALUE, _("Value"), wxLIST_FORMAT_RIGHT);
-    m_listCtrlAssets->InsertColumn(COL_DATE, _("Date"), wxLIST_FORMAT_RIGHT);
-    m_listCtrlAssets->InsertColumn(COL_NOTES, _("Notes"));
-
+    
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4;
     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL0_WIDTH"), wxT("150")).ToLong(&col0); 
@@ -158,13 +152,13 @@ void mmAssetsPanel::CreateControls()
     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL2_WIDTH"), wxT("-2")).ToLong(&col2); 
     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL3_WIDTH"), wxT("-2")).ToLong(&col3); 
     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL4_WIDTH"), wxT("450")).ToLong(&col4); 
-     
-    m_listCtrlAssets->SetColumnWidth(COL_NAME, col0);
-    m_listCtrlAssets->SetColumnWidth(COL_TYPE, col1);
-    m_listCtrlAssets->SetColumnWidth(COL_VALUE, col2);
-    m_listCtrlAssets->SetColumnWidth(COL_DATE, col3);
-    m_listCtrlAssets->SetColumnWidth(COL_NOTES, col4);
-    
+
+    m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"), wxLIST_FORMAT_RIGHT, col0);
+    m_listCtrlAssets->InsertColumn(COL_TYPE, _("Type"), wxLIST_FORMAT_RIGHT, col1);
+    m_listCtrlAssets->InsertColumn(COL_VALUE, _("Value"), wxLIST_FORMAT_RIGHT, col2);
+    m_listCtrlAssets->InsertColumn(COL_DATE, _("Date"), wxLIST_FORMAT_RIGHT, col3);
+    m_listCtrlAssets->InsertColumn(COL_NOTES, _("Notes"), wxLIST_FORMAT_LEFT, col4);
+
     wxPanel* assets_panel = new wxPanel( itemSplitterWindow10, wxID_ANY,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
 
