@@ -3607,9 +3607,15 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     wxString site = wxT("http://www.codelathe.com/mmex/version.html");
 
     wxString page;
-    if (site_content(site, page) != 0)
+    int err_code = site_content(site, page);
+    if (err_code != wxID_OK) {
+        if (err_code == 2)
+            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxICON_WARNING);
+        else if (err_code == 1)
+            wxMessageBox(_("Unable to connect!"), _("Error"), wxICON_WARNING);
         return;
-        
+    }
+
     /*************************************************************************
         Expected format of the string from the internet. Version: 0.9.8.0
         page = wxT("x.x.x.x - Win: w.w.w.w - Unix: u.u.u.u - Mac: m.m.m.m");
@@ -3696,8 +3702,14 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     site << wxT("&f=") << yahoo_->CSVColumns_ << wxT("&e=.csv");
 
     wxString rates;
-    if (site_content(site, rates) != 0)
+    int err_code = site_content(site, rates);
+    if (err_code != wxID_OK) {
+        if (err_code == 2)
+            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxICON_WARNING);
+        else if (err_code == 1)
+            wxMessageBox(_("Unable to connect!"), _("Error"), wxICON_WARNING);
         return;
+    }
 
     wxString CurrencySymbol, dName;
     double dRate = 0;

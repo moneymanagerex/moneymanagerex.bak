@@ -1134,7 +1134,7 @@ wxArrayString itemChoiceStrings() {
 
 int site_content(wxString site, wxString& output)
 {
-    int err_code = 0;
+    int err_code = wxID_OK;
     wxURL url(site);
     if (url.GetError() == wxURL_NOERR) {
         url.GetProtocol().SetTimeout(10); // 10 secs
@@ -1146,13 +1146,12 @@ int site_content(wxString site, wxString& output)
             delete in_stream;
             buf[bytes_read] = '\0';
             output = wxString::FromAscii((const char *)buf);
-        } else {
-            err_code = 2;
-            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxICON_WARNING);
         }
-    } else {
-        err_code = 1;
-        wxMessageBox(_("Unable to connect!"), _("Error"), wxICON_WARNING);
+        else
+            err_code = 2; //Cannot get data from WWW!
     }
+    else
+        err_code = 1; //Unable to connect
+
     return err_code;
 }
