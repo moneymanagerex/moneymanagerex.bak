@@ -1,3 +1,0 @@
-awxtest ICON "awxtest.ico"
-#include "wx/msw/wx.rc"
-
