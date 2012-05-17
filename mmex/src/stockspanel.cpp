@@ -669,7 +669,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     yahoo_->StocksRefreshStatus_ = mmYahoo::DS_INPROGRESS;
     wxString quotes;
 
-    if (site_content(site, quotes) != 0)
+    if (site_content(site, quotes) != wxID_OK)
     {
         yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
         return;
