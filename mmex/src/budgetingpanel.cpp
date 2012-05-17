@@ -582,14 +582,13 @@ wxString budgetingListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr* budgetingListCtrl::OnGetItemAttr(long item) const
 {
-    if ((cp_->trans_[item].id_ < 0) && 
-        (cp_->currentView_ != wxT("View Budget Category Summary")) )
+    if (cp_->trans_[item].id_ < 0 && cp_->currentView_ != wxT("View Budget Category Summary"))
     {
-        return (wxListItemAttr *)&attr3_;
+        return m_attr3;
     }
     
     /* Returns the alternating background pattern */
-    return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
+    return item % 2 ? this->m_attr2 : this->m_attr1;
 }
 
 void budgetingListCtrl::OnListItemActivated(wxListEvent& event)

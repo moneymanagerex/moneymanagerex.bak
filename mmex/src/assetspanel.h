@@ -20,7 +20,6 @@
 #include "mmpanelbase.h"
 #include "util.h"
 
-#include <boost/scoped_ptr.hpp>
 #include "mmex_db_view.h"
 
 class wxListEvent;
