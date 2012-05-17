@@ -39,15 +39,15 @@ public:
     budgetingListCtrl(mmBudgetingPanel* cp, wxWindow *parent,
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
-        : mmListCtrl(parent, id, pos, size, style),
-        attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
-        attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
-        attr3_(mmColors::listAlternativeColor1, mmColors::listFutureDateColor, wxNullFont),
-//      Forground,background,font
-//      attr3_(wxColour( 255, 0, 0 ), wxColour( 0, 255, 0 ), wxNullFont),
-        cp_(cp),
-        selectedIndex_(-1)
+        : mmListCtrl(parent, id, pos, size, style)
+        , m_attr3(new wxListItemAttr(mmColors::listAlternativeColor1, mmColors::listFutureDateColor, wxNullFont))
+        , cp_(cp)
+        , selectedIndex_(-1)
     {}
+    ~budgetingListCtrl()
+    {
+        if (m_attr3) delete m_attr3;
+    }
 
 public:
     wxString OnGetItemText(long item, long column) const;
@@ -58,11 +58,8 @@ public:
     void OnListItemSelected(wxListEvent& event);
     void OnListItemActivated(wxListEvent& event);
     
-
 private:
-    wxListItemAttr attr1_; // style1
-    wxListItemAttr attr2_; // style2
-    wxListItemAttr attr3_; // style3
+    wxListItemAttr* m_attr3; // style3
     mmBudgetingPanel* cp_;
     long selectedIndex_;
 };
