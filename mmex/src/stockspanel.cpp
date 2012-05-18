@@ -28,7 +28,7 @@
 /*******************************************************/
 enum
 {
-    ID_PANEL_STOCKS_STATIC_DETAILS = 0,
+    ID_PANEL_STOCKS_STATIC_DETAILS = wxID_HIGHEST + 300,
     ID_PANEL_STOCKS_STATIC_DETAILS_MINI
 };
 enum EColumn
@@ -96,11 +96,10 @@ bool mmStocksPanel::Create(wxWindow *parent,
     // Greg Newton
     yahoo_ = new mmYahoo(inidb_, db_);
 
+    updateExtraStocksData(-1);
+
     DownloadScheduleTimer_=NULL;
     StatusRefreshTimer_=NULL;
-
-    // Speed the LED flash rate up. Crude, eh?
-    // m_LED->SetTimerInterval(m_LED->GetTimerInterval()/2);
 
     StatusRefreshTimer_ = new wxTimer(this,ID_TIMER_REFRESH_STOCK);
     StatusRefreshTimer_->Start(1250, wxTIMER_CONTINUOUS);
@@ -129,31 +128,12 @@ mmStocksPanel::~mmStocksPanel()
     if (yahoo_) delete yahoo_;
     if (m_LED) delete m_LED;
 
-    long col0, col1, col2, col3, col4, col5, col6;
-    col0 = listCtrlAccount_->GetColumnWidth(COL_DATE);
-    col1 = listCtrlAccount_->GetColumnWidth(COL_NAME);
-    col2 = listCtrlAccount_->GetColumnWidth(COL_NUMBER);
-    col3 = listCtrlAccount_->GetColumnWidth(COL_VALUE);
-    col4 = listCtrlAccount_->GetColumnWidth(COL_GAIN_LOSS);
-    col5 = listCtrlAccount_->GetColumnWidth(COL_CURRENT);
-    col6 = listCtrlAccount_->GetColumnWidth(COL_NOTES);
-
-    wxString col0Str = wxString::Format(wxT("%d"), col0);
-    wxString col1Str = wxString::Format(wxT("%d"), col1);
-    wxString col2Str = wxString::Format(wxT("%d"), col2);
-    wxString col3Str = wxString::Format(wxT("%d"), col3);
-    wxString col4Str = wxString::Format(wxT("%d"), col4);
-    wxString col5Str = wxString::Format(wxT("%d"), col5);
-    wxString col6Str = wxString::Format(wxT("%d"), col6);
-
     inidb_->Begin();
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL0_WIDTH"), col0Str);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL1_WIDTH"), col1Str);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL2_WIDTH"), col2Str);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL3_WIDTH"), col3Str);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL4_WIDTH"), col4Str);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL5_WIDTH"), col5Str);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL6_WIDTH"), col6Str);
+    for (int i = 0; i < COL_MAX; ++i)
+    {
+        mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("STOCKS_COL%i_WIDTH"), i),
+                                wxString::Format(wxT("%i"), listCtrlAccount_->GetColumnWidth(i)));
+    };
     inidb_->Commit();
 }
 
@@ -233,22 +213,14 @@ void mmStocksPanel::CreateControls()
     listCtrlAccount_->InsertColumn(COL_NOTES, itemCol);
 
     /* See if we can get data from inidb */
-    long col0, col1, col2, col3, col4, col5, col6;
-    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL0_WIDTH"), wxT("150")).ToLong(&col0);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL1_WIDTH"), wxT("-2")).ToLong(&col1);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL2_WIDTH"), wxT("-2")).ToLong(&col2);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL3_WIDTH"), wxT("-2")).ToLong(&col3);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL4_WIDTH"), wxT("-2")).ToLong(&col4);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL5_WIDTH"), wxT("-2")).ToLong(&col5);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL6_WIDTH"), wxT("-2")).ToLong(&col6);
-
-    listCtrlAccount_->SetColumnWidth(COL_DATE, col0);
-    listCtrlAccount_->SetColumnWidth(COL_NAME, col1);
-    listCtrlAccount_->SetColumnWidth(COL_NUMBER, col2);
-    listCtrlAccount_->SetColumnWidth(COL_VALUE, col3);
-    listCtrlAccount_->SetColumnWidth(COL_GAIN_LOSS, col4);
-    listCtrlAccount_->SetColumnWidth(COL_CURRENT, col5);
-    listCtrlAccount_->SetColumnWidth(COL_NOTES, col6);
+    long col_x = -2;
+    for (int i = 0; i < COL_MAX; ++i)
+    {
+        if (!mmDBWrapper::getINISettingValue(inidb_, wxString::Format(wxT("STOCKS_COL%i_WIDTH"), i),
+                                        (i == 0 ? wxT("140"): wxT("-2"))).ToLong(&col_x))
+            (i == 0 ? col_x = 140 : col_x = -2);
+        listCtrlAccount_->SetColumnWidth(i, col_x);
+    };
 
     wxPanel* itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1,
                                         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
@@ -290,16 +262,14 @@ void mmStocksPanel::CreateControls()
     itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
     //Infobar-mini
-    wxStaticText* itemStaticText44 = new wxStaticText(itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""),
+    stock_details_short_ = new wxStaticText(itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""),
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
+    itemBoxSizer5->Add(stock_details_short_, 1, wxGROW|wxTOP, 12);
     //Infobar
-    wxStaticText* itemStaticText33 = new wxStaticText(itemPanel12,
+    stock_details_ = new wxStaticText(itemPanel12,
     ID_PANEL_STOCKS_STATIC_DETAILS, wxT(""),
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
-    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxLEFT|wxRIGHT, 14);
-
-    updateExtraStocksData(-1);
+    itemBoxSizer4->Add(stock_details_, 1, wxGROW|wxLEFT|wxRIGHT, 14);
 }
 
 void mmStocksPanel::initVirtualListControl()
@@ -692,7 +662,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         if (csvsimple.HasMoreTokens())
         {
             StockSymbol = csvsimple.GetNextToken();
-            if (suffix_available) 
+            if (suffix_available)
                 StockSymbol.Replace(suffix, wxT(""));
             if (csvsimple.HasMoreTokens())
             {
@@ -732,7 +702,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         // update stock price and value
         if (stock.STOCKNAME.IsEmpty())
             stock.STOCKNAME = data.second;
-        
+
         stock.VALUE = stock.NUMSHARES * price;
 
         // store into db
@@ -796,23 +766,16 @@ void stocksListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 
 void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 {
-    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS);
-    wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS_MINI);
     if (selectedIndex_ == -1)
     {
-        st->SetLabel(Tips(TIPS_STOCK));
-        stm->SetLabel(wxT(""));
+        stock_details_->SetLabel(Tips(TIPS_STOCK));
+        stock_details_short_->SetLabel(wxT(""));
     }
     else
     {
-        wxString stockPurchasePriceStr;
-        wxString stockCurrentPriceStr;
-        wxString stockDifferenceStr;
-        wxString stocktotalDifferenceStr;
-        wxString stockPercentageStr;
-        wxString stocktotalPercentageStr;
-        wxString stockPercentagePerYearStr;
-        wxString stockavgPurchasePriceStr;
+        wxString stockPurchasePriceStr, stockCurrentPriceStr, stockDifferenceStr;
+        wxString stocktotalDifferenceStr, stockPercentageStr, stocktotalPercentageStr;
+        wxString stockPercentagePerYearStr, stockavgPurchasePriceStr;
         wxString stocknumSharesStr = trans_[selectedIndex_].numSharesStr_;
         wxString stocktotalnumSharesStr = trans_[selectedIndex_].totalnumSharesStr_;
         wxString stockgainlossStr = trans_[selectedIndex_].gainLossStr_;
@@ -825,11 +788,11 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         double stockavgPurchasePrice = trans_[selectedIndex_].avgpurchasePrice_;
         double stocktotalDifference = stockCurrentPrice - stockavgPurchasePrice;
         double stockDaysOwn = trans_[selectedIndex_].stockDays_;
-        //Commision don't calculates here
+        // Commision don't calculates here
         double stockPercentage = (stockCurrentPrice/stockPurchasePrice-1.0)*100.0;
         double stockPercentagePerYear = stockPercentage * 365.0 / stockDaysOwn;
         double stocktotalPercentage = (stockCurrentPrice/stockavgPurchasePrice-1.0)*100.0;
-    //  double stocknumShares = trans_[selectedIndex_].numShares_;
+        // double stocknumShares = trans_[selectedIndex_].numShares_;
         double stocktotalnumShares = trans_[selectedIndex_].totalnumShares_;
         double stocktotalgainloss = stocktotalDifference * stocktotalnumShares;
 
@@ -842,35 +805,29 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         mmex::formatDoubleToCurrencyEdit(stockPercentagePerYear, stockPercentagePerYearStr);
         mmex::formatDoubleToCurrencyEdit(stocktotalPercentage, stocktotalPercentageStr);
         mmex::formatDoubleToCurrencyEdit(stocktotalgainloss, stocktotalgainlossStr);
-        //mmex::formatDoubleToCurrencyEdit(stocknumShares, stocknumSharesStr);
 
         wxString miniInfo = wxT("");
         if (trans_[selectedIndex_].stockSymbol_ != wxT(""))
         miniInfo << wxT("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ << wxT ("\t\t");
         miniInfo << _ ("Total:") << wxT (" (") << trans_[selectedIndex_].totalnumSharesStr_ << wxT (") ");
-        //If some share has been bot for a short period we don't need that info because the forecast may be too optimistic
-        //if (stockDaysOwn > 182.5)
-        //miniInfo << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex_].stockPercentagePerYearStr_;
-        stm->SetLabel(miniInfo);
+        stock_details_short_->SetLabel(miniInfo);
 
         wxString additionInfo =wxT("");
         //Selected share info
         additionInfo
         << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockPurchasePriceStr << wxT("|") << wxT(" = ") << stockDifferenceStr
         << wxT (" * ") << stocknumSharesStr << wxT (" = ") << stockgainlossStr << wxT (" ( ") << stockPercentageStr << wxT ('%')
-        //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ")  << _("Yearly")
         << wxT (" )") << wxT ("\n");
         //Summary for account for selected symbol
         if (trans_[selectedIndex_].purchasedTime_ > 1)
         {
             additionInfo << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockavgPurchasePriceStr << wxT("|") << wxT(" = ") << stocktotalDifferenceStr
             << wxT (" * ") << stocktotalnumSharesStr << wxT (" = ") << stocktotalgainlossStr << wxT (" ( ") << stocktotalPercentageStr << wxT ('%')
-            //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _("Yearly")
             << wxT (" )") //<< wxT ("\n")
             << wxT ("\n") << getItem(selectedIndex_, COL_NOTES);
         }
 
-        st->SetLabel(additionInfo);
+        stock_details_->SetLabel(additionInfo);
     }
 }
 
