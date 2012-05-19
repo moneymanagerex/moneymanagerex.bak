@@ -301,7 +301,7 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS);
     wxStaticText* stm = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS_MINI);
-    if (selIndex > -1 && selIndex < all_assets_.size())
+    if ((selIndex > -1) && (selIndex < (int)all_assets_.size()))
     {
         const DB_View_ASSETS_V1::Data& asset = all_assets_.at(selIndex);
         enableEditDeleteButtons(true);
