@@ -83,6 +83,9 @@ public:
 
 private:
     assetsListCtrl* m_listCtrlAssets;
+    wxButton* m_delete_button;
+    wxButton* m_edit_button;
+    wxButton* m_new_button;
 
     bool Create(wxWindow *parent, wxWindowID winid, const wxPoint& pos, const wxSize& size, long style, const wxString &name);
     void CreateControls();
