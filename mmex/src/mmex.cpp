@@ -3544,25 +3544,23 @@ bool mmGUIFrame::IsUpdateAvailable(const wxString& page)
     int numTokens = (int)tkz.CountTokens();
     if (numTokens != 4)
     {
-        wxString url = wxT("http://www.codelathe.com/mmex");
-        wxLaunchDefaultBrowser(url);
-        return false;
+        return true;
     }
 
-    wxString maj = tkz.GetNextToken();
-    wxString min = tkz.GetNextToken();
-    wxString cust = tkz.GetNextToken();
-    wxString build = tkz.GetNextToken();
+    int maj = wxAtoi(tkz.GetNextToken());
+    int min = wxAtoi(tkz.GetNextToken());
+    int cust = wxAtoi(tkz.GetNextToken());
+    int build = wxAtoi(tkz.GetNextToken());
 
     // get current version
     wxString currentV = mmex::getProgramVersion();
     wxStringTokenizer tkz1(currentV, wxT('.'), wxTOKEN_RET_EMPTY_ALL);
     numTokens = (int)tkz1.CountTokens();
 
-    wxString majC = tkz1.GetNextToken();
-    wxString minC = tkz1.GetNextToken();
-    wxString custC = tkz1.GetNextToken();
-    wxString buildC = tkz1.GetNextToken();
+    int majC = wxAtoi(tkz1.GetNextToken());
+    int minC = wxAtoi(tkz1.GetNextToken());
+    int custC = wxAtoi(tkz1.GetNextToken());
+    int buildC = wxAtoi(tkz1.GetNextToken());
 
     bool isUpdateAvailable = false;
     if (maj > majC)
@@ -3592,6 +3590,7 @@ bool mmGUIFrame::IsUpdateAvailable(const wxString& page)
 
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 {
+    wxString update_check_heading = _("MMEX System Information Check");
     // Set up system information
     wxString versionDetails = wxString()
         << wxT("MMEX: ")     << mmex::getProgramVersion()       << wxT("\n")
@@ -3610,20 +3609,30 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     int err_code = site_content(site, page);
     if (err_code != wxID_OK) {
         if (err_code == 2)
-            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxICON_WARNING);
+            wxMessageBox(_("Cannot get data from WWW!"), update_check_heading, wxICON_WARNING);
         else if (err_code == 1)
-            wxMessageBox(_("Unable to connect!"), _("Error"), wxICON_WARNING);
+            wxMessageBox(_("Unable to connect!"), update_check_heading, wxICON_WARNING);
         return;
     }
-
+    
+//  Included for future testing
+//  page = wxT("x.x.x.x - Win: w.w.w.w - Unix: u.u.u.u - Mac: m.m.m.m");
+//  page = wxT("9.9.9.9 - Win: 0.9.9.0 - Unix: 0.9.9.0 - Mac: 0.9.9.0");
+//  page = wxT("9.9.9.9 - Win: 0.9.9.0 - Unix: 0.9.9.0 - Mac: 0.9.9.0 -[ Win: 0.9.9.0 - Unix: 0.9.9.0 - Mac: 0.9.9.0");
     /*************************************************************************
-        Expected format of the string from the internet. Version: 0.9.8.0
-        page = wxT("x.x.x.x - Win: w.w.w.w - Unix: u.u.u.u - Mac: m.m.m.m");
-        string length = 53 characters
+     Note: To allow larger digit counters and maintain backward compatability,
+           the leading counters before the character [ is ignored by the
+           version checking routines.
+
+     Expected format of the string from the internet. Version: 0.9.8.0
+     page = wxT("x.x.x.x - Win: w.w.w.w - Unix: u.u.u.u - Mac: m.m.m.m");
+     string length = 53 characters
     **************************************************************************/
+    wxStringTokenizer versionTokens(page,wxT("["));
+    page = versionTokens.GetNextToken(); // ignore old counters
+    page = versionTokens.GetNextToken();
+
     wxStringTokenizer sysTokens(page,wxT("-"));
-    // Ignored the first token. Added for compatibility for pre 0.9.8.0
-    wxString oldSys  = sysTokens.GetNextToken();
     wxString winSys  = sysTokens.GetNextToken().Trim(false);
     wxString unixSys = sysTokens.GetNextToken().Trim(false);
     wxString macSys  = sysTokens.GetNextToken().Trim(false);
@@ -3656,7 +3665,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 
     wxString urlString = wxT("http://www.codelathe.com/mmex");
     versionDetails << wxT("\n\n") << _("Proceed to website: ") << urlString << wxT("     ");
-    if (wxMessageBox(versionDetails, _("MMEX System Information Check"), style) == wxOK)
+    if (wxMessageBox(versionDetails, update_check_heading, style) == wxOK)
         wxLaunchDefaultBrowser(urlString);
 }
 //----------------------------------------------------------------------------
