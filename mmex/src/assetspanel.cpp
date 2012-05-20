@@ -97,6 +97,10 @@ mmAssetsPanel::~mmAssetsPanel()
     } catch (...) {
         wxASSERT(false);
     }
+
+    if (m_new_button) delete m_new_button;
+    if (m_edit_button) delete m_edit_button;
+    if (m_delete_button) delete m_delete_button;
 }
 
 void mmAssetsPanel::destroy()
@@ -174,19 +178,19 @@ void mmAssetsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 3);
 
-    wxButton* itemButton6 = new wxButton( assets_panel, wxID_NEW, _("&New"));
-    itemButton6->SetToolTip(_("New Asset"));
-    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    m_new_button = new wxButton( assets_panel, wxID_NEW, _("&New"));
+    m_new_button->SetToolTip(_("New Asset"));
+    itemBoxSizer5->Add(m_new_button, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
-    wxButton* itemButton81 = new wxButton( assets_panel, wxID_EDIT, _("&Edit"));
-    itemButton81->SetToolTip(_("Edit Asset"));
-    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
-    itemButton81->Enable(false);
+    m_edit_button = new wxButton( assets_panel, wxID_EDIT, _("&Edit"));
+    m_edit_button->SetToolTip(_("Edit Asset"));
+    itemBoxSizer5->Add(m_edit_button, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    m_edit_button->Enable(false);
     
-    wxButton* itemButton7 = new wxButton( assets_panel, wxID_DELETE, _("&Delete"));
-    itemButton7->SetToolTip(_("Delete Asset"));
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
-    itemButton7->Enable(false);
+    m_delete_button = new wxButton(assets_panel, wxID_DELETE, _("&Delete"));
+    m_delete_button->SetToolTip(_("Delete Asset"));
+    itemBoxSizer5->Add(m_delete_button, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    m_delete_button->Enable(false);
 
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), 
@@ -322,13 +326,8 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
 
 void mmAssetsPanel::enableEditDeleteButtons(bool enable)
 {
-    wxButton* btn = static_cast<wxButton*>(FindWindow(wxID_EDIT));
-    wxASSERT(btn);
-    btn->Enable(enable);
-
-    btn = static_cast<wxButton*>(FindWindow(wxID_DELETE));
-    wxASSERT(btn);
-    btn->Enable(enable);
+    m_edit_button->Enable(enable);
+    m_delete_button->Enable(enable);
 }
 
 int assetsListCtrl::OnGetItemImage(long /*item*/) const
