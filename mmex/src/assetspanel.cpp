@@ -362,11 +362,8 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
         DeleteItem(m_selectedIndex);
         m_cp->initVirtualListControl(m_selected_col, m_asc);
         
-        //if (m_cp->getTrans().empty()) //after delition of asset - index and extra panel should be erased
-        {
-            m_selectedIndex = -1;
-            m_cp->updateExtraAssetData(m_selectedIndex);
-        }
+        m_selectedIndex = -1;
+        m_cp->updateExtraAssetData(m_selectedIndex);
     }
 }
 
