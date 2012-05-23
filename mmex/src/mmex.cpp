@@ -127,7 +127,7 @@
 #include <wx/debugrpt.h>
 #include <wx/sysopt.h>
 #include <wx/wizard.h>
-#include <wx/xml/xml.h>
+
 //----------------------------------------------------------------------------
 #include <boost/scoped_array.hpp>
 //----------------------------------------------------------------------------
@@ -3618,7 +3618,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
             wxMessageBox(_("Unable to connect!"), update_check_heading, wxICON_WARNING);
         return;
     }
-    
+
 //  Included for future testing
 //  page = wxT("x.x.x.x - Win: w.w.w.w - Unix: u.u.u.u - Mac: m.m.m.m");
 //  page = wxT("9.9.9.9 - Win: 0.9.9.0 - Unix: 0.9.9.0 - Mac: 0.9.9.0");
