@@ -291,10 +291,6 @@ bool OnInitImpl(mmGUIApp &app)
 
     inidb.Close();
 
-#if defined (__WXMAC__) || defined (__WXOSX__)
-wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL,1);
-#endif
-
     mmGUIFrame *frame = new mmGUIFrame(mmex::getProgramName(), wxPoint(valx, valy), wxSize(valw, valh));
     bool ok = frame->Show();
     wxASSERT(ok);
@@ -4573,10 +4569,9 @@ void mmGUIApp::HandleEvent(wxEvtHandler *handler, wxEventFunction func, wxEvent&
     {
         wxLogError(e.GetMessage());
     }
-    catch (std::exception &e)
+    catch (const std::exception &e)
     {
-        wxString msg(e.what(), wxConvCurrent); // wxConvLibc, wxConvLocal
-        wxLogError(msg);
+        wxLogError(wxString::Format(wxT("%s"), e.what()));
     }
 }
 //----------------------------------------------------------------------------
@@ -4593,10 +4588,9 @@ bool mmGUIApp::OnInit()
     {
         wxLogError(e.GetMessage());
     }
-    catch (std::exception &e)
+    catch (const std::exception &e)
     {
-        wxString msg(e.what(), wxConvCurrent);
-        wxLogError(msg);
+        wxLogError(wxString::Format(wxT("%s"), e.what()));
     }
 
     return ok;

@@ -300,11 +300,15 @@ namespace boost
 	}
 
    /* problems using wxWidgets 2.9.2
+    */
 	inline std::size_t hash_value(const wxString& value)
 	{
-		return boost::hash_value(value.c_str());
+        size_t key = 0;
+        for(wxString::const_iterator it = value.begin(); it != value.end(); ++ it)
+            key += static_cast<wxUChar>(*it);
+
+        return key;
 	}
-    */
 
 } // namespace boost
 
