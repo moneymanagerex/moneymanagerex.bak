@@ -27,6 +27,9 @@
 #include "platfdep.h"
 //----------------------------------------------------------------------------
 #include <wx/sound.h>
+#if wxCHECK_VERSION(2,9,0)
+#include <wx/unichar.h>
+#endif
 #include <boost/shared_ptr.hpp>
 //----------------------------------------------------------------------------
 
@@ -823,8 +826,13 @@ void mmex::CurrencyFormatter::loadSettings(
 
 void mmex::CurrencyFormatter::loadSettings(const mmCurrency &cur)
 {
-    wxChar dec = cur.dec_.empty() ? wxT('\0') : cur.dec_.GetChar(0);
-    wxChar grp = cur.grp_.empty() ? wxT('\0') : cur.grp_.GetChar(0);
+#if wxCHECK_VERSION(2,9,0)
+    wxUniChar dec = cur.dec_.IsEmpty() ? wxUniChar('\0') : cur.dec_.GetChar(0);
+    wxUniChar grp = cur.grp_.IsEmpty() ? wxUniChar('\0') : cur.grp_.GetChar(0);
+#else
+    wxChar dec = cur.dec_.IsEmpty() ? wxChar('\0') : cur.dec_.GetChar(0);
+    wxChar grp = cur.grp_.IsEmpty() ? wxChar('\0') : cur.grp_.GetChar(0);
+#endif
 
     loadSettings(cur.pfxSymbol_, cur.sfxSymbol_, dec, grp, cur.unit_, cur.cent_, cur.scaleDl_);
 }
