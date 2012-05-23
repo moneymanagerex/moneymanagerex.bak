@@ -92,12 +92,7 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
 
 mmAssetsPanel::~mmAssetsPanel()
 {
-    try {
-        destroy();
-    } catch (...) {
-        wxASSERT(false);
-    }
-
+    destroy();
     if (m_new_button) delete m_new_button;
     if (m_edit_button) delete m_edit_button;
     if (m_delete_button) delete m_delete_button;
