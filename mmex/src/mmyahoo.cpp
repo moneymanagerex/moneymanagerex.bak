@@ -45,9 +45,12 @@ void mmYahoo::ReadSettings()
     CloseTimeStr_ = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_MARKET_CLOSE_TIME"), 
                                                           wxT("16:40:00")).GetData() ;
     // Get time of last update from user database
-    if ( NULL == LastRefreshDT_.ParseDateTime( 
-                 mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxT("")).GetData())
-       )
+    wxString datetime_str = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxT(""));
+#if wxCHECK_VERSION(2,9,0)
+    if (!LastRefreshDT_.ParseDateTime(datetime_str))
+#else 
+    if (!LastRefreshDT_.ParseDateTime(datetime_str.GetData()))
+#endif
         LastRefreshDT_ = wxInvalidDateTime;
 
     mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_REFRESH_MINUTES"), wxT("30")).ToLong(&UpdateIntervalMinutes_);
