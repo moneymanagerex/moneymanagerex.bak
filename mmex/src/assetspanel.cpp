@@ -25,8 +25,8 @@
 enum 
 { 
   IDC_PANEL_ASSETS_LISTCTRL = wxID_HIGHEST + 1,
-  IDC_PANEL_CHECKING_STATIC_BALHEADER,
-  IDC_PANEL_CHECKING_STATIC_BAL,
+  IDC_PANEL_ASSET_STATIC_BALHEADER,
+  IDC_PANEL_ASSET_STATIC_BAL,
   MENU_TREEPOPUP_NEW,
   MENU_TREEPOPUP_EDIT,
   MENU_TREEPOPUP_DELETE,
@@ -118,33 +118,27 @@ void mmAssetsPanel::CreateControls()
 {    
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
-    //this->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, 
-        wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
+    wxPanel* headerPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
     itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
-    //headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
-    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, wxID_ANY, _("Assets"),
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText9 = new wxStaticText(headerPanel, wxID_ANY, _("Assets"));
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
 
-    wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, IDC_PANEL_CHECKING_STATIC_BALHEADER, _("Total:"),
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText10 = new wxStaticText(headerPanel, IDC_PANEL_ASSET_STATIC_BALHEADER, _("Total:"));
 
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
     itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);
 
     /* ---------------------- */
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( this, IDC_PANEL_CHECKING_STATIC_BAL,
-        wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow(this, IDC_PANEL_ASSET_STATIC_BAL, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
-    m_listCtrlAssets = new assetsListCtrl( this, itemSplitterWindow10, 
+    m_listCtrlAssets = new assetsListCtrl(this, itemSplitterWindow10, 
         IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     m_listCtrlAssets->m_imageList->Add(wxBitmap(assets_xpm));
@@ -163,7 +157,7 @@ void mmAssetsPanel::CreateControls()
     m_listCtrlAssets->InsertColumn(COL_DATE, _("Date"), wxLIST_FORMAT_RIGHT, col3);
     m_listCtrlAssets->InsertColumn(COL_NOTES, _("Notes"), wxLIST_FORMAT_LEFT, col4);
 
-    wxPanel* assets_panel = new wxPanel( itemSplitterWindow10, wxID_ANY,
+    wxPanel* assets_panel = new wxPanel(itemSplitterWindow10, wxID_ANY,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
 
     itemSplitterWindow10->SplitHorizontally(m_listCtrlAssets, assets_panel);
@@ -178,11 +172,11 @@ void mmAssetsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 3);
 
-    m_new_button = new wxButton( assets_panel, wxID_NEW, _("&New"));
+    m_new_button = new wxButton(assets_panel, wxID_NEW, _("&New"));
     m_new_button->SetToolTip(_("New Asset"));
     itemBoxSizer5->Add(m_new_button, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
-    m_edit_button = new wxButton( assets_panel, wxID_EDIT, _("&Edit"));
+    m_edit_button = new wxButton(assets_panel, wxID_EDIT, _("&Edit"));
     m_edit_button->SetToolTip(_("Edit Asset"));
     itemBoxSizer5->Add(m_edit_button, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     m_edit_button->Enable(false);
@@ -193,12 +187,11 @@ void mmAssetsPanel::CreateControls()
     m_delete_button->Enable(false);
 
     //Infobar-mini 
-    wxStaticText* itemStaticText44 = new wxStaticText( assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText44 = new wxStaticText(assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
 
     //Infobar 
-    wxStaticText* itemStaticText33 = new wxStaticText( assets_panel, 
+    wxStaticText* itemStaticText33 = new wxStaticText(assets_panel, 
         IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxLEFT|wxRIGHT, 14);
             
@@ -212,7 +205,7 @@ void mmAssetsPanel::initVirtualListControl(int col, bool asc)
     double total = mmDBWrapper::getAssetBalance(db_);
     wxString balance;
     mmex::formatDoubleToCurrency(total, balance);
-    wxStaticText* header = (wxStaticText*)FindWindow(IDC_PANEL_CHECKING_STATIC_BALHEADER);
+    wxStaticText* header = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_BALHEADER);
     wxASSERT(header);
     wxString lbl  = wxString::Format(_("Total: %s"), balance.c_str());
     header->SetLabel(lbl);
