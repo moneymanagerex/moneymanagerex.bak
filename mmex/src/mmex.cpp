@@ -291,6 +291,10 @@ bool OnInitImpl(mmGUIApp &app)
 
     inidb.Close();
 
+#if defined (__WXMAC__) || defined (__WXOSX__)
+    wxSystemOptions::SetOption(wxT("mac.listctrl.always_use_generic"), 1);
+#endif
+
     mmGUIFrame *frame = new mmGUIFrame(mmex::getProgramName(), wxPoint(valx, valy), wxSize(valw, valh));
     bool ok = frame->Show();
     wxASSERT(ok);
