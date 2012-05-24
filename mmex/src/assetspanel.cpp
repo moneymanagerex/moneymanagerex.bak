@@ -304,7 +304,7 @@ void assetsListCtrl::OnListKeyDown(wxListEvent& event)
 {
     if (event.GetKeyCode() == WXK_DELETE)
     {
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, wxID_DELETE);
         OnDeleteAsset(evt);
     }
     else
