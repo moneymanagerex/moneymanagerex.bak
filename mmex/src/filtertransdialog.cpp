@@ -139,7 +139,7 @@ void mmFilterTransactionsDialog::CreateControls()
     wxPanel* itemPanel = new wxPanel( this, ID_PANEL11, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel, 1, wxGROW|wxALL, 5);
 
-    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(2, 2, 0, 0);
+    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(9, 2, 0, 0);
     itemPanel->SetSizer(itemPanelSizer);
 
     //--Start of Row --------------------------------------------------------
@@ -280,10 +280,10 @@ void mmFilterTransactionsDialog::CreateControls()
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
 
-    wxButton* itemButton30 = new wxButton( buttonPanel, wxID_OK, _("&OK"));
+    wxButton* itemButton30 = new wxButton( buttonPanel, wxID_OK);
     buttonPanelSizer->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButtonCancel = new wxButton( buttonPanel, wxID_CANCEL, _("&Cancel"));
+    wxButton* itemButtonCancel = new wxButton( buttonPanel, wxID_CANCEL);
     buttonPanelSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButtonCancel->SetFocus();
     
