@@ -139,7 +139,7 @@ void mmNewAcctDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(2, 2, 0, 0);
+    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(12, 2, 0, 0);
     itemBoxSizer2->Add(itemGridSizer2, 0, wxALL);
     
     wxStaticText* itemStaticText3 = new wxStaticText( this, 
@@ -286,13 +286,11 @@ void mmNewAcctDialog::CreateControls()
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
    
-    wxButton* itemButton7 = new wxButton( this, 
-        wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer9->Add(itemButton7, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButton7 = new wxButton( this, wxID_OK);
+    itemBoxSizer9->Add(itemButton7, 0, wxALIGN_CENTER|wxALL, 5);
 
-    wxButton* itemButtonCancel = new wxButton( this, 
-        wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer9->Add(itemButtonCancel, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButtonCancel = new wxButton( this, wxID_CANCEL);
+    itemBoxSizer9->Add(itemButtonCancel, 0, wxALIGN_CENTER|wxALL, 5);
     itemButtonCancel->SetFocus();
 }
 
