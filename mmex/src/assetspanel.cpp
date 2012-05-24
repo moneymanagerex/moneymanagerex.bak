@@ -3,12 +3,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -20,8 +20,8 @@
 #include "assetdialog.h"
 #include <boost/foreach.hpp>
 
-enum 
-{ 
+enum
+{
   IDC_PANEL_ASSETS_LISTCTRL = wxID_HIGHEST + 1,
   IDC_PANEL_ASSET_STATIC_BALHEADER,
   IDC_PANEL_ASSET_STATIC_BAL,
@@ -32,10 +32,10 @@ enum
   IDC_PANEL_ASSET_STATIC_DETAILS_MINI
 };
 enum EColumn
-{ 
-    COL_NAME = 0, 
+{
+    COL_NAME = 0,
     COL_DATE,
-    COL_TYPE, 
+    COL_TYPE,
     COL_VALUE,
     COL_NOTES,
     COL_MAX, // number of columns
@@ -54,16 +54,16 @@ BEGIN_EVENT_TABLE(assetsListCtrl, mmListCtrl)
     EVT_LIST_ITEM_SELECTED(IDC_PANEL_ASSETS_LISTCTRL,    assetsListCtrl::OnListItemSelected)
     EVT_LIST_ITEM_DESELECTED(IDC_PANEL_ASSETS_LISTCTRL,    assetsListCtrl::OnListItemDeselected)
     EVT_LIST_COL_CLICK(IDC_PANEL_ASSETS_LISTCTRL,       assetsListCtrl::OnColClick)
-        
+
     EVT_MENU(MENU_TREEPOPUP_NEW, assetsListCtrl::OnNewAsset)
     EVT_MENU(MENU_TREEPOPUP_EDIT, assetsListCtrl::OnEditAsset)
     EVT_MENU(MENU_TREEPOPUP_DELETE, assetsListCtrl::OnDeleteAsset)
-    
+
     EVT_LIST_KEY_DOWN(IDC_PANEL_ASSETS_LISTCTRL, assetsListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
 /*******************************************************/
 
-mmAssetsPanel::mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core) : 
+mmAssetsPanel::mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core) :
     mmPanelBase(db, inidb, core)
 {
     Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxPanelNameStr);
@@ -79,7 +79,7 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
-    
+
     initVirtualListControl(0, true);
     if (!all_assets_.empty())
         m_listCtrlAssets->EnsureVisible(all_assets_.size() - 1);
@@ -97,7 +97,7 @@ mmAssetsPanel::~mmAssetsPanel()
 }
 
 void mmAssetsPanel::CreateControls()
-{    
+{
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer1);
 
@@ -116,19 +116,20 @@ void mmAssetsPanel::CreateControls()
 
     /* ---------------------- */
 
-    wxSplitterWindow* itemSplitterWindow = new wxSplitterWindow(this, IDC_PANEL_ASSET_STATIC_BAL, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    wxSplitterWindow* itemSplitterWindow = new wxSplitterWindow(this,
+        IDC_PANEL_ASSET_STATIC_BAL, wxDefaultPosition, wxSize(200, 200), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
-    m_listCtrlAssets = new assetsListCtrl(this, itemSplitterWindow, 
-        IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
+    m_listCtrlAssets = new assetsListCtrl(this, itemSplitterWindow,
+        IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    
+
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4;
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL0_WIDTH"), wxT("150")).ToLong(&col0); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL1_WIDTH"), wxT("-2")).ToLong(&col1); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL2_WIDTH"), wxT("-2")).ToLong(&col2); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL3_WIDTH"), wxT("-2")).ToLong(&col3); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL4_WIDTH"), wxT("450")).ToLong(&col4); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL0_WIDTH"), wxT("150")).ToLong(&col0);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL1_WIDTH"), wxT("-2")).ToLong(&col1);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL2_WIDTH"), wxT("-2")).ToLong(&col2);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL3_WIDTH"), wxT("-2")).ToLong(&col3);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL4_WIDTH"), wxT("450")).ToLong(&col4);
 
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"), wxLIST_FORMAT_RIGHT, col0);
     m_listCtrlAssets->InsertColumn(COL_TYPE, _("Type"), wxLIST_FORMAT_RIGHT, col1);
@@ -156,19 +157,19 @@ void mmAssetsPanel::CreateControls()
     m_edit_button = new wxButton(assets_panel, wxID_EDIT);
     itemBoxSizer3->Add(m_edit_button, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     m_edit_button->Enable(false);
-    
+
     m_delete_button = new wxButton(assets_panel, wxID_DELETE);
     itemBoxSizer3->Add(m_delete_button, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     m_delete_button->Enable(false);
 
-    //Infobar-mini 
+    //Infobar-mini
     wxStaticText* itemStaticText44 = new wxStaticText(assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer3->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
 
-    //Infobar 
+    //Infobar
     wxStaticText* itemStaticText33 = new wxStaticText(assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer2->Add(itemStaticText33, 1, wxGROW|wxLEFT|wxRIGHT, 14);
-            
+
     updateExtraAssetData(-1);
 }
 
@@ -232,14 +233,14 @@ wxString mmAssetsPanel::getItem(long item, long column)
 
     if (column == COL_NAME)  return asset.ASSETNAME;
     if (column == COL_TYPE)  return wxGetTranslation(asset.ASSETTYPE);
-    if (column == COL_VALUE) 
+    if (column == COL_VALUE)
     {
         double val = mmDBWrapper::getAssetValue(asset);
         wxString val_str;
         mmex::formatDoubleToCurrencyEdit(val, val_str);
         return val_str;
     }
-    if (column == COL_DATE)  
+    if (column == COL_DATE)
     {
         wxDateTime dt;
         dt.ParseDate(asset.STARTDATE);
@@ -299,17 +300,17 @@ void mmAssetsPanel::enableEditDeleteButtons(bool enable)
 
 int assetsListCtrl::OnGetItemImage(long /*item*/) const
 {
-    return ICON_ASSET; 
+    return ICON_ASSET;
 }
 
 void assetsListCtrl::OnListKeyDown(wxListEvent& event)
 {
-    if (event.GetKeyCode() == WXK_DELETE) 
+    if (event.GetKeyCode() == WXK_DELETE)
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
         OnDeleteAsset(evt);
-    } 
-    else 
+    }
+    else
     {
         event.Skip();
     }
@@ -326,20 +327,20 @@ void assetsListCtrl::doRefreshItems()
     m_cp->initVirtualListControl(m_selected_col, m_asc);
     RefreshItems(0, m_cp->all_assets_.empty() ? 0: m_cp->all_assets_.size() - 1);
 }
- 
+
 void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex == -1)    return;
     if (m_cp->all_assets_.empty()) return;
 
     wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"), _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
-    if (msgDlg.ShowModal() == wxID_YES) 
+    if (msgDlg.ShowModal() == wxID_YES)
     {
         DB_View_ASSETS_V1::Data& asset = m_cp->all_assets_[m_selectedIndex];
         asset.remove(m_cp->getDb());
         DeleteItem(m_selectedIndex);
         m_cp->initVirtualListControl(m_selected_col, m_asc);
-        
+
         m_selectedIndex = -1;
         m_cp->updateExtraAssetData(m_selectedIndex);
     }
