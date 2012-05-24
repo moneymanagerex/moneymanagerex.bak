@@ -20,8 +20,6 @@
 #include "assetdialog.h"
 #include <boost/foreach.hpp>
 
-/* Include XPM Support */
-#include "../resources/assets.xpm"
 enum 
 { 
   IDC_PANEL_ASSETS_LISTCTRL = wxID_HIGHEST + 1,
@@ -123,7 +121,6 @@ void mmAssetsPanel::CreateControls()
     m_listCtrlAssets = new assetsListCtrl(this, itemSplitterWindow, 
         IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    m_listCtrlAssets->m_imageList->Add(wxBitmap(assets_xpm));
     
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4;
@@ -305,7 +302,7 @@ void mmAssetsPanel::enableEditDeleteButtons(bool enable)
 
 int assetsListCtrl::OnGetItemImage(long /*item*/) const
 {
-    return this->m_imageList->GetImageCount() - 1; // last one
+    return ICON_ASSET; 
 }
 
 void assetsListCtrl::OnListKeyDown(wxListEvent& event)
