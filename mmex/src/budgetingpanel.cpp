@@ -46,7 +46,7 @@ mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* ini
            ) : 
     mmPanelBase(db, inidb, core),
     m_imageList(), 
-    listCtrlAccount_(),
+    listCtrlBudget_(),
     budgetYearID_(budgetYearID),
     mainFrame_(mainFrame)
 {
@@ -75,7 +75,7 @@ bool mmBudgetingPanel::Create( wxWindow *parent,
 mmBudgetingPanel::~mmBudgetingPanel()
 {
     if (m_imageList) delete m_imageList;
-    this->save_config(listCtrlAccount_, wxT("BUDGET"));
+    this->save_config(listCtrlBudget_, wxT("BUDGET"));
 }
 
 void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
@@ -112,9 +112,9 @@ void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
         wxASSERT(false);
     }
 
-    listCtrlAccount_->DeleteAllItems();
+    listCtrlBudget_->DeleteAllItems();
     initVirtualListControl();
-    listCtrlAccount_->RefreshItems(0, ((int)trans_.size()) - 1);
+    listCtrlBudget_->RefreshItems(0, ((int)trans_.size()) - 1);
 }
 
 void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
@@ -245,26 +245,26 @@ void mmBudgetingPanel::CreateControls()
     m_imageList->Add(wxBitmap(flag_xpm));
     m_imageList->Add(wxBitmap(empty_xpm));
     
-    listCtrlAccount_ = new budgetingListCtrl( this, this, 
+    listCtrlBudget_ = new budgetingListCtrl( this, this, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    //listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
-    listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
-    listCtrlAccount_->InsertColumn(0, _("Category  "));
-    listCtrlAccount_->InsertColumn(1, _("Sub Category"));
-    listCtrlAccount_->InsertColumn(2, _("Frequency"));
+    //listCtrlBudget_->SetBackgroundColour(mmColors::listBackColor);
+    listCtrlBudget_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
+    listCtrlBudget_->InsertColumn(0, _("Category  "));
+    listCtrlBudget_->InsertColumn(1, _("Sub Category"));
+    listCtrlBudget_->InsertColumn(2, _("Frequency"));
 
     wxListItem itemCol;
     itemCol.SetImage(-1);
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Amount"));
-    listCtrlAccount_->InsertColumn(3, itemCol);
+    listCtrlBudget_->InsertColumn(3, itemCol);
 
     itemCol.SetText(_("Estimated"));
-    listCtrlAccount_->InsertColumn(4, itemCol);
+    listCtrlBudget_->InsertColumn(4, itemCol);
 
     itemCol.SetText(_("Actual"));
-    listCtrlAccount_->InsertColumn(5, itemCol);
+    listCtrlBudget_->InsertColumn(5, itemCol);
 
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4, col5;
@@ -275,14 +275,14 @@ void mmBudgetingPanel::CreateControls()
     mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL4_WIDTH"), wxT("80")).ToLong(&col4); 
     mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL5_WIDTH"), wxT("80")).ToLong(&col5); 
 
-    listCtrlAccount_->SetColumnWidth(0, col0);
-    listCtrlAccount_->SetColumnWidth(1, col1);
-    listCtrlAccount_->SetColumnWidth(2, col2);
-    listCtrlAccount_->SetColumnWidth(3, col3);
-    listCtrlAccount_->SetColumnWidth(4, col4);
-    listCtrlAccount_->SetColumnWidth(5, col5);
+    listCtrlBudget_->SetColumnWidth(0, col0);
+    listCtrlBudget_->SetColumnWidth(1, col1);
+    listCtrlBudget_->SetColumnWidth(2, col2);
+    listCtrlBudget_->SetColumnWidth(3, col3);
+    listCtrlBudget_->SetColumnWidth(4, col4);
+    listCtrlBudget_->SetColumnWidth(5, col5);
 
-    itemBoxSizer2->Add(listCtrlAccount_, 1, wxGROW | wxALL, 1);
+    itemBoxSizer2->Add(listCtrlBudget_, 1, wxGROW | wxALL, 1);
 }
 
 bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
@@ -482,14 +482,14 @@ void mmBudgetingPanel::initVirtualListControl()
         {
             trans_.push_back(catTotals);
             int transCatTotalIndex = (int)trans_.size()-1;
-            listCtrlAccount_->RefreshItem(transCatTotalIndex);
+            listCtrlBudget_->RefreshItem(transCatTotalIndex);
         }
     }
 
     st_sub.Finalize();
     st.Finalize();
 
-    listCtrlAccount_->SetItemCount((int)trans_.size());
+    listCtrlBudget_->SetItemCount((int)trans_.size());
     
     wxString estIncomeStr, actIncomeStr,  estExpensesStr, actExpensesStr;
     mmex::formatDoubleToCurrency(estIncome, estIncomeStr);

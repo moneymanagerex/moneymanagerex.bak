@@ -124,7 +124,7 @@ public:
 
 public:
     wxImageList* m_imageList;
-    budgetingListCtrl* listCtrlAccount_;
+    budgetingListCtrl* listCtrlBudget_;
     wxString currentView_;
     int budgetYearID_;
     mmGUIFrame* mainFrame_;
