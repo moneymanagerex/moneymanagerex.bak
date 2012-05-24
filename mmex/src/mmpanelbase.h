@@ -40,6 +40,8 @@
 #include "../resources/trans_into.xpm"
 #include "../resources/tipicon.xpm"
 #include "../resources/empty.xpm"
+#include "../resources/trans_transfer.xpm"
+#include "../resources/assets.xpm"
 //----------------------------------------------------------------------------
 
 class wxSQLite3Database;
@@ -51,12 +53,14 @@ enum EIcons
     ICON_VOID,
     ICON_FOLLOWUP,
     ICON_NONE,
+    ICON_UNRECONCILED,
     ICON_DESC,
     ICON_ASC,
     ICON_DUPLICATE,
     ICON_TRANS_WITHDRAWAL,
     ICON_TRANS_DEPOSIT,
     ICON_TRANS_TRANSFER
+    , ICON_ASSET
 };
 
 struct mmHolderBase
@@ -82,13 +86,15 @@ public:
         m_imageList->Add(wxBitmap(reconciled_xpm));
         m_imageList->Add(wxBitmap(void_xpm));
         m_imageList->Add(wxBitmap(flag_xpm));
+        m_imageList->Add(wxBitmap(empty_xpm));
         m_imageList->Add(wxBitmap(unreconciled_xpm));
         m_imageList->Add(wxBitmap(uparrow_xpm));
         m_imageList->Add(wxBitmap(downarrow_xpm));
         m_imageList->Add(wxBitmap(duplicate_xpm));
         m_imageList->Add(wxBitmap(trans_from_xpm));
         m_imageList->Add(wxBitmap(trans_into_xpm));
-        //m_imageList->Add(wxBitmap(trans_transfer_xpm));
+        m_imageList->Add(wxBitmap(trans_transfer_xpm));
+        m_imageList->Add(wxBitmap(assets_xpm));
         
         SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     }

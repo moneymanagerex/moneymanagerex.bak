@@ -45,7 +45,6 @@ mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* ini
             const wxString& name 
            ) : 
     mmPanelBase(db, inidb, core),
-    m_imageList(), 
     listCtrlBudget_(),
     budgetYearID_(budgetYearID),
     mainFrame_(mainFrame)
@@ -74,7 +73,6 @@ bool mmBudgetingPanel::Create( wxWindow *parent,
 
 mmBudgetingPanel::~mmBudgetingPanel()
 {
-    if (m_imageList) delete m_imageList;
     this->save_config(listCtrlBudget_, wxT("BUDGET"));
 }
 
@@ -238,18 +236,10 @@ void mmBudgetingPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemExpenseSizer, 0, wxALL, 1);
     /* ---------------------- */
 
-    wxSize imageSize(16, 16);
-    m_imageList = new wxImageList( imageSize.GetWidth(), imageSize.GetHeight() );
-    m_imageList->Add(wxBitmap(reconciled_xpm));
-    m_imageList->Add(wxBitmap(void_xpm));
-    m_imageList->Add(wxBitmap(flag_xpm));
-    m_imageList->Add(wxBitmap(empty_xpm));
-    
     listCtrlBudget_ = new budgetingListCtrl( this, this, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     //listCtrlBudget_->SetBackgroundColour(mmColors::listBackColor);
-    listCtrlBudget_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlBudget_->InsertColumn(0, _("Category  "));
     listCtrlBudget_->InsertColumn(1, _("Sub Category"));
     listCtrlBudget_->InsertColumn(2, _("Frequency"));
@@ -544,12 +534,12 @@ wxString mmBudgetingPanel::getItem(long item, long column)
 
 int budgetingListCtrl::OnGetItemImage(long item) const
 {
-    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ == 0.0)) return 3;
-    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ != 0.0)) return 2;
-    if (cp_->trans_[item].estimated_ < cp_->trans_[item].actual_) return 0;
-    if (fabs(cp_->trans_[item].estimated_ - cp_->trans_[item].actual_)  < 0.001) return 0;
+    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ == 0.0)) return ICON_NONE;
+    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ != 0.0)) return ICON_VOID;
+    if (cp_->trans_[item].estimated_ < cp_->trans_[item].actual_) return ICON_RECONCILED;
+    if (fabs(cp_->trans_[item].estimated_ - cp_->trans_[item].actual_)  < 0.001) return ICON_RECONCILED;
 
-   return 1;
+   return ICON_VOID;
 }
 
 wxString budgetingListCtrl::OnGetItemText(long item, long column) const

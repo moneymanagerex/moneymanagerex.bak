@@ -89,7 +89,6 @@
 #include "../resources/options.xpm"
 #include "../resources/about.xpm"
 #include "../resources/issues.xpm"
-#include "../resources/assets.xpm"
 #include "../resources/addacctwiz.xpm"
 #include "../resources/notify.xpm"
 #include "../resources/checkupdate.xpm"
