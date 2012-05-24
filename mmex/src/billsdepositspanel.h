@@ -153,7 +153,7 @@ public:
 
 public:
     wxImageList* m_imageList;
-    billsDepositsListCtrl* listCtrlAccount_;
+    billsDepositsListCtrl* listCtrlBD_;
 };
 #endif
 

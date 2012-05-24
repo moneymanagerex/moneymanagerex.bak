@@ -91,7 +91,7 @@ bool mmStocksPanel::Create(wxWindow *parent,
 
     initVirtualListControl();
     if (trans_.size() > 1)
-        listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
+        listCtrlStock_->EnsureVisible(((int)trans_.size()) - 1);
 
     // Greg Newton
     yahoo_ = new mmYahoo(inidb_, db_);
@@ -127,7 +127,7 @@ mmStocksPanel::~mmStocksPanel()
 
     if (yahoo_) delete yahoo_;
     if (m_LED) delete m_LED;
-    this->save_config(listCtrlAccount_, wxT("STOCKS_COL"));
+    this->save_config(listCtrlStock_, wxT("STOCKS_COL"));
 }
 
 void mmStocksPanel::CreateControls()
@@ -172,38 +172,38 @@ void mmStocksPanel::CreateControls()
             ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(100, 100),
             wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER);
 
-    listCtrlAccount_ = new stocksListCtrl(this, itemSplitterWindow10,
+    listCtrlStock_ = new stocksListCtrl(this, itemSplitterWindow10,
                                            ID_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
                                            wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
-    //listCtrlAccount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
-    listCtrlAccount_->InsertColumn(COL_DATE, _("Purchase Date"));
+    //listCtrlStock_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    listCtrlStock_->InsertColumn(COL_DATE, _("Purchase Date"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
     //itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     itemCol.SetText(_("Share Name"));
-    listCtrlAccount_->InsertColumn(COL_NAME, itemCol);
+    listCtrlStock_->InsertColumn(COL_NAME, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Number of Shares"));
 
-    listCtrlAccount_->InsertColumn(COL_NUMBER, itemCol);
+    listCtrlStock_->InsertColumn(COL_NUMBER, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Gain/Loss"));
 
-    listCtrlAccount_->InsertColumn(COL_GAIN_LOSS, itemCol);
+    listCtrlStock_->InsertColumn(COL_GAIN_LOSS, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Value"));
-    listCtrlAccount_->InsertColumn(COL_VALUE, itemCol);
+    listCtrlStock_->InsertColumn(COL_VALUE, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Current"));
-    listCtrlAccount_->InsertColumn(COL_CURRENT, itemCol);
+    listCtrlStock_->InsertColumn(COL_CURRENT, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     itemCol.SetText(_("Notes"));
-    listCtrlAccount_->InsertColumn(COL_NOTES, itemCol);
+    listCtrlStock_->InsertColumn(COL_NOTES, itemCol);
 
     /* See if we can get data from inidb */
     long col_x = -2;
@@ -212,13 +212,13 @@ void mmStocksPanel::CreateControls()
         if (!mmDBWrapper::getINISettingValue(inidb_, wxString::Format(wxT("STOCKS_COL%i_WIDTH"), i),
                                         (i == 0 ? wxT("140"): wxT("-2"))).ToLong(&col_x))
             (i == 0 ? col_x = 140 : col_x = -2);
-        listCtrlAccount_->SetColumnWidth(i, col_x);
+        listCtrlStock_->SetColumnWidth(i, col_x);
     };
 
     wxPanel* itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1,
                                         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
-    itemSplitterWindow10->SplitHorizontally(listCtrlAccount_, itemPanel12);
+    itemSplitterWindow10->SplitHorizontally(listCtrlStock_, itemPanel12);
     itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);
     itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
@@ -399,7 +399,7 @@ void mmStocksPanel::initVirtualListControl()
     }
 
     st.Finalize();
-    listCtrlAccount_->SetItemCount(cnt);
+    listCtrlStock_->SetItemCount(cnt);
 }
 
 void mmStocksPanel::OnRefreshQuotes(wxCommandEvent& WXUNUSED(event))
@@ -424,17 +424,17 @@ void mmStocksPanel::OnHTTPSettings(wxCommandEvent& WXUNUSED(event))
 
 void mmStocksPanel::OnDeleteStocks(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnDeleteStocks(event);
+    listCtrlStock_->OnDeleteStocks(event);
 }
 
 void mmStocksPanel::OnNewStocks(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnNewStocks(event);
+    listCtrlStock_->OnNewStocks(event);
 }
 
 void mmStocksPanel::OnEditStocks(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnEditStocks(event);
+    listCtrlStock_->OnEditStocks(event);
 }
 
 /** Thread and timer events **/
@@ -706,7 +706,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
     // Now refresh the display
     initVirtualListControl();
-    listCtrlAccount_->RefreshItems(0, ((int)trans_.size()) - 1);
+    listCtrlStock_->RefreshItems(0, ((int)trans_.size()) - 1);
 
     // We are done!
     yahoo_->LastRefreshDT_       = wxDateTime::Now();

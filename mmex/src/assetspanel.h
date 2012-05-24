@@ -71,7 +71,7 @@ class mmAssetsPanel : public mmPanelBase
 
 public:
     mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core);
-   ~mmAssetsPanel();
+    ~mmAssetsPanel();
 
     void enableEditDeleteButtons(bool enable);
     void initVirtualListControl(int col, bool asc);

@@ -67,7 +67,7 @@ mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, wxSQLite3Datab
             wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
-            : mmPanelBase(db, inidb, core), m_imageList(), listCtrlAccount_()
+            : mmPanelBase(db, inidb, core), m_imageList(), listCtrlBD_()
 {
     Create(parent, winid, pos, size, style, name);
 }
@@ -86,7 +86,7 @@ bool mmBillsDepositsPanel::Create( wxWindow *parent,
 
     initVirtualListControl();
     if (trans_.size() > 1)
-        listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
+        listCtrlBD_->EnsureVisible(((int)trans_.size()) - 1);
 
     this->Thaw();
     return TRUE;
@@ -95,7 +95,7 @@ bool mmBillsDepositsPanel::Create( wxWindow *parent,
 mmBillsDepositsPanel::~mmBillsDepositsPanel()
 {
     if (m_imageList) delete m_imageList;
-    this->save_config(listCtrlAccount_, wxT("BD"));
+    this->save_config(listCtrlBD_, wxT("BD"));
 }
 
 void mmBillsDepositsPanel::CreateControls()
@@ -129,23 +129,23 @@ void mmBillsDepositsPanel::CreateControls()
     m_imageList->Add(wxBitmap(rt_exec_auto_xpm));
     m_imageList->Add(wxBitmap(rt_exec_user_xpm));
 
-    listCtrlAccount_ = new billsDepositsListCtrl( this, itemSplitterWindowBillsDeposit,
+    listCtrlBD_ = new billsDepositsListCtrl( this, itemSplitterWindowBillsDeposit,
         ID_PANEL_BD_LISTCTRL, wxDefaultPosition, wxDefaultSize,
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    //listCtrlAccount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
-    listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
-    listCtrlAccount_->InsertColumn(0, _("Payee"));
-    listCtrlAccount_->InsertColumn(1, _("Account"));
-    listCtrlAccount_->InsertColumn(2, _("Type"));
+    //listCtrlBD_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    listCtrlBD_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
+    listCtrlBD_->InsertColumn(0, _("Payee"));
+    listCtrlBD_->InsertColumn(1, _("Account"));
+    listCtrlBD_->InsertColumn(2, _("Type"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Amount"));
-    listCtrlAccount_->InsertColumn(3, itemCol);
-    listCtrlAccount_->InsertColumn(4, _("Next Due Date"));
-    listCtrlAccount_->InsertColumn(5, _("Frequency"));
-    listCtrlAccount_->InsertColumn(6, _("Remaining Days"));
-    listCtrlAccount_->InsertColumn(7, _("Notes"));
+    listCtrlBD_->InsertColumn(3, itemCol);
+    listCtrlBD_->InsertColumn(4, _("Next Due Date"));
+    listCtrlBD_->InsertColumn(5, _("Frequency"));
+    listCtrlBD_->InsertColumn(6, _("Remaining Days"));
+    listCtrlBD_->InsertColumn(7, _("Notes"));
 
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4, col5, col6, col7;
@@ -159,19 +159,19 @@ void mmBillsDepositsPanel::CreateControls()
     mmDBWrapper::getINISettingValue(inidb_,  wxT("BD_COL7_WIDTH"), wxT("-2")).ToLong(&col7);
 
 
-    listCtrlAccount_->SetColumnWidth(0, col0);
-    listCtrlAccount_->SetColumnWidth(1, col1);
-    listCtrlAccount_->SetColumnWidth(2, col2);
-    listCtrlAccount_->SetColumnWidth(3, col3);
-    listCtrlAccount_->SetColumnWidth(4, col4);
-    listCtrlAccount_->SetColumnWidth(5, col5);
-    listCtrlAccount_->SetColumnWidth(6, col6);
-    listCtrlAccount_->SetColumnWidth(7, col7);
+    listCtrlBD_->SetColumnWidth(0, col0);
+    listCtrlBD_->SetColumnWidth(1, col1);
+    listCtrlBD_->SetColumnWidth(2, col2);
+    listCtrlBD_->SetColumnWidth(3, col3);
+    listCtrlBD_->SetColumnWidth(4, col4);
+    listCtrlBD_->SetColumnWidth(5, col5);
+    listCtrlBD_->SetColumnWidth(6, col6);
+    listCtrlBD_->SetColumnWidth(7, col7);
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindowBillsDeposit, ID_PANEL1,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
 
-    itemSplitterWindowBillsDeposit->SplitHorizontally(listCtrlAccount_, itemPanel12);
+    itemSplitterWindowBillsDeposit->SplitHorizontally(listCtrlBD_, itemPanel12);
     itemSplitterWindowBillsDeposit->SetMinimumPaneSize(100);
     itemSplitterWindowBillsDeposit->SetSashGravity(1.0);
     itemBoxSizer9->Add(itemSplitterWindowBillsDeposit, 1, wxGROW|wxALL, 1);
@@ -367,33 +367,33 @@ void mmBillsDepositsPanel::initVirtualListControl()
     q1.Finalize();
 
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
-    listCtrlAccount_->SetItemCount(static_cast<long>(trans_.size()));
+    listCtrlBD_->SetItemCount(static_cast<long>(trans_.size()));
 }
 
 void mmBillsDepositsPanel::OnNewBDSeries(wxCommandEvent& event)
 {
-  listCtrlAccount_->OnNewBDSeries(event);
+  listCtrlBD_->OnNewBDSeries(event);
 }
 
 void mmBillsDepositsPanel::OnEditBDSeries(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnEditBDSeries(event);
+    listCtrlBD_->OnEditBDSeries(event);
 }
 
 void mmBillsDepositsPanel::OnDeleteBDSeries(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnDeleteBDSeries(event);
+    listCtrlBD_->OnDeleteBDSeries(event);
 }
 
 void mmBillsDepositsPanel::OnEnterBDTransaction(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnEnterBDTransaction(event);
+    listCtrlBD_->OnEnterBDTransaction(event);
 }
 
 void mmBillsDepositsPanel::OnSkipBDTransaction(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnSkipBDTransaction(event);
-    listCtrlAccount_->SetFocus();
+    listCtrlBD_->OnSkipBDTransaction(event);
+    listCtrlBD_->SetFocus();
 }
 
 /*******************************************************/
@@ -604,8 +604,8 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
     {
         wxListItem selectedItem;
         selectedItem.SetId(selIndex);
-        listCtrlAccount_->GetItem(selectedItem);
-        listCtrlAccount_->SetItemState(selectedItem, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED);
+        listCtrlBD_->GetItem(selectedItem);
+        listCtrlBD_->SetItemState(selectedItem, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED);
 
         wxString addInfo;
         addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == wxT ("") ? wxT ("") : wxT (":") + trans_[selIndex].subcategoryStr_);

@@ -139,7 +139,7 @@ public:
 
 
 public:
-    stocksListCtrl* listCtrlAccount_;
+    stocksListCtrl* listCtrlStock_;
     int accountID_;
 
     /************************************************************/
