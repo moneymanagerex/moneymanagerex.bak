@@ -25,9 +25,6 @@ enum
   IDC_PANEL_ASSETS_LISTCTRL = wxID_HIGHEST + 1,
   IDC_PANEL_ASSET_STATIC_BALHEADER,
   IDC_PANEL_ASSET_STATIC_BAL,
-  MENU_TREEPOPUP_NEW,
-  MENU_TREEPOPUP_EDIT,
-  MENU_TREEPOPUP_DELETE,
   IDC_PANEL_ASSET_STATIC_DETAILS,
   IDC_PANEL_ASSET_STATIC_DETAILS_MINI
 };
@@ -55,9 +52,9 @@ BEGIN_EVENT_TABLE(assetsListCtrl, mmListCtrl)
     EVT_LIST_ITEM_DESELECTED(IDC_PANEL_ASSETS_LISTCTRL,    assetsListCtrl::OnListItemDeselected)
     EVT_LIST_COL_CLICK(IDC_PANEL_ASSETS_LISTCTRL,       assetsListCtrl::OnColClick)
 
-    EVT_MENU(MENU_TREEPOPUP_NEW, assetsListCtrl::OnNewAsset)
-    EVT_MENU(MENU_TREEPOPUP_EDIT, assetsListCtrl::OnEditAsset)
-    EVT_MENU(MENU_TREEPOPUP_DELETE, assetsListCtrl::OnDeleteAsset)
+    EVT_MENU(wxID_NEW, assetsListCtrl::OnNewAsset)
+    EVT_MENU(wxID_EDIT, assetsListCtrl::OnEditAsset)
+    EVT_MENU(wxID_DELETE, assetsListCtrl::OnDeleteAsset)
 
     EVT_LIST_KEY_DOWN(IDC_PANEL_ASSETS_LISTCTRL, assetsListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
@@ -220,10 +217,10 @@ void assetsListCtrl::OnItemRightClick(wxListEvent& event)
     m_selectedIndex = event.GetIndex();
 
     wxMenu menu;
-    menu.Append(MENU_TREEPOPUP_NEW, _("&New Asset"));
+    menu.Append(wxID_NEW);
     menu.AppendSeparator();
-    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Asset"));
-    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Asset"));
+    menu.Append(wxID_EDIT);
+    menu.Append(wxID_DELETE);
     PopupMenu(&menu, event.GetPoint());
 }
 
