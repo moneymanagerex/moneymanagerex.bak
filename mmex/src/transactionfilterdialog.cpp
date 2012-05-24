@@ -103,7 +103,7 @@ void TransFilterDialog::CreateControls()
     wxPanel* itemPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer->Add(itemPanel, 1, wxGROW|wxALL, 5);
 
-    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(2, 8, 0, 0);
+    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(8, 2, 0, 0);
     itemPanel->SetSizer(itemPanelSizer);
 
     //--Start of Row --------------------------------------------------------
