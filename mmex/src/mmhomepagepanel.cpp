@@ -20,8 +20,6 @@
 #include "mmex.h"
 #include "util.h"
 
-#include "transdialog.h"
-#include "newacctdialog.h"
 #include "htmlbuilder.h"
 #include "dbwrapper.h"
 #include "billsdepositspanel.h"
@@ -76,13 +74,12 @@ bool mmHomePagePanel::Create( wxWindow *parent,
     return TRUE;
 }
 
-bool sortTransactionsByRemainingDaysHP(const mmBDTransactionHolder& elem1, 
-                                       const mmBDTransactionHolder& elem2)
+bool sortTransactionsByRemainingDaysHP(const mmBDTransactionHolder& elem1, const mmBDTransactionHolder& elem2)
 {
     return elem1.daysRemaining_ < elem2.daysRemaining_;
 }
 
-void mmHomePagePanel::displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTitle)
+void mmHomePagePanel::displaySummaryHeader(mmHTMLBuilder& hb, const wxString& summaryTitle)
 {
     hb.startTableRow();
     hb.addTableHeaderCell(summaryTitle, false);
@@ -90,7 +87,7 @@ void mmHomePagePanel::displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTi
     hb.addTableHeaderCell(_("Balance"), true);
     hb.endTableRow();
 }
-void mmHomePagePanel::displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle)
+void mmHomePagePanel::displayStocksHeader(mmHTMLBuilder& hb, const wxString& summaryTitle)
 {
     hb.startTableRow();
     hb.addTableHeaderCell(summaryTitle, false);
@@ -99,7 +96,7 @@ void mmHomePagePanel::displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTit
     hb.endTableRow();
 }
 
-void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double tRecBalance, double& tBalance, bool showSeparator)
+void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, const wxString& totalsTitle, double tRecBalance, double& tBalance, bool showSeparator)
 {
     // format the totals for display
     mmDBWrapper::loadBaseCurrencySettings(db_);
