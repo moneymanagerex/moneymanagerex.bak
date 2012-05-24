@@ -36,7 +36,7 @@ public:
     
     // This constructor is for recent files list
     RecentDatabaseFiles(wxSQLite3Database* ini_db, wxMenu *menuRecentFiles);
-    virtual ~RecentDatabaseFiles();
+    ~RecentDatabaseFiles();
   
     void loadRecentList();
     void saveRecentList();

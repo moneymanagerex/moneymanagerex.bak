@@ -548,7 +548,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     refreshRequested_(),
     autoRepeatTransactionsTimer_(this, AUTO_REPEAT_TRANSACTIONS_TIMER_ID),
     activeHomePage_(false),
-    panelCurrent_(),
+    panelCurrent_(0),
     homePanel(),
     navTreeCtrl_(),
     menuBar_(),
@@ -636,18 +636,14 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
 mmGUIFrame::~mmGUIFrame()
 {
-    try {
-        cleanup();
-    } catch (...) {
-        wxASSERT(false);
-    }
+    cleanup();
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::cleanup()
 {
     printer_.reset();
-    recentFiles_->~RecentDatabaseFiles();
+    if (recentFiles_) delete recentFiles_;
     if (!fileName_.IsEmpty())   saveConfigFile();
 
     m_mgr.UnInit();
@@ -2546,7 +2542,7 @@ void mmGUIFrame::createHomePage()
 
     if (panelCurrent_)
     {
-        delete panelCurrent_;
+//        delete panelCurrent_;
         panelCurrent_  = 0;
     }
     panelCurrent_ = new mmHomePagePanel(this
