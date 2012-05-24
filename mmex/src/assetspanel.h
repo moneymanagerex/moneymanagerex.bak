@@ -94,10 +94,6 @@ private:
     void OnNewAsset(wxCommandEvent& event);
     void OnDeleteAsset(wxCommandEvent& event);
     void OnEditAsset(wxCommandEvent& event);
-
-    void OnViewPopupSelected(wxCommandEvent& event);
-    void sortTable();
-    void destroy();
 };
 
 #endif
