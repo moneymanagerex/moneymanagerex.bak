@@ -127,14 +127,7 @@ mmStocksPanel::~mmStocksPanel()
 
     if (yahoo_) delete yahoo_;
     if (m_LED) delete m_LED;
-
-    inidb_->Begin();
-    for (int i = 0; i < COL_MAX; ++i)
-    {
-        mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("STOCKS_COL%i_WIDTH"), i),
-                                wxString::Format(wxT("%i"), listCtrlAccount_->GetColumnWidth(i)));
-    };
-    inidb_->Commit();
+    this->save_config(listCtrlAccount_, wxT("STOCKS_COL"));
 }
 
 void mmStocksPanel::CreateControls()
