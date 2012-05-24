@@ -390,7 +390,7 @@ void mmBDDialog::CreateControls()
     wxPanel* transactionPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     transDetailsStaticBoxSizer->Add(transactionPanel, 0, wxGROW|wxALL, 10);
 
-    wxFlexGridSizer* transPanelSizer = new wxFlexGridSizer(5, 2, 10, 10);
+    wxFlexGridSizer* transPanelSizer = new wxFlexGridSizer(10, 2, 10, 10);
     transactionPanel->SetSizer(transPanelSizer);
 
     // Trans Date --------------------------------------------
