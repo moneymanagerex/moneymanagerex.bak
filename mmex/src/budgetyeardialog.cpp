@@ -28,9 +28,9 @@ IMPLEMENT_DYNAMIC_CLASS( mmBudgetYearDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmBudgetYearDialog, wxDialog )
     EVT_BUTTON(wxID_OK, mmBudgetYearDialog::OnOk)
-    EVT_BUTTON(ID_DIALOG_BUDGETYEAR_BUTTON_ADD, mmBudgetYearDialog::OnAdd)
+    EVT_BUTTON(wxID_ADD, mmBudgetYearDialog::OnAdd)
     EVT_BUTTON(ID_DIALOG_BUDGETYEAR_BUTTON_ADD_MONTH, mmBudgetYearDialog::OnAddMonth)
-    EVT_BUTTON(ID_DIALOG_BUDGETYEAR_BUTTON_DELETE, mmBudgetYearDialog::OnDelete)
+    EVT_BUTTON(wxID_DELETE, mmBudgetYearDialog::OnDelete)
 END_EVENT_TABLE()
 
 mmBudgetYearDialog::mmBudgetYearDialog( )
@@ -104,7 +104,7 @@ void mmBudgetYearDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 1, wxGROW|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( this, ID_DIALOG_BUDGETYEAR_BUTTON_ADD, 
+    wxButton* itemButton7 = new wxButton( this, wxID_ADD, 
         _("&Add Year"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL);
     itemButton7->SetToolTip(_("Add a new budget year"));
@@ -114,8 +114,7 @@ void mmBudgetYearDialog::CreateControls()
     itemBoxSizer5->Add(itemBudgetMonth, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     itemBudgetMonth->SetToolTip(_("Add a new budget month"));
 
-    wxButton* itemButtonDelete = new wxButton( this, ID_DIALOG_BUDGETYEAR_BUTTON_DELETE, 
-        _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButtonDelete = new wxButton( this, wxID_DELETE);
     itemBoxSizer5->Add(itemButtonDelete, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     itemButtonDelete->SetToolTip(_("Delete existing budget"));
 

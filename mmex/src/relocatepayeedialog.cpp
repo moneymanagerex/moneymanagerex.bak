@@ -29,7 +29,7 @@ IMPLEMENT_DYNAMIC_CLASS( relocatePayeeDialog, wxDialog )
 BEGIN_EVENT_TABLE( relocatePayeeDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_PAYEE_SELECT_BUTTON_SOURCE, relocatePayeeDialog::OnSelectSource)
     EVT_BUTTON(ID_DIALOG_PAYEE_SELECT_BUTTON_DEST, relocatePayeeDialog::OnSelectDest)
-    EVT_BUTTON(ID_DIALOG_PAYEE_RELOCATE_BUTTON_OK, relocatePayeeDialog::OnOk)
+    EVT_BUTTON(wxID_OK, relocatePayeeDialog::OnOk)
 END_EVENT_TABLE()
 
 relocatePayeeDialog::relocatePayeeDialog( )
@@ -107,8 +107,8 @@ void relocatePayeeDialog::CreateControls()
     boxSizer->Add(5,5,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
     boxSizer->Add(lineBottom,0,wxGROW|wxALL,5);
 
-    wxButton* okButton = new wxButton(this,ID_DIALOG_PAYEE_RELOCATE_BUTTON_OK,_("OK"),wxDefaultPosition,wxDefaultSize);
-    wxButton* cancelButton = new wxButton(this,wxID_CANCEL,_("Cancel"),wxDefaultPosition,wxDefaultSize);
+    wxButton* okButton = new wxButton(this,wxID_OK);
+    wxButton* cancelButton = new wxButton(this,wxID_CANCEL);
     cancelButton-> SetFocus () ;
     wxBoxSizer* buttonBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonBoxSizer->Add(okButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
