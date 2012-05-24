@@ -67,7 +67,7 @@ void mmBudgetYearEntryDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(2, 2, 0, 0);
+    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(3, 2, 0, 0);
     itemBoxSizer2->Add(itemGridSizer2, 0, wxALL, 5);
     
     wxStaticText* itemStaticText3 = new wxStaticText( this, wxID_STATIC, _("Budget Year:"));
