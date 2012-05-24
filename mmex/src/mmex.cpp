@@ -1618,11 +1618,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                  Thaw();
               }
             }
-            else
-            {
-                /* cannot find accountid */
-                wxASSERT(true);
-            }
         }
     }
     else
@@ -2551,20 +2546,19 @@ void mmGUIFrame::createHomePage()
 
     if (panelCurrent_)
     {
-        //panelCurrent_->DestroyChildren();
-        //panelCurrent_->SetSizer(NULL);
+        delete panelCurrent_;
         panelCurrent_  = 0;
     }
-    panelCurrent_ = new mmHomePagePanel(this,
-        m_db.get(),
-        m_inidb.get(),
-        m_core.get(),
-        m_topCategories,
-        homePanel,
-        ID_PANEL3,
-        wxDefaultPosition,
-        wxDefaultSize,
-        wxNO_BORDER|wxTAB_TRAVERSAL);
+    panelCurrent_ = new mmHomePagePanel(this
+            , m_db.get()
+            , m_inidb.get()
+            , m_core.get()
+            , m_topCategories
+            , homePanel
+            , ID_PANEL3
+            , wxDefaultPosition
+            , wxDefaultSize
+            , wxNO_BORDER|wxTAB_TRAVERSAL);
 
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 

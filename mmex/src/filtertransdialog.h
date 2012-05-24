@@ -18,7 +18,6 @@
 #pragma interface "filtertransdialog.cpp"
 #endif
 
-#include <wx/datectrl.h>
 #include "defs.h"
 #include <boost/shared_ptr.hpp>
 #include <vector>
