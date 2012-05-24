@@ -137,8 +137,7 @@ void mmStocksPanel::CreateControls()
     //this->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition,
-                                        wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
+    wxPanel* headerPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
     itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
@@ -169,7 +168,7 @@ void mmStocksPanel::CreateControls()
 
     /* ---------------------- */
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow(this,
-            ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(100, 100),
+            ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(200, 200),
             wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER);
 
     listCtrlStock_ = new stocksListCtrl(this, itemSplitterWindow10,
@@ -215,8 +214,7 @@ void mmStocksPanel::CreateControls()
         listCtrlStock_->SetColumnWidth(i, col_x);
     };
 
-    wxPanel* itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1,
-                                        wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
+    wxPanel* itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
     itemSplitterWindow10->SplitHorizontally(listCtrlStock_, itemPanel12);
     itemSplitterWindow10->SetMinimumPaneSize(100);
@@ -231,7 +229,6 @@ void mmStocksPanel::CreateControls()
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
-    itemButton6->SetToolTip(_("New Stock Investment"));
     itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
     wxButton* itemButton81 = new wxButton(itemPanel12, wxID_EDIT);
