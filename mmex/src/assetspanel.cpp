@@ -101,7 +101,7 @@ mmAssetsPanel::~mmAssetsPanel()
 void mmAssetsPanel::destroy()
 {
     inidb_->Begin();
-    for (int i = 0; i < COL_MAX-1; ++i) 
+    for (int i = 0; i < m_listCtrlAssets->GetColumnCount(); ++i) 
     {
         int width = m_listCtrlAssets->GetColumnWidth(i);
         mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), wxString() << width); 

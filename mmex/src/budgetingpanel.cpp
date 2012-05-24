@@ -76,28 +76,12 @@ mmBudgetingPanel::~mmBudgetingPanel()
 {
     if (m_imageList) delete m_imageList;
 
-    long col0, col1, col2, col3, col4, col5;
-    col0 = listCtrlAccount_->GetColumnWidth(0);
-    col1 = listCtrlAccount_->GetColumnWidth(1);
-    col2 = listCtrlAccount_->GetColumnWidth(2);
-    col3 = listCtrlAccount_->GetColumnWidth(3);
-    col4 = listCtrlAccount_->GetColumnWidth(4);
-    col5 = listCtrlAccount_->GetColumnWidth(5);
-
-    wxString col0Str = wxString::Format(wxT("%d"), col0);
-    wxString col1Str = wxString::Format(wxT("%d"), col1);
-    wxString col2Str = wxString::Format(wxT("%d"), col2);
-    wxString col3Str = wxString::Format(wxT("%d"), col3);
-    wxString col4Str = wxString::Format(wxT("%d"), col4);
-    wxString col5Str = wxString::Format(wxT("%d"), col5);
-
     inidb_->Begin();
-    mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL0_WIDTH"), col0Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL1_WIDTH"), col1Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL2_WIDTH"), col2Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL3_WIDTH"), col3Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL4_WIDTH"), col4Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL5_WIDTH"), col5Str); 
+    for (int i = 0; i < listCtrlAccount_->GetColumnCount(); ++i) 
+    {
+        int width = listCtrlAccount_->GetColumnWidth(i);
+        mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("BUDGET_COL%d_WIDTH"), i), wxString() << width); 
+    }
     inidb_->Commit();
 }
 
