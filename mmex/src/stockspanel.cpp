@@ -230,16 +230,16 @@ void mmStocksPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW, _("&New"));
+    wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
     itemButton6->SetToolTip(_("New Stock Investment"));
     itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
-    wxButton* itemButton81 = new wxButton(itemPanel12, wxID_EDIT, _("&Edit"));
+    wxButton* itemButton81 = new wxButton(itemPanel12, wxID_EDIT);
     itemButton81->SetToolTip(_("Edit Stock Investment"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButton81->Enable(false);
 
-    wxButton* itemButton7 = new wxButton(itemPanel12, wxID_DELETE, _("&Delete"));
+    wxButton* itemButton7 = new wxButton(itemPanel12, wxID_DELETE);
     itemButton7->SetToolTip(_("Delete Stock Investment"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButton7->Enable(false);
