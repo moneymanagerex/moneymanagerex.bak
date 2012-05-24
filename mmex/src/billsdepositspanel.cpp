@@ -120,7 +120,7 @@ void mmBillsDepositsPanel::CreateControls()
 
     /* ---------------------- */
     wxSplitterWindow* itemSplitterWindowBillsDeposit = new wxSplitterWindow( this,
-        ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(100, 100),
+        ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(200, 200),
         wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
     wxSize imageSize(16, 16);
