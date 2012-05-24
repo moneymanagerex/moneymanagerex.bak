@@ -584,9 +584,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     recentFiles_ = new RecentDatabaseFiles(m_inidb.get(), menuRecentFiles_);
 
     // add the toolbars to the manager
-    m_mgr.AddPane(toolBar_, wxAuiPaneInfo().
-        Name(wxT("toolbar")).Caption(wxT("Toolbar")).ToolbarPane().Top().
-        LeftDockable(false).RightDockable(false));
+    m_mgr.AddPane(toolBar_, wxAuiPaneInfo().Name(wxT("toolbar")).Caption(wxT("Toolbar")).ToolbarPane().Top().LeftDockable(false).RightDockable(false));
 
     // change look and feel of wxAuiManager
     m_mgr.GetArtProvider()->SetMetric(16, 0);
@@ -595,8 +593,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     // Save default perspective
     m_perspective = m_mgr.SavePerspective();
 
-    wxString auiPerspective = mmDBWrapper::getINISettingValue(m_inidb.get(),
-        wxT("AUIPERSPECTIVE"), m_perspective);
+    wxString auiPerspective = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("AUIPERSPECTIVE"), m_perspective);
 
     m_mgr.LoadPerspective(auiPerspective);
 
@@ -622,14 +619,16 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
     wxFileName dbpath = from_scratch ? wxGetEmptyString() : mmDBWrapper::getLastDbPath(m_inidb.get());
 
-    if (from_scratch || !dbpath.IsOk()) {
+    if (from_scratch || !dbpath.IsOk()) 
+    {
         menuEnableItems(false);
         createHomePage();
         updateNavTreeControl();
         showBeginAppDialog(dbpath.GetFullName().IsEmpty());
-    } else {
-        if (!openFile(dbpath.GetFullPath(), false))
-            showBeginAppDialog(true);
+    } 
+    else 
+    {
+        if (!openFile(dbpath.GetFullPath(), false)) showBeginAppDialog(true);
     }
 }
 //----------------------------------------------------------------------------
@@ -2567,8 +2566,7 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmReportsPanel(this, m_db.get(), rs, homePanel, ID_PANEL3,
-        wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
+    panelCurrent_ = new mmReportsPanel(this, m_db.get(), rs, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
