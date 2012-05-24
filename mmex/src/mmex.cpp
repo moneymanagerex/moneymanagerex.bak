@@ -4677,37 +4677,4 @@ void mmGUIFrame::BackupDatabase(const wxString& filename, bool updateRequired)
         wxFileName fnLastFile(backupFileArray.Last());
         if (fnLastFile.IsFileWritable()) wxRemoveFile(backupFileArray.Last());
     }
-
-#if 0
-//  Start debugging code
-    wxLogMessage(wxString() << wxT("Before - File List size:") << backupFileArray.Count());
-    if (backupFileArray.Count() > 0)
-    {
-        backupFileArray.Sort(true);
-        for (size_t debugIndex = 0; debugIndex < backupFileArray.Count(); debugIndex++)
-        {
-            wxLogMessage(wxString() << wxT("File ") <<debugIndex << wxT(": ") << backupFileArray[debugIndex]);
-        }
-    }
-
-    wxLogMessage(wxT(" "));
-    wxLogMessage(wxString() << wxT("After - File List size:") << backupFileArray.Count());
-    backupFileArray.Clear();
-    backupFile = wxFindFirstFile(fileSearch);
-    while (!backupFile.empty())
-    {
-        backupFileArray.Add(backupFile);
-        backupFile = wxFindNextFile();
-    }
-
-    if (backupFileArray.Count() > 0)
-    {
-        backupFileArray.Sort(true);
-        for (size_t debugIndex = 0; debugIndex < backupFileArray.Count(); debugIndex++)
-        {
-            wxLogMessage(wxString() << wxT("File ") <<debugIndex << wxT(": ") << backupFileArray[debugIndex]);
-        }
-    }
-//  End debugging code
-#endif
 }
