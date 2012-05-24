@@ -23,6 +23,7 @@
 #include <wx/panel.h>
 #include <wx/string.h>
 #include "mmcoredb.h"
+#include "dbwrapper.h"
 #include "util.h" // XXX
 //----------------------------------------------------------------------------
 /* Include XPM Support */
@@ -134,11 +135,23 @@ public:
     virtual wxString getReportText() const { return wxGetEmptyString(); }
     
     mmPanelBase() {}
+    ~mmPanelBase() {}
     mmPanelBase(wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core = 0): db_(db), inidb_(inidb), core_(core) {}
 
     wxSQLite3Database* db_; //TODO remove
     wxSQLite3Database* inidb_;
     mmCoreDB* core_;
+public:
+    virtual void save_config(const mmListCtrl* list_ctrl, const wxString& module = wxT("mmPanelBase"))
+    {
+        inidb_->Begin();
+        for (int i = 0; i < list_ctrl->GetColumnCount(); ++i) 
+        {
+            int width = list_ctrl->GetColumnWidth(i);
+            mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("%s_COL%d_WIDTH"), module.c_str(), i), wxString() << width); 
+        }
+        inidb_->Commit();
+    }
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_PANELBASE_H_

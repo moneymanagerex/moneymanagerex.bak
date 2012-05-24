@@ -94,14 +94,8 @@ bool mmBillsDepositsPanel::Create( wxWindow *parent,
 
 mmBillsDepositsPanel::~mmBillsDepositsPanel()
 {
-   if (m_imageList) delete m_imageList;
-    inidb_->Begin();
-    for (int i = 0; i < listCtrlAccount_->GetColumnCount(); ++i) 
-    {
-        int width = listCtrlAccount_->GetColumnWidth(i);
-        mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("BD_COL%d_WIDTH"), i), wxString() << width); 
-    }
-    inidb_->Commit();
+    if (m_imageList) delete m_imageList;
+    this->save_config(listCtrlAccount_, wxT("BD"));
 }
 
 void mmBillsDepositsPanel::CreateControls()

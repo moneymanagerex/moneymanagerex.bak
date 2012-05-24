@@ -92,21 +92,10 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
 
 mmAssetsPanel::~mmAssetsPanel()
 {
-    destroy();
+    this->save_config(m_listCtrlAssets, wxT("ASSETS"));
     if (m_new_button) delete m_new_button;
     if (m_edit_button) delete m_edit_button;
     if (m_delete_button) delete m_delete_button;
-}
-
-void mmAssetsPanel::destroy()
-{
-    inidb_->Begin();
-    for (int i = 0; i < m_listCtrlAssets->GetColumnCount(); ++i) 
-    {
-        int width = m_listCtrlAssets->GetColumnWidth(i);
-        mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), wxString() << width); 
-    }
-    inidb_->Commit();
 }
 
 void mmAssetsPanel::CreateControls()
