@@ -75,14 +75,7 @@ bool mmBudgetingPanel::Create( wxWindow *parent,
 mmBudgetingPanel::~mmBudgetingPanel()
 {
     if (m_imageList) delete m_imageList;
-
-    inidb_->Begin();
-    for (int i = 0; i < listCtrlAccount_->GetColumnCount(); ++i) 
-    {
-        int width = listCtrlAccount_->GetColumnWidth(i);
-        mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("BUDGET_COL%d_WIDTH"), i), wxString() << width); 
-    }
-    inidb_->Commit();
+    this->save_config(listCtrlAccount_, wxT("BUDGET"));
 }
 
 void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
