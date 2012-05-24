@@ -469,8 +469,7 @@ void billsDepositsListCtrl::OnListKeyDown(wxListEvent& event)
     {
         case WXK_DELETE:
             {
-                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,
-                    MENU_TREEPOPUP_DELETE);
+                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
                 OnDeleteBDSeries(evt);
             }
             break;
