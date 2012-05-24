@@ -29,7 +29,7 @@ IMPLEMENT_DYNAMIC_CLASS( relocateCategoryDialog, wxDialog )
 BEGIN_EVENT_TABLE( relocateCategoryDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_CATEG_SELECT_BUTTON_SOURCE, relocateCategoryDialog::OnSelectSource)
     EVT_BUTTON(ID_DIALOG_CATEG_SELECT_BUTTON_DEST, relocateCategoryDialog::OnSelectDest)
-    EVT_BUTTON(ID_DIALOG_CATEG_RELOCATE_BUTTON_OK, relocateCategoryDialog::OnOk)
+    EVT_BUTTON(wxID_OK, relocateCategoryDialog::OnOk)
 END_EVENT_TABLE()
 
 relocateCategoryDialog::relocateCategoryDialog( )
@@ -106,21 +106,21 @@ void relocateCategoryDialog::CreateControls()
     boxSizer->Add(lineTop,0,wxGROW|wxALL,5);
 
     wxBoxSizer* requestBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-    requestBoxSizer->Add(staticText_1,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    requestBoxSizer->Add(sourceBtn_,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL);
+    requestBoxSizer->Add(staticText_1,0,wxALIGN_CENTER|wxALL,5);
+    requestBoxSizer->Add(sourceBtn_,0,wxALIGN_CENTER|wxALL);
     requestBoxSizer->Add(5,10,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
-    requestBoxSizer->Add(staticText_2,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL);
-    requestBoxSizer->Add(destBtn_,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
+    requestBoxSizer->Add(staticText_2,0,wxALIGN_CENTER|wxALL);
+    requestBoxSizer->Add(destBtn_,0,wxALIGN_CENTER|wxALL,5);
     boxSizer->Add(requestBoxSizer);
     boxSizer->Add(5,5,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
     boxSizer->Add(lineBottom,0,wxGROW|wxALL,5);
 
-    wxButton* okButton = new wxButton(this,ID_DIALOG_CATEG_RELOCATE_BUTTON_OK,_("OK"),wxDefaultPosition,wxDefaultSize);
-    wxButton* cancelButton = new wxButton(this,wxID_CANCEL,_("Cancel"),wxDefaultPosition,wxDefaultSize);
+    wxButton* okButton = new wxButton(this,wxID_OK);
+    wxButton* cancelButton = new wxButton(this,wxID_CANCEL);
     cancelButton-> SetFocus () ;
     wxBoxSizer* buttonBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonBoxSizer->Add(okButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    buttonBoxSizer->Add(cancelButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
+    buttonBoxSizer->Add(okButton,0,wxALIGN_CENTER|wxALL,5);
+    buttonBoxSizer->Add(cancelButton,0,wxALIGN_CENTER|wxALL,5);
     boxSizer->Add(buttonBoxSizer, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 }
 
