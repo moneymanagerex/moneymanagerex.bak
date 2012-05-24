@@ -139,23 +139,19 @@ void mmNewAcctDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(12, 2, 0, 0);
-    itemBoxSizer2->Add(itemGridSizer2, 0, wxALL);
+    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(12, 2, 10, 10);
+    itemBoxSizer2->Add(itemGridSizer2, 0, wxALL, 15);
     
     wxStaticText* itemStaticText3 = new wxStaticText( this, 
-        wxID_STATIC, _("Account Name:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText3, 0, 
-        wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+        wxID_STATIC, _("Account Name:"));
+    itemGridSizer2->Add(itemStaticText3);
 
-    textAccountName_ = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNAME, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(textAccountName_, 0, wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    textAccountName_ = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNAME, wxT(""));
+    itemGridSizer2->Add(textAccountName_, 0, wxEXPAND);
     textAccountName_->SetToolTip(_("Enter the Name of the Account. This name can be renamed at any time."));
 
-    wxStaticText* itemStaticText51 = new wxStaticText( this, wxID_STATIC, 
-        _("Account Type:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText51, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText51 = new wxStaticText( this, wxID_STATIC, _("Account Type:"));
+    itemGridSizer2->Add(itemStaticText51);
 
     wxArrayString itemAcctTypeStrings;
        itemAcctTypeStrings.Add(_("Checking"));   // ACCOUNT_TYPE_BANK
@@ -164,65 +160,49 @@ void mmNewAcctDialog::CreateControls()
 
     wxChoice* itemChoice61 = new wxChoice( this, ID_DIALOG_NEWACCT_COMBO_ACCTTYPE, 
         wxDefaultPosition, wxDefaultSize, itemAcctTypeStrings);
-    itemGridSizer2->Add(itemChoice61, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemGridSizer2->Add(itemChoice61, 0, wxEXPAND);
     itemChoice61->SetSelection(ACCT_TYPE_CHECKING);
     itemChoice61->SetToolTip(_("Specify the type of account to be created."));
 
-    wxStaticText* itemStaticText5 = new wxStaticText( this, wxID_STATIC, _("Account Number:"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText5, 0, 
-        wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText5 = new wxStaticText( this, wxID_STATIC, _("Account Number:"));
+    itemGridSizer2->Add(itemStaticText5);
 
     wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( this, 
-        ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemTextCtrl6, 0, wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+        ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER);
+    itemGridSizer2->Add(itemTextCtrl6, 0, wxEXPAND);
     itemTextCtrl6->SetToolTip(_("Enter the Account Number associated with this account."));
 
-    wxStaticText* itemStaticText7 = new wxStaticText( this, wxID_STATIC, 
-        _("Held At:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText7, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText7 = new wxStaticText( this, wxID_STATIC, _("Held At:"));
+    itemGridSizer2->Add(itemStaticText7);
 
-    wxTextCtrl* itemTextCtrl8 = new wxTextCtrl( this, 
-        ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemTextCtrl8, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* itemTextCtrl8 = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT);
+    itemGridSizer2->Add(itemTextCtrl8, 0, wxEXPAND);
     itemTextCtrl8->SetToolTip(_("Enter the name of the financial institution in which the account is held."));
 
-    wxStaticText* itemStaticText9 = new wxStaticText( this, wxID_STATIC, _("Website:"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText9, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText9 = new wxStaticText( this, wxID_STATIC, _("Website:"));
+    itemGridSizer2->Add(itemStaticText9);
 
-    wxTextCtrl* itemTextCtrl10 = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemTextCtrl10, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* itemTextCtrl10 = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE);
+    itemGridSizer2->Add(itemTextCtrl10, 0, wxEXPAND);
     itemTextCtrl10->SetToolTip(_("Enter the URL of the website for the financial institution."));
 
-    wxStaticText* itemStaticText11 = new wxStaticText( this, 
-        wxID_STATIC, _("Contact:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText11, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText11 = new wxStaticText( this, wxID_STATIC, _("Contact:"));
+    itemGridSizer2->Add(itemStaticText11);
     
-    wxTextCtrl* itemTextCtrl12 = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemTextCtrl12, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* itemTextCtrl12 = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT);
+    itemGridSizer2->Add(itemTextCtrl12, 0, wxEXPAND);
     itemTextCtrl12->SetToolTip(_("Enter any contact information for the financial institution."));
 
     wxStaticText* itemStaticText13 = new wxStaticText( this, 
-        wxID_STATIC, _("Access Info:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText13, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+        wxID_STATIC, _("Access Info:"));
+    itemGridSizer2->Add(itemStaticText13);
 
-    wxTextCtrl* itemTextCtrl14 = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemTextCtrl14, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* itemTextCtrl14 = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO);
+    itemGridSizer2->Add(itemTextCtrl14, 0, wxEXPAND);
     itemTextCtrl14->SetToolTip(_("Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."));
 
     wxStaticText* itemStaticText15 = new wxStaticText( this, wxID_STATIC, _("Account Status:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText15, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemGridSizer2->Add(itemStaticText15);
 
     wxArrayString itemChoice6Strings;  
     itemChoice6Strings.Add(_("Open"));
@@ -230,26 +210,23 @@ void mmNewAcctDialog::CreateControls()
 
     wxChoice* itemChoice6 = new wxChoice( this, 
         ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS, wxDefaultPosition, wxDefaultSize, itemChoice6Strings);
-    itemGridSizer2->Add(itemChoice6, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemGridSizer2->Add(itemChoice6, 0, wxEXPAND);
     itemChoice6->SetSelection(ACCT_STATUS_OPEN);
     itemChoice6->SetToolTip(_("Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."));
     
     wxStaticText* itemStaticText18 = new wxStaticText( this, 
-        wxID_STATIC, _("Initial Balance:"), wxDefaultPosition, wxDefaultSize, 0);
-    itemGridSizer2->Add(itemStaticText18, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+        wxID_STATIC, _("Initial Balance:"));
+    itemGridSizer2->Add(itemStaticText18);
 
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this, 
         ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 , doubleValidator());
-    itemGridSizer2->Add(itemTextCtrl19, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemGridSizer2->Add(itemTextCtrl19, 0, wxEXPAND);
     itemTextCtrl19->SetToolTip(_("Enter the initial balance in this account."));
 
     wxStaticText* itemStaticText181 = new wxStaticText( this, 
         wxID_STATIC, _("Currency:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText181, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemGridSizer2->Add(itemStaticText181);
 
     currencyID_ = mmDBWrapper::getBaseCurrencySettings(core_->db_.get());
     wxString currName = _("Select Currency");
@@ -259,32 +236,30 @@ void mmNewAcctDialog::CreateControls()
     }
 
     wxButton* itemButton71 = new wxButton( this, 
-        ID_DIALOG_NEWACCT_BUTTON_CURRENCY, currName, wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemButton71, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE|wxEXPAND, 5);    
+        ID_DIALOG_NEWACCT_BUTTON_CURRENCY, currName);
+    itemGridSizer2->Add(itemButton71, 0, wxEXPAND);    
     itemButton71->SetToolTip(_("Specify the currency to be used by this account."));
 
     wxStaticText* itemStaticText17 = new wxStaticText( this, 
-        wxID_STATIC, _("Notes:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+        wxID_STATIC, _("Notes:"));
+    itemGridSizer2->Add(itemStaticText17);
 
     wxTextCtrl* itemTextCtrl18 = new wxTextCtrl( this, 
         ID_DIALOG_NEWACCT_TEXTCTRL_NOTES, 
         wxT(""), wxDefaultPosition, wxSize(150, 70), wxTE_MULTILINE );
-    itemGridSizer2->Add(itemTextCtrl18, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemGridSizer2->Add(itemTextCtrl18, 0, wxEXPAND);
     itemTextCtrl18->SetToolTip(_("Enter user notes and details about this account."));
 
-     itemGridSizer2->Add(5, 5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemGridSizer2->AddSpacer(5); //(5, 5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
  
     wxCheckBox* itemCheckBox10 = new wxCheckBox( this, 
         ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT, _("Favorite Account"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBox10->SetValue(TRUE);
-    itemGridSizer2->Add(itemCheckBox10, 0, 
-        wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemGridSizer2->Add(itemCheckBox10);
     itemCheckBox10->SetToolTip(_("Select whether this is an account that is used often. This is used to filter accounts display view."));
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer9, 0, wxALIGN_CENTER|wxALL, 5);
    
     wxButton* itemButton7 = new wxButton( this, wxID_OK);
     itemBoxSizer9->Add(itemButton7, 0, wxALIGN_CENTER|wxALL, 5);
