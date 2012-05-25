@@ -57,7 +57,6 @@ private:
     void OnChangeAppreciationType(wxCommandEvent& event);
     void enableDisableRate(bool en);
     
-    void fillControls();
     void dataToControls();
 
 };
