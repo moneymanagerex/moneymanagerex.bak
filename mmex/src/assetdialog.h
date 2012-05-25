@@ -36,7 +36,6 @@ private:
     wxSQLite3Database* m_db;
     int m_assetID;
     bool m_edit;
-    bool assetRichText;
 
     wxTextCtrl* m_assetName;
     wxDatePickerCtrl* m_dpc;
