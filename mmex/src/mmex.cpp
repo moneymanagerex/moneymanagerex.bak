@@ -217,7 +217,7 @@ private:
 /*
     See also: wxStackWalker, wxDebugReportUpload.
 */
-void reportFatalException(wxDebugReport::Context ctx)
+void reportFatalException(const wxDebugReport::Context& ctx)
 {
     wxDebugReportCompress rep;
 
