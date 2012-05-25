@@ -18,7 +18,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "assetdialog.h"
-#include <boost/foreach.hpp>
 
 enum
 {
