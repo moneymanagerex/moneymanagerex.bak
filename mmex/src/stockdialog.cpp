@@ -138,7 +138,7 @@ void mmStockDialog::CreateControls()
     wxPanel* itemPanel5 = new wxPanel( this, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel5, 1, wxGROW|wxALL, 5);
 
-    wxFlexGridSizer* itemFlexGridSizer6 = new wxFlexGridSizer(8, 2, 0, 0);
+    wxFlexGridSizer* itemFlexGridSizer6 = new wxFlexGridSizer(10, 2, 0, 0);
     itemPanel5->SetSizer(itemFlexGridSizer6);
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel5, wxID_STATIC, _("Stock Name"), wxDefaultPosition, wxDefaultSize, 0 );
