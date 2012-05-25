@@ -999,22 +999,21 @@ void mmGUIFrame::createControls()
 
     //navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
 
-    wxSize imageSize(16, 16);
-    wxImageList* imageList_ = new wxImageList( imageSize.GetWidth(), imageSize.GetHeight() );
-    imageList_->Add(wxBitmap(house_xpm));
-    imageList_->Add(wxBitmap(moneyaccount_xpm));  // used for: savings_account
-    imageList_->Add(wxBitmap(clock_xpm));
-    imageList_->Add(wxBitmap(calendar_xpm));
-    imageList_->Add(wxBitmap(chartpiereport_xpm));
-    imageList_->Add(wxBitmap(help_xpm));
-    imageList_->Add(wxBitmap(stock_curve_xpm));
-    imageList_->Add(wxBitmap(car_xpm));
-    imageList_->Add(wxBitmap(customsql_xpm));
-    imageList_->Add(wxBitmap(termaccount_xpm));   // used for: term_account
-    imageList_->Add(wxBitmap(savings_acc_favorite_xpm));
-    imageList_->Add(wxBitmap(savings_acc_closed_xpm));
-    imageList_->Add(wxBitmap(term_acc_favorite_xpm));
-    imageList_->Add(wxBitmap(term_acc_closed_xpm));
+    wxImageList* imageList_ = new wxImageList(16, 16);
+    imageList_->Add(wxBitmap(wxImage(house_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(moneyaccount_xpm).Scale(16, 16)));  // used for: savings_account
+    imageList_->Add(wxBitmap(wxImage(clock_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(calendar_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(chartpiereport_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(help_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(stock_curve_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(car_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(customsql_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(termaccount_xpm).Scale(16, 16)));   // used for: term_account
+    imageList_->Add(wxBitmap(wxImage(savings_acc_favorite_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(savings_acc_closed_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(term_acc_favorite_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(term_acc_closed_xpm).Scale(16, 16)));
 
     navTreeCtrl_->AssignImageList(imageList_);
 
