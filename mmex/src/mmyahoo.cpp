@@ -75,7 +75,7 @@ void mmYahoo::ReadSettings()
 void mmYahoo::WriteSettings()
 {
     // Status - Save to mmexini.db3
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_REFRESH_ENABLED"), wxString::Format(wxT("%d"),UpdatingEnabled_));
+    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_REFRESH_ENABLED"), wxString::Format(wxT("%ld"), UpdatingEnabled_));
     
     // Save to user database
     mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKS_MARKET_OPEN_TIME"), OpenTimeStr_) ;
@@ -85,7 +85,7 @@ void mmYahoo::WriteSettings()
         mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxString::Format(wxT("%s %s"),
                                               LastRefreshDT_.FormatISODate().c_str(),LastRefreshDT_.FormatISOTime().c_str()));
     }
-    mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKS_REFRESH_MINUTES"),wxString::Format(wxT("%d"),UpdateIntervalMinutes_));
+    mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKS_REFRESH_MINUTES"),wxString::Format(wxT("%ld"),UpdateIntervalMinutes_));
     // Server
     mmDBWrapper::setInfoSettingValue(db_,wxT("HTTP_YAHOO_SERVER"),Server_);
     mmDBWrapper::setInfoSettingValue(db_,wxT("HTTP_YAHOO_SUFFIX"),Suffix_);

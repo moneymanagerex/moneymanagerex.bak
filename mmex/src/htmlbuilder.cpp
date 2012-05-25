@@ -152,7 +152,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<w
 {
     html += wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
     if(cols - data.size() > 1)
-        html += wxString::Format(wxT(" colspan=\"%d\""), cols - data.size());
+        html += wxString::Format(wxT(" colspan=\"%ld\""), cols - data.size());
     html += wxT("><font size=") + fontSize + wxT("><b><i>&nbsp;&nbsp;");
     html += caption;
     html += wxT("</i></b></font>");

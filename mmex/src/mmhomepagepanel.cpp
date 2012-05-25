@@ -707,7 +707,7 @@ void mmHomePagePanel::displayStatistics(mmHTMLBuilder& hb)
 
     hb.startTableRow();
     hb.addTableCell( _("Total Transactions: "));  
-    hb.addTableCell(wxString::Format(wxT("%d"), core_->bTransactionList_.transactions_.size()), true, true, true);
+    hb.addTableCell(wxString::Format(wxT("%ld"), core_->bTransactionList_.transactions_.size()), true, true, true);
     hb.endTableRow();
     hb.addRowSeparator(2);
     hb.endTable();
