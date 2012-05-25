@@ -264,7 +264,7 @@ void mmTransDialog::CreateControls()
     wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel7, 0, wxGROW|wxALL, 10);
 
-    wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(5, 2, 10, 10);
+    wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(10, 2, 10, 10);
     itemPanel7->SetSizer(itemFlexGridSizer8);
     //itemPanel7->SetBackgroundColour(mmColors::listBackColor);
 
