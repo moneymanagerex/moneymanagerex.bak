@@ -37,7 +37,6 @@ BEGIN_EVENT_TABLE(mmAssetDialog, wxDialog)
     EVT_BUTTON(wxID_OK, mmAssetDialog::OnOk)
     EVT_BUTTON(wxID_CANCEL, mmAssetDialog::OnCancel)
     EVT_CHOICE(IDC_COMBO_TYPE, mmAssetDialog::OnChangeAppreciationType)
-    EVT_CHILD_FOCUS(mmAssetDialog::changeFocus)
 END_EVENT_TABLE()
 
 
@@ -339,15 +338,5 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 
 void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 {
-    if (assetRichText)
-        return;
-    else 
-        EndModal(wxID_CANCEL);
-}
-
-void mmAssetDialog::changeFocus(wxChildFocusEvent& event)
-{
-    wxWindow *w = event.GetWindow();
-    if (w) 
-        assetRichText = (w->GetId() == IDC_NOTES ? true : false);    
+    EndModal(wxID_CANCEL);
 }
