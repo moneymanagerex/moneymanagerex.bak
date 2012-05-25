@@ -381,7 +381,7 @@ int getTransformedTrxStatus(const wxString& in);
 wxString getTransformedTrxStatus(int in);
 wxString Tips(wxString type);
 wxArrayString viewTransactionsStrings(bool translated, wxString input_string, int& row_id);
-int site_content(wxString site, wxString& output);
+int site_content(const wxString& site, wxString& output);
 
 // Validators -----------------------------------------------------
 

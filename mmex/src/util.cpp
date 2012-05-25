@@ -1140,7 +1140,7 @@ wxArrayString itemChoiceStrings() {
     return itemChoice7Strings;
 }
 
-int site_content(wxString site, wxString& output)
+int site_content(const wxString& site, wxString& output)
 {
     int err_code = wxID_OK;
     wxURL url(site);
