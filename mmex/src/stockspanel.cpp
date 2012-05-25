@@ -60,9 +60,9 @@ BEGIN_EVENT_TABLE(stocksListCtrl, mmListCtrl)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_STOCKS_LISTCTRL,    stocksListCtrl::OnListItemSelected)
     EVT_LIST_ITEM_DESELECTED(ID_PANEL_STOCKS_LISTCTRL,    stocksListCtrl::OnListItemDeselected)
 
-    EVT_MENU(MENU_TREEPOPUP_NEW,              stocksListCtrl::OnNewStocks)
-    EVT_MENU(MENU_TREEPOPUP_EDIT,             stocksListCtrl::OnEditStocks)
-    EVT_MENU(MENU_TREEPOPUP_DELETE,           stocksListCtrl::OnDeleteStocks)
+    EVT_MENU(wxID_NEW,              stocksListCtrl::OnNewStocks)
+    EVT_MENU(wxID_EDIT,             stocksListCtrl::OnEditStocks)
+    EVT_MENU(wxID_DELETE,           stocksListCtrl::OnDeleteStocks)
 
     EVT_LIST_KEY_DOWN(ID_PANEL_STOCKS_LISTCTRL,   stocksListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
@@ -715,10 +715,10 @@ void stocksListCtrl::OnItemRightClick(wxListEvent& event)
     selectedIndex_ = event.GetIndex();
 
     wxMenu menu;
-    menu.Append(MENU_TREEPOPUP_NEW, _("&New Stock Investment"));
+    menu.Append(wxID_NEW);
     menu.AppendSeparator();
-    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Stock Investment"));
-    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Stock Investment"));
+    menu.Append(wxID_EDIT);
+    menu.Append(wxID_DELETE);
     PopupMenu(&menu, event.GetPoint());
 }
 
@@ -841,7 +841,7 @@ void stocksListCtrl::OnListKeyDown(wxListEvent& event)
     {
         case WXK_DELETE:
             {
-                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,  MENU_TREEPOPUP_DELETE);
+                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,  wxID_DELETE);
                 OnDeleteStocks(evt);
             }
             break;
