@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #ifndef _MM_EX_CONSTANTS_H_
 #define _MM_EX_CONSTANTS_H_
+
 //----------------------------------------------------------------------------
 class wxString;
 //----------------------------------------------------------------------------
@@ -30,8 +31,14 @@ namespace mmex
         Do not use mmex::GetAppName() for such things.
 */
 wxString getProgramName();
-
 wxString getProgramVersion();
+wxString getProgramCopyright();
+wxString getProgramWebSite();
+wxString getProgramDevelopers();
+wxString getProgramDocWriters();
+wxString getProgramTranslators();
+wxString getProgramArtists();
+wxString getProgramDescription();
 
 } // namespace mmex
 
