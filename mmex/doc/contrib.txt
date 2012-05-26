@@ -29,10 +29,7 @@ Vadim
 Vat
 Wesley Ellis ..... [elliswr]
 
-Silk Icons
-==========================================
-http://www.famfamfam.com/lab/icons/silk/
-
+------------------------------------------
 Translations
 ==========================================
 Brazilian Portuguese
@@ -98,6 +95,7 @@ Ukrainian
 Vietnamese
 -- Nicky, Luu Cong Thanh
 
+-----------------------------------------
 User Manual
 ==========================================
 English
@@ -109,6 +107,12 @@ Russian ... Nikolay
 Polish .... Damian_pl
 Spanish ... jorgeb
 
+------------------------------------------
+Silk Icons
+==========================================
+http://www.famfamfam.com/lab/icons/silk/
+
+------------------------------------------
 Sponsors
 ==========================================
 William Thompson

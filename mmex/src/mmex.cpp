@@ -3809,15 +3809,33 @@ void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
     wxAboutDialogInfo aboutInfo;
     aboutInfo.SetIcon(logo);
     aboutInfo.SetName(_("Version: "));
-
     aboutInfo.SetVersion(mmex::getProgramVersion());
     aboutInfo.SetDescription(mmex::getProgramDescription());
     aboutInfo.SetCopyright(mmex::getProgramCopyright());
     aboutInfo.SetWebSite(mmex::getProgramWebSite());
-    aboutInfo.AddDeveloper(mmex::getProgramDevelopers());
-    aboutInfo.AddTranslator(mmex::getProgramTranslators());
-    aboutInfo.AddDocWriter(mmex::getProgramDocWriters());
-    aboutInfo.AddArtist(mmex::getProgramArtists());
+
+    wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
+    wxFileInputStream input(filePath);
+    wxTextInputStream text(input);
+    wxArrayString data;
+    data.Add(wxT(""));
+
+    int part = 0;
+    while (!input.Eof())
+    {
+        wxString line = text.ReadLine() << wxT("\n");
+        if (!line.Contains(wxT("-------------\n")))
+            data[part] << line;
+        else {
+            ++part;
+            data.Add(wxT(""));
+        }
+    }
+
+    aboutInfo.AddDeveloper(data[0]);
+    if (data.GetCount() > 1) aboutInfo.AddTranslator(data[1]);
+    if (data.GetCount() > 2) aboutInfo.AddDocWriter(data[2]);
+    if (data.GetCount() > 3) aboutInfo.AddArtist(data[3]);
 
     wxAboutBox(aboutInfo);
 }
