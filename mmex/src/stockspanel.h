@@ -21,8 +21,28 @@
 
 #include "mmpanelbase.h"
 #include "util.h"
-#include "led.h"
-#include <wx/tglbtn.h>
+
+enum
+{
+    ID_PANEL_STOCKS_STATIC_DETAILS = wxID_HIGHEST + 500,
+    ID_PANEL_STOCKS_STATIC_DETAILS_MINI,
+    ID_TIMER_SCHEDULE_STOCK,
+    ID_DPC_STOCK_PDATE,
+    ID_BUTTON_STOCKS_HELDAT,
+    ID_TEXTCTRL_STOCKNAME,
+    ID_TEXTCTRL_STOCK_SYMBOL,
+    ID_TEXTCTRL_NUMBER_SHARES,
+    ID_TEXTCTRL_STOCK_PP,
+    ID_TEXTCTRL_STOCK_NOTES,
+    ID_TEXTCTRL_STOCK_CP,
+    ID_BUTTON_STOCK_CURRENCY,
+    ID_STATIC_STOCK_VALUE,
+    ID_TEXTCTRL_STOCK_COMMISSION,
+    ID_BUTTON_STOCK_WEBPRICE,
+    ID_PANEL_STOCK_UPDATE_LED,
+    ID_DIALOG_STOCKS,
+    ID_PANEL_STOCKS_LISTCTRL
+};
 
 class wxListEvent;
 class mmStocksPanel;
@@ -147,13 +167,10 @@ public:
 
 private:
     mmYahoo* yahoo_;
-    awxLed* m_LED;
+    wxStaticBitmap* m_LED;
     wxTimer* StatusRefreshTimer_;
     wxTimer* DownloadScheduleTimer_;
 
-    // Timer to refresh the state of the LED & its tooltip
-    void OnRefreshTimer( wxTimerEvent& event );
-    // Timer to kick off download when required
     void OnScheduleTimer( wxTimerEvent &event );
     void OrderDownloadIfRequired(void);
 
@@ -162,7 +179,7 @@ private:
 
     wxStaticText* stock_details_;
     wxStaticText* stock_details_short_;
+    wxString strLastUpdate_;
 };
 
 #endif
-
