@@ -25,12 +25,10 @@
 #include "mmex_db_view.h"
 #include <boost/foreach.hpp>
 
+#include "../resources/leds.xpm"
+
 /*******************************************************/
-enum
-{
-    ID_PANEL_STOCKS_STATIC_DETAILS = wxID_HIGHEST + 300,
-    ID_PANEL_STOCKS_STATIC_DETAILS_MINI
-};
+
 enum EColumn
 {
     //COL_HELDAT,
@@ -50,7 +48,6 @@ BEGIN_EVENT_TABLE(mmStocksPanel, wxPanel)
     EVT_BUTTON(wxID_DELETE,      mmStocksPanel::OnDeleteStocks)
     EVT_BUTTON(wxID_REFRESH,     mmStocksPanel::OnRefreshQuotes)
     EVT_BUTTON(wxID_SETUP,     mmStocksPanel::OnHTTPSettings)
-    EVT_TIMER(ID_TIMER_REFRESH_STOCK,       mmStocksPanel::OnRefreshTimer)
     EVT_TIMER(ID_TIMER_SCHEDULE_STOCK,      mmStocksPanel::OnScheduleTimer)
 END_EVENT_TABLE()
 /*******************************************************/
@@ -96,13 +93,12 @@ bool mmStocksPanel::Create(wxWindow *parent,
     // Greg Newton
     yahoo_ = new mmYahoo(inidb_, db_);
 
+    strLastUpdate_ = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxT(""));
+
     updateExtraStocksData(-1);
 
     DownloadScheduleTimer_=NULL;
     StatusRefreshTimer_=NULL;
-
-    StatusRefreshTimer_ = new wxTimer(this,ID_TIMER_REFRESH_STOCK);
-    StatusRefreshTimer_->Start(1250, wxTIMER_CONTINUOUS);
 
     DownloadScheduleTimer_ = new wxTimer(this, ID_TIMER_SCHEDULE_STOCK);
     DownloadScheduleTimer_->Start(yahoo_->UpdateIntervalMinutes_ * 60000, wxTIMER_CONTINUOUS);
@@ -126,7 +122,6 @@ mmStocksPanel::~mmStocksPanel()
     }
 
     if (yahoo_) delete yahoo_;
-    if (m_LED) delete m_LED;
     this->save_config(listCtrlStock_, wxT("STOCKS_COL"));
 }
 
@@ -151,11 +146,8 @@ void mmStocksPanel::CreateControls()
     wxStaticText* itemStaticText10 = new wxStaticText(headerPanel,
                                      ID_PANEL_CHECKING_STATIC_BALHEADER,
                                      _("Total:"), wxDefaultPosition, wxDefaultSize, 0);
-
-    m_LED = new awxLed(headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN, 1, 5);
-    //m_LED = new awxLed(headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN);
-    m_LED->SetState(awxLED_OFF);
-    //m_LED->SetBackgroundColour(mmColors::listBackColor);
+    wxBitmap pic(led_off_xpm);
+    m_LED = new wxStaticBitmap(headerPanel, ID_PANEL_STOCK_UPDATE_LED, pic);
     m_LED->SetToolTip(_("Idle"));
 
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
@@ -252,8 +244,8 @@ void mmStocksPanel::CreateControls()
     itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
     //Infobar-mini
-    stock_details_short_ = new wxStaticText(itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""),
-        wxDefaultPosition, wxDefaultSize, 0);
+    stock_details_short_ = new wxStaticText(itemPanel12,
+         ID_PANEL_STOCKS_STATIC_DETAILS_MINI, strLastUpdate_);
     itemBoxSizer5->Add(stock_details_short_, 1, wxGROW|wxTOP, 12);
     //Infobar
     stock_details_ = new wxStaticText(itemPanel12,
@@ -434,73 +426,6 @@ void mmStocksPanel::OnEditStocks(wxCommandEvent& event)
     listCtrlStock_->OnEditStocks(event);
 }
 
-/** Thread and timer events **/
-// The timer for refreshing the LED and status bar (every second?)
-void mmStocksPanel::OnRefreshTimer(wxTimerEvent& WXUNUSED(event))
-{
-    wxDateTime      LastRefreshDT;
-    wxString        strLastUpdate;
-
-    awxLedColour    LEDcolour;
-    awxLedState     LEDstate;
-    bool            LEDblink;
-
-    wxString sStatusText;
-    if (yahoo_->LastRefreshDT_.IsValid())
-        strLastUpdate.Printf(_("%s on %s"),yahoo_->LastRefreshDT_.FormatTime().c_str(),
-                             yahoo_->LastRefreshDT_.FormatDate().c_str());
-    else
-        strLastUpdate = _("never!");
-
-    switch (yahoo_->StocksRefreshStatus_)
-    {
-    case mmYahoo::DS_NOTAUTOMATIC:
-        sStatusText.Printf(_("Automatic stock quote refresh is disabled. \nLast update: %s"),strLastUpdate.c_str());
-        LEDcolour = awxLED_LUCID;
-        LEDstate = awxLED_OFF;
-        LEDblink = false;
-        break;
-    case mmYahoo::DS_OUTOFHOURS:
-        sStatusText.Printf(_("Automatic stock quote refresh idle - Out of Hours. \nLast update: %s"),strLastUpdate.c_str());
-        LEDcolour = awxLED_YELLOW;
-        LEDstate = awxLED_ON;
-        LEDblink = false;
-        break;
-    case mmYahoo::DS_INPROGRESS:
-        sStatusText.Printf(_("Automatic stock quote refresh in progress..."));
-        LEDstate = awxLED_ON;
-        LEDcolour = awxLED_GREEN;
-        LEDblink = true;
-        break;
-    case mmYahoo::DS_SUCCESSFUL:
-        sStatusText.Printf(_("Automatic stock quote refresh successful. \nLast update: %s"),strLastUpdate.c_str());
-        LEDstate = awxLED_ON;
-        LEDcolour = awxLED_GREEN;
-        LEDblink = false;
-        break;
-    case mmYahoo::DS_FAILED:
-        sStatusText.Printf(_("Automatic stock quote refresh Failed. \nLast successful update: %s"),strLastUpdate.c_str());
-        LEDstate = awxLED_ON;
-        LEDcolour = awxLED_RED;
-        LEDblink = false;
-        break;
-    default:
-     case mmYahoo::DS_NOTSTARTED:
-        sStatusText.Printf(_("Automatic stock quote refresh not started. \nLast update: %s"),strLastUpdate.c_str());
-        LEDcolour = awxLED_LUCID;
-        LEDstate = awxLED_OFF;
-        LEDblink = false;
-        break;
-    }
-
-    //SetStatusText(sStatusText,1);
-
-    m_LED->SetColour(LEDcolour);
-    m_LED->SetState(LEDstate);
-    if (LEDblink)  m_LED->SetState(awxLED_BLINK);
-    m_LED->SetToolTip(sStatusText);
-    m_LED->Redraw();
-}
 // The timer for scheduling quote updates
 void mmStocksPanel::OnScheduleTimer(wxTimerEvent& WXUNUSED(event))
 {
@@ -513,11 +438,16 @@ void mmStocksPanel::OrderDownloadIfRequired(void)
     {
         if (DownloadIsRequired())
             OrderQuoteRefresh();
-        else
-            yahoo_->StocksRefreshStatus_ = mmYahoo::DS_OUTOFHOURS;
+        else {
+             yahoo_->StocksRefreshStatus_ = mmYahoo::DS_OUTOFHOURS;
+            wxBitmap pic(led_yellow_xpm);
+            m_LED->SetBitmap(pic);
+        }
     }
     else
     {
+        wxBitmap pic(led_off_xpm);
+        m_LED->SetBitmap(pic);
         yahoo_->StocksRefreshStatus_ = mmYahoo::DS_NOTAUTOMATIC;
     }
 }
@@ -629,9 +559,19 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     yahoo_->StocksRefreshStatus_ = mmYahoo::DS_INPROGRESS;
     wxString quotes;
 
-    if (site_content(site, quotes) != wxID_OK)
+    int err_code = site_content(site, quotes);
+    if (err_code != wxID_OK)
     {
         yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
+        wxBitmap pic(led_red_xpm);
+        m_LED->SetBitmap(pic);
+        if (err_code != wxID_OK) {
+            if (err_code == 2)
+                stock_details_->SetLabel(_("Cannot get data from WWW!"));
+            else if (err_code == 1)
+                stock_details_->SetLabel(_("Unable to connect!"));
+            stock_details_short_->SetLabel(wxT(""));
+        }
         return;
     }
 
@@ -708,6 +648,8 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     // We are done!
     yahoo_->LastRefreshDT_       = wxDateTime::Now();
     yahoo_->StocksRefreshStatus_ = mmYahoo::DS_SUCCESSFUL;
+    wxBitmap pic(led_green_xpm);
+    m_LED->SetBitmap(pic);
 }
 
 void stocksListCtrl::OnItemRightClick(wxListEvent& event)
@@ -759,7 +701,7 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
     if (selectedIndex_ == -1)
     {
         stock_details_->SetLabel(Tips(TIPS_STOCK));
-        stock_details_short_->SetLabel(wxT(""));
+        stock_details_short_->SetLabel(strLastUpdate_);
     }
     else
     {
