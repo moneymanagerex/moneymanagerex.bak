@@ -43,7 +43,6 @@
 #include "reportbudgetcategorysummary.h"
 #include "mmgraphtopcategories.h"
 #include "appstartdialog.h"
-#include "aboutdialog.h"
 #include "newacctdialog.h"
 #include "categdialog.h"
 #include "payeedialog.h"
@@ -64,6 +63,7 @@
 #include "customreportdialog.h"
 #include <boost/version.hpp>
 #include "mmyahoo.h"
+#include <wx/aboutdlg.h>
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -100,6 +100,7 @@
 #include "../resources/delete_account.xpm"
 #include "../resources/filter.xpm"
 #include "../resources/facebook.xpm"
+#include "../resources/money.xpm"
 //----------------------------------------------------------------------------
 
 // Icons from Silk Collection
@@ -618,14 +619,14 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
     wxFileName dbpath = from_scratch ? wxGetEmptyString() : mmDBWrapper::getLastDbPath(m_inidb.get());
 
-    if (from_scratch || !dbpath.IsOk()) 
+    if (from_scratch || !dbpath.IsOk())
     {
         menuEnableItems(false);
         createHomePage();
         updateNavTreeControl();
         showBeginAppDialog(dbpath.GetFullName().IsEmpty());
-    } 
-    else 
+    }
+    else
     {
         if (!openFile(dbpath.GetFullPath(), false)) showBeginAppDialog(true);
     }
@@ -3804,7 +3805,21 @@ void mmGUIFrame::OnFacebook(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    mmAboutDialog(m_inidb.get(), this).ShowModal();
+    wxIcon logo(money_xpm);
+    wxAboutDialogInfo aboutInfo;
+    aboutInfo.SetIcon(logo);
+    aboutInfo.SetName(_("Version: "));
+
+    aboutInfo.SetVersion(mmex::getProgramVersion());
+    aboutInfo.SetDescription(mmex::getProgramDescription());
+    aboutInfo.SetCopyright(mmex::getProgramCopyright());
+    aboutInfo.SetWebSite(mmex::getProgramWebSite());
+    aboutInfo.AddDeveloper(mmex::getProgramDevelopers());
+    aboutInfo.AddTranslator(mmex::getProgramTranslators());
+    aboutInfo.AddDocWriter(mmex::getProgramDocWriters());
+    aboutInfo.AddArtist(mmex::getProgramArtists());
+
+    wxAboutBox(aboutInfo);
 }
 //----------------------------------------------------------------------------
 
