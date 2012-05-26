@@ -34,10 +34,6 @@ wxString getProgramName();
 wxString getProgramVersion();
 wxString getProgramCopyright();
 wxString getProgramWebSite();
-wxString getProgramDevelopers();
-wxString getProgramDocWriters();
-wxString getProgramTranslators();
-wxString getProgramArtists();
 wxString getProgramDescription();
 
 } // namespace mmex
