@@ -19,12 +19,12 @@
 #include "fileviewerdialog.h"
 #include "defs.h"
 
-IMPLEMENT_DYNAMIC_CLASS( fileviewer, wxDialog )
+IMPLEMENT_DYNAMIC_CLASS(fileviewer, wxDialog)
 
-BEGIN_EVENT_TABLE( fileviewer, wxDialog )
+BEGIN_EVENT_TABLE(fileviewer, wxDialog)
 END_EVENT_TABLE()
 
-fileviewer::fileviewer( )
+fileviewer::fileviewer()
 {
 }
 
@@ -36,11 +36,11 @@ fileviewer::fileviewer(const wxString& fileName, wxWindow* parent,
     Create(parent, id, caption, pos, size, style);
 }
 
-bool fileviewer::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
-                        const wxPoint& pos, const wxSize& size, long style )
+bool fileviewer::Create(wxWindow* parent, wxWindowID id, const wxString& caption,
+                        const wxPoint& pos, const wxSize& size, long style)
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
-    wxDialog::Create( parent, id, caption, pos, size, style );
+    wxDialog::Create( parent, id, caption, pos, size, style);
 
     CreateControls();
     GetSizer()->Fit(this);
@@ -54,7 +54,7 @@ void fileviewer::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxTextCtrl *itemTextCtrl3 = new wxTextCtrl( this,
+    wxTextCtrl *itemTextCtrl3 = new wxTextCtrl(this,
         ID_TEXTCTRL_FILEVIEWER, wxT(""),
         SYMBOL_FILEVIEWER_POSITION, SYMBOL_FILEVIEWER_SIZE,
         wxTE_MULTILINE|wxTE_READONLY );
@@ -64,26 +64,19 @@ void fileviewer::CreateControls()
     /* Load the Text from the file */
     if ( !fileName_.empty() )
     {
-         wxFileInputStream input( fileName_ );
-         wxTextInputStream text( input );
-          while (!input.Eof() )
-          {
-                wxString line = text.ReadLine();
-                if (!line.IsEmpty())
-                {
-                    *itemTextCtrl3 << line << wxT("\n");
-                }
-                else
-                {
-                    *itemTextCtrl3 << wxT("\n");
-                }
-          }
-
+        wxFileInputStream input( fileName_ );
+        wxTextInputStream text( input );
+        wxString line;
+        while (!input.Eof() )
+        {
+            line = text.ReadLine() << wxT("\n");
+            *itemTextCtrl3 << wxT("\n");
+        }
     }
     //Scroll to the top of file
     itemTextCtrl3->SetInsertionPoint(0);
 
-    wxButton* itemButtonOK = new wxButton( this, wxID_OK);
-    itemBoxSizer2->Add(itemButtonOK, 0, wxALIGN_RIGHT|wxALL, 4);
+    wxButton* itemButtonOK = new wxButton(this, wxID_OK);
+    itemBoxSizer2->Add(itemButtonOK, 0, wxALIGN_RIGHT|wxALL, 5);
     itemButtonOK->SetFocus();
 }
