@@ -1,15 +1,14 @@
-		*** Build instructions for MS Windows platform ***
-                            using
-        *** Microsoft Visual C++ 2010 Express compiler ***
-        
-        
+*** Build instructions for MS Windows platform ***
+                         using
+*** Microsoft Visual C++ 2010 Express compiler ***
+
 NOTE:   The directory msw-vc-2010e has the project files for:
-                   Microsoft Visual C++ 2010 Express.
-                     For other compilers, see the 
-        readme file in the mmex/build/msw directory.
+        Microsoft Visual C++ 2010 Express.
+        For other compilers, see the readme file in the
+        directory: mmex/build/msw
 
 
-                     *** Prerequisites ***
+   *** Prerequisites ***
 
 1. Install wxWidgets 2.8.10 and above in a directory like C:\wxWidgets-2.8.10
    and then create an environment variable WXWIN to point to that directory.
@@ -51,4 +50,37 @@ NOTE:   The directory msw-vc-2010e has the project files for:
 
 4. Build the solution...
 
-                    ---------- 000000000000000 ----------
+=====================================================================================
+Added support for multiple builds using wxWidgets 2.8.xx and wxWidgets 2.9.x
+=====================================================================================
+Install wxWidgets 2.8.x and 2.9.x in separate locations
+
+Assuming that the following are installed in the following directories:
+BOOST               c:\cpp\boost_1_49_0
+wxWidgets 2.8.12    c:\cpp\wxWidgets-2.8.12
+wxWidgets 2.9.3     c:\cpp\wxWidgets-2.9.3
+
+Set up windows environment variables as follows:
+
+Variable            Value          
+-----------------------------------------------
+BOOSTDIR            c:\boost_1_49_0
+WXWIN               c:\cpp\wxWidgets-2.8.12
+WXWIN_29            c:\cpp\wxWidgets-2.9.3
+
+Select the following configurations:
+Builds      wxWidgets 2.8.12    wxWidgets 2.9.3
+-----------------------------------------------
+debug       Unicode Debug       Debug               
+release     Unicode Release     Release             
+
+
+MMEX        wxWidgets 2.8.12                        wxWidgets 2.9.3
+---------------------------------------------------------------------
+Debug       Unicode Debug Multilib WX_PYTHON_0      wxwin_29_deug
+Release     Unicode Release Multilib WX_PYTHON_0    wxwin_29_release
+---------------------------------------------------------------------
+
+=====================================================================================
+End of File
+=====================================================================================
