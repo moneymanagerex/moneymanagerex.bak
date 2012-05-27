@@ -129,6 +129,22 @@
       <Configuration>Unicode Release Multilib WX_PYTHON_1</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32">
+      <Configuration>WXWIN_28_Unicode Debug Multilib WX_PYTHON_0</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="wxwin_29_debug|Win32">
+      <Configuration>wxwin_29_debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="wxwin_29_release|Win32">
+      <Configuration>wxwin_29_release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32">
+      <Configuration>WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>sqlite</ProjectName>
@@ -215,6 +231,18 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
@@ -228,6 +256,10 @@
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
@@ -326,6 +358,15 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -336,6 +377,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Monolithic WX_PYTHON_1|Win32'" Label="PropertySheets">
@@ -382,7 +426,9 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug Monolithic WX_PYTHON_1|Win32'">vc-static-d\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug Monolithic WX_PYTHON_1|Win32'">vc-static-d\sqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'">vc-static-u\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'">vc-static-29u\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'">vc-static-u\sqlite\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'">vc-static-29u\sqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_1|Win32'">vc-static-u\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_1|Win32'">vc-static-u\sqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_0|Win32'">vc-static-u\</OutDir>
@@ -390,7 +436,13 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'">vc-static-u\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'">vc-static-u\sqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'">vc-static-29ud\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'">vc-static-ud29\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\sqlite\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'">vc-static-29ud\sqlite\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\sqlite\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'">vc-static-ud29\sqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_1|Win32'">vc-static-ud\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_1|Win32'">vc-static-ud\sqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Monolithic WX_PYTHON_0|Win32'">vc-static-ud\</OutDir>
@@ -708,6 +760,36 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <ObjectFileName>vc-static-29u\sqlite\</ObjectFileName>
+      <ProgramDataBaseFileName>vc-static-29u\sqlite.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>vc-static-29u\sqlite.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_1|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -818,6 +900,102 @@
     </ClCompile>
     <Lib>
       <OutputFile>vc-static-ud\sqlite.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <ObjectFileName>vc-static-29ud\sqlite\</ObjectFileName>
+      <ProgramDataBaseFileName>vc-static-29ud\sqlite.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>vc-static-29ud\sqlite.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <ObjectFileName>vc-static-ud\sqlite\</ObjectFileName>
+      <ProgramDataBaseFileName>vc-static-ud\sqlite.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>vc-static-ud\sqlite.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <ObjectFileName>vc-static-ud29\sqlite\</ObjectFileName>
+      <ProgramDataBaseFileName>vc-static-ud29\sqlite.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>vc-static-ud29\sqlite.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Midl>
