@@ -34,12 +34,113 @@ const wxString ACCOUNT_TYPE_BANK  = wxT("Checking");
 const wxString ACCOUNT_TYPE_TERM  = wxT("Term");
 const wxString ACCOUNT_TYPE_STOCK = wxT("Investment");
 
-const wxString TRANS_TYPE_WITHDRAWAL_STR   = wxT("Withdrawal");
-const wxString TRANS_TYPE_DEPOSIT_STR      = wxT("Deposit");
-const wxString TRANS_TYPE_TRANSFER_STR     = wxT("Transfer");
+const wxString TRANS_TYPE_WITHDRAWAL_STR = wxT("Withdrawal");
+const wxString TRANS_TYPE_DEPOSIT_STR    = wxT("Deposit");
+const wxString TRANS_TYPE_TRANSFER_STR   = wxT("Transfer");
 
 enum {DEF_STATUS_NONE , DEF_STATUS_RECONCILED , DEF_STATUS_VOID , DEF_STATUS_FOLLOWUP , DEF_STATUS_DUPLICATE };
 enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
+
+/*****************************************************************************
+Class BudgetYear_Table
+******************************************************************************/
+class BudgetYear_Table
+{
+public:
+    BudgetYear_Table(wxSQLite3Database* db);
+
+    /// Add the Year and return the ID
+    int AddYear(const wxString& year);
+    /// Get the Budget Year, for the given ID
+    wxString GetYear(int id);
+    /// Get the Budget Year ID, for the given Year
+    int GetYearID(const wxString& year);
+    
+    /// Update the Budget Year, for the given ID
+    bool UpdateYear(const wxString& year, int id);
+
+    bool DeleteYear(int id);
+    bool DeleteYear(const wxString& year);
+
+private:
+    wxSQLite3Database* db_;
+};
+
+/*****************************************************************************
+Class BudgetEntry_Table
+******************************************************************************/
+class BudgetEntry_Table : public BudgetYear_Table
+{
+public:
+    BudgetEntry_Table(wxSQLite3Database* db);
+
+    /// Add the entry and return the Year ID
+    int AddEntry(int year_id
+        , int cat_id, int subcat_id
+        , const wxString& period, double amount);
+
+    // Get the entry ID given the year
+    int GetEntryID(const wxString& year);
+    
+    /// Update the Budget Entry, for the given year ID
+    bool UpdateEntry(int year_id
+        , int cat_id, int subcat_id
+        , const wxString& period, double amount);
+
+    /// copy year of base ID to new ID
+    bool CopyYear(int base_id, int new_id);
+
+private:
+    wxSQLite3Database* db_;
+};
+
+/*****************************************************************************
+Class: Category_Table
+******************************************************************************/
+class Category_Table
+{
+public:
+    Category_Table(wxSQLite3Database* db);
+
+    /// Add the name and return the ID
+    int AddName(const wxString& name);
+    /// Get the category name, for the given ID
+    wxString GetName(int id);
+    /// Get the category ID, for the given name
+    int GetID(const wxString& name);
+    /// update the category name, for the given ID
+    bool UpdateName(const wxString& name, int id);
+    bool DeleteCategory(int id);
+    bool DeleteCategory(const wxString& name);
+
+private:
+    wxSQLite3Database* db_;
+};
+
+/*****************************************************************************
+Class SubCategory_Table
+******************************************************************************/
+class SubCategory_Table
+{
+public:
+    SubCategory_Table(wxSQLite3Database* db);
+
+    /// Add the name for the Category ID and return the Subcategory ID
+    int AddName(const wxString& name, int cat_id);
+    /// Get the subcategory name given the category ID and subcategory ID
+    wxString GetName(int cat_id, int subcat_id);
+    /// get the id given the name and category ID
+    int GetID(const wxString& name, int cat_id);
+    /// update the subcategory name, for the given cat ID and subcat ID
+    bool UpdateName(const wxString& name, int cat_id, int subcat_id);
+
+private:
+    wxSQLite3Database* db_;
+};
+
+/*****************************************************************************
+End Class Definitions
+******************************************************************************/
 
 namespace mmDBWrapper
 {

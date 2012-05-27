@@ -167,15 +167,12 @@ TEST(checkDBVersion)
 TEST(addBudgetYear)
 {
     wxSQLite3Database &db = getDb();
-    
-    int year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
+    BudgetEntry_Table budget_table(&db);
+
+    int year_id = budget_table.GetYearID(g_BudgetYear);
     CHECK(year_id == -1);
 
-    DB_View_BUDGETYEAR_V1::Data* budget_year = BUDGETYEAR_V1.create();
-    budget_year->BUDGETYEARNAME = g_BudgetYear;
-    budget_year->save(&db);
-
-    year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
+    year_id = budget_table.AddYear(g_BudgetYear);
     CHECK(year_id > 0);
 }
 //----------------------------------------------------------------------------
@@ -183,11 +180,12 @@ TEST(addBudgetYear)
 TEST(getBudgetYearID)
 {
     wxSQLite3Database &db = getDb();
+    BudgetYear_Table budget_year_table(&db);
 
-    int year_id = mmDBWrapper::getBudgetYearID(&db, wxT("unknown_year"));
+    int year_id = budget_year_table.GetYearID(wxT("unknown_year"));
     CHECK(year_id == -1);
 
-    year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
+    year_id = budget_year_table.GetYearID(g_BudgetYear);
     CHECK(year_id > 0);
 }
 //----------------------------------------------------------------------------
@@ -195,11 +193,12 @@ TEST(getBudgetYearID)
 TEST(getBudgetYearForID)
 {
     wxSQLite3Database &db = getDb();
+    BudgetYear_Table budget_year_table(&db);
 
-    int year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
+    int year_id = budget_year_table.GetYearID(g_BudgetYear);
     CHECK(year_id > 0);
 
-    wxString year = mmDBWrapper::getBudgetYearForID(&db, year_id);
+    wxString year = budget_year_table.GetYear(year_id);
     CHECK(year == g_BudgetYear);
 }
 //----------------------------------------------------------------------------
@@ -207,20 +206,21 @@ TEST(getBudgetYearForID)
 TEST(updateYearForID)
 {
     wxSQLite3Database &db = getDb();
+    BudgetEntry_Table budget_table(&db);
 
-    int year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
+    int year_id = budget_table.GetYearID(g_BudgetYear);
     CHECK(year_id > 0);
 
     wxString new_year = g_BudgetYear + g_BudgetYear;
-    mmDBWrapper::updateYearForID(&db, new_year, year_id);
+    budget_table.UpdateYear(new_year, year_id);
 
-    wxString year = mmDBWrapper::getBudgetYearForID(&db, year_id);
+    wxString year = budget_table.GetYear(year_id);
     CHECK(year == new_year);
 
     // restore original value
 
-    mmDBWrapper::updateYearForID(&db, g_BudgetYear, year_id);
-    year = mmDBWrapper::getBudgetYearForID(&db, year_id);
+    budget_table.UpdateYear(g_BudgetYear, year_id);
+    year = budget_table.GetYear(year_id);
     CHECK(year == g_BudgetYear);
 }
 //----------------------------------------------------------------------------
@@ -228,29 +228,29 @@ TEST(updateYearForID)
 TEST(copyBudgetYear)
 {
     wxSQLite3Database &db = getDb();
+    BudgetEntry_Table budget_table(&db);
 
-    int base_year_id = mmDBWrapper::getBudgetYearID(&db, g_BudgetYear);
+    int base_year_id = budget_table.GetYearID(g_BudgetYear);
     CHECK(base_year_id > 0);
+
+    budget_table.AddEntry(base_year_id,1,1,wxT("None"),100);
+    CHECK(budget_table.GetEntryID(g_BudgetYear) != -1);
 
     // --
 
-    bool ok = mmDBWrapper::copyBudgetYear(&db, base_year_id, base_year_id);
+    bool ok = budget_table.CopyYear(base_year_id, base_year_id);
     CHECK(!ok);
-
     // --
 
     wxString new_year = g_BudgetYear + g_BudgetYear;
-
-    DB_View_BUDGETYEAR_V1::Data* budget_year = BUDGETYEAR_V1.create();
-    budget_year->BUDGETYEARNAME = new_year;
-    budget_year->save(&db);
-    
-    int new_year_id = mmDBWrapper::getBudgetYearID(&db, new_year);
+    int new_year_id = budget_table.AddYear(new_year);
     CHECK(new_year_id > 0);
+    int entry_id = budget_table.GetEntryID(new_year);
+    CHECK( entry_id == -1);
 
     // --
 
-    ok = mmDBWrapper::copyBudgetYear(&db, new_year_id, base_year_id);
+    ok = budget_table.CopyYear(base_year_id, new_year_id);
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
@@ -258,11 +258,12 @@ TEST(copyBudgetYear)
 TEST(deleteBudgetYear)
 {
     wxSQLite3Database &db = getDb();
+    BudgetEntry_Table budget_table(&db);
 
-    bool deleted = mmDBWrapper::deleteBudgetYear(&db, wxT("wrong_year"));
+    bool deleted = budget_table.DeleteYear(wxT("wrong_year"));
     CHECK(!deleted);
 
-    deleted = mmDBWrapper::deleteBudgetYear(&db, g_BudgetYear);
+    deleted = budget_table.DeleteYear(g_BudgetYear);
     CHECK(deleted);
 }
 //----------------------------------------------------------------------------
@@ -271,12 +272,10 @@ TEST(addCategory)
 {
     wxSQLite3Database &db = getDb();
 
-    DB_View_CATEGORY_V1::Data* category = CATEGORY_V1.create();
-    CHECK(category);
+    Category_Table category_table(&db);
 
-    category->CATEGNAME = g_CategName;
-    category->save(&db);
-    CHECK(CATEGORY_V1.all(&db).size() > 0);
+    int cat_id = category_table.AddName(g_CategName);
+    CHECK(cat_id > 0);
 }
 //----------------------------------------------------------------------------
 
@@ -284,33 +283,25 @@ TEST(addSubCategory)
 {
     wxSQLite3Database &db = getDb();
 
-    DB_View_CATEGORY_V1::Data_Set categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
-    CHECK(categories.size() > 0);
+    Category_Table category_table(&db);
+    SubCategory_Table sub_category_table(&db);
 
-    int cat_id = categories[0].CATEGID;
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    DB_View_SUBCATEGORY_V1::Data* sub_category = SUBCATEGORY_V1.create();
-    sub_category->CATEGID = cat_id;
-    sub_category->SUBCATEGNAME = g_SubCategName;
-    bool added = sub_category->save(&db);
-    CHECK(added);
+    int subcat_id = sub_category_table.AddName(g_SubCategName, cat_id);
+    CHECK(subcat_id > 0);
 }
 //----------------------------------------------------------------------------
 
-
 TEST(getCategoryID)
 {
-    wxSQLite3Database &db = getDb();
+    Category_Table category_table(&getDb());
 
-    DB_View_CATEGORY_V1::Data_Set categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
-    int cat_id = -1;
-    if (categories.size() > 0) cat_id = categories[0].CATEGID;
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, wxT("unknown category"));
-    cat_id = -1;
-    if (categories.size() > 0) cat_id = categories[0].CATEGID;
+    cat_id = category_table.GetID(wxT("unknown category"));
     CHECK(cat_id == -1);
 }
 //----------------------------------------------------------------------------
@@ -318,37 +309,31 @@ TEST(getCategoryID)
 TEST(getSubCategoryID)
 {
     wxSQLite3Database &db = getDb();
+    Category_Table category_table(&db);
+    SubCategory_Table subcategory_table(&db);
 
-    DB_View_CATEGORY_V1::Data_Set categories = CATEGORY_V1.find(&db, DB_View_CATEGORY_V1::COL_CATEGNAME, g_CategName);
-    int cat_id = -1;
-    if (categories.size() > 0) cat_id = categories[0].CATEGID;
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    DB_View_SUBCATEGORY_V1::Data_Set sub_categories = SUBCATEGORY_V1.find(&db, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, g_SubCategName);
-    int subcat_id = -1;
-    if (sub_categories.size() > 0) subcat_id = sub_categories[0].SUBCATEGID;
-    CHECK(cat_id > 0);
+    int subcat_id = subcategory_table.GetID(g_SubCategName, cat_id);
+    CHECK(subcat_id > 0);
 
-    sub_categories = SUBCATEGORY_V1.find(&db, DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, wxT("unknown subcategory"));
-    subcat_id = -1;
-    if (sub_categories.size() > 0) subcat_id = sub_categories[0].SUBCATEGID;
-    CHECK(cat_id > 0);
+    subcat_id = subcategory_table.GetID(wxT("unknown subcategory"), cat_id);
+    CHECK(subcat_id == -1);
 }
 //----------------------------------------------------------------------------
 
-/*
-
 TEST(getCategoryName)
 {
-    wxSQLite3Database &db = getDb();
-
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    Category_Table category_table(&getDb());
+    
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    wxString name = mmDBWrapper::getCategoryName(&db, cat_id);
+    wxString name = category_table.GetName(cat_id);
     CHECK(name == g_CategName);
 
-    name = mmDBWrapper::getCategoryName(&db, 0);
+    name = category_table.GetName(0);
     CHECK(name.empty());
 }
 //----------------------------------------------------------------------------
@@ -356,18 +341,20 @@ TEST(getCategoryName)
 TEST(getSubCategoryName)
 {
     wxSQLite3Database &db = getDb();
+    Category_Table category_table(&db);
+    SubCategory_Table subcategory_table(&db);
 
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    int sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
-    CHECK(sc_id > 0);
-    
-    wxString name = mmDBWrapper::getSubCategoryName(&db, cat_id, sc_id);
-    CHECK(name == g_SubCategName);
+    int subcat_id = subcategory_table.GetID(g_SubCategName, cat_id);
+    CHECK(subcat_id > 0);
 
-    name = mmDBWrapper::getSubCategoryName(&db, cat_id, 0);
-    CHECK(name.empty());
+    wxString sct_name = subcategory_table.GetName(cat_id, subcat_id);
+    CHECK(sct_name == g_SubCategName);
+
+    sct_name = subcategory_table.GetName(cat_id, 0);
+    CHECK(sct_name.empty());
 }
 //----------------------------------------------------------------------------
 
@@ -375,38 +362,40 @@ TEST(updateCategory)
 {
     wxSQLite3Database &db = getDb();
 
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    Category_Table category_table(&db);
+    SubCategory_Table subcategory_table(&db);
+
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    int sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
+    int sc_id = subcategory_table.GetID(g_SubCategName, cat_id);
     CHECK(sc_id > 0);
 
     // --
 
     const wxString new_name = wxT("new name");
-
-    bool ok = mmDBWrapper::updateCategory(&db, cat_id, -1, new_name);
+    bool ok = category_table.UpdateName(new_name, cat_id);
     CHECK(ok);
 
-    wxString name = mmDBWrapper::getCategoryName(&db, cat_id);
+    wxString name = category_table.GetName(cat_id);
     CHECK(name == new_name);
 
-    ok = mmDBWrapper::updateCategory(&db, cat_id, -1, g_CategName); // restore name
+    ok = category_table.UpdateName(g_CategName, cat_id); // restore name
     CHECK(ok);
 
     // --
 
-    ok = mmDBWrapper::updateCategory(&db, cat_id, sc_id, new_name);
+    ok = subcategory_table.UpdateName(new_name, cat_id, sc_id);
     CHECK(ok);
 
-    name = mmDBWrapper::getSubCategoryName(&db, cat_id, sc_id);
+    name = subcategory_table.GetName(cat_id, sc_id);
     CHECK(name == new_name);
 
-    ok = mmDBWrapper::updateCategory(&db, cat_id, sc_id, g_SubCategName); // restore
+    ok = subcategory_table.UpdateName(g_SubCategName, cat_id, sc_id); // restore
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
-
+/*
 TEST(deleteSubCategoryWithConstraints)
 {
     wxSQLite3Database &db = getDb();

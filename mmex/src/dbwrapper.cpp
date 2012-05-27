@@ -29,6 +29,304 @@
 #include <sqlite3.h>
 //----------------------------------------------------------------------------
 
+/*****************************************************************************
+Class: BudgetYear_Table Methods
+******************************************************************************/
+BudgetYear_Table::BudgetYear_Table(wxSQLite3Database* db): db_(db)
+{}
+
+// Add the Year and return the ID
+int BudgetYear_Table::AddYear(const wxString& year)
+{
+    DB_View_BUDGETYEAR_V1::Data* budget_year = BUDGETYEAR_V1.create();
+    budget_year->BUDGETYEARNAME = year;
+    budget_year->save(db_);
+
+    return GetYearID(year);
+}
+
+// Get the Budget Year, for the given ID
+wxString BudgetYear_Table::GetYear(int id)
+{
+    DB_View_BUDGETYEAR_V1::Data_Set record
+        = BUDGETYEAR_V1.find(db_
+        , DB_View_BUDGETYEAR_V1::COL_BUDGETYEARID
+        , id);
+
+    wxString year;
+    if (record.size() > 0) year = record[0].BUDGETYEARNAME;
+
+    return year;
+}
+
+// Get the Budget Year ID, for the given Year
+int BudgetYear_Table::GetYearID(const wxString& year)
+{
+    DB_View_BUDGETYEAR_V1::Data_Set record
+        = BUDGETYEAR_V1.find(db_
+        , DB_View_BUDGETYEAR_V1::COL_BUDGETYEARNAME
+        , year);
+
+    int id = -1;
+    if (record.size() > 0) id = record[0].BUDGETYEARID;
+
+    return id;
+}
+    
+// Update the Budget Year, for the given ID
+bool BudgetYear_Table::UpdateYear(const wxString& year, int id)
+{
+    DB_View_BUDGETYEAR_V1::Data_Set record
+        = BUDGETYEAR_V1.find(db_
+        , DB_View_BUDGETYEAR_V1::COL_BUDGETYEARID
+        , id);
+
+    bool result = false;
+    if (record.size() > 0)
+    {
+        record[0].BUDGETYEARNAME = year;
+        result = record[0].save(db_);
+    }
+    return result;
+}
+
+bool BudgetYear_Table::DeleteYear(int id)
+{
+    bool result = false;
+    if (id != -1)
+    {
+        result = BUDGETTABLE_V1.remove(id, db_);
+        if (result)
+        {
+            result = BUDGETYEAR_V1.remove(id, db_);
+        }
+    }
+
+    return result;
+}
+
+bool BudgetYear_Table::DeleteYear(const wxString& year)
+{
+    int year_id = this->GetYearID(year);
+    return DeleteYear(year_id);
+}
+
+/*****************************************************************************
+Class: BudgetEntry_Table Methods
+******************************************************************************/
+BudgetEntry_Table::BudgetEntry_Table(wxSQLite3Database* db)
+: db_(db), BudgetYear_Table(db)
+{}
+
+// Add the entry and return the Year ID
+int BudgetEntry_Table::AddEntry(int year_id
+, int cat_id, int subcat_id
+, const wxString& period, double amount)
+{
+    DB_View_BUDGETTABLE_V1::Data* entry = BUDGETTABLE_V1.create();
+    entry->BUDGETYEARID = year_id;
+    entry->CATEGID    = cat_id;
+    entry->SUBCATEGID = subcat_id;
+    entry->PERIOD     = period;
+    entry->AMOUNT     = amount;
+    entry->save(db_);
+
+    return this->GetEntryID(GetYear(year_id));
+}
+
+// Get the entry ID given the year
+int BudgetEntry_Table::GetEntryID(const wxString& year)
+{
+    int year_id = GetYearID(year);
+
+    DB_View_BUDGETTABLE_V1::Data_Set record = BUDGETTABLE_V1.find(db_
+        , DB_View_BUDGETTABLE_V1::COL_CATEGID, year_id);
+
+    int entry_id = -1;
+    if (record.size() > 0) entry_id = record[0].BUDGETENTRYID;
+    
+    return entry_id;
+}
+
+    
+// Update the Budget Entry, for the given year ID
+bool BudgetEntry_Table::UpdateEntry(int year_id
+, int cat_id, int subcat_id
+, const wxString& period, double amount)
+{
+    DB_View_BUDGETTABLE_V1::Data_Set record = BUDGETTABLE_V1.find(db_
+        , DB_View_BUDGETTABLE_V1::COL_BUDGETYEARID, year_id);
+
+    bool result = false;
+    if (record.size() > 0)
+    {
+        record[0].CATEGID    = cat_id;
+        record[0].SUBCATEGID = subcat_id;
+        record[0].PERIOD     = period;
+        record[0].AMOUNT     = amount;
+        result = record[0].save(db_);
+    }
+    return result;
+}
+
+// copy the Budget Year base to the new entry
+bool BudgetEntry_Table::CopyYear(int base_id, int new_id)
+{
+    if (base_id == new_id)
+        return false;
+
+    DB_View_BUDGETTABLE_V1::Data_Set source_entry = BUDGETTABLE_V1.find(db_
+        , DB_View_BUDGETTABLE_V1::COL_BUDGETYEARID, base_id);
+
+    bool result = false;
+    if (!source_entry.empty())
+    {
+        int id = AddEntry(new_id
+            , source_entry[0].CATEGID, source_entry[0].SUBCATEGID
+            , source_entry[0].PERIOD, source_entry[0].AMOUNT);
+        if (id != -1)
+            result = true;
+    }
+    return result;
+}
+
+/*****************************************************************************
+Class: Category_Table Methods
+******************************************************************************/
+Category_Table::Category_Table(wxSQLite3Database* db):db_(db)
+{}
+
+// Add the name and return the ID
+int Category_Table::AddName(const wxString& name)
+{
+    DB_View_CATEGORY_V1::Data* category = CATEGORY_V1.create();
+    category->CATEGNAME = name;
+    category->save(db_);
+
+    return GetID(name);
+}
+
+// Get the category name, for the given ID
+wxString Category_Table::GetName(int id)
+{
+    DB_View_CATEGORY_V1::Data_Set record = CATEGORY_V1.find(db_
+        , DB_View_CATEGORY_V1::COL_CATEGID, id);
+
+    wxString name;
+    if (record.size() > 0) name = record[0].CATEGNAME;
+    
+    return name;
+}
+
+// Get the category ID, for the given name
+int Category_Table::GetID(const wxString& name)
+{
+    DB_View_CATEGORY_V1::Data_Set record = CATEGORY_V1.find(db_
+        , DB_View_CATEGORY_V1::COL_CATEGNAME
+        , name);
+
+    int cat_id = -1;
+    if (record.size() > 0) cat_id = record[0].CATEGID;
+
+    return cat_id;
+}
+
+// update the category name, for the given ID
+bool Category_Table::UpdateName(const wxString& name, int id)
+{
+    bool result = false;
+    DB_View_CATEGORY_V1::Data_Set record
+        = CATEGORY_V1.find(db_, DB_View_CATEGORY_V1::COL_CATEGID, id);
+
+    if (record.size() > 0)
+    {
+        record[0].CATEGNAME = name;
+        result = record[0].save(db_);
+    }
+    return result;
+}
+
+bool Category_Table::DeleteCategory(int id)
+{
+    //TODO: complete this
+
+    return false;
+}
+
+bool Category_Table::DeleteCategory(const wxString& name)
+{
+    //TODO: complete this
+
+    return false;
+}
+
+/*****************************************************************************
+Class: SubCategory_Table Methods
+******************************************************************************/
+SubCategory_Table::SubCategory_Table(wxSQLite3Database* db):db_(db)
+{}
+
+// Add the name for the Category ID and return the Subcategory ID
+int SubCategory_Table::AddName(const wxString& name, int cat_id)
+{
+    DB_View_SUBCATEGORY_V1::Data* subcategory = SUBCATEGORY_V1.create();
+    subcategory->CATEGID = cat_id;
+    subcategory->SUBCATEGNAME = name;
+    subcategory->save(db_);
+
+    return GetID(name, cat_id);
+}
+
+// Get the subcategory name given the category ID and subcategory ID
+wxString SubCategory_Table::GetName(int cat_id, int subcat_id)
+{
+    DB_View_SUBCATEGORY_V1::Data_Set record 
+        = SUBCATEGORY_V1.find(db_
+        , DB_View_SUBCATEGORY_V1::COL_CATEGID, cat_id
+        , DB_View_SUBCATEGORY_V1::COL_SUBCATEGID, subcat_id);
+
+    wxString name;
+    if (record.size() > 0) name = record[0].SUBCATEGNAME;
+    
+    return name;
+}
+
+// Get the id given the name
+int SubCategory_Table::GetID(const wxString& name, int cat_id)
+{
+    DB_View_SUBCATEGORY_V1::Data_Set record 
+        = SUBCATEGORY_V1.find(db_
+        , DB_View_SUBCATEGORY_V1::COL_CATEGID, cat_id
+        , DB_View_SUBCATEGORY_V1::COL_SUBCATEGNAME, name);
+
+    int subcat_id = -1;
+    if (record.size() > 0) subcat_id = record[0].SUBCATEGID;
+
+    return subcat_id;
+}
+
+// update the subcategory name, for the given cat ID and subcat ID
+bool SubCategory_Table::UpdateName(const wxString& name, int cat_id, int subcat_id)
+{
+    bool result = false;
+    DB_View_SUBCATEGORY_V1::Data_Set record 
+        = SUBCATEGORY_V1.find(db_
+        , DB_View_SUBCATEGORY_V1::COL_CATEGID, cat_id
+        , DB_View_SUBCATEGORY_V1::COL_SUBCATEGID, subcat_id);
+
+    if (record.size() > 0)
+    {
+        record[0].SUBCATEGNAME = name;
+        result = record[0].save(db_);
+    }
+
+    return result;
+}
+
+/*****************************************************************************
+End Class Methods
+******************************************************************************/
+
 namespace
 {
 
