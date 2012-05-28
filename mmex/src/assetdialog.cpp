@@ -93,42 +93,11 @@ void mmAssetDialog::dataToControls()
         wxString valueChangeRate;
         valueChangeRate.Printf(wxT("%.3f"), asset->VALUECHANGERATE);
         m_valueChangeRate->SetValue(valueChangeRate);
-    
-        if (asset->VALUECHANGE == wxT("None"))
-        {
-            m_valueChange->SetSelection(DEF_CHANGE_NONE);
-            enableDisableRate(false);
-        }
-        else if (asset->VALUECHANGE == wxT("Appreciates"))
-        {
-            m_valueChange->SetSelection(DEF_CHANGE_APPRECIATE);
-            enableDisableRate(true);
-        }
-        else if (asset->VALUECHANGE == wxT("Depreciates"))
-        {
-            m_valueChange->SetSelection(DEF_CHANGE_DEPRECIATE);
-            enableDisableRate(true);
-        }
-        else
-        {
-            wxASSERT(false);
-        }
-        
-         wxString assetTypeStr = asset->ASSETTYPE;
-         if (assetTypeStr == wxT("Property"))
-            m_assetType->SetSelection(DEF_ASSET_PROPERTY);
-         else if (assetTypeStr == wxT("Automobile"))
-            m_assetType->SetSelection(DEF_ASSET_AUTO);
-         else if (assetTypeStr == wxT("Household Object"))
-            m_assetType->SetSelection(DEF_ASSET_HOUSE);
-         else if (assetTypeStr == wxT("Art"))
-            m_assetType->SetSelection(DEF_ASSET_ART);
-         else if (assetTypeStr == wxT("Jewellery"))
-             m_assetType->SetSelection(DEF_ASSET_JEWELLERY);
-         else if (assetTypeStr == wxT("Cash"))
-             m_assetType->SetSelection(DEF_ASSET_CASH);
-         else if (assetTypeStr == wxT("Other"))
-            m_assetType->SetSelection(DEF_ASSET_OTHER);
+
+        m_valueChange->SetStringSelection(asset->VALUECHANGE);
+        if (asset->VALUECHANGE == wxT("None")) enableDisableRate(false);
+
+        m_assetType->SetStringSelection(asset->ASSETTYPE);
     }
 }
 
