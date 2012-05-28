@@ -19,6 +19,7 @@
 #include "dbwrapper.h"
 #include "assetdialog.h"
 
+#define _MM_EX_ASSETSPANEL_CPP_REVISION_ID    "$Rev$"
 enum
 {
   IDC_PANEL_ASSETS_LISTCTRL = wxID_HIGHEST + 1,
