@@ -23,8 +23,8 @@
 
 #include <wx/datectrl.h>
 #define _MM_EX_ASSETDIALOG_CPP_REVISION_ID    "$Revision$"
-enum { DEF_CHANGE_NONE, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
-enum { DEF_ASSET_PROPERTY, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
+enum { DEF_CHANGE_NONE = 0, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
+enum { DEF_ASSET_PROPERTY = 0, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
 
 enum 
 { 
@@ -222,10 +222,10 @@ void mmAssetDialog::CreateControls()
     wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel27->SetSizer(itemBoxSizer28);
 
-    wxButton* itemButton29 = new wxButton(itemPanel27, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0);
+    wxButton* itemButton29 = new wxButton(itemPanel27, wxID_OK);
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton30 = new wxButton(itemPanel27, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0);
+    wxButton* itemButton30 = new wxButton(itemPanel27, wxID_CANCEL);
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton30->SetFocus();
 }
