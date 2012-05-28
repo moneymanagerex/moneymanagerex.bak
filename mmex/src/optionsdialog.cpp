@@ -220,7 +220,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* dateFormatStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Date Format"));
     dateFormatStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* dateFormatStaticBoxSizer = new wxStaticBoxSizer(dateFormatStaticBox, wxVERTICAL);
-    wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid = new wxFlexGridSizer(2,2,0,5);
+    wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid = new wxFlexGridSizer(0,2,0,5);
     generalPanelSizer->Add(dateFormatStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
     dateFormatStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid);
 
@@ -257,7 +257,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* financialYearStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Financial Year"));
     financialYearStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* financialYearStaticBoxSizer = new wxStaticBoxSizer(financialYearStaticBox, wxVERTICAL);
-    wxFlexGridSizer* financialYearStaticBoxSizerGrid = new wxFlexGridSizer(3,2,0,0);
+    wxFlexGridSizer* financialYearStaticBoxSizerGrid = new wxFlexGridSizer(0,2,0,0);
     generalPanelSizer->Add(financialYearStaticBoxSizer, 0, wxGROW|wxALL, 5);
     financialYearStaticBoxSizer->Add(financialYearStaticBoxSizerGrid);
 
@@ -348,7 +348,7 @@ void mmOptionsDialog::CreateControls()
     wxBoxSizer* transOptionStaticBoxSizer = new wxStaticBoxSizer(transOptionStaticBox, wxHORIZONTAL);
     viewsPanelSizer->Add(transOptionStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
-    wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid2 = new wxFlexGridSizer(1,2,0,5);
+    wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid2 = new wxFlexGridSizer(0,2,0,5);
     transOptionStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid2);
 
     wxStaticText* transVisibleStaticText = new wxStaticText(viewsPanel, wxID_STATIC,
@@ -483,7 +483,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* colourSettingStaticBoxSizer = new wxStaticBoxSizer(colourSettingStaticBox, wxVERTICAL);
     colourPanelSizer->Add(colourSettingStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
-    wxFlexGridSizer* colourPanelSizerGrid = new wxFlexGridSizer(2, 2, 10, 10);
+    wxFlexGridSizer* colourPanelSizerGrid = new wxFlexGridSizer(0, 2, 10, 10);
     colourSettingStaticBoxSizer->Add(colourPanelSizerGrid, 0, wxALL, 5);
 
     wxStaticText* navTreeStaticText = new wxStaticText(colourPanel, wxID_STATIC, _("Nav Tree"));
@@ -561,7 +561,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* transSettingsStaticBoxSizer = new wxStaticBoxSizer(transSettingsStaticBox, wxVERTICAL);
     othersPanelSizer->Add(transSettingsStaticBoxSizer, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 10);
 
-    wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(5,2,5,5);
+    wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(0,2,5,5);
     transSettingsStaticBoxSizer->Add(newTransflexGridSizer);
 
     //  Default Date
