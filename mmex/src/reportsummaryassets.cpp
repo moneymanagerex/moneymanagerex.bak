@@ -26,6 +26,7 @@
 #include "mmex_db_view.h"
 #include <boost/foreach.hpp>
 
+#define _MM_EX_REPORTSUMMARYASSETS_CPP_REVISION_ID    "$Revision$"
 wxString mmReportSummaryAssets::getHTMLText()
 {
     mmHTMLBuilder hb;

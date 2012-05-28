@@ -19,6 +19,8 @@
 #ifndef _MM_EX_REPORTSUMMARYASSETS_H_
 #define _MM_EX_REPORTSUMMARYASSETS_H_
 
+#define _MM_EX_REPORTSUMMARYASSETS_H_REVISION_ID    "$Revision$"
+
 #include "reportbase.h"
 
 class wxSQLite3Database;

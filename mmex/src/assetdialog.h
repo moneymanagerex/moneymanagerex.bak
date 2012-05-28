@@ -17,6 +17,8 @@
 #ifndef _MM_EX_ASSETDIALOG_H_
 #define _MM_EX_ASSETDIALOG_H_
 
+#define _MM_EX_ASSETDIALOG_H_REVISION_ID    "$Revision$"
+
 #include "defs.h"
 
 class wxDatePickerCtrl;
