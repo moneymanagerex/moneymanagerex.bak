@@ -77,7 +77,6 @@ MMEX_OBJECTS =  \
 	mmex_filtertransdialog.o \
 	mmex_guiid.o \
 	mmex_htmlbuilder.o \
-	mmex_led.o \
 	mmex_maincurrencydialog.o \
 	mmex_mmaccount.o \
 	mmex_mmcategory.o \
@@ -308,9 +307,6 @@ mmex_guiid.o: $(srcdir)/src/guiid.cpp
 
 mmex_htmlbuilder.o: $(srcdir)/src/htmlbuilder.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/htmlbuilder.cpp
-
-mmex_led.o: $(srcdir)/src/led.cpp
-	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/led.cpp
 
 mmex_maincurrencydialog.o: $(srcdir)/src/maincurrencydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/maincurrencydialog.cpp
