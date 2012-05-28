@@ -45,6 +45,7 @@ MMEX_CXXFLAGS = /MD$(__DEBUGINFO_1) /DWIN32 $(__WXUNICODE_DEFINE_p) \
 	/I..\..\lib\wxsqlite /DNOPCH /D_WINDOWS /EHsc /GR $(__mmex_CL_FLAGS) \
 	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_aboutdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_appstartdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_assetdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_assetspanel.obj \
@@ -429,6 +430,9 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite_sqlite3secure.obj: ..\..\lib\sqlite\sqlite3secure.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE_CFLAGS) ..\..\lib\sqlite\sqlite3secure.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_aboutdialog.obj: ..\..\src\aboutdialog.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\aboutdialog.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_appstartdialog.obj: ..\..\src\appstartdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\appstartdialog.cpp
