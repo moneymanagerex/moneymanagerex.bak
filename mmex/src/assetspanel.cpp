@@ -72,7 +72,6 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
 
     if (!wxPanel::Create(parent, winid, pos, size, style, name)) return false;
 
-    Freeze();
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
@@ -80,8 +79,6 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
     initVirtualListControl(0, true);
     if (!all_assets_.empty())
         m_listCtrlAssets->EnsureVisible(all_assets_.size() - 1);
-
-    Thaw();
     return true;
 }
 
