@@ -482,7 +482,6 @@ bool mmCheckingPanel::Create(
 
     if (ok)
     {
-        Freeze();
         CreateControls();
         initViewTransactionsHeader();
         GetSizer()->Fit(this);
@@ -496,7 +495,6 @@ bool mmCheckingPanel::Create(
         //show progress bar only when panel created
         wxProgressDialog dlg(_("Please Wait"), _("Accessing Database"), 100, this, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
         initVirtualListControl(&dlg);
-        Thaw();
     }
 
     return ok;
