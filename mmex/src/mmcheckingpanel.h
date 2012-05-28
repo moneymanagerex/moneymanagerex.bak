@@ -141,7 +141,7 @@ private:
     void DeleteFlaggedTransactions();
 
     /* updates the checking panel data */
-    void initVirtualListControl(wxProgressDialog* pgd);
+    void initVirtualListControl();
     void showTips();
     void updateExtraTransactionData(int selIndex);
     void saveSettings();

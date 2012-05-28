@@ -302,7 +302,8 @@ bool sortTransByDateAsc(const mmBankTransaction *t1, const mmBankTransaction *t2
 class TransactionListCtrl : public wxListCtrl
 {
 public:
-    TransactionListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
+    TransactionListCtrl(mmCheckingPanel *cp, wxWindow *parent,
+        const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
 
     bool getSortOrder() const { return m_asc; }
     EColumn getSortColumn() const { return m_sortCol; }
@@ -492,9 +493,7 @@ bool mmCheckingPanel::Create(
         transFilterActive_ = false;
         transFilterDlg_    = new TransFilterDialog(core_, this);
 
-        //show progress bar only when panel created
-        wxProgressDialog dlg(_("Please Wait"), _("Accessing Database"), 100, this, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
-        initVirtualListControl(&dlg);
+        initVirtualListControl();
     }
 
     return ok;
@@ -589,13 +588,14 @@ void mmCheckingPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
-    //headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
     wxGridSizer* itemBoxSizerVHeader2 = new wxGridSizer(2,1,5,20);
     itemBoxSizerVHeader->Add(itemBoxSizerVHeader2);
 
-    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_HEADER, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    wxStaticText* itemStaticText9 = new wxStaticText(headerPanel,
+        ID_PANEL_CHECKING_STATIC_HEADER, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    int font_size = this->GetFont().GetPointSize() + 2;
+    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader2->Add(itemStaticText9, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 0);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
@@ -607,8 +607,10 @@ void mmCheckingPanel::CreateControls()
     wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW,
         itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL, 0);
-    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterResetToViewAll), NULL, this);
-    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
+    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_RIGHT_DOWN,
+        wxMouseEventHandler(mmCheckingPanel::OnFilterResetToViewAll), NULL, this);
+    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN,
+        wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
 
     itemStaticTextMainFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW,
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
@@ -620,8 +622,10 @@ void mmCheckingPanel::CreateControls()
         itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 150);
     itemStaticBitmap31_->Enable(false);
-    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
-    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
+    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN,
+        wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
+    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN,
+        wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
 
     statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_FILTER,
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -681,13 +685,13 @@ void mmCheckingPanel::CreateControls()
         // --
         m_listCtrlAccount->setSortColumn(g_sortcol);
         m_listCtrlAccount->setSortOrder(g_asc);
-        m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
-        //m_listCtrlAccount->SetBackgroundColour(mmColors::listDetailsPanelColor);
+        m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(),
+            m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
     }
 
-    wxPanel *itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
+    wxPanel *itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1,
+        wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
-    //itemPanel12->SetBackgroundColour(mmColors::listBackColor);
     itemSplitterWindow10->SplitHorizontally(m_listCtrlAccount, itemPanel12);
     itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);
@@ -700,16 +704,16 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW, _("&New"));
+    wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
     itemButton6->SetToolTip(_("New Transaction"));
     itemBoxSizer5->Add(itemButton6, 0, wxRIGHT, 5);
 
-    wxButton* itemButton7 = new wxButton(itemPanel12, wxID_EDIT, _("&Edit"));
+    wxButton* itemButton7 = new wxButton(itemPanel12, wxID_EDIT);
     itemButton7->SetToolTip(_("Edit selected transaction"));
     itemBoxSizer5->Add(itemButton7, 0, wxRIGHT, 5);
     itemButton7->Enable(false);
 
-    wxButton* itemButton8 = new wxButton(itemPanel12, wxID_DELETE, _("&Delete"));
+    wxButton* itemButton8 = new wxButton(itemPanel12, wxID_DELETE);
     itemButton8->SetToolTip(_("Delete selected transaction"));
     itemBoxSizer5->Add(itemButton8, 0, wxRIGHT, 5);
     itemButton8->Enable(false);
@@ -720,7 +724,8 @@ void mmCheckingPanel::CreateControls()
     itemButton9->Enable(false);
 
     wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12,
-        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB, wxDefaultValidator, _("Search"));
+        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1),
+        wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB, wxDefaultValidator, _("Search"));
     itemBoxSizer5->Add(searchCtrl, 0, wxTOP, 1);
     searchCtrl->SetToolTip(_("Enter any string to find it in the nearest transaction notes"));
 
@@ -731,7 +736,8 @@ void mmCheckingPanel::CreateControls()
 
     //Infobar
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12,
-        ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
+        ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition,
+        wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
     //Show tips when no transaction selected
     showTips();
@@ -977,7 +983,6 @@ public:
         wxASSERT(pTrans);
         wxDateTime startRange = DateTimeProvider::StartRange();
         wxDateTime endRange = DateTimeProvider::EndRange();
-        // ::OutputDebugStringW((wxT("- start: ") + startRange.Format(L"%x %X") + wxT(", end: ") + endRange.Format(L"%x %X") + wxT("\r\n")).c_str());
         return pTrans->date_.IsBetween(startRange, endRange);
     }
 };
@@ -1008,13 +1013,10 @@ const TransactionMatchMap& initTransactionMatchMap()
 }
 static const TransactionMatchMap& s_transactionMatchers_Map = initTransactionMatchMap();
 
-void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
+void mmCheckingPanel::initVirtualListControl()
 {
     // clear everything
     m_trans.clear();
-
-    if (pgd)
-    pgd->Update(20);
 
     boost::shared_ptr<mmAccount> pAccount = core_->getAccountSharedPtr(m_AccountID);
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
@@ -1097,8 +1099,6 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
      Stage 2
      Sort all account transactions by date to, determine balances.
     **********************************************************************************/
-    if (pgd)
-    pgd->Update(40);
 
     std::sort(v_transPtr.begin(), v_transPtr.end(), sortTransByDateAsc);
 
@@ -1106,8 +1106,6 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
      Stage 3
      Add the account balances to all the transactions in this account.
     **********************************************************************************/
-    if (pgd)
-    pgd->Update(60);
 
     double initBalance = pAccount->initialBalance_;
     for (size_t i = 0; i < v_transPtr.size(); ++i)
@@ -1126,8 +1124,6 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
      Stage 4
      Sort the list of visible transactions dependant on user preferences.
     **********************************************************************************/
-    if (pgd)
-    pgd->Update(80);
 
     // decide whether top or down icon needs to be shown
     m_listCtrlAccount->setColumnImage(g_sortcol, g_asc ? ICON_ASC : ICON_DESC);
@@ -1149,12 +1145,6 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     }
 
     setAccountSummary();
-
-    if (pgd)
-    {
-        pgd->Update(100);
-        pgd->Destroy();
-    }
 }
 //----------------------------------------------------------------------------
 
@@ -1332,7 +1322,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 
     m_listCtrlAccount->DeleteAllItems();
 
-    initVirtualListControl(NULL);
+    initVirtualListControl();
     m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 }
 
@@ -1404,7 +1394,7 @@ void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
     statTextTransFilter_->Enable(true);
 
     m_listCtrlAccount->DeleteAllItems();
-    initVirtualListControl(NULL);
+    initVirtualListControl();
     m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 
 }
@@ -1423,7 +1413,7 @@ void mmCheckingPanel::OnFilterResetToViewAll(wxMouseEvent& event) {
     statTextTransFilter_->Enable(true);
 
     m_listCtrlAccount->DeleteAllItems();
-    initVirtualListControl(NULL);
+    initVirtualListControl();
     m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 
 }
@@ -1517,7 +1507,7 @@ void TransactionListCtrl::OnMarkTransactionDB(const wxString& status)
     //  was changed from unreconciled to void).
     DeleteAllItems();
 
-    m_cp->initVirtualListControl(NULL);
+    m_cp->initVirtualListControl();
 }
 //----------------------------------------------------------------------------
 
@@ -1562,7 +1552,7 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
     {
         DeleteAllItems();
 
-        m_cp->initVirtualListControl(NULL);
+        m_cp->initVirtualListControl();
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
     }
 
@@ -1884,7 +1874,7 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     m_cp->core_->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
     {
         //initialize the transaction list to redo balances and images
-        m_cp->initVirtualListControl(NULL);
+        m_cp->initVirtualListControl();
 
         if (!m_cp->m_trans.empty())
         {
@@ -1962,7 +1952,7 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 
 void TransactionListCtrl::refreshVisualList()
 {
-    m_cp->initVirtualListControl(NULL);
+    m_cp->initVirtualListControl();
     RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
     if ((m_selectedIndex + 1) != (long)m_cp->m_trans.size() && (m_selectedIndex > -1))
         m_selectedIndex--;
@@ -2042,7 +2032,7 @@ void TransactionListCtrl::OnListItemActivated(wxListEvent& /*event*/)
             m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
-            m_cp->initVirtualListControl(NULL);
+            m_cp->initVirtualListControl();
             RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
             if (m_selectedIndex != -1)
             {
