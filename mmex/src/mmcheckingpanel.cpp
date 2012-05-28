@@ -655,12 +655,12 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(void_xpm));
     m_imageList->Add(wxBitmap(flag_xpm));
     m_imageList->Add(wxBitmap(unreconciled_xpm));
+    m_imageList->Add(wxBitmap(empty_xpm));
     m_imageList->Add(wxBitmap(uparrow_xpm));
     m_imageList->Add(wxBitmap(downarrow_xpm));
     m_imageList->Add(wxBitmap(duplicate_xpm));
     m_imageList->Add(wxBitmap(trans_from_xpm));
     m_imageList->Add(wxBitmap(trans_into_xpm));
-    //m_imageList->Add(wxBitmap(trans_transfer_xpm));
 
     m_listCtrlAccount = new TransactionListCtrl( this, itemSplitterWindow10,
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize,
