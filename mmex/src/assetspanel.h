@@ -21,6 +21,7 @@
 #include "util.h"
 
 #include "mmex_db_view.h"
+#define _MM_EX_ASSETSPANEL_H_REVISION_ID    "$Rev$"
 
 class wxListEvent;
 class mmAssetsPanel;
