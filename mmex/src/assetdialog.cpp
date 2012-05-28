@@ -280,8 +280,6 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         valueChangeTypeStr = wxT("Appreciates");
     else if (valueChangeType == DEF_CHANGE_DEPRECIATE)
         valueChangeTypeStr = wxT("Depreciates");
-    else
-        wxASSERT(false);
 
     wxString valueChangeRateStr = m_valueChangeRate->GetValue().Trim();
     if (valueChangeRateStr.IsEmpty() && valueChangeType != DEF_CHANGE_NONE)
@@ -291,10 +289,10 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     }
     double valueChangeRate = 0;
     if(valueChangeRateStr.ToDouble(&valueChangeRate) == false) {
-        valueChangeRate = -1.0;
+        valueChangeRate = 0.0;
     }
     //This should be unnecessary with hidden controls
-    if ((valueChangeType != DEF_CHANGE_NONE) && (valueChangeRate < 0.0))
+    if (valueChangeType != DEF_CHANGE_NONE && valueChangeRate < 0.0)
     {
         mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
         return;
