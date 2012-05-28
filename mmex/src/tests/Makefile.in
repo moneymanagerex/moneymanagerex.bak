@@ -70,6 +70,7 @@ MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../lib/sqlite \
 	-I$(srcdir)/../../lib/UnitTest++ -DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) \
 	$(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
+	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
 	mmex_tests_assetdialog.o \
 	mmex_tests_assetspanel.o \
@@ -263,6 +264,9 @@ UnitTestPP_SignalTranslator.o: $(srcdir)/../../lib/UnitTest++/Posix/SignalTransl
 
 UnitTestPP_TimeHelpers.o: $(srcdir)/../../lib/UnitTest++/Posix/TimeHelpers.cpp
 	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../lib/UnitTest++/Posix/TimeHelpers.cpp
+
+mmex_tests_aboutdialog.o: $(srcdir)/../../src/aboutdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/aboutdialog.cpp
 
 mmex_tests_appstartdialog.o: $(srcdir)/../../src/appstartdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/appstartdialog.cpp
