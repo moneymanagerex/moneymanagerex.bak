@@ -273,13 +273,6 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     }
 
     int valueChangeType = m_valueChange->GetSelection();
-    wxString valueChangeTypeStr;
-    if (valueChangeType == DEF_CHANGE_NONE)
-        valueChangeTypeStr = wxT("None");
-    else if (valueChangeType == DEF_CHANGE_APPRECIATE)
-        valueChangeTypeStr = wxT("Appreciates");
-    else if (valueChangeType == DEF_CHANGE_DEPRECIATE)
-        valueChangeTypeStr = wxT("Depreciates");
 
     wxString valueChangeRateStr = m_valueChangeRate->GetValue().Trim();
     if (valueChangeRateStr.IsEmpty() && valueChangeType != DEF_CHANGE_NONE)
@@ -298,25 +291,6 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
 
-    int assetType = m_assetType->GetSelection();
-    wxString assetTypeStr;
-    if (assetType == DEF_ASSET_PROPERTY)
-        assetTypeStr = wxT("Property");
-    else if (assetType == DEF_ASSET_AUTO)
-        assetTypeStr = wxT("Automobile");
-    else if (assetType == DEF_ASSET_HOUSE)
-        assetTypeStr = wxT("Household Object");
-    else if (assetType == DEF_ASSET_ART)
-        assetTypeStr = wxT("Art");
-    else if (assetType == DEF_ASSET_JEWELLERY)
-        assetTypeStr = wxT("Jewellery");
-    else if (assetType == DEF_ASSET_CASH)
-        assetTypeStr = wxT("Cash");
-    else if (assetType == DEF_ASSET_OTHER)
-        assetTypeStr = wxT("Other");
-    else
-        wxASSERT(false);
-
     DB_View_ASSETS_V1::Data* asset = ASSETS_V1.get(m_assetID, m_db);
     if (! asset)
         asset = ASSETS_V1.create();
@@ -324,10 +298,10 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     asset->STARTDATE = pdate;
     asset->ASSETNAME = name;
     asset->VALUE = value;
-    asset->VALUECHANGE = valueChangeTypeStr;
+    asset->VALUECHANGE = m_valueChange->GetStringSelection();
     asset->NOTES = notes;
     asset->VALUECHANGERATE = valueChangeRate;
-    asset->ASSETTYPE = assetTypeStr;
+    asset->ASSETTYPE = m_assetType->GetStringSelection();
 
     asset->save(m_db);
 
