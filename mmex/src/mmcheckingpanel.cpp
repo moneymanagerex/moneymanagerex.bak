@@ -579,7 +579,8 @@ void mmCheckingPanel::CreateControls()
 {
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
-    //this->SetBackgroundColour(mmColors::listBackColor);
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 4);
 
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition,
@@ -666,7 +667,6 @@ void mmCheckingPanel::CreateControls()
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
 
     m_listCtrlAccount->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
-    //m_listCtrlAccount->SetBackgroundColour(mmColors::listDetailsPanelColor);
     m_listCtrlAccount->setSortOrder(g_asc);
     m_listCtrlAccount->setSortColumn(g_sortcol);
     m_listCtrlAccount->SetFocus();
@@ -702,37 +702,37 @@ void mmCheckingPanel::CreateControls()
     itemPanel12->SetSizer(itemBoxSizer4);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer4->Add(itemBoxSizer5, flags);
 
     wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
     itemButton6->SetToolTip(_("New Transaction"));
-    itemBoxSizer5->Add(itemButton6, 0, wxRIGHT, 5);
+    itemBoxSizer5->Add(itemButton6, flags);
 
     wxButton* itemButton7 = new wxButton(itemPanel12, wxID_EDIT);
     itemButton7->SetToolTip(_("Edit selected transaction"));
-    itemBoxSizer5->Add(itemButton7, 0, wxRIGHT, 5);
+    itemBoxSizer5->Add(itemButton7, flags);
     itemButton7->Enable(false);
 
     wxButton* itemButton8 = new wxButton(itemPanel12, wxID_DELETE);
     itemButton8->SetToolTip(_("Delete selected transaction"));
-    itemBoxSizer5->Add(itemButton8, 0, wxRIGHT, 5);
+    itemBoxSizer5->Add(itemButton8, flags);
     itemButton8->Enable(false);
 
     wxButton* itemButton9 = new wxButton(itemPanel12, wxID_MOVE_FRAME, _("&Move"));
     itemButton9->SetToolTip(_("Move selected transaction to another account"));
-    itemBoxSizer5->Add(itemButton9, 0, wxRIGHT, 5);
+    itemBoxSizer5->Add(itemButton9, flags);
     itemButton9->Enable(false);
 
     wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12,
         wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1),
         wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB, wxDefaultValidator, _("Search"));
-    itemBoxSizer5->Add(searchCtrl, 0, wxTOP, 1);
+    itemBoxSizer5->Add(searchCtrl, flags);
     searchCtrl->SetToolTip(_("Enter any string to find it in the nearest transaction notes"));
 
     //Infobar-mini
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_CHECKING_STATIC_MINI, wxT(""),
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP|wxLEFT, 5);
+    itemBoxSizer5->Add(itemStaticText44, flags);
 
     //Infobar
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12,
