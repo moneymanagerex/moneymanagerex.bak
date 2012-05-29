@@ -20,7 +20,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
 {
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(3, title_);
+    hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
     dateDisplay.DisplayDateHeading(hb, dtBegin_, dtEnd_, !ignoreDate_);

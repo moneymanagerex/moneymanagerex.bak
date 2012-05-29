@@ -742,8 +742,8 @@ void mmHomePagePanel::updateAccounts()
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(5, dt);
-    hb.addLineBreak();
+    hb.addHeader(1, dt);
+    //hb.addLineBreak();
 
     hb.startCenter();
     hb.startTable(wxT("98%"), wxT("top")); 

@@ -124,7 +124,7 @@ void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& sta
         << _("to: ") 
         << wxT ("<b>") << mmGetNiceDateSimpleString(endYear) << wxT ("</b>");
     }
-    hb.addHeader(7, todaysDate);
+    hb.addHeader(0, todaysDate);
     hb.addLineBreak();
     hb.addLineBreak();
 }

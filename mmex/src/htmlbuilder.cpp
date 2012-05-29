@@ -66,7 +66,11 @@ void mmHTMLBuilder::end()
 
 void mmHTMLBuilder::addHeader(int level, const wxString& header)
 {
-    html += wxString::Format(wxT("<h%d>%s</h%d>\n"), level, header.c_str(), level);
+    long font_size;
+    if(!mmIniOptions::instance().fontSize_.ToLong(&font_size)) { font_size = 3; }
+    font_size = level + font_size;
+    if (font_size>7) font_size=7;
+    html += wxString::Format(wxT("<font size=\"%d\">%s</font><br>\n"), font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addParaText(const wxString& text)

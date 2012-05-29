@@ -20,11 +20,11 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
 
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(3, _("Income vs Expenses for Year: ") + yearStr );
+    hb.addHeader(2, _("Income vs Expenses for Year: ") + yearStr );
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(7, dt);
+    hb.addHeader(1, dt);
     hb.addLineBreak();
     hb.addLineBreak();
 

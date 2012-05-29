@@ -1,5 +1,5 @@
 /*************************************************************************
- Copyright (C) 2011 Stefano Giorgio      
+ Copyright (C) 2011 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -26,10 +26,9 @@ mmCustomSQLReport::mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle
 
 void mmCustomSQLReport::displayReportHeader(mmHTMLBuilder& hb, wxString reportTitle)
 {
-    hb.addHeader(3, reportTitle);
+    hb.addHeader(2, reportTitle);
 
-    hb.addHeader(7, wxT("Today's Date: ") + mmGetNiceDateString(wxDateTime::Now()));
-    hb.addLineBreak();
+    hb.addHeader(1, wxT("Today's Date: ") + mmGetNiceDateString(wxDateTime::Now()));
     hb.addLineBreak();
 
 	hb.startCenter();
@@ -53,7 +52,7 @@ wxString mmCustomSQLReport::getHTMLText()
 		return wxString::Format(_("Error: %s"), e.GetMessage().c_str());
 	}
 
-    // Use column info to determine if data is to be right justified.    
+    // Use column info to determine if data is to be right justified.
     int columnCount = sqlQueryResult.GetColumnCount();
     bool *alignRight = new bool[columnCount];
 
@@ -61,7 +60,7 @@ wxString mmCustomSQLReport::getHTMLText()
     for (int index = 0; index < columnCount; index ++)
     {
     	hb.addTableHeaderCell(sqlQueryResult.GetColumnName(index));
-    	alignRight[index] = (sqlQueryResult.GetColumnType(index) == WXSQLITE_INTEGER 
+    	alignRight[index] = (sqlQueryResult.GetColumnType(index) == WXSQLITE_INTEGER
     	                  || sqlQueryResult.GetColumnType(index) == WXSQLITE_FLOAT);
     }
     hb.endTableRow();
@@ -71,13 +70,13 @@ wxString mmCustomSQLReport::getHTMLText()
         hb.startTableRow();
         for (int index = 0; index < columnCount; index ++)
         {
-            wxString displayData = sqlQueryResult.GetAsString(index); 
+            wxString displayData = sqlQueryResult.GetAsString(index);
             if ( sqlQueryResult.GetColumnType(index) == WXSQLITE_FLOAT )
             {
                 mmex::formatDoubleToCurrencyEdit(sqlQueryResult.GetDouble(index), displayData);
             }
 
-            //Right justify numeric data. 
+            //Right justify numeric data.
             hb.addTableCell( displayData, alignRight[index]);
         }
         hb.endTableRow();

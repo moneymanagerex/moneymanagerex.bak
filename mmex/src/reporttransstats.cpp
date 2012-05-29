@@ -20,11 +20,11 @@ wxString mmReportTransactionStats::getHTMLText()
 
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(3, _("Transaction Statistics for ") + rangeStr );
+    hb.addHeader(2, _("Transaction Statistics for ") + rangeStr );
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(7, dt);
+    hb.addHeader(1, dt);
     hb.addLineBreak();
     hb.addLineBreak();
 

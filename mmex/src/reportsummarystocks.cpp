@@ -28,11 +28,11 @@ wxString mmReportSummaryStocks::getHTMLText()
 {
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(3, _("Summary of Stocks"));
+    hb.addHeader(2, _("Summary of Stocks"));
     
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(6, dt);
+    hb.addHeader(1, dt);
     hb.startCenter();
 
     double gain_loss_sum_total = 0.0;

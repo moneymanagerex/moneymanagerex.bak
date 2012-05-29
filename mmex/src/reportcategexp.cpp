@@ -46,7 +46,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
 {
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(3, title_);
+    hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
     wxDateTime tBegin = dtBegin_;    // date needs to be adjusted
