@@ -31,15 +31,14 @@
 
 enum EColumn
 {
-    //COL_HELDAT,
-    COL_DATE,
-    COL_NAME,
-    COL_NUMBER,
-    COL_VALUE,
-    COL_GAIN_LOSS,
-    COL_CURRENT,
-    COL_NOTES,
-    COL_MAX, // number of columns
+	COL_DATE,
+	COL_NAME,
+	COL_NUMBER,
+	COL_VALUE,
+	COL_GAIN_LOSS,
+	COL_CURRENT,
+	COL_NOTES,
+	COL_MAX, // number of columns
 };
 
 BEGIN_EVENT_TABLE(mmStocksPanel, wxPanel)
@@ -81,7 +80,6 @@ bool mmStocksPanel::Create(wxWindow *parent,
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);
 
-    this->Freeze();
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
@@ -97,13 +95,12 @@ bool mmStocksPanel::Create(wxWindow *parent,
 
     updateExtraStocksData(-1);
 
-    DownloadScheduleTimer_=NULL;
-    StatusRefreshTimer_=NULL;
+    DownloadScheduleTimer_ = NULL;
+    StatusRefreshTimer_ = NULL;
 
     DownloadScheduleTimer_ = new wxTimer(this, ID_TIMER_SCHEDULE_STOCK);
     DownloadScheduleTimer_->Start(yahoo_->UpdateIntervalMinutes_ * 60000, wxTIMER_CONTINUOUS);
 
-    this->Thaw();
     return TRUE;
 }
 
@@ -122,41 +119,42 @@ mmStocksPanel::~mmStocksPanel()
     }
 
     if (yahoo_) delete yahoo_;
-    this->save_config(listCtrlStock_, wxT("STOCKS_COL"));
+    this->save_config(listCtrlStock_, wxT("STOCKS"));
 }
 
 void mmStocksPanel::CreateControls()
 {
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
-    //this->SetBackgroundColour(mmColors::listBackColor);
 
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 4);
     /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
-    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxPanel* headerPanel = new wxPanel(this,
+        wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemBoxSizer9->Add(headerPanel, flags);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
-    //headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
-    wxStaticText* itemStaticText9 = new wxStaticText(headerPanel, ID_PANEL_BD_STATIC_HEADER,
-                                    _("Stock Investments"), wxDefaultPosition, wxDefaultSize, 0);
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    wxStaticText* header_text = new wxStaticText(headerPanel,
+        ID_PANEL_BD_STATIC_HEADER, _("Stock Investments"));
+    int font_size = this->GetFont().GetPointSize() + 2;
+    header_text->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
 
     wxStaticText* itemStaticText10 = new wxStaticText(headerPanel,
                                      ID_PANEL_CHECKING_STATIC_BALHEADER,
-                                     _("Total:"), wxDefaultPosition, wxDefaultSize, 0);
+                                     _("Total:"));
     wxBitmap pic(led_off_xpm);
     m_LED = new wxStaticBitmap(headerPanel, ID_PANEL_STOCK_UPDATE_LED, pic);
-    m_LED->SetToolTip(_("Idle"));
 
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
 
-    itemBoxSizerHHeader->Add(m_LED, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
-    itemBoxSizerHHeader->Add(itemStaticText9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizerHHeader->Add(m_LED, flags);
+    itemBoxSizerHHeader->Add(header_text, flags);
 
-    itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 1, wxEXPAND, 1);
-    itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);
+    itemBoxSizerVHeader->Add(itemBoxSizerHHeader, flags);
+    itemBoxSizerVHeader->Add(itemStaticText10, flags);
 
     /* ---------------------- */
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow(this,
@@ -166,92 +164,77 @@ void mmStocksPanel::CreateControls()
     listCtrlStock_ = new stocksListCtrl(this, itemSplitterWindow10,
                                            ID_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
                                            wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
-    //listCtrlStock_->SetBackgroundColour(mmColors::listDetailsPanelColor);
-    listCtrlStock_->InsertColumn(COL_DATE, _("Purchase Date"));
+    long col_x;
     wxListItem itemCol;
     itemCol.SetImage(-1);
-    //itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-    itemCol.SetText(_("Share Name"));
-    listCtrlStock_->InsertColumn(COL_NAME, itemCol);
+    const wxChar* columns[] = { _("Purchase Date"),
+                             _("Share Name"),
+                             _("Number of Shares"),
+                             _("Gain/Loss"),
+                             _("Value"),
+                             _("Current"),
+                             _("Notes")};
 
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Number of Shares"));
-
-    listCtrlStock_->InsertColumn(COL_NUMBER, itemCol);
-
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Gain/Loss"));
-
-    listCtrlStock_->InsertColumn(COL_GAIN_LOSS, itemCol);
-
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Value"));
-    listCtrlStock_->InsertColumn(COL_VALUE, itemCol);
-
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Current"));
-    listCtrlStock_->InsertColumn(COL_CURRENT, itemCol);
-
-    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-    itemCol.SetText(_("Notes"));
-    listCtrlStock_->InsertColumn(COL_NOTES, itemCol);
-
-    /* See if we can get data from inidb */
-    long col_x = -2;
     for (int i = 0; i < COL_MAX; ++i)
     {
+        if (i==2 || i==3 || i==4 || i==5)
+            itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+        else
+            itemCol.SetAlign(wxLIST_FORMAT_LEFT);
+
+        itemCol.SetText(wxString()<<columns[i]);
+        listCtrlStock_->InsertColumn(i, columns[i], (i<2 || i>5 ? wxLIST_FORMAT_LEFT : wxLIST_FORMAT_RIGHT));
+
         if (!mmDBWrapper::getINISettingValue(inidb_, wxString::Format(wxT("STOCKS_COL%i_WIDTH"), i),
                                         (i == 0 ? wxT("140"): wxT("-2"))).ToLong(&col_x))
             (i == 0 ? col_x = 140 : col_x = -2);
         listCtrlStock_->SetColumnWidth(i, col_x);
-    };
+    }
 
-    wxPanel* itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
+    wxPanel* itemPanel12 = new wxPanel(itemSplitterWindow10,
+        ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
     itemSplitterWindow10->SplitHorizontally(listCtrlStock_, itemPanel12);
     itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);
-    itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
+    itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
-    //itemPanel12->SetBackgroundColour(mmColors::listBackColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer4->Add(itemBoxSizer5, flags);
 
     wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
-    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton6, flags);
 
     wxButton* itemButton81 = new wxButton(itemPanel12, wxID_EDIT);
     itemButton81->SetToolTip(_("Edit Stock Investment"));
-    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton81, flags);
     itemButton81->Enable(false);
 
     wxButton* itemButton7 = new wxButton(itemPanel12, wxID_DELETE);
     itemButton7->SetToolTip(_("Delete Stock Investment"));
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton7, flags);
     itemButton7->Enable(false);
 
-    wxButton* itemButton8 = new wxButton(itemPanel12, wxID_REFRESH, _("&Refresh"),
-                                          wxDefaultPosition, wxDefaultSize, 0);
+    wxButton* itemButton8 = new wxButton(itemPanel12, wxID_REFRESH);
     itemButton8->SetToolTip(_("Refresh Stock Prices from Yahoo"));
-    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton8, flags);
 
-    wxButton* itemButton9 = new wxButton(itemPanel12, wxID_SETUP, _("&Settings"),
-                                          wxDefaultPosition, wxDefaultSize, 0);
+    wxButton* itemButton9 = new wxButton(itemPanel12, wxID_SETUP, _("&Settings"));
     itemButton9->SetToolTip(_("Change settings for automatic refresh"));
-    itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton9, flags);
 
     //Infobar-mini
     stock_details_short_ = new wxStaticText(itemPanel12,
          ID_PANEL_STOCKS_STATIC_DETAILS_MINI, strLastUpdate_);
-    itemBoxSizer5->Add(stock_details_short_, 1, wxGROW|wxTOP, 12);
+    itemBoxSizer5->Add(stock_details_short_, flags);
     //Infobar
     stock_details_ = new wxStaticText(itemPanel12,
-    ID_PANEL_STOCKS_STATIC_DETAILS, wxT(""),
+    ID_PANEL_STOCKS_STATIC_DETAILS, wxT("                                         "),
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
-    itemBoxSizer4->Add(stock_details_, 1, wxGROW|wxLEFT|wxRIGHT, 14);
+    itemBoxSizer4->Add(stock_details_, 1, wxGROW|wxLEFT|wxTOP, 4);
 }
 
 void mmStocksPanel::initVirtualListControl()
@@ -755,9 +738,9 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         {
             additionInfo << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockavgPurchasePriceStr << wxT("|") << wxT(" = ") << stocktotalDifferenceStr
             << wxT (" * ") << stocktotalnumSharesStr << wxT (" = ") << stocktotalgainlossStr << wxT (" ( ") << stocktotalPercentageStr << wxT ('%')
-            << wxT (" )") //<< wxT ("\n")
-            << wxT ("\n") << getItem(selectedIndex_, COL_NOTES);
+            << wxT (" )") << wxT ("\n");
         }
+        additionInfo << getItem(selectedIndex_, COL_NOTES);
 
         stock_details_->SetLabel(additionInfo);
     }
