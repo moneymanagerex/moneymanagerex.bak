@@ -134,6 +134,8 @@
 #include "mmex_db_view.h"
 #include <boost/foreach.hpp>
 
+#define _MM_EX_MMEX_CPP_REVISION_ID    "$Revision$"
+
 class mmPrintableBase;
 
 namespace
@@ -555,6 +557,9 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 {
     // tell wxAuiManager to manage this frame
     m_mgr.SetManagedWindow(this);
+    CreateStatusBar();
+    wxStatusBar *sb = GetStatusBar();
+    if (sb) sb->SetStatusText(wxT(_MM_EX_MMEX_CPP_REVISION_ID));
 
     SetIcon(mmex::getProgramIcon());
     SetMinSize(wxSize(800,600));
