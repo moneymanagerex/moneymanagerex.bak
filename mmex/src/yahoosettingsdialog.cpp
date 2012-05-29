@@ -44,45 +44,46 @@ YahooSettingsDialog::YahooSettingsDialog( mmYahoo* myp,
 : wxDialog( parent, id, title, pos, size, style ),
 m_yahoopointer(myp)
 {
+    wxSizerFlags flags, flags_expand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 4);
+    flags_expand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 4).Expand();
+
     wxBoxSizer* bSizer1000;
     bSizer1000 = new wxBoxSizer(wxVERTICAL);
 
     wxFlexGridSizer* fgSizer_main;
     fgSizer_main = new wxFlexGridSizer(0, 2, 10, 10);
 
-    m_staticText34 = new wxStaticText(this, wxID_ANY,
+    wxStaticText* m_staticText34 = new wxStaticText(this, wxID_STATIC,
         _("Yahoo Server"));
-    fgSizer_main->Add(m_staticText34, 0, wxALIGN_RIGHT);
+    fgSizer_main->Add(m_staticText34, flags);
 
     m_YahooServer = new wxTextCtrl(this, idYahooServer,
         _("finance.au.yahoo.com"));
     m_YahooServer->SetToolTip( _("Do not enter anything except the server name (or IP address, if you're feeling lucky)") );
     m_YahooServer->SetValue(m_yahoopointer->Server_);
 
-    fgSizer_main->Add(m_YahooServer, 0, wxEXPAND);
+    fgSizer_main->Add(m_YahooServer, flags_expand);
 
-    m_staticText2 = new wxStaticText(this, wxID_ANY, _("Yahoo Suffix"));
-    fgSizer_main->Add(m_staticText2, 0, wxALIGN_RIGHT);
+    wxStaticText* m_staticText2 = new wxStaticText(this, wxID_STATIC, _("Yahoo Suffix"));
+    fgSizer_main->Add(m_staticText2, flags);
 
     m_YahooSuffix = new wxTextCtrl(this,
         idYahooSuffix, wxEmptyString);
     m_YahooSuffix->SetToolTip( _("Enter the suffix used by Yahoo for the market of your stocks. \nIf your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio.") );
     m_YahooSuffix->SetValue(m_yahoopointer->Suffix_);
 
-    fgSizer_main->Add(m_YahooSuffix, 0, wxEXPAND);
+    fgSizer_main->Add(m_YahooSuffix, flags_expand);
 
     fgSizer_main->AddSpacer(1);
-    wxStaticText *m_staticText33 = new wxStaticText(this,
-        wxID_ANY, _("Market open"));
-    fgSizer_main->Add(m_staticText33);
-    m_staticText3 = new wxStaticText(this,
-        wxID_ANY, _("from"));
-    fgSizer_main->Add(m_staticText3, 0, wxALIGN_RIGHT);
+    wxStaticText* m_staticText33 = new wxStaticText(this,
+        wxID_STATIC, _("Market open"));
+    fgSizer_main->Add(m_staticText33, flags);
+    wxStaticText* m_staticText3 = new wxStaticText(this,
+        wxID_STATIC, _("from"));
+    fgSizer_main->Add(m_staticText3, flags);
 
-    wxFlexGridSizer* fgSizer5;
-    fgSizer5 = new wxFlexGridSizer(1, 3, 0, 0);
-    fgSizer5->SetFlexibleDirection(wxBOTH);
-    fgSizer5->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+    wxFlexGridSizer* fgSizer5 = new wxFlexGridSizer(1, 3, 0, 0);
 
     m_MarketOpenHour = new wxSpinCtrl(this,
         idMarketOpenHour, wxEmptyString, wxDefaultPosition,
@@ -92,10 +93,7 @@ m_yahoopointer(myp)
     m_yahoopointer->OpenTimeStr_.Mid(0,2).ToLong(&LongTemp);
     m_MarketOpenHour->SetValue(LongTemp);
 
-    fgSizer5->Add(m_MarketOpenHour);
-
-    m_staticText20 = new wxStaticText(this, wxID_ANY, wxT(" : "));
-    fgSizer5->Add(m_staticText20);
+    wxStaticText* m_staticText20 = new wxStaticText(this, wxID_STATIC, wxT(" : "));
 
     m_MarketOpenMinute = new wxSpinCtrl(this,
         idMarketOpenMinute, wxEmptyString, wxDefaultPosition,
@@ -104,18 +102,15 @@ m_yahoopointer(myp)
     m_yahoopointer->OpenTimeStr_.Mid(3,2).ToLong(&LongTemp);
     m_MarketOpenMinute->SetValue(LongTemp);
 
-    fgSizer5->Add(m_MarketOpenMinute);
-
+    fgSizer5->Add(m_MarketOpenHour, flags);
+    fgSizer5->Add(m_staticText20, flags);
+    fgSizer5->Add(m_MarketOpenMinute, flags);
     fgSizer_main->Add(fgSizer5);
 
-    m_staticText4 = new wxStaticText(this,
-        wxID_ANY, _("to"));
-    fgSizer_main->Add(m_staticText4, 0, wxALIGN_RIGHT);
+    wxStaticText* m_staticText4 = new wxStaticText(this, wxID_STATIC, _("to"));
+    fgSizer_main->Add(m_staticText4, flags);
 
-    wxFlexGridSizer* fgSizer6;
-    fgSizer6 = new wxFlexGridSizer(1, 3, 0, 0);
-    fgSizer6->SetFlexibleDirection(wxBOTH);
-    fgSizer6->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+    wxFlexGridSizer* fgSizer6 = new wxFlexGridSizer(1, 3, 0, 0);
 
     m_MarketCloseHour = new wxSpinCtrl(this,
         idMarketCloseHour, wxEmptyString,
@@ -124,11 +119,7 @@ m_yahoopointer(myp)
     m_yahoopointer->CloseTimeStr_.Mid(0,2).ToLong(&LongTemp);
     m_MarketCloseHour->SetValue(LongTemp);
 
-    fgSizer6->Add(m_MarketCloseHour);
-
-    m_staticText201 = new wxStaticText(this,
-        wxID_ANY, wxT(" : "));
-    fgSizer6->Add(m_staticText201);
+    wxStaticText* m_staticText201 = new wxStaticText(this, wxID_STATIC, wxT(" : "));
 
     m_MarketCloseMinute = new wxSpinCtrl( this,
         idMarketCloseMinute, wxEmptyString, wxDefaultPosition,
@@ -137,48 +128,46 @@ m_yahoopointer(myp)
     m_yahoopointer->CloseTimeStr_.Mid(3,2).ToLong(&LongTemp);
     m_MarketCloseMinute->SetValue(LongTemp);
 
-    fgSizer6->Add( m_MarketCloseMinute);
-    fgSizer_main->Add(fgSizer6, 1, wxEXPAND);
+    fgSizer6->Add(m_MarketCloseHour, flags);
+    fgSizer6->Add(m_staticText201, flags);
+    fgSizer6->Add( m_MarketCloseMinute, flags);
+    fgSizer_main->Add(fgSizer6);
 
-    fgSizer_main->AddSpacer(1);
     m_checkBoxRefreshPrices = new wxCheckBox(this,
-        idCBDoRefresh, _("&Refresh prices every"));
+        idCBDoRefresh, _("&Refresh interval"));
     m_checkBoxRefreshPrices->SetValue(m_yahoopointer->UpdatingEnabled_ ? true : false);
-    fgSizer_main->Add(m_checkBoxRefreshPrices);
-    fgSizer_main->AddSpacer(1);
 
-    wxBoxSizer* bSizer29;
-    bSizer29 = new wxBoxSizer(wxHORIZONTAL);
+    wxFlexGridSizer* fgSizer9 = new wxFlexGridSizer(1, 2, 0, 0);
 
     m_RefreshInterval = new wxSpinCtrl(this,
         idRefreshInterval, wxEmptyString, wxDefaultPosition,
         wxDefaultSize, wxSP_ARROW_KEYS, 1, 999, 5);
     m_RefreshInterval->SetValue(m_yahoopointer->UpdateIntervalMinutes_);
-    fgSizer_main->Add(m_RefreshInterval);
+    m_RefreshInterval->SetToolTip(_("Refresh interval in minutes while market is open"));
 
-    m_staticText6 = new wxStaticText(this, wxID_ANY,
-        _("minutes while market is open"));
-    fgSizer_main->AddSpacer(1);
-    fgSizer_main->Add(m_staticText6);
+    wxStaticText* label_minutes = new wxStaticText(this, wxID_STATIC, _("minutes"));
 
-    fgSizer_main->Add(bSizer29);
+    fgSizer_main->AddSpacer(1);    
+    fgSizer_main->Add(m_checkBoxRefreshPrices, flags);
+    fgSizer_main->AddSpacer(1);    
+    fgSizer_main->Add(fgSizer9);
+    fgSizer9->Add(m_RefreshInterval, flags);
+    fgSizer9->Add(label_minutes, flags);
 
     bSizer1000->Add(fgSizer_main, 1, wxEXPAND|wxALL, 15);
 
     m_sdbSettings = new wxStdDialogButtonSizer();
 
-    wxPanel* itemPanel25 = new wxPanel(this,
-        wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    bSizer1000->Add(itemPanel25, 0, wxALIGN_RIGHT);
     wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
-    itemPanel25->SetSizer(itemStdDialogButtonSizer1);
-    wxButton* itemButtonOK = new wxButton(itemPanel25, wxID_OK);
-    itemStdDialogButtonSizer1->Add(itemButtonOK, 0, wxRIGHT, 10);
-    wxButton* itemButtonCancel = new wxButton(itemPanel25, wxID_CANCEL);
-    itemStdDialogButtonSizer1->Add(itemButtonCancel, 0, wxRIGHT, 10);
+    bSizer1000->Add(itemStdDialogButtonSizer1, 0, wxALIGN_RIGHT|wxALL, 10);
+
+    wxButton* itemButtonOK = new wxButton(this, wxID_OK);
+    itemStdDialogButtonSizer1->Add(itemButtonOK, flags);
+    wxButton* itemButtonCancel = new wxButton(this, wxID_CANCEL);
+    itemStdDialogButtonSizer1->Add(itemButtonCancel, flags);
 
     m_sdbSettings->Realize();
-    bSizer1000->Add(m_sdbSettings, 0, wxALL, 10);
+    bSizer1000->Add(m_sdbSettings);
 
     this->SetSizer(bSizer1000);
 
