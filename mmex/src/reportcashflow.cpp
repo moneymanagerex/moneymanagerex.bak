@@ -34,7 +34,7 @@ wxString mmReportCashFlow::getHTMLText()
 
     int years = 10;
     wxString headerMsg = wxString::Format (_("Cash Flow Forecast for %d Years Ahead"), years);
-        hb.addHeader(3, headerMsg );
+        hb.addHeader(2, headerMsg );
     headerMsg = _("Accounts: ");
     if (accountArray_ == NULL) 
     {
@@ -68,11 +68,11 @@ wxString mmReportCashFlow::getHTMLText()
 
     }
 
-    hb.addHeader(6, headerMsg);
+    hb.addHeader(2, headerMsg);
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(7, dt);
+    hb.addHeader(1, dt);
     hb.addLineBreak();
     hb.addLineBreak();
 

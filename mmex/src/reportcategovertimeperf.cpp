@@ -237,12 +237,12 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     mmHTMLBuilder hb;
     hb.init();
     
-    hb.addHeader(3, wxString::Format(_("Category Income/Expenses Over Last %d Months "), MONTHS_IN_PERIOD));
+    hb.addHeader(2, wxString::Format(_("Category Income/Expenses Over Last %d Months "), MONTHS_IN_PERIOD));
 
     const wxDateTime now = wxDateTime::Now();
 
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(7, dt);
+    hb.addHeader(1, dt);
     hb.addLineBreak();
     hb.addLineBreak();
 
