@@ -123,7 +123,6 @@ public:
     std::vector<mmBudgetEntryHolder> trans_;
 
 public:
-    wxImageList* m_imageList;
     budgetingListCtrl* listCtrlBudget_;
     wxString currentView_;
     int budgetYearID_;
