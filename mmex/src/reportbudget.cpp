@@ -116,17 +116,15 @@ void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& sta
 {
     wxString todaysDate = wxString() 
         << _("Today's Date: ") << mmGetNiceDateString(wxDateTime::Now())
-        << wxT("<br>") << wxT("<br>");
+        << wxT("<br>");
     if (withDateRange)
     {   
         todaysDate
-        << _("From: ") << wxT("<b>") << mmGetNiceDateSimpleString(startYear) <<  wxT("</b> ") 
+        << _("</b>From: ") << wxT("<b>") << mmGetNiceDateSimpleString(startYear) <<  wxT("</b> ") 
         << _("to: ") 
-        << wxT ("<b>") << mmGetNiceDateSimpleString(endYear) << wxT ("</b>");
+        << wxT ("<b>") << mmGetNiceDateSimpleString(endYear) << wxT ("</b><b>") << wxT("<br>");
     }
-    hb.addHeader(0, todaysDate);
-    hb.addLineBreak();
-    hb.addLineBreak();
+    hb.addHeader(1, todaysDate);
 }
 
 void mmReportBudget::SetDateToEndOfMonth(int month, wxDateTime& date)
