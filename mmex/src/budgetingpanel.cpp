@@ -139,12 +139,12 @@ void mmBudgetingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxPanel* itemPanel3 = new wxPanel( this, ID_PANEL_REPORTS_HEADER_PANEL, 
+    wxPanel* headerPanel = new wxPanel( this, ID_PANEL_REPORTS_HEADER_PANEL, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer2->Add(itemPanel3, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(headerPanel, 0, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
-    itemPanel3->SetSizer(itemBoxSizerVHeader);
+    headerPanel->SetSizer(itemBoxSizerVHeader);
 
     wxString yearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
     if ((yearStr.length() < 5)) 
@@ -165,7 +165,7 @@ void mmBudgetingPanel::CreateControls()
     {
         yearStr = wxString() << _("Month: ") << yearStr;
     }
-    wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
+    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_REPORTS_STATIC_HEADER, 
         _("Budget Setup for ") + yearStr, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
@@ -174,32 +174,32 @@ void mmBudgetingPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, 0, wxALL, 1);
 
     wxBitmap itemStaticBitmap3Bitmap(rightarrow_xpm);
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemPanel3, 
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, 
         ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW, 
         itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemBoxSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemStaticBitmap3->SetEventHandler( this ); 
 
-    wxStaticText* itemStaticText18 = new wxStaticText( itemPanel3, 
+    wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_PANELVIEW, 
             _("Viewing All Budget Categories"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
 
     wxSize distSize(170, 20);
 
-    wxStaticText* itemStaticText100 = new wxStaticText( itemPanel3, wxID_ANY, _("Income......."),
+    wxStaticText* itemStaticText100 = new wxStaticText( headerPanel, wxID_ANY, _("Income......."),
         wxDefaultPosition, wxSize(75, 20), 0 );
     itemStaticText100->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
-    wxStaticText* itemStaticText101 = new wxStaticText( itemPanel3,
+    wxStaticText* itemStaticText101 = new wxStaticText( headerPanel,
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
     itemStaticText101->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
-    wxStaticText* itemStaticText102 = new wxStaticText( itemPanel3, 
+    wxStaticText* itemStaticText102 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
     itemStaticText102->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
-    wxStaticText* itemStaticText103 = new wxStaticText( itemPanel3, 
+    wxStaticText* itemStaticText103 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
     itemStaticText103->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
@@ -210,19 +210,19 @@ void mmBudgetingPanel::CreateControls()
     itemIncomeSizer->Add(itemStaticText103, 0, wxALL, 0);
     itemBoxSizerVHeader->Add(itemIncomeSizer, 0, wxALL, 1);
 
-    wxStaticText* itemStaticText200 = new wxStaticText( itemPanel3, wxID_ANY, _("Expenses..."),
+    wxStaticText* itemStaticText200 = new wxStaticText( headerPanel, wxID_ANY, _("Expenses..."),
         wxDefaultPosition, wxSize(75, 20), 0 );
     itemStaticText200->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
-    wxStaticText* itemStaticText201 = new wxStaticText( itemPanel3, 
+    wxStaticText* itemStaticText201 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
     itemStaticText201->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
-    wxStaticText* itemStaticText202 = new wxStaticText( itemPanel3, 
+    wxStaticText* itemStaticText202 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
     itemStaticText202->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
-    wxStaticText* itemStaticText203 = new wxStaticText( itemPanel3, 
+    wxStaticText* itemStaticText203 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
     itemStaticText203->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
