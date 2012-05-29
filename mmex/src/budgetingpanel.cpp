@@ -241,18 +241,9 @@ void mmBudgetingPanel::CreateControls()
     listCtrlBudget_->InsertColumn(0, _("Category  "));
     listCtrlBudget_->InsertColumn(1, _("Sub Category"));
     listCtrlBudget_->InsertColumn(2, _("Frequency"));
-
-    wxListItem itemCol;
-    itemCol.SetImage(-1);
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Amount"));
-    listCtrlBudget_->InsertColumn(3, itemCol);
-
-    itemCol.SetText(_("Estimated"));
-    listCtrlBudget_->InsertColumn(4, itemCol);
-
-    itemCol.SetText(_("Actual"));
-    listCtrlBudget_->InsertColumn(5, itemCol);
+    listCtrlBudget_->InsertColumn(3, _("Amount"), wxLIST_FORMAT_RIGHT);
+    listCtrlBudget_->InsertColumn(4, _("Estimated"), wxLIST_FORMAT_RIGHT);
+    listCtrlBudget_->InsertColumn(5, _("Actual"), wxLIST_FORMAT_RIGHT);
 
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4, col5;
