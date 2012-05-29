@@ -42,7 +42,7 @@ class YahooSettingsDialog : public wxDialog
 	public:
 		enum
 		{
-			idYahooSettingsDialog = 1000,
+			idYahooSettingsDialog = wxID_HIGHEST + 1000,
 			idSettingsNotebook,
 			idHTTPSettingsPanel,
 			idYahooSuffix,
@@ -65,38 +65,21 @@ class YahooSettingsDialog : public wxDialog
 		};
 
 		wxPanel* m_HTTPSettingsPanel;
-		wxStaticText* m_staticText2;
 		wxTextCtrl* m_YahooSuffix;
-		wxStaticText* m_staticText3;
 		wxSpinCtrl* m_MarketOpenHour;
-		wxStaticText* m_staticText20;
 		wxSpinCtrl* m_MarketOpenMinute;
-		wxStaticText* m_staticText4;
 		wxSpinCtrl* m_MarketCloseHour;
-		wxStaticText* m_staticText201;
 		wxSpinCtrl* m_MarketCloseMinute;
 		wxCheckBox* m_checkBoxRefreshPrices;
 		wxSpinCtrl* m_RefreshInterval;
-		wxStaticText* m_staticText6;
 		wxRadioBox* m_WebProxy;
 		wxPanel* m_ProxySettingsPanel;
-		wxStaticText* m_staticText12;
 		wxTextCtrl* m_ProxyHost;
-		wxStaticText* m_staticText13;
 		wxTextCtrl* m_ProxyPort;
 
 		wxCheckBox* m_ProxyAuthentication;
-		wxStaticText* m_staticText14;
 		wxTextCtrl* m_ProxyUser;
-		wxStaticText* m_staticText15;
-		wxTextCtrl* m_ProxyPassword;
-
-		wxCheckBox* m_SaveProxyPassword;
-		wxStaticText* m_staticText16;
-		wxTextCtrl* m_ProxyExceptions;
-		wxStaticText* m_staticText17;
 		wxStdDialogButtonSizer* m_sdbSettings;
-		wxStaticText* m_staticText34;
 		wxTextCtrl* m_YahooServer;
 
 		wxButton* m_proxySettingsButton;
