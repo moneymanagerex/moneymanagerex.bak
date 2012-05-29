@@ -483,10 +483,11 @@ bool mmCheckingPanel::Create(
 
     if (ok)
     {
+        m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
         CreateControls();
-        initViewTransactionsHeader();
         GetSizer()->Fit(this);
         GetSizer()->SetSizeHints(this);
+        initViewTransactionsHeader();
 
         /* Set up the transaction filter.  The transFilter dialog will be destroyed
            when the checking panel is destroyed. */
@@ -580,72 +581,65 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
     wxSizerFlags flags;
-    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 4);
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 4);
 
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition,
         wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
-    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 2);
+    itemBoxSizer9->Add(headerPanel, flags);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
-    wxGridSizer* itemBoxSizerVHeader2 = new wxGridSizer(2,1,5,20);
-    itemBoxSizerVHeader->Add(itemBoxSizerVHeader2);
-
-    wxStaticText* itemStaticText9 = new wxStaticText(headerPanel,
-        ID_PANEL_CHECKING_STATIC_HEADER, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* header_text = new wxStaticText(headerPanel,
+        ID_PANEL_CHECKING_STATIC_HEADER, wxT(""));
     int font_size = this->GetFont().GetPointSize() + 2;
-    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-    itemBoxSizerVHeader2->Add(itemStaticText9, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 0);
+    header_text->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemBoxSizerVHeader->Add(header_text, flags);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
-    wxFlexGridSizer* itemFlexGridSizerHHeader2 = new wxFlexGridSizer(5,1,1);
-    itemBoxSizerVHeader2->Add(itemBoxSizerHHeader2);
+    wxFlexGridSizer* itemFlexGridSizerHHeader2 = new wxFlexGridSizer(0,12,1,1);
+
+    itemBoxSizerVHeader->Add(itemBoxSizerHHeader2);
     itemBoxSizerHHeader2->Add(itemFlexGridSizerHHeader2);
 
     wxBitmap itemStaticBitmap(rightarrow_xpm);
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW,
-        itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL, 0);
-    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_RIGHT_DOWN,
-        wxMouseEventHandler(mmCheckingPanel::OnFilterResetToViewAll), NULL, this);
-    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN,
-        wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap(headerPanel,
+        ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, itemStaticBitmap);
+    itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, flags);
 
-    itemStaticTextMainFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW,
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, 0, wxALIGN_CENTER_VERTICAL, 0);
+    itemStaticTextMainFilter_ = new wxStaticText(headerPanel,
+        ID_PANEL_CHECKING_STATIC_PANELVIEW, wxT(""));
 
-    itemFlexGridSizerHHeader2->AddSpacer(20);
+    itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, flags);
+    //need more horizontal space to include all menu items
+    for (int i=4; i<12; ++i) {
+        //itemFlexGridSizerHHeader2->SetFlexibleDirection(wxHORIZONTAL); //Does not working
+        itemFlexGridSizerHHeader2->AddSpacer(20);
+    }
 
-    itemStaticBitmap31_ = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER,
-        itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 150);
+    itemStaticBitmap31_ = new wxStaticBitmap(headerPanel,
+        ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, itemStaticBitmap);
+    itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, flags);
     itemStaticBitmap31_->Enable(false);
-    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN,
-        wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
-    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN,
-        wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
 
-    statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_FILTER,
-        _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_CENTER_VERTICAL, 0);
+    statTextTransFilter_ = new wxStaticText(headerPanel,
+        ID_PANEL_CHECKING_STATIC_FILTER, _("Transaction Filter"));
+    itemFlexGridSizerHHeader2->Add(statTextTransFilter_, flags);
     statTextTransFilter_->Enable(false);
 
-    m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
-
-    initViewTransactionsHeader();
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 0, wxALL, 1);
+    itemBoxSizerVHeader->Add(itemBoxSizerHHeader, flags);
 
-    wxStaticText* itemStaticText10 = new wxStaticText( headerPanel,
-            ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(800,20), 0 );
-    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxRIGHT|wxEXPAND, 50);
+    wxStaticText* itemStaticText10 = new wxStaticText(headerPanel,
+            ID_PANEL_CHECKING_STATIC_BALHEADER,
+            wxT("<----------the-plase-holder-------------------------------->"),
+            wxDefaultPosition, wxDefaultSize);
+    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxEXPAND);
 
     /* ---------------------- */
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( this,
+    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow(this,
         ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(200, 200),
         wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
@@ -696,7 +690,7 @@ void mmCheckingPanel::CreateControls()
     itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);
 
-    itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
+    itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
@@ -730,7 +724,8 @@ void mmCheckingPanel::CreateControls()
     searchCtrl->SetToolTip(_("Enter any string to find it in the nearest transaction notes"));
 
     //Infobar-mini
-    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_CHECKING_STATIC_MINI, wxT(""),
+    wxStaticText* itemStaticText44 = new wxStaticText(itemPanel12,
+        ID_PANEL_CHECKING_STATIC_MINI, wxT(""),
         wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText44, flags);
 
@@ -741,6 +736,15 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
     //Show tips when no transaction selected
     showTips();
+
+    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_RIGHT_DOWN,
+        wxMouseEventHandler(mmCheckingPanel::OnFilterResetToViewAll), NULL, this);
+    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN,
+        wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
+    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN,
+        wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
+    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN,
+        wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
 }
 //----------------------------------------------------------------------------
 
