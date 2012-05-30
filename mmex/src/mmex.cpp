@@ -3498,15 +3498,15 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
         menuBar_->FindItem(MENU_VIEW_BUDGET_CATEGORY_SUMMARY)->Check(mmIniOptions::instance().budgetSummaryWithoutCategories_);
         menuBar_->FindItem(MENU_IGNORE_FUTURE_TRANSACTIONS)->Check(mmIniOptions::instance().ignoreFutureTransactions_);
 
-        int messageIcon = wxICON_INFORMATION;
+        int style = wxICON_INFORMATION|wxOK;
         wxString sysMsg = wxString() << _("MMEX Options have been updated.") << wxT("\n\n");
         if (systemOptions.RequiresRestart())
         {
-            messageIcon = wxICON_WARNING;
+            style = wxICON_WARNING|wxOK;
             sysMsg << _("Recommendation: Shut down and restart MMEX.") << wxT("\n")
                    << _("This will allow all MMEX option updates to take effect.");
         }
-        wxMessageBox(sysMsg, _("New MMEX Options"), messageIcon);
+        wxMessageBox(sysMsg, _("New MMEX Options"), style);
 
         createHomePage();
         updateNavTreeControl();
