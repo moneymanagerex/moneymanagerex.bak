@@ -28,7 +28,7 @@ void mmCustomSQLReport::displayReportHeader(mmHTMLBuilder& hb, wxString reportTi
 {
     hb.addHeader(2, reportTitle);
 
-    hb.addHeader(1, wxT("Today's Date: ") + mmGetNiceDateString(wxDateTime::Now()));
+    hb.addHeaderItalic(0, wxT("Today's Date: ") + mmGetNiceDateString(wxDateTime::Now()));
     hb.addLineBreak();
 
 	hb.startCenter();
