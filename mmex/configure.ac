@@ -44,7 +44,10 @@ AM_OPTIONS_WXCONFIG
 AM_OPTIONS_WXPRESETS
 
 AM_WXPRESETS_FULL([2.8.10], [base, core, html, xml, net, aui, adv, qa])
-
+dnl we use AC_ARG_WITH and not WX_ARG_WITH for the toolkit options as they
+dnl shouldn't default to wxUSE_ALL_FEATURES
+AC_ARG_WITH(osx_cocoa,     [  --with-osx_cocoa        use Mac OS X (Cocoa)], [wxUSE_OSX_COCOA="$withval" CACHE_OSX_COCOA=1 TOOLKIT_GIVEN=1])
+AC_ARG_WITH(cocoa,         [  --with-cocoa            same as --with-osx_cocoa], [wxUSE_OSX_COCOA="$withval" CACHE_OSX_COCOA=1 TOOLKIT_GIVEN=1])
 ##########################################################################
 
 # Process standard bakefile
