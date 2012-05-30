@@ -95,21 +95,16 @@ void mmAssetsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer1);
 
-    /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
-    headerPanel->SetSizer(itemBoxSizerVHeader);
 
-    wxStaticText* itemStaticText1 = new wxStaticText(headerPanel, wxID_ANY, _("Assets"));
+    wxStaticText* itemStaticText1 = new wxStaticText(this, wxID_ANY, _("Assets"));
     itemStaticText1->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
-    wxStaticText* itemStaticText2 = new wxStaticText(headerPanel, IDC_PANEL_ASSET_STATIC_BALHEADER, _("Total:"));
+    wxStaticText* itemStaticText2 = new wxStaticText(this, IDC_PANEL_ASSET_STATIC_BALHEADER, _("Total:"));
     itemBoxSizerVHeader->Add(itemStaticText1, 0, wxALL, 1);
     itemBoxSizerVHeader->Add(itemStaticText2, 0, wxALL, 1);
+    itemBoxSizer1->Add(itemBoxSizerVHeader);
 
     /* ---------------------- */
-
     wxSplitterWindow* itemSplitterWindow = new wxSplitterWindow(this,
         IDC_PANEL_ASSET_STATIC_BAL, wxDefaultPosition, wxSize(200, 200), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
