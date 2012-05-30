@@ -24,9 +24,6 @@ enum
 {
   IDC_PANEL_ASSETS_LISTCTRL = wxID_HIGHEST + 1,
   IDC_PANEL_ASSET_STATIC_BALHEADER,
-  IDC_PANEL_ASSET_STATIC_BAL,
-  IDC_PANEL_ASSET_STATIC_DETAILS,
-  IDC_PANEL_ASSET_STATIC_DETAILS_MINI
 };
 enum EColumn
 {
@@ -62,6 +59,8 @@ END_EVENT_TABLE()
 
 mmAssetsPanel::mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core) :
     mmPanelBase(db, inidb, core)
+    , m_listCtrlAssets(0), m_new_button(0), m_edit_button(0), m_delete_button(0)
+    , m_sum(0), m_detail(0)
 {
     Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxPanelNameStr);
 }
@@ -106,7 +105,7 @@ void mmAssetsPanel::CreateControls()
 
     /* ---------------------- */
     wxSplitterWindow* itemSplitterWindow = new wxSplitterWindow(this,
-        IDC_PANEL_ASSET_STATIC_BAL, wxDefaultPosition, wxSize(200, 200), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+        wxID_ANY, wxDefaultPosition, wxSize(200, 200), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
     m_listCtrlAssets = new assetsListCtrl(this, itemSplitterWindow,
         IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
@@ -151,13 +150,11 @@ void mmAssetsPanel::CreateControls()
     itemBoxSizer3->Add(m_delete_button, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     m_delete_button->Enable(false);
 
-    //Infobar-mini
-    wxStaticText* itemStaticText44 = new wxStaticText(assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer3->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
+    m_sum = new wxStaticText(assets_panel, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer3->Add(m_sum, 1, wxGROW|wxTOP, 12);
 
-    //Infobar
-    wxStaticText* itemStaticText33 = new wxStaticText(assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
-    itemBoxSizer2->Add(itemStaticText33, 1, wxGROW|wxLEFT|wxRIGHT, 14);
+    m_detail = new wxStaticText(assets_panel, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
+    itemBoxSizer2->Add(m_detail, 1, wxGROW|wxLEFT|wxRIGHT, 14);
 
     updateExtraAssetData(-1);
 }
@@ -260,23 +257,21 @@ void assetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 
 void mmAssetsPanel::updateExtraAssetData(int selIndex)
 {
-    wxStaticText* st = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS);
-    wxStaticText* stm = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS_MINI);
-    if ((selIndex > -1) && (selIndex < (int)all_assets_.size()))
+    if (selIndex > -1 && selIndex < (int)all_assets_.size())
     {
         const DB_View_ASSETS_V1::Data& asset = all_assets_.at(selIndex);
-        enableEditDeleteButtons(true);
+        m_detail->SetLabel(asset.NOTES);
         wxString miniInfo;
-        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << asset.VALUECHANGE;
+        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << wxGetTranslation(asset.VALUECHANGE);
         if (asset.VALUECHANGE != _("None"))
             miniInfo<< wxT(" = ") << asset.VALUECHANGERATE << wxT("%");
-        st->SetLabel(asset.NOTES);
-        stm->SetLabel(miniInfo);
+        m_sum->SetLabel(miniInfo);
+        enableEditDeleteButtons(true);
     }
     else
     {
-        stm->SetLabel(wxT(""));
-        st->SetLabel(Tips(TIPS_ASSETS));
+        m_detail->SetLabel(Tips(TIPS_ASSETS));
+        m_sum->SetLabel(wxT(""));
         enableEditDeleteButtons(false);
     }
 }

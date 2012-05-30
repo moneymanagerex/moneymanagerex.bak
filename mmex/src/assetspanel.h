@@ -87,6 +87,8 @@ private:
     wxButton* m_delete_button;
     wxButton* m_edit_button;
     wxButton* m_new_button;
+    wxStaticText* m_sum;
+    wxStaticText* m_detail;
 
     bool Create(wxWindow *parent, wxWindowID winid, const wxPoint& pos, const wxSize& size, long style, const wxString &name);
     void CreateControls();
