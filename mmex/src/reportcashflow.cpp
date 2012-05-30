@@ -72,7 +72,7 @@ wxString mmReportCashFlow::getHTMLText()
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(1, dt);
+    hb.addHeaderItalic(0, dt);
     hb.addLineBreak();
     hb.addLineBreak();
 
