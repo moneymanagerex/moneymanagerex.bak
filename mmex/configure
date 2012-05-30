@@ -743,6 +743,8 @@ with_mac
 with_mgl
 with_msw
 with_wxshared
+with_osx_cocoa
+with_cocoa
 enable_omf
 enable_dependency_tracking
 '
@@ -1407,6 +1409,8 @@ Optional Packages:
   --with-msw              Uses the wxMSW port (default is auto)
   --with-wxshared         Builds against a shared build of wxWidgets (default
                           is auto)
+  --with-osx_cocoa        use Mac OS X (Cocoa)
+  --with-cocoa            same as --with-osx_cocoa
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -6763,6 +6767,17 @@ $as_echo "no" >&6; }
                 CFLAGS="$CFLAGS -g0 -O2"
             fi
 
+
+# Check whether --with-osx_cocoa was given.
+if test "${with_osx_cocoa+set}" = set; then :
+  withval=$with_osx_cocoa; wxUSE_OSX_COCOA="$withval" CACHE_OSX_COCOA=1 TOOLKIT_GIVEN=1
+fi
+
+
+# Check whether --with-cocoa was given.
+if test "${with_cocoa+set}" = set; then :
+  withval=$with_cocoa; wxUSE_OSX_COCOA="$withval" CACHE_OSX_COCOA=1 TOOLKIT_GIVEN=1
+fi
 
 ##########################################################################
 
