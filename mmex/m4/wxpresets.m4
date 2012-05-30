@@ -233,6 +233,7 @@ AC_DEFUN([AM_OPTIONS_WXPRESETS],
         WX_ARG_WITH([gtk], [GTKPORT], [Uses the wxGTK port], [auto], [PORT="gtk"])
         WX_ARG_WITH([x11], [X11PORT], [Uses the wxX11 port], [auto], [PORT="x11"])
         WX_ARG_WITH([mac], [MACPORT], [Uses the wxMac port], [auto], [PORT="mac"])
+        WX_ARG_WITH([cocoa], [MACPORT], [Uses the wxCocoa port], [auto], [PORT="cocoa"])
         WX_ARG_WITH([mgl], [MGLPORT], [Uses the wxMGL port], [auto], [PORT="mgl"])
 
         dnl In case we are on Cygwin !
@@ -445,6 +446,8 @@ AC_DEFUN([AM_WXPRESETS_CHECK],
                                 [if wxWidgets port is wxMotif], [WX_PORT="motif"])
             AM_WXSELECTEDCONFIG_CHECK([MACPORT], [mac],
                                 [if wxWidgets port is wxMac], [WX_PORT="mac"])
+            AM_WXSELECTEDCONFIG_CHECK([MACPORT], [cocoa],
+                                [if wxWidgets port is wxMac], [WX_PORT="cocoa"])
             AM_WXSELECTEDCONFIG_CHECK([X11PORT], [x11],
                                 [if wxWidgets port is wxX11], [WX_PORT="x11"])
             AM_WXSELECTEDCONFIG_CHECK([MGLPORT], [mgl],
@@ -486,6 +489,8 @@ AC_DEFUN([AM_WXPRESETS_CHECK],
                                 [if wxWidgets port is wxMotif], [WX_PORT="motif"])
             AM_WXFLAGS_CHECK([MACPORT], [__WXMAC__],
                                 [if wxWidgets port is wxMac], [WX_PORT="mac"])
+            AM_WXFLAGS_CHECK([MACPORT], [__WXCOCOA__],
+                                [if wxWidgets port is wxMac], [WX_PORT="cocoa"])
             AM_WXFLAGS_CHECK([X11PORT], [__WXX11__],
                                 [if wxWidgets port is wxX11], [WX_PORT="x11"])
             AM_WXFLAGS_CHECK([MGLPORT], [__WXMGL__],
@@ -608,6 +613,8 @@ AC_DEFUN([AM_CONVERT_WXPRESETS_OPTIONS_TO_WXCONFIG_FLAGS],
             WXCFG_FLAGS="$WXCFG_FLAGS""--toolkit=x11 "
         elif test "$MACPORT" = "1" ; then
             WXCFG_FLAGS="$WXCFG_FLAGS""--toolkit=mac "
+        elif test "$COCOAPORT" = "1" ; then
+            WXCFG_FLAGS="$WXCFG_FLAGS""--toolkit=cocoa "
         elif test "$MGLPORT" = "1" ; then
             WXCFG_FLAGS="$WXCFG_FLAGS""--toolkit=mgl "
         elif test "$MSWPORT" = "1" ; then
