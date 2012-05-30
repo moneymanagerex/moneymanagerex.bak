@@ -740,11 +740,11 @@ with_motif
 with_gtk
 with_x11
 with_mac
+with_cocoa
 with_mgl
 with_msw
 with_wxshared
 with_osx_cocoa
-with_cocoa
 enable_omf
 enable_dependency_tracking
 '
@@ -1405,6 +1405,7 @@ Optional Packages:
   --with-gtk              Uses the wxGTK port (default is auto)
   --with-x11              Uses the wxX11 port (default is auto)
   --with-mac              Uses the wxMac port (default is auto)
+  --with-cocoa            Uses the wxCocoa port (default is auto)
   --with-mgl              Uses the wxMGL port (default is auto)
   --with-msw              Uses the wxMSW port (default is auto)
   --with-wxshared         Builds against a shared build of wxWidgets (default
@@ -4640,6 +4641,36 @@ $as_echo "will be automatically detected" >&6; }
             fi
 
 
+# Check whether --with-cocoa was given.
+if test "${with_cocoa+set}" = set; then :
+  withval=$with_cocoa;
+else
+  withval="auto"
+fi
+
+
+                        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for the --with-cocoa option" >&5
+$as_echo_n "checking for the --with-cocoa option... " >&6; }
+            if test "$withval" = "yes" ; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+                MACPORT=1
+                PORT="cocoa"
+                                    elif test "" = "1" -a "$withval" = "no" ; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                MACPORT=0
+            elif test "$withval" = "auto" ; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: result: will be automatically detected" >&5
+$as_echo "will be automatically detected" >&6; }
+                MACPORT="auto"
+            else
+                as_fn_error $? "
+    Unrecognized option value (allowed values: yes, auto) !
+                " "$LINENO" 5
+            fi
+
+
 # Check whether --with-mgl was given.
 if test "${with_mgl+set}" = set; then :
   withval=$with_mgl;
@@ -5858,6 +5889,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
             WXCFG_FLAGS="$WXCFG_FLAGS""--toolkit=x11 "
         elif test "$MACPORT" = "1" ; then
             WXCFG_FLAGS="$WXCFG_FLAGS""--toolkit=mac "
+        elif test "$COCOAPORT" = "1" ; then
+            WXCFG_FLAGS="$WXCFG_FLAGS""--toolkit=cocoa "
         elif test "$MGLPORT" = "1" ; then
             WXCFG_FLAGS="$WXCFG_FLAGS""--toolkit=mgl "
         elif test "$MSWPORT" = "1" ; then
@@ -6314,6 +6347,30 @@ $as_echo "no" >&6; }
         fi
 
 
+        if test "$MACPORT" = "auto" ; then
+
+                                    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if wxWidgets port is wxMac" >&5
+$as_echo_n "checking if wxWidgets port is wxMac... " >&6; }
+
+        WX_MACPORT=$(expr "$WX_SELECTEDCONFIG" : ".*cocoa.*")
+
+            if test "$WX_MACPORT" != "0"; then
+                WX_MACPORT=1
+                { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+                WX_PORT="cocoa"
+            else
+                WX_MACPORT=0
+                { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                :
+            fi
+        else
+
+                        WX_MACPORT=$MACPORT
+        fi
+
+
         if test "$X11PORT" = "auto" ; then
 
                                     { $as_echo "$as_me:${as_lineno-$LINENO}: checking if wxWidgets port is wxX11" >&5
@@ -6555,6 +6612,30 @@ $as_echo_n "checking if wxWidgets port is wxMac... " >&6; }
                 { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
                 WX_PORT="mac"
+            else
+                WX_MACPORT=0
+                { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                :
+            fi
+        else
+
+                        WX_MACPORT=$MACPORT
+        fi
+
+
+        if test "$MACPORT" = "auto" ; then
+
+                                    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if wxWidgets port is wxMac" >&5
+$as_echo_n "checking if wxWidgets port is wxMac... " >&6; }
+
+        WX_MACPORT=$(expr "$WX_CPPFLAGS" : ".*__WXCOCOA__.*")
+
+            if test "$WX_MACPORT" != "0"; then
+                WX_MACPORT=1
+                { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+                WX_PORT="cocoa"
             else
                 WX_MACPORT=0
                 { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
