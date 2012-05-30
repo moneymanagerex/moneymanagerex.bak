@@ -34,8 +34,9 @@ void mmHTMLBuilder::init()
     html += mmex::getProgramName();
     html += wxT(" - ");
     html += _("Report");
-    html += wxT("</title>\n</head><body bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX)
-          + wxT("\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
+    html += wxT("</title>\n</head><body bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
+    html += wxT("\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
+    html += wxString::Format(wxT("<font size=%s>\n"), fontSize.c_str());
 
     //if I need more space on the top of home page and reports I will delete user name from settings
     if (mmIniOptions::instance().userNameString_ != wxT (""))
@@ -61,7 +62,7 @@ void mmHTMLBuilder::init()
 
 void mmHTMLBuilder::end()
 {
-    html += wxT("\n</body>\n</html>\n");
+    html += wxT("\n</font></body>\n</html>\n");
 }
 
 void mmHTMLBuilder::addHeader(int level, const wxString& header)
@@ -157,8 +158,8 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxStrin
     html += wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
     if(cols - 1 > 1)
         html += wxString::Format(wxT(" colspan=\"%d\""), cols - 1);
-    html += wxString::Format(wxT("><font size=%s><b><i>&nbsp;&nbsp;%s"), fontSize.c_str(), caption.c_str());
-    html += wxString::Format(wxT("</i></b></font></td><td nowrap align=\"right\"><font size=%s><b><i>%s</i></b></font></td></tr>\n"), fontSize.c_str(), value.c_str());
+    html += wxString::Format(wxT("><b><i>&nbsp;&nbsp;%s"), caption.c_str());
+    html += wxString::Format(wxT("</i></b></td><td nowrap align=\"right\"><b><i>%s</i></b></td></tr>\n"), value.c_str());
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data)
@@ -166,15 +167,15 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<w
     html += wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
     if(cols - data.size() > 1)
         html += wxString::Format(wxT(" colspan=\"%ld\""), cols - data.size());
-    html += wxT("><font size=") + fontSize + wxT("><b><i>&nbsp;&nbsp;");
+    html += wxT("><b><i>&nbsp;&nbsp;");
     html += caption;
-    html += wxT("</i></b></font>");
+    html += wxT("</i></b>");
 
     for (unsigned long idx = 0; idx < data.size(); idx++)
     {
-        html += wxT("</td><td nowrap align=\"right\"><font size=") + fontSize + wxT("><b><i>");
+        html += wxT("</td><td nowrap align=\"right\"><b><i>");
         html += data[idx];
-        html += wxT("</i></b></font>");
+        html += wxT("</i></b>");
     }
     html += wxT("</td></tr>\n");
 }
@@ -188,9 +189,9 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols)
         html += wxString::Format(wxT("%d"), cols);
         html += wxT("\"");
     }
-    html += wxT("><font size=") + fontSize + wxT("><b>&nbsp;");
+    html += wxT("><b>&nbsp;");
     html += value;
-    html += wxT("</b></font></th></tr>\n");
+    html += wxT("</b></th></tr>\n");
     bgswitch = true;
 }
 
@@ -198,31 +199,32 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value, bool numeric)
 {
     html += (numeric ? wxT("<th nowrap align=\"right\" ") : wxT("<th align=\"left\" "));
     html += wxT(" valign=\"center\" bgcolor=\"#d5d6de\">");
-    html += wxString::Format(wxT ("<font size=%s><b>&nbsp;%s</b></font></th>\n"), fontSize.c_str(), value.c_str());
+    html += wxString::Format(wxT ("<b>&nbsp;%s</b></th>\n"), value.c_str());
     bgswitch = false;
 }
 
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value)
 {
     html += wxT("<th nowrap align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\">");
-    html += wxT ("<font size=") + fontSize + wxT(">") + wxT("<b>&nbsp;") + value + wxT("</b></font></th>\n");
+    html += wxT("<b>&nbsp;") + value + wxT("</b></th>\n");
     bgswitch = false;
 }
 
 void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor)
 {
-    html << (numeric ? wxT("<td nowrap align=\"right\" ") : wxT("<td")) << wxT("><font size=") << fontSize;
+    html << (numeric ? wxT("<td nowrap align=\"right\" >") : wxT("<td>"));
 
     if(!fontColor.empty())
-    html += wxT(" color=\"") + fontColor + wxT ("\"");
+        html += wxT("<font color=") + fontColor + wxT (">");
 
-    html += wxT(">");
+    if (!bold && !italic)    html += value;
+    else if (bold && italic) html += wxT("<b><i>") + value + wxT("</i></b>");
+    else if (bold)           html += wxT("<b>") + value + wxT("</b>");
+    else if (italic)         html += wxT("<i>") + value + wxT("</i>");
 
-    if (!bold && !italic)    html += value + wxT("</font></td>\n");
-    else if (bold && italic) html += wxT("<b><i>") + value + wxT("</i></b></font></td>\n");
-    else if (bold)           html += wxT("<b>") + value + wxT("</b></font></td>\n");
-    else if (italic)         html += wxT("<i>") + value + wxT("</i></font></td>\n");
-
+    if(!fontColor.empty())
+        html += wxT("</font>");
+    html += wxT("</td>\n");
 }
 
 void mmHTMLBuilder::addTableCellLink(const wxString& href, const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor)
