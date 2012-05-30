@@ -73,6 +73,15 @@ void mmHTMLBuilder::addHeader(int level, const wxString& header)
     html += wxString::Format(wxT("<font size=\"%ld\"><b>%s</b></font><br>\n"), font_size, header.c_str());
 }
 
+void mmHTMLBuilder::addHeaderItalic(int level, const wxString& header)
+{
+    long font_size;
+    if(!mmIniOptions::instance().fontSize_.ToLong(&font_size)) { font_size = 3; }
+    font_size = level + font_size;
+    if (font_size>7) font_size=7;
+    html += wxString::Format(wxT("<font size=\"%ld\"><i>%s</i></font><br>\n"), font_size, header.c_str());
+}
+
 void mmHTMLBuilder::addParaText(const wxString& text)
 {
     html += wxString::Format(wxT("<p><font size=%s>%s</font></p>\n"), fontSize.c_str(), text.c_str());

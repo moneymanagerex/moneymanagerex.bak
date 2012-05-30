@@ -179,11 +179,11 @@ wxString mmReportTransactions::getHTMLText()
     if (unknownnReferenceAccount && transferTransactionFound)
     {
         hb.addHorizontalLine();
-        hb.addHeader(0, _("</b><b>Note:</b> Transactions contain <b>'transfers'</b> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account.<b>"));
+        hb.addHeaderItalic(0, _("<b>Note:</b> Transactions contain <b>'transfers'</b> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."));
     }
 
     // Extract the parameters from the transaction dialog and add them to the report.
-    wxString filterDetails = wxString() << wxT("</b>");
+    wxString filterDetails;
 
     if ( !transDialog_->refAccountStr_.IsEmpty())
         filterDetails << wxT("<b>") << _("Account: ") << wxT("</b>") << transDialog_->refAccountStr_ << wxT("<br>");
@@ -220,8 +220,8 @@ wxString mmReportTransactions::getHTMLText()
         wxString filterDetailsStr;
         hb.addHorizontalLine();
         filterDetailsStr << wxT("<b>") << _("Filtering Details: ") 
-        << wxT ("</b><br>") << filterDetails << wxT("</b>");
-        hb.addHeader(0, filterDetailsStr );
+        << wxT ("</b><br>") << filterDetails;
+        hb.addHeaderItalic(0, filterDetailsStr );
     }
 
     hb.end();

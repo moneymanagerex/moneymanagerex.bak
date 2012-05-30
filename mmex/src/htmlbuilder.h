@@ -40,6 +40,7 @@ public:
 	
 	/** Create an HTML header and returns as a wxString */
     void addHeader(int level, const wxString& header);
+    void addHeaderItalic(int level, const wxString& header);
 	
 	/** Create an HTML paragrapth */
     void addParaText(const wxString& text);
