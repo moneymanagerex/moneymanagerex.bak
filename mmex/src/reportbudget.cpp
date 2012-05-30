@@ -120,11 +120,11 @@ void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& sta
     if (withDateRange)
     {   
         todaysDate
-        << _("</b>From: ") << wxT("<b>") << mmGetNiceDateSimpleString(startYear) <<  wxT("</b> ") 
+        << _("From: ") << wxT("<b>") << mmGetNiceDateSimpleString(startYear) <<  wxT("</b> ") 
         << _("to: ") 
-        << wxT ("<b>") << mmGetNiceDateSimpleString(endYear) << wxT ("</b><b>") << wxT("<br>");
+        << wxT ("<b>") << mmGetNiceDateSimpleString(endYear) << wxT ("</b>") << wxT("<br>");
     }
-    hb.addHeader(1, todaysDate);
+    hb.addHeaderItalic(0, todaysDate);
 }
 
 void mmReportBudget::SetDateToEndOfMonth(int month, wxDateTime& date)
