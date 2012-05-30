@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-20 17:20:38.055000.
+ *          AUTO GENERATED at 2012-05-30 14:02:07.298737.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -976,7 +976,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE BILLSDEPOSITS_V1(BDID integer primary key, ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT, CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric, REPEATS numeric, NEXTOCCURRENCEDATE TEXT, NUMOCCURRENCES numeric)"));
+            db->ExecuteUpdate(wxT("CREATE TABLE BILLSDEPOSITS_V1(BDID integer primary key, ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT, CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric, REPEATS integer, NEXTOCCURRENCEDATE TEXT, NUMOCCURRENCES numeric)"));
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -1117,7 +1117,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         wxString TRANSDATE;
         int FOLLOWUPID;
         double TOTRANSAMOUNT;
-        double REPEATS;
+        int REPEATS;
         wxString NEXTOCCURRENCEDATE;
         double NUMOCCURRENCES;
         int id() const { return BDID; }
@@ -1136,7 +1136,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
             SUBCATEGID = -1;
             FOLLOWUPID = -1;
             TOTRANSAMOUNT = 0.0;
-            REPEATS = 0.0;
+            REPEATS = -1;
             NUMOCCURRENCES = 0.0;
         }
 
@@ -1158,7 +1158,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
             TRANSDATE = q.GetString(wxT("TRANSDATE"));
             FOLLOWUPID = q.GetInt(wxT("FOLLOWUPID"));
             TOTRANSAMOUNT = q.GetDouble(wxT("TOTRANSAMOUNT"));
-            REPEATS = q.GetDouble(wxT("REPEATS"));
+            REPEATS = q.GetInt(wxT("REPEATS"));
             NEXTOCCURRENCEDATE = q.GetString(wxT("NEXTOCCURRENCEDATE"));
             NUMOCCURRENCES = q.GetDouble(wxT("NUMOCCURRENCES"));
         }

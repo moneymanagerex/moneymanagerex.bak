@@ -44,7 +44,7 @@ BDID integer primary key
 , TRANSDATE TEXT
 , FOLLOWUPID integer
 , TOTRANSAMOUNT numeric
-, REPEATS numeric
+, REPEATS integer
 , NEXTOCCURRENCEDATE TEXT
 , NUMOCCURRENCES numeric
 );
