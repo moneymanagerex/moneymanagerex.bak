@@ -42,6 +42,31 @@ wxString mmCustomSQLReport::getHTMLText()
     displayReportHeader(hb, wxString() << _("Custom SQL Report: ") << reportTitle_ );
 
 	wxSQLite3ResultSet sqlQueryResult;
+
+    int lines_number;
+    wxString error_string;
+	try
+	{
+		lines_number = core_->db_->ExecuteScalar(wxT("select count (*) from (") + sqlQuery_ + wxT(")"));
+	}
+	catch(const wxSQLite3Exception& e)
+	{
+		error_string = e.GetMessage();
+	}
+
+    wxString lower = error_string.Lower();
+    if (lower.Contains(wxT("update")) || 
+        lower.Contains(wxT("delete")) || 
+        lower.Contains(wxT("insert")))
+    {
+        wxMessageDialog msgDlg(0, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO);
+        if (msgDlg.ShowModal() != wxID_YES) {
+            hb.addHeader(2, _("SQL query discardeded by user"));
+            hb.end();
+            return hb.getHTMLText();
+        }
+    }
+
 	try
 	{
 		sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_);
@@ -65,8 +90,24 @@ wxString mmCustomSQLReport::getHTMLText()
     }
     hb.endTableRow();
 
+    int progress = 0;
+    wxString progressMsg;
+    wxProgressDialog dlg(_("Report printing in progress"), progressMsg, lines_number, 
+        NULL, wxPD_AUTO_HIDE |  wxPD_CAN_ABORT);
+
+
     while (sqlQueryResult.NextRow())
     {
+        progress++;
+        progressMsg = wxString() << _("Lines prepared: ") << progress;
+        if(!dlg.Update(progress, progressMsg))
+        {
+            hb.clear();
+            hb.addHeader(2, _("SQL query discardeded by user"));
+            hb.end();
+            return hb.getHTMLText(); // abort processing
+        }
+
         hb.startTableRow();
         for (int index = 0; index < columnCount; index ++)
         {

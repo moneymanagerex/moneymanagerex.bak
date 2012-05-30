@@ -287,25 +287,8 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
 
 void mmCustomSQLDialog::OnRun(wxCommandEvent& /*event*/)
 {
-   wxString lower = sqlSourceTxtCtrl_->GetValue().Lower();
-   if ((lower.Find(wxT("update")) != wxNOT_FOUND) || (lower.Find(wxT("delete")) != wxNOT_FOUND) || (lower.Find(wxT("insert")) != wxNOT_FOUND))
-   {
-        wxMessageDialog msgDlg(this, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO);
-        if (msgDlg.ShowModal() == wxID_YES)
-        {
-            sqlQuery_ = sqlSourceTxtCtrl_->GetValue();
-            EndModal(wxID_MORE);
-        }
-        else
-        {
-            return;
-        }
-   }
-   else
-   {
-       sqlQuery_ = sqlSourceTxtCtrl_->GetValue();
-       EndModal(wxID_MORE);
-   }
+   sqlQuery_ = sqlSourceTxtCtrl_->GetValue();
+   EndModal(wxID_MORE);
 }
 
 void mmCustomSQLDialog::OnClear(wxCommandEvent& /*event*/)
