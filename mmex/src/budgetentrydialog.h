@@ -27,6 +27,7 @@
 
 #include "guiid.h"
 #include "defs.h"
+#include "mmex_db_view.h"
 
 class mmCoreDB;
 class mmBudgetEntryDialog : public wxDialog
@@ -36,9 +37,10 @@ class mmBudgetEntryDialog : public wxDialog
 
 public:
     mmBudgetEntryDialog();
-    mmBudgetEntryDialog(wxSQLite3Database* db, mmCoreDB* core, 
+    mmBudgetEntryDialog(wxSQLite3Database* db, mmCoreDB* core
+            , int budget_entry_id ,
         int budgetYearID, int categID, int subcategID, 
-        wxString categoryEstimate, wxString CategoryActual,
+        const wxString& categoryEstimate, const wxString& CategoryActual,
         wxWindow* parent, wxWindowID id = SYMBOL_BUDGETENTRYDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_BUDGETENTRYDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_BUDGETENTRYDIALOG_POSITION, 
@@ -69,6 +71,7 @@ private:
     wxString catActualAmountStr_;
 
 public:
+    int budget_entry_id_;
     int budgetYearID_;
     int categID_;
     int subcategID_;
