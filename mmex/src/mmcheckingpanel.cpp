@@ -64,7 +64,7 @@ EColumn toEColumn(long col)
 /*
     Adds columns to list controls and setup their initial widths.
 */
-void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
+void createColumns(wxSQLite3Database *inidb_, mmListCtrl &lst)
 {
     wxASSERT(inidb_);
 
@@ -299,7 +299,7 @@ bool sortTransByDateAsc(const mmBankTransaction *t1, const mmBankTransaction *t2
 } // namespace
 
 //----------------------------------------------------------------------------
-class TransactionListCtrl : public wxListCtrl
+class TransactionListCtrl : public mmListCtrl
 {
 public:
     TransactionListCtrl(mmCheckingPanel *cp, wxWindow *parent,
@@ -397,7 +397,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
 
-BEGIN_EVENT_TABLE(TransactionListCtrl, wxListCtrl)
+BEGIN_EVENT_TABLE(TransactionListCtrl, mmListCtrl)
 
     EVT_LIST_ITEM_SELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemSelected)
     EVT_LIST_ITEM_DESELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemDeselected)
@@ -643,24 +643,10 @@ void mmCheckingPanel::CreateControls()
         ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(200, 200),
         wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
-    wxSize imageSize(16, 16);
-    m_imageList.reset(new wxImageList(imageSize.GetWidth(), imageSize.GetHeight()));
-    m_imageList->Add(wxBitmap(reconciled_xpm));
-    m_imageList->Add(wxBitmap(void_xpm));
-    m_imageList->Add(wxBitmap(flag_xpm));
-    m_imageList->Add(wxBitmap(unreconciled_xpm));
-    m_imageList->Add(wxBitmap(empty_xpm));
-    m_imageList->Add(wxBitmap(uparrow_xpm));
-    m_imageList->Add(wxBitmap(downarrow_xpm));
-    m_imageList->Add(wxBitmap(duplicate_xpm));
-    m_imageList->Add(wxBitmap(trans_from_xpm));
-    m_imageList->Add(wxBitmap(trans_into_xpm));
-
     m_listCtrlAccount = new TransactionListCtrl( this, itemSplitterWindow10,
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize,
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
 
-    m_listCtrlAccount->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
     m_listCtrlAccount->setSortOrder(g_asc);
     m_listCtrlAccount->setSortColumn(g_sortcol);
     m_listCtrlAccount->SetFocus();
@@ -2059,7 +2045,7 @@ TransactionListCtrl::TransactionListCtrl(
     const wxSize& size,
     long style
 ) :
-    wxListCtrl(parent, id, pos, size, style | wxWANTS_CHARS),
+    mmListCtrl(parent, id, pos, size, style | wxWANTS_CHARS),
     m_cp(cp),
     m_selectedIndex(-1),
     m_selectedForCopy(-1),
