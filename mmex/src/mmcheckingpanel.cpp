@@ -464,11 +464,8 @@ mmCheckingPanel::mmCheckingPanel
 */
 mmCheckingPanel::~mmCheckingPanel()
 {
-    try {
-        saveSettings();
-    } catch (...) {
-        wxASSERT(false);
-    }
+    this->save_config(m_listCtrlAccount, wxT("CHECK"));
+    saveSettings();
 }
 //----------------------------------------------------------------------------
 
@@ -506,18 +503,10 @@ bool mmCheckingPanel::Create(
 */
 void mmCheckingPanel::saveSettings()
 {
-    int cols = m_listCtrlAccount->GetColumnCount();
+    this->save_config(m_listCtrlAccount, wxT("CHECK"));
 
     inidb_->Begin();
     {
-        for (int i = 0; i < cols; ++i)
-        {
-            wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
-            int width = m_listCtrlAccount->GetColumnWidth(i);
-
-            mmDBWrapper::setINISettingValue(inidb_, name, wxString() << width);
-        }
-
         // sorting column index
         mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxString() << g_sortcol);
 
