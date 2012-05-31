@@ -20,7 +20,7 @@
 #include "util.h"
 
 mmCustomSQLReport::mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle,
-    const wxString& sqlQuery, wxHtmlWindow* htmlWindow):
+    const wxString& sqlQuery):
     mmPrintableBase(core), reportTitle_(reportTitle), sqlQuery_(sqlQuery)
 {
 }
@@ -126,7 +126,6 @@ wxString mmCustomSQLReport::getHTMLText()
 
     hb.endTable();
     hb.endCenter();
-    hb.end();
 
     if (lower.Contains(wxT("update")))
          hb.addHeader(2, _("Dababase updated succesfully"));
@@ -134,6 +133,8 @@ wxString mmCustomSQLReport::getHTMLText()
          hb.addHeader(2, _("Deletion completed"));
     if (lower.Contains(wxT("insert")))
          hb.addHeader(2, _("Data Insertion completed"));
+
+    hb.end();
 
     return hb.getHTMLText();
 }
