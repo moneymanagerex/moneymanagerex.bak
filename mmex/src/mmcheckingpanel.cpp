@@ -329,10 +329,8 @@ private:
     long m_selectedIndex;
     long m_selectedForCopy;
 
-    wxListItemAttr m_attr1; // style1
-    wxListItemAttr m_attr2; // style2
-    wxListItemAttr m_attr3; // style, for future dates
-    wxListItemAttr m_attr4; // style, for future dates
+    wxListItemAttr* m_attr3; // style, for future dates
+    wxListItemAttr* m_attr4; // style, for future dates
 
     EColumn m_sortCol;
     bool m_asc;
@@ -1685,24 +1683,18 @@ int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
 */
 wxListItemAttr* TransactionListCtrl::OnGetItemAttr(long item) const
 {
-    wxASSERT(m_cp);
-    wxASSERT(item >= 0);
-
     size_t idx = item;
     bool ok = m_cp && idx < m_cp->m_trans.size();
 
-    mmBankTransaction *tr = ok ? m_cp->m_trans[idx] : 0;
+    const mmBankTransaction *tr = ok ? m_cp->m_trans.at(idx) : 0;
     bool in_the_future = tr && tr->date_ > wxDateTime::Now();
-
-    TransactionListCtrl &self = *const_cast<TransactionListCtrl*>(this);
 
     if (in_the_future) // apply alternating background pattern
     {
-        return item % 2 ? &self.m_attr3 : &self.m_attr4;
+        return item % 2 ? this->m_attr3 : this->m_attr4;
     }
 
-    return item % 2 ? &self.m_attr1 : &self.m_attr2;
-
+    return item % 2 ? this->m_attr1 : this->m_attr2;
 }
 //----------------------------------------------------------------------------
 // If any of these keys are encountered, the search for the event handler
@@ -2038,10 +2030,8 @@ TransactionListCtrl::TransactionListCtrl(
     m_cp(cp),
     m_selectedIndex(-1),
     m_selectedForCopy(-1),
-    m_attr1(*wxBLACK, mmColors::listAlternativeColor0, wxNullFont),
-    m_attr2(*wxBLACK, mmColors::listAlternativeColor1, wxNullFont),
-    m_attr3(mmColors::listFutureDateColor, mmColors::listAlternativeColor0, wxNullFont),
-    m_attr4(mmColors::listFutureDateColor, mmColors::listAlternativeColor1, wxNullFont),
+    m_attr3(new wxListItemAttr(mmColors::listFutureDateColor, mmColors::listAlternativeColor0, wxNullFont)),
+    m_attr4(new wxListItemAttr(mmColors::listFutureDateColor, mmColors::listAlternativeColor1, wxNullFont)),
     m_sortCol(COL_DEF_SORT),
     m_asc(true)
 {
