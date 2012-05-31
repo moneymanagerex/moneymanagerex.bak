@@ -739,8 +739,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
     {
         enableEditDeleteButtons(true);
         st->SetLabel(m_trans[selIndex]->notes_);
-        wxString miniStr;
-        miniStr = getMiniInfoStr(selIndex);
+        wxString miniStr = getMiniInfoStr(selIndex);
 
         //Show only first line but full string set as tooltip
         if (miniStr.Find(wxT("\n")) > 1 && !miniStr.IsEmpty())
