@@ -501,8 +501,6 @@ bool mmCheckingPanel::Create(
 */
 void mmCheckingPanel::saveSettings()
 {
-    this->save_config(m_listCtrlAccount, wxT("CHECK"));
-
     inidb_->Begin();
     {
         // sorting column index
@@ -570,15 +568,10 @@ void mmCheckingPanel::CreateControls()
     wxSizerFlags flags;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 4);
 
-    /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition,
-        wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
-    itemBoxSizer9->Add(headerPanel, flags);
-
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
-    headerPanel->SetSizer(itemBoxSizerVHeader);
+    itemBoxSizer9->Add(itemBoxSizerVHeader, flags);
 
-    wxStaticText* header_text = new wxStaticText(headerPanel,
+    wxStaticText* header_text = new wxStaticText(this,
         ID_PANEL_CHECKING_STATIC_HEADER, wxT(""));
     int font_size = this->GetFont().GetPointSize() + 2;
     header_text->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
@@ -591,11 +584,11 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerHHeader2->Add(itemFlexGridSizerHHeader2);
 
     wxBitmap itemStaticBitmap(rightarrow_xpm);
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap(headerPanel,
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap(this,
         ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, itemStaticBitmap);
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, flags);
 
-    itemStaticTextMainFilter_ = new wxStaticText(headerPanel,
+    itemStaticTextMainFilter_ = new wxStaticText(this,
         ID_PANEL_CHECKING_STATIC_PANELVIEW, wxT(""));
 
     itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, flags);
@@ -605,12 +598,12 @@ void mmCheckingPanel::CreateControls()
         itemFlexGridSizerHHeader2->AddSpacer(20);
     }
 
-    itemStaticBitmap31_ = new wxStaticBitmap(headerPanel,
+    itemStaticBitmap31_ = new wxStaticBitmap(this,
         ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, itemStaticBitmap);
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, flags);
     itemStaticBitmap31_->Enable(false);
 
-    statTextTransFilter_ = new wxStaticText(headerPanel,
+    statTextTransFilter_ = new wxStaticText(this,
         ID_PANEL_CHECKING_STATIC_FILTER, _("Transaction Filter"));
     itemFlexGridSizerHHeader2->Add(statTextTransFilter_, flags);
     statTextTransFilter_->Enable(false);
@@ -618,7 +611,7 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, flags);
 
-    wxStaticText* itemStaticText10 = new wxStaticText(headerPanel,
+    wxStaticText* itemStaticText10 = new wxStaticText(this,
             ID_PANEL_CHECKING_STATIC_BALHEADER,
             wxT("<----------the-plase-holder-------------------------------->"),
             wxDefaultPosition, wxDefaultSize);
