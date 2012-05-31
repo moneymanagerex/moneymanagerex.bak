@@ -154,15 +154,7 @@ bool ViewExists(wxSQLite3Database* db, const char *viewName);
 void initDB(wxSQLite3Database* db, wxProgressDialog* pgd);
 void createInfoV1Table(wxSQLite3Database* db);
 void createCurrencyV1Table(wxSQLite3Database* db);
-void createAccountListV1Table(wxSQLite3Database* db);
-void createCheckingAccountV1Table(wxSQLite3Database* db);
-void createPayeeV1Table(wxSQLite3Database* db);
 void createCategoryV1Table(wxSQLite3Database* db);
-void createBudgetingV1Table(wxSQLite3Database* db);
-void createBillsDepositsV1Table(wxSQLite3Database* db);
-void createStockV1Table(wxSQLite3Database* db);
-void createAssetsV1Table(wxSQLite3Database* db);
-void createSplitTransactionsV1Table(wxSQLite3Database* db);
 void createAllDataView(wxSQLite3Database* db);
 
 /* Upgrading to new DBs */

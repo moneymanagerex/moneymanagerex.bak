@@ -594,28 +594,6 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
     loadCurrencies(db);
 }
 
-
-void mmDBWrapper::createBudgetingV1Table(wxSQLite3Database* db)
-{
-    BUDGETYEAR_V1.ensure(db);
-    BUDGETTABLE_V1.ensure(db);
-}
-
-void mmDBWrapper::createStockV1Table(wxSQLite3Database* db)
-{
-    STOCK_V1.ensure(db);
-}
-
-void mmDBWrapper::createAssetsV1Table(wxSQLite3Database* db)
-{
-    ASSETS_V1.ensure(db);
-}
-
-void mmDBWrapper::createBillsDepositsV1Table(wxSQLite3Database* db)
-{
-    BILLSDEPOSITS_V1.ensure(db);
-}
-
 bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
 {
     bool ok = false;
@@ -636,27 +614,6 @@ bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
     q1.Finalize();
 
     return ok;
-}
-
-void mmDBWrapper::createAccountListV1Table(wxSQLite3Database* db)
-{
-    ACCOUNTLIST_V1.ensure(db);
-}
-
-void mmDBWrapper::createCheckingAccountV1Table(wxSQLite3Database* db)
-{
-    CHECKINGACCOUNT_V1.ensure(db);
-}
-
-void mmDBWrapper::createSplitTransactionsV1Table(wxSQLite3Database* db)
-{
-    SPLITTRANSACTIONS_V1.ensure(db);
-    BUDGETSPLITTRANSACTIONS_V1.ensure(db);
-}
-
-void mmDBWrapper::createPayeeV1Table(wxSQLite3Database* db)
-{
-    PAYEE_V1.ensure(db);
 }
 
 void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
@@ -825,15 +782,15 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
     if (pgd) pgd->Update(20);
 
     /* Create ACCOUNTLIST_V1 Tables */
-    createAccountListV1Table(db);
+    ACCOUNTLIST_V1.ensure(db);
     if (pgd) pgd->Update(30);
 
     /* Create CHECKINGACCOUNT_V1 Tables */
-    createCheckingAccountV1Table(db);
+    CHECKINGACCOUNT_V1.ensure(db);
     if (pgd) pgd->Update(40);
 
     /* Create PAYEE_V1 Tables */
-    createPayeeV1Table(db);
+    PAYEE_V1.ensure(db);
     if (pgd) pgd->Update(50);
 
     /* Create CATEGORY_V1 Tables */
@@ -841,23 +798,25 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
     if (pgd) pgd->Update(60);
 
     /* Create Budgeting_V1 Tables */
-    createBudgetingV1Table(db);
+    BUDGETYEAR_V1.ensure(db);
+    BUDGETTABLE_V1.ensure(db);
     if (pgd) pgd->Update(75);
 
     /* Create Bills & Deposits V1 Table */
-    createBillsDepositsV1Table(db);
+    BILLSDEPOSITS_V1.ensure(db);
     if (pgd) pgd->Update(80);
 
     /* Create Stock V1 Table */
-    createStockV1Table(db);
+    STOCK_V1.ensure(db);
     if (pgd) pgd->Update(85);
 
     /* Create Asset V1 Table */
-    createAssetsV1Table(db);
+    ASSETS_V1.ensure(db);
     if (pgd) pgd->Update(90);
 
     /* Create SplitTransactions V1 Table */
-    createSplitTransactionsV1Table(db);
+    SPLITTRANSACTIONS_V1.ensure(db);
+    BUDGETSPLITTRANSACTIONS_V1.ensure(db);
     if (pgd) pgd->Update(95);
 
     /* Create AllData view */
