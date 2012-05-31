@@ -60,7 +60,7 @@ wxString mmCustomSQLReport::getHTMLText()
     {
         wxMessageDialog msgDlg(0, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO);
         if (msgDlg.ShowModal() != wxID_YES) {
-            hb.addHeader(2, _("SQL query discardeded by user"));
+            hb.addHeader(2, _("SQL query discarded by user"));
             hb.end();
             return hb.getHTMLText();
         }
@@ -102,7 +102,7 @@ wxString mmCustomSQLReport::getHTMLText()
         if(!dlg.Update(progress, progressMsg))
         {
             hb.clear();
-            hb.addHeader(2, _("SQL query discardeded by user"));
+            hb.addHeader(2, _("SQL query discarded by user"));
             hb.end();
             return hb.getHTMLText(); // abort processing
         }
