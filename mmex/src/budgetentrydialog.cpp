@@ -37,27 +37,20 @@ BEGIN_EVENT_TABLE( mmBudgetEntryDialog, wxDialog )
 END_EVENT_TABLE()
 
 mmBudgetEntryDialog::mmBudgetEntryDialog( )
-{
-    db_ = 0;
-    budgetYearID_ = -1;
-    categID_ = -1;
-    subcategID_ = -1;
-}
+    : db_(0), core_(0), budget_entry_id_(-1), budgetYearID_(-1), categID_(-1), subcategID_(-1)
+{ }
 
 mmBudgetEntryDialog::mmBudgetEntryDialog( wxSQLite3Database* db, mmCoreDB* core,
+                                            int budget_entry_id,
                                          int budgetYearID, int categID, int subcategID,
-                                         wxString categoryEstimate, wxString CategoryActual,
+                                         const wxString& categoryEstimate, const wxString& CategoryActual,
                                          wxWindow* parent, 
                                          wxWindowID id, const wxString& caption, 
                                          const wxPoint& pos, const wxSize& size, long style )
+: db_(db), core_(core), budget_entry_id_(budget_entry_id)
+    , budgetYearID_(budgetYearID), categID_(categID), subcategID_(subcategID)
+    , catEstimateAmountStr_(categoryEstimate), catActualAmountStr_(CategoryActual)
 {
-    db_ = db;
-    core_ = core;
-    budgetYearID_ = budgetYearID;
-    categID_ = categID;
-    subcategID_ = subcategID;
-    catEstimateAmountStr_= categoryEstimate;
-    catActualAmountStr_  = CategoryActual;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -82,30 +75,30 @@ bool mmBudgetEntryDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmBudgetEntryDialog::fillControls()
 {
-    if (!db_)
-       return;
+    if (!db_) return;
 
-    wxString period = wxT("Monthly");
-    double amt = 0.0;
-    mmDBWrapper::getBudgetEntry(db_, budgetYearID_, categID_, subcategID_, period, amt);
+    DB_View_BUDGETTABLE_V1::Data* budget = BUDGETTABLE_V1.get(budget_entry_id_, db_);
+    if (!budget) return;
 
-    if (period == wxT("None"))
+    double amt = budget->AMOUNT;
+
+    if (budget->PERIOD == wxT("None"))
         itemChoice_->SetSelection(DEF_FREQ_NONE);
-    else if (period == wxT("Monthly"))
+    else if (budget->PERIOD == wxT("Monthly"))
         itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
-    else if (period == wxT("Yearly"))
+    else if (budget->PERIOD == wxT("Yearly"))
         itemChoice_->SetSelection(DEF_FREQ_YEARLY);
-    else if (period == wxT("Weekly"))
+    else if (budget->PERIOD == wxT("Weekly"))
         itemChoice_->SetSelection(DEF_FREQ_WEEKLY);
-    else if (period == wxT("Bi-Weekly"))
+    else if (budget->PERIOD == wxT("Bi-Weekly"))
         itemChoice_->SetSelection(DEF_FREQ_BIWEEKLY);
-    else if (period == wxT("Bi-Monthly"))
+    else if (budget->PERIOD == wxT("Bi-Monthly"))
         itemChoice_->SetSelection(DEF_FREQ_BIMONTHLY);
-    else if (period == wxT("Quarterly"))
+    else if (budget->PERIOD == wxT("Quarterly"))
         itemChoice_->SetSelection(DEF_FREQ_QUARTERLY);
-    else if (period == wxT("Half-Yearly"))
+    else if (budget->PERIOD == wxT("Half-Yearly"))
         itemChoice_->SetSelection(DEF_FREQ_HALFYEARLY);
-    else if (period == wxT("Daily"))
+    else if (budget->PERIOD == wxT("Daily"))
         itemChoice_->SetSelection(DEF_FREQ_DAILY);
     else
         wxASSERT(false);
@@ -283,7 +276,14 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
     if (typeSelection == DEF_TYPE_EXPENSE)
         amt = -amt;
 
-    mmDBWrapper::updateBudgetEntry(db_, budgetYearID_, categID_, subcategID_, period, amt);
+    DB_View_BUDGETTABLE_V1::Data* budget = BUDGETTABLE_V1.get(budget_entry_id_, db_);
+    if (!budget) budget = BUDGETTABLE_V1.create();
+    budget->BUDGETENTRYID = budgetYearID_;
+    budget->CATEGID = categID_;
+    budget->SUBCATEGID = subcategID_;
+    budget->PERIOD = period;
+    budget->AMOUNT = amt;
+    budget->save(db_);
 
     EndModal(wxID_OK);
 }

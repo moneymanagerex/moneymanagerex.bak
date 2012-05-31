@@ -558,7 +558,7 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
     if (cp_->trans_[selectedIndex_].id_ >= 0)
     {
         mmBudgetEntryDialog dlg(
-            cp_->db_, cp_->core_, cp_->budgetYearID_,
+            cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, cp_->budgetYearID_,
             cp_->trans_[selectedIndex_].categID_,
             cp_->trans_[selectedIndex_].subcategID_,
             cp_->trans_[selectedIndex_].estimatedStr_,
