@@ -211,7 +211,6 @@ void setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, con
 /* Operations on the INI SETTINGS DB */
 wxString getINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal = wxGetEmptyString());
 void setINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
-void verifyINIDB(wxSQLite3Database* inidb);
 
 wxString getLastDbPath(wxSQLite3Database *db, const wxString &defaultVal = wxGetEmptyString());
 void setLastDbPath(wxSQLite3Database *db, const wxString &path);

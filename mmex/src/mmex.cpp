@@ -257,7 +257,7 @@ bool OnInitImpl(mmGUIApp &app)
 
     inidb.Open(mmex::getPathUser(mmex::SETTINGS));
 
-    mmDBWrapper::verifyINIDB(&inidb);
+    SETTING_V1.ensure(&inidb);
 
     /* Load Colors from Database */
     mmLoadColorsFromDatabase(&inidb);
