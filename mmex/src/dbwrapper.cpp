@@ -575,47 +575,23 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 
 void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool exists = db->TableExists(wxT("CURRENCYFORMATS_V1"));
+    CURRENCYFORMATS_V1.ensure(db);
 
-        if (exists) {
+    DB_View_CURRENCYFORMATS_V1::Data* us_dollar = CURRENCYFORMATS_V1.create();
+    us_dollar->CURRENCYNAME = wxT("US DOLLAR");
+    us_dollar->PFX_SYMBOL = wxT("$");
+    us_dollar->SFX_SYMBOL = wxT("");
+    us_dollar->DECIMAL_POINT = wxT(",");
+    us_dollar->GROUP_SEPARATOR = wxT(",");
+    us_dollar->UNIT_NAME = wxT("dollar");
+    us_dollar->CENT_NAME = wxT("cents");
+    us_dollar->SCALE = 100;
+    us_dollar->BASECONVRATE = 1.0;
+    us_dollar->CURRENCY_SYMBOL = wxT("USD");
 
-            /* Check whether the column "CURRENCY_SYMBOL" exists or not */
-            wxSQLite3ResultSet q1 = db->ExecuteQuery(wxT("select * from CURRENCYFORMATS_V1 limit 1"));
-
-            if(q1.GetColumnCount() < 11) {
-                /* not exist, create the column */
-                db->ExecuteUpdate(wxT("alter table CURRENCYFORMATS_V1 add CURRENCY_SYMBOL TEXT"));
-            }
-
-        } else {
-
-            db->ExecuteUpdate(wxT("create table CURRENCYFORMATS_V1(CURRENCYID integer primary key, \
-                                CURRENCYNAME TEXT NOT NULL, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT,              \
-                                DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT,               \
-                                UNIT_NAME TEXT, CENT_NAME TEXT, SCALE numeric, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT);"));
-
-            exists = db->TableExists(wxT("CURRENCYFORMATS_V1"));
-            wxASSERT(exists);
-
-            /* Load Default US Currency */
-
-            static const char sql[] =
-            "insert into CURRENCYFORMATS_V1 ("
-              "CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT,GROUP_SEPARATOR, UNIT_NAME, "
-              "CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
-            ") values ("
-              "'US DOLLAR', '$', '', '.', ',', 'dollar', 'cents', 100, 1.0, 'USD' "
-            ")";
-
-            db->ExecuteUpdate(sql);
-            loadCurrencies(db);
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createCurrencyV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create CURRENCYFORMATS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    us_dollar->save(db);
+    
+    loadCurrencies(db);
 }
 
 
