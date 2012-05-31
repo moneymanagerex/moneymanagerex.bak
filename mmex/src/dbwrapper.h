@@ -168,8 +168,6 @@ void updateYearForID(wxSQLite3Database* db, const wxString& yearName, int yearid
 bool deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName);
 
 /* Budgeting BUDGETTABLE_V1 API */
-void addBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, const wxString& period, double amount);
-void updateBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, const wxString& period, double amout);
 bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, wxString& period, double& amt);
 
 
