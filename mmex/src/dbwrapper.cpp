@@ -1157,51 +1157,6 @@ double mmDBWrapper::getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID
 }
 //--------------------------------------------------------------------
 
-void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
-{
-    wxASSERT(inidb);
-    bool ok = false;
-    try
-    {
-        ok = inidb->TableExists(wxT("SETTING_V1"));
-    }
-    catch (const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::TableExists: Exception"), e.GetMessage().c_str());
-        wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-
-    if (ok) return;
-
-    // mmexini.db3 database not set correctly so recreate it.
-    static const char sql[] =
-        "create table SETTING_V1"
-        "(SETTINGID integer not null primary key, "
-          "SETTINGNAME TEXT NOT NULL, "
-          "SETTINGVALUE TEXT)";
-    try
-    {
-        inidb->ExecuteUpdate(sql);
-    }
-    catch (const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::Create table SETTING_V1: Exception: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("create table SETTING_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-
-    try
-    {
-        ok = inidb->TableExists(wxT("SETTING_V1"));
-    }
-    catch (const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::TableExists: Exception: %s"), e.GetMessage().c_str());
-        wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-
-    wxASSERT(ok);
-}
-
 wxString mmDBWrapper::getINISettingValue(wxSQLite3Database* db, const wxString& settingName,
                                             const wxString& defaultVal)
 {
