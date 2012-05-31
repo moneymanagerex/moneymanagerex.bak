@@ -107,7 +107,6 @@ private:
 
     TransactionListCtrl *m_listCtrlAccount;
     const int m_AccountID;
-    boost::scoped_ptr<wxImageList> m_imageList;
     std::vector<mmBankTransaction*> m_trans;
 
     boost::shared_ptr<wxSQLite3Database> getDb() const;
