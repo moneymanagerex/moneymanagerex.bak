@@ -187,7 +187,6 @@ wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
 /* Transactions API */
 bool updateTransactionWithStatus(wxSQLite3Database &db, int transID, const wxString& status);
 bool deleteTransaction(wxSQLite3Database* db, int transID);
-wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID);
 
 /* Bills & Deposits API */
 void deleteBDSeries(wxSQLite3Database* db, int bdID);
