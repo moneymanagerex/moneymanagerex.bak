@@ -27,7 +27,6 @@
 #include "util.h" // XXX
 //----------------------------------------------------------------------------
 /* Include XPM Support */
-#include "../resources/exefile.xpm"
 #include "../resources/flag.xpm"
 #include "../resources/void.xpm"
 #include "../resources/reconciled.xpm"
