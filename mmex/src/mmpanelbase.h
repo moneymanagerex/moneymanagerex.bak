@@ -43,6 +43,7 @@
 #include "../resources/trans_transfer.xpm"
 #include "../resources/assets.xpm"
 //----------------------------------------------------------------------------
+#define _MM_EX_PANELBASE_H_REVISION_ID    "$Revision$"
 
 class wxSQLite3Database;
 class wxListCtrl;
@@ -157,6 +158,11 @@ public:
             mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("%s_COL%d_WIDTH"), module.c_str(), i), wxString() << width); 
         }
         inidb_->Commit();
+    }
+
+    virtual wxString get_version() const
+    {
+        return wxT(_MM_EX_PANELBASE_H_REVISION_ID);
     }
 };
 //----------------------------------------------------------------------------
