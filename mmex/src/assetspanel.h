@@ -84,9 +84,9 @@ public:
 
 private:
     assetsListCtrl* m_listCtrlAssets;
-    wxButton* m_delete_button;
-    wxButton* m_edit_button;
     wxButton* m_new_button;
+    wxButton* m_edit_button;
+    wxButton* m_delete_button;
     wxStaticText* m_sum;
     wxStaticText* m_detail;
 
