@@ -60,11 +60,19 @@ bool mmBudgetingPanel::Create( wxWindow *parent,
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);
 
+#ifdef __WXMSW__
+    Freeze();
+#endif
+
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
     
     initVirtualListControl();
+
+#ifdef __WXMSW__
+    Thaw();
+#endif
 
     return TRUE;
 }
