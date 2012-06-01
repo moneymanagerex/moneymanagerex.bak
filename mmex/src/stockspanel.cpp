@@ -80,6 +80,10 @@ bool mmStocksPanel::Create(wxWindow *parent,
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);
 
+#ifdef __WXMSW__
+    Freeze();
+#endif
+
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
@@ -100,6 +104,10 @@ bool mmStocksPanel::Create(wxWindow *parent,
 
     DownloadScheduleTimer_ = new wxTimer(this, ID_TIMER_SCHEDULE_STOCK);
     DownloadScheduleTimer_->Start(yahoo_->UpdateIntervalMinutes_ * 60000, wxTIMER_CONTINUOUS);
+
+#ifdef __WXMSW__
+    Thaw();
+#endif
 
     return TRUE;
 }

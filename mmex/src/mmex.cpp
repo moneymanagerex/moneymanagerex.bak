@@ -562,7 +562,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     if (sb) sb->SetStatusText(wxT(_MM_EX_MMEX_CPP_REVISION_ID));
 
     SetIcon(mmex::getProgramIcon());
-    SetMinSize(wxSize(800,600));
+    SetMinSize(wxSize(800,200));
 
     /* Setup Printer */
     printer_.reset(new wxHtmlEasyPrinting(mmex::getProgramName(), this));
@@ -1555,13 +1555,16 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if (iData->isBudgetingNode())
         {
             wxString reportWaitingMsg = _("Budget report being generated... Please wait.");
+#ifdef __WXMSW__
+            Freeze();
+#endif
             wxTreeItemId idparent = navTreeCtrl_->GetItemParent(id);
             mmTreeItemData* iParentData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(idparent));
             if (iParentData->getString() == wxT("Budget Performance"))
             {
                 wxProgressDialog proDlg(_("Budget Performance"), reportWaitingMsg, 100, this);
                 mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), this, data);
-                proDlg.Update(70);
+                proDlg.Update(30);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
                 proDlg.Update(95);
@@ -1570,7 +1573,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             {
                 wxProgressDialog proDlg(_("Budget Category Summary"), reportWaitingMsg, 100, this);
                 mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, data);
-                proDlg.Update(70);
+                proDlg.Update(30);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
                 proDlg.Update(95);
@@ -1581,6 +1584,9 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 createBudgetingPage(data);
                 proDlg.Update(95);
             }
+#ifdef __WXMSW__
+            Thaw();
+#endif
         }
         else
         {
@@ -1597,12 +1603,18 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 }
                 else
                 {
+#ifdef __WXMSW__
+                    Freeze();
+#endif
                     wxSizer *sizer = cleanupHomePanel();
                 
                     panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), m_core.get(), data, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-                    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+                    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 5);
                     
                     homePanel->Layout();
+#ifdef __WXMSW__
+                    Thaw();
+#endif
                 }
             }
         }

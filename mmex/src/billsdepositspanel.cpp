@@ -79,6 +79,10 @@ bool mmBillsDepositsPanel::Create( wxWindow *parent,
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);
 
+#ifdef __WXMSW__
+    Freeze();
+#endif
+
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
@@ -86,6 +90,10 @@ bool mmBillsDepositsPanel::Create( wxWindow *parent,
     initVirtualListControl();
     if (trans_.size() > 1)
         listCtrlBD_->EnsureVisible(((int)trans_.size()) - 1);
+
+#ifdef __WXMSW__
+    Thaw();
+#endif
 
     return TRUE;
 }

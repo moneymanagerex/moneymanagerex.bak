@@ -479,6 +479,9 @@ bool mmCheckingPanel::Create(
 
     if (ok)
     {
+#ifdef __WXMSW__
+        Freeze();
+#endif        
         m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
         CreateControls();
         GetSizer()->Fit(this);
@@ -491,6 +494,9 @@ bool mmCheckingPanel::Create(
         transFilterDlg_    = new TransFilterDialog(core_, this);
 
         initVirtualListControl();
+#ifdef __WXMSW__
+        Thaw();
+#endif
     }
 
     return ok;
