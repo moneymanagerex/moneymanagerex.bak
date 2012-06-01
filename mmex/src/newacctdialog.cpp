@@ -225,7 +225,7 @@ void mmNewAcctDialog::CreateControls()
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this,
         ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE,
         wxT(""), wxDefaultPosition, wxDefaultSize,
-        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator());
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2));
     itemGridSizer2->Add(itemTextCtrl19, flags_expand);
     itemTextCtrl19->SetToolTip(_("Enter the initial balance in this account."));
 
