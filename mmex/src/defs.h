@@ -65,6 +65,7 @@
 #include <wx/app.h>
 #include <wx/choice.h>
 #include <wx/statline.h>
+#include <wx/valnum.h>
 
 #endif // _MM_EX_DEFS_H_
 

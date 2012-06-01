@@ -365,13 +365,13 @@ void mmTransDialog::CreateControls()
     textAmount_ = new wxTextCtrl( itemPanel7,
         ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), 
         //use wxTE_PROCESS_ENTER flag when creating the control to generate EVT_TEXT_ENTER events
-        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
     textAmount_->SetToolTip(amountNormalTip_);
     textAmount_->Connect(ID_DIALOG_TRANS_TEXTAMOUNT,
         wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TOTEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), 
-        wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator() );
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER, wxFloatingPointValidator<float>(2) );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
     toTextAmount_->Connect(ID_DIALOG_TRANS_TOTEXTAMOUNT,

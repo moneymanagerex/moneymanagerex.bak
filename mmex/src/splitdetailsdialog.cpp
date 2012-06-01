@@ -124,7 +124,7 @@ void SplitDetailDialog::CreateControls()
     controlSizer->Add(staticTextAmount, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     textAmount_ = new wxTextCtrl( itemPanel7, ID_TEXTCTRLAMOUNT, _T(""), 
-        wxDefaultPosition, wxSize(110,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator());
+        wxDefaultPosition, wxSize(110,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2));
     controlSizer->Add(textAmount_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
     textAmount_->SetFocus();
 

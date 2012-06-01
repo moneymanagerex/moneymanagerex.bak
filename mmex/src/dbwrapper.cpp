@@ -1777,10 +1777,6 @@ double mmDBWrapper::getAssetValue(const DB_View_ASSETS_V1::Data& asset)
         else
             assetValue = value;
     }
-    else
-    {
-        wxASSERT(false);
-    }
 
     return assetValue;
 }

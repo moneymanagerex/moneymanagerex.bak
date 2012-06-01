@@ -244,8 +244,8 @@ void mmFilterTransactionsDialog::CreateControls()
     amountRangeCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(amountRangeCheckBox, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    amountMinEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL13, wxT(""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
-    amountMaxEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL14, wxT(""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+    amountMinEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL13, wxT(""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+    amountMaxEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL14, wxT(""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
     amountSizer->Add(amountMinEdit, 0, wxALIGN_LEFT|wxALL, 5);
