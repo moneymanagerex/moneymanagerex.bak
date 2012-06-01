@@ -184,6 +184,11 @@ void mmAssetsPanel::initVirtualListControl(int col, bool asc)
     m_listCtrlAssets->SetItemCount(all_assets_.size());
 }
 
+wxString mmAssetsPanel::get_version() const
+{
+    return wxT(_MM_EX_ASSETSPANEL_CPP_REVISION_ID);
+}
+
 void mmAssetsPanel::OnDeleteAsset(wxCommandEvent& event)
 {
     m_listCtrlAssets->OnDeleteAsset(event);

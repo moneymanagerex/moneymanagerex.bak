@@ -76,6 +76,7 @@ public:
 
     void enableEditDeleteButtons(bool enable);
     void initVirtualListControl(int col, bool asc);
+    wxString get_version() const;
 
     wxString getItem(long item, long column);
     wxSQLite3Database* getDb() const { return db_; }
