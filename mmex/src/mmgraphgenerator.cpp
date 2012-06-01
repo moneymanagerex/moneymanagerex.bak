@@ -55,7 +55,7 @@ Eraser::~Eraser()
 
 void Eraser::clear()
 {
-    for_each(files.begin(), files.end(), wxRemoveFile);
+//    for_each(files.begin(), files.end(), wxRemoveFile);
     files.clear();
 }
 //----------------------------------------------------------------------------
