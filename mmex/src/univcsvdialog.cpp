@@ -1128,9 +1128,9 @@ void mmUnivCSVDialog::OnCheckOrRadioBox(wxCommandEvent& event)
         default:
             break;
     }
-
+    //FIXME
     textDelimiter4->SetEvtHandlerEnabled(false);
-    textDelimiter4->SetValue(delimit_);
+    *textDelimiter4<<(delimit_);
     textDelimiter4->SetEvtHandlerEnabled(true);
     event.Skip();
 
