@@ -83,10 +83,7 @@ enum
     ID_DIALOG_OPTIONS_LISTBOOK,
     ID_DIALOG_OPTIONS_PANEL1,
     ID_DIALOG_OPTIONS_PANEL2,
-    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA,
-    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON,
-    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB,
-    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER,
+    ID_RADIO_BOX,
 };
 
 class mmCoreDB;
@@ -149,11 +146,15 @@ private:
     wxCheckBox* cbBudgetSummaryWithoutCateg_;
     wxCheckBox* cbIgnoreFutureTransactions_;
 
+    wxRadioBox* m_radio_box_;
+    wxTextCtrl* textDelimiter_;
+
     bool restartRequired_;
     bool changesApplied_;
     int currencyId_;
     wxString dateFormat_;
     wxString currentLanguage_;
+    wxString delimit_;
 
     wxArrayString viewAccountStrings(bool translated, wxString get_string_id);
     wxArrayString viewAccountStrings(bool translated, wxString input_string, int& row_id);
@@ -178,10 +179,7 @@ private:
     void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
     bool GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState);
 
-    void OnDelimiterSelectedU(wxCommandEvent& event);
-    void OnDelimiterSelectedC(wxCommandEvent& event);
-    void OnDelimiterSelectedS(wxCommandEvent& event);
-    void OnDelimiterSelectedT(wxCommandEvent& event);
+    void OnDelimiterSelected(wxCommandEvent& event);
 
     void SaveViewAccountOptions();
     void SaveViewTransactionOptions();
