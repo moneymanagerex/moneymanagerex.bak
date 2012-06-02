@@ -140,7 +140,7 @@ void mmStocksPanel::CreateControls()
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel(this,
         wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer9->Add(headerPanel, flags);
+    itemBoxSizer9->Add(headerPanel);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
@@ -161,7 +161,7 @@ void mmStocksPanel::CreateControls()
     itemBoxSizerHHeader->Add(m_LED, flags);
     itemBoxSizerHHeader->Add(header_text, flags);
 
-    itemBoxSizerVHeader->Add(itemBoxSizerHHeader, flags);
+    itemBoxSizerVHeader->Add(itemBoxSizerHHeader);
     itemBoxSizerVHeader->Add(itemStaticText10, flags);
 
     /* ---------------------- */
@@ -211,7 +211,7 @@ void mmStocksPanel::CreateControls()
     itemPanel12->SetSizer(itemBoxSizer4);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, flags);
+    itemBoxSizer4->Add(itemBoxSizer5);
 
     wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
     itemBoxSizer5->Add(itemButton6, flags);
@@ -237,12 +237,12 @@ void mmStocksPanel::CreateControls()
     //Infobar-mini
     stock_details_short_ = new wxStaticText(itemPanel12,
          ID_PANEL_STOCKS_STATIC_DETAILS_MINI, strLastUpdate_);
-    itemBoxSizer5->Add(stock_details_short_, flags);
+    itemBoxSizer5->Add(stock_details_short_, flags);y
     //Infobar
     stock_details_ = new wxStaticText(itemPanel12,
     ID_PANEL_STOCKS_STATIC_DETAILS, wxT("                                         "),
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
-    itemBoxSizer4->Add(stock_details_, 1, wxGROW|wxLEFT|wxTOP, 4);
+    itemBoxSizer4->Add(stock_details_, 1, wxGROW|wxALL, 5);
 }
 
 void mmStocksPanel::initVirtualListControl()
