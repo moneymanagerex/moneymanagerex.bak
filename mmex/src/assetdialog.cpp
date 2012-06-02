@@ -94,10 +94,10 @@ void mmAssetDialog::dataToControls()
         valueChangeRate.Printf(wxT("%.3f"), asset->VALUECHANGERATE);
         m_valueChangeRate->SetValue(valueChangeRate);
 
-        m_valueChange->SetStringSelection(asset->VALUECHANGE);
+        m_valueChange->SetStringSelection(wxGetTranslation(asset->VALUECHANGE));
         if (asset->VALUECHANGE == wxT("None")) enableDisableRate(false);
 
-        m_assetType->SetStringSelection(asset->ASSETTYPE);
+        m_assetType->SetStringSelection(wxGetTranslation(asset->ASSETTYPE));
     }
 }
 
