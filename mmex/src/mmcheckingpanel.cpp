@@ -669,7 +669,7 @@ void mmCheckingPanel::CreateControls()
     itemPanel12->SetSizer(itemBoxSizer4);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, flags);
+    itemBoxSizer4->Add(itemBoxSizer5);
 
     wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
     itemButton6->SetToolTip(_("New Transaction"));
