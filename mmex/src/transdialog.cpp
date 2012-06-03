@@ -31,7 +31,7 @@
 #include <wx/choice.h>
 
 #include <sstream>
-#define _MM_EX_ASSETDIALOG_CPP_REVISION_ID    "$Revision$"
+#define _MM_EX_TRANSDIALOG_CPP_REVISION_ID    "$Revision$"
 
 // Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
