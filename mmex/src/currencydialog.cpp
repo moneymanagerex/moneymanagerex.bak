@@ -25,10 +25,6 @@
 
 #include <wx/combobox.h>
 
-#ifndef __VISUALC__
-#define INT_PTR intptr_t
-#endif
-
 IMPLEMENT_DYNAMIC_CLASS( mmCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCurrencyDialog, wxDialog )
@@ -92,7 +88,7 @@ void mmCurrencyDialog::fillControls()
     if (currencyID_ != -1)
     {
         wxString name = core_->getCurrencyName(currencyID_);
-        currencyChoice_->Append(name, (void*)(INT_PTR)currencyID_);
+        currencyChoice_->Append(name);
         currencyChoice_->SetStringSelection(name);
     }
     else
@@ -158,7 +154,6 @@ void mmCurrencyDialog::updateControls()
 
 void mmCurrencyDialog::OnCurrencyTypeChanged(wxCommandEvent& /*event*/)
 {
-    /*INT_PTR currencyID = (INT_PTR)*/currencyChoice_->GetClientData();
     updateControls();
 }
 

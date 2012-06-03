@@ -148,20 +148,20 @@ public:
     wxSQLite3Database* inidb_;
     mmCoreDB* core_;
 public:
-    virtual void save_config(const mmListCtrl* list_ctrl, const wxString& module = wxT("mmPanelBase"))
+    virtual void save_config(const mmListCtrl* list_ctrl, const wxString& module = "mmPanelBase")
     {
         inidb_->Begin();
         for (int i = 0; i < list_ctrl->GetColumnCount(); ++i) 
         {
             int width = list_ctrl->GetColumnWidth(i);
-            mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("%s_COL%d_WIDTH"), module.c_str(), i), wxString() << width); 
+            mmDBWrapper::setINISettingValue(inidb_, wxString::Format("%s_COL%d_WIDTH", module.c_str(), i), wxString() << width); 
         }
         inidb_->Commit();
     }
 
     virtual wxString get_version() const
     {
-        return wxT(_MM_EX_PANELBASE_H_REVISION_ID);
+        return _MM_EX_PANELBASE_H_REVISION_ID;
     }
 };
 //----------------------------------------------------------------------------
