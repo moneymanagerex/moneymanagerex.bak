@@ -19,6 +19,8 @@
 //----------------------------------------------------------------------------
 #ifndef _MM_EX_REPORTBASE_H_
 #define _MM_EX_REPORTBASE_H_
+
+#define _MM_EX_REPORTBASE_H_REVISION_ID "$Revision$"
 //----------------------------------------------------------------------------
 #include "mmcoredb.h"
 class wxString;
@@ -29,6 +31,7 @@ class mmPrintableBase
 public:
     virtual ~mmPrintableBase() {}
     virtual wxString getHTMLText() = 0;
+    virtual wxString get_version() const { return _MM_EX_REPORTBASE_H_REVISION_ID; }
 
 public:
     mmPrintableBase(mmCoreDB* core): core_(core) {}
