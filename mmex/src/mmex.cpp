@@ -2578,6 +2578,9 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
+    wxStatusBar *sb = GetStatusBar();
+    if (sb) sb->SetStatusText(rs->get_version());
+
     homePanel->Layout();
 }
 //----------------------------------------------------------------------------
