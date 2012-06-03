@@ -24,7 +24,6 @@
 #include <wx/datectrl.h>
 #define _MM_EX_ASSETDIALOG_CPP_REVISION_ID    "$Revision$"
 enum { DEF_CHANGE_NONE = 0, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
-enum { DEF_ASSET_PROPERTY = 0, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
 
 enum 
 { 
@@ -136,18 +135,13 @@ void mmAssetDialog::CreateControls()
     wxStaticText* itemStaticText15 = new wxStaticText(itemPanel5, wxID_STATIC, _("Asset Type"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer6->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxArrayString itemAssetTypeStrings;  
-    itemAssetTypeStrings.Add(_("Property"));
-    itemAssetTypeStrings.Add(_("Automobile"));
-    itemAssetTypeStrings.Add(_("Household Object"));
-    itemAssetTypeStrings.Add(_("Art"));
-    itemAssetTypeStrings.Add(_("Jewellery"));
-    itemAssetTypeStrings.Add(_("Cash"));
-    itemAssetTypeStrings.Add(_("Other"));
+    m_assetType = new wxChoice(itemPanel5, wxID_ANY, wxDefaultPosition, wxSize(150, -1));
+    wxString asset_types[] = {wxT("Property"), wxT("Automobile"), wxT("Household Object"), wxT("Art"), wxT("Jewellery"), wxT("Cash"), wxT("Other")};
+    for(size_t i = 0; i < sizeof(asset_types)/sizeof(wxString); ++i)
+        m_assetType->Append(wxGetTranslation(asset_types[i]), new wxStringClientData(asset_types[i]));
 
-    m_assetType = new wxChoice(itemPanel5, wxID_ANY, wxDefaultPosition, wxSize(150, -1), itemAssetTypeStrings);
     m_assetType->SetToolTip(_("Select type of asset"));
-    m_assetType->SetSelection(DEF_ASSET_PROPERTY);
+    m_assetType->SetSelection(0);
     itemFlexGridSizer6->Add(m_assetType, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText31 = new wxStaticText(itemPanel5, wxID_STATIC, _("Value"), wxDefaultPosition, wxDefaultSize, 0);
@@ -160,14 +154,13 @@ void mmAssetDialog::CreateControls()
     wxStaticText* itemStaticText11 = new wxStaticText(itemPanel5, wxID_STATIC, _("Change in Value"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer6->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxArrayString itemTypeStrings; 
-    itemTypeStrings.Add(_("None"));
-    itemTypeStrings.Add(_("Appreciates"));
-    itemTypeStrings.Add(_("Depreciates"));
-
-    m_valueChange = new wxChoice(itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1), itemTypeStrings);
+    m_valueChange = new wxChoice(itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1));
+    wxString change_types[] = {wxT("None"), wxT("Appreciates"), wxT("Depreciates")};
+    for(size_t i = 0; i < sizeof(change_types)/sizeof(wxString); ++i)
+        m_valueChange->Append(wxGetTranslation(change_types[i]), new wxStringClientData(change_types[i]));
+        
     m_valueChange->SetToolTip(_("Specify if the value of the asset changes over time"));
-    m_valueChange->SetSelection(DEF_CHANGE_NONE);
+    m_valueChange->SetSelection(0);
     itemFlexGridSizer6->Add(m_valueChange, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_valueChangeRateLabel = new wxStaticText(itemPanel5, wxID_STATIC, _("% Rate"), wxDefaultPosition, wxDefaultSize, 0);
@@ -267,10 +260,10 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     asset->STARTDATE = pdate;
     asset->ASSETNAME = name;
     asset->VALUE = value;
-    asset->VALUECHANGE = m_valueChange->GetStringSelection();
+    asset->VALUECHANGE = m_valueChange->GetStringSelection(); // FIXME
     asset->NOTES = notes;
     asset->VALUECHANGERATE = valueChangeRate;
-    asset->ASSETTYPE = m_assetType->GetStringSelection();
+    asset->ASSETTYPE = m_assetType->GetStringSelection(); // FIXME 
 
     asset->save(m_db);
 
