@@ -100,8 +100,7 @@ Class mmCategoryList
 class mmCategoryList
 {
 public:
-    mmCategoryList(boost::shared_ptr<wxSQLite3Database> db)
-        : db_(db) {}
+    mmCategoryList(boost::shared_ptr<wxSQLite3Database> db);
     ~mmCategoryList() {}
 
     /* Category Functions */
@@ -131,5 +130,7 @@ public:
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
+    Category_Table category_table_;
+    SubCategory_Table subCategory_table_;
 };
 #endif

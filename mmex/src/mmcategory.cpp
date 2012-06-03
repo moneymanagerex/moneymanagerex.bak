@@ -34,6 +34,7 @@ int Category_Table::AddName(const wxString& name)
     DB_View_CATEGORY_V1::Data* category = CATEGORY_V1.create();
     category->CATEGNAME = name;
     category->save(db_);
+    mmOptions::instance().databaseUpdated_ = true;
 
     return GetID(name);
 }
@@ -74,6 +75,7 @@ bool Category_Table::UpdateName(const wxString& name, int id)
     {
         record[0].CATEGNAME = name;
         result = record[0].save(db_);
+        mmOptions::instance().databaseUpdated_ = true;
     }
     return result;
 }
@@ -110,6 +112,7 @@ int SubCategory_Table::AddName(const wxString& name, int cat_id)
     subcategory->CATEGID = cat_id;
     subcategory->SUBCATEGNAME = name;
     subcategory->save(db_);
+    mmOptions::instance().databaseUpdated_ = true;
 
     return GetID(name, cat_id);
 }
@@ -155,15 +158,22 @@ bool SubCategory_Table::UpdateName(const wxString& name, int cat_id, int subcat_
     {
         record[0].SUBCATEGNAME = name;
         result = record[0].save(db_);
+        mmOptions::instance().databaseUpdated_ = true;
     }
 
     return result;
 }
 
-
 /*****************************************************************************
 Class: mmCategoryList Methods
 ******************************************************************************/
+mmCategoryList::mmCategoryList(boost::shared_ptr<wxSQLite3Database> db)
+    : db_(db)
+    , category_table_(db.get())
+    , subCategory_table_(db.get()
+    )
+{}
+
 bool mmCategoryList::categoryExists(const wxString& categoryName) const
 {
     for (const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
@@ -198,12 +208,7 @@ wxString mmCategoryList::getCategoryName(int id) const
 
 int mmCategoryList::addCategory(const wxString& name)
 {
-    DB_View_CATEGORY_V1::Data* category = CATEGORY_V1.create();
-    category->CATEGNAME = name;
-    if(!category->save(db_.get()))
-        return -1;
-
-    int cID = category->id();
+    int cID = category_table_.AddName(name);
 
     boost::shared_ptr<mmCategory> pCategory(new mmCategory(cID, name));
     entries_.push_back(pCategory);
@@ -220,15 +225,7 @@ int mmCategoryList::getSubCategoryID(int parentID, const wxString& subCategoryNa
 
 int mmCategoryList::addSubCategory(int parentID, const wxString& text)
 {
-    DB_View_SUBCATEGORY_V1::Data* sub_category = SUBCATEGORY_V1.create();
-    sub_category->CATEGID = parentID;
-    sub_category->SUBCATEGNAME = text;
-
-    if (!sub_category->save(db_.get()))
-        return -1;
-
-    int cID = sub_category->id();
-
+    int cID = subCategory_table_.AddName(text, parentID);
     boost::shared_ptr<mmCategory> categ = getCategorySharedPtr(parentID, -1);
 
     boost::shared_ptr<mmCategory> subCateg(new mmCategory(cID, text));
@@ -267,7 +264,7 @@ boost::shared_ptr<mmCategory> mmCategoryList::getCategorySharedPtr(int category,
 
 int mmCategoryList::deleteCategory(int categID)
 {
-    int error_code = mmCategoryList::deleteCategoryWithConstraints(categID);
+    int error_code = deleteCategoryWithConstraints(categID);
     if (error_code == wxID_OK)
     {
         std::vector <boost::shared_ptr<mmCategory> >::iterator Iter;
@@ -286,7 +283,7 @@ int mmCategoryList::deleteCategory(int categID)
 
 int mmCategoryList::deleteSubCategory(int categID, int subCategID)
 {
-    int error_code = mmCategoryList::deleteSubCategoryWithConstraints(categID, subCategID);
+    int error_code = deleteSubCategoryWithConstraints(categID, subCategID);
     if (error_code == wxID_OK)
     {
         boost::shared_ptr<mmCategory> categ = getCategorySharedPtr(categID, subCategID);
@@ -307,6 +304,7 @@ int mmCategoryList::deleteSubCategory(int categID, int subCategID)
     return error_code;
 }
 
+// update the category or subcategory.
 bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString& text)
 {
     boost::shared_ptr<mmCategory> categ = getCategorySharedPtr(categID, subCategID);
@@ -332,9 +330,14 @@ bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString&
         }
     }
 
-    mmDBWrapper::updateCategory(db_.get(), categID, subCategID, text);
+    bool dbSave_result;
+    if (subCategID < 0)
+        dbSave_result = category_table_.UpdateName(text, categID);
+    else
+        dbSave_result = subCategory_table_.UpdateName(text, categID, subCategID);
+
     categ->categName_ = text;
-    return true;
+    return dbSave_result;
 }
 
 wxString mmCategoryList::GetCategoryString(int categID) const
@@ -347,6 +350,9 @@ wxString mmCategoryList::GetCategoryString(int categID) const
 
 wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID) const
 {
+//  Not sure why this will not compile 
+//    wxString subcatName = subCategory_table_.GetName(categID, subCategID);
+
     wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), categID, subCategID);
     subcatName.Replace (wxT("&"), wxT("&&"));
 

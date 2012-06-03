@@ -25,7 +25,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------------
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
-#include "mmCategory.h"
+#include "mmcategory.h"
+#include "mmpayee.h"
+#include "mmaccount.h"
+#include "mmtransaction.h"
 
 const wxString g_BudgetYear = wxT("2009");
 const wxString g_CategName = wxT("new category");
@@ -564,6 +567,7 @@ TEST(addPayee)
     wxSQLite3Database* db = getDb().get();
     Category_Table category_table(db);
     SubCategory_Table subcategory_table(db);
+    mmPayeeList payee_list(getDb());
 
     int cat_id = category_table.AddName(g_CategName);
     CHECK(cat_id > 0);
@@ -573,9 +577,8 @@ TEST(addPayee)
 
     // --
 
-// leave a marker for code to be completed
-    int To_Do = 0;
-//    mmDBWrapper::addPayee(&db, g_PayeeName, cat_id, sc_id);
+    int id = payee_list.add(g_PayeeName);
+    CHECK(id > 0);
 }
 //----------------------------------------------------------------------------
 TEST(getPayeeID)
@@ -583,6 +586,7 @@ TEST(getPayeeID)
     wxSQLite3Database* db = getDb().get();
     Category_Table category_table(db);
     SubCategory_Table subcategory_table(db);
+    mmPayeeList payee_list(getDb());
 
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
@@ -592,123 +596,108 @@ TEST(getPayeeID)
 
     // --
 
-// leave a marker for code to be completed
-    int To_Do = 0;
-//    int id = 0;
-//    int cat = 0;
-//    int subc = 0;
+    int id = payee_list.getID(g_PayeeName);
+    CHECK(id > 0);
 
-//    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
-//    CHECK(ok);
-//    CHECK(id > 0);
-//    CHECK(cat > 0);
-//    CHECK(subc > 0);
-
-    // --
-
-//    ok = mmDBWrapper::getPayeeID(&db, wxT("bad payee name"), id, cat, subc);
-//    CHECK(!ok);
+    id = payee_list.getID(wxT("bad payee name"));
+    CHECK(id < 0);
 }
 
 
 //----------------------------------------------------------------------------
 /*
+*/
 TEST(getPayee)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
+    mmPayeeList payee_list(getDb());
 
-    int id = 0;
+    int payee_id = payee_list.getID(g_PayeeName);
+    CHECK(payee_id != -1);
+
     int cat = 0;
     int subc = 0;
 
-    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
-    CHECK(ok);
-
-    // --
-
     int cat2 = 0;
     int subc2 = 0;
-    wxString name = mmDBWrapper::getPayee(&db, id, cat2, subc2);
+    wxString name = mmDBWrapper::getPayee(db, payee_id, cat2, subc2);
     CHECK(name == g_PayeeName);
     CHECK(cat2 == cat);
     CHECK(subc2 == subc);
 
     // --
 
-    name = mmDBWrapper::getPayee(&db, 0, cat, subc);
+    name = mmDBWrapper::getPayee(db, 0, cat, subc);
     CHECK(name.empty());
 }
 //----------------------------------------------------------------------------
 
 TEST(updatePayee)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
+    mmPayeeList payee_list(getDb());
 
-    int id = 0;
+    int id = payee_list.getID(g_PayeeName);
+    CHECK(id != -1);
+
     int cat = 0;
     int subc = 0;
 
-    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
-    CHECK(ok);
-
-    // --
-
     const wxString new_name = wxT("new payee name");
-    ok = mmDBWrapper::updatePayee(&db, new_name, id, cat, -1);
+    bool ok = mmDBWrapper::updatePayee(db, new_name, id, cat, -1);
     CHECK(ok);
 
     // --
 
     int subc2 = 0;
-    wxString name = mmDBWrapper::getPayee(&db, id, cat, subc2);
+    wxString name = mmDBWrapper::getPayee(db, id, cat, subc2);
     CHECK(name == new_name);
     CHECK(subc2 == -1);
 
     // restore
 
-    ok = mmDBWrapper::updatePayee(&db, g_PayeeName, id, cat, subc);
+    ok = mmDBWrapper::updatePayee(db, g_PayeeName, id, cat, subc);
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
 
 TEST(getAmountForPayee)
 {
-    wxSQLite3Database &db = getDb();
+    mmPayeeList payee_list(getDb());
+    mmBankTransactionList transaction_list(getDb());
 
-    int id = 0;
-    int cat = 0;
-    int subc = 0;
-
-    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
-    CHECK(ok);
+    int payee_id = payee_list.getID(g_PayeeName);
+    CHECK(payee_id != -1);
 
     // --
 
-    const wxDateTime dt = wxDateTime::Now();
-//    double amt = mmDBWrapper::getAmountForPayee(&db, id, true, dt, dt);
-//    CHECK(amt == 0.0);
+    const wxDateTime dt_begin = wxDateTime::Now();
+    dt_begin.Subtract(wxDateSpan::Day());
+
+    const wxDateTime dt_end = wxDateTime::Now();
+
+    double amt = transaction_list.getAmountForPayee(payee_id, true,dt_begin, dt_end);
+    CHECK(amt == 0.0);
 }
 //----------------------------------------------------------------------------
 
 TEST(deletePayeeWithConstraints)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
-    int id = 0;
-    int cat = 0;
-    int subc = 0;
+    mmPayeeList payee_list(getDb());
 
-    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
+    int payee_id = payee_list.getID(g_PayeeName);
+    CHECK(payee_id != -1);
+    
+    // --
+
+    bool ok = mmDBWrapper::deletePayeeWithConstraints(db, payee_id);
     CHECK(ok);
 
     // --
 
-    ok = mmDBWrapper::deletePayeeWithConstraints(&db, id);
-    CHECK(ok);
-
-    // --
-
-    ok = mmDBWrapper::deletePayeeWithConstraints(&db, 0);
+    ok = mmDBWrapper::deletePayeeWithConstraints(db, 0);
     CHECK(ok); // returns true even for wrong id
 }
 //----------------------------------------------------------------------------
@@ -716,12 +705,13 @@ TEST(deletePayeeWithConstraints)
 
 TEST(getNumAccounts)
 {
-    wxSQLite3Database &db = getDb();
+    mmAccountList account_list(getDb());
+    int count = account_list.getNumAccounts();
 
-    int cnt = mmDBWrapper::getNumAccounts(&db);
-    CHECK(!cnt);
+    CHECK(!count);
 }
 //----------------------------------------------------------------------------
+/*
 */
 } // SUITE
 
