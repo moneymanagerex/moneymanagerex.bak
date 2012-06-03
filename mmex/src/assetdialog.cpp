@@ -260,10 +260,12 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     asset->STARTDATE = pdate;
     asset->ASSETNAME = name;
     asset->VALUE = value;
-    asset->VALUECHANGE = m_valueChange->GetStringSelection(); // FIXME
+    wxStringClientData* value_change_obj = (wxStringClientData *)m_valueChange->GetClientObject(m_valueChange->GetSelection());
+    if (value_change_obj) asset->VALUECHANGE = value_change_obj->GetData();
     asset->NOTES = notes;
     asset->VALUECHANGERATE = valueChangeRate;
-    asset->ASSETTYPE = m_assetType->GetStringSelection(); // FIXME 
+    wxStringClientData* asset_type_obj = (wxStringClientData *)m_assetType->GetClientObject(m_assetType->GetSelection());
+    if (asset_type_obj) asset->ASSETTYPE = asset_type_obj->GetData();
 
     asset->save(m_db);
 
