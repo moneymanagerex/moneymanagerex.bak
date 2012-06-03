@@ -73,11 +73,11 @@ struct DB_View_%s : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("%s"));
+            db->ExecuteUpdate("%s");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+            wxLogError("%s: Exception %%s", e.GetMessage().c_str());
             return false;
         }
 
@@ -87,7 +87,7 @@ struct DB_View_%s : public DB_View
 
         for field in self._fields:
             s += '''
-    struct %s { wxString name() const { return wxT("%s"); } };''' % (field['name'], field['name'])
+    struct %s { wxString name() const { return "%s"; } };''' % (field['name'], field['name'])
 
         s += '''
     typedef %s PRIMARY;''' % self._primay_key
@@ -122,26 +122,26 @@ struct DB_View_%s : public DB_View
     {
         switch(col)
         {
-            case COL_%s: return wxT("%s");''' % (self._primay_key.upper(), self._primay_key)
+            case COL_%s: return "%s";''' % (self._primay_key.upper(), self._primay_key)
 
         for index, name in enumerate([field['name'] for field in self._fields if not field['pk']]):
             s += '''
-            case COL_%s: return wxT("%s");''' %(name.upper(), name)
+            case COL_%s: return "%s";''' %(name.upper(), name)
         s +='''
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 '''
         s +='''
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("%s") == name) return COL_%s;''' % (self._primay_key, self._primay_key.upper())
+        if ("%s" == name) return COL_%s;''' % (self._primay_key, self._primay_key.upper())
 
         for index, name in enumerate([field['name'] for field in self._fields if not field['pk']]):
             s += '''
-        else if (wxT("%s") == name) return COL_%s;''' %(name, name.upper())
+        else if ("%s" == name) return COL_%s;''' %(name, name.upper())
 
         s += '''
 
@@ -190,7 +190,7 @@ struct DB_View_%s : public DB_View
         for field in self._fields:
             func = base_data_types_function[field['type']]
             s += '''
-            %s = q.%s(wxT("%s"));''' % (field['name'], func, field['name'])
+            %s = q.%s("%s");''' % (field['name'], func, field['name'])
 
         s += '''
         }
@@ -214,7 +214,7 @@ struct DB_View_%s : public DB_View
         }
 '''
         s +='''
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -225,7 +225,7 @@ struct DB_View_%s : public DB_View
         }
 '''
         s += '''
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << %s;''' % self._primay_key
@@ -243,7 +243,7 @@ struct DB_View_%s : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -254,7 +254,7 @@ struct DB_View_%s : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -274,13 +274,13 @@ struct DB_View_%s : public DB_View
 ''' % len(self._fields)
         
         s += '''
-    wxString name() const { return wxT("%s"); }
+    wxString name() const { return "%s"; }
 ''' % self._table
         
         s +='''
     DB_View_%s() 
     {
-        query_ = wxT("SELECT %s FROM %s ");
+        query_ = "SELECT %s FROM %s ";
     }
 ''' % (self._table, ', '.join([field['name'] for field in self._fields]), self._table)
         
@@ -298,13 +298,13 @@ struct DB_View_%s : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO %s(%s) VALUES(%s)");
+            sql = "INSERT INTO %s(%s) VALUES(%s)";
         }''' % (self._table, ', '.join([field['name'] for field in self._fields if not field['pk']]), ', '.join(['?' for field in self._fields if not field['pk']]))
         
         s +='''
         else
         {
-            sql = wxT("UPDATE %s SET %s WHERE %s = ?");
+            sql = "UPDATE %s SET %s WHERE %s = ?";
         }
 
         try
@@ -326,7 +326,7 @@ struct DB_View_%s : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+            wxLogError("%s: Exception %%s", e.GetMessage().c_str());
             return false;
         }
 
@@ -340,7 +340,7 @@ struct DB_View_%s : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM %s WHERE %s = ?");
+            wxString sql = "DELETE FROM %s WHERE %s = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -360,7 +360,7 @@ struct DB_View_%s : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+            wxLogError("%s: Exception %%s", e.GetMessage().c_str());
             return false;
         }
 
@@ -391,7 +391,7 @@ struct DB_View_%s : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE %s = ?"));
+        wxString where = wxString::Format(" WHERE %s = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -407,7 +407,7 @@ struct DB_View_%s : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+            wxLogError("%s: Exception %%s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -421,9 +421,9 @@ struct DB_View_%s : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -438,7 +438,7 @@ struct DB_View_%s : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+            wxLogError("%s: Exception %%s", e.GetMessage().c_str());
         }
 
         return result;
@@ -452,12 +452,12 @@ struct DB_View_%s : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -473,7 +473,7 @@ struct DB_View_%s : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+            wxLogError("%s: Exception %%s", e.GetMessage().c_str());
         }
 
         return result;
@@ -487,8 +487,8 @@ struct DB_View_%s : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -500,7 +500,7 @@ struct DB_View_%s : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
+            wxLogError("%s: Exception %%s", e.GetMessage().c_str());
         }
 
         return result;
@@ -552,6 +552,7 @@ if __name__ == '__main__':
 
 #ifndef _MM_EX_DB_VIEW_H_
 #define _MM_EX_DB_VIEW_H_
+#define _MM_EX_DB_VIEW_H_REVISION_ID "$Revision$"
 '''% (sys.argv[0], str(datetime.datetime.now()))
     
     code +='''

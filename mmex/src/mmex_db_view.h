@@ -10,13 +10,14 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-30 14:02:07.298737.
+ *          AUTO GENERATED at 2012-06-03 17:40:00.924000.
  *          DO NOT EDIT!
  */
 //=============================================================================
 
 #ifndef _MM_EX_DB_VIEW_H_
 #define _MM_EX_DB_VIEW_H_
+#define _MM_EX_DB_VIEW_H_REVISION_ID "$Revision$"
 
 #include <vector>
 #include <map>
@@ -70,30 +71,30 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE ACCOUNTLIST_V1(ACCOUNTID integer primary key, ACCOUNTNAME TEXT NOT NULL , ACCOUNTTYPE TEXT NOT NULL , ACCOUNTNUM TEXT, STATUS TEXT NOT NULL, NOTES TEXT , HELDAT TEXT , WEBSITE TEXT , CONTACTINFO TEXT, ACCESSINFO TEXT , INITIALBAL numeric , FAVORITEACCT TEXT NOT NULL, CURRENCYID integer NOT NULL)"));
+            db->ExecuteUpdate("CREATE TABLE ACCOUNTLIST_V1(ACCOUNTID integer primary key, ACCOUNTNAME TEXT NOT NULL , ACCOUNTTYPE TEXT NOT NULL , ACCOUNTNUM TEXT, STATUS TEXT NOT NULL, NOTES TEXT , HELDAT TEXT , WEBSITE TEXT , CONTACTINFO TEXT, ACCESSINFO TEXT , INITIALBAL numeric , FAVORITEACCT TEXT NOT NULL, CURRENCYID integer NOT NULL)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ACCOUNTLIST_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct ACCOUNTID { wxString name() const { return wxT("ACCOUNTID"); } };
-    struct ACCOUNTNAME { wxString name() const { return wxT("ACCOUNTNAME"); } };
-    struct ACCOUNTTYPE { wxString name() const { return wxT("ACCOUNTTYPE"); } };
-    struct ACCOUNTNUM { wxString name() const { return wxT("ACCOUNTNUM"); } };
-    struct STATUS { wxString name() const { return wxT("STATUS"); } };
-    struct NOTES { wxString name() const { return wxT("NOTES"); } };
-    struct HELDAT { wxString name() const { return wxT("HELDAT"); } };
-    struct WEBSITE { wxString name() const { return wxT("WEBSITE"); } };
-    struct CONTACTINFO { wxString name() const { return wxT("CONTACTINFO"); } };
-    struct ACCESSINFO { wxString name() const { return wxT("ACCESSINFO"); } };
-    struct INITIALBAL { wxString name() const { return wxT("INITIALBAL"); } };
-    struct FAVORITEACCT { wxString name() const { return wxT("FAVORITEACCT"); } };
-    struct CURRENCYID { wxString name() const { return wxT("CURRENCYID"); } };
+    struct ACCOUNTID { wxString name() const { return "ACCOUNTID"; } };
+    struct ACCOUNTNAME { wxString name() const { return "ACCOUNTNAME"; } };
+    struct ACCOUNTTYPE { wxString name() const { return "ACCOUNTTYPE"; } };
+    struct ACCOUNTNUM { wxString name() const { return "ACCOUNTNUM"; } };
+    struct STATUS { wxString name() const { return "STATUS"; } };
+    struct NOTES { wxString name() const { return "NOTES"; } };
+    struct HELDAT { wxString name() const { return "HELDAT"; } };
+    struct WEBSITE { wxString name() const { return "WEBSITE"; } };
+    struct CONTACTINFO { wxString name() const { return "CONTACTINFO"; } };
+    struct ACCESSINFO { wxString name() const { return "ACCESSINFO"; } };
+    struct INITIALBAL { wxString name() const { return "INITIALBAL"; } };
+    struct FAVORITEACCT { wxString name() const { return "FAVORITEACCT"; } };
+    struct CURRENCYID { wxString name() const { return "CURRENCYID"; } };
     typedef ACCOUNTID PRIMARY;
     enum COLUMN
     {
@@ -135,40 +136,40 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_ACCOUNTID: return wxT("ACCOUNTID");
-            case COL_ACCOUNTNAME: return wxT("ACCOUNTNAME");
-            case COL_ACCOUNTTYPE: return wxT("ACCOUNTTYPE");
-            case COL_ACCOUNTNUM: return wxT("ACCOUNTNUM");
-            case COL_STATUS: return wxT("STATUS");
-            case COL_NOTES: return wxT("NOTES");
-            case COL_HELDAT: return wxT("HELDAT");
-            case COL_WEBSITE: return wxT("WEBSITE");
-            case COL_CONTACTINFO: return wxT("CONTACTINFO");
-            case COL_ACCESSINFO: return wxT("ACCESSINFO");
-            case COL_INITIALBAL: return wxT("INITIALBAL");
-            case COL_FAVORITEACCT: return wxT("FAVORITEACCT");
-            case COL_CURRENCYID: return wxT("CURRENCYID");
+            case COL_ACCOUNTID: return "ACCOUNTID";
+            case COL_ACCOUNTNAME: return "ACCOUNTNAME";
+            case COL_ACCOUNTTYPE: return "ACCOUNTTYPE";
+            case COL_ACCOUNTNUM: return "ACCOUNTNUM";
+            case COL_STATUS: return "STATUS";
+            case COL_NOTES: return "NOTES";
+            case COL_HELDAT: return "HELDAT";
+            case COL_WEBSITE: return "WEBSITE";
+            case COL_CONTACTINFO: return "CONTACTINFO";
+            case COL_ACCESSINFO: return "ACCESSINFO";
+            case COL_INITIALBAL: return "INITIALBAL";
+            case COL_FAVORITEACCT: return "FAVORITEACCT";
+            case COL_CURRENCYID: return "CURRENCYID";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("ACCOUNTID") == name) return COL_ACCOUNTID;
-        else if (wxT("ACCOUNTNAME") == name) return COL_ACCOUNTNAME;
-        else if (wxT("ACCOUNTTYPE") == name) return COL_ACCOUNTTYPE;
-        else if (wxT("ACCOUNTNUM") == name) return COL_ACCOUNTNUM;
-        else if (wxT("STATUS") == name) return COL_STATUS;
-        else if (wxT("NOTES") == name) return COL_NOTES;
-        else if (wxT("HELDAT") == name) return COL_HELDAT;
-        else if (wxT("WEBSITE") == name) return COL_WEBSITE;
-        else if (wxT("CONTACTINFO") == name) return COL_CONTACTINFO;
-        else if (wxT("ACCESSINFO") == name) return COL_ACCESSINFO;
-        else if (wxT("INITIALBAL") == name) return COL_INITIALBAL;
-        else if (wxT("FAVORITEACCT") == name) return COL_FAVORITEACCT;
-        else if (wxT("CURRENCYID") == name) return COL_CURRENCYID;
+        if ("ACCOUNTID" == name) return COL_ACCOUNTID;
+        else if ("ACCOUNTNAME" == name) return COL_ACCOUNTNAME;
+        else if ("ACCOUNTTYPE" == name) return COL_ACCOUNTTYPE;
+        else if ("ACCOUNTNUM" == name) return COL_ACCOUNTNUM;
+        else if ("STATUS" == name) return COL_STATUS;
+        else if ("NOTES" == name) return COL_NOTES;
+        else if ("HELDAT" == name) return COL_HELDAT;
+        else if ("WEBSITE" == name) return COL_WEBSITE;
+        else if ("CONTACTINFO" == name) return COL_CONTACTINFO;
+        else if ("ACCESSINFO" == name) return COL_ACCESSINFO;
+        else if ("INITIALBAL" == name) return COL_INITIALBAL;
+        else if ("FAVORITEACCT" == name) return COL_FAVORITEACCT;
+        else if ("CURRENCYID" == name) return COL_CURRENCYID;
 
         return COLUMN(-1);
     }
@@ -206,19 +207,19 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         {
             view_ = view;
         
-            ACCOUNTID = q.GetInt(wxT("ACCOUNTID"));
-            ACCOUNTNAME = q.GetString(wxT("ACCOUNTNAME"));
-            ACCOUNTTYPE = q.GetString(wxT("ACCOUNTTYPE"));
-            ACCOUNTNUM = q.GetString(wxT("ACCOUNTNUM"));
-            STATUS = q.GetString(wxT("STATUS"));
-            NOTES = q.GetString(wxT("NOTES"));
-            HELDAT = q.GetString(wxT("HELDAT"));
-            WEBSITE = q.GetString(wxT("WEBSITE"));
-            CONTACTINFO = q.GetString(wxT("CONTACTINFO"));
-            ACCESSINFO = q.GetString(wxT("ACCESSINFO"));
-            INITIALBAL = q.GetDouble(wxT("INITIALBAL"));
-            FAVORITEACCT = q.GetString(wxT("FAVORITEACCT"));
-            CURRENCYID = q.GetInt(wxT("CURRENCYID"));
+            ACCOUNTID = q.GetInt("ACCOUNTID");
+            ACCOUNTNAME = q.GetString("ACCOUNTNAME");
+            ACCOUNTTYPE = q.GetString("ACCOUNTTYPE");
+            ACCOUNTNUM = q.GetString("ACCOUNTNUM");
+            STATUS = q.GetString("STATUS");
+            NOTES = q.GetString("NOTES");
+            HELDAT = q.GetString("HELDAT");
+            WEBSITE = q.GetString("WEBSITE");
+            CONTACTINFO = q.GetString("CONTACTINFO");
+            ACCESSINFO = q.GetString("ACCESSINFO");
+            INITIALBAL = q.GetDouble("INITIALBAL");
+            FAVORITEACCT = q.GetString("FAVORITEACCT");
+            CURRENCYID = q.GetInt("CURRENCYID");
         }
 
         wxString to_string(COLUMN col) const
@@ -245,7 +246,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -255,7 +256,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << ACCOUNTID;
@@ -278,7 +279,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -289,7 +290,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -306,11 +307,11 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("ACCOUNTLIST_V1"); }
+    wxString name() const { return "ACCOUNTLIST_V1"; }
 
     DB_View_ACCOUNTLIST_V1() 
     {
-        query_ = wxT("SELECT ACCOUNTID, ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO, INITIALBAL, FAVORITEACCT, CURRENCYID FROM ACCOUNTLIST_V1 ");
+        query_ = "SELECT ACCOUNTID, ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO, INITIALBAL, FAVORITEACCT, CURRENCYID FROM ACCOUNTLIST_V1 ";
     }
 
     Self::Data* create()
@@ -325,11 +326,11 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO ACCOUNTLIST_V1(ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO, INITIALBAL, FAVORITEACCT, CURRENCYID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            sql = "INSERT INTO ACCOUNTLIST_V1(ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO, INITIALBAL, FAVORITEACCT, CURRENCYID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE ACCOUNTLIST_V1 SET ACCOUNTNAME = ?, ACCOUNTTYPE = ?, ACCOUNTNUM = ?, STATUS = ?, NOTES = ?, HELDAT = ?, WEBSITE = ?, CONTACTINFO = ?, ACCESSINFO = ?, INITIALBAL = ?, FAVORITEACCT = ?, CURRENCYID = ? WHERE ACCOUNTID = ?");
+            sql = "UPDATE ACCOUNTLIST_V1 SET ACCOUNTNAME = ?, ACCOUNTTYPE = ?, ACCOUNTNUM = ?, STATUS = ?, NOTES = ?, HELDAT = ?, WEBSITE = ?, CONTACTINFO = ?, ACCESSINFO = ?, INITIALBAL = ?, FAVORITEACCT = ?, CURRENCYID = ? WHERE ACCOUNTID = ?";
         }
 
         try
@@ -356,7 +357,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ACCOUNTLIST_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -369,7 +370,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM ACCOUNTLIST_V1 WHERE ACCOUNTID = ?");
+            wxString sql = "DELETE FROM ACCOUNTLIST_V1 WHERE ACCOUNTID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -389,7 +390,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ACCOUNTLIST_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -418,7 +419,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE ACCOUNTID = ?"));
+        wxString where = wxString::Format(" WHERE ACCOUNTID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -434,7 +435,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ACCOUNTLIST_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -446,9 +447,9 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -463,7 +464,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ACCOUNTLIST_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -475,12 +476,12 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -496,7 +497,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ACCOUNTLIST_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -508,8 +509,8 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -521,7 +522,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ACCOUNTLIST_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ACCOUNTLIST_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -548,25 +549,25 @@ struct DB_View_ASSETS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE ASSETS_V1(ASSETID integer primary key, STARTDATE TEXT NOT NULL , ASSETNAME TEXT, VALUE numeric, VALUECHANGE TEXT, NOTES TEXT, VALUECHANGERATE numeric, ASSETTYPE TEXT)"));
+            db->ExecuteUpdate("CREATE TABLE ASSETS_V1(ASSETID integer primary key, STARTDATE TEXT NOT NULL , ASSETNAME TEXT, VALUE numeric, VALUECHANGE TEXT, NOTES TEXT, VALUECHANGERATE numeric, ASSETTYPE TEXT)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ASSETS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct ASSETID { wxString name() const { return wxT("ASSETID"); } };
-    struct STARTDATE { wxString name() const { return wxT("STARTDATE"); } };
-    struct ASSETNAME { wxString name() const { return wxT("ASSETNAME"); } };
-    struct VALUE { wxString name() const { return wxT("VALUE"); } };
-    struct VALUECHANGE { wxString name() const { return wxT("VALUECHANGE"); } };
-    struct NOTES { wxString name() const { return wxT("NOTES"); } };
-    struct VALUECHANGERATE { wxString name() const { return wxT("VALUECHANGERATE"); } };
-    struct ASSETTYPE { wxString name() const { return wxT("ASSETTYPE"); } };
+    struct ASSETID { wxString name() const { return "ASSETID"; } };
+    struct STARTDATE { wxString name() const { return "STARTDATE"; } };
+    struct ASSETNAME { wxString name() const { return "ASSETNAME"; } };
+    struct VALUE { wxString name() const { return "VALUE"; } };
+    struct VALUECHANGE { wxString name() const { return "VALUECHANGE"; } };
+    struct NOTES { wxString name() const { return "NOTES"; } };
+    struct VALUECHANGERATE { wxString name() const { return "VALUECHANGERATE"; } };
+    struct ASSETTYPE { wxString name() const { return "ASSETTYPE"; } };
     typedef ASSETID PRIMARY;
     enum COLUMN
     {
@@ -598,30 +599,30 @@ struct DB_View_ASSETS_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_ASSETID: return wxT("ASSETID");
-            case COL_STARTDATE: return wxT("STARTDATE");
-            case COL_ASSETNAME: return wxT("ASSETNAME");
-            case COL_VALUE: return wxT("VALUE");
-            case COL_VALUECHANGE: return wxT("VALUECHANGE");
-            case COL_NOTES: return wxT("NOTES");
-            case COL_VALUECHANGERATE: return wxT("VALUECHANGERATE");
-            case COL_ASSETTYPE: return wxT("ASSETTYPE");
+            case COL_ASSETID: return "ASSETID";
+            case COL_STARTDATE: return "STARTDATE";
+            case COL_ASSETNAME: return "ASSETNAME";
+            case COL_VALUE: return "VALUE";
+            case COL_VALUECHANGE: return "VALUECHANGE";
+            case COL_NOTES: return "NOTES";
+            case COL_VALUECHANGERATE: return "VALUECHANGERATE";
+            case COL_ASSETTYPE: return "ASSETTYPE";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("ASSETID") == name) return COL_ASSETID;
-        else if (wxT("STARTDATE") == name) return COL_STARTDATE;
-        else if (wxT("ASSETNAME") == name) return COL_ASSETNAME;
-        else if (wxT("VALUE") == name) return COL_VALUE;
-        else if (wxT("VALUECHANGE") == name) return COL_VALUECHANGE;
-        else if (wxT("NOTES") == name) return COL_NOTES;
-        else if (wxT("VALUECHANGERATE") == name) return COL_VALUECHANGERATE;
-        else if (wxT("ASSETTYPE") == name) return COL_ASSETTYPE;
+        if ("ASSETID" == name) return COL_ASSETID;
+        else if ("STARTDATE" == name) return COL_STARTDATE;
+        else if ("ASSETNAME" == name) return COL_ASSETNAME;
+        else if ("VALUE" == name) return COL_VALUE;
+        else if ("VALUECHANGE" == name) return COL_VALUECHANGE;
+        else if ("NOTES" == name) return COL_NOTES;
+        else if ("VALUECHANGERATE" == name) return COL_VALUECHANGERATE;
+        else if ("ASSETTYPE" == name) return COL_ASSETTYPE;
 
         return COLUMN(-1);
     }
@@ -654,14 +655,14 @@ struct DB_View_ASSETS_V1 : public DB_View
         {
             view_ = view;
         
-            ASSETID = q.GetInt(wxT("ASSETID"));
-            STARTDATE = q.GetString(wxT("STARTDATE"));
-            ASSETNAME = q.GetString(wxT("ASSETNAME"));
-            VALUE = q.GetDouble(wxT("VALUE"));
-            VALUECHANGE = q.GetString(wxT("VALUECHANGE"));
-            NOTES = q.GetString(wxT("NOTES"));
-            VALUECHANGERATE = q.GetDouble(wxT("VALUECHANGERATE"));
-            ASSETTYPE = q.GetString(wxT("ASSETTYPE"));
+            ASSETID = q.GetInt("ASSETID");
+            STARTDATE = q.GetString("STARTDATE");
+            ASSETNAME = q.GetString("ASSETNAME");
+            VALUE = q.GetDouble("VALUE");
+            VALUECHANGE = q.GetString("VALUECHANGE");
+            NOTES = q.GetString("NOTES");
+            VALUECHANGERATE = q.GetDouble("VALUECHANGERATE");
+            ASSETTYPE = q.GetString("ASSETTYPE");
         }
 
         wxString to_string(COLUMN col) const
@@ -683,7 +684,7 @@ struct DB_View_ASSETS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -693,7 +694,7 @@ struct DB_View_ASSETS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << ASSETID;
@@ -711,7 +712,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -722,7 +723,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -739,11 +740,11 @@ struct DB_View_ASSETS_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("ASSETS_V1"); }
+    wxString name() const { return "ASSETS_V1"; }
 
     DB_View_ASSETS_V1() 
     {
-        query_ = wxT("SELECT ASSETID, STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE FROM ASSETS_V1 ");
+        query_ = "SELECT ASSETID, STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE FROM ASSETS_V1 ";
     }
 
     Self::Data* create()
@@ -758,11 +759,11 @@ struct DB_View_ASSETS_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO ASSETS_V1(STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE) VALUES(?, ?, ?, ?, ?, ?, ?)");
+            sql = "INSERT INTO ASSETS_V1(STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE) VALUES(?, ?, ?, ?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE ASSETS_V1 SET STARTDATE = ?, ASSETNAME = ?, VALUE = ?, VALUECHANGE = ?, NOTES = ?, VALUECHANGERATE = ?, ASSETTYPE = ? WHERE ASSETID = ?");
+            sql = "UPDATE ASSETS_V1 SET STARTDATE = ?, ASSETNAME = ?, VALUE = ?, VALUECHANGE = ?, NOTES = ?, VALUECHANGERATE = ?, ASSETTYPE = ? WHERE ASSETID = ?";
         }
 
         try
@@ -784,7 +785,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ASSETS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -797,7 +798,7 @@ struct DB_View_ASSETS_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM ASSETS_V1 WHERE ASSETID = ?");
+            wxString sql = "DELETE FROM ASSETS_V1 WHERE ASSETID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -817,7 +818,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ASSETS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -846,7 +847,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE ASSETID = ?"));
+        wxString where = wxString::Format(" WHERE ASSETID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -862,7 +863,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ASSETS_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -874,9 +875,9 @@ struct DB_View_ASSETS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -891,7 +892,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ASSETS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -903,12 +904,12 @@ struct DB_View_ASSETS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -924,7 +925,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ASSETS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -936,8 +937,8 @@ struct DB_View_ASSETS_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -949,7 +950,7 @@ struct DB_View_ASSETS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("ASSETS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("ASSETS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -976,34 +977,34 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE BILLSDEPOSITS_V1(BDID integer primary key, ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT, CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric, REPEATS integer, NEXTOCCURRENCEDATE TEXT, NUMOCCURRENCES numeric)"));
+            db->ExecuteUpdate("CREATE TABLE BILLSDEPOSITS_V1(BDID integer primary key, ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT, CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric, REPEATS integer, NEXTOCCURRENCEDATE TEXT, NUMOCCURRENCES numeric)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BILLSDEPOSITS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct BDID { wxString name() const { return wxT("BDID"); } };
-    struct ACCOUNTID { wxString name() const { return wxT("ACCOUNTID"); } };
-    struct TOACCOUNTID { wxString name() const { return wxT("TOACCOUNTID"); } };
-    struct PAYEEID { wxString name() const { return wxT("PAYEEID"); } };
-    struct TRANSCODE { wxString name() const { return wxT("TRANSCODE"); } };
-    struct TRANSAMOUNT { wxString name() const { return wxT("TRANSAMOUNT"); } };
-    struct STATUS { wxString name() const { return wxT("STATUS"); } };
-    struct TRANSACTIONNUMBER { wxString name() const { return wxT("TRANSACTIONNUMBER"); } };
-    struct NOTES { wxString name() const { return wxT("NOTES"); } };
-    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
-    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
-    struct TRANSDATE { wxString name() const { return wxT("TRANSDATE"); } };
-    struct FOLLOWUPID { wxString name() const { return wxT("FOLLOWUPID"); } };
-    struct TOTRANSAMOUNT { wxString name() const { return wxT("TOTRANSAMOUNT"); } };
-    struct REPEATS { wxString name() const { return wxT("REPEATS"); } };
-    struct NEXTOCCURRENCEDATE { wxString name() const { return wxT("NEXTOCCURRENCEDATE"); } };
-    struct NUMOCCURRENCES { wxString name() const { return wxT("NUMOCCURRENCES"); } };
+    struct BDID { wxString name() const { return "BDID"; } };
+    struct ACCOUNTID { wxString name() const { return "ACCOUNTID"; } };
+    struct TOACCOUNTID { wxString name() const { return "TOACCOUNTID"; } };
+    struct PAYEEID { wxString name() const { return "PAYEEID"; } };
+    struct TRANSCODE { wxString name() const { return "TRANSCODE"; } };
+    struct TRANSAMOUNT { wxString name() const { return "TRANSAMOUNT"; } };
+    struct STATUS { wxString name() const { return "STATUS"; } };
+    struct TRANSACTIONNUMBER { wxString name() const { return "TRANSACTIONNUMBER"; } };
+    struct NOTES { wxString name() const { return "NOTES"; } };
+    struct CATEGID { wxString name() const { return "CATEGID"; } };
+    struct SUBCATEGID { wxString name() const { return "SUBCATEGID"; } };
+    struct TRANSDATE { wxString name() const { return "TRANSDATE"; } };
+    struct FOLLOWUPID { wxString name() const { return "FOLLOWUPID"; } };
+    struct TOTRANSAMOUNT { wxString name() const { return "TOTRANSAMOUNT"; } };
+    struct REPEATS { wxString name() const { return "REPEATS"; } };
+    struct NEXTOCCURRENCEDATE { wxString name() const { return "NEXTOCCURRENCEDATE"; } };
+    struct NUMOCCURRENCES { wxString name() const { return "NUMOCCURRENCES"; } };
     typedef BDID PRIMARY;
     enum COLUMN
     {
@@ -1053,48 +1054,48 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_BDID: return wxT("BDID");
-            case COL_ACCOUNTID: return wxT("ACCOUNTID");
-            case COL_TOACCOUNTID: return wxT("TOACCOUNTID");
-            case COL_PAYEEID: return wxT("PAYEEID");
-            case COL_TRANSCODE: return wxT("TRANSCODE");
-            case COL_TRANSAMOUNT: return wxT("TRANSAMOUNT");
-            case COL_STATUS: return wxT("STATUS");
-            case COL_TRANSACTIONNUMBER: return wxT("TRANSACTIONNUMBER");
-            case COL_NOTES: return wxT("NOTES");
-            case COL_CATEGID: return wxT("CATEGID");
-            case COL_SUBCATEGID: return wxT("SUBCATEGID");
-            case COL_TRANSDATE: return wxT("TRANSDATE");
-            case COL_FOLLOWUPID: return wxT("FOLLOWUPID");
-            case COL_TOTRANSAMOUNT: return wxT("TOTRANSAMOUNT");
-            case COL_REPEATS: return wxT("REPEATS");
-            case COL_NEXTOCCURRENCEDATE: return wxT("NEXTOCCURRENCEDATE");
-            case COL_NUMOCCURRENCES: return wxT("NUMOCCURRENCES");
+            case COL_BDID: return "BDID";
+            case COL_ACCOUNTID: return "ACCOUNTID";
+            case COL_TOACCOUNTID: return "TOACCOUNTID";
+            case COL_PAYEEID: return "PAYEEID";
+            case COL_TRANSCODE: return "TRANSCODE";
+            case COL_TRANSAMOUNT: return "TRANSAMOUNT";
+            case COL_STATUS: return "STATUS";
+            case COL_TRANSACTIONNUMBER: return "TRANSACTIONNUMBER";
+            case COL_NOTES: return "NOTES";
+            case COL_CATEGID: return "CATEGID";
+            case COL_SUBCATEGID: return "SUBCATEGID";
+            case COL_TRANSDATE: return "TRANSDATE";
+            case COL_FOLLOWUPID: return "FOLLOWUPID";
+            case COL_TOTRANSAMOUNT: return "TOTRANSAMOUNT";
+            case COL_REPEATS: return "REPEATS";
+            case COL_NEXTOCCURRENCEDATE: return "NEXTOCCURRENCEDATE";
+            case COL_NUMOCCURRENCES: return "NUMOCCURRENCES";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("BDID") == name) return COL_BDID;
-        else if (wxT("ACCOUNTID") == name) return COL_ACCOUNTID;
-        else if (wxT("TOACCOUNTID") == name) return COL_TOACCOUNTID;
-        else if (wxT("PAYEEID") == name) return COL_PAYEEID;
-        else if (wxT("TRANSCODE") == name) return COL_TRANSCODE;
-        else if (wxT("TRANSAMOUNT") == name) return COL_TRANSAMOUNT;
-        else if (wxT("STATUS") == name) return COL_STATUS;
-        else if (wxT("TRANSACTIONNUMBER") == name) return COL_TRANSACTIONNUMBER;
-        else if (wxT("NOTES") == name) return COL_NOTES;
-        else if (wxT("CATEGID") == name) return COL_CATEGID;
-        else if (wxT("SUBCATEGID") == name) return COL_SUBCATEGID;
-        else if (wxT("TRANSDATE") == name) return COL_TRANSDATE;
-        else if (wxT("FOLLOWUPID") == name) return COL_FOLLOWUPID;
-        else if (wxT("TOTRANSAMOUNT") == name) return COL_TOTRANSAMOUNT;
-        else if (wxT("REPEATS") == name) return COL_REPEATS;
-        else if (wxT("NEXTOCCURRENCEDATE") == name) return COL_NEXTOCCURRENCEDATE;
-        else if (wxT("NUMOCCURRENCES") == name) return COL_NUMOCCURRENCES;
+        if ("BDID" == name) return COL_BDID;
+        else if ("ACCOUNTID" == name) return COL_ACCOUNTID;
+        else if ("TOACCOUNTID" == name) return COL_TOACCOUNTID;
+        else if ("PAYEEID" == name) return COL_PAYEEID;
+        else if ("TRANSCODE" == name) return COL_TRANSCODE;
+        else if ("TRANSAMOUNT" == name) return COL_TRANSAMOUNT;
+        else if ("STATUS" == name) return COL_STATUS;
+        else if ("TRANSACTIONNUMBER" == name) return COL_TRANSACTIONNUMBER;
+        else if ("NOTES" == name) return COL_NOTES;
+        else if ("CATEGID" == name) return COL_CATEGID;
+        else if ("SUBCATEGID" == name) return COL_SUBCATEGID;
+        else if ("TRANSDATE" == name) return COL_TRANSDATE;
+        else if ("FOLLOWUPID" == name) return COL_FOLLOWUPID;
+        else if ("TOTRANSAMOUNT" == name) return COL_TOTRANSAMOUNT;
+        else if ("REPEATS" == name) return COL_REPEATS;
+        else if ("NEXTOCCURRENCEDATE" == name) return COL_NEXTOCCURRENCEDATE;
+        else if ("NUMOCCURRENCES" == name) return COL_NUMOCCURRENCES;
 
         return COLUMN(-1);
     }
@@ -1144,23 +1145,23 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         {
             view_ = view;
         
-            BDID = q.GetInt(wxT("BDID"));
-            ACCOUNTID = q.GetInt(wxT("ACCOUNTID"));
-            TOACCOUNTID = q.GetInt(wxT("TOACCOUNTID"));
-            PAYEEID = q.GetInt(wxT("PAYEEID"));
-            TRANSCODE = q.GetString(wxT("TRANSCODE"));
-            TRANSAMOUNT = q.GetDouble(wxT("TRANSAMOUNT"));
-            STATUS = q.GetString(wxT("STATUS"));
-            TRANSACTIONNUMBER = q.GetString(wxT("TRANSACTIONNUMBER"));
-            NOTES = q.GetString(wxT("NOTES"));
-            CATEGID = q.GetInt(wxT("CATEGID"));
-            SUBCATEGID = q.GetInt(wxT("SUBCATEGID"));
-            TRANSDATE = q.GetString(wxT("TRANSDATE"));
-            FOLLOWUPID = q.GetInt(wxT("FOLLOWUPID"));
-            TOTRANSAMOUNT = q.GetDouble(wxT("TOTRANSAMOUNT"));
-            REPEATS = q.GetInt(wxT("REPEATS"));
-            NEXTOCCURRENCEDATE = q.GetString(wxT("NEXTOCCURRENCEDATE"));
-            NUMOCCURRENCES = q.GetDouble(wxT("NUMOCCURRENCES"));
+            BDID = q.GetInt("BDID");
+            ACCOUNTID = q.GetInt("ACCOUNTID");
+            TOACCOUNTID = q.GetInt("TOACCOUNTID");
+            PAYEEID = q.GetInt("PAYEEID");
+            TRANSCODE = q.GetString("TRANSCODE");
+            TRANSAMOUNT = q.GetDouble("TRANSAMOUNT");
+            STATUS = q.GetString("STATUS");
+            TRANSACTIONNUMBER = q.GetString("TRANSACTIONNUMBER");
+            NOTES = q.GetString("NOTES");
+            CATEGID = q.GetInt("CATEGID");
+            SUBCATEGID = q.GetInt("SUBCATEGID");
+            TRANSDATE = q.GetString("TRANSDATE");
+            FOLLOWUPID = q.GetInt("FOLLOWUPID");
+            TOTRANSAMOUNT = q.GetDouble("TOTRANSAMOUNT");
+            REPEATS = q.GetInt("REPEATS");
+            NEXTOCCURRENCEDATE = q.GetString("NEXTOCCURRENCEDATE");
+            NUMOCCURRENCES = q.GetDouble("NUMOCCURRENCES");
         }
 
         wxString to_string(COLUMN col) const
@@ -1191,7 +1192,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -1201,7 +1202,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << BDID;
@@ -1228,7 +1229,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -1239,7 +1240,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -1256,11 +1257,11 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("BILLSDEPOSITS_V1"); }
+    wxString name() const { return "BILLSDEPOSITS_V1"; }
 
     DB_View_BILLSDEPOSITS_V1() 
     {
-        query_ = wxT("SELECT BDID, ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, NEXTOCCURRENCEDATE, NUMOCCURRENCES FROM BILLSDEPOSITS_V1 ");
+        query_ = "SELECT BDID, ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, NEXTOCCURRENCEDATE, NUMOCCURRENCES FROM BILLSDEPOSITS_V1 ";
     }
 
     Self::Data* create()
@@ -1275,11 +1276,11 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO BILLSDEPOSITS_V1(ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, NEXTOCCURRENCEDATE, NUMOCCURRENCES) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            sql = "INSERT INTO BILLSDEPOSITS_V1(ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, NEXTOCCURRENCEDATE, NUMOCCURRENCES) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE BILLSDEPOSITS_V1 SET ACCOUNTID = ?, TOACCOUNTID = ?, PAYEEID = ?, TRANSCODE = ?, TRANSAMOUNT = ?, STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?, TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ?, REPEATS = ?, NEXTOCCURRENCEDATE = ?, NUMOCCURRENCES = ? WHERE BDID = ?");
+            sql = "UPDATE BILLSDEPOSITS_V1 SET ACCOUNTID = ?, TOACCOUNTID = ?, PAYEEID = ?, TRANSCODE = ?, TRANSAMOUNT = ?, STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?, TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ?, REPEATS = ?, NEXTOCCURRENCEDATE = ?, NUMOCCURRENCES = ? WHERE BDID = ?";
         }
 
         try
@@ -1310,7 +1311,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BILLSDEPOSITS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -1323,7 +1324,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM BILLSDEPOSITS_V1 WHERE BDID = ?");
+            wxString sql = "DELETE FROM BILLSDEPOSITS_V1 WHERE BDID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -1343,7 +1344,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BILLSDEPOSITS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -1372,7 +1373,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE BDID = ?"));
+        wxString where = wxString::Format(" WHERE BDID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -1388,7 +1389,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BILLSDEPOSITS_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -1400,9 +1401,9 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -1417,7 +1418,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BILLSDEPOSITS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -1429,12 +1430,12 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -1450,7 +1451,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BILLSDEPOSITS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -1462,8 +1463,8 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -1475,7 +1476,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BILLSDEPOSITS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BILLSDEPOSITS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -1502,22 +1503,22 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE BUDGETSPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, TRANSID integer NOT NULL, CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric)"));
+            db->ExecuteUpdate("CREATE TABLE BUDGETSPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, TRANSID integer NOT NULL, CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETSPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct SPLITTRANSID { wxString name() const { return wxT("SPLITTRANSID"); } };
-    struct TRANSID { wxString name() const { return wxT("TRANSID"); } };
-    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
-    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
-    struct SPLITTRANSAMOUNT { wxString name() const { return wxT("SPLITTRANSAMOUNT"); } };
+    struct SPLITTRANSID { wxString name() const { return "SPLITTRANSID"; } };
+    struct TRANSID { wxString name() const { return "TRANSID"; } };
+    struct CATEGID { wxString name() const { return "CATEGID"; } };
+    struct SUBCATEGID { wxString name() const { return "SUBCATEGID"; } };
+    struct SPLITTRANSAMOUNT { wxString name() const { return "SPLITTRANSAMOUNT"; } };
     typedef SPLITTRANSID PRIMARY;
     enum COLUMN
     {
@@ -1543,24 +1544,24 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_SPLITTRANSID: return wxT("SPLITTRANSID");
-            case COL_TRANSID: return wxT("TRANSID");
-            case COL_CATEGID: return wxT("CATEGID");
-            case COL_SUBCATEGID: return wxT("SUBCATEGID");
-            case COL_SPLITTRANSAMOUNT: return wxT("SPLITTRANSAMOUNT");
+            case COL_SPLITTRANSID: return "SPLITTRANSID";
+            case COL_TRANSID: return "TRANSID";
+            case COL_CATEGID: return "CATEGID";
+            case COL_SUBCATEGID: return "SUBCATEGID";
+            case COL_SPLITTRANSAMOUNT: return "SPLITTRANSAMOUNT";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("SPLITTRANSID") == name) return COL_SPLITTRANSID;
-        else if (wxT("TRANSID") == name) return COL_TRANSID;
-        else if (wxT("CATEGID") == name) return COL_CATEGID;
-        else if (wxT("SUBCATEGID") == name) return COL_SUBCATEGID;
-        else if (wxT("SPLITTRANSAMOUNT") == name) return COL_SPLITTRANSAMOUNT;
+        if ("SPLITTRANSID" == name) return COL_SPLITTRANSID;
+        else if ("TRANSID" == name) return COL_TRANSID;
+        else if ("CATEGID" == name) return COL_CATEGID;
+        else if ("SUBCATEGID" == name) return COL_SUBCATEGID;
+        else if ("SPLITTRANSAMOUNT" == name) return COL_SPLITTRANSAMOUNT;
 
         return COLUMN(-1);
     }
@@ -1592,11 +1593,11 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         {
             view_ = view;
         
-            SPLITTRANSID = q.GetInt(wxT("SPLITTRANSID"));
-            TRANSID = q.GetInt(wxT("TRANSID"));
-            CATEGID = q.GetInt(wxT("CATEGID"));
-            SUBCATEGID = q.GetInt(wxT("SUBCATEGID"));
-            SPLITTRANSAMOUNT = q.GetDouble(wxT("SPLITTRANSAMOUNT"));
+            SPLITTRANSID = q.GetInt("SPLITTRANSID");
+            TRANSID = q.GetInt("TRANSID");
+            CATEGID = q.GetInt("CATEGID");
+            SUBCATEGID = q.GetInt("SUBCATEGID");
+            SPLITTRANSAMOUNT = q.GetDouble("SPLITTRANSAMOUNT");
         }
 
         wxString to_string(COLUMN col) const
@@ -1615,7 +1616,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -1625,7 +1626,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << SPLITTRANSID;
@@ -1640,7 +1641,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -1651,7 +1652,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -1668,11 +1669,11 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("BUDGETSPLITTRANSACTIONS_V1"); }
+    wxString name() const { return "BUDGETSPLITTRANSACTIONS_V1"; }
 
     DB_View_BUDGETSPLITTRANSACTIONS_V1() 
     {
-        query_ = wxT("SELECT SPLITTRANSID, TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT FROM BUDGETSPLITTRANSACTIONS_V1 ");
+        query_ = "SELECT SPLITTRANSID, TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT FROM BUDGETSPLITTRANSACTIONS_V1 ";
     }
 
     Self::Data* create()
@@ -1687,11 +1688,11 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO BUDGETSPLITTRANSACTIONS_V1(TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) VALUES(?, ?, ?, ?)");
+            sql = "INSERT INTO BUDGETSPLITTRANSACTIONS_V1(TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) VALUES(?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE BUDGETSPLITTRANSACTIONS_V1 SET TRANSID = ?, CATEGID = ?, SUBCATEGID = ?, SPLITTRANSAMOUNT = ? WHERE SPLITTRANSID = ?");
+            sql = "UPDATE BUDGETSPLITTRANSACTIONS_V1 SET TRANSID = ?, CATEGID = ?, SUBCATEGID = ?, SPLITTRANSAMOUNT = ? WHERE SPLITTRANSID = ?";
         }
 
         try
@@ -1710,7 +1711,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETSPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -1723,7 +1724,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM BUDGETSPLITTRANSACTIONS_V1 WHERE SPLITTRANSID = ?");
+            wxString sql = "DELETE FROM BUDGETSPLITTRANSACTIONS_V1 WHERE SPLITTRANSID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -1743,7 +1744,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETSPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -1772,7 +1773,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE SPLITTRANSID = ?"));
+        wxString where = wxString::Format(" WHERE SPLITTRANSID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -1788,7 +1789,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETSPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -1800,9 +1801,9 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -1817,7 +1818,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETSPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -1829,12 +1830,12 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -1850,7 +1851,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETSPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -1862,8 +1863,8 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -1875,7 +1876,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETSPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETSPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -1902,23 +1903,23 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE BUDGETTABLE_V1(BUDGETENTRYID integer primary key, BUDGETYEARID integer, CATEGID integer, SUBCATEGID integer, PERIOD TEXT NOT NULL, AMOUNT numeric NOT NULL)"));
+            db->ExecuteUpdate("CREATE TABLE BUDGETTABLE_V1(BUDGETENTRYID integer primary key, BUDGETYEARID integer, CATEGID integer, SUBCATEGID integer, PERIOD TEXT NOT NULL, AMOUNT numeric NOT NULL)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETTABLE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct BUDGETENTRYID { wxString name() const { return wxT("BUDGETENTRYID"); } };
-    struct BUDGETYEARID { wxString name() const { return wxT("BUDGETYEARID"); } };
-    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
-    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
-    struct PERIOD { wxString name() const { return wxT("PERIOD"); } };
-    struct AMOUNT { wxString name() const { return wxT("AMOUNT"); } };
+    struct BUDGETENTRYID { wxString name() const { return "BUDGETENTRYID"; } };
+    struct BUDGETYEARID { wxString name() const { return "BUDGETYEARID"; } };
+    struct CATEGID { wxString name() const { return "CATEGID"; } };
+    struct SUBCATEGID { wxString name() const { return "SUBCATEGID"; } };
+    struct PERIOD { wxString name() const { return "PERIOD"; } };
+    struct AMOUNT { wxString name() const { return "AMOUNT"; } };
     typedef BUDGETENTRYID PRIMARY;
     enum COLUMN
     {
@@ -1946,26 +1947,26 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_BUDGETENTRYID: return wxT("BUDGETENTRYID");
-            case COL_BUDGETYEARID: return wxT("BUDGETYEARID");
-            case COL_CATEGID: return wxT("CATEGID");
-            case COL_SUBCATEGID: return wxT("SUBCATEGID");
-            case COL_PERIOD: return wxT("PERIOD");
-            case COL_AMOUNT: return wxT("AMOUNT");
+            case COL_BUDGETENTRYID: return "BUDGETENTRYID";
+            case COL_BUDGETYEARID: return "BUDGETYEARID";
+            case COL_CATEGID: return "CATEGID";
+            case COL_SUBCATEGID: return "SUBCATEGID";
+            case COL_PERIOD: return "PERIOD";
+            case COL_AMOUNT: return "AMOUNT";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("BUDGETENTRYID") == name) return COL_BUDGETENTRYID;
-        else if (wxT("BUDGETYEARID") == name) return COL_BUDGETYEARID;
-        else if (wxT("CATEGID") == name) return COL_CATEGID;
-        else if (wxT("SUBCATEGID") == name) return COL_SUBCATEGID;
-        else if (wxT("PERIOD") == name) return COL_PERIOD;
-        else if (wxT("AMOUNT") == name) return COL_AMOUNT;
+        if ("BUDGETENTRYID" == name) return COL_BUDGETENTRYID;
+        else if ("BUDGETYEARID" == name) return COL_BUDGETYEARID;
+        else if ("CATEGID" == name) return COL_CATEGID;
+        else if ("SUBCATEGID" == name) return COL_SUBCATEGID;
+        else if ("PERIOD" == name) return COL_PERIOD;
+        else if ("AMOUNT" == name) return COL_AMOUNT;
 
         return COLUMN(-1);
     }
@@ -1998,12 +1999,12 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         {
             view_ = view;
         
-            BUDGETENTRYID = q.GetInt(wxT("BUDGETENTRYID"));
-            BUDGETYEARID = q.GetInt(wxT("BUDGETYEARID"));
-            CATEGID = q.GetInt(wxT("CATEGID"));
-            SUBCATEGID = q.GetInt(wxT("SUBCATEGID"));
-            PERIOD = q.GetString(wxT("PERIOD"));
-            AMOUNT = q.GetDouble(wxT("AMOUNT"));
+            BUDGETENTRYID = q.GetInt("BUDGETENTRYID");
+            BUDGETYEARID = q.GetInt("BUDGETYEARID");
+            CATEGID = q.GetInt("CATEGID");
+            SUBCATEGID = q.GetInt("SUBCATEGID");
+            PERIOD = q.GetString("PERIOD");
+            AMOUNT = q.GetDouble("AMOUNT");
         }
 
         wxString to_string(COLUMN col) const
@@ -2023,7 +2024,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -2033,7 +2034,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << BUDGETENTRYID;
@@ -2049,7 +2050,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -2060,7 +2061,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -2077,11 +2078,11 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("BUDGETTABLE_V1"); }
+    wxString name() const { return "BUDGETTABLE_V1"; }
 
     DB_View_BUDGETTABLE_V1() 
     {
-        query_ = wxT("SELECT BUDGETENTRYID, BUDGETYEARID, CATEGID, SUBCATEGID, PERIOD, AMOUNT FROM BUDGETTABLE_V1 ");
+        query_ = "SELECT BUDGETENTRYID, BUDGETYEARID, CATEGID, SUBCATEGID, PERIOD, AMOUNT FROM BUDGETTABLE_V1 ";
     }
 
     Self::Data* create()
@@ -2096,11 +2097,11 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO BUDGETTABLE_V1(BUDGETYEARID, CATEGID, SUBCATEGID, PERIOD, AMOUNT) VALUES(?, ?, ?, ?, ?)");
+            sql = "INSERT INTO BUDGETTABLE_V1(BUDGETYEARID, CATEGID, SUBCATEGID, PERIOD, AMOUNT) VALUES(?, ?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE BUDGETTABLE_V1 SET BUDGETYEARID = ?, CATEGID = ?, SUBCATEGID = ?, PERIOD = ?, AMOUNT = ? WHERE BUDGETENTRYID = ?");
+            sql = "UPDATE BUDGETTABLE_V1 SET BUDGETYEARID = ?, CATEGID = ?, SUBCATEGID = ?, PERIOD = ?, AMOUNT = ? WHERE BUDGETENTRYID = ?";
         }
 
         try
@@ -2120,7 +2121,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETTABLE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -2133,7 +2134,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM BUDGETTABLE_V1 WHERE BUDGETENTRYID = ?");
+            wxString sql = "DELETE FROM BUDGETTABLE_V1 WHERE BUDGETENTRYID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -2153,7 +2154,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETTABLE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -2182,7 +2183,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE BUDGETENTRYID = ?"));
+        wxString where = wxString::Format(" WHERE BUDGETENTRYID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -2198,7 +2199,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETTABLE_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -2210,9 +2211,9 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -2227,7 +2228,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETTABLE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -2239,12 +2240,12 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -2260,7 +2261,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETTABLE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -2272,8 +2273,8 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -2285,7 +2286,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETTABLE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -2312,19 +2313,19 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE BUDGETYEAR_V1(BUDGETYEARID integer primary key, BUDGETYEARNAME TEXT NOT NULL)"));
+            db->ExecuteUpdate("CREATE TABLE BUDGETYEAR_V1(BUDGETYEARID integer primary key, BUDGETYEARNAME TEXT NOT NULL)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETYEAR_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct BUDGETYEARID { wxString name() const { return wxT("BUDGETYEARID"); } };
-    struct BUDGETYEARNAME { wxString name() const { return wxT("BUDGETYEARNAME"); } };
+    struct BUDGETYEARID { wxString name() const { return "BUDGETYEARID"; } };
+    struct BUDGETYEARNAME { wxString name() const { return "BUDGETYEARNAME"; } };
     typedef BUDGETYEARID PRIMARY;
     enum COLUMN
     {
@@ -2344,18 +2345,18 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_BUDGETYEARID: return wxT("BUDGETYEARID");
-            case COL_BUDGETYEARNAME: return wxT("BUDGETYEARNAME");
+            case COL_BUDGETYEARID: return "BUDGETYEARID";
+            case COL_BUDGETYEARNAME: return "BUDGETYEARNAME";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("BUDGETYEARID") == name) return COL_BUDGETYEARID;
-        else if (wxT("BUDGETYEARNAME") == name) return COL_BUDGETYEARNAME;
+        if ("BUDGETYEARID" == name) return COL_BUDGETYEARID;
+        else if ("BUDGETYEARNAME" == name) return COL_BUDGETYEARNAME;
 
         return COLUMN(-1);
     }
@@ -2380,8 +2381,8 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         {
             view_ = view;
         
-            BUDGETYEARID = q.GetInt(wxT("BUDGETYEARID"));
-            BUDGETYEARNAME = q.GetString(wxT("BUDGETYEARNAME"));
+            BUDGETYEARID = q.GetInt("BUDGETYEARID");
+            BUDGETYEARNAME = q.GetString("BUDGETYEARNAME");
         }
 
         wxString to_string(COLUMN col) const
@@ -2397,7 +2398,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -2407,7 +2408,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << BUDGETYEARID;
@@ -2419,7 +2420,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -2430,7 +2431,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -2447,11 +2448,11 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("BUDGETYEAR_V1"); }
+    wxString name() const { return "BUDGETYEAR_V1"; }
 
     DB_View_BUDGETYEAR_V1() 
     {
-        query_ = wxT("SELECT BUDGETYEARID, BUDGETYEARNAME FROM BUDGETYEAR_V1 ");
+        query_ = "SELECT BUDGETYEARID, BUDGETYEARNAME FROM BUDGETYEAR_V1 ";
     }
 
     Self::Data* create()
@@ -2466,11 +2467,11 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO BUDGETYEAR_V1(BUDGETYEARNAME) VALUES(?)");
+            sql = "INSERT INTO BUDGETYEAR_V1(BUDGETYEARNAME) VALUES(?)";
         }
         else
         {
-            sql = wxT("UPDATE BUDGETYEAR_V1 SET BUDGETYEARNAME = ? WHERE BUDGETYEARID = ?");
+            sql = "UPDATE BUDGETYEAR_V1 SET BUDGETYEARNAME = ? WHERE BUDGETYEARID = ?";
         }
 
         try
@@ -2486,7 +2487,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETYEAR_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -2499,7 +2500,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM BUDGETYEAR_V1 WHERE BUDGETYEARID = ?");
+            wxString sql = "DELETE FROM BUDGETYEAR_V1 WHERE BUDGETYEARID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -2519,7 +2520,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETYEAR_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -2548,7 +2549,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE BUDGETYEARID = ?"));
+        wxString where = wxString::Format(" WHERE BUDGETYEARID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -2564,7 +2565,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETYEAR_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -2576,9 +2577,9 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -2593,7 +2594,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETYEAR_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -2605,12 +2606,12 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -2626,7 +2627,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETYEAR_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -2638,8 +2639,8 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -2651,7 +2652,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("BUDGETYEAR_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("BUDGETYEAR_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -2678,19 +2679,19 @@ struct DB_View_CATEGORY_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE CATEGORY_V1(CATEGID integer primary key, CATEGNAME TEXT NOT NULL)"));
+            db->ExecuteUpdate("CREATE TABLE CATEGORY_V1(CATEGID integer primary key, CATEGNAME TEXT NOT NULL)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CATEGORY_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
-    struct CATEGNAME { wxString name() const { return wxT("CATEGNAME"); } };
+    struct CATEGID { wxString name() const { return "CATEGID"; } };
+    struct CATEGNAME { wxString name() const { return "CATEGNAME"; } };
     typedef CATEGID PRIMARY;
     enum COLUMN
     {
@@ -2710,18 +2711,18 @@ struct DB_View_CATEGORY_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_CATEGID: return wxT("CATEGID");
-            case COL_CATEGNAME: return wxT("CATEGNAME");
+            case COL_CATEGID: return "CATEGID";
+            case COL_CATEGNAME: return "CATEGNAME";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("CATEGID") == name) return COL_CATEGID;
-        else if (wxT("CATEGNAME") == name) return COL_CATEGNAME;
+        if ("CATEGID" == name) return COL_CATEGID;
+        else if ("CATEGNAME" == name) return COL_CATEGNAME;
 
         return COLUMN(-1);
     }
@@ -2746,8 +2747,8 @@ struct DB_View_CATEGORY_V1 : public DB_View
         {
             view_ = view;
         
-            CATEGID = q.GetInt(wxT("CATEGID"));
-            CATEGNAME = q.GetString(wxT("CATEGNAME"));
+            CATEGID = q.GetInt("CATEGID");
+            CATEGNAME = q.GetString("CATEGNAME");
         }
 
         wxString to_string(COLUMN col) const
@@ -2763,7 +2764,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -2773,7 +2774,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << CATEGID;
@@ -2785,7 +2786,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -2796,7 +2797,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -2813,11 +2814,11 @@ struct DB_View_CATEGORY_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("CATEGORY_V1"); }
+    wxString name() const { return "CATEGORY_V1"; }
 
     DB_View_CATEGORY_V1() 
     {
-        query_ = wxT("SELECT CATEGID, CATEGNAME FROM CATEGORY_V1 ");
+        query_ = "SELECT CATEGID, CATEGNAME FROM CATEGORY_V1 ";
     }
 
     Self::Data* create()
@@ -2832,11 +2833,11 @@ struct DB_View_CATEGORY_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO CATEGORY_V1(CATEGNAME) VALUES(?)");
+            sql = "INSERT INTO CATEGORY_V1(CATEGNAME) VALUES(?)";
         }
         else
         {
-            sql = wxT("UPDATE CATEGORY_V1 SET CATEGNAME = ? WHERE CATEGID = ?");
+            sql = "UPDATE CATEGORY_V1 SET CATEGNAME = ? WHERE CATEGID = ?";
         }
 
         try
@@ -2852,7 +2853,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CATEGORY_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -2865,7 +2866,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM CATEGORY_V1 WHERE CATEGID = ?");
+            wxString sql = "DELETE FROM CATEGORY_V1 WHERE CATEGID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -2885,7 +2886,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CATEGORY_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -2914,7 +2915,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE CATEGID = ?"));
+        wxString where = wxString::Format(" WHERE CATEGID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -2930,7 +2931,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CATEGORY_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -2942,9 +2943,9 @@ struct DB_View_CATEGORY_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -2959,7 +2960,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CATEGORY_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -2971,12 +2972,12 @@ struct DB_View_CATEGORY_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -2992,7 +2993,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CATEGORY_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -3004,8 +3005,8 @@ struct DB_View_CATEGORY_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -3017,7 +3018,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CATEGORY_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -3044,31 +3045,31 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE CHECKINGACCOUNT_V1(TRANSID integer primary key, ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT, CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric)"));
+            db->ExecuteUpdate("CREATE TABLE CHECKINGACCOUNT_V1(TRANSID integer primary key, ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT, CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CHECKINGACCOUNT_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct TRANSID { wxString name() const { return wxT("TRANSID"); } };
-    struct ACCOUNTID { wxString name() const { return wxT("ACCOUNTID"); } };
-    struct TOACCOUNTID { wxString name() const { return wxT("TOACCOUNTID"); } };
-    struct PAYEEID { wxString name() const { return wxT("PAYEEID"); } };
-    struct TRANSCODE { wxString name() const { return wxT("TRANSCODE"); } };
-    struct TRANSAMOUNT { wxString name() const { return wxT("TRANSAMOUNT"); } };
-    struct STATUS { wxString name() const { return wxT("STATUS"); } };
-    struct TRANSACTIONNUMBER { wxString name() const { return wxT("TRANSACTIONNUMBER"); } };
-    struct NOTES { wxString name() const { return wxT("NOTES"); } };
-    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
-    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
-    struct TRANSDATE { wxString name() const { return wxT("TRANSDATE"); } };
-    struct FOLLOWUPID { wxString name() const { return wxT("FOLLOWUPID"); } };
-    struct TOTRANSAMOUNT { wxString name() const { return wxT("TOTRANSAMOUNT"); } };
+    struct TRANSID { wxString name() const { return "TRANSID"; } };
+    struct ACCOUNTID { wxString name() const { return "ACCOUNTID"; } };
+    struct TOACCOUNTID { wxString name() const { return "TOACCOUNTID"; } };
+    struct PAYEEID { wxString name() const { return "PAYEEID"; } };
+    struct TRANSCODE { wxString name() const { return "TRANSCODE"; } };
+    struct TRANSAMOUNT { wxString name() const { return "TRANSAMOUNT"; } };
+    struct STATUS { wxString name() const { return "STATUS"; } };
+    struct TRANSACTIONNUMBER { wxString name() const { return "TRANSACTIONNUMBER"; } };
+    struct NOTES { wxString name() const { return "NOTES"; } };
+    struct CATEGID { wxString name() const { return "CATEGID"; } };
+    struct SUBCATEGID { wxString name() const { return "SUBCATEGID"; } };
+    struct TRANSDATE { wxString name() const { return "TRANSDATE"; } };
+    struct FOLLOWUPID { wxString name() const { return "FOLLOWUPID"; } };
+    struct TOTRANSAMOUNT { wxString name() const { return "TOTRANSAMOUNT"; } };
     typedef TRANSID PRIMARY;
     enum COLUMN
     {
@@ -3112,42 +3113,42 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_TRANSID: return wxT("TRANSID");
-            case COL_ACCOUNTID: return wxT("ACCOUNTID");
-            case COL_TOACCOUNTID: return wxT("TOACCOUNTID");
-            case COL_PAYEEID: return wxT("PAYEEID");
-            case COL_TRANSCODE: return wxT("TRANSCODE");
-            case COL_TRANSAMOUNT: return wxT("TRANSAMOUNT");
-            case COL_STATUS: return wxT("STATUS");
-            case COL_TRANSACTIONNUMBER: return wxT("TRANSACTIONNUMBER");
-            case COL_NOTES: return wxT("NOTES");
-            case COL_CATEGID: return wxT("CATEGID");
-            case COL_SUBCATEGID: return wxT("SUBCATEGID");
-            case COL_TRANSDATE: return wxT("TRANSDATE");
-            case COL_FOLLOWUPID: return wxT("FOLLOWUPID");
-            case COL_TOTRANSAMOUNT: return wxT("TOTRANSAMOUNT");
+            case COL_TRANSID: return "TRANSID";
+            case COL_ACCOUNTID: return "ACCOUNTID";
+            case COL_TOACCOUNTID: return "TOACCOUNTID";
+            case COL_PAYEEID: return "PAYEEID";
+            case COL_TRANSCODE: return "TRANSCODE";
+            case COL_TRANSAMOUNT: return "TRANSAMOUNT";
+            case COL_STATUS: return "STATUS";
+            case COL_TRANSACTIONNUMBER: return "TRANSACTIONNUMBER";
+            case COL_NOTES: return "NOTES";
+            case COL_CATEGID: return "CATEGID";
+            case COL_SUBCATEGID: return "SUBCATEGID";
+            case COL_TRANSDATE: return "TRANSDATE";
+            case COL_FOLLOWUPID: return "FOLLOWUPID";
+            case COL_TOTRANSAMOUNT: return "TOTRANSAMOUNT";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("TRANSID") == name) return COL_TRANSID;
-        else if (wxT("ACCOUNTID") == name) return COL_ACCOUNTID;
-        else if (wxT("TOACCOUNTID") == name) return COL_TOACCOUNTID;
-        else if (wxT("PAYEEID") == name) return COL_PAYEEID;
-        else if (wxT("TRANSCODE") == name) return COL_TRANSCODE;
-        else if (wxT("TRANSAMOUNT") == name) return COL_TRANSAMOUNT;
-        else if (wxT("STATUS") == name) return COL_STATUS;
-        else if (wxT("TRANSACTIONNUMBER") == name) return COL_TRANSACTIONNUMBER;
-        else if (wxT("NOTES") == name) return COL_NOTES;
-        else if (wxT("CATEGID") == name) return COL_CATEGID;
-        else if (wxT("SUBCATEGID") == name) return COL_SUBCATEGID;
-        else if (wxT("TRANSDATE") == name) return COL_TRANSDATE;
-        else if (wxT("FOLLOWUPID") == name) return COL_FOLLOWUPID;
-        else if (wxT("TOTRANSAMOUNT") == name) return COL_TOTRANSAMOUNT;
+        if ("TRANSID" == name) return COL_TRANSID;
+        else if ("ACCOUNTID" == name) return COL_ACCOUNTID;
+        else if ("TOACCOUNTID" == name) return COL_TOACCOUNTID;
+        else if ("PAYEEID" == name) return COL_PAYEEID;
+        else if ("TRANSCODE" == name) return COL_TRANSCODE;
+        else if ("TRANSAMOUNT" == name) return COL_TRANSAMOUNT;
+        else if ("STATUS" == name) return COL_STATUS;
+        else if ("TRANSACTIONNUMBER" == name) return COL_TRANSACTIONNUMBER;
+        else if ("NOTES" == name) return COL_NOTES;
+        else if ("CATEGID" == name) return COL_CATEGID;
+        else if ("SUBCATEGID" == name) return COL_SUBCATEGID;
+        else if ("TRANSDATE" == name) return COL_TRANSDATE;
+        else if ("FOLLOWUPID" == name) return COL_FOLLOWUPID;
+        else if ("TOTRANSAMOUNT" == name) return COL_TOTRANSAMOUNT;
 
         return COLUMN(-1);
     }
@@ -3192,20 +3193,20 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         {
             view_ = view;
         
-            TRANSID = q.GetInt(wxT("TRANSID"));
-            ACCOUNTID = q.GetInt(wxT("ACCOUNTID"));
-            TOACCOUNTID = q.GetInt(wxT("TOACCOUNTID"));
-            PAYEEID = q.GetInt(wxT("PAYEEID"));
-            TRANSCODE = q.GetString(wxT("TRANSCODE"));
-            TRANSAMOUNT = q.GetDouble(wxT("TRANSAMOUNT"));
-            STATUS = q.GetString(wxT("STATUS"));
-            TRANSACTIONNUMBER = q.GetString(wxT("TRANSACTIONNUMBER"));
-            NOTES = q.GetString(wxT("NOTES"));
-            CATEGID = q.GetInt(wxT("CATEGID"));
-            SUBCATEGID = q.GetInt(wxT("SUBCATEGID"));
-            TRANSDATE = q.GetString(wxT("TRANSDATE"));
-            FOLLOWUPID = q.GetInt(wxT("FOLLOWUPID"));
-            TOTRANSAMOUNT = q.GetDouble(wxT("TOTRANSAMOUNT"));
+            TRANSID = q.GetInt("TRANSID");
+            ACCOUNTID = q.GetInt("ACCOUNTID");
+            TOACCOUNTID = q.GetInt("TOACCOUNTID");
+            PAYEEID = q.GetInt("PAYEEID");
+            TRANSCODE = q.GetString("TRANSCODE");
+            TRANSAMOUNT = q.GetDouble("TRANSAMOUNT");
+            STATUS = q.GetString("STATUS");
+            TRANSACTIONNUMBER = q.GetString("TRANSACTIONNUMBER");
+            NOTES = q.GetString("NOTES");
+            CATEGID = q.GetInt("CATEGID");
+            SUBCATEGID = q.GetInt("SUBCATEGID");
+            TRANSDATE = q.GetString("TRANSDATE");
+            FOLLOWUPID = q.GetInt("FOLLOWUPID");
+            TOTRANSAMOUNT = q.GetDouble("TOTRANSAMOUNT");
         }
 
         wxString to_string(COLUMN col) const
@@ -3233,7 +3234,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -3243,7 +3244,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << TRANSID;
@@ -3267,7 +3268,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -3278,7 +3279,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -3295,11 +3296,11 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("CHECKINGACCOUNT_V1"); }
+    wxString name() const { return "CHECKINGACCOUNT_V1"; }
 
     DB_View_CHECKINGACCOUNT_V1() 
     {
-        query_ = wxT("SELECT TRANSID, ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT FROM CHECKINGACCOUNT_V1 ");
+        query_ = "SELECT TRANSID, ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT FROM CHECKINGACCOUNT_V1 ";
     }
 
     Self::Data* create()
@@ -3314,11 +3315,11 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO CHECKINGACCOUNT_V1(ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            sql = "INSERT INTO CHECKINGACCOUNT_V1(ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE CHECKINGACCOUNT_V1 SET ACCOUNTID = ?, TOACCOUNTID = ?, PAYEEID = ?, TRANSCODE = ?, TRANSAMOUNT = ?, STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?, TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ? WHERE TRANSID = ?");
+            sql = "UPDATE CHECKINGACCOUNT_V1 SET ACCOUNTID = ?, TOACCOUNTID = ?, PAYEEID = ?, TRANSCODE = ?, TRANSAMOUNT = ?, STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?, TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ? WHERE TRANSID = ?";
         }
 
         try
@@ -3346,7 +3347,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CHECKINGACCOUNT_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -3359,7 +3360,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM CHECKINGACCOUNT_V1 WHERE TRANSID = ?");
+            wxString sql = "DELETE FROM CHECKINGACCOUNT_V1 WHERE TRANSID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -3379,7 +3380,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CHECKINGACCOUNT_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -3408,7 +3409,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE TRANSID = ?"));
+        wxString where = wxString::Format(" WHERE TRANSID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -3424,7 +3425,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CHECKINGACCOUNT_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -3436,9 +3437,9 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -3453,7 +3454,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CHECKINGACCOUNT_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -3465,12 +3466,12 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -3486,7 +3487,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CHECKINGACCOUNT_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -3498,8 +3499,8 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -3511,7 +3512,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CHECKINGACCOUNT_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CHECKINGACCOUNT_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -3538,28 +3539,28 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE CURRENCYFORMATS_V1(CURRENCYID integer primary key, CURRENCYNAME TEXT NOT NULL, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT, DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT, UNIT_NAME TEXT, CENT_NAME TEXT, SCALE integer, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT)"));
+            db->ExecuteUpdate("CREATE TABLE CURRENCYFORMATS_V1(CURRENCYID integer primary key, CURRENCYNAME TEXT NOT NULL, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT, DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT, UNIT_NAME TEXT, CENT_NAME TEXT, SCALE integer, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CURRENCYFORMATS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct CURRENCYID { wxString name() const { return wxT("CURRENCYID"); } };
-    struct CURRENCYNAME { wxString name() const { return wxT("CURRENCYNAME"); } };
-    struct PFX_SYMBOL { wxString name() const { return wxT("PFX_SYMBOL"); } };
-    struct SFX_SYMBOL { wxString name() const { return wxT("SFX_SYMBOL"); } };
-    struct DECIMAL_POINT { wxString name() const { return wxT("DECIMAL_POINT"); } };
-    struct GROUP_SEPARATOR { wxString name() const { return wxT("GROUP_SEPARATOR"); } };
-    struct UNIT_NAME { wxString name() const { return wxT("UNIT_NAME"); } };
-    struct CENT_NAME { wxString name() const { return wxT("CENT_NAME"); } };
-    struct SCALE { wxString name() const { return wxT("SCALE"); } };
-    struct BASECONVRATE { wxString name() const { return wxT("BASECONVRATE"); } };
-    struct CURRENCY_SYMBOL { wxString name() const { return wxT("CURRENCY_SYMBOL"); } };
+    struct CURRENCYID { wxString name() const { return "CURRENCYID"; } };
+    struct CURRENCYNAME { wxString name() const { return "CURRENCYNAME"; } };
+    struct PFX_SYMBOL { wxString name() const { return "PFX_SYMBOL"; } };
+    struct SFX_SYMBOL { wxString name() const { return "SFX_SYMBOL"; } };
+    struct DECIMAL_POINT { wxString name() const { return "DECIMAL_POINT"; } };
+    struct GROUP_SEPARATOR { wxString name() const { return "GROUP_SEPARATOR"; } };
+    struct UNIT_NAME { wxString name() const { return "UNIT_NAME"; } };
+    struct CENT_NAME { wxString name() const { return "CENT_NAME"; } };
+    struct SCALE { wxString name() const { return "SCALE"; } };
+    struct BASECONVRATE { wxString name() const { return "BASECONVRATE"; } };
+    struct CURRENCY_SYMBOL { wxString name() const { return "CURRENCY_SYMBOL"; } };
     typedef CURRENCYID PRIMARY;
     enum COLUMN
     {
@@ -3597,36 +3598,36 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_CURRENCYID: return wxT("CURRENCYID");
-            case COL_CURRENCYNAME: return wxT("CURRENCYNAME");
-            case COL_PFX_SYMBOL: return wxT("PFX_SYMBOL");
-            case COL_SFX_SYMBOL: return wxT("SFX_SYMBOL");
-            case COL_DECIMAL_POINT: return wxT("DECIMAL_POINT");
-            case COL_GROUP_SEPARATOR: return wxT("GROUP_SEPARATOR");
-            case COL_UNIT_NAME: return wxT("UNIT_NAME");
-            case COL_CENT_NAME: return wxT("CENT_NAME");
-            case COL_SCALE: return wxT("SCALE");
-            case COL_BASECONVRATE: return wxT("BASECONVRATE");
-            case COL_CURRENCY_SYMBOL: return wxT("CURRENCY_SYMBOL");
+            case COL_CURRENCYID: return "CURRENCYID";
+            case COL_CURRENCYNAME: return "CURRENCYNAME";
+            case COL_PFX_SYMBOL: return "PFX_SYMBOL";
+            case COL_SFX_SYMBOL: return "SFX_SYMBOL";
+            case COL_DECIMAL_POINT: return "DECIMAL_POINT";
+            case COL_GROUP_SEPARATOR: return "GROUP_SEPARATOR";
+            case COL_UNIT_NAME: return "UNIT_NAME";
+            case COL_CENT_NAME: return "CENT_NAME";
+            case COL_SCALE: return "SCALE";
+            case COL_BASECONVRATE: return "BASECONVRATE";
+            case COL_CURRENCY_SYMBOL: return "CURRENCY_SYMBOL";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("CURRENCYID") == name) return COL_CURRENCYID;
-        else if (wxT("CURRENCYNAME") == name) return COL_CURRENCYNAME;
-        else if (wxT("PFX_SYMBOL") == name) return COL_PFX_SYMBOL;
-        else if (wxT("SFX_SYMBOL") == name) return COL_SFX_SYMBOL;
-        else if (wxT("DECIMAL_POINT") == name) return COL_DECIMAL_POINT;
-        else if (wxT("GROUP_SEPARATOR") == name) return COL_GROUP_SEPARATOR;
-        else if (wxT("UNIT_NAME") == name) return COL_UNIT_NAME;
-        else if (wxT("CENT_NAME") == name) return COL_CENT_NAME;
-        else if (wxT("SCALE") == name) return COL_SCALE;
-        else if (wxT("BASECONVRATE") == name) return COL_BASECONVRATE;
-        else if (wxT("CURRENCY_SYMBOL") == name) return COL_CURRENCY_SYMBOL;
+        if ("CURRENCYID" == name) return COL_CURRENCYID;
+        else if ("CURRENCYNAME" == name) return COL_CURRENCYNAME;
+        else if ("PFX_SYMBOL" == name) return COL_PFX_SYMBOL;
+        else if ("SFX_SYMBOL" == name) return COL_SFX_SYMBOL;
+        else if ("DECIMAL_POINT" == name) return COL_DECIMAL_POINT;
+        else if ("GROUP_SEPARATOR" == name) return COL_GROUP_SEPARATOR;
+        else if ("UNIT_NAME" == name) return COL_UNIT_NAME;
+        else if ("CENT_NAME" == name) return COL_CENT_NAME;
+        else if ("SCALE" == name) return COL_SCALE;
+        else if ("BASECONVRATE" == name) return COL_BASECONVRATE;
+        else if ("CURRENCY_SYMBOL" == name) return COL_CURRENCY_SYMBOL;
 
         return COLUMN(-1);
     }
@@ -3662,17 +3663,17 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         {
             view_ = view;
         
-            CURRENCYID = q.GetInt(wxT("CURRENCYID"));
-            CURRENCYNAME = q.GetString(wxT("CURRENCYNAME"));
-            PFX_SYMBOL = q.GetString(wxT("PFX_SYMBOL"));
-            SFX_SYMBOL = q.GetString(wxT("SFX_SYMBOL"));
-            DECIMAL_POINT = q.GetString(wxT("DECIMAL_POINT"));
-            GROUP_SEPARATOR = q.GetString(wxT("GROUP_SEPARATOR"));
-            UNIT_NAME = q.GetString(wxT("UNIT_NAME"));
-            CENT_NAME = q.GetString(wxT("CENT_NAME"));
-            SCALE = q.GetInt(wxT("SCALE"));
-            BASECONVRATE = q.GetDouble(wxT("BASECONVRATE"));
-            CURRENCY_SYMBOL = q.GetString(wxT("CURRENCY_SYMBOL"));
+            CURRENCYID = q.GetInt("CURRENCYID");
+            CURRENCYNAME = q.GetString("CURRENCYNAME");
+            PFX_SYMBOL = q.GetString("PFX_SYMBOL");
+            SFX_SYMBOL = q.GetString("SFX_SYMBOL");
+            DECIMAL_POINT = q.GetString("DECIMAL_POINT");
+            GROUP_SEPARATOR = q.GetString("GROUP_SEPARATOR");
+            UNIT_NAME = q.GetString("UNIT_NAME");
+            CENT_NAME = q.GetString("CENT_NAME");
+            SCALE = q.GetInt("SCALE");
+            BASECONVRATE = q.GetDouble("BASECONVRATE");
+            CURRENCY_SYMBOL = q.GetString("CURRENCY_SYMBOL");
         }
 
         wxString to_string(COLUMN col) const
@@ -3697,7 +3698,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -3707,7 +3708,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << CURRENCYID;
@@ -3728,7 +3729,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -3739,7 +3740,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -3756,11 +3757,11 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("CURRENCYFORMATS_V1"); }
+    wxString name() const { return "CURRENCYFORMATS_V1"; }
 
     DB_View_CURRENCYFORMATS_V1() 
     {
-        query_ = wxT("SELECT CURRENCYID, CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL FROM CURRENCYFORMATS_V1 ");
+        query_ = "SELECT CURRENCYID, CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL FROM CURRENCYFORMATS_V1 ";
     }
 
     Self::Data* create()
@@ -3775,11 +3776,11 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO CURRENCYFORMATS_V1(CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            sql = "INSERT INTO CURRENCYFORMATS_V1(CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE CURRENCYFORMATS_V1 SET CURRENCYNAME = ?, PFX_SYMBOL = ?, SFX_SYMBOL = ?, DECIMAL_POINT = ?, GROUP_SEPARATOR = ?, UNIT_NAME = ?, CENT_NAME = ?, SCALE = ?, BASECONVRATE = ?, CURRENCY_SYMBOL = ? WHERE CURRENCYID = ?");
+            sql = "UPDATE CURRENCYFORMATS_V1 SET CURRENCYNAME = ?, PFX_SYMBOL = ?, SFX_SYMBOL = ?, DECIMAL_POINT = ?, GROUP_SEPARATOR = ?, UNIT_NAME = ?, CENT_NAME = ?, SCALE = ?, BASECONVRATE = ?, CURRENCY_SYMBOL = ? WHERE CURRENCYID = ?";
         }
 
         try
@@ -3804,7 +3805,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CURRENCYFORMATS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -3817,7 +3818,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM CURRENCYFORMATS_V1 WHERE CURRENCYID = ?");
+            wxString sql = "DELETE FROM CURRENCYFORMATS_V1 WHERE CURRENCYID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -3837,7 +3838,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CURRENCYFORMATS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -3866,7 +3867,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE CURRENCYID = ?"));
+        wxString where = wxString::Format(" WHERE CURRENCYID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -3882,7 +3883,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CURRENCYFORMATS_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -3894,9 +3895,9 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -3911,7 +3912,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CURRENCYFORMATS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -3923,12 +3924,12 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -3944,7 +3945,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CURRENCYFORMATS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -3956,8 +3957,8 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -3969,7 +3970,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("CURRENCYFORMATS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("CURRENCYFORMATS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -3996,20 +3997,20 @@ struct DB_View_INFOTABLE_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE INFOTABLE_V1(INFOID integer not null primary key, INFONAME TEXT NOT NULL, INFOVALUE TEXT NOT NULL)"));
+            db->ExecuteUpdate("CREATE TABLE INFOTABLE_V1(INFOID integer not null primary key, INFONAME TEXT NOT NULL, INFOVALUE TEXT NOT NULL)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("INFOTABLE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct INFOID { wxString name() const { return wxT("INFOID"); } };
-    struct INFONAME { wxString name() const { return wxT("INFONAME"); } };
-    struct INFOVALUE { wxString name() const { return wxT("INFOVALUE"); } };
+    struct INFOID { wxString name() const { return "INFOID"; } };
+    struct INFONAME { wxString name() const { return "INFONAME"; } };
+    struct INFOVALUE { wxString name() const { return "INFOVALUE"; } };
     typedef INFOID PRIMARY;
     enum COLUMN
     {
@@ -4031,20 +4032,20 @@ struct DB_View_INFOTABLE_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_INFOID: return wxT("INFOID");
-            case COL_INFONAME: return wxT("INFONAME");
-            case COL_INFOVALUE: return wxT("INFOVALUE");
+            case COL_INFOID: return "INFOID";
+            case COL_INFONAME: return "INFONAME";
+            case COL_INFOVALUE: return "INFOVALUE";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("INFOID") == name) return COL_INFOID;
-        else if (wxT("INFONAME") == name) return COL_INFONAME;
-        else if (wxT("INFOVALUE") == name) return COL_INFOVALUE;
+        if ("INFOID" == name) return COL_INFOID;
+        else if ("INFONAME" == name) return COL_INFONAME;
+        else if ("INFOVALUE" == name) return COL_INFOVALUE;
 
         return COLUMN(-1);
     }
@@ -4070,9 +4071,9 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         {
             view_ = view;
         
-            INFOID = q.GetInt(wxT("INFOID"));
-            INFONAME = q.GetString(wxT("INFONAME"));
-            INFOVALUE = q.GetString(wxT("INFOVALUE"));
+            INFOID = q.GetInt("INFOID");
+            INFONAME = q.GetString("INFONAME");
+            INFOVALUE = q.GetString("INFOVALUE");
         }
 
         wxString to_string(COLUMN col) const
@@ -4089,7 +4090,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -4099,7 +4100,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << INFOID;
@@ -4112,7 +4113,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -4123,7 +4124,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -4140,11 +4141,11 @@ struct DB_View_INFOTABLE_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("INFOTABLE_V1"); }
+    wxString name() const { return "INFOTABLE_V1"; }
 
     DB_View_INFOTABLE_V1() 
     {
-        query_ = wxT("SELECT INFOID, INFONAME, INFOVALUE FROM INFOTABLE_V1 ");
+        query_ = "SELECT INFOID, INFONAME, INFOVALUE FROM INFOTABLE_V1 ";
     }
 
     Self::Data* create()
@@ -4159,11 +4160,11 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO INFOTABLE_V1(INFONAME, INFOVALUE) VALUES(?, ?)");
+            sql = "INSERT INTO INFOTABLE_V1(INFONAME, INFOVALUE) VALUES(?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE INFOTABLE_V1 SET INFONAME = ?, INFOVALUE = ? WHERE INFOID = ?");
+            sql = "UPDATE INFOTABLE_V1 SET INFONAME = ?, INFOVALUE = ? WHERE INFOID = ?";
         }
 
         try
@@ -4180,7 +4181,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("INFOTABLE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -4193,7 +4194,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM INFOTABLE_V1 WHERE INFOID = ?");
+            wxString sql = "DELETE FROM INFOTABLE_V1 WHERE INFOID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -4213,7 +4214,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("INFOTABLE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -4242,7 +4243,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE INFOID = ?"));
+        wxString where = wxString::Format(" WHERE INFOID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -4258,7 +4259,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("INFOTABLE_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -4270,9 +4271,9 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -4287,7 +4288,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("INFOTABLE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -4299,12 +4300,12 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -4320,7 +4321,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("INFOTABLE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -4332,8 +4333,8 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -4345,7 +4346,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("INFOTABLE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("INFOTABLE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -4372,21 +4373,21 @@ struct DB_View_PAYEE_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE PAYEE_V1(PAYEEID integer primary key, PAYEENAME TEXT NOT NULL, CATEGID integer, SUBCATEGID integer)"));
+            db->ExecuteUpdate("CREATE TABLE PAYEE_V1(PAYEEID integer primary key, PAYEENAME TEXT NOT NULL, CATEGID integer, SUBCATEGID integer)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("PAYEE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct PAYEEID { wxString name() const { return wxT("PAYEEID"); } };
-    struct PAYEENAME { wxString name() const { return wxT("PAYEENAME"); } };
-    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
-    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
+    struct PAYEEID { wxString name() const { return "PAYEEID"; } };
+    struct PAYEENAME { wxString name() const { return "PAYEENAME"; } };
+    struct CATEGID { wxString name() const { return "CATEGID"; } };
+    struct SUBCATEGID { wxString name() const { return "SUBCATEGID"; } };
     typedef PAYEEID PRIMARY;
     enum COLUMN
     {
@@ -4410,22 +4411,22 @@ struct DB_View_PAYEE_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_PAYEEID: return wxT("PAYEEID");
-            case COL_PAYEENAME: return wxT("PAYEENAME");
-            case COL_CATEGID: return wxT("CATEGID");
-            case COL_SUBCATEGID: return wxT("SUBCATEGID");
+            case COL_PAYEEID: return "PAYEEID";
+            case COL_PAYEENAME: return "PAYEENAME";
+            case COL_CATEGID: return "CATEGID";
+            case COL_SUBCATEGID: return "SUBCATEGID";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("PAYEEID") == name) return COL_PAYEEID;
-        else if (wxT("PAYEENAME") == name) return COL_PAYEENAME;
-        else if (wxT("CATEGID") == name) return COL_CATEGID;
-        else if (wxT("SUBCATEGID") == name) return COL_SUBCATEGID;
+        if ("PAYEEID" == name) return COL_PAYEEID;
+        else if ("PAYEENAME" == name) return COL_PAYEENAME;
+        else if ("CATEGID" == name) return COL_CATEGID;
+        else if ("SUBCATEGID" == name) return COL_SUBCATEGID;
 
         return COLUMN(-1);
     }
@@ -4454,10 +4455,10 @@ struct DB_View_PAYEE_V1 : public DB_View
         {
             view_ = view;
         
-            PAYEEID = q.GetInt(wxT("PAYEEID"));
-            PAYEENAME = q.GetString(wxT("PAYEENAME"));
-            CATEGID = q.GetInt(wxT("CATEGID"));
-            SUBCATEGID = q.GetInt(wxT("SUBCATEGID"));
+            PAYEEID = q.GetInt("PAYEEID");
+            PAYEENAME = q.GetString("PAYEENAME");
+            CATEGID = q.GetInt("CATEGID");
+            SUBCATEGID = q.GetInt("SUBCATEGID");
         }
 
         wxString to_string(COLUMN col) const
@@ -4475,7 +4476,7 @@ struct DB_View_PAYEE_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -4485,7 +4486,7 @@ struct DB_View_PAYEE_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << PAYEEID;
@@ -4499,7 +4500,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -4510,7 +4511,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -4527,11 +4528,11 @@ struct DB_View_PAYEE_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("PAYEE_V1"); }
+    wxString name() const { return "PAYEE_V1"; }
 
     DB_View_PAYEE_V1() 
     {
-        query_ = wxT("SELECT PAYEEID, PAYEENAME, CATEGID, SUBCATEGID FROM PAYEE_V1 ");
+        query_ = "SELECT PAYEEID, PAYEENAME, CATEGID, SUBCATEGID FROM PAYEE_V1 ";
     }
 
     Self::Data* create()
@@ -4546,11 +4547,11 @@ struct DB_View_PAYEE_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO PAYEE_V1(PAYEENAME, CATEGID, SUBCATEGID) VALUES(?, ?, ?)");
+            sql = "INSERT INTO PAYEE_V1(PAYEENAME, CATEGID, SUBCATEGID) VALUES(?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE PAYEE_V1 SET PAYEENAME = ?, CATEGID = ?, SUBCATEGID = ? WHERE PAYEEID = ?");
+            sql = "UPDATE PAYEE_V1 SET PAYEENAME = ?, CATEGID = ?, SUBCATEGID = ? WHERE PAYEEID = ?";
         }
 
         try
@@ -4568,7 +4569,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("PAYEE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -4581,7 +4582,7 @@ struct DB_View_PAYEE_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM PAYEE_V1 WHERE PAYEEID = ?");
+            wxString sql = "DELETE FROM PAYEE_V1 WHERE PAYEEID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -4601,7 +4602,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("PAYEE_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -4630,7 +4631,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE PAYEEID = ?"));
+        wxString where = wxString::Format(" WHERE PAYEEID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -4646,7 +4647,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("PAYEE_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -4658,9 +4659,9 @@ struct DB_View_PAYEE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -4675,7 +4676,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("PAYEE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -4687,12 +4688,12 @@ struct DB_View_PAYEE_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -4708,7 +4709,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("PAYEE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -4720,8 +4721,8 @@ struct DB_View_PAYEE_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -4733,7 +4734,7 @@ struct DB_View_PAYEE_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("PAYEE_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("PAYEE_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -4760,20 +4761,20 @@ struct DB_View_SETTING_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE SETTING_V1(SETTINGID integer not null primary key, SETTINGNAME TEXT NOT NULL, SETTINGVALUE TEXT)"));
+            db->ExecuteUpdate("CREATE TABLE SETTING_V1(SETTINGID integer not null primary key, SETTINGNAME TEXT NOT NULL, SETTINGVALUE TEXT)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SETTING_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct SETTINGID { wxString name() const { return wxT("SETTINGID"); } };
-    struct SETTINGNAME { wxString name() const { return wxT("SETTINGNAME"); } };
-    struct SETTINGVALUE { wxString name() const { return wxT("SETTINGVALUE"); } };
+    struct SETTINGID { wxString name() const { return "SETTINGID"; } };
+    struct SETTINGNAME { wxString name() const { return "SETTINGNAME"; } };
+    struct SETTINGVALUE { wxString name() const { return "SETTINGVALUE"; } };
     typedef SETTINGID PRIMARY;
     enum COLUMN
     {
@@ -4795,20 +4796,20 @@ struct DB_View_SETTING_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_SETTINGID: return wxT("SETTINGID");
-            case COL_SETTINGNAME: return wxT("SETTINGNAME");
-            case COL_SETTINGVALUE: return wxT("SETTINGVALUE");
+            case COL_SETTINGID: return "SETTINGID";
+            case COL_SETTINGNAME: return "SETTINGNAME";
+            case COL_SETTINGVALUE: return "SETTINGVALUE";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("SETTINGID") == name) return COL_SETTINGID;
-        else if (wxT("SETTINGNAME") == name) return COL_SETTINGNAME;
-        else if (wxT("SETTINGVALUE") == name) return COL_SETTINGVALUE;
+        if ("SETTINGID" == name) return COL_SETTINGID;
+        else if ("SETTINGNAME" == name) return COL_SETTINGNAME;
+        else if ("SETTINGVALUE" == name) return COL_SETTINGVALUE;
 
         return COLUMN(-1);
     }
@@ -4834,9 +4835,9 @@ struct DB_View_SETTING_V1 : public DB_View
         {
             view_ = view;
         
-            SETTINGID = q.GetInt(wxT("SETTINGID"));
-            SETTINGNAME = q.GetString(wxT("SETTINGNAME"));
-            SETTINGVALUE = q.GetString(wxT("SETTINGVALUE"));
+            SETTINGID = q.GetInt("SETTINGID");
+            SETTINGNAME = q.GetString("SETTINGNAME");
+            SETTINGVALUE = q.GetString("SETTINGVALUE");
         }
 
         wxString to_string(COLUMN col) const
@@ -4853,7 +4854,7 @@ struct DB_View_SETTING_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -4863,7 +4864,7 @@ struct DB_View_SETTING_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << SETTINGID;
@@ -4876,7 +4877,7 @@ struct DB_View_SETTING_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -4887,7 +4888,7 @@ struct DB_View_SETTING_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -4904,11 +4905,11 @@ struct DB_View_SETTING_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("SETTING_V1"); }
+    wxString name() const { return "SETTING_V1"; }
 
     DB_View_SETTING_V1() 
     {
-        query_ = wxT("SELECT SETTINGID, SETTINGNAME, SETTINGVALUE FROM SETTING_V1 ");
+        query_ = "SELECT SETTINGID, SETTINGNAME, SETTINGVALUE FROM SETTING_V1 ";
     }
 
     Self::Data* create()
@@ -4923,11 +4924,11 @@ struct DB_View_SETTING_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO SETTING_V1(SETTINGNAME, SETTINGVALUE) VALUES(?, ?)");
+            sql = "INSERT INTO SETTING_V1(SETTINGNAME, SETTINGVALUE) VALUES(?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE SETTING_V1 SET SETTINGNAME = ?, SETTINGVALUE = ? WHERE SETTINGID = ?");
+            sql = "UPDATE SETTING_V1 SET SETTINGNAME = ?, SETTINGVALUE = ? WHERE SETTINGID = ?";
         }
 
         try
@@ -4944,7 +4945,7 @@ struct DB_View_SETTING_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SETTING_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -4957,7 +4958,7 @@ struct DB_View_SETTING_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM SETTING_V1 WHERE SETTINGID = ?");
+            wxString sql = "DELETE FROM SETTING_V1 WHERE SETTINGID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -4977,7 +4978,7 @@ struct DB_View_SETTING_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SETTING_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -5006,7 +5007,7 @@ struct DB_View_SETTING_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE SETTINGID = ?"));
+        wxString where = wxString::Format(" WHERE SETTINGID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -5022,7 +5023,7 @@ struct DB_View_SETTING_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SETTING_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -5034,9 +5035,9 @@ struct DB_View_SETTING_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -5051,7 +5052,7 @@ struct DB_View_SETTING_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SETTING_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5063,12 +5064,12 @@ struct DB_View_SETTING_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -5084,7 +5085,7 @@ struct DB_View_SETTING_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SETTING_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5096,8 +5097,8 @@ struct DB_View_SETTING_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -5109,7 +5110,7 @@ struct DB_View_SETTING_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SETTING_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SETTING_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5136,22 +5137,22 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE SPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, TRANSID numeric NOT NULL, CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric)"));
+            db->ExecuteUpdate("CREATE TABLE SPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, TRANSID numeric NOT NULL, CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct SPLITTRANSID { wxString name() const { return wxT("SPLITTRANSID"); } };
-    struct TRANSID { wxString name() const { return wxT("TRANSID"); } };
-    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
-    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
-    struct SPLITTRANSAMOUNT { wxString name() const { return wxT("SPLITTRANSAMOUNT"); } };
+    struct SPLITTRANSID { wxString name() const { return "SPLITTRANSID"; } };
+    struct TRANSID { wxString name() const { return "TRANSID"; } };
+    struct CATEGID { wxString name() const { return "CATEGID"; } };
+    struct SUBCATEGID { wxString name() const { return "SUBCATEGID"; } };
+    struct SPLITTRANSAMOUNT { wxString name() const { return "SPLITTRANSAMOUNT"; } };
     typedef SPLITTRANSID PRIMARY;
     enum COLUMN
     {
@@ -5177,24 +5178,24 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_SPLITTRANSID: return wxT("SPLITTRANSID");
-            case COL_TRANSID: return wxT("TRANSID");
-            case COL_CATEGID: return wxT("CATEGID");
-            case COL_SUBCATEGID: return wxT("SUBCATEGID");
-            case COL_SPLITTRANSAMOUNT: return wxT("SPLITTRANSAMOUNT");
+            case COL_SPLITTRANSID: return "SPLITTRANSID";
+            case COL_TRANSID: return "TRANSID";
+            case COL_CATEGID: return "CATEGID";
+            case COL_SUBCATEGID: return "SUBCATEGID";
+            case COL_SPLITTRANSAMOUNT: return "SPLITTRANSAMOUNT";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("SPLITTRANSID") == name) return COL_SPLITTRANSID;
-        else if (wxT("TRANSID") == name) return COL_TRANSID;
-        else if (wxT("CATEGID") == name) return COL_CATEGID;
-        else if (wxT("SUBCATEGID") == name) return COL_SUBCATEGID;
-        else if (wxT("SPLITTRANSAMOUNT") == name) return COL_SPLITTRANSAMOUNT;
+        if ("SPLITTRANSID" == name) return COL_SPLITTRANSID;
+        else if ("TRANSID" == name) return COL_TRANSID;
+        else if ("CATEGID" == name) return COL_CATEGID;
+        else if ("SUBCATEGID" == name) return COL_SUBCATEGID;
+        else if ("SPLITTRANSAMOUNT" == name) return COL_SPLITTRANSAMOUNT;
 
         return COLUMN(-1);
     }
@@ -5226,11 +5227,11 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         {
             view_ = view;
         
-            SPLITTRANSID = q.GetInt(wxT("SPLITTRANSID"));
-            TRANSID = q.GetDouble(wxT("TRANSID"));
-            CATEGID = q.GetInt(wxT("CATEGID"));
-            SUBCATEGID = q.GetInt(wxT("SUBCATEGID"));
-            SPLITTRANSAMOUNT = q.GetDouble(wxT("SPLITTRANSAMOUNT"));
+            SPLITTRANSID = q.GetInt("SPLITTRANSID");
+            TRANSID = q.GetDouble("TRANSID");
+            CATEGID = q.GetInt("CATEGID");
+            SUBCATEGID = q.GetInt("SUBCATEGID");
+            SPLITTRANSAMOUNT = q.GetDouble("SPLITTRANSAMOUNT");
         }
 
         wxString to_string(COLUMN col) const
@@ -5249,7 +5250,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -5259,7 +5260,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << SPLITTRANSID;
@@ -5274,7 +5275,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -5285,7 +5286,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -5302,11 +5303,11 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("SPLITTRANSACTIONS_V1"); }
+    wxString name() const { return "SPLITTRANSACTIONS_V1"; }
 
     DB_View_SPLITTRANSACTIONS_V1() 
     {
-        query_ = wxT("SELECT SPLITTRANSID, TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT FROM SPLITTRANSACTIONS_V1 ");
+        query_ = "SELECT SPLITTRANSID, TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT FROM SPLITTRANSACTIONS_V1 ";
     }
 
     Self::Data* create()
@@ -5321,11 +5322,11 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO SPLITTRANSACTIONS_V1(TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) VALUES(?, ?, ?, ?)");
+            sql = "INSERT INTO SPLITTRANSACTIONS_V1(TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) VALUES(?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE SPLITTRANSACTIONS_V1 SET TRANSID = ?, CATEGID = ?, SUBCATEGID = ?, SPLITTRANSAMOUNT = ? WHERE SPLITTRANSID = ?");
+            sql = "UPDATE SPLITTRANSACTIONS_V1 SET TRANSID = ?, CATEGID = ?, SUBCATEGID = ?, SPLITTRANSAMOUNT = ? WHERE SPLITTRANSID = ?";
         }
 
         try
@@ -5344,7 +5345,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -5357,7 +5358,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM SPLITTRANSACTIONS_V1 WHERE SPLITTRANSID = ?");
+            wxString sql = "DELETE FROM SPLITTRANSACTIONS_V1 WHERE SPLITTRANSID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -5377,7 +5378,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -5406,7 +5407,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE SPLITTRANSID = ?"));
+        wxString where = wxString::Format(" WHERE SPLITTRANSID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -5422,7 +5423,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -5434,9 +5435,9 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -5451,7 +5452,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5463,12 +5464,12 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -5484,7 +5485,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5496,8 +5497,8 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -5509,7 +5510,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SPLITTRANSACTIONS_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SPLITTRANSACTIONS_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5536,28 +5537,28 @@ struct DB_View_STOCK_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE STOCK_V1(STOCKID integer primary key, HELDAT integer , PURCHASEDATE TEXT NOT NULL, STOCKNAME TEXT, SYMBOL TEXT, NUMSHARES numeric, PURCHASEPRICE numeric NOT NULL, NOTES TEXT, CURRENTPRICE numeric NOT NULL, VALUE numeric, COMMISSION numeric)"));
+            db->ExecuteUpdate("CREATE TABLE STOCK_V1(STOCKID integer primary key, HELDAT integer , PURCHASEDATE TEXT NOT NULL, STOCKNAME TEXT, SYMBOL TEXT, NUMSHARES numeric, PURCHASEPRICE numeric NOT NULL, NOTES TEXT, CURRENTPRICE numeric NOT NULL, VALUE numeric, COMMISSION numeric)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("STOCK_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct STOCKID { wxString name() const { return wxT("STOCKID"); } };
-    struct HELDAT { wxString name() const { return wxT("HELDAT"); } };
-    struct PURCHASEDATE { wxString name() const { return wxT("PURCHASEDATE"); } };
-    struct STOCKNAME { wxString name() const { return wxT("STOCKNAME"); } };
-    struct SYMBOL { wxString name() const { return wxT("SYMBOL"); } };
-    struct NUMSHARES { wxString name() const { return wxT("NUMSHARES"); } };
-    struct PURCHASEPRICE { wxString name() const { return wxT("PURCHASEPRICE"); } };
-    struct NOTES { wxString name() const { return wxT("NOTES"); } };
-    struct CURRENTPRICE { wxString name() const { return wxT("CURRENTPRICE"); } };
-    struct VALUE { wxString name() const { return wxT("VALUE"); } };
-    struct COMMISSION { wxString name() const { return wxT("COMMISSION"); } };
+    struct STOCKID { wxString name() const { return "STOCKID"; } };
+    struct HELDAT { wxString name() const { return "HELDAT"; } };
+    struct PURCHASEDATE { wxString name() const { return "PURCHASEDATE"; } };
+    struct STOCKNAME { wxString name() const { return "STOCKNAME"; } };
+    struct SYMBOL { wxString name() const { return "SYMBOL"; } };
+    struct NUMSHARES { wxString name() const { return "NUMSHARES"; } };
+    struct PURCHASEPRICE { wxString name() const { return "PURCHASEPRICE"; } };
+    struct NOTES { wxString name() const { return "NOTES"; } };
+    struct CURRENTPRICE { wxString name() const { return "CURRENTPRICE"; } };
+    struct VALUE { wxString name() const { return "VALUE"; } };
+    struct COMMISSION { wxString name() const { return "COMMISSION"; } };
     typedef STOCKID PRIMARY;
     enum COLUMN
     {
@@ -5595,36 +5596,36 @@ struct DB_View_STOCK_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_STOCKID: return wxT("STOCKID");
-            case COL_HELDAT: return wxT("HELDAT");
-            case COL_PURCHASEDATE: return wxT("PURCHASEDATE");
-            case COL_STOCKNAME: return wxT("STOCKNAME");
-            case COL_SYMBOL: return wxT("SYMBOL");
-            case COL_NUMSHARES: return wxT("NUMSHARES");
-            case COL_PURCHASEPRICE: return wxT("PURCHASEPRICE");
-            case COL_NOTES: return wxT("NOTES");
-            case COL_CURRENTPRICE: return wxT("CURRENTPRICE");
-            case COL_VALUE: return wxT("VALUE");
-            case COL_COMMISSION: return wxT("COMMISSION");
+            case COL_STOCKID: return "STOCKID";
+            case COL_HELDAT: return "HELDAT";
+            case COL_PURCHASEDATE: return "PURCHASEDATE";
+            case COL_STOCKNAME: return "STOCKNAME";
+            case COL_SYMBOL: return "SYMBOL";
+            case COL_NUMSHARES: return "NUMSHARES";
+            case COL_PURCHASEPRICE: return "PURCHASEPRICE";
+            case COL_NOTES: return "NOTES";
+            case COL_CURRENTPRICE: return "CURRENTPRICE";
+            case COL_VALUE: return "VALUE";
+            case COL_COMMISSION: return "COMMISSION";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("STOCKID") == name) return COL_STOCKID;
-        else if (wxT("HELDAT") == name) return COL_HELDAT;
-        else if (wxT("PURCHASEDATE") == name) return COL_PURCHASEDATE;
-        else if (wxT("STOCKNAME") == name) return COL_STOCKNAME;
-        else if (wxT("SYMBOL") == name) return COL_SYMBOL;
-        else if (wxT("NUMSHARES") == name) return COL_NUMSHARES;
-        else if (wxT("PURCHASEPRICE") == name) return COL_PURCHASEPRICE;
-        else if (wxT("NOTES") == name) return COL_NOTES;
-        else if (wxT("CURRENTPRICE") == name) return COL_CURRENTPRICE;
-        else if (wxT("VALUE") == name) return COL_VALUE;
-        else if (wxT("COMMISSION") == name) return COL_COMMISSION;
+        if ("STOCKID" == name) return COL_STOCKID;
+        else if ("HELDAT" == name) return COL_HELDAT;
+        else if ("PURCHASEDATE" == name) return COL_PURCHASEDATE;
+        else if ("STOCKNAME" == name) return COL_STOCKNAME;
+        else if ("SYMBOL" == name) return COL_SYMBOL;
+        else if ("NUMSHARES" == name) return COL_NUMSHARES;
+        else if ("PURCHASEPRICE" == name) return COL_PURCHASEPRICE;
+        else if ("NOTES" == name) return COL_NOTES;
+        else if ("CURRENTPRICE" == name) return COL_CURRENTPRICE;
+        else if ("VALUE" == name) return COL_VALUE;
+        else if ("COMMISSION" == name) return COL_COMMISSION;
 
         return COLUMN(-1);
     }
@@ -5664,17 +5665,17 @@ struct DB_View_STOCK_V1 : public DB_View
         {
             view_ = view;
         
-            STOCKID = q.GetInt(wxT("STOCKID"));
-            HELDAT = q.GetInt(wxT("HELDAT"));
-            PURCHASEDATE = q.GetString(wxT("PURCHASEDATE"));
-            STOCKNAME = q.GetString(wxT("STOCKNAME"));
-            SYMBOL = q.GetString(wxT("SYMBOL"));
-            NUMSHARES = q.GetDouble(wxT("NUMSHARES"));
-            PURCHASEPRICE = q.GetDouble(wxT("PURCHASEPRICE"));
-            NOTES = q.GetString(wxT("NOTES"));
-            CURRENTPRICE = q.GetDouble(wxT("CURRENTPRICE"));
-            VALUE = q.GetDouble(wxT("VALUE"));
-            COMMISSION = q.GetDouble(wxT("COMMISSION"));
+            STOCKID = q.GetInt("STOCKID");
+            HELDAT = q.GetInt("HELDAT");
+            PURCHASEDATE = q.GetString("PURCHASEDATE");
+            STOCKNAME = q.GetString("STOCKNAME");
+            SYMBOL = q.GetString("SYMBOL");
+            NUMSHARES = q.GetDouble("NUMSHARES");
+            PURCHASEPRICE = q.GetDouble("PURCHASEPRICE");
+            NOTES = q.GetString("NOTES");
+            CURRENTPRICE = q.GetDouble("CURRENTPRICE");
+            VALUE = q.GetDouble("VALUE");
+            COMMISSION = q.GetDouble("COMMISSION");
         }
 
         wxString to_string(COLUMN col) const
@@ -5699,7 +5700,7 @@ struct DB_View_STOCK_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -5709,7 +5710,7 @@ struct DB_View_STOCK_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << STOCKID;
@@ -5730,7 +5731,7 @@ struct DB_View_STOCK_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -5741,7 +5742,7 @@ struct DB_View_STOCK_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -5758,11 +5759,11 @@ struct DB_View_STOCK_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("STOCK_V1"); }
+    wxString name() const { return "STOCK_V1"; }
 
     DB_View_STOCK_V1() 
     {
-        query_ = wxT("SELECT STOCKID, HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION FROM STOCK_V1 ");
+        query_ = "SELECT STOCKID, HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION FROM STOCK_V1 ";
     }
 
     Self::Data* create()
@@ -5777,11 +5778,11 @@ struct DB_View_STOCK_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO STOCK_V1(HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            sql = "INSERT INTO STOCK_V1(HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE STOCK_V1 SET HELDAT = ?, PURCHASEDATE = ?, STOCKNAME = ?, SYMBOL = ?, NUMSHARES = ?, PURCHASEPRICE = ?, NOTES = ?, CURRENTPRICE = ?, VALUE = ?, COMMISSION = ? WHERE STOCKID = ?");
+            sql = "UPDATE STOCK_V1 SET HELDAT = ?, PURCHASEDATE = ?, STOCKNAME = ?, SYMBOL = ?, NUMSHARES = ?, PURCHASEPRICE = ?, NOTES = ?, CURRENTPRICE = ?, VALUE = ?, COMMISSION = ? WHERE STOCKID = ?";
         }
 
         try
@@ -5806,7 +5807,7 @@ struct DB_View_STOCK_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("STOCK_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -5819,7 +5820,7 @@ struct DB_View_STOCK_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM STOCK_V1 WHERE STOCKID = ?");
+            wxString sql = "DELETE FROM STOCK_V1 WHERE STOCKID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -5839,7 +5840,7 @@ struct DB_View_STOCK_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("STOCK_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -5868,7 +5869,7 @@ struct DB_View_STOCK_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE STOCKID = ?"));
+        wxString where = wxString::Format(" WHERE STOCKID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -5884,7 +5885,7 @@ struct DB_View_STOCK_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("STOCK_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -5896,9 +5897,9 @@ struct DB_View_STOCK_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -5913,7 +5914,7 @@ struct DB_View_STOCK_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("STOCK_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5925,12 +5926,12 @@ struct DB_View_STOCK_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -5946,7 +5947,7 @@ struct DB_View_STOCK_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("STOCK_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5958,8 +5959,8 @@ struct DB_View_STOCK_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -5971,7 +5972,7 @@ struct DB_View_STOCK_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("STOCK_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("STOCK_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -5998,20 +5999,20 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate(wxT("CREATE TABLE SUBCATEGORY_V1(SUBCATEGID integer primary key, SUBCATEGNAME TEXT NOT NULL, CATEGID integer NOT NULL)"));
+            db->ExecuteUpdate("CREATE TABLE SUBCATEGORY_V1(SUBCATEGID integer primary key, SUBCATEGNAME TEXT NOT NULL, CATEGID integer NOT NULL)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SUBCATEGORY_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
         return true;
     }
 
-    struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
-    struct SUBCATEGNAME { wxString name() const { return wxT("SUBCATEGNAME"); } };
-    struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    struct SUBCATEGID { wxString name() const { return "SUBCATEGID"; } };
+    struct SUBCATEGNAME { wxString name() const { return "SUBCATEGNAME"; } };
+    struct CATEGID { wxString name() const { return "CATEGID"; } };
     typedef SUBCATEGID PRIMARY;
     enum COLUMN
     {
@@ -6033,20 +6034,20 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
     {
         switch(col)
         {
-            case COL_SUBCATEGID: return wxT("SUBCATEGID");
-            case COL_SUBCATEGNAME: return wxT("SUBCATEGNAME");
-            case COL_CATEGID: return wxT("CATEGID");
+            case COL_SUBCATEGID: return "SUBCATEGID";
+            case COL_SUBCATEGNAME: return "SUBCATEGNAME";
+            case COL_CATEGID: return "CATEGID";
             default: break;
         }
         
-        return wxT("UNKNOWN");
+        return "UNKNOWN";
     }
 
     COLUMN name_to_column(const wxString& name) const
     {
-        if (wxT("SUBCATEGID") == name) return COL_SUBCATEGID;
-        else if (wxT("SUBCATEGNAME") == name) return COL_SUBCATEGNAME;
-        else if (wxT("CATEGID") == name) return COL_CATEGID;
+        if ("SUBCATEGID" == name) return COL_SUBCATEGID;
+        else if ("SUBCATEGNAME" == name) return COL_SUBCATEGNAME;
+        else if ("CATEGID" == name) return COL_CATEGID;
 
         return COLUMN(-1);
     }
@@ -6073,9 +6074,9 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         {
             view_ = view;
         
-            SUBCATEGID = q.GetInt(wxT("SUBCATEGID"));
-            SUBCATEGNAME = q.GetString(wxT("SUBCATEGNAME"));
-            CATEGID = q.GetInt(wxT("CATEGID"));
+            SUBCATEGID = q.GetInt("SUBCATEGID");
+            SUBCATEGNAME = q.GetString("SUBCATEGNAME");
+            CATEGID = q.GetInt("CATEGID");
         }
 
         wxString to_string(COLUMN col) const
@@ -6092,7 +6093,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = wxT(",")) const
+        wxString to_string(std::vector<COLUMN> columns, const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             std::vector<COLUMN>::const_iterator it = columns.begin(); 
@@ -6102,7 +6103,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
             return ret;
         }
 
-        wxString to_string(const wxString& delimiter = wxT(",")) const
+        wxString to_string(const wxString& delimiter = ",") const
         {
             wxString ret = wxEmptyString;
             ret << SUBCATEGID;
@@ -6115,7 +6116,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not save"));
+                wxLogError("can not save");
                 return false;
             }
 
@@ -6126,7 +6127,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         {
             if (!view_ || !db) 
             {
-                wxLogError(wxT("can not remove"));
+                wxLogError("can not remove");
                 return false;
             }
             
@@ -6143,11 +6144,11 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
 
     size_t num_columns() const { return NUM_COLUMNS; }
 
-    wxString name() const { return wxT("SUBCATEGORY_V1"); }
+    wxString name() const { return "SUBCATEGORY_V1"; }
 
     DB_View_SUBCATEGORY_V1() 
     {
-        query_ = wxT("SELECT SUBCATEGID, SUBCATEGNAME, CATEGID FROM SUBCATEGORY_V1 ");
+        query_ = "SELECT SUBCATEGID, SUBCATEGNAME, CATEGID FROM SUBCATEGORY_V1 ";
     }
 
     Self::Data* create()
@@ -6162,11 +6163,11 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         wxString sql = wxEmptyString;
         if (entity->id() < 0) //  new & insert
         {
-            sql = wxT("INSERT INTO SUBCATEGORY_V1(SUBCATEGNAME, CATEGID) VALUES(?, ?)");
+            sql = "INSERT INTO SUBCATEGORY_V1(SUBCATEGNAME, CATEGID) VALUES(?, ?)";
         }
         else
         {
-            sql = wxT("UPDATE SUBCATEGORY_V1 SET SUBCATEGNAME = ?, CATEGID = ? WHERE SUBCATEGID = ?");
+            sql = "UPDATE SUBCATEGORY_V1 SET SUBCATEGNAME = ?, CATEGID = ? WHERE SUBCATEGID = ?";
         }
 
         try
@@ -6183,7 +6184,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SUBCATEGORY_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -6196,7 +6197,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
     {
         try
         {
-            wxString sql = wxT("DELETE FROM SUBCATEGORY_V1 WHERE SUBCATEGID = ?");
+            wxString sql = "DELETE FROM SUBCATEGORY_V1 WHERE SUBCATEGID = ?";
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
             stmt.Bind(1, id);
             stmt.ExecuteUpdate();
@@ -6216,7 +6217,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SUBCATEGORY_V1: Exception %s", e.GetMessage().c_str());
             return false;
         }
 
@@ -6245,7 +6246,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         }
 
         Self::Data* entity = 0;
-        wxString where = wxString::Format(wxT(" WHERE SUBCATEGID = ?"));
+        wxString where = wxString::Format(" WHERE SUBCATEGID = ?");
         try
         {
             wxSQLite3Statement stmt = db->PrepareStatement(this->query() + where);
@@ -6261,7 +6262,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SUBCATEGORY_V1: Exception %s", e.GetMessage().c_str());
         }
  
         return entity;
@@ -6273,9 +6274,9 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                + column_to_name(col) + wxT(" = ?")
-                + wxT(" ORDER BY ") + column_to_name(col)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE " 
+                + column_to_name(col) + " = ?"
+                + " ORDER BY " + column_to_name(col)
                 );
             stmt.Bind(1, v);
             wxSQLite3ResultSet q = stmt.ExecuteQuery();
@@ -6290,7 +6291,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SUBCATEGORY_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -6302,12 +6303,12 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         Data_Set result;
         try
         {
-            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + wxT(" WHERE ") 
-                                                                + column_to_name(col1) + wxT(" = ? ")
-                                                                + (op_and ? wxT(" AND ") : wxT(" OR "))
-                                                                + column_to_name(col2) + wxT(" = ?")
-                                                                + wxT(" ORDER BY ") + column_to_name(col1)
-                                                                + wxT(",") + column_to_name(col2)
+            wxSQLite3Statement stmt = db->PrepareStatement(this->query() + " WHERE "
+                                                                + column_to_name(col1) + " = ? "
+                                                                + (op_and ? " AND " : " OR ")
+                                                                + column_to_name(col2) + " = ?"
+                                                                + " ORDER BY " + column_to_name(col1)
+                                                                + "," + column_to_name(col2)
                                                                 );
             stmt.Bind(1, v1);
             stmt.Bind(2, v2);
@@ -6323,7 +6324,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SUBCATEGORY_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
@@ -6335,8 +6336,8 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         PRIMARY primay;
         try
         {
-            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + wxT(" ORDER BY ") + column_to_name(col) + (asc ? wxT(" ASC ") : wxT(" DESC "))
-                + wxT(",") + primay.name());
+            wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + " ORDER BY " + column_to_name(col) + (asc ? " ASC " : " DESC ")
+                + "," + primay.name());
 
             while(q.NextRow())
             {
@@ -6348,7 +6349,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         }
         catch(const wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("SUBCATEGORY_V1: Exception %s"), e.GetMessage().c_str());
+            wxLogError("SUBCATEGORY_V1: Exception %s", e.GetMessage().c_str());
         }
 
         return result;
