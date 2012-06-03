@@ -1,0 +1,64 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wxsqlite", "mmex_tests_wxsqlite.vcxproj", "{05486C1A-D087-50A3-9670-0AE3D19887CD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite", "mmex_tests_sqlite.vcxproj", "{954C5780-85D4-55D1-A7BF-83CBBF56408F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTestPP", "mmex_tests_UnitTestPP.vcxproj", "{F1040BA3-154D-5924-9779-6907CF93CCCE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mmex_tests", "mmex_tests_mmex_tests.vcxproj", "{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DLL Unicode Debug Multilib WX_PYTHON_0|Win32 = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		DLL Unicode Release Multilib WX_PYTHON_0|Win32 = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		Unicode Debug Multilib WX_PYTHON_0|Win32 = Unicode Debug Multilib WX_PYTHON_0|Win32
+		Unicode Release Multilib WX_PYTHON_0|Win32 = Unicode Release Multilib WX_PYTHON_0|Win32
+		wxWin29_debug|Win32 = wxWin29_debug|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.DLL Unicode Debug Multilib WX_PYTHON_0|Win32.ActiveCfg = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.DLL Unicode Debug Multilib WX_PYTHON_0|Win32.Build.0 = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.DLL Unicode Release Multilib WX_PYTHON_0|Win32.ActiveCfg = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.DLL Unicode Release Multilib WX_PYTHON_0|Win32.Build.0 = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.Unicode Debug Multilib WX_PYTHON_0|Win32.ActiveCfg = Unicode Debug Multilib WX_PYTHON_0|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.Unicode Debug Multilib WX_PYTHON_0|Win32.Build.0 = Unicode Debug Multilib WX_PYTHON_0|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.Unicode Release Multilib WX_PYTHON_0|Win32.ActiveCfg = Unicode Release Multilib WX_PYTHON_0|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.Unicode Release Multilib WX_PYTHON_0|Win32.Build.0 = Unicode Release Multilib WX_PYTHON_0|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.wxWin29_debug|Win32.ActiveCfg = wxWin29_debug|Win32
+		{05486C1A-D087-50A3-9670-0AE3D19887CD}.wxWin29_debug|Win32.Build.0 = wxWin29_debug|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.DLL Unicode Debug Multilib WX_PYTHON_0|Win32.ActiveCfg = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.DLL Unicode Debug Multilib WX_PYTHON_0|Win32.Build.0 = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.DLL Unicode Release Multilib WX_PYTHON_0|Win32.ActiveCfg = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.DLL Unicode Release Multilib WX_PYTHON_0|Win32.Build.0 = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.Unicode Debug Multilib WX_PYTHON_0|Win32.ActiveCfg = Unicode Debug Multilib WX_PYTHON_0|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.Unicode Debug Multilib WX_PYTHON_0|Win32.Build.0 = Unicode Debug Multilib WX_PYTHON_0|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.Unicode Release Multilib WX_PYTHON_0|Win32.ActiveCfg = Unicode Release Multilib WX_PYTHON_0|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.Unicode Release Multilib WX_PYTHON_0|Win32.Build.0 = Unicode Release Multilib WX_PYTHON_0|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.wxWin29_debug|Win32.ActiveCfg = wxWin29_debug|Win32
+		{954C5780-85D4-55D1-A7BF-83CBBF56408F}.wxWin29_debug|Win32.Build.0 = wxWin29_debug|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.DLL Unicode Debug Multilib WX_PYTHON_0|Win32.ActiveCfg = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.DLL Unicode Debug Multilib WX_PYTHON_0|Win32.Build.0 = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.DLL Unicode Release Multilib WX_PYTHON_0|Win32.ActiveCfg = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.DLL Unicode Release Multilib WX_PYTHON_0|Win32.Build.0 = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.Unicode Debug Multilib WX_PYTHON_0|Win32.ActiveCfg = Unicode Debug Multilib WX_PYTHON_0|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.Unicode Debug Multilib WX_PYTHON_0|Win32.Build.0 = Unicode Debug Multilib WX_PYTHON_0|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.Unicode Release Multilib WX_PYTHON_0|Win32.ActiveCfg = Unicode Release Multilib WX_PYTHON_0|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.Unicode Release Multilib WX_PYTHON_0|Win32.Build.0 = Unicode Release Multilib WX_PYTHON_0|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.wxWin29_debug|Win32.ActiveCfg = wxWin29_debug|Win32
+		{F1040BA3-154D-5924-9779-6907CF93CCCE}.wxWin29_debug|Win32.Build.0 = wxWin29_debug|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.DLL Unicode Debug Multilib WX_PYTHON_0|Win32.ActiveCfg = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.DLL Unicode Debug Multilib WX_PYTHON_0|Win32.Build.0 = DLL Unicode Debug Multilib WX_PYTHON_0|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.DLL Unicode Release Multilib WX_PYTHON_0|Win32.ActiveCfg = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.DLL Unicode Release Multilib WX_PYTHON_0|Win32.Build.0 = DLL Unicode Release Multilib WX_PYTHON_0|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.Unicode Debug Multilib WX_PYTHON_0|Win32.ActiveCfg = Unicode Debug Multilib WX_PYTHON_0|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.Unicode Debug Multilib WX_PYTHON_0|Win32.Build.0 = Unicode Debug Multilib WX_PYTHON_0|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.Unicode Release Multilib WX_PYTHON_0|Win32.ActiveCfg = Unicode Release Multilib WX_PYTHON_0|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.Unicode Release Multilib WX_PYTHON_0|Win32.Build.0 = Unicode Release Multilib WX_PYTHON_0|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.wxWin29_debug|Win32.ActiveCfg = wxWin29_debug|Win32
+		{41FC52EC-2DA2-5289-AB6A-BB921FCA4B7D}.wxWin29_debug|Win32.Build.0 = wxWin29_debug|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

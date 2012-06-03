@@ -22,10 +22,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------------
 #include "dbwrapper.h"
 #include "utils.h"
-#include "mmex_db_view.h"
 //----------------------------------------------------------------------------
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
+#include "mmCategory.h"
 
 const wxString g_BudgetYear = wxT("2009");
 const wxString g_CategName = wxT("new category");
@@ -41,20 +41,20 @@ wxString getDbPath()
 }
 //----------------------------------------------------------------------------
 
-wxSQLite3Database& getDb()
+boost::shared_ptr<wxSQLite3Database> getDb()
 {
-    static wxSQLite3Database db;
+    static boost::shared_ptr<wxSQLite3Database> db_ptr(new wxSQLite3Database);
 
-    if (!db.IsOpen())
+    if (!db_ptr->IsOpen())
     {
         wxString path = getDbPath();
         wxRemoveFile(path);
 
-        db.Open(path);
-        CHECK(db.IsOpen());
+        db_ptr->Open(path);
+        CHECK(db_ptr->IsOpen());
     }
 
-    return db;
+    return db_ptr;
 }
 //----------------------------------------------------------------------------
 
@@ -63,93 +63,93 @@ SUITE(dbwrapper)
 
 TEST(wxSQLite3Exception)
 {
-    wxSQLite3Database &db = getDb();
-    CHECK_THROW(db.ExecuteUpdate("update bad_table set bad_col = unknown_value"), wxSQLite3Exception);
+    wxSQLite3Database* db = getDb().get();
+    CHECK_THROW(db->ExecuteUpdate("update bad_table set bad_col = unknown_value"), wxSQLite3Exception);
 }
 //----------------------------------------------------------------------------
 
 TEST(HasBackupSupport)
 {
-    bool ok = wxSQLite3Database::HasBackupSupport();
+    bool ok = getDb().get()->HasBackupSupport();
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
 
 TEST(HasEncryptionSupport)
 {
-    bool ok = wxSQLite3Database::HasEncryptionSupport();
+    bool ok = getDb().get()->HasEncryptionSupport();
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
 
 TEST(HasMetaDataSupport)
 {
-    bool ok = wxSQLite3Database::HasMetaDataSupport();
+    bool ok = getDb().get()->HasMetaDataSupport();
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
 
 TEST(HasSavepointSupport)
 {
-    bool ok = wxSQLite3Database::HasSavepointSupport();
+    bool ok = getDb().get()->HasSavepointSupport();
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
 
 TEST(ViewExists)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
-    bool ok = mmDBWrapper::ViewExists(&db, "I'm_not_exists");
+    bool ok = mmDBWrapper::ViewExists(db, "I'm_not_exists");
     CHECK(!ok);
 
-    db.ExecuteUpdate("create view master_view as "
+    db->ExecuteUpdate("create view master_view as "
                      "select * "
                      "from sqlite_master"
                     );
 
-    ok = mmDBWrapper::ViewExists(&db, "master_view");
+    ok = mmDBWrapper::ViewExists(db, "master_view");
     CHECK(ok);
 
-    db.ExecuteUpdate("drop view master_view");
+    db->ExecuteUpdate("drop view master_view");
 }
 //----------------------------------------------------------------------------
 
 TEST(initDB)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
-    mmDBWrapper::initDB(&db, 0);
+    mmDBWrapper::initDB(db, 0);
     bool ok = false;
 
-    ok = db.TableExists(wxT("ASSETS_V1"));
+    ok = db->TableExists(wxT("ASSETS_V1"));
     CHECK(ok);
 
-    ok = db.TableExists(wxT("ACCOUNTLIST_V1"));
+    ok = db->TableExists(wxT("ACCOUNTLIST_V1"));
     CHECK(ok);
 
-    ok = db.TableExists(wxT("CATEGORY_V1"));
+    ok = db->TableExists(wxT("CATEGORY_V1"));
     CHECK(ok);
-    CHECK(!CATEGORY_V1.all(&db).empty());
+    CHECK(!CATEGORY_V1.all(db).empty());
 
-    ok = db.TableExists(wxT("SUBCATEGORY_V1"));
+    ok = db->TableExists(wxT("SUBCATEGORY_V1"));
     CHECK(ok);
-    CHECK(!SUBCATEGORY_V1.all(&db).empty());
+    CHECK(!SUBCATEGORY_V1.all(db).empty());
 }
 //----------------------------------------------------------------------------
 
 TEST(getCurrencySymbol)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
     wxString s;
-    DB_View_CURRENCYFORMATS_V1::Data* currency = CURRENCYFORMATS_V1.get(1, &db);
+    DB_View_CURRENCYFORMATS_V1::Data* currency = CURRENCYFORMATS_V1.get(1, db);
     if (currency)
         s = currency->CURRENCY_SYMBOL;
     CHECK(s == L"USD");
 
     s = wxEmptyString;
-    currency = CURRENCYFORMATS_V1.get(0, &db);
+    currency = CURRENCYFORMATS_V1.get(0, db);
     if (currency)
         s = currency->CURRENCY_SYMBOL;
     CHECK(s.empty());
@@ -158,16 +158,18 @@ TEST(getCurrencySymbol)
 
 TEST(checkDBVersion)
 {
-    wxSQLite3Database &db = getDb();
-    bool ok = mmDBWrapper::checkDBVersion(&db);
+    wxSQLite3Database* db = getDb().get();
+
+    bool ok = mmDBWrapper::checkDBVersion(db);
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
 
 TEST(addBudgetYear)
 {
-    wxSQLite3Database &db = getDb();
-    BudgetEntry_Table budget_table(&db);
+    wxSQLite3Database* db = getDb().get();
+
+    BudgetEntry_Table budget_table(db);
 
     int year_id = budget_table.GetYearID(g_BudgetYear);
     CHECK(year_id == -1);
@@ -179,8 +181,9 @@ TEST(addBudgetYear)
 
 TEST(getBudgetYearID)
 {
-    wxSQLite3Database &db = getDb();
-    BudgetYear_Table budget_year_table(&db);
+    wxSQLite3Database* db = getDb().get();
+
+    BudgetYear_Table budget_year_table(db);
 
     int year_id = budget_year_table.GetYearID(wxT("unknown_year"));
     CHECK(year_id == -1);
@@ -192,8 +195,9 @@ TEST(getBudgetYearID)
 
 TEST(getBudgetYearForID)
 {
-    wxSQLite3Database &db = getDb();
-    BudgetYear_Table budget_year_table(&db);
+    wxSQLite3Database* db = getDb().get();
+
+    BudgetYear_Table budget_year_table(db);
 
     int year_id = budget_year_table.GetYearID(g_BudgetYear);
     CHECK(year_id > 0);
@@ -205,8 +209,9 @@ TEST(getBudgetYearForID)
 
 TEST(updateYearForID)
 {
-    wxSQLite3Database &db = getDb();
-    BudgetEntry_Table budget_table(&db);
+    wxSQLite3Database* db = getDb().get();
+
+    BudgetEntry_Table budget_table(db);
 
     int year_id = budget_table.GetYearID(g_BudgetYear);
     CHECK(year_id > 0);
@@ -227,8 +232,8 @@ TEST(updateYearForID)
 
 TEST(copyBudgetYear)
 {
-    wxSQLite3Database &db = getDb();
-    BudgetEntry_Table budget_table(&db);
+    wxSQLite3Database* db = getDb().get();
+    BudgetEntry_Table budget_table(db);
 
     int base_year_id = budget_table.GetYearID(g_BudgetYear);
     CHECK(base_year_id > 0);
@@ -257,8 +262,8 @@ TEST(copyBudgetYear)
 
 TEST(deleteBudgetYear)
 {
-    wxSQLite3Database &db = getDb();
-    BudgetEntry_Table budget_table(&db);
+    wxSQLite3Database* db = getDb().get();
+    BudgetEntry_Table budget_table(db);
 
     bool deleted = budget_table.DeleteYear(wxT("wrong_year"));
     CHECK(!deleted);
@@ -270,9 +275,8 @@ TEST(deleteBudgetYear)
 //----------------------------------------------------------------------------
 TEST(addCategory)
 {
-    wxSQLite3Database &db = getDb();
-
-    Category_Table category_table(&db);
+    wxSQLite3Database* db = getDb().get();
+    Category_Table category_table(db);
 
     int cat_id = category_table.AddName(g_CategName);
     CHECK(cat_id > 0);
@@ -281,10 +285,10 @@ TEST(addCategory)
 
 TEST(addSubCategory)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
-    Category_Table category_table(&db);
-    SubCategory_Table sub_category_table(&db);
+    Category_Table category_table(db);
+    SubCategory_Table sub_category_table(db);
 
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
@@ -296,7 +300,9 @@ TEST(addSubCategory)
 
 TEST(getCategoryID)
 {
-    Category_Table category_table(&getDb());
+    wxSQLite3Database* db = getDb().get();
+
+    Category_Table category_table(db);
 
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
@@ -308,9 +314,10 @@ TEST(getCategoryID)
 
 TEST(getSubCategoryID)
 {
-    wxSQLite3Database &db = getDb();
-    Category_Table category_table(&db);
-    SubCategory_Table subcategory_table(&db);
+    wxSQLite3Database* db = getDb().get();
+
+    Category_Table category_table(db);
+    SubCategory_Table subcategory_table(db);
 
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
@@ -325,7 +332,9 @@ TEST(getSubCategoryID)
 
 TEST(getCategoryName)
 {
-    Category_Table category_table(&getDb());
+    wxSQLite3Database* db = getDb().get();
+
+    Category_Table category_table(db);
     
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
@@ -340,9 +349,9 @@ TEST(getCategoryName)
 
 TEST(getSubCategoryName)
 {
-    wxSQLite3Database &db = getDb();
-    Category_Table category_table(&db);
-    SubCategory_Table subcategory_table(&db);
+    wxSQLite3Database* db = getDb().get();
+    Category_Table category_table(db);
+    SubCategory_Table subcategory_table(db);
 
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
@@ -360,10 +369,9 @@ TEST(getSubCategoryName)
 
 TEST(updateCategory)
 {
-    wxSQLite3Database &db = getDb();
-
-    Category_Table category_table(&db);
-    SubCategory_Table subcategory_table(&db);
+    wxSQLite3Database* db = getDb().get();
+    Category_Table category_table(db);
+    SubCategory_Table subcategory_table(db);
 
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
@@ -395,32 +403,38 @@ TEST(updateCategory)
     CHECK(ok);
 }
 //----------------------------------------------------------------------------
-/*
 TEST(deleteSubCategoryWithConstraints)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
+    Category_Table category_table(db);
+    SubCategory_Table subcategory_table(db);
 
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    int sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
-    CHECK(sc_id > 0);
+    int subcat_id = subcategory_table.GetID(g_SubCategName, cat_id);
+    CHECK(subcat_id > 0);
 
-    bool ok = mmDBWrapper::deleteSubCategoryWithConstraints(&db, cat_id, sc_id);
-    CHECK(ok);
+    mmCategoryList category_list(getDb());
+
+    int ok = category_list.deleteSubCategoryWithConstraints(cat_id, subcat_id);
+    CHECK(ok == wxID_OK);
 }
 //----------------------------------------------------------------------------
 
 TEST(deleteCategoryWithConstraints)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
+    Category_Table category_table(db);
 
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    bool ok = mmDBWrapper::deleteCategoryWithConstraints(&db, cat_id);
-    CHECK(ok);
+    mmCategoryList category_list(getDb());
+    int ok = category_list.deleteCategoryWithConstraints(cat_id);
+    CHECK(ok == wxID_OK);
 }
+/*
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 
@@ -544,58 +558,61 @@ TEST(getInfoSettingValue)
 }
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
-
+*/
 TEST(addPayee)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
+    Category_Table category_table(db);
+    SubCategory_Table subcategory_table(db);
 
-    bool added = mmDBWrapper::addCategory(&db, g_CategName);
-    CHECK(added);
-
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    int cat_id = category_table.AddName(g_CategName);
     CHECK(cat_id > 0);
 
-    added = mmDBWrapper::addSubCategory(&db, cat_id, g_SubCategName);
-    CHECK(added);
-
-    int sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
-    CHECK(sc_id > 0);
+    int subcat_id = subcategory_table.AddName(g_SubCategName, cat_id);
+    CHECK(subcat_id > 0);
 
     // --
 
+// leave a marker for code to be completed
+    int To_Do = 0;
 //    mmDBWrapper::addPayee(&db, g_PayeeName, cat_id, sc_id);
 }
 //----------------------------------------------------------------------------
-
 TEST(getPayeeID)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
+    Category_Table category_table(db);
+    SubCategory_Table subcategory_table(db);
 
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    int sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
-    CHECK(sc_id > 0);
+    int subcat_id = subcategory_table.GetID(g_SubCategName, cat_id);
+    CHECK(subcat_id > 0);
 
     // --
 
-    int id = 0;
-    int cat = 0;
-    int subc = 0;
+// leave a marker for code to be completed
+    int To_Do = 0;
+//    int id = 0;
+//    int cat = 0;
+//    int subc = 0;
 
-    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
-    CHECK(ok);
-    CHECK(id > 0);
-    CHECK(cat > 0);
-    CHECK(subc > 0);
+//    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
+//    CHECK(ok);
+//    CHECK(id > 0);
+//    CHECK(cat > 0);
+//    CHECK(subc > 0);
 
     // --
 
-    ok = mmDBWrapper::getPayeeID(&db, wxT("bad payee name"), id, cat, subc);
-    CHECK(!ok);
+//    ok = mmDBWrapper::getPayeeID(&db, wxT("bad payee name"), id, cat, subc);
+//    CHECK(!ok);
 }
-//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
+/*
 TEST(getPayee)
 {
     wxSQLite3Database &db = getDb();
