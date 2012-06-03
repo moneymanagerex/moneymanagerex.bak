@@ -51,7 +51,8 @@ mmAssetDialog::mmAssetDialog(wxWindow* parent, wxSQLite3Database* db, int assetI
         mmDBWrapper::loadBaseCurrencySettings(m_db);
 }
 
-bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
+bool mmAssetDialog::Create(wxWindow* parent,
+    wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
 
@@ -90,11 +91,11 @@ void mmAssetDialog::dataToControls()
         m_value->SetValue(value);
 
         wxString valueChangeRate;
-        valueChangeRate.Printf("%.3f", asset->VALUECHANGERATE);
+        valueChangeRate.Printf(wxT("%.3f"), asset->VALUECHANGERATE);
         m_valueChangeRate->SetValue(valueChangeRate);
 
         m_valueChange->SetStringSelection(wxGetTranslation(asset->VALUECHANGE));
-        if (asset->VALUECHANGE == "None") enableDisableRate(false);
+        if (asset->VALUECHANGE == wxT("None")) enableDisableRate(false);
 
         m_assetType->SetStringSelection(wxGetTranslation(asset->ASSETTYPE));
     }
@@ -112,31 +113,49 @@ void mmAssetDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
     itemBoxSizer3->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxPanel* itemPanel5 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxPanel* itemPanel5 = new wxPanel(this,
+        wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemStaticBoxSizer4->Add(itemPanel5, 1, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer6 = new wxFlexGridSizer(8, 2, 0, 0);
     itemPanel5->SetSizer(itemFlexGridSizer6);
 
-    wxStaticText* itemStaticText7 = new wxStaticText(itemPanel5, wxID_STATIC, _("Name"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer6->Add(itemStaticText7, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText7 = new wxStaticText(itemPanel5,
+        wxID_STATIC, _("Name"), wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer6->Add(itemStaticText7,
+        0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    m_assetName = new wxTextCtrl(itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0);
+    m_assetName = new wxTextCtrl(itemPanel5,
+        wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0);
     m_assetName->SetToolTip(_("Enter the name of the asset"));
     itemFlexGridSizer6->Add(m_assetName, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText9 = new wxStaticText(itemPanel5, wxID_STATIC, _("Date"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer6->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText9 = new wxStaticText(itemPanel5,
+        wxID_STATIC, _("Date"), wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer6->Add(itemStaticText9,
+        0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     
-    m_dpc = new wxDatePickerCtrl(itemPanel5, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxSize(120, -1), wxDP_DROPDOWN|wxDP_SHOWCENTURY);    
+    m_dpc = new wxDatePickerCtrl(itemPanel5,
+        wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxSize(120, -1), wxDP_DROPDOWN|wxDP_SHOWCENTURY);    
     itemFlexGridSizer6->Add(m_dpc, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     m_dpc->SetToolTip(_("Specify the date of purchase of asset"));
 
-    wxStaticText* itemStaticText15 = new wxStaticText(itemPanel5, wxID_STATIC, _("Asset Type"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer6->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText15 = new wxStaticText(itemPanel5,
+        wxID_STATIC, _("Asset Type"), wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer6->Add(itemStaticText15,
+        0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     m_assetType = new wxChoice(itemPanel5, wxID_ANY, wxDefaultPosition, wxSize(150, -1));
-    wxString asset_types[] = {"Property", "Automobile", "Household Object", "Art", "Jewellery", "Cash", "Other"};
+    wxString asset_types[] = 
+    {
+        wxTRANSLATE("Property"),
+        wxTRANSLATE("Automobile"),
+        wxTRANSLATE("Household Object"),
+        wxTRANSLATE("Art"),
+        wxTRANSLATE("Jewellery"),
+        wxTRANSLATE("Cash"),
+        wxTRANSLATE("Other")
+    };
     for(size_t i = 0; i < sizeof(asset_types)/sizeof(wxString); ++i)
         m_assetType->Append(wxGetTranslation(asset_types[i]), new wxStringClientData(asset_types[i]));
 
@@ -144,18 +163,29 @@ void mmAssetDialog::CreateControls()
     m_assetType->SetSelection(0);
     itemFlexGridSizer6->Add(m_assetType, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText31 = new wxStaticText(itemPanel5, wxID_STATIC, _("Value"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer6->Add(itemStaticText31, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText31 = new wxStaticText(itemPanel5,
+        wxID_STATIC, _("Value"), wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer6->Add(itemStaticText31,
+        0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    m_value = new wxTextCtrl(itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(150,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2));
+    m_value = new wxTextCtrl(itemPanel5,
+        wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(150,-1),
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2));
     m_value->SetToolTip(_("Enter the current value of the asset"));
     itemFlexGridSizer6->Add(m_value, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText11 = new wxStaticText(itemPanel5, wxID_STATIC, _("Change in Value"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer6->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText11 = new wxStaticText(itemPanel5,
+        wxID_STATIC, _("Change in Value"), wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer6->Add(itemStaticText11,
+        0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     m_valueChange = new wxChoice(itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1));
-    wxString change_types[] = {"None", "Appreciates", "Depreciates"};
+    wxString change_types[] = 
+    {
+        wxTRANSLATE("None"),
+        wxTRANSLATE("Appreciates"),
+        wxTRANSLATE("Depreciates")
+    };
     for(size_t i = 0; i < sizeof(change_types)/sizeof(wxString); ++i)
         m_valueChange->Append(wxGetTranslation(change_types[i]), new wxStringClientData(change_types[i]));
         
@@ -163,10 +193,14 @@ void mmAssetDialog::CreateControls()
     m_valueChange->SetSelection(0);
     itemFlexGridSizer6->Add(m_valueChange, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_valueChangeRateLabel = new wxStaticText(itemPanel5, wxID_STATIC, _("% Rate"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer6->Add(m_valueChangeRateLabel, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    m_valueChangeRateLabel = new wxStaticText(itemPanel5,
+        wxID_STATIC, _("% Rate"), wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer6->Add(m_valueChangeRateLabel,
+        0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    m_valueChangeRate = new wxTextCtrl(itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(150,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2));
+    m_valueChangeRate = new wxTextCtrl(itemPanel5,
+        wxID_ANY, wxGetEmptyString(), wxDefaultPosition,
+        wxSize(150,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2));
     m_valueChangeRate->SetToolTip(_("Enter the rate at which the asset changes its value in % per year"));
     itemFlexGridSizer6->Add(m_valueChangeRate, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     enableDisableRate(false);
