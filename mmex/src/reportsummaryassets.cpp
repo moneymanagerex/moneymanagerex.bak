@@ -41,7 +41,7 @@ wxString mmReportSummaryAssets::getHTMLText()
 
     hb.startCenter();
 
-    hb.startTable(wxT("95%"));
+    hb.startTable("95%");
     hb.startTableRow();
     hb.addTableHeaderCell(_("Name"));
     hb.addTableHeaderCell(_("Type"));
@@ -75,7 +75,7 @@ wxString mmReportSummaryAssets::getHTMLText()
 
     hb.addRowSeparator(4);
     hb.addTotalRow(_("Total Assets: "), 3, assetBalanceStr);
-    hb.addTableCell(wxT(""));
+    hb.addTableCell("");
     hb.endTableRow();
     hb.endTable();
 

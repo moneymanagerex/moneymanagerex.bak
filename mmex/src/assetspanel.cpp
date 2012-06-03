@@ -92,7 +92,7 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
 
 mmAssetsPanel::~mmAssetsPanel()
 {
-    this->save_config(m_listCtrlAssets, wxT("ASSETS"));
+    this->save_config(m_listCtrlAssets, "ASSETS");
     if (m_new_button) delete m_new_button;
     if (m_edit_button) delete m_edit_button;
     if (m_delete_button) delete m_delete_button;
@@ -126,11 +126,11 @@ void mmAssetsPanel::CreateControls()
 
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4;
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL0_WIDTH"), wxT("150")).ToLong(&col0);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL1_WIDTH"), wxT("-2")).ToLong(&col1);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL2_WIDTH"), wxT("-2")).ToLong(&col2);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL3_WIDTH"), wxT("-2")).ToLong(&col3);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL4_WIDTH"), wxT("450")).ToLong(&col4);
+    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL0_WIDTH", "150").ToLong(&col0);
+    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL1_WIDTH", "-2").ToLong(&col1);
+    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL2_WIDTH", "-2").ToLong(&col2);
+    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL3_WIDTH", "-2").ToLong(&col3);
+    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL4_WIDTH", "450").ToLong(&col4);
 
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"), wxLIST_FORMAT_RIGHT, col0);
     m_listCtrlAssets->InsertColumn(COL_TYPE, _("Type"), wxLIST_FORMAT_RIGHT, col1);
@@ -162,10 +162,10 @@ void mmAssetsPanel::CreateControls()
     itemBoxSizer3->Add(m_delete_button, flags);
     m_delete_button->Enable(false);
 
-    m_sum = new wxStaticText(assets_panel, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0);
+    m_sum = new wxStaticText(assets_panel, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer3->Add(m_sum, flags);
 
-    m_detail = new wxStaticText(assets_panel, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
+    m_detail = new wxStaticText(assets_panel, wxID_ANY, "", wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer2->Add(m_detail, 1, wxGROW|wxALL, 5);
 
     updateExtraAssetData(-1);
@@ -198,7 +198,7 @@ void mmAssetsPanel::initVirtualListControl(int col, bool asc)
 
 wxString mmAssetsPanel::get_version() const
 {
-    return wxT(_MM_EX_ASSETSPANEL_CPP_REVISION_ID);
+    return _MM_EX_ASSETSPANEL_CPP_REVISION_ID;
 }
 
 void mmAssetsPanel::OnDeleteAsset(wxCommandEvent& event)
@@ -279,16 +279,16 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
         const DB_View_ASSETS_V1::Data& asset = all_assets_.at(selIndex);
         m_detail->SetLabel(asset.NOTES);
         wxString miniInfo;
-        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << wxGetTranslation(asset.VALUECHANGE);
+        miniInfo << "\t" << _("Change in Value") << ": " << wxGetTranslation(asset.VALUECHANGE);
         if (asset.VALUECHANGE != _("None"))
-            miniInfo<< wxT(" = ") << asset.VALUECHANGERATE << wxT("%");
+            miniInfo<< " = " << asset.VALUECHANGERATE << "%";
         m_sum->SetLabel(miniInfo);
         enableEditDeleteButtons(true);
     }
     else
     {
         m_detail->SetLabel(Tips(TIPS_ASSETS));
-        m_sum->SetLabel(wxT(""));
+        m_sum->SetLabel("");
         enableEditDeleteButtons(false);
     }
 }

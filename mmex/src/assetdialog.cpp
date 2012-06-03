@@ -90,11 +90,11 @@ void mmAssetDialog::dataToControls()
         m_value->SetValue(value);
 
         wxString valueChangeRate;
-        valueChangeRate.Printf(wxT("%.3f"), asset->VALUECHANGERATE);
+        valueChangeRate.Printf("%.3f", asset->VALUECHANGERATE);
         m_valueChangeRate->SetValue(valueChangeRate);
 
         m_valueChange->SetStringSelection(wxGetTranslation(asset->VALUECHANGE));
-        if (asset->VALUECHANGE == wxT("None")) enableDisableRate(false);
+        if (asset->VALUECHANGE == "None") enableDisableRate(false);
 
         m_assetType->SetStringSelection(wxGetTranslation(asset->ASSETTYPE));
     }
@@ -136,7 +136,7 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     m_assetType = new wxChoice(itemPanel5, wxID_ANY, wxDefaultPosition, wxSize(150, -1));
-    wxString asset_types[] = {wxT("Property"), wxT("Automobile"), wxT("Household Object"), wxT("Art"), wxT("Jewellery"), wxT("Cash"), wxT("Other")};
+    wxString asset_types[] = {"Property", "Automobile", "Household Object", "Art", "Jewellery", "Cash", "Other"};
     for(size_t i = 0; i < sizeof(asset_types)/sizeof(wxString); ++i)
         m_assetType->Append(wxGetTranslation(asset_types[i]), new wxStringClientData(asset_types[i]));
 
@@ -155,7 +155,7 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     m_valueChange = new wxChoice(itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1));
-    wxString change_types[] = {wxT("None"), wxT("Appreciates"), wxT("Depreciates")};
+    wxString change_types[] = {"None", "Appreciates", "Depreciates"};
     for(size_t i = 0; i < sizeof(change_types)/sizeof(wxString); ++i)
         m_valueChange->Append(wxGetTranslation(change_types[i]), new wxStringClientData(change_types[i]));
         
@@ -208,7 +208,6 @@ void mmAssetDialog::enableDisableRate(bool en)
     }
     else 
     {
-        //m_valueChangeRate->SetValue(wxT("0"));
         m_valueChangeRate->SetEditable(false);
         m_valueChangeRate->Enable(false);
         m_valueChangeRateLabel->Enable(false);
