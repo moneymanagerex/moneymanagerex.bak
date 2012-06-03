@@ -1477,17 +1477,21 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
 
 void mmGUIFrame::CreateCustomReport(int index)
 {
+    wxProgressDialog* progressBar = new wxProgressDialog(_("Report printing in progress")
+        , wxEmptyString, 100, NULL, wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
+
     wxString rfn = custRepIndex_->reportFileName(index);
     if (rfn != wxT(""))
     {
         wxString sqlStr;
         if (custRepIndex_->getSqlFileData(sqlStr) )
         {
-            mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->currentReportTitle(), sqlStr);
+            mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->currentReportTitle(), sqlStr, progressBar);
             menuPrintingEnable(true);
             createReportsPage(csr);
         }
     }
+    progressBar->Destroy();
 }
 
 bool mmGUIFrame::CustomSQLReportSelected( int& customSqlReportID, mmTreeItemData* iData )
@@ -4296,6 +4300,8 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
 {
+//    wxProgressDialog* progressBar = new wxProgressDialog(_("Report printing in progress")
+//        , wxEmptyString, 100, NULL, wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
     //Use Shared pointer to ensure object gets destroyed if SQL Script errors hijack the object.
     boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, this, forEdit ));
     int dialogStatus = dlg->ShowModal();

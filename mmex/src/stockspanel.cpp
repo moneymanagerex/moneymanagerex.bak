@@ -237,7 +237,7 @@ void mmStocksPanel::CreateControls()
     //Infobar-mini
     stock_details_short_ = new wxStaticText(itemPanel12,
          ID_PANEL_STOCKS_STATIC_DETAILS_MINI, strLastUpdate_);
-    itemBoxSizer5->Add(stock_details_short_, flags);y
+    itemBoxSizer5->Add(stock_details_short_, flags);
     //Infobar
     stock_details_ = new wxStaticText(itemPanel12,
     ID_PANEL_STOCKS_STATIC_DETAILS, wxT("                                         "),

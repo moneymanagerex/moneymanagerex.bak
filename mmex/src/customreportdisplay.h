@@ -24,7 +24,7 @@
 class mmCustomSQLReport : public mmPrintableBase
 {
 public:
-    mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle, const wxString& sqlQuery);
+    mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle, const wxString& sqlQuery, wxProgressDialog* progressBar = NULL);
 
     wxString getHTMLText();
     void displayReportHeader(mmHTMLBuilder& hb, wxString reportTitle);
@@ -32,6 +32,7 @@ public:
 private:
     wxString reportTitle_;
     wxString sqlQuery_;
+    wxProgressDialog* progressBar_;
 };
 
 #endif

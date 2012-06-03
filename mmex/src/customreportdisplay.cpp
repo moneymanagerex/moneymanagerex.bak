@@ -20,8 +20,8 @@
 #include "util.h"
 
 mmCustomSQLReport::mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle,
-    const wxString& sqlQuery):
-    mmPrintableBase(core), reportTitle_(reportTitle), sqlQuery_(sqlQuery)
+    const wxString& sqlQuery, wxProgressDialog* progressBar): mmPrintableBase(core)
+    , reportTitle_(reportTitle), sqlQuery_(sqlQuery), progressBar_(progressBar)
 {
 }
 
@@ -41,7 +41,7 @@ wxString mmCustomSQLReport::getHTMLText()
 
     wxSQLite3ResultSet sqlQueryResult;
 
-    int lines_number;
+    int lines_number = 0;
     wxString error_string;
 
     try
@@ -91,20 +91,23 @@ wxString mmCustomSQLReport::getHTMLText()
 
     int progress = 0;
     wxString progressMsg;
-    wxProgressDialog dlg(_("Report printing in progress"), progressMsg, lines_number,
-        NULL, wxPD_AUTO_HIDE |  wxPD_CAN_ABORT);
-
+//    wxProgressDialog dlg(_("Report printing in progress"), progressMsg, lines_number,
+//        NULL, wxPD_AUTO_HIDE |  wxPD_CAN_ABORT);
 
     while (sqlQueryResult.NextRow())
     {
-        progress++;
-        progressMsg = wxString() << _("Lines prepared: ") << progress;
-        if(!dlg.Update(progress, progressMsg))
+        if (progressBar_)
         {
-            hb.clear();
-            hb.addHeader(2, _("SQL query discarded by user"));
-            hb.end();
-            return hb.getHTMLText(); // abort processing
+            progress++;
+            if (progress > 99) progress = 1;
+            progressMsg = wxString() << _("Lines prepared: ") << progress;
+            if(!progressBar_->Update(progress, progressMsg))
+            {
+                hb.clear();
+                hb.addHeader(2, _("SQL query discarded by user"));
+                hb.end();
+                return hb.getHTMLText(); // abort processing
+            }
         }
 
         hb.startTableRow();
@@ -135,6 +138,9 @@ wxString mmCustomSQLReport::getHTMLText()
          hb.addHeader(2, _("Data Insertion completed"));
 
     hb.end();
+
+    progressMsg = wxString() << _("Lines prepared: ") << progress << _(" Completed");
+    progressBar_->Update(90, progressMsg);
 
     return hb.getHTMLText();
 }
