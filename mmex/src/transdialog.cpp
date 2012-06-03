@@ -31,6 +31,7 @@
 #include <wx/choice.h>
 
 #include <sstream>
+#define _MM_EX_ASSETDIALOG_CPP_REVISION_ID    "$Revision$"
 
 // Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
@@ -165,7 +166,8 @@ void mmTransDialog::dataToControls()
         wxString dt = mmGetDateForDisplay(db_.get(), trx_date_);
         dpc_->SetValue(trx_date_);
         //process date change event for set weekday name
-        wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), trx_date_, wxEVT_DATE_CHANGED);
+        wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE),
+            trx_date_, wxEVT_DATE_CHANGED);
         GetEventHandler()->ProcessEvent(dateEvent);
 
         wxString transNumString = q1.GetString("TRANSACTIONNUMBER");
@@ -358,7 +360,8 @@ void mmTransDialog::CreateControls()
         wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceTransChar), NULL, this);
 
     cAdvanced_ = new wxCheckBox(itemPanel7,
-        ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+        ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cAdvanced_->SetValue(FALSE);
     cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
 
