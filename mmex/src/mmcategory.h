@@ -101,7 +101,7 @@ class mmCategoryList
 {
 public:
     mmCategoryList(boost::shared_ptr<wxSQLite3Database> db);
-    ~mmCategoryList() {}
+//    ~mmCategoryList() {};
 
     /* Category Functions */
     int getID(const wxString& categoryName) const;
