@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-06-03 17:40:00.924000.
+ *          AUTO GENERATED at 2012-06-04 10:27:56.179049.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -71,7 +71,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate("CREATE TABLE ACCOUNTLIST_V1(ACCOUNTID integer primary key, ACCOUNTNAME TEXT NOT NULL , ACCOUNTTYPE TEXT NOT NULL , ACCOUNTNUM TEXT, STATUS TEXT NOT NULL, NOTES TEXT , HELDAT TEXT , WEBSITE TEXT , CONTACTINFO TEXT, ACCESSINFO TEXT , INITIALBAL numeric , FAVORITEACCT TEXT NOT NULL, CURRENCYID integer NOT NULL)");
+            db->ExecuteUpdate("CREATE TABLE ACCOUNTLIST_V1(ACCOUNTID integer primary key, ACCOUNTNAME TEXT NOT NULL UNIQUE, ACCOUNTTYPE TEXT NOT NULL , ACCOUNTNUM TEXT, STATUS TEXT NOT NULL, NOTES TEXT , HELDAT TEXT , WEBSITE TEXT , CONTACTINFO TEXT, ACCESSINFO TEXT , INITIALBAL numeric , FAVORITEACCT TEXT NOT NULL, CURRENCYID integer NOT NULL)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -549,7 +549,7 @@ struct DB_View_ASSETS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate("CREATE TABLE ASSETS_V1(ASSETID integer primary key, STARTDATE TEXT NOT NULL , ASSETNAME TEXT, VALUE numeric, VALUECHANGE TEXT, NOTES TEXT, VALUECHANGERATE numeric, ASSETTYPE TEXT)");
+            db->ExecuteUpdate("CREATE TABLE ASSETS_V1(ASSETID integer primary key, STARTDATE TEXT NOT NULL , ASSETNAME TEXT NOT NULL UNIQUE, VALUE numeric, VALUECHANGE TEXT, NOTES TEXT, VALUECHANGERATE numeric, ASSETTYPE TEXT)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -2313,7 +2313,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate("CREATE TABLE BUDGETYEAR_V1(BUDGETYEARID integer primary key, BUDGETYEARNAME TEXT NOT NULL)");
+            db->ExecuteUpdate("CREATE TABLE BUDGETYEAR_V1(BUDGETYEARID integer primary key, BUDGETYEARNAME TEXT NOT NULL UNIQUE)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -3539,7 +3539,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate("CREATE TABLE CURRENCYFORMATS_V1(CURRENCYID integer primary key, CURRENCYNAME TEXT NOT NULL, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT, DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT, UNIT_NAME TEXT, CENT_NAME TEXT, SCALE integer, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT)");
+            db->ExecuteUpdate("CREATE TABLE CURRENCYFORMATS_V1(CURRENCYID integer primary key, CURRENCYNAME TEXT NOT NULL UNIQUE, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT, DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT, UNIT_NAME TEXT, CENT_NAME TEXT, SCALE integer, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -3997,7 +3997,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate("CREATE TABLE INFOTABLE_V1(INFOID integer not null primary key, INFONAME TEXT NOT NULL, INFOVALUE TEXT NOT NULL)");
+            db->ExecuteUpdate("CREATE TABLE INFOTABLE_V1(INFOID integer not null primary key, INFONAME TEXT NOT NULL UNIQUE, INFOVALUE TEXT NOT NULL)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -4373,7 +4373,7 @@ struct DB_View_PAYEE_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate("CREATE TABLE PAYEE_V1(PAYEEID integer primary key, PAYEENAME TEXT NOT NULL, CATEGID integer, SUBCATEGID integer)");
+            db->ExecuteUpdate("CREATE TABLE PAYEE_V1(PAYEEID integer primary key, PAYEENAME TEXT NOT NULL UNIQUE, CATEGID integer, SUBCATEGID integer)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -4761,7 +4761,7 @@ struct DB_View_SETTING_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate("CREATE TABLE SETTING_V1(SETTINGID integer not null primary key, SETTINGNAME TEXT NOT NULL, SETTINGVALUE TEXT)");
+            db->ExecuteUpdate("CREATE TABLE SETTING_V1(SETTINGID integer not null primary key, SETTINGNAME TEXT NOT NULL UNIQUE, SETTINGVALUE TEXT)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
@@ -5537,7 +5537,7 @@ struct DB_View_STOCK_V1 : public DB_View
 
         try
         {
-            db->ExecuteUpdate("CREATE TABLE STOCK_V1(STOCKID integer primary key, HELDAT integer , PURCHASEDATE TEXT NOT NULL, STOCKNAME TEXT, SYMBOL TEXT, NUMSHARES numeric, PURCHASEPRICE numeric NOT NULL, NOTES TEXT, CURRENTPRICE numeric NOT NULL, VALUE numeric, COMMISSION numeric)");
+            db->ExecuteUpdate("CREATE TABLE STOCK_V1(STOCKID integer primary key, HELDAT integer , PURCHASEDATE TEXT NOT NULL, STOCKNAME TEXT NOT NULL UNIQUE, SYMBOL TEXT, NUMSHARES numeric, PURCHASEPRICE numeric NOT NULL, NOTES TEXT, CURRENTPRICE numeric NOT NULL, VALUE numeric, COMMISSION numeric)");
         }
         catch(const wxSQLite3Exception &e) 
         { 
