@@ -255,6 +255,41 @@ wxString mmReportCashFlow::getHTMLText()
             {
                 nextOccurDate = nextOccurDate.Add(wxDateSpan::Days(1));
             }
+            else if (repeats == 11) // repeat in numRepeats Days (Once only)
+            {
+                if (numRepeats > 0)
+                {
+                    nextOccurDate = nextOccurDate.Add(wxDateSpan::Days(numRepeats));
+                    numRepeats = -1;
+                }
+                else break;
+            }
+            else if (repeats == 12) // repeat in numRepeats Months (Once only)
+            {
+                if (numRepeats > 0)
+                {
+                    nextOccurDate = nextOccurDate.Add(wxDateSpan::Months(numRepeats));
+                    numRepeats = -1;
+                }
+                else break;
+            }
+            else if (repeats == 13) // repeat every numRepeats Days
+            {
+                if (numRepeats > 0)
+                {
+                    nextOccurDate = nextOccurDate.Add(wxDateSpan::Days(numRepeats));
+                }
+                else break;
+            }
+            else if (repeats == 14) // repeat every numRepeats Months
+            {
+                if (numRepeats > 0)
+                {
+                    nextOccurDate = nextOccurDate.Add(wxDateSpan::Months(numRepeats));
+                }
+                else break;
+            }
+            else break;
         } // end while
     } //end query
     q1.Finalize();
