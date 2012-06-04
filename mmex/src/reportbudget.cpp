@@ -78,7 +78,7 @@ void mmReportBudget::setBudgetYearlyEstimate(mmBudgetEntryHolder& budEntry)
         budEntry.estimated_ = budEntry.amt_ * 6;
 
     } else if (budEntry.period_ == ("Quarterly")) {
-        budEntry.estimated_ = budEntry.amt_ * 3;
+        budEntry.estimated_ = budEntry.amt_ * 4;
 
     } else if (budEntry.period_ == ("Half-Yearly")) {
         budEntry.estimated_ = budEntry.amt_ * 2;
