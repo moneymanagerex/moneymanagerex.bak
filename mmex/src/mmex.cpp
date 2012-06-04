@@ -265,29 +265,15 @@ bool OnInitImpl(mmGUIApp &app)
     /* Load MMEX Custom Settings */
     mmIniOptions::instance().loadOptions(&inidb);
 
+    wxConfigBase *config = wxConfigBase::Get();
     /* Was App Maximized? */
-    wxString isMaxStrDef = ("FALSE");
-    wxString isMaxStr = mmDBWrapper::getINISettingValue(&inidb, ("ISMAXIMIZED"), isMaxStrDef);
+    bool isMax = config->ReadBool("ISMAXIMIZED", false);
 
     /* Load Dimensions of Window */
-    wxString originX = ("50");
-    wxString originY = ("50");
-    wxString sizeW = ("800");
-    wxString sizeH = ("600");
-    wxString valxStr = mmDBWrapper::getINISettingValue(&inidb, ("ORIGINX"), originX);
-    wxString valyStr = mmDBWrapper::getINISettingValue(&inidb, ("ORIGINY"), originY);
-    wxString valWStr = mmDBWrapper::getINISettingValue(&inidb, ("SIZEW"),  sizeW);
-    wxString valHStr = mmDBWrapper::getINISettingValue(&inidb, ("SIZEH"),  sizeH);
-
-    long valx = 0;
-    long valy = 0;
-    long valw = 0;
-    long valh = 0;
-
-    valxStr.ToLong(&valx);
-    valyStr.ToLong(&valy);
-    valWStr.ToLong(&valw);
-    valHStr.ToLong(&valh);
+    long valx = config->ReadLong("ORIGINX", 50);
+    long valy = config->ReadLong("ORIGINY", 50);
+    long valw = config->ReadLong("SIZEW", 800);
+    long valh = config->ReadLong("SIZEH", 600);
 
     mmSelectLanguage(0, &inidb, false);
 
@@ -297,9 +283,7 @@ bool OnInitImpl(mmGUIApp &app)
     bool ok = frame->Show();
     wxASSERT(ok);
 
-    if (isMaxStr == ("TRUE")) {
-        frame->Maximize(true);
-    }
+    frame->Maximize(isMax);
 
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned FALSE here, the
@@ -913,18 +897,12 @@ void mmGUIFrame::saveConfigFile()
     this->GetPosition(&valx, &valy);
     this->GetSize(&valw, &valh);
 
-    wxString valxs = wxString::Format(("%d"), valx);
-    wxString valys = wxString::Format(("%d"), valy);
-    wxString valws = wxString::Format(("%d"), valw);
-    wxString valhs = wxString::Format(("%d"), valh);
-
-    m_inidb.get()->Begin();
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("ORIGINX"), valxs);
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("ORIGINY"), valys);
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("SIZEW"), valws);
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("SIZEH"), valhs);
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("ISMAXIMIZED"), this->IsMaximized() ? ("TRUE") : ("FALSE"));
-    m_inidb.get()->Commit();
+    wxConfigBase *config = wxConfigBase::Get();
+    config->Write("ORIGINX", valx);
+    config->Write("ORIGINY", valx);
+    config->Write("SIZEW", valw);
+    config->Write("SIZEH", valh);
+    config->Write("ISMAXIMIZED", this->IsMaximized());
 }
 //----------------------------------------------------------------------------
 
