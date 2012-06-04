@@ -442,6 +442,8 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 
 void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
 {
+    if (CURRENCYFORMATS_V1.exists(db)) return;
+
     CURRENCYFORMATS_V1.ensure(db);
 
     DB_View_CURRENCYFORMATS_V1::Data* us_dollar = CURRENCYFORMATS_V1.create();
