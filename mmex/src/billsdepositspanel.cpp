@@ -609,10 +609,13 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
         wxListItem selectedItem;
         selectedItem.SetId(selIndex);
         listCtrlBD_->GetItem(selectedItem);
-        listCtrlBD_->SetItemState(selectedItem, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED);
+        listCtrlBD_->SetItemState(selectedItem, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        listCtrlBD_->SetItemState(selectedItem, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
 
         wxString addInfo;
-        addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == wxT ("") ? wxT ("") : wxT (":") + trans_[selIndex].subcategoryStr_);
+        addInfo << trans_[selIndex].categoryStr_ 
+                << (trans_[selIndex].subcategoryStr_ == "" ? "" : ":" 
+                + trans_[selIndex].subcategoryStr_);
         stm->SetLabel(addInfo);
         st ->SetLabel (trans_[selIndex].notes_ );
     }
