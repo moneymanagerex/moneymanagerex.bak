@@ -25,11 +25,11 @@
 
 namespace mmex
 {
-extern const int MIN_DATAVERSION;
-extern const wxChar * const DATAVERSION;
-extern const wxChar *const DEFDATEFORMAT;
-extern const wxChar *const DEFDELIMTER;
-extern const wxChar *const DEFSTOCKURL;
+const int MIN_DATAVERSION = 2;
+const wxChar *const DATAVERSION = wxT("2");
+const wxChar *const DEFDATEFORMAT = wxT("%m/%d/%y");
+const wxChar *const DEFDELIMTER = wxT(",");
+const wxChar *const DEFSTOCKURL = wxT("http://finance.yahoo.com/echarts?s=%s");
 } // mmex
 
 //----------------------------------------------------------------------------
