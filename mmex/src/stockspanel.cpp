@@ -172,7 +172,6 @@ void mmStocksPanel::CreateControls()
     listCtrlStock_ = new stocksListCtrl(this, itemSplitterWindow10,
                                            ID_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
                                            wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
-    long col_x;
     wxListItem itemCol;
     itemCol.SetImage(-1);
     const wxChar* columns[] = { _("Purchase Date"),
@@ -183,6 +182,7 @@ void mmStocksPanel::CreateControls()
                              _("Current"),
                              _("Notes")};
 
+    wxConfigBase *config = wxConfigBase::Get();
     for (int i = 0; i < COL_MAX; ++i)
     {
         if (i==2 || i==3 || i==4 || i==5)
@@ -193,9 +193,7 @@ void mmStocksPanel::CreateControls()
         itemCol.SetText(wxString()<<columns[i]);
         listCtrlStock_->InsertColumn(i, columns[i], (i<2 || i>5 ? wxLIST_FORMAT_LEFT : wxLIST_FORMAT_RIGHT));
 
-        if (!mmDBWrapper::getINISettingValue(inidb_, wxString::Format(("STOCKS_COL%i_WIDTH"), i),
-                                        (i == 0 ? ("140"): ("-2"))).ToLong(&col_x))
-            (i == 0 ? col_x = 140 : col_x = -2);
+        long col_x = config->ReadLong(wxString::Format("STOCKS_COL%i_WIDTH", i), -2);
         listCtrlStock_->SetColumnWidth(i, col_x);
     }
 

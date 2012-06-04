@@ -153,17 +153,16 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlBD_->InsertColumn(6, _("Remaining Days"));
     listCtrlBD_->InsertColumn(7, _("Notes"));
 
+    wxConfigBase *config = wxConfigBase::Get();
     /* See if we can get data from inidb */
-    long col0, col1, col2, col3, col4, col5, col6, col7;
-    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL0_WIDTH"), ("150")).ToLong(&col0);
-    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL1_WIDTH"), ("-2")).ToLong(&col1);
-    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL2_WIDTH"), ("-2")).ToLong(&col2);
-    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL3_WIDTH"), ("-2")).ToLong(&col3);
-    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL4_WIDTH"), ("-2")).ToLong(&col4);
-    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL5_WIDTH"), ("-2")).ToLong(&col5);
-    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL6_WIDTH"), ("-2")).ToLong(&col6);
-    mmDBWrapper::getINISettingValue(inidb_,  ("BD_COL7_WIDTH"), ("-2")).ToLong(&col7);
-
+    long col0 = config->ReadLong("BD_COL0_WIDTH", 140);
+    long col1 = config->ReadLong("BD_COL1_WIDTH", -2);
+    long col2 = config->ReadLong("BD_COL2_WIDTH", -2);
+    long col3 = config->ReadLong("BD_COL3_WIDTH", -2);
+    long col4 = config->ReadLong("BD_COL4_WIDTH", -2);
+    long col5 = config->ReadLong("BD_COL5_WIDTH", -2);
+    long col6 = config->ReadLong("BD_COL6_WIDTH", -2);
+    long col7 = config->ReadLong("BD_COL7_WIDTH", -2);
 
     listCtrlBD_->SetColumnWidth(0, col0);
     listCtrlBD_->SetColumnWidth(1, col1);

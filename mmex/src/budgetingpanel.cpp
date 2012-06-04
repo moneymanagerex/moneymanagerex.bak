@@ -255,14 +255,14 @@ void mmBudgetingPanel::CreateControls()
     listCtrlBudget_->InsertColumn(4, _("Estimated"), wxLIST_FORMAT_RIGHT);
     listCtrlBudget_->InsertColumn(5, _("Actual"), wxLIST_FORMAT_RIGHT);
 
+    wxConfigBase *config = wxConfigBase::Get();
     /* See if we can get data from inidb */
-    long col0, col1, col2, col3, col4, col5;
-    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL0_WIDTH"), ("80")).ToLong(&col0); 
-    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL1_WIDTH"), ("80")).ToLong(&col1); 
-    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL2_WIDTH"), ("80")).ToLong(&col2); 
-    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL3_WIDTH"), ("80")).ToLong(&col3); 
-    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL4_WIDTH"), ("80")).ToLong(&col4); 
-    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL5_WIDTH"), ("80")).ToLong(&col5); 
+    long col0 = config->ReadLong("BUDGET_COL0_WIDTH", 80);
+    long col1 = config->ReadLong("BUDGET_COL1_WIDTH", 80);
+    long col2 = config->ReadLong("BUDGET_COL2_WIDTH", 80);
+    long col3 = config->ReadLong("BUDGET_COL3_WIDTH", 80);
+    long col4 = config->ReadLong("BUDGET_COL4_WIDTH", 80);
+    long col5 = config->ReadLong("BUDGET_COL5_WIDTH", 80);
 
     listCtrlBudget_->SetColumnWidth(0, col0);
     listCtrlBudget_->SetColumnWidth(1, col1);
