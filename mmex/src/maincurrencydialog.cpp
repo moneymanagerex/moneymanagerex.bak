@@ -23,6 +23,8 @@
 #include "util.h"
 #include "defs.h"
 #include "paths.h"
+#include "mmex_db_view.h"
+#include "boost/foreach.hpp"
  
 IMPLEMENT_DYNAMIC_CLASS( mmMainCurrencyDialog, wxDialog )
 
@@ -83,14 +85,10 @@ void mmMainCurrencyDialog::fillControls()
        return;
 
     currencyListBox_->Clear();
-
-    std::pair<mmCurrencyList::const_iterator, mmCurrencyList::const_iterator> range = core_->rangeCurrency(); 
-    int idx = 0;
-    for(mmCurrencyList::const_iterator it = range.first; it != range.second; ++ it)
+    DB_View_CURRENCYFORMATS_V1::Data_Set all_currencies = CURRENCYFORMATS_V1.all(core_->db_.get());
+    BOOST_FOREACH(const DB_View_CURRENCYFORMATS_V1::Data& currency, all_currencies)
     {
-        int currencyID         = (*it)->currencyID_;
-        wxString currencyName  = (*it)->currencyName_;
-        currencyListBox_->Insert(currencyName, idx++, new mmListBoxItem(currencyID, currencyName));
+        currencyListBox_->Append(currency.CURRENCYNAME, new mmListBoxItem(currency.CURRENCYID, currency.CURRENCYNAME));
     }
 }
 
