@@ -22,6 +22,8 @@
 //----------------------------------------------------------------------------
 #include "defs.h"
 #include "mmpanelbase.h"
+
+#include "mmex_db_view.h"
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
@@ -92,6 +94,7 @@ public:
 
     /// Display the split categories for the selected transaction.
     void DisplaySplitCategories(int transID); 
+    DB_View_CHECKINGACCOUNT_V1::Data_Set all_trans_;
 
 private:
     DECLARE_EVENT_TABLE()

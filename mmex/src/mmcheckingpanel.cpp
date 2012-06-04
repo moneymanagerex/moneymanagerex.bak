@@ -367,7 +367,6 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
 
-    //EVT_MENU(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, mmCheckingPanel::OnFilterTransactions)
     EVT_SEARCHCTRL_SEARCH_BTN(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
     EVT_TEXT_ENTER(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
 
@@ -453,31 +452,33 @@ bool mmCheckingPanel::Create(
 )
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
-    bool ok = wxPanel::Create(parent, winid, pos, size, style, name);
+    if (! wxPanel::Create(parent, winid, pos, size, style, name)) return false;
 
-    if (ok)
-    {
 #ifdef __WXMSW__
-        Freeze();
+    Freeze();
 #endif        
-        m_currentView = mmDBWrapper::getINISettingValue(inidb_, ("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
-        CreateControls();
-        GetSizer()->Fit(this);
-        GetSizer()->SetSizeHints(this);
-        initViewTransactionsHeader();
+    m_currentView = mmDBWrapper::getINISettingValue(inidb_, ("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
+    CreateControls();
+    GetSizer()->Fit(this);
+    GetSizer()->SetSizeHints(this);
+    initViewTransactionsHeader();
 
-        /* Set up the transaction filter.  The transFilter dialog will be destroyed
-           when the checking panel is destroyed. */
-        transFilterActive_ = false;
-        transFilterDlg_    = new TransFilterDialog(core_, this);
+    /* Set up the transaction filter.  The transFilter dialog will be destroyed
+       when the checking panel is destroyed. */
+    transFilterActive_ = false;
+    transFilterDlg_    = new TransFilterDialog(core_, this);
 
-        initVirtualListControl();
-#ifdef __WXMSW__
-        Thaw();
-#endif
+    initVirtualListControl();
+    if (!all_trans_.empty())
+    {
+        m_listCtrlAccount->EnsureVisible(all_trans_.size() - 1);
     }
 
-    return ok;
+#ifdef __WXMSW__
+    Thaw();
+#endif
+
+    return true;
 }
 //----------------------------------------------------------------------------
 
@@ -526,9 +527,6 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_LAST90, _("View Transactions for last 90 days"));
             menu.Append(MENU_VIEW_LASTMONTH, _("View Transactions for last month"));
             menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions for last 3 months"));
-            menu.AppendSeparator();
-            menu.Append(MENU_VIEW_DELETE_TRANS, _("Delete all transactions in current view"));
-            menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete Viewed \"Follow Up\" Trans."));
 
             PopupMenu(&menu, event.GetPosition());
 
@@ -736,7 +734,6 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
             stm->SetLabel(miniStr);
             stm->SetToolTip(miniStr);
         }
-
     }
     else
     {
@@ -1159,7 +1156,6 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     m_listCtrlAccount->DeleteAllItems();
 
     initVirtualListControl();
-    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 }
 
 void mmCheckingPanel::DeleteViewedTransactions()
@@ -1359,8 +1355,8 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
     else wxASSERT(false);
 
     OnMarkTransactionDB(status);
-    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
     SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
 }
 //----------------------------------------------------------------------------
 
@@ -1396,8 +1392,8 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 
     m_cp->setAccountSummary();
     if (m_selectedIndex > -1) {
-        SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
         SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
     }
 
 }
@@ -1665,17 +1661,6 @@ void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
         event.Skip();
         return;
     }
-
-    if ((long)m_cp->m_trans.size() == m_selectedIndex)
-        m_selectedIndex--;
-
-    m_cp->updateExtraTransactionData(m_selectedIndex);
-
-    //set the deleted transaction index to the new selection and focus on it
-    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
-    //make sure the topmost item before transaction deletion is visible, otherwise
-    // the control will go back to the very top or bottom when refreshed
-    EnsureVisible(topItemIndex);
 }
 //----------------------------------------------------------------------------
 
@@ -1686,7 +1671,8 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 
     //ask if they really want to delete
     wxMessageDialog msgDlg(this,_("Do you really want to delete the selected transaction?"),
-                                _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+                                _("Confirm Transaction Deletion"),
+                                wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
 
     if (msgDlg.ShowModal() != wxID_YES)
         return;
@@ -1711,17 +1697,19 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
             //refresh the items showing from the point of the transaction delete down
             //the transactions above the deleted transaction won't change so they
             // don't need to be refreshed
-            if (m_selectedIndex == (long)(m_cp->m_trans.size() - 1) && m_selectedIndex > 0)
+            RefreshItems(0, m_cp->all_trans_.empty() ? 0: m_cp->all_trans_.size() - 1);
+            if (m_selectedIndex +1 != (long)(m_cp->m_trans.size()) && m_selectedIndex > 0)
+            {
                 m_selectedIndex--;
-            RefreshItems(m_selectedIndex, static_cast<long>(m_cp->m_trans.size()) - 1);
+                //RefreshItems(m_selectedIndex, static_cast<long>(m_cp->m_trans.size()) - 1);
 
-            //set the deleted transaction index to the new selection and focus on it
-            SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED,
-            wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
-
+                //set the deleted transaction index to the new selection and focus on it
+                SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+            }
             //make sure the topmost item before transaction deletion is visible, otherwise
             // the control will go back to the very top or bottom when refreshed
-            EnsureVisible(topItemIndex);
+            //EnsureVisible(topItemIndex);
         }
         else
         {
@@ -1730,8 +1718,6 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
             m_selectedIndex = -1;
             m_cp->updateExtraTransactionData(m_selectedIndex);
         }
-        //Update info panels
-        //m_cp->updateExtraTransactionData(m_selectedIndex);
     }
 }
 //----------------------------------------------------------------------------
@@ -1756,7 +1742,7 @@ void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 
     if ( dlg.ShowModal() == wxID_OK )
     {
-        m_selectedIndex  ++;
+        m_selectedIndex++;
         refreshVisualList();
     }
 }
@@ -1783,12 +1769,14 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 void TransactionListCtrl::refreshVisualList()
 {
     m_cp->initVirtualListControl();
-    RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
-    if ((m_selectedIndex + 1) != (long)m_cp->m_trans.size() && (m_selectedIndex > -1))
+    RefreshItems(0, m_cp->all_trans_.empty() ? 0: m_cp->all_trans_.size() - 1);
+    if ((m_selectedIndex + 1) != (long)m_cp->m_trans.size() && (m_selectedIndex > 0))
+    {
         m_selectedIndex--;
-    EnsureVisible(m_selectedIndex);
+        SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+    }
     m_cp->updateExtraTransactionData(m_selectedIndex);
-    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED|wxLIST_STATE_SELECTED, wxLIST_STATE_FOCUSED|wxLIST_STATE_SELECTED);
 }
 
 //  Called only when moving a deposit/withdraw transaction to a new account.
@@ -1820,7 +1808,6 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
                               m_cp->inidb_, this);
             if ( dlg.ShowModal() == wxID_OK )
             {
-                //m_selectedIndex --;
                 refreshVisualList();
             }
         }
@@ -1835,7 +1822,6 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 
                 pTransaction->accountID_ = toAccountID;
                 m_cp->core_->bTransactionList_.updateTransaction(pTransaction);
-                //m_selectedIndex --;
                 refreshVisualList();
             }
         }
@@ -1857,7 +1843,6 @@ void TransactionListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
     {
-        //m_selectedIndex = event.GetIndex();
         mmTransDialog dlg(m_cp->getDb(), m_cp->core_,  m_cp->accountID(),
             m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         if ( dlg.ShowModal() == wxID_OK )
@@ -1866,8 +1851,8 @@ void TransactionListCtrl::OnListItemActivated(wxListEvent& /*event*/)
             RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
             if (m_selectedIndex != -1)
             {
-                SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
                 SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
                 EnsureVisible(m_selectedIndex);
                 //Notes and other info should be updated
                 m_cp->updateExtraTransactionData(m_selectedIndex);
