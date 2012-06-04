@@ -77,8 +77,8 @@ bool mmAppStartDialog::Create( wxWindow* parent, wxWindowID id, const wxString& 
 mmAppStartDialog::~mmAppStartDialog()
 {
     try {
-        wxString showBeginApp = itemCheckBox->GetValue() ? wxT("TRUE") : wxT("FALSE");
-        mmDBWrapper::setINISettingValue(inidb_, wxT("SHOWBEGINAPP"), showBeginApp);
+        wxString showBeginApp = itemCheckBox->GetValue() ? ("TRUE") : ("FALSE");
+        mmDBWrapper::setINISettingValue(inidb_, ("SHOWBEGINAPP"), showBeginApp);
     } catch (...) {
         wxASSERT(false);
     }
@@ -149,8 +149,8 @@ void mmAppStartDialog::CreateControls()
         showAppStartString, wxDefaultPosition, 
         wxDefaultSize, wxCHK_2STATE );
     wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("SHOWBEGINAPP"), wxGetEmptyString());
-    if (showBeginApp == wxT("TRUE") )
+        ("SHOWBEGINAPP"), wxGetEmptyString());
+    if (showBeginApp == ("TRUE") )
         itemCheckBox->SetValue(true);
     else
         itemCheckBox->SetValue(false);
@@ -204,9 +204,9 @@ void mmAppStartDialog::OnButtonAppstartHelpClick( wxCommandEvent& /*event*/ )
     retCode_ = appStartDialog(APP_START_HELP);
     int helpFileIndex_ = mmex::HTML_INDEX;
     wxFileName helpIndexFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
-    wxString url = wxT("file://");
+    wxString url = ("file://");
     
-    if (mmOptions::instance().language != wxT("english")) helpIndexFile.AppendDir(mmOptions::instance().language);
+    if (mmOptions::instance().language != ("english")) helpIndexFile.AppendDir(mmOptions::instance().language);
     
     if (helpIndexFile.FileExists()) // Load the help file for the given language 
     {
@@ -222,7 +222,7 @@ void mmAppStartDialog::OnButtonAppstartHelpClick( wxCommandEvent& /*event*/ )
 void mmAppStartDialog::OnButtonAppstartWebsiteClick( wxCommandEvent& /*event*/ )
 {
    retCode_ = appStartDialog(APP_START_WEB);
-   wxString url = wxT("http://www.codelathe.com/mmex/index.php");
+   wxString url = ("http://www.codelathe.com/mmex/index.php");
    wxLaunchDefaultBrowser(url);
 }
     

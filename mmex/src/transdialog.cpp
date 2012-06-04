@@ -1346,7 +1346,7 @@ void mmTransDialog::activateSplitTransactionsDlg()
 void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
 {
     //it's for debuging
-    //wxSafeShowMessage(wxT(":"), wxString::Format(wxT("%i"), event.GetUnicodeKey()));
+    //wxSafeShowMessage((":"), wxString::Format(("%i"), event.GetUnicodeKey()));
     if (event.GetKeyCode() != WXK_DOWN && event.GetKeyCode()!=WXK_UP) 
     {
         event.Skip();

@@ -82,29 +82,29 @@ void mmBudgetEntryDialog::fillControls()
 
     double amt = budget->AMOUNT;
 
-    if (budget->PERIOD == wxT("None"))
+    if (budget->PERIOD == ("None"))
         itemChoice_->SetSelection(DEF_FREQ_NONE);
-    else if (budget->PERIOD == wxT("Monthly"))
+    else if (budget->PERIOD == ("Monthly"))
         itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
-    else if (budget->PERIOD == wxT("Yearly"))
+    else if (budget->PERIOD == ("Yearly"))
         itemChoice_->SetSelection(DEF_FREQ_YEARLY);
-    else if (budget->PERIOD == wxT("Weekly"))
+    else if (budget->PERIOD == ("Weekly"))
         itemChoice_->SetSelection(DEF_FREQ_WEEKLY);
-    else if (budget->PERIOD == wxT("Bi-Weekly"))
+    else if (budget->PERIOD == ("Bi-Weekly"))
         itemChoice_->SetSelection(DEF_FREQ_BIWEEKLY);
-    else if (budget->PERIOD == wxT("Bi-Monthly"))
+    else if (budget->PERIOD == ("Bi-Monthly"))
         itemChoice_->SetSelection(DEF_FREQ_BIMONTHLY);
-    else if (budget->PERIOD == wxT("Quarterly"))
+    else if (budget->PERIOD == ("Quarterly"))
         itemChoice_->SetSelection(DEF_FREQ_QUARTERLY);
-    else if (budget->PERIOD == wxT("Half-Yearly"))
+    else if (budget->PERIOD == ("Half-Yearly"))
         itemChoice_->SetSelection(DEF_FREQ_HALFYEARLY);
-    else if (budget->PERIOD == wxT("Daily"))
+    else if (budget->PERIOD == ("Daily"))
         itemChoice_->SetSelection(DEF_FREQ_DAILY);
     else
         wxASSERT(false);
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
-    wxString displayAmtString = wxT("0");
+    wxString displayAmtString = ("0");
 
     if (amt <= 0.0)
     {
@@ -123,7 +123,7 @@ void mmBudgetEntryDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, wxT("")); //  ,_("Budget Entry Details"));
+    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, ("")); //  ,_("Budget Entry Details"));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
     itemBoxSizer2->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxTOP|wxRIGHT, 10);
 
@@ -202,7 +202,7 @@ void mmBudgetEntryDialog::CreateControls()
         wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     textAmount_ = new wxTextCtrl( itemPanel7, 
-        ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, wxT(""), wxDefaultPosition,
+        ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, (""), wxDefaultPosition,
         wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER, wxFloatingPointValidator<float>(2));
     itemGridSizer2->Add(textAmount_);
     textAmount_->SetToolTip(_("Enter the amount budgeted for this category."));
@@ -234,23 +234,23 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
     int periodSel = itemChoice_->GetSelection();
     wxString period;
     if (periodSel == DEF_FREQ_NONE)
-        period = wxT("None");
+        period = ("None");
     else if (periodSel == DEF_FREQ_MONTHLY)
-        period = wxT("Monthly");
+        period = ("Monthly");
     else if (periodSel == DEF_FREQ_YEARLY)
-        period = wxT("Yearly");
+        period = ("Yearly");
     else if (periodSel == DEF_FREQ_WEEKLY)
-        period = wxT("Weekly");
+        period = ("Weekly");
     else if (periodSel == DEF_FREQ_BIWEEKLY)
-        period = wxT("Bi-Weekly");
+        period = ("Bi-Weekly");
     else if (periodSel == DEF_FREQ_BIMONTHLY)
-        period = wxT("Bi-Monthly");
+        period = ("Bi-Monthly");
     else if (periodSel == DEF_FREQ_QUARTERLY)
-        period = wxT("Quarterly");
+        period = ("Quarterly");
     else if (periodSel == DEF_FREQ_HALFYEARLY)
-        period = wxT("Half-Yearly");
+        period = ("Half-Yearly");
     else if (periodSel == DEF_FREQ_DAILY)
-        period = wxT("Daily");
+        period = ("Daily");
     else
         wxASSERT(false);
 
@@ -263,7 +263,7 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
-    if (period == wxT("None") && amt > 0) {
+    if (period == ("None") && amt > 0) {
         itemChoice_->SetFocus();
         itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
         event.Skip();
@@ -271,7 +271,7 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
     }
     
     if (amt == 0.0)
-        period = wxT("None");
+        period = ("None");
 
     if (typeSelection == DEF_TYPE_EXPENSE)
         amt = -amt;

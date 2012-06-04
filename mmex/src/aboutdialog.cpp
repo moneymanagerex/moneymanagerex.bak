@@ -103,17 +103,17 @@ void mmAboutDialog::CreateControls()
     wxFileInputStream input(filePath);
     wxTextInputStream text(input);
     wxArrayString data;
-    data.Add(wxT(""));
+    data.Add((""));
 
     int part = 0;
     while (!input.Eof())
     {
-        wxString line = text.ReadLine() << wxT("\n");
-        if (!line.Contains(wxT("-------------\n")))
+        wxString line = text.ReadLine() << ("\n");
+        if (!line.Contains(("-------------\n")))
             data[part] << line;
         else {
             ++part;
-            data.Add(wxT(""));
+            data.Add((""));
         }
     }
 

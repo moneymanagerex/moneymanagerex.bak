@@ -55,22 +55,22 @@ void loadCategories(boost::shared_ptr<wxSQLite3Database> db_, mmCategoryList &ca
 
     while (q1.NextRow())
     {
-        int catID = q1.GetInt(wxT("CATEGID"));
+        int catID = q1.GetInt(("CATEGID"));
         
         if (!pCat || pCat->categID_ != catID)
         {
             if (pCat) cat_list.entries_.push_back(pCat);
 
-            pCat.reset(new mmCategory(catID, q1.GetString(wxT("CATEGNAME"))));
+            pCat.reset(new mmCategory(catID, q1.GetString(("CATEGNAME"))));
         }
 
-        int sub_idx = q1.FindColumnIndex(wxT("SUBCATEGID"));
+        int sub_idx = q1.FindColumnIndex(("SUBCATEGID"));
         wxASSERT(sub_idx);
 
         if (!q1.IsNull(sub_idx))
         {
             int subcatID = q1.GetInt(sub_idx);
-            boost::shared_ptr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString(wxT("SUBCATEGNAME"))));
+            boost::shared_ptr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString(("SUBCATEGNAME"))));
 
             pSubCat->parent_ = pCat;
             pCat->children_.push_back(pSubCat);
@@ -100,11 +100,11 @@ void loadPayees(boost::shared_ptr<wxSQLite3Database> db_,
 
     while (q1.NextRow())
     {
-        int payeeID = q1.GetInt(wxT("PAYEEID"));
-        int categID = q1.GetInt(wxT("CATEGID"));
-        int subCategID = q1.GetInt(wxT("SUBCATEGID"));
+        int payeeID = q1.GetInt(("PAYEEID"));
+        int categID = q1.GetInt(("CATEGID"));
+        int subCategID = q1.GetInt(("SUBCATEGID"));
 
-        boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, q1.GetString(wxT("PAYEENAME")), 
+        boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, q1.GetString(("PAYEENAME")), 
                                                       cat_list.getCategorySharedPtr(categID, subCategID)
                                                      )
                                          );
@@ -133,7 +133,7 @@ void loadAccounts(boost::shared_ptr<wxSQLite3Database> db_,
     {
         boost::shared_ptr<mmAccount> pAccount(new mmAccount(q1));
 
-        boost::weak_ptr<mmCurrency> pCurrency = cur_list.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
+        boost::weak_ptr<mmCurrency> pCurrency = cur_list.getCurrencySharedPtr(q1.GetInt(("CURRENCYID")));
         pAccount->currency_ = pCurrency;
 
         acc_list.accounts_.push_back(pAccount);
@@ -174,7 +174,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db) :
     displayDatabaseError_(true)
 {
     if (!db_)
-        throw wxSQLite3Exception(WXSQLITE_ERROR, wxT("Null pointer to database"));
+        throw wxSQLite3Exception(WXSQLITE_ERROR, ("Null pointer to database"));
 
     /* Load the DB into memory */
 

@@ -365,7 +365,7 @@ wxString getFileLine(wxTextInputStream& textFile, int& lineNumber)
 bool warning_message()
 {
     wxString msgStr;
-    msgStr << _("To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX.") << wxT("\n\n")
+    msgStr << _("To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX.") << ("\n\n")
            << _("Are you are sure you want to proceed with the import?");
     wxMessageDialog msgDlg(NULL, msgStr, _("QIF Import"), wxYES_NO|wxICON_QUESTION);
     if (msgDlg.ShowModal() != wxID_YES)
@@ -404,13 +404,13 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
     wxASSERT(pCurrencyPtr);
 
     wxString chooseExt;
-    chooseExt << _("QIF Files ") << wxT("(*.qif)|*.qif;*.QIF|")
-              << _("All Files ") << wxT("(*.*)|*.*");
+    chooseExt << _("QIF Files ") << ("(*.qif)|*.qif;*.QIF|")
+              << _("All Files ") << ("(*.*)|*.*");
     wxString fileName = wxFileSelector(_("Choose QIF data file to import"), 
         wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
     wxFileName logFile = mmex::GetLogDir(true);
     logFile.SetFullName(fileName);
-    logFile.SetExt(wxT("log"));
+    logFile.SetExt(("log"));
     bool canceledbyuser = false;
 
     if ( !fileName.IsEmpty() )
@@ -426,7 +426,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         int numImported = 0;
 
         wxString dt = wxDateTime::Now().FormatISODate();
-        //wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+        //wxString date_format = mmDBWrapper::getInfoSettingValue(db, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
         wxString date_format = mmOptions::instance().dateFormat;
         wxString payee, type, amount, categ, subcateg, transNum, notes, convDate;
         wxDateTime dtdt = wxDateTime::Now();
@@ -442,8 +442,8 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         while(!input.Eof())
         {   
 			wxString progressMsg;
-			progressMsg << _("Transactions imported from QIF") << wxT("\n") 
-                        << _("to account ") << acctName << wxT(": ") << numImported;
+			progressMsg << _("Transactions imported from QIF") << ("\n") 
+                        << _("to account ") << acctName << (": ") << numImported;
             dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *99), progressMsg);
 
 			if (!dlg.Update(-1)) // if cancel clicked
@@ -459,26 +459,26 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
             bool isOK = isLineOK(readLine);  
             if (!isOK)
             {
-                log << _("Line: ") << numLines << wxT("  ") << _(" Unknown QIF line: ") << readLine << endl;                    
+                log << _("Line: ") << numLines << ("  ") << _(" Unknown QIF line: ") << readLine << endl;                    
                 continue;
             }
 
             if (lineType(readLine) == AcctType)
             {
                 wxString accountType = getLineData(readLine);
-                if ((!accountType.CmpNoCase(wxT("Type:Bank"))) ||
-                    (!accountType.CmpNoCase(wxT("Type:Cash"))) ||
-                    (!accountType.CmpNoCase(wxT("Type:CCard"))))
+                if ((!accountType.CmpNoCase(("Type:Bank"))) ||
+                    (!accountType.CmpNoCase(("Type:Cash"))) ||
+                    (!accountType.CmpNoCase(("Type:CCard"))))
                 {
                     log << _("Importing account type: ") << accountType << endl;      
                     continue;
                 }
 
-                if (accountType == wxT("Account"))
+                if (accountType == ("Account"))
                 {
                     // account information
                     // Need to read till we get to end of account information
-                    while( (readLine = getFileLine(text, numLines) ) != wxT("^"))
+                    while( (readLine = getFileLine(text, numLines) ) != ("^"))
                     {
 						numLines++;
                         int i = accountInfoType(readLine);
@@ -497,25 +497,25 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 }
                 
                 // ignore these type of lines
-                if ( accountType == wxT("Option:AutoSwitch") ) 
+                if ( accountType == ("Option:AutoSwitch") ) 
                 {
-                    while((readLine = getFileLine(text, numLines)) != wxT("^"))
+                    while((readLine = getFileLine(text, numLines)) != ("^"))
                     {
                         // ignore all lines
                     }
                     continue;
                 }
-                else if ( accountType == wxT("Type:Security") || accountType == wxT("Clear:AutoSwitch"))
+                else if ( accountType == ("Type:Security") || accountType == ("Clear:AutoSwitch"))
                 {
                     continue;
                 }
-                else if ( accountType == wxT("Type:Cat") ) 
+                else if ( accountType == ("Type:Cat") ) 
                 {
                     bool reading = true;
                     while( reading )
                     {
                         readLine = getFileLine(text, numLines);
-                        if (readLine == wxT("!Type:Bank"))
+                        if (readLine == ("!Type:Bank"))
                             reading = false;
                     }
                     continue;
@@ -523,11 +523,11 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 
                 // we do not know how to process this type yet
                 wxString errMsgStr = _("Cannot process these QIF Account Types yet.");
-                wxString errLineMsgStr = wxString() << _("Line: ") << numLines << wxT("  ") << readLine;
+                wxString errLineMsgStr = wxString() << _("Line: ") << numLines << ("  ") << readLine;
                 
                 log << errLineMsgStr << endl;
                 log << errMsgStr << endl;
-                wxMessageBox( errLineMsgStr + wxT("\n\n") + errMsgStr, _("QIF Import"), wxICON_ERROR);
+                wxMessageBox( errLineMsgStr + ("\n\n") + errMsgStr, _("QIF Import"), wxICON_ERROR);
                 
                 // exit: while(!input.Eof()) loop and allow to exit routine and allow user to save or abort
                 break;
@@ -541,7 +541,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 payee = getLineData(readLine);
                 if (payee.Trim().IsEmpty())
                 {
-                    payee = wxT("Unknown");
+                    payee = ("Unknown");
                 }
 
                 if (!core->payeeExists(payee))
@@ -590,14 +590,14 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
             }
             else if (lineType(readLine) == Memo || lineType(readLine) == MemoSplit )
             {
-                notes << getLineData(readLine) << wxT("\n");
+                notes << getLineData(readLine) << ("\n");
                 continue;
             }
             else if (lineType(readLine) == Category)
             {
                 categ = getLineData(readLine);
 
-                wxStringTokenizer cattkz(categ, wxT(":"));
+                wxStringTokenizer cattkz(categ, (":"));
                 
                 if (cattkz.HasMoreTokens())
                     cat = cattkz.GetNextToken();
@@ -625,7 +625,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
             }
             else if (lineType(readLine) == EOTLT)
             {
-                wxString status = wxT("F");
+                wxString status = ("F");
 
                 if (dt.Trim().IsEmpty())
                 {
@@ -644,7 +644,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 {
                     if (payee.Trim().IsEmpty())
                     {
-                        payee = wxT("Unknown");
+                        payee = ("Unknown");
                     }
 
                     if (!core->payeeExists(payee))
@@ -667,10 +667,10 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     {
                         log << _("Category is empty, marking transaction as Unknown category") << endl;
 
-                        categID = core->getCategoryID(wxT("Unknown"));
+                        categID = core->getCategoryID(("Unknown"));
                         if (categID == -1)
                         {
-                            categID =  core->addCategory(wxT("Unknown"));
+                            categID =  core->addCategory(("Unknown"));
                         }
                     }
                 }
@@ -695,7 +695,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 pTransaction->amt_ = val;
                 pTransaction->status_ = status;
                 pTransaction->transNum_ = transNum;
-                pTransaction->notes_ = (wxString(notes.Last()) == wxT("\n") ? notes.RemoveLast() : notes);
+                pTransaction->notes_ = (wxString(notes.Last()) == ("\n") ? notes.RemoveLast() : notes);
                 pTransaction->category_ = core->getCategorySharedPtr(categID, subCategID);
                 pTransaction->date_ = dtdt;
                 pTransaction->toAmt_ = 0.0;

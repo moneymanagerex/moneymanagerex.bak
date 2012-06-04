@@ -43,12 +43,12 @@ void customSQLReportIndex::initIndexFileHeader()
         if (result)
         {
             indexFile_->AddLine(_("Custom SQL Reports"));
-            indexFile_->AddLine(wxT(""));
+            indexFile_->AddLine((""));
             indexFile_->AddLine(_("Report Name[|Report Filename.sql[|SUB]]"));
-            indexFile_->AddLine(wxT("========================================"));
-//            indexFile_->AddLine(wxT("My First Report|My First Report.sql"));
-//            indexFile_->AddLine(wxT("MY REPORT HEADING"));
-//            indexFile_->AddLine(wxT("My Second Report|My Second Report.sql|SUB"));
+            indexFile_->AddLine(("========================================"));
+//            indexFile_->AddLine(("My First Report|My First Report.sql"));
+//            indexFile_->AddLine(("MY REPORT HEADING"));
+//            indexFile_->AddLine(("My Second Report|My Second Report.sql|SUB"));
             indexFile_->Write();
             activeSqlReports_ = true;
         }
@@ -95,7 +95,7 @@ wxString customSQLReportIndex::nextReportTitle()
         currentReportFileIndex_ ++;
         if (!line.IsEmpty())
         {
-            wxStringTokenizer tk(line, wxT("|"));
+            wxStringTokenizer tk(line, ("|"));
             currentReportTitle_     = tk.GetNextToken();
             currentReportFileName_  = tk.GetNextToken();
             if (tk.HasMoreTokens())
@@ -144,9 +144,9 @@ void customSQLReportIndex::LoadArrays(wxArrayString& titleArray, wxArrayString& 
         titleArray.Add(currentReportTitle_);
         fileNameArray.Add(currentReportFileName_);
         if (reportIsSubReport_)
-            subArray.Add(wxT("SUB"));
+            subArray.Add(("SUB"));
         else
-            subArray.Add(wxT("NS"));
+            subArray.Add(("NS"));
         nextReportTitle();
     }
 }
@@ -177,7 +177,7 @@ wxString customSQLReportIndex::getUserTitleSelection(wxString description)
             currentReportTitle_     = reportTitles.Item(selectionIndex);
             currentReportFileName_  = reportFileNames.Item(selectionIndex);
             validTitle_ = true;
-            if ( reportIsSub.Item(selectionIndex) == wxT("SUB"))
+            if ( reportIsSub.Item(selectionIndex) == ("SUB"))
                 reportIsSubReport_ = true;
             else
                 reportIsSubReport_ = false;
@@ -190,13 +190,13 @@ wxString customSQLReportIndex::getUserTitleSelection(wxString description)
 
     currentReportFileIndex_ = selectionIndex + 4;  // Add File header line Count.
 
-    return wxString() << wxT("Custom_Report_") << selectionIndex;
+    return wxString() << ("Custom_Report_") << selectionIndex;
 }
 
 void customSQLReportIndex::getSelectedTitleSelection(wxString titleIndex)
 {
     long index; 
-    wxStringTokenizer tk(titleIndex, wxT("_")); // get the 3rd token 'Custom_Report_xx'   
+    wxStringTokenizer tk(titleIndex, ("_")); // get the 3rd token 'Custom_Report_xx'   
     tk.GetNextToken();
     tk.GetNextToken();
     wxString indexStr = tk.GetNextToken();
@@ -211,7 +211,7 @@ void customSQLReportIndex::getSelectedTitleSelection(wxString titleIndex)
     currentReportFileName_  = reportFileNames.Item(index);
     currentReportFileIndex_ = index + 4;  // Add number of header lines in file.
     validTitle_ = true;
-    if ( reportIsSub.Item(index) == wxT("SUB"))
+    if ( reportIsSub.Item(index) == ("SUB"))
         reportIsSubReport_ = true;
     else
         reportIsSubReport_ = false;
@@ -224,9 +224,9 @@ void customSQLReportIndex::addReportTitle(wxString reportTitle, bool updateIndex
         wxString indexLine = reportTitle;
         if (!reportFileName.IsEmpty())
         {
-            indexLine = indexLine << wxT("|") << reportFileName;
+            indexLine = indexLine << ("|") << reportFileName;
             if (isSub)
-                indexLine = indexLine << wxT("|SUB");
+                indexLine = indexLine << ("|SUB");
         }
 
         if (updateIndex)
@@ -269,14 +269,14 @@ bool customSQLReportIndex::getSqlFileData(wxString& sqlText)
         {
             wxString nextLine = sqlFile.GetNextLine();
             if (! nextLine.IsEmpty())
-                sqlText << wxT("\n"); 
+                sqlText << ("\n"); 
             sqlText << nextLine;
         }
         result = true;
     }
     else
     {
-        wxString msg = wxString() << _("Cannot locate file: ") << currentReportFileName() << wxT("\n\n");
+        wxString msg = wxString() << _("Cannot locate file: ") << currentReportFileName() << ("\n\n");
         wxMessageBox(msg,UserDialogHeading(),wxOK|wxICON_ERROR);
     }
 
@@ -285,5 +285,5 @@ bool customSQLReportIndex::getSqlFileData(wxString& sqlText)
 
 //customSQLReportIndex::~customSQLReportIndex()
 //{
-//    wxMessageBox(wxT("Testing that customSQLReportIndex objects are being destroyed.\nGoodby.."),wxT("customSQLReportIndex Dialog Destructor..."));
+//    wxMessageBox(("Testing that customSQLReportIndex objects are being destroyed.\nGoodby.."),("customSQLReportIndex Dialog Destructor..."));
 //}

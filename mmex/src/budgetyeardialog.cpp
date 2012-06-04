@@ -82,8 +82,8 @@ void mmBudgetYearDialog::fillControls()
     int index = 0;
     while (q1.NextRow())
     {
-        wxString payeeString = q1.GetString(wxT("BUDGETYEARNAME"));
-        int budgetYearID = q1.GetInt(wxT("BUDGETYEARID"));
+        wxString payeeString = q1.GetString(("BUDGETYEARNAME"));
+        int budgetYearID = q1.GetInt(("BUDGETYEARID"));
         listBox_->Insert(payeeString, index++, new mmListBoxItem(budgetYearID, payeeString));
     }
     q1.Finalize();

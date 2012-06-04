@@ -127,7 +127,7 @@ void relocatePayeeDialog::OnSelectSource(wxCommandEvent& /*event*/)
         if (sourcePayeeID_ != -1 )
             payee_name = core_->getPayeeName(sourcePayeeID_);
 
-        if (payee_name != wxT(""))
+        if (payee_name != (""))
             sourceBtn_->SetLabel(payee_name);
     }
 }
@@ -142,7 +142,7 @@ void relocatePayeeDialog::OnSelectDest(wxCommandEvent& /*event*/)
         wxString payee_name; 
         if (destPayeeID_ != -1 )
             payee_name = core_->getPayeeName(destPayeeID_);
-        if (payee_name != wxT(""))
+        if (payee_name != (""))
             destBtn_->SetLabel(payee_name);
     }
 }
@@ -160,7 +160,7 @@ void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
     if ((sourcePayeeID_ > 0) &&  (destPayeeID_ > 0) ) 
     {
         wxString msgStr = _("Please Confirm:") ;
-        msgStr << wxT("\n\n") << _ ("Changing all payees of: ") << sourceBtn_->GetLabelText() << wxT("\n\n") << _("to payee: ") << destBtn_->GetLabelText();
+        msgStr << ("\n\n") << _ ("Changing all payees of: ") << sourceBtn_->GetLabelText() << ("\n\n") << _("to payee: ") << destBtn_->GetLabelText();
 
         int ans = wxMessageBox(msgStr,_("Payee Relocation Confirmation"),wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)
@@ -174,7 +174,7 @@ void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
                 st.Finalize();
 			} catch(const wxSQLite3Exception& e) 
 			{
-				wxLogDebug(wxT("update checkingaccount_v1 : Exception"), e.GetMessage().c_str());
+				wxLogDebug(("update checkingaccount_v1 : Exception"), e.GetMessage().c_str());
 				wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
 			}
 

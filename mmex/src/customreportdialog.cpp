@@ -80,7 +80,7 @@ void mmCustomSQLDialog::CreateControls()
     wxStaticText* headingTitleText = new wxStaticText( headingPanel, wxID_STATIC, _("Report Title:") );
     headingPanelSizerH->Add(headingTitleText, 0,  wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    reportTitleTxtCtrl_ = new wxTextCtrl( headingPanel, DIALOG_CUSTOM_SQL_TXTCTRL_REPORT_TITLE, wxT(""), wxDefaultPosition, wxSize(titleTextWidth,-1), 0 );
+    reportTitleTxtCtrl_ = new wxTextCtrl( headingPanel, DIALOG_CUSTOM_SQL_TXTCTRL_REPORT_TITLE, (""), wxDefaultPosition, wxSize(titleTextWidth,-1), 0 );
     reportTitleTxtCtrl_->SetToolTip(_("Report Title is used as the file name of the SQL script."));
     headingPanelSizerH->Add(reportTitleTxtCtrl_, 0,  wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -183,7 +183,7 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
 {
     wxString sqlScriptFileName = wxFileSelector( _("Load Custom SQL file:"), 
                                                  mmex::getPathUser(mmex::DIRECTORY),
-                                                 wxEmptyString, wxEmptyString,  wxT("SQL File(*.sql)|*.sql"), wxFD_FILE_MUST_EXIST);
+                                                 wxEmptyString, wxEmptyString,  ("SQL File(*.sql)|*.sql"), wxFD_FILE_MUST_EXIST);
     if ( !sqlScriptFileName.empty() )
     {
         wxFileName selectedFileName(sqlScriptFileName);
@@ -198,7 +198,7 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
             {
                 wxString nextLine = sqlFile.GetNextLine();
                 if (! nextLine.IsEmpty())
-                    sqlText << wxT("\n"); 
+                    sqlText << ("\n"); 
                 sqlText << nextLine;
             }
             sqlSourceTxtCtrl_->SetValue(sqlText);
@@ -207,7 +207,7 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
         }
         else
         {
-            wxString msg = wxString() << _("Unable to open file.") << sqlScriptFileName << wxT("\n\n");
+            wxString msg = wxString() << _("Unable to open file.") << sqlScriptFileName << ("\n\n");
             wxMessageBox(msg,reportIndex_->UserDialogHeading(),wxOK|wxICON_ERROR);
         }
     }
@@ -223,8 +223,8 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
 
     wxString reportfileName;
     reportfileName = reportTitleTxtCtrl_->GetValue();   // Get name from report title.
-    reportfileName.Replace(wxT(" "),wxT("_"));          // Replace spaces with underscore character
-    reportfileName += wxT(".sql");                      // Add the file extenstion
+    reportfileName.Replace((" "),("_"));          // Replace spaces with underscore character
+    reportfileName += (".sql");                      // Add the file extenstion
 
     if (reportfileName == loadedFileName_)
     {
@@ -359,5 +359,5 @@ void mmCustomSQLDialog::OnTextChangeSubReport(wxCommandEvent& /*event*/)
 
 //mmCustomSQLDialog::~mmCustomSQLDialog()
 //{
-//    wxMessageBox(wxT("Testing that the dialog is being destroyed.\nGoodby.."),wxT("Custom SQL Dialog destructor..."));
+//    wxMessageBox(("Testing that the dialog is being destroyed.\nGoodby.."),("Custom SQL Dialog destructor..."));
 //}

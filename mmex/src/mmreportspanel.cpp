@@ -72,7 +72,7 @@ void mmReportsPanel::CreateControls()
 
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         _("REPORTS"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, ("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     htmlWindow_ = new wxHtmlWindow( this, ID_PANEL_REPORTS_HTMLWINDOW, 

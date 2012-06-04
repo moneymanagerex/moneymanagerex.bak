@@ -35,10 +35,10 @@ struct TestData
 void dumpDates(wxString mgs, wxDateTime dateStart, wxDateTime dateEnd)
 {
 	wxLogDebug(mgs.c_str());
-	wxLogDebug((dateStart.FormatISODate() + wxT('-') + dateStart.FormatISOTime()).c_str());
-	wxLogDebug(wxT(" - "));
-	wxLogDebug((dateEnd.FormatISODate() + wxT('-') + dateEnd.FormatISOTime()).c_str());
-	wxLogDebug(wxT("\n"));
+	wxLogDebug((dateStart.FormatISODate() + ('-') + dateStart.FormatISOTime()).c_str());
+	wxLogDebug((" - "));
+	wxLogDebug((dateEnd.FormatISODate() + ('-') + dateEnd.FormatISOTime()).c_str());
+	wxLogDebug(("\n"));
 }
 
 //----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ TEST(LastDays)
 
 	wxDateTime dateStart = LastDays<5, Date_20100501>::StartRange();
 	wxDateTime dateEnd = LastDays<5, Date_20100501>::EndRange();
-	dumpDates(wxT("LastDays [1]: "), dateStart, dateEnd);
+	dumpDates(("LastDays [1]: "), dateStart, dateEnd);
 
 	CHECK(!wxDateTime(26, wxDateTime::Apr, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
 	CHECK(wxDateTime(27, wxDateTime::Apr, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
@@ -84,7 +84,7 @@ TEST(LastDays)
 
 	dateStart = LastDays<1, Date_20100501>::StartRange();
 	dateEnd = LastDays<1, Date_20100501>::EndRange();
-	dumpDates(wxT("LastDays [2]: "), dateStart, dateEnd);
+	dumpDates(("LastDays [2]: "), dateStart, dateEnd);
 
 	CHECK(!wxDateTime(4, wxDateTime::May, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
 	CHECK(wxDateTime(1, wxDateTime::May, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
@@ -100,7 +100,7 @@ TEST(LastDays)
 
 	dateStart = LastDays<30, Date_20100501>::StartRange();
 	dateEnd = LastDays<30, Date_20100501>::EndRange();
-	dumpDates(wxT("LastDays [3]: "), dateStart, dateEnd);
+	dumpDates(("LastDays [3]: "), dateStart, dateEnd);
 
 	CHECK(!wxDateTime(1, wxDateTime::Apr, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
 	CHECK(wxDateTime(2, wxDateTime::Apr, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
@@ -124,7 +124,7 @@ TEST(CurrentMonth)
 
 	wxDateTime dateStart = CurrentMonth<Date_20100501>::StartRange();
 	wxDateTime dateEnd = CurrentMonth<Date_20100501>::EndRange();	
-	dumpDates(wxT("Current month [1]: "), dateStart, dateEnd);
+	dumpDates(("Current month [1]: "), dateStart, dateEnd);
 
 	CHECK(!wxDateTime(30, wxDateTime::Apr, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
 	CHECK(wxDateTime(1, wxDateTime::May, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
@@ -140,7 +140,7 @@ TEST(CurrentMonth)
 
 	dateStart = CurrentMonth<Date_20100612>::StartRange();
 	dateEnd = CurrentMonth<Date_20100612>::EndRange();
-	dumpDates(wxT("Current month [2]: "), dateStart, dateEnd);
+	dumpDates(("Current month [2]: "), dateStart, dateEnd);
 
 	CHECK(!wxDateTime(31, wxDateTime::May, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
 	CHECK(wxDateTime(1, wxDateTime::Jun, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
@@ -156,7 +156,7 @@ TEST(CurrentMonth)
 
 	dateStart = CurrentMonth<Date_20101026>::StartRange();
 	dateEnd = CurrentMonth<Date_20101026>::EndRange();
-	dumpDates(wxT("Current month [3]: "), dateStart, dateEnd);
+	dumpDates(("Current month [3]: "), dateStart, dateEnd);
 
 	CHECK(!wxDateTime(30, wxDateTime::Sep, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
 	CHECK(wxDateTime(1, wxDateTime::Oct, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
@@ -180,19 +180,19 @@ TEST(LastMonths)
 
 	wxDateTime dateStart = LastMonths<1, 0, Date_20100501>::StartRange();
 	wxDateTime dateEnd = LastMonths<1, 0, Date_20100501>::EndRange();	
-	dumpDates(wxT("Last months [1]: "), dateStart, dateEnd);
+	dumpDates(("Last months [1]: "), dateStart, dateEnd);
 
 	dateStart = LastMonths<2, 0, Date_20100501>::StartRange();
 	dateEnd = LastMonths<2, 0, Date_20100501>::EndRange();	
-	dumpDates(wxT("Last months [2]: "), dateStart, dateEnd);
+	dumpDates(("Last months [2]: "), dateStart, dateEnd);
 
 	dateStart = LastMonths<2, 1, Date_20100501>::StartRange();
 	dateEnd = LastMonths<2, 1, Date_20100501>::EndRange();	
-	dumpDates(wxT("Last months [3]: "), dateStart, dateEnd);
+	dumpDates(("Last months [3]: "), dateStart, dateEnd);
 
 	dateStart = LastMonths<0, 0, Date_20100501>::StartRange();
 	dateEnd = LastMonths<0, 0, Date_20100501>::EndRange();	
-	dumpDates(wxT("Last months [4]: "), dateStart, dateEnd);
+	dumpDates(("Last months [4]: "), dateStart, dateEnd);
 }
 //----------------------------------------------------------------------------
 
@@ -208,23 +208,23 @@ namespace
 
 typedef boost::unordered_map<wxString, wxString> TransactionMatchMap;
 
-const wxString s_view_reconciled(wxT("View Reconciled"));
-const wxString s_view_void(wxT("View Void"));
-const wxString s_view_flagged(wxT("View Flagged"));
-const wxString s_view_unreconciled(wxT("View UnReconciled"));
-const wxString s_view_not_reconciled(wxT("View Not-Reconciled"));
-const wxString s_view_duplicates(wxT("View Duplicates"));
+const wxString s_view_reconciled(("View Reconciled"));
+const wxString s_view_void(("View Void"));
+const wxString s_view_flagged(("View Flagged"));
+const wxString s_view_unreconciled(("View UnReconciled"));
+const wxString s_view_not_reconciled(("View Not-Reconciled"));
+const wxString s_view_duplicates(("View Duplicates"));
 
 const TransactionMatchMap& initTransactionMatchMap()
 {
 	static TransactionMatchMap map;
 
-	map[s_view_reconciled] = wxT("R");
-	map[s_view_void] = wxT("V");
-	map[s_view_flagged] = wxT("F");
-	map[s_view_unreconciled] = wxT("");
-	map[s_view_not_reconciled] = wxT("R");
-	map[s_view_duplicates] = wxT("D");
+	map[s_view_reconciled] = ("R");
+	map[s_view_void] = ("V");
+	map[s_view_flagged] = ("F");
+	map[s_view_unreconciled] = ("");
+	map[s_view_not_reconciled] = ("R");
+	map[s_view_duplicates] = ("D");
 
 	return map;
 }
@@ -244,10 +244,10 @@ TEST(BoostHashMap)
 
 	TransactionMatchMap::hasher hasher = s_transactionMatchers_Map.hash_function();
 	std::size_t h1 = hasher(s_view_reconciled);
-	std::size_t h2 = hasher(wxT("View Reconciled"));
+	std::size_t h2 = hasher(("View Reconciled"));
 	CHECK(h1 == h2);
 
-	TransactionMatchMap::const_iterator result = s_transactionMatchers_Map.find(wxT("View Void"));
+	TransactionMatchMap::const_iterator result = s_transactionMatchers_Map.find(("View Void"));
 	CHECK(result != end);
 }
 
@@ -267,49 +267,49 @@ TEST(formatDoubleToCurrency1)
 	wxString s;
 	
 	mmex::formatDoubleToCurrency(0, s);
-	CHECK(s == wxT("$ 0.00"));
+	CHECK(s == ("$ 0.00"));
 
 	mmex::formatDoubleToCurrency(-0, s);
-	CHECK(s == wxT("$ 0.00"));
+	CHECK(s == ("$ 0.00"));
 
 	mmex::formatDoubleToCurrency(1.0, s);
-	CHECK(s == wxT("$ 1.00"));
+	CHECK(s == ("$ 1.00"));
 
 	mmex::formatDoubleToCurrency(-12.3, s);
-	CHECK(s == wxT("$ -12.30"));
+	CHECK(s == ("$ -12.30"));
 
 	mmex::formatDoubleToCurrency(123.4, s);
-	CHECK(s == wxT("$ 123.40"));
+	CHECK(s == ("$ 123.40"));
 	
 	mmex::formatDoubleToCurrency(-1000.0, s);
-	CHECK(s == wxT("$ -1,000.00"));
+	CHECK(s == ("$ -1,000.00"));
 
 	mmex::formatDoubleToCurrency(10000.0, s);
-	CHECK(s == wxT("$ 10,000.00"));
+	CHECK(s == ("$ 10,000.00"));
 
 	mmex::formatDoubleToCurrency(-100000.0, s);
-	CHECK(s == wxT("$ -100,000.00"));
+	CHECK(s == ("$ -100,000.00"));
 
 	mmex::formatDoubleToCurrency(1000000.0, s);
-	CHECK(s == wxT("$ 1,000,000.00"));
+	CHECK(s == ("$ 1,000,000.00"));
 
 	mmex::formatDoubleToCurrency(-10000000.0, s);
-	CHECK(s == wxT("$ -10,000,000.00"));
+	CHECK(s == ("$ -10,000,000.00"));
 
 	mmex::formatDoubleToCurrency(100000000.0, s);
-	CHECK(s == wxT("$ 100,000,000.00"));
+	CHECK(s == ("$ 100,000,000.00"));
 
 	mmex::formatDoubleToCurrency(1000000000.0, s);
-	CHECK(s == wxT("$ 1,000,000,000.00"));
+	CHECK(s == ("$ 1,000,000,000.00"));
 
 	mmex::formatDoubleToCurrency(-10000000000.0, s);
-	CHECK(s == wxT("$ -10,000,000,000.00"));
+	CHECK(s == ("$ -10,000,000,000.00"));
 
 	mmex::formatDoubleToCurrency(100000000000.0, s);
-	CHECK(s == wxT("$ 100,000,000,000.00"));
+	CHECK(s == ("$ 100,000,000,000.00"));
 
 	mmex::formatDoubleToCurrency(-1234567890123.45, s);
-	CHECK(s == wxT("$ -1,234,567,890,123.45"));
+	CHECK(s == ("$ -1,234,567,890,123.45"));
 }
 //----------------------------------------------------------------------------
 
@@ -319,10 +319,10 @@ TEST(formatDoubleToCurrency2)
 	wxString s;
 
 	mmex::formatDoubleToCurrency(val, s);
-	CHECK(s == wxT("$ 1,234.14"));
+	CHECK(s == ("$ 1,234.14"));
 
 	mmex::formatDoubleToCurrency(-val, s);
-	CHECK(s == wxT("$ -1,234.14"));
+	CHECK(s == ("$ -1,234.14"));
 }
 //----------------------------------------------------------------------------
 
@@ -332,34 +332,34 @@ TEST(formatDoubleToCurrency3)
 	wxString s;
 
 	mmex::formatDoubleToCurrency(val, s);
-	CHECK(s == wxT("$ 0.01"));
+	CHECK(s == ("$ 0.01"));
 
 	mmex::formatDoubleToCurrency(-val, s);
-	CHECK(s == wxT("$ -0.01"));
+	CHECK(s == ("$ -0.01"));
 
 	mmex::formatDoubleToCurrency(0.004, s);
-	CHECK(s == wxT("$ 0.00"));
+	CHECK(s == ("$ 0.00"));
 
 	mmex::formatDoubleToCurrency(0.005, s);
-	CHECK(s == wxT("$ 0.01"));
+	CHECK(s == ("$ 0.01"));
 }
 //----------------------------------------------------------------------------
 
 TEST(formatDoubleToCurrency4)
 {
-	wxString pfx = wxT("AAA");
-	wxString sfx = wxT("ZZZ");
-	wxChar dec = wxT('%');
-	wxChar grp = wxT(':');
-	wxString unit = wxT("baboses");
-	wxString cent = wxT("kop.");
+	wxString pfx = ("AAA");
+	wxString sfx = ("ZZZ");
+	wxChar dec = ('%');
+	wxChar grp = (':');
+	wxString unit = ("baboses");
+	wxString cent = ("kop.");
 	double scale = 100;
 
 	mmex::CurrencyFormatter::instance().loadSettings(pfx, sfx, dec, grp, unit, cent, scale);
 
 	wxString s;
 	mmex::formatDoubleToCurrency(-9123456789012.34, s);
-	CHECK(s == wxT("AAA -9:123:456:789:012%34ZZZ"));
+	CHECK(s == ("AAA -9:123:456:789:012%34ZZZ"));
 }
 //----------------------------------------------------------------------------
 
@@ -368,24 +368,24 @@ TEST(formatDoubleToCurrencyEdit)
 	wxString s;
 
 	mmex::formatDoubleToCurrencyEdit(0, s);
-	CHECK(s == wxT("0%00"));
+	CHECK(s == ("0%00"));
 
 	mmex::formatDoubleToCurrencyEdit(-9123456789012.34, s);
-	CHECK(s == wxT("-9:123:456:789:012%34"));
+	CHECK(s == ("-9:123:456:789:012%34"));
 }
 //----------------------------------------------------------------------------
 
 TEST(formatDoubleToCurrency5)
 {
 	wxString es;
-	wxChar dec = wxT('\a'); // isprint() -> false
-	wxChar grp = wxT('\0');
+	wxChar dec = ('\a'); // isprint() -> false
+	wxChar grp = ('\0');
 
 	mmex::CurrencyFormatter::instance().loadSettings(es, es, dec, grp, es, es, 1000);
 
 	wxString s;
 	mmex::formatDoubleToCurrency(12345670.895, s);
-	CHECK(s == wxT("12345670.895"));
+	CHECK(s == ("12345670.895"));
 
 	// --
 
@@ -393,7 +393,7 @@ TEST(formatDoubleToCurrency5)
 
 	s.clear();
 	mmex::formatDoubleToCurrency(12345670.895, s);
-	CHECK(s == wxT("12345670.9"));
+	CHECK(s == ("12345670.9"));
 
 	// --
 
@@ -401,7 +401,7 @@ TEST(formatDoubleToCurrency5)
 
 	s.clear();
 	mmex::formatDoubleToCurrency(12345670.8954, s);
-	CHECK(s == wxT("12345670.8954"));
+	CHECK(s == ("12345670.8954"));
 
 	// --
 
@@ -409,7 +409,7 @@ TEST(formatDoubleToCurrency5)
 
 	s.clear();
 	mmex::formatDoubleToCurrency(12345670.89, s);
-	CHECK(s == wxT("12345670.89"));
+	CHECK(s == ("12345670.89"));
 
 	// --
 
@@ -417,7 +417,7 @@ TEST(formatDoubleToCurrency5)
 
 	s.clear();
 	mmex::formatDoubleToCurrency(12345670.89, s);
-	CHECK(s == wxT("12345670.89"));
+	CHECK(s == ("12345670.89"));
 }
 //----------------------------------------------------------------------------
 

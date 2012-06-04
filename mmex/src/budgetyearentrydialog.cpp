@@ -101,7 +101,7 @@ void mmBudgetYearEntryDialog::CreateControls()
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxArrayString itemYearStrings;
-    itemYearStrings.Add(wxT("None"));
+    itemYearStrings.Add(("None"));
     
     itemChoice_ = new wxChoice( this, ID_DIALOG_BUDGETYEARENTRY_COMBO_YEARS, 
         wxDefaultPosition, wxSize(textYear_->GetSize()), itemYearStrings );
@@ -117,7 +117,7 @@ void mmBudgetYearEntryDialog::CreateControls()
     int index = 1;
     while (q1.NextRow())
     {
-        wxString budgetYearString = q1.GetString(wxT("BUDGETYEARNAME"));
+        wxString budgetYearString = q1.GetString(("BUDGETYEARNAME"));
         itemChoice_->Insert(budgetYearString, index++);
     }
     q1.Finalize();
@@ -145,9 +145,9 @@ void mmBudgetYearEntryDialog::OnOk(wxCommandEvent& /*event*/)
         wxString currMonthText = wxEmptyString;
         currMonthText << textMonth_->GetValue();
         if (currMonthText.length() != 2 )
-            currMonthText = wxString() << wxT("0") << currMonthText;
+            currMonthText = wxString() << ("0") << currMonthText;
 
-        currYearText << wxT("-") << currMonthText;
+        currYearText << ("-") << currMonthText;
     }
 
     if (mmDBWrapper::getBudgetYearID(db_, currYearText) != -1)
@@ -160,7 +160,7 @@ void mmBudgetYearEntryDialog::OnOk(wxCommandEvent& /*event*/)
         DB_View_BUDGETYEAR_V1::Data* budget_year = BUDGETYEAR_V1.create();
         budget_year->BUDGETYEARNAME = currYearText;
         budget_year->save(db_);
-        if (baseYear != wxT("None"))
+        if (baseYear != ("None"))
         {
             int baseYearID = mmDBWrapper::getBudgetYearID(db_, baseYear);
             int newYearID  = mmDBWrapper::getBudgetYearID(db_, currYearText);

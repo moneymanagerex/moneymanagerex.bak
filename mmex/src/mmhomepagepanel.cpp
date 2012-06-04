@@ -131,7 +131,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
     double tRecBalance = 0.0;
 
     // Get account balances and display accounts if we want them displayed 
-    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
+    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, ("VIEWACCOUNTS"), ("ALL"));
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount();
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
@@ -162,12 +162,12 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
             mmex::formatDoubleToCurrency(bal, balanceStr);
             mmex::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
 
-            if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
-                (vAccts == wxT("ALL")))
+            if ((vAccts == ("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == ("Favorites") && pCA->favoriteAcct_) ||
+                (vAccts == ("ALL")))
             {
                 hb.startTableRow();
-                hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->id_), pCA->name_, false, true);
+                hb.addTableCellLink(("ACCT:") + wxString::Format(("%d"), pCA->id_), pCA->name_, false, true);
                 hb.addTableCell(reconciledBalanceStr, true);
                 hb.addTableCell(balanceStr, true);
                 hb.endTableRow();
@@ -192,7 +192,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
         displaySummaryHeader(hb, _("Term Account"));
 
     // Get account balances and add to totals, and display accounts if we want them displayed 
-    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
+    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, ("VIEWACCOUNTS"), ("ALL"));
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount(); 
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
@@ -222,12 +222,12 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
                 mmex::formatDoubleToCurrency(bal, balanceStr);
                 mmex::formatDoubleToCurrency(reconciledBal, reconciledBalStr);
 
-                if ((vAccts == wxT("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
-                    (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
-                    (vAccts == wxT("ALL")))
+                if ((vAccts == ("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
+                    (vAccts == ("Favorites") && pTA->favoriteAcct_) ||
+                    (vAccts == ("ALL")))
                 {
                     hb.startTableRow();
-                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->id_), pTA->name_, false, true);
+                    hb.addTableCellLink(("ACCT:") + wxString::Format(("%d"), pTA->id_), pTA->name_, false, true);
                     hb.addTableCell(reconciledBalStr, true);
                     hb.addTableCell(balanceStr, true);
                     hb.endTableRow();
@@ -273,13 +273,13 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while(q1.NextRow())
     {
-        int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
-        double stockBalance = q1.GetDouble(wxT("BALANCE"));
-        wxString stocknameStr = q1.GetString(wxT("ACCOUNTNAME"));
-        //double income = q1.GetDouble(wxT("INCOME"));
-        //double expenses = q1.GetDouble(wxT("EXPENCES"));
-        double baseconvrate = q1.GetDouble(wxT("BASECONVRATE"));
-        double stockGain = q1.GetDouble(wxT("GAIN"));
+        int stockaccountId = q1.GetInt(("ACCOUNTID"));
+        double stockBalance = q1.GetDouble(("BALANCE"));
+        wxString stocknameStr = q1.GetString(("ACCOUNTNAME"));
+        //double income = q1.GetDouble(("INCOME"));
+        //double expenses = q1.GetDouble(("EXPENCES"));
+        double baseconvrate = q1.GetDouble(("BASECONVRATE"));
+        double stockGain = q1.GetDouble(("GAIN"));
 
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(stockaccountId).lock();
         wxASSERT(pCurrencyPtr);
@@ -298,7 +298,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
             hb.startTableRow();
             //////
             //hb.addTableCell(stocknameStr, false,true);
-            hb.addTableCellLink(wxT("STOCK:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+            hb.addTableCellLink(("STOCK:") + wxString::Format(("%d"), stockaccountId), stocknameStr, false, true);
             hb.addTableCell(tGainStr, true);
             hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
@@ -323,7 +323,7 @@ void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
     if (mmIniOptions::instance().enableAssets_)
     {
         hb.startTableRow();
-        hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
+        hb.addTableCellLink(("Assets"), _("Assets"), false, true);
         hb.addTableCell(wxT (""), true);
         hb.addTableCell(assetBalanceStr, true);
         hb.endTableRow();
@@ -379,7 +379,7 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
     if (curnumber > 1 )
     {
         // display the currency header
-        hb.startTable(wxT("95%"));
+        hb.startTable(("95%"));
         hb.startTableRow();
         hb.addTableHeaderCell(_("Currency"), false);
         hb.addTableHeaderCell(_("Base Rate"), true);
@@ -389,10 +389,10 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
         // display the totals for each currency value
         while(q1.NextRow())
         {
-            int accountId = q1.GetInt(wxT("ACCOUNTID"));
-            double currBalance = q1.GetDouble(wxT("BALANCE"));
-            wxString currencyStr = q1.GetString(wxT("CURRENCYNAME"));
-            double convRate = q1.GetDouble(wxT("BASECONVRATE"));
+            int accountId = q1.GetInt(("ACCOUNTID"));
+            double currBalance = q1.GetDouble(("BALANCE"));
+            wxString currencyStr = q1.GetString(("CURRENCYNAME"));
+            double convRate = q1.GetDouble(("BASECONVRATE"));
             wxString convRateStr;
 
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(accountId).lock();
@@ -418,7 +418,7 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
 //* Income vs Expenses *//
 void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome, double& texpenses)
 {
-    hb.startTable(wxT("95%"));
+    hb.startTable(("95%"));
 
     wxString incStr, expStr, difStr;
     mmex::formatDoubleToCurrency(tincome, incStr); // must use loadBaseCurrencySettings (called above)
@@ -427,7 +427,7 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
 
     mmGraphIncExpensesMonth gg;
     gg.init(tincome, texpenses);
-    gg.Generate(wxT(""));
+    gg.Generate((""));
 
     wxString monthHeading = _("Current Month");
     if (mmIniOptions::instance().ignoreFutureTransactions_) monthHeading = _("Current Month to Date");
@@ -435,12 +435,12 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     hb.addTableHeaderRow(wxString() << _("Income vs Expenses: ") << monthHeading, 2);
     
     hb.startTableRow();
-    //hb.startTableCell(wxT("50%\" align=\"center"));
+    //hb.startTableCell(("50%\" align=\"center"));
     hb.startTableCell();
     hb.addImage(gg.getOutputFileName());
     hb.endTableCell();
 
-    //hb.startTableCell(wxT("50%\" align=\"center"));
+    //hb.startTableCell(("50%\" align=\"center"));
     hb.startTableCell();
     //start table in table
     hb.startTable();
@@ -463,7 +463,7 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     hb.addRowSeparator(2);
     hb.startTableRow();
     hb.addTableCell(_("Difference:"), false, true, true);
-    hb.addTableCell(difStr, true, true, true, (tincome-texpenses < 0.0 ? wxT("RED"):wxT("")));
+    hb.addTableCell(difStr, true, true, true, (tincome-texpenses < 0.0 ? ("RED"):("")));
 
     hb.endTableRow();
 
@@ -489,12 +489,12 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
     {
         mmBDTransactionHolder th;
 
-        th.id_           = q1.GetInt(wxT("BDID"));
-        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
+        th.id_           = q1.GetInt(("BDID"));
+        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(("NEXTOCCURRENCEDATE")));
         th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
-        int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
+        int numRepeats     = q1.GetInt(("NUMOCCURRENCES"));
 
-        int repeats        = q1.GetInt(wxT("REPEATS"));
+        int repeats        = q1.GetInt(("REPEATS"));
         // DeMultiplex the Auto Executable fields.
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
             repeats -= BD_REPEATS_MULTIPLEX_BASE;
@@ -510,7 +510,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
         if (minutesRemaining_ > 0)
             th.daysRemaining_ += 1;
 
-        th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + _(" days remaining");
+        th.daysRemainingStr_ = wxString::Format(("%d"), th.daysRemaining_) + _(" days remaining");
 
         if (th.daysRemaining_ == 0)
         {
@@ -520,18 +520,18 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
         if (th.daysRemaining_ < 0)
         {
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
+            th.daysRemainingStr_ = wxString::Format(("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
             if ((repeats > 10) && (numRepeats < 0) )
                 th.daysRemainingStr_ = _("Inactive");
         }
 
-        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
-        th.transType_      = q1.GetString(wxT("TRANSCODE"));
-        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
-        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+        th.payeeID_        = q1.GetInt(("PAYEEID"));
+        th.transType_      = q1.GetString(("TRANSCODE"));
+        th.accountID_      = q1.GetInt(("ACCOUNTID"));
+        th.toAccountID_    = q1.GetInt(("TOACCOUNTID"));
 
-        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
-        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+        th.amt_            = q1.GetDouble(("TRANSAMOUNT"));
+        th.toAmt_          = q1.GetDouble(("TOTRANSAMOUNT"));
 
         mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
         //for Withdrawal amount should be negative
@@ -569,8 +569,8 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
         hb.addLineBreak();
         hb.addLineBreak();
-        hb.startTable(wxT("95%"));
-        hb.addTableHeaderRowLink(wxT("billsdeposits"), _("Upcoming Transactions"), 3);
+        hb.startTable(("95%"));
+        hb.addTableHeaderRowLink(("billsdeposits"), _("Upcoming Transactions"), 3);
 
         std::vector<wxString> data4;
         for (size_t bdidx = 0; bdidx < trans_.size(); ++bdidx)
@@ -583,11 +583,11 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
             if (trans_[bdidx].daysRemaining_ <= 14)
             {
                 wxString daysRemainingStr;
-                colorStr = wxT("#9999FF");
+                colorStr = ("#9999FF");
 
                 daysRemainingStr = trans_[bdidx].daysRemainingStr_;
                 if (trans_[bdidx].daysRemaining_ < 0)
-                    colorStr = wxT("#FF6600");
+                    colorStr = ("#FF6600");
 
                 // Load the currency for this BD
                 boost::weak_ptr<mmCurrency> wpCurrency = core_->getCurrencyWeakPtr(trans_[bdidx].accountID_);
@@ -652,7 +652,7 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 
     wxString headerMsg = wxString() << _("Top Withdrawals: ") << _("Last 30 Days");
 
-    hb.startTable(wxT("95%"));
+    hb.startTable(("95%"));
     hb.addTableHeaderRow(headerMsg, 3);
     hb.startTableRow();
     hb.addTableCell(_("Category"), false, false, true);
@@ -662,14 +662,14 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 
     while(q1.NextRow())
     {
-        double category_total = q1.GetDouble(wxT("AMOUNT"));
+        double category_total = q1.GetDouble(("AMOUNT"));
         wxString category_total_str = wxEmptyString;
         mmDBWrapper::loadBaseCurrencySettings(core_->db_.get());
         mmex::formatDoubleToCurrency(category_total, category_total_str);
 
         hb.startTableRow();
-        hb.addTableCell(q1.GetString(wxT("SUBCATEGORY")), false, true);
-        hb.addTableCell(q1.GetString(wxT("NUMBER")), true, true);
+        hb.addTableCell(q1.GetString(("SUBCATEGORY")), false, true);
+        hb.addTableCell(q1.GetString(("NUMBER")), true, true);
         hb.addTableCell(category_total_str, true);
         hb.endTableRow();
     }
@@ -693,7 +693,7 @@ void mmHomePagePanel::displayStatistics(mmHTMLBuilder& hb)
     int countFollowUp = core_->countFollowupTransactions();
     hb.addLineBreak();
     hb.addLineBreak();
-    hb.startTable(wxT("95%"));
+    hb.startTable(("95%"));
 
     hb.addTableHeaderRow(_("Transaction Statistics"), 2);
 
@@ -701,13 +701,13 @@ void mmHomePagePanel::displayStatistics(mmHTMLBuilder& hb)
     {
         hb.startTableRow();
         hb.addTableCell(_("Follow Up On Transactions: "));
-        hb.addTableCell(wxString::Format(wxT("%d"), countFollowUp), true, true, true);
+        hb.addTableCell(wxString::Format(("%d"), countFollowUp), true, true, true);
         hb.endTableRow();
     }
 
     hb.startTableRow();
     hb.addTableCell( _("Total Transactions: "));  
-    hb.addTableCell(wxString::Format(wxT("%ld"), core_->bTransactionList_.transactions_.size()), true, true, true);
+    hb.addTableCell(wxString::Format(("%ld"), core_->bTransactionList_.transactions_.size()), true, true, true);
     hb.endTableRow();
     hb.addRowSeparator(2);
     hb.endTable();
@@ -720,7 +720,7 @@ void mmHomePagePanel::displayGrandTotals(mmHTMLBuilder& hb, double& tBalance)
     mmDBWrapper::loadBaseCurrencySettings(db_);
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
-    hb.startTable(wxT("95%"));
+    hb.startTable(("95%"));
     hb.addTotalRow(_("Grand Total:"), 2, tBalanceStr);
     //hb.addRowSeparator(2);
     hb.endTable();
@@ -746,16 +746,16 @@ void mmHomePagePanel::updateAccounts()
     //hb.addLineBreak();
 
     hb.startCenter();
-    hb.startTable(wxT("98%"), wxT("top")); 
+    hb.startTable(("98%"), ("top")); 
     hb.startTableRow();
 
     double tBalance = 0.0;
     double tIncome = 0.0;
     double tExpenses = 0.0;
 
-    hb.startTableCell(wxT("50%\" align=\"center")); 
+    hb.startTableCell(("50%\" align=\"center")); 
 
-    hb.startTable(wxT("95%")); 
+    hb.startTable(("95%")); 
     displayCheckingAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
     if ( frame_->hasActiveTermAccounts() )
         displayTermAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
@@ -770,7 +770,7 @@ void mmHomePagePanel::updateAccounts()
     displayTopTransactions(hb); 
     hb.endTableCell();
 
-    hb.startTableCell(wxT("50%\" align=\"center")); 
+    hb.startTableCell(("50%\" align=\"center")); 
     displayIncomeVsExpenses(hb, tIncome, tExpenses); //Also displays the Income vs Expenses graph.
     displayBillsAndDeposits(hb); 
     displayStatistics(hb);
@@ -799,15 +799,15 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 {
     wxString href = link.GetHref();
     wxString number;
-    bool isAcct = href.StartsWith(wxT("ACCT:"), &number);
-    bool isStock = href.StartsWith(wxT("STOCK:"), &number);
-    if (href == wxT("billsdeposits"))
+    bool isAcct = href.StartsWith(("ACCT:"), &number);
+    bool isStock = href.StartsWith(("STOCK:"), &number);
+    if (href == ("billsdeposits"))
     {
         frame_->setNavTreeSection(_("Repeating Transactions"));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
-    else if (href == wxT("Assets"))
+    else if (href == ("Assets"))
     {
         frame_->setNavTreeSection(_("Assets"));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);

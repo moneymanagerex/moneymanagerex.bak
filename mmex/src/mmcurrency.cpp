@@ -20,21 +20,21 @@
 
 mmCurrency::mmCurrency(wxSQLite3ResultSet& q1)
 {
-   currencyID_       = q1.GetInt(wxT("CURRENCYID"));
-   currencyName_     = q1.GetString(wxT("CURRENCYNAME"));
-   pfxSymbol_        = q1.GetString(wxT("PFX_SYMBOL"));
-   sfxSymbol_        = q1.GetString(wxT("SFX_SYMBOL"));
-   dec_              = q1.GetString(wxT("DECIMAL_POINT"));
-   grp_              = q1.GetString(wxT("GROUP_SEPARATOR"));
-   unit_             = q1.GetString(wxT("UNIT_NAME"));
-   cent_             = q1.GetString(wxT("CENT_NAME"));
-   scaleDl_          = q1.GetInt(wxT("SCALE"));
-   baseConv_         = q1.GetDouble(wxT("BASECONVRATE"), 1.0);
+   currencyID_       = q1.GetInt(("CURRENCYID"));
+   currencyName_     = q1.GetString(("CURRENCYNAME"));
+   pfxSymbol_        = q1.GetString(("PFX_SYMBOL"));
+   sfxSymbol_        = q1.GetString(("SFX_SYMBOL"));
+   dec_              = q1.GetString(("DECIMAL_POINT"));
+   grp_              = q1.GetString(("GROUP_SEPARATOR"));
+   unit_             = q1.GetString(("UNIT_NAME"));
+   cent_             = q1.GetString(("CENT_NAME"));
+   scaleDl_          = q1.GetInt(("SCALE"));
+   baseConv_         = q1.GetDouble(("BASECONVRATE"), 1.0);
    if(q1.GetColumnCount() < 11) {
        /* no Currency symbol in the table yet */
        currencySymbol_ = wxEmptyString;
    } else {
-       currencySymbol_ = q1.GetString(wxT("CURRENCY_SYMBOL"));
+       currencySymbol_ = q1.GetString(("CURRENCY_SYMBOL"));
    }
    decChar_ = 0;
    grpChar_ = 0;
@@ -51,18 +51,18 @@ mmCurrency::mmCurrency(wxSQLite3ResultSet& q1)
 
 mmCurrency::mmCurrency() :
    currencyID_(-1),
-   currencyName_(wxT("US Dollar")),
-   pfxSymbol_(wxT('$')),
+   currencyName_(("US Dollar")),
+   pfxSymbol_(('$')),
    sfxSymbol_(),
-   dec_(wxT('.')),
-   grp_(wxT(',')),
-   unit_(wxT("dollar")),
-   cent_(wxT("cent")),
+   dec_(('.')),
+   grp_((',')),
+   unit_(("dollar")),
+   cent_(("cent")),
    scaleDl_(100),
    baseConv_(1),
-   decChar_(wxT('\0')),
-   grpChar_(wxT('\0')),
-   currencySymbol_(wxT("USD"))
+   decChar_(('\0')),
+   grpChar_(('\0')),
+   currencySymbol_(("USD"))
 {
 }
 

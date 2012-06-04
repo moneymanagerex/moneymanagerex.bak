@@ -48,7 +48,7 @@ wxString mmReportSummary::getHTMLText()
 
     hb.startCenter();
 
-    hb.startTable(wxT("50%"));
+    hb.startTable(("50%"));
     hb.startTableRow();
     hb.addTableHeaderCell(_("Account Name"));
     hb.addTableHeaderCell(_("Balance"));

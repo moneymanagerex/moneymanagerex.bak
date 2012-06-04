@@ -35,7 +35,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     {
         hb.addImage(gg.getOutputFileName());
     }
-	hb.startTable(wxT("50%"));
+	hb.startTable(("50%"));
 	hb.startTableRow();
 	hb.addTableHeaderCell(_("Payee"));
 	hb.addTableHeaderCell(_("Amount"), true);
@@ -75,7 +75,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
             hb.startTableRow();
             hb.addTableCell((*it)->name_, false, true);
 
-            hb.addTableCell(balance, true, true, true, (amt<0.0 ? wxT("RED") : wxT("BLACK")));
+            hb.addTableCell(balance, true, true, true, (amt<0.0 ? ("RED") : ("BLACK")));
             hb.endTableRow();
 		}
     }
@@ -83,23 +83,23 @@ wxString mmReportPayeeExpenses::getHTMLText()
     wxString payeetotalStr;
     wxString positiveTotalStr;
     wxString negativeTotalStr;
-    wxString colorStr = (total<0.0 ? wxT("RED") : wxT("BLACK"));
+    wxString colorStr = (total<0.0 ? ("RED") : ("BLACK"));
     mmex::formatDoubleToCurrency(total, payeetotalStr);
     mmex::formatDoubleToCurrency(positiveTotal, positiveTotalStr);
     mmex::formatDoubleToCurrency(negativeTotal, negativeTotalStr);
 
     hb.addRowSeparator(2);
     hb.startTableRow();
-    hb.addTableCell(_("Income:"),false, true, true, wxT("BLACK"));
-    hb.addTableCell(positiveTotalStr, true, false, true, wxT("BLACK"));
+    hb.addTableCell(_("Income:"),false, true, true, ("BLACK"));
+    hb.addTableCell(positiveTotalStr, true, false, true, ("BLACK"));
 	hb.endTableRow();
     hb.startTableRow();
-    hb.addTableCell(_("Expenses:"),false, true, true, wxT("BLACK"));
-    hb.addTableCell(negativeTotalStr, true, false, true, wxT("RED"));
+    hb.addTableCell(_("Expenses:"),false, true, true, ("BLACK"));
+    hb.addTableCell(negativeTotalStr, true, false, true, ("RED"));
 	hb.endTableRow();
     hb.addRowSeparator(2);
     hb.startTableRow();
-    hb.addTableCell(_("Payees Total: "),false, true, true, wxT("BLACK"));
+    hb.addTableCell(_("Payees Total: "),false, true, true, ("BLACK"));
     hb.addTableCell(payeetotalStr, true, false, true, colorStr);
 	hb.endTableRow();
 

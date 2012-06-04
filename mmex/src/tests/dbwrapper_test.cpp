@@ -30,16 +30,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "mmaccount.h"
 #include "mmtransaction.h"
 
-const wxString g_BudgetYear = wxT("2009");
-const wxString g_CategName = wxT("new category");
-const wxString g_SubCategName= wxT("new subcategory");
-const wxString g_CurrencyName = wxT("US DOLLAR");
-const wxString g_PayeeName = wxT("Payee #1");
+const wxString g_BudgetYear = ("2009");
+const wxString g_CategName = ("new category");
+const wxString g_SubCategName= ("new subcategory");
+const wxString g_CurrencyName = ("US DOLLAR");
+const wxString g_PayeeName = ("Payee #1");
 //----------------------------------------------------------------------------
 
 wxString getDbPath()
 {
-    wxFileName fn(wxFileName::GetTempDir(), wxT("mmex_tests.db3"));
+    wxFileName fn(wxFileName::GetTempDir(), ("mmex_tests.db3"));
     return fn.GetFullPath();
 }
 //----------------------------------------------------------------------------
@@ -125,17 +125,17 @@ TEST(initDB)
     mmDBWrapper::initDB(db, 0);
     bool ok = false;
 
-    ok = db->TableExists(wxT("ASSETS_V1"));
+    ok = db->TableExists(("ASSETS_V1"));
     CHECK(ok);
 
-    ok = db->TableExists(wxT("ACCOUNTLIST_V1"));
+    ok = db->TableExists(("ACCOUNTLIST_V1"));
     CHECK(ok);
 
-    ok = db->TableExists(wxT("CATEGORY_V1"));
+    ok = db->TableExists(("CATEGORY_V1"));
     CHECK(ok);
     CHECK(!CATEGORY_V1.all(db).empty());
 
-    ok = db->TableExists(wxT("SUBCATEGORY_V1"));
+    ok = db->TableExists(("SUBCATEGORY_V1"));
     CHECK(ok);
     CHECK(!SUBCATEGORY_V1.all(db).empty());
 }
@@ -188,7 +188,7 @@ TEST(getBudgetYearID)
 
     BudgetYear_Table budget_year_table(db);
 
-    int year_id = budget_year_table.GetYearID(wxT("unknown_year"));
+    int year_id = budget_year_table.GetYearID(("unknown_year"));
     CHECK(year_id == -1);
 
     year_id = budget_year_table.GetYearID(g_BudgetYear);
@@ -241,7 +241,7 @@ TEST(copyBudgetYear)
     int base_year_id = budget_table.GetYearID(g_BudgetYear);
     CHECK(base_year_id > 0);
 
-    budget_table.AddEntry(base_year_id,1,1,wxT("None"),100);
+    budget_table.AddEntry(base_year_id,1,1,("None"),100);
     CHECK(budget_table.GetEntryID(g_BudgetYear) != -1);
 
     // --
@@ -268,7 +268,7 @@ TEST(deleteBudgetYear)
     wxSQLite3Database* db = getDb().get();
     BudgetEntry_Table budget_table(db);
 
-    bool deleted = budget_table.DeleteYear(wxT("wrong_year"));
+    bool deleted = budget_table.DeleteYear(("wrong_year"));
     CHECK(!deleted);
 
     deleted = budget_table.DeleteYear(g_BudgetYear);
@@ -310,7 +310,7 @@ TEST(getCategoryID)
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
-    cat_id = category_table.GetID(wxT("unknown category"));
+    cat_id = category_table.GetID(("unknown category"));
     CHECK(cat_id == -1);
 }
 //----------------------------------------------------------------------------
@@ -328,7 +328,7 @@ TEST(getSubCategoryID)
     int subcat_id = subcategory_table.GetID(g_SubCategName, cat_id);
     CHECK(subcat_id > 0);
 
-    subcat_id = subcategory_table.GetID(wxT("unknown subcategory"), cat_id);
+    subcat_id = subcategory_table.GetID(("unknown subcategory"), cat_id);
     CHECK(subcat_id == -1);
 }
 //----------------------------------------------------------------------------
@@ -384,7 +384,7 @@ TEST(updateCategory)
 
     // --
 
-    const wxString new_name = wxT("new name");
+    const wxString new_name = ("new name");
     bool ok = category_table.UpdateName(new_name, cat_id);
     CHECK(ok);
 
@@ -448,7 +448,7 @@ TEST(getCurrencyID)
     int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
     CHECK(id > 0);
 
-    id = mmDBWrapper::getCurrencyID(&db, wxT("unknown currency"));
+    id = mmDBWrapper::getCurrencyID(&db, ("unknown currency"));
     CHECK(id == -1);
 }
 //----------------------------------------------------------------------------
@@ -533,12 +533,12 @@ TEST(setInfoSettingValue)
 {
     wxSQLite3Database &db = getDb();
 
-    const wxString name = wxT("settings name");
-    const wxString val = wxT("settings value");
+    const wxString name = ("settings name");
+    const wxString val = ("settings value");
 
     mmDBWrapper::setInfoSettingValue(&db, name, val);
 
-    wxString s = mmDBWrapper::getInfoSettingValue(&db, name, wxT(""));
+    wxString s = mmDBWrapper::getInfoSettingValue(&db, name, (""));
     CHECK(s == val);
 }
 //----------------------------------------------------------------------------
@@ -547,8 +547,8 @@ TEST(getInfoSettingValue)
 {
     wxSQLite3Database &db = getDb();
 
-    const wxString name = wxT("wrong name");
-    const wxString defVal = wxT("default value");
+    const wxString name = ("wrong name");
+    const wxString defVal = ("default value");
 
     wxString s = mmDBWrapper::getInfoSettingValue(&db, name, defVal);
     CHECK(s == defVal);
@@ -556,7 +556,7 @@ TEST(getInfoSettingValue)
     // --
 
     mmDBWrapper::setInfoSettingValue(&db, name, defVal);
-    s = mmDBWrapper::getInfoSettingValue(&db, name, wxT(""));
+    s = mmDBWrapper::getInfoSettingValue(&db, name, (""));
     CHECK(s == defVal);
 }
 //----------------------------------------------------------------------------
@@ -599,7 +599,7 @@ TEST(getPayeeID)
     int id = payee_list.getID(g_PayeeName);
     CHECK(id > 0);
 
-    id = payee_list.getID(wxT("bad payee name"));
+    id = payee_list.getID(("bad payee name"));
     CHECK(id < 0);
 }
 
@@ -643,7 +643,7 @@ TEST(updatePayee)
     int cat = 0;
     int subc = 0;
 
-    const wxString new_name = wxT("new payee name");
+    const wxString new_name = ("new payee name");
     bool ok = mmDBWrapper::updatePayee(db, new_name, id, cat, -1);
     CHECK(ok);
 
