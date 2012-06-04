@@ -571,12 +571,8 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     m_mgr.GetArtProvider()->SetMetric(16, 0);
     m_mgr.GetArtProvider()->SetMetric(3, 1);
 
-    // Save default perspective
-    m_perspective = m_mgr.SavePerspective();
-
-    wxString auiPerspective = mmDBWrapper::getINISettingValue(m_inidb.get(), ("AUIPERSPECTIVE"), m_perspective);
-
-    m_mgr.LoadPerspective(auiPerspective);
+    wxConfigBase *config = wxConfigBase::Get();
+    m_mgr.LoadPerspective(config->Read("AUIPERSPECTIVE"));
 
     // "commit" all changes made to wxAuiManager
     m_mgr.Update();
@@ -882,22 +878,18 @@ void mmGUIFrame::saveConfigFile()
     wxFileName fname(fileName_);
     mmDBWrapper::setLastDbPath(m_inidb.get(), fname.GetFullPath());
 
+    wxConfigBase *config = wxConfigBase::Get();
     /* Aui Settings */
-    m_perspective = m_mgr.SavePerspective();
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("AUIPERSPECTIVE"), m_perspective);
+    config->Write("AUIPERSPECTIVE", m_mgr.SavePerspective());
 
     // prevent values being saved while window is in an iconised state.
     if (this->IsIconized()) this->Restore();
 
-    int valx = 0;
-    int valy = 0;
-    int valw = 0;
-    int valh = 0;
+    int valx = 0, valy = 0, valw = 0, valh = 0;
 
     this->GetPosition(&valx, &valy);
     this->GetSize(&valw, &valh);
 
-    wxConfigBase *config = wxConfigBase::Get();
     config->Write("ORIGINX", valx);
     config->Write("ORIGINY", valx);
     config->Write("SIZEW", valw);
