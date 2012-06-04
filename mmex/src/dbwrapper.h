@@ -26,17 +26,17 @@
 #include <boost/shared_ptr.hpp>
 //----------------------------------------------------------------------------
 
-const wxString LANGUAGE_PARAMETER = wxT("LANGUAGE");
+const wxString LANGUAGE_PARAMETER = ("LANGUAGE");
 
 const int BD_REPEATS_MULTIPLEX_BASE  = 100;
 
-const wxString ACCOUNT_TYPE_BANK  = wxT("Checking");
-const wxString ACCOUNT_TYPE_TERM  = wxT("Term");
-const wxString ACCOUNT_TYPE_STOCK = wxT("Investment");
+const wxString ACCOUNT_TYPE_BANK  = ("Checking");
+const wxString ACCOUNT_TYPE_TERM  = ("Term");
+const wxString ACCOUNT_TYPE_STOCK = ("Investment");
 
-const wxString TRANS_TYPE_WITHDRAWAL_STR = wxT("Withdrawal");
-const wxString TRANS_TYPE_DEPOSIT_STR    = wxT("Deposit");
-const wxString TRANS_TYPE_TRANSFER_STR   = wxT("Transfer");
+const wxString TRANS_TYPE_WITHDRAWAL_STR = ("Withdrawal");
+const wxString TRANS_TYPE_DEPOSIT_STR    = ("Deposit");
+const wxString TRANS_TYPE_TRANSFER_STR   = ("Transfer");
 
 enum {DEF_STATUS_NONE , DEF_STATUS_RECONCILED , DEF_STATUS_VOID , DEF_STATUS_FOLLOWUP , DEF_STATUS_DUPLICATE };
 enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
@@ -185,7 +185,7 @@ double getAssetValue(const DB_View_ASSETS_V1::Data& asset);
 
 inline void mmDBWrapper::setLastDbPath(wxSQLite3Database *db, const wxString &path)
 {
-    setINISettingValue(db, wxT("LASTFILENAME"), path);
+    setINISettingValue(db, ("LASTFILENAME"), path);
 }
 //----------------------------------------------------------------------------
 #endif // _MM_EX_DBWRAPPER_H_

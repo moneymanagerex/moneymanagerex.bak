@@ -51,9 +51,9 @@ wxString mmReportCashFlow::getHTMLText()
         int arrIdx = 0;
  
         if ( (int)accountArray_->size() == 0 )
-            headerMsg << wxT("?");
+            headerMsg << ("?");
         //else if ( (int)accountArray_->size() > 1 )
-        //    msgString = wxT("s") + msgString; //<-- we can't translate it to other languages
+        //    msgString = ("s") + msgString; //<-- we can't translate it to other languages
 
         if ( (int)accountArray_->size() > 0 )
         {
@@ -62,7 +62,7 @@ wxString mmReportCashFlow::getHTMLText()
         }
         while ( arrIdx < (int)accountArray_->size() )
         {
-            headerMsg << wxT(", ") << accountArray_->Item(arrIdx);
+            headerMsg << (", ") << accountArray_->Item(arrIdx);
             arrIdx ++;
         }
 
@@ -78,7 +78,7 @@ wxString mmReportCashFlow::getHTMLText()
 
     hb.startCenter();
 
-    hb.startTable(wxT("65%"));
+    hb.startTable(("65%"));
     hb.startTableRow();
     hb.addTableHeaderCell(_("Date"));
     hb.addTableHeaderCell(_("Total"), true);
@@ -135,14 +135,14 @@ wxString mmReportCashFlow::getHTMLText()
 
     while (q1.NextRow())
     {
-        wxString nextOccurrString = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
+        wxString nextOccurrString = q1.GetString(("NEXTOCCURRENCEDATE"));
         wxDateTime nextOccurDate = mmGetStorageStringAsDate(nextOccurrString);
            
-        int repeats             = q1.GetInt(wxT("REPEATS"));
-        int numRepeats          = q1.GetInt(wxT("NUMOCCURRENCES"));
-        wxString transType      = q1.GetString(wxT("TRANSCODE"));
-        double amt              = q1.GetDouble(wxT("TRANSAMOUNT"));
-        double toAmt            = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+        int repeats             = q1.GetInt(("REPEATS"));
+        int numRepeats          = q1.GetInt(("NUMOCCURRENCES"));
+        wxString transType      = q1.GetString(("TRANSCODE"));
+        double amt              = q1.GetDouble(("TRANSAMOUNT"));
+        double toAmt            = q1.GetDouble(("TOTRANSAMOUNT"));
 
         // DeMultiplex the Auto Executable fields from the db entry: REPEATS
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
@@ -163,8 +163,8 @@ wxString mmReportCashFlow::getHTMLText()
         if (nextOccurDate > yearFromNow)
             continue;
 
-        int accountID = q1.GetInt(wxT("ACCOUNTID"));
-        int toAccountID = q1.GetInt(wxT("TOACCOUNTID"));
+        int accountID = q1.GetInt(("ACCOUNTID"));
+        int toAccountID = q1.GetInt(("TOACCOUNTID"));
 
         bool isAccountFound = true, isToAccountFound = true;
         if (accountArray_ != NULL)
@@ -325,13 +325,13 @@ wxString mmReportCashFlow::getHTMLText()
         if (addSeparator) hb.addRowSeparator(3);
 
         wxString dtStr ; 
-        //dtStr << mmGetNiceShortMonthName(dtEnd.GetMonth()) << wxT(" ") << dtEnd.GetYear();
+        //dtStr << mmGetNiceShortMonthName(dtEnd.GetMonth()) << (" ") << dtEnd.GetYear();
         dtStr << mmGetDateForDisplay(core_->db_.get(), dtEnd); 
 
         hb.startTableRow();
         hb.addTableCell(dtStr, false, true);
-        hb.addTableCell(balanceStr, true, true, true, ((balance < 0) ? wxT("RED") : wxT("BLACK")));
-        hb.addTableCell((idx==0 ? wxT ("") : diffStr), true, true, true, (diff < 0 ? wxT("RED") : wxT("BLACK"))) ;
+        hb.addTableCell(balanceStr, true, true, true, ((balance < 0) ? ("RED") : ("BLACK")));
+        hb.addTableCell((idx==0 ? wxT ("") : diffStr), true, true, true, (diff < 0 ? ("RED") : ("BLACK"))) ;
         hb.endTableRow();
     }
 

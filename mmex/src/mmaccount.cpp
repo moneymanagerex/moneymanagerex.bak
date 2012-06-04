@@ -23,27 +23,27 @@
 
 mmAccount::mmAccount(wxSQLite3ResultSet& q1)
 {
-    id_ = q1.GetInt(wxT("ACCOUNTID"));
-    name_ = q1.GetString(wxT("ACCOUNTNAME"));
-    accountNum_  = q1.GetString(wxT("ACCOUNTNUM"));
-    heldAt_ = q1.GetString(wxT("HELDAT"));
-    website_ = q1.GetString(wxT("WEBSITE"));
-    contactInfo_ = q1.GetString(wxT("CONTACTINFO"));
-    accessInfo_ = q1.GetString(wxT("ACCESSINFO"));
-    notes_ = q1.GetString(wxT("NOTES"));  
-    acctType_ = q1.GetString(wxT("ACCOUNTTYPE"));
+    id_ = q1.GetInt(("ACCOUNTID"));
+    name_ = q1.GetString(("ACCOUNTNAME"));
+    accountNum_  = q1.GetString(("ACCOUNTNUM"));
+    heldAt_ = q1.GetString(("HELDAT"));
+    website_ = q1.GetString(("WEBSITE"));
+    contactInfo_ = q1.GetString(("CONTACTINFO"));
+    accessInfo_ = q1.GetString(("ACCESSINFO"));
+    notes_ = q1.GetString(("NOTES"));  
+    acctType_ = q1.GetString(("ACCOUNTTYPE"));
 
     status_ =  mmAccount::MMEX_Open;
-    if (q1.GetString(wxT("STATUS")) == wxT("Closed"))
+    if (q1.GetString(("STATUS")) == ("Closed"))
         status_ = mmAccount::MMEX_Closed;
 
-    wxString retVal = q1.GetString(wxT("FAVORITEACCT"));
-    if (retVal == wxT("TRUE"))
+    wxString retVal = q1.GetString(("FAVORITEACCT"));
+    if (retVal == ("TRUE"))
         favoriteAcct_ = true;
     else
         favoriteAcct_ = false;
 
-    initialBalance_ = q1.GetDouble(wxT("INITIALBAL"));
+    initialBalance_ = q1.GetDouble(("INITIALBAL"));
 }
 
 mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
@@ -125,13 +125,13 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
 
 void mmAccountList::update(boost::shared_ptr<mmAccount> pAccount)
 {
-   wxString statusStr = wxT("Open");
+   wxString statusStr = ("Open");
    if (pAccount->status_ == mmAccount::MMEX_Closed)
-      statusStr = wxT("Closed");
+      statusStr = ("Closed");
 
-   wxString favStr = wxT("TRUE");
+   wxString favStr = ("TRUE");
    if (!pAccount->favoriteAcct_)
-      favStr = wxT("FALSE");
+      favStr = ("FALSE");
 
    boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
    wxASSERT(pCurrency);
@@ -271,7 +271,7 @@ wxString mmAccountList::getAccountType(int accountID) const
     }
 
     wxASSERT(false);
-    return wxT("");
+    return ("");
 }
 
 mmAccount::AccountStatus mmAccountList::getAccountStatus(int accountID) const
@@ -294,7 +294,7 @@ wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID) const
     if (pCurrency)
         return pCurrency->decChar_;
 
-    return wxT(".");
+    return (".");
 }
 
 wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
@@ -306,7 +306,7 @@ wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
     if (pCurrency)
         return pCurrency->grpChar_;
 
-    return wxT(",");
+    return (",");
 }
 
 wxString mmAccountList::getAccountCurrencyName(int accountID) const
@@ -318,7 +318,7 @@ wxString mmAccountList::getAccountCurrencyName(int accountID) const
     if (pCurrency)
         return pCurrency->currencyName_;
 
-    return wxT("");
+    return ("");
 }
 
 
@@ -336,13 +336,13 @@ boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) con
 
 int mmAccountList::add(boost::shared_ptr<mmAccount> pAccount)
 {
-      wxString statusStr = wxT("Open");
+      wxString statusStr = ("Open");
       if (pAccount->status_ == mmAccount::MMEX_Closed)
-         statusStr = wxT("Closed");
+         statusStr = ("Closed");
 
-      wxString favStr = wxT("TRUE");
+      wxString favStr = ("TRUE");
       if (!pAccount->favoriteAcct_)
-         favStr = wxT("FALSE");
+         favStr = ("FALSE");
 
       boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
       wxASSERT(pCurrency);

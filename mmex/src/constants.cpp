@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 wxString mmex::getProgramName()
 {
-    return wxString(wxT("MoneyManagerEx"));
+    return wxString(("MoneyManagerEx"));
 }
 
 wxString mmex::getProgramVersion()
@@ -36,34 +36,34 @@ wxString mmex::getProgramVersion()
      The commented line has been left to act as a template
      for when a development version is created for release.
      ******************************************************/
-    //return wxString(wxT("0.9.9.0 DEV:SVN-xxxx"));
-    return wxT("0.10.0.0");
+    //return wxString(("0.9.9.0 DEV:SVN-xxxx"));
+    return ("0.10.0.0");
 }
 
 wxString mmex::getProgramCopyright()
 {
-    return wxT("(c) 2005-2012 Madhan Kanagavel");
+    return ("(c) 2005-2012 Madhan Kanagavel");
 }
 
 wxString mmex::getProgramWebSite()
 {
-    return wxT("http://codelathe.com/mmex\n");
+    return ("http://codelathe.com/mmex\n");
 }
 
 wxString mmex::getProgramDescription()
 {
     wxString description = _("wxWidgets-based application!");
-    description << wxT("\n\n") << _("System: ")
+    description << ("\n\n") << _("System: ")
                 << wxPlatformInfo::Get().GetOperatingSystemIdName()
-                << wxT("\n\n")
+                << ("\n\n")
                 << _("Released under the GNU GPL License")
-                << wxT("\n\n")
+                << ("\n\n")
                 << wxVERSION_STRING
-                << wxT(",  Boost C++ ") << (BOOST_VERSION/100000) << wxT('.')
-                << (BOOST_VERSION / 100 % 1000) << wxT('.')
-                << (BOOST_VERSION % 100) << wxT(",\n")
-                << wxT("SQLite3 ") << wxSQLite3Database::GetVersion()
-                << wxT(",  wxSQLite by Ulrich Telle")
-                << wxT("\n\n");
+                << (",  Boost C++ ") << (BOOST_VERSION/100000) << ('.')
+                << (BOOST_VERSION / 100 % 1000) << ('.')
+                << (BOOST_VERSION % 100) << (",\n")
+                << ("SQLite3 ") << wxSQLite3Database::GetVersion()
+                << (",  wxSQLite by Ulrich Telle")
+                << ("\n\n");
     return description;
 }

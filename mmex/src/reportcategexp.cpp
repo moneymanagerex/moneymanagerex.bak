@@ -58,7 +58,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     mmGraphPie gg;
     hb.addImage(gg.getOutputFileName());
 
-    hb.startTable(wxT("60%"));
+    hb.startTable(("60%"));
     hb.startTableRow();
     hb.addTableHeaderCell(_("Category"));
     hb.addTableHeaderCell(_("Amount"), true);
@@ -89,8 +89,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
         int categs = 0;
         //grandtotalseparator = true;
         double categtotal = 0.0;
-        int categID          = q1.GetInt(wxT("CATEGID"));
-        wxString categString = q1.GetString(wxT("CATEGNAME"));
+        int categID          = q1.GetInt(("CATEGID"));
+        wxString categString = q1.GetString(("CATEGNAME"));
         wxString balance;
         double amt = core_->getAmountForCategory(categID, -1, ignoreDate_,
             dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_
@@ -122,8 +122,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
            
         while(q2.NextRow())
         {
-            int subcategID = q2.GetInt(wxT("SUBCATEGID"));
-            wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
+            int subcategID = q2.GetInt(("SUBCATEGID"));
+            wxString subcategString = q2.GetString(("SUBCATEGNAME"));
 
             amt = core_->getAmountForCategory(categID, subcategID, ignoreDate_,
                 dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_
@@ -141,7 +141,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             if (amt != 0.0)
             {
                 ValuePair vp;
-                vp.label = categString + wxT(" : ") + subcategString;
+                vp.label = categString + (" : ") + subcategString;
                 vp.amount = amt;
                 grandtotal += amt;
                 categtotal += amt;
@@ -149,7 +149,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
                 valueList.push_back(vp);
 
                 hb.startTableRow();
-                hb.addTableCell(categString + wxT(" : ") + subcategString, false, true);
+                hb.addTableCell(categString + (" : ") + subcategString, false, true);
                 hb.addTableCell(balance, true, false, true);
                 hb.endTableRow();
             }
@@ -158,8 +158,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
         {
             wxString categtotalStr;
             mmex::formatDoubleToCurrency(categtotal, categtotalStr);hb.startTableRow();
-            hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
-            hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
+            hb.addTableCell(_("Category Total: "),false, true, true, ("GRAY"));
+            hb.addTableCell(categtotalStr, true, false, true, ("GRAY"));
         }
         if (categs>0)
         {

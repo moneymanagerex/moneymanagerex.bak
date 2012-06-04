@@ -32,7 +32,7 @@ RecentDatabaseFiles::RecentDatabaseFiles(wxSQLite3Database* ini_db, wxMenu *menu
 : mmex_inidb_(ini_db), menuRecentFiles_(menuRecentFiles)
 {
     recentListSize_ = 6;
-    dbIndexName_ = wxT("RECENT_DB_");
+    dbIndexName_ = ("RECENT_DB_");
     recentFileList_.Add(mmDBWrapper::getLastDbPath(mmex_inidb_));
     for (int index = 1; index < recentListSize_; index ++ )
     {
@@ -52,7 +52,7 @@ void RecentDatabaseFiles::loadRecentList()
     for(int index = 1; index < recentListSize_; index ++)
     {
         wxString dbIndex = wxString() << dbIndexName_ << index;
-        recentFileList_[index] = mmDBWrapper::getINISettingValue(mmex_inidb_,dbIndex,wxT(""));
+        recentFileList_[index] = mmDBWrapper::getINISettingValue(mmex_inidb_,dbIndex,(""));
     }
 }
 

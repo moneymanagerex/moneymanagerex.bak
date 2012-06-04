@@ -101,7 +101,7 @@ bool mmBillsDepositsPanel::Create( wxWindow *parent,
 mmBillsDepositsPanel::~mmBillsDepositsPanel()
 {
     if (m_imageList) delete m_imageList;
-    this->save_config(listCtrlBD_, wxT("BD"));
+    this->save_config(listCtrlBD_, ("BD"));
 }
 
 void mmBillsDepositsPanel::CreateControls()
@@ -121,7 +121,7 @@ void mmBillsDepositsPanel::CreateControls()
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER,
         _("Repeating Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, ("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     /* ---------------------- */
@@ -155,14 +155,14 @@ void mmBillsDepositsPanel::CreateControls()
 
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4, col5, col6, col7;
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL0_WIDTH"), wxT("150")).ToLong(&col0);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL1_WIDTH"), wxT("-2")).ToLong(&col1);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL2_WIDTH"), wxT("-2")).ToLong(&col2);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL3_WIDTH"), wxT("-2")).ToLong(&col3);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL4_WIDTH"), wxT("-2")).ToLong(&col4);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL5_WIDTH"), wxT("-2")).ToLong(&col5);
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL6_WIDTH"), wxT("-2")).ToLong(&col6);
-    mmDBWrapper::getINISettingValue(inidb_,  wxT("BD_COL7_WIDTH"), wxT("-2")).ToLong(&col7);
+    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL0_WIDTH"), ("150")).ToLong(&col0);
+    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL1_WIDTH"), ("-2")).ToLong(&col1);
+    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL2_WIDTH"), ("-2")).ToLong(&col2);
+    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL3_WIDTH"), ("-2")).ToLong(&col3);
+    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL4_WIDTH"), ("-2")).ToLong(&col4);
+    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL5_WIDTH"), ("-2")).ToLong(&col5);
+    mmDBWrapper::getINISettingValue(inidb_, ("BD_COL6_WIDTH"), ("-2")).ToLong(&col6);
+    mmDBWrapper::getINISettingValue(inidb_,  ("BD_COL7_WIDTH"), ("-2")).ToLong(&col7);
 
 
     listCtrlBD_->SetColumnWidth(0, col0);
@@ -215,12 +215,12 @@ void mmBillsDepositsPanel::CreateControls()
     buttonSkipTrans->Enable(false);
 
     //Infobar-mini
-    wxStaticText* itemStaticText444 = new wxStaticText(itemPanel12, ID_PANEL_BD_STATIC_MINI, wxT(""),
+    wxStaticText* itemStaticText444 = new wxStaticText(itemPanel12, ID_PANEL_BD_STATIC_MINI, (""),
                                                        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText444, 1, wxGROW|wxTOP, 12);
 
     //Infobar
-    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, wxT(""),
+    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, (""),
     wxPoint(-1,-1), wxSize(200, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
     itemBoxSizer4->Add(text, 1, wxGROW|wxLEFT|wxRIGHT, 14);
 
@@ -264,24 +264,24 @@ void mmBillsDepositsPanel::initVirtualListControl()
     {
         mmBDTransactionHolder th;
 
-        th.id_           = q1.GetInt(wxT("BDID"));
-        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
+        th.id_           = q1.GetInt(("BDID"));
+        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(("NEXTOCCURRENCEDATE")));
         th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
-        int repeats        = q1.GetInt(wxT("REPEATS"));
-        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
-        th.transType_      = q1.GetString(wxT("TRANSCODE"));
-        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
-        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+        int repeats        = q1.GetInt(("REPEATS"));
+        th.payeeID_        = q1.GetInt(("PAYEEID"));
+        th.transType_      = q1.GetString(("TRANSCODE"));
+        th.accountID_      = q1.GetInt(("ACCOUNTID"));
+        th.toAccountID_    = q1.GetInt(("TOACCOUNTID"));
         th.accountName_    = core_->getAccountName(th.accountID_);
-        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
-        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-        th.notes_           = q1.GetString(wxT("NOTES"));
-        th.categID_           = q1.GetInt(wxT("CATEGID"));
-        th.categoryStr_       = q1.GetString(wxT("CATEGNAME"));
-        th.subcategID_       = q1.GetInt(wxT("SUBCATEGID"));
-        th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
+        th.amt_            = q1.GetDouble(("TRANSAMOUNT"));
+        th.toAmt_          = q1.GetDouble(("TOTRANSAMOUNT"));
+        th.notes_           = q1.GetString(("NOTES"));
+        th.categID_           = q1.GetInt(("CATEGID"));
+        th.categoryStr_       = q1.GetString(("CATEGNAME"));
+        th.subcategID_       = q1.GetInt(("SUBCATEGID"));
+        th.subcategoryStr_ = q1.GetString(("SUBCATEGNAME"));
 
-        int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
+        int numRepeats     = q1.GetInt(("NUMOCCURRENCES"));
 
         th.bd_repeat_user_ = false;
         th.bd_repeat_auto_ = false;
@@ -338,7 +338,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
         if (minutesRemaining > 0)
             th.daysRemaining_ += 1;
 
-        th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + _(" days remaining");
+        th.daysRemainingStr_ = wxString::Format(("%d"), th.daysRemaining_) + _(" days remaining");
 
         if (th.daysRemaining_ == 0)
         {
@@ -348,7 +348,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
 
         if (th.daysRemaining_ < 0)
         {
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
+            th.daysRemainingStr_ = wxString::Format(("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
             if ((repeats > 10) && (numRepeats < 0) )
                 th.daysRemainingStr_ = _("Inactive");
         }
@@ -438,7 +438,7 @@ wxString mmBillsDepositsPanel::getItem(long item, long column)
     if (column == 6) return trans_[item].daysRemainingStr_;
     if (column == 7) return trans_[item].notes_;
 
-    return wxT("");
+    return ("");
 }
 
 wxString billsDepositsListCtrl::OnGetItemText(long item, long column) const
@@ -620,7 +620,7 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
     else
     {
         st-> SetLabel(Tips(TIPS_BILLS));
-        stm-> SetLabel(wxT(""));
+        stm-> SetLabel((""));
     }
 }
 

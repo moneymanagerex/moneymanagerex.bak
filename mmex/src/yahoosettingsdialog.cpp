@@ -93,7 +93,7 @@ m_yahoopointer(myp)
     m_yahoopointer->OpenTimeStr_.Mid(0,2).ToLong(&LongTemp);
     m_MarketOpenHour->SetValue(LongTemp);
 
-    wxStaticText* m_staticText20 = new wxStaticText(this, wxID_STATIC, wxT(" : "));
+    wxStaticText* m_staticText20 = new wxStaticText(this, wxID_STATIC, (" : "));
 
     m_MarketOpenMinute = new wxSpinCtrl(this,
         idMarketOpenMinute, wxEmptyString, wxDefaultPosition,
@@ -119,7 +119,7 @@ m_yahoopointer(myp)
     m_yahoopointer->CloseTimeStr_.Mid(0,2).ToLong(&LongTemp);
     m_MarketCloseHour->SetValue(LongTemp);
 
-    wxStaticText* m_staticText201 = new wxStaticText(this, wxID_STATIC, wxT(" : "));
+    wxStaticText* m_staticText201 = new wxStaticText(this, wxID_STATIC, (" : "));
 
     m_MarketCloseMinute = new wxSpinCtrl( this,
         idMarketCloseMinute, wxEmptyString, wxDefaultPosition,

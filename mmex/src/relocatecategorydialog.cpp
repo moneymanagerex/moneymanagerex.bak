@@ -137,7 +137,7 @@ void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
             catName = core_->getCategoryName(sourceCatID_);
         if (sourceSubCatID_ != -1 )
             catName << _(":") << mmDBWrapper::getSubCategoryName(db_, sourceCatID_ , sourceSubCatID_ );
-        if (catName != wxT(""))
+        if (catName != (""))
             sourceBtn_->SetLabel(catName);
     }
 }
@@ -155,7 +155,7 @@ void relocateCategoryDialog::OnSelectDest(wxCommandEvent& /*event*/)
             catName = core_->getCategoryName(destCatID_);
         if (destSubCatID_ != -1 )
             catName << _(":") << mmDBWrapper::getSubCategoryName(db_, destCatID_ , destSubCatID_ );
-        if (catName != wxT(""))
+        if (catName != (""))
             destBtn_->SetLabel(catName);
     }
 }
@@ -173,7 +173,7 @@ void relocateCategoryDialog::OnOk(wxCommandEvent& /*event*/)
     if ((sourceCatID_ > 0) &&  (destCatID_ > 0) ) 
     {
         wxString msgStr = _("Please Confirm:");
-        msgStr << wxT("\n\n") << _("Changing all categories of: ") << sourceBtn_->GetLabelText() << wxT("\n\n") << _("to category: ") << destBtn_->GetLabelText();
+        msgStr << ("\n\n") << _("Changing all categories of: ") << sourceBtn_->GetLabelText() << ("\n\n") << _("to category: ") << destBtn_->GetLabelText();
 
         int ans = wxMessageBox(msgStr,_("Category Relocation Confirmation"),wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)

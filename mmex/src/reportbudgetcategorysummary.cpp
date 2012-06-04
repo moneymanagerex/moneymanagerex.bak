@@ -35,16 +35,16 @@ mmReportBudgetCategorySummary::mmReportBudgetCategorySummary(mmCoreDB* core, mmG
 
 wxString mmReportBudgetCategorySummary::actualAmountColour( mmBudgetEntryHolder& budEntry, bool total)
 {
-    wxString actAmtColStr = wxT("black");
+    wxString actAmtColStr = ("black");
     if (total) {
-        actAmtColStr = wxT("blue");
+        actAmtColStr = ("blue");
     }
     
     if (budEntry.amt_ == 0) {
-        actAmtColStr = wxT("blue");
+        actAmtColStr = ("blue");
     } else {
         if (budEntry.actual_ < budEntry.estimated_) {
-            actAmtColStr = wxT("red");
+            actAmtColStr = ("red");
         }
     }
 
@@ -98,7 +98,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         headerStartupMsg = _("Budget Categories for ");
     else
         headerStartupMsg = _("Budget Category Summary for ");
-    hb.addHeader(2, headerStartupMsg + headingStr + wxT("<br>") + _("( Estimated Vs Actual )"));
+    hb.addHeader(2, headerStartupMsg + headingStr + ("<br>") + _("( Estimated Vs Actual )"));
     DisplayDateHeading(hb, yearBegin, yearEnd);
 
     double estIncome = 0.0;
@@ -108,7 +108,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
 
     hb.startCenter();
 
-    hb.startTable(wxT("65%"));
+    hb.startTable(("65%"));
     hb.startTableRow();
     hb.addTableHeaderCell(_("Category"));
     hb.addTableHeaderCell(_("Sub Category"));
@@ -138,8 +138,8 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     {
         mmBudgetEntryHolder th;
         initBudgetEntryFields(th, budgetYearID_);
-        th.categID_ = q1.GetInt(wxT("CATEGID"));
-        th.catStr_ = q1.GetString(wxT("CATEGNAME"));
+        th.categID_ = q1.GetInt(("CATEGID"));
+        th.catStr_ = q1.GetString(("CATEGNAME"));
         mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
 
         setBudgetEstimate(th,monthlyBudget);
@@ -202,8 +202,8 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             initBudgetEntryFields(thsub, budgetYearID_);
             thsub.categID_ = th.categID_;
             thsub.catStr_ = th.catStr_;
-            thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
-            thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
+            thsub.subcategID_ = q2.GetInt(("SUBCATEGID"));
+            thsub.subCatStr_   = q2.GetString(("SUBCATEGNAME"));
             mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
 
             setBudgetEstimate(thsub,monthlyBudget);
@@ -257,12 +257,12 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         }
         // Category, Sub Category, Period, Amount, Estimated, Actual
         hb.startTableRow();
-        hb.addTableCell(catTotals.catStr_, false, true, true, wxT("blue"));
-        hb.addTableCell(wxT(""), false, true, true, wxT("blue"));
-        hb.addTableCell(wxEmptyString, true, false,true, wxT("blue"));
-//        hb.addTableCell(catTotals.amtString_, true, false,true, wxT("blue"));
-        hb.addTableCell(catTotals.period_, false, true, true, wxT("blue")); 
-        hb.addTableCell(catTotals.estimatedStr_, true, false, true, wxT("blue"));
+        hb.addTableCell(catTotals.catStr_, false, true, true, ("blue"));
+        hb.addTableCell((""), false, true, true, ("blue"));
+        hb.addTableCell(wxEmptyString, true, false,true, ("blue"));
+//        hb.addTableCell(catTotals.amtString_, true, false,true, ("blue"));
+        hb.addTableCell(catTotals.period_, false, true, true, ("blue")); 
+        hb.addTableCell(catTotals.estimatedStr_, true, false, true, ("blue"));
         hb.addTableCell(catTotals.actualStr_, true, false, true, actualAmountColour(catTotals,true));
         hb.endTableRow();
         hb.addRowSeparator(6);
@@ -288,19 +288,19 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
 
     double difIncome = estIncome - actIncome;
     wxString difIncomeStr;
-    wxString incomeDiferenceColour = wxT("red");
+    wxString incomeDiferenceColour = ("red");
     if (difIncome < 0) {
         difIncome = -difIncome;
-        incomeDiferenceColour = wxT("black");
+        incomeDiferenceColour = ("black");
     }
     mmex::formatDoubleToCurrency(difIncome, difIncomeStr);
 
     double difExpense = estExpenses - actExpenses;
     wxString difExpenseStr;
-    wxString expenseDiferenceColour = wxT("black");
+    wxString expenseDiferenceColour = ("black");
     if (difExpense < 0) {
         difExpense = -difExpense;
-        expenseDiferenceColour = wxT("red");
+        expenseDiferenceColour = ("red");
     }
     mmex::formatDoubleToCurrency(difExpense, difExpenseStr);
 
@@ -315,7 +315,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     //Summary of Estimated Vs Actual totals
     hb.addLineBreak();
     hb.startCenter();
-    hb.startTable(wxT("50%"));        
+    hb.startTable(("50%"));        
 //    hb.addRowSeparator(3);
     hb.startTableRow();
     hb.addTableCell(incEstStr, true, true);

@@ -96,7 +96,7 @@ public:
     bool expandedTermAccounts() { return menuBar_->IsChecked(MENU_VIEW_TERMACCOUNTS); }
     bool expandedStockAccounts() { return menuBar_->IsChecked(MENU_VIEW_STOCKACCOUNTS); }
     bool hasActiveTermAccounts() const { return activeTermAccounts_; }
-    bool financialYearIsDifferent() { return (mmOptions::instance().financialYearStartDayString_ != wxT("1") || mmOptions::instance().financialYearStartMonthString_ != wxT("1")); }
+    bool financialYearIsDifferent() { return (mmOptions::instance().financialYearStartDayString_ != ("1") || mmOptions::instance().financialYearStartMonthString_ != ("1")); }
     bool budgetFinancialYears() { return menuBar_->IsChecked(MENU_VIEW_BUDGET_FINANCIAL_YEARS); }
     bool budgetSetupWithSummary() { return !menuBar_->IsChecked(MENU_VIEW_BUDGET_SETUP_SUMMARY); }
     bool budgetCategoryTotal() { return menuBar_->IsChecked(MENU_VIEW_BUDGET_CATEGORY_SUMMARY); }

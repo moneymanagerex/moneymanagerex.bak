@@ -50,7 +50,7 @@ mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* ini
     mainFrame_(mainFrame)
 {
     Create(parent, winid, pos, size, style, name);
-    currentView_ = wxT("View All Budget Categories");
+    currentView_ = ("View All Budget Categories");
 }
 
 bool mmBudgetingPanel::Create( wxWindow *parent,
@@ -79,7 +79,7 @@ bool mmBudgetingPanel::Create( wxWindow *parent,
 
 mmBudgetingPanel::~mmBudgetingPanel()
 {
-    this->save_config(listCtrlBudget_, wxT("BUDGET"));
+    this->save_config(listCtrlBudget_, ("BUDGET"));
 }
 
 void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
@@ -89,27 +89,27 @@ void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
     if (evt ==  MENU_VIEW_ALLBUDGETENTRIES) 
     {
         header->SetLabel(_("View All Budget Categories"));
-        currentView_ = wxT("View All Budget Categories");
+        currentView_ = ("View All Budget Categories");
     } 
     else if (evt == MENU_VIEW_NONZEROBUDGETENTRIES) 
     {
         header->SetLabel(_("View Non-Zero Budget Categories"));
-        currentView_ = wxT("View Non-Zero Budget Categories");
+        currentView_ = ("View Non-Zero Budget Categories");
     } 
     else if (evt == MENU_VIEW_INCOMEBUDGETENTRIES) 
     {
         header->SetLabel(_("View Income Budget Categories"));
-        currentView_ = wxT("View Income Budget Categories");
+        currentView_ = ("View Income Budget Categories");
     } 
     else if (evt == MENU_VIEW_EXPENSEBUDGETENTRIES) 
     {
         header->SetLabel(_("View Expense Budget Categories"));
-        currentView_ = wxT("View Expense Budget Categories");
+        currentView_ = ("View Expense Budget Categories");
     } 
     else if (evt == MENU_VIEW_SUMMARYBUDGETENTRIES) 
     {
         header->SetLabel(_("View Budget Category Summary"));
-        currentView_ = wxT("View Budget Category Summary");
+        currentView_ = ("View Budget Category Summary");
     } 
     else 
     {
@@ -162,7 +162,7 @@ void mmBudgetingPanel::CreateControls()
             long year;
             yearStr.ToLong(&year);
             year++;
-            yearStr = wxString() << _("Financial Year: ") << yearStr << wxT(" - ") << year;
+            yearStr = wxString() << _("Financial Year: ") << yearStr << (" - ") << year;
         } 
         else
         {
@@ -175,7 +175,7 @@ void mmBudgetingPanel::CreateControls()
     }
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_REPORTS_STATIC_HEADER, 
         _("Budget Setup for ") + yearStr, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, ("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
@@ -199,19 +199,19 @@ void mmBudgetingPanel::CreateControls()
 
     wxStaticText* itemStaticText100 = new wxStaticText( headerPanel, wxID_ANY, _("Income......."),
         wxDefaultPosition, wxSize(75, 20), 0 );
-    itemStaticText100->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    itemStaticText100->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText101 = new wxStaticText( headerPanel,
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
-    itemStaticText101->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    itemStaticText101->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText102 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
-    itemStaticText102->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    itemStaticText102->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText103 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
-    itemStaticText103->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    itemStaticText103->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxBoxSizer* itemIncomeSizer = new wxBoxSizer(wxHORIZONTAL);
     itemIncomeSizer->Add(itemStaticText100, 0, wxALL, 0);
@@ -222,19 +222,19 @@ void mmBudgetingPanel::CreateControls()
 
     wxStaticText* itemStaticText200 = new wxStaticText( headerPanel, wxID_ANY, _("Expenses..."),
         wxDefaultPosition, wxSize(75, 20), 0 );
-    itemStaticText200->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    itemStaticText200->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText201 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
-    itemStaticText201->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    itemStaticText201->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText202 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
-    itemStaticText202->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    itemStaticText202->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText203 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
-    itemStaticText203->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    itemStaticText203->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxBoxSizer* itemExpenseSizer = new wxBoxSizer(wxHORIZONTAL);
     itemExpenseSizer->Add(itemStaticText200, 0, wxALL, 0);
@@ -257,12 +257,12 @@ void mmBudgetingPanel::CreateControls()
 
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4, col5;
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL0_WIDTH"), wxT("80")).ToLong(&col0); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL1_WIDTH"), wxT("80")).ToLong(&col1); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL2_WIDTH"), wxT("80")).ToLong(&col2); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL3_WIDTH"), wxT("80")).ToLong(&col3); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL4_WIDTH"), wxT("80")).ToLong(&col4); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL5_WIDTH"), wxT("80")).ToLong(&col5); 
+    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL0_WIDTH"), ("80")).ToLong(&col0); 
+    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL1_WIDTH"), ("80")).ToLong(&col1); 
+    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL2_WIDTH"), ("80")).ToLong(&col2); 
+    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL3_WIDTH"), ("80")).ToLong(&col3); 
+    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL4_WIDTH"), ("80")).ToLong(&col4); 
+    mmDBWrapper::getINISettingValue(inidb_, ("BUDGET_COL5_WIDTH"), ("80")).ToLong(&col5); 
 
     listCtrlBudget_->SetColumnWidth(0, col0);
     listCtrlBudget_->SetColumnWidth(1, col1);
@@ -278,15 +278,15 @@ bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
 {
     bool result = false;
 
-    if (currentView_ == wxT("View Non-Zero Budget Categories")) 
+    if (currentView_ == ("View Non-Zero Budget Categories")) 
     {
         if ((budgetEntry.estimated_ != 0.0) || (budgetEntry.actual_ != 0.0)) result = true;
     } 
-    else if (currentView_ == wxT("View Income Budget Categories")) 
+    else if (currentView_ == ("View Income Budget Categories")) 
     {
         if ((budgetEntry.estimated_ > 0.0) || (budgetEntry.actual_ > 0.0)) result = true;
     } 
-    else if (currentView_ == wxT("View Expense Budget Categories")) 
+    else if (currentView_ == ("View Expense Budget Categories")) 
     {
         if ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0)) result = true;
     } 
@@ -366,8 +366,8 @@ void mmBudgetingPanel::initVirtualListControl()
     {
         mmBudgetEntryHolder th;
         budgetDetails.initBudgetEntryFields(th, budgetYearID_);
-        th.categID_ = q1.GetInt(wxT("CATEGID"));
-        th.catStr_ = q1.GetString(wxT("CATEGNAME"));
+        th.categID_ = q1.GetInt(("CATEGID"));
+        th.catStr_ = q1.GetString(("CATEGNAME"));
 
         mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
         budgetDetails.setBudgetEstimate(th, monthlyBudget);
@@ -423,8 +423,8 @@ void mmBudgetingPanel::initVirtualListControl()
             budgetDetails.initBudgetEntryFields(thsub, budgetYearID_);
             thsub.categID_ = th.categID_;
             thsub.catStr_ = th.catStr_;
-            thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
-            thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
+            thsub.subcategID_ = q2.GetInt(("SUBCATEGID"));
+            thsub.subCatStr_   = q2.GetString(("SUBCATEGNAME"));
 
             mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
             budgetDetails.setBudgetEstimate(thsub, monthlyBudget);
@@ -528,7 +528,7 @@ wxString mmBudgetingPanel::getItem(long item, long column)
     if (column == 4) return trans_[item].estimatedStr_;
     if (column == 5) return trans_[item].actualStr_;
 
-    return wxT("");
+    return ("");
 }
 
 int budgetingListCtrl::OnGetItemImage(long item) const
@@ -548,7 +548,7 @@ wxString budgetingListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr* budgetingListCtrl::OnGetItemAttr(long item) const
 {
-    if (cp_->trans_[item].id_ < 0 && cp_->currentView_ != wxT("View Budget Category Summary"))
+    if (cp_->trans_[item].id_ < 0 && cp_->currentView_ != ("View Budget Category Summary"))
     {
         return m_attr3;
     }

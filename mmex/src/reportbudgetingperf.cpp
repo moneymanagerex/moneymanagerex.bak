@@ -65,7 +65,7 @@ void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudg
 
         if(actualMonthVal < budgetEntry.estimated_)
 		{
-            hb.addTableCell(actualMonthValStr, true, true, true, wxT("#ff0000"));
+            hb.addTableCell(actualMonthValStr, true, true, true, ("#ff0000"));
         }
         else
         {
@@ -142,8 +142,8 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     {
         mmBudgetEntryHolder th;
         initBudgetEntryFields(th, budgetYearID_);
-        th.categID_ = q1.GetInt(wxT("CATEGID"));
-        th.catStr_  = q1.GetString(wxT("CATEGNAME"));
+        th.categID_ = q1.GetInt(("CATEGID"));
+        th.catStr_  = q1.GetString(("CATEGNAME"));
         mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
 
         // Set the estimated amount for the year
@@ -177,7 +177,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             DisplayEstimateMonths(hb, th, startMonth);
            
             hb.addTableCell(totalEstimatedStr_, true, true, true);
-            hb.addTableCell(wxT("-"));
+            hb.addTableCell(("-"));
             hb.endTableRow();
 
             // actual stuff
@@ -190,7 +190,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             // year end
 			if(th.actual_ < totalEstimated_)
 			{
-				hb.addTableCell(th.actualStr_, true, true, true, wxT("#ff0000"));
+				hb.addTableCell(th.actualStr_, true, true, true, ("#ff0000"));
 			}
 			else
 			{
@@ -201,11 +201,11 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                 ((totalEstimated_ > 0) && (th.actual_ > 0)))
             {
                 double percent = (fabs(th.actual_) / fabs(totalEstimated_)) * 100.0;
-                hb.addTableCell(wxString::Format(wxT("%.0f"), percent));
+                hb.addTableCell(wxString::Format(("%.0f"), percent));
             }
             else
             {
-                hb.addTableCell(wxT("-"));
+                hb.addTableCell(("-"));
             }
 				
             hb.endTableRow();
@@ -222,8 +222,8 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             initBudgetEntryFields(thsub, budgetYearID_);
             thsub.categID_ = th.categID_;
             thsub.catStr_  = th.catStr_;
-            thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
-            thsub.subCatStr_  = q2.GetString(wxT("SUBCATEGNAME"));
+            thsub.subcategID_ = q2.GetInt(("SUBCATEGID"));
+            thsub.subCatStr_  = q2.GetString(("SUBCATEGNAME"));
 
             mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
  
@@ -249,17 +249,17 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             if ((totalEstimated_ != 0.0) || (thsub.actual_ != 0.0))
             {
                 hb.startTableRow();
-                hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
+                hb.addTableCell(thsub.catStr_+ (": ") + thsub.subCatStr_, false, true);
                 hb.addTableCell(_("Estimated"));
 			
                 DisplayEstimateMonths(hb, thsub, startMonth);
 
                 hb.addTableCell(totalEstimatedStr_, true, true, true);
-                hb.addTableCell(wxT("-"));
+                hb.addTableCell(("-"));
                 hb.endTableRow();
 
                 hb.startTableRow();
-                hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
+                hb.addTableCell(thsub.catStr_+ (": ") + thsub.subCatStr_, false, true);
                 hb.addTableCell(_("Actual"));
 
                 DisplayActualMonths(hb, thsub, startMonth, startYear);
@@ -267,7 +267,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                 // year end
                 if(thsub.actual_ < totalEstimated_)
                 {
-                    hb.addTableCell(thsub.actualStr_, true, true, true, wxT("#ff0000"));
+                    hb.addTableCell(thsub.actualStr_, true, true, true, ("#ff0000"));
                 }
                 else
                 {
@@ -278,11 +278,11 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                     ((totalEstimated_ > 0) && (thsub.actual_ > 0)))
                 {
                     double percent = (fabs(thsub.actual_) / fabs(totalEstimated_)) * 100.0;
-                    hb.addTableCell(wxString::Format(wxT("%.0f"), percent));
+                    hb.addTableCell(wxString::Format(("%.0f"), percent));
                 }
                 else
                 {
-                    hb.addTableCell(wxT("-"));
+                    hb.addTableCell(("-"));
                 }
 
                 hb.endTableRow();

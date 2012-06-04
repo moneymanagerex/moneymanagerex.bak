@@ -98,7 +98,7 @@ void mmStockDialog::dataToControls()
     wxString numSharesString;
     //I wish see integer if it integer else double
     if ((numShares - static_cast<long>(numShares)) != 0.0 )
-        numSharesString=wxString::Format(wxT("%0.4f"),numShares);
+        numSharesString=wxString::Format(("%0.4f"),numShares);
     else
         numSharesString <<  static_cast<long>(numShares);
 
@@ -144,7 +144,7 @@ void mmStockDialog::CreateControls()
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel5, wxID_STATIC, _("Stock Name"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    stockName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCKNAME, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    stockName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCKNAME, (""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(stockName_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     stockName_->SetToolTip(_("Enter the stock company name"));
     if (!edit_)
@@ -172,7 +172,7 @@ void mmStockDialog::CreateControls()
     wxStaticText* itemStaticText13 = new wxStaticText( itemPanel5, wxID_STATIC, _("Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    stockSymbol_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_SYMBOL, wxT(""), wxDefaultPosition, wxSize(150, -1), 0 );
+    stockSymbol_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_SYMBOL, (""), wxDefaultPosition, wxSize(150, -1), 0 );
     itemFlexGridSizer6->Add(stockSymbol_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     stockSymbol_->SetToolTip(_("Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"));
     //
@@ -181,7 +181,7 @@ void mmStockDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    numShares_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_NUMBER_SHARES, wxT(""), wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+    numShares_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_NUMBER_SHARES, (""), wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
     itemFlexGridSizer6->Add(numShares_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     numShares_->SetToolTip(_("Enter number of shares held"));
 
@@ -189,7 +189,7 @@ void mmStockDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    purchasePrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_PP, wxT(""), wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+    purchasePrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_PP, (""), wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
     itemFlexGridSizer6->Add(purchasePrice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     purchasePrice_->SetToolTip(_("Enter purchase price for each stock"));
 
@@ -197,7 +197,7 @@ void mmStockDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText21, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    currentPrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_CP, wxT(""), wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+    currentPrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_CP, (""), wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
     itemFlexGridSizer6->Add(currentPrice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     currentPrice_->SetToolTip(_("Enter current stock price"));
 
@@ -205,20 +205,20 @@ void mmStockDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText211, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, wxT("0"), wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+    commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, ("0"), wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
     itemFlexGridSizer6->Add(commission_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     commission_->SetToolTip(_("Enter any commission paid"));
 
     wxStaticText* itemStaticText25 = new wxStaticText( itemPanel5, wxID_STATIC, _("Value"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText25, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    valueInvestment_ = new wxStaticText( itemPanel5, ID_STATIC_STOCK_VALUE, wxT("--"), wxDefaultPosition, wxDefaultSize, 0 );
+    valueInvestment_ = new wxStaticText( itemPanel5, ID_STATIC_STOCK_VALUE, ("--"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(valueInvestment_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText19, 0, wxALIGN_LEFT|wxALIGN_TOP|wxALL|wxADJUST_MINSIZE, 5);
 
-    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_NOTES, wxT(""), wxDefaultPosition, wxSize(200, 75), wxTE_MULTILINE );
+    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_NOTES, (""), wxDefaultPosition, wxSize(200, 75), wxTE_MULTILINE );
     itemFlexGridSizer6->Add(notes_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     notes_->SetToolTip(_("Enter notes associated with this investment"));
 
@@ -244,7 +244,7 @@ void mmStockDialog::CreateControls()
 void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
 {
 
-    DB_View_ACCOUNTLIST_V1::Data_Set all_accounts = ACCOUNTLIST_V1.find(db_, DB_View_ACCOUNTLIST_V1::COL_ACCOUNTTYPE, wxT("Investment"));
+    DB_View_ACCOUNTLIST_V1::Data_Set all_accounts = ACCOUNTLIST_V1.find(db_, DB_View_ACCOUNTLIST_V1::COL_ACCOUNTTYPE, ("Investment"));
 
     wxArrayString account_names;
 
@@ -274,18 +274,18 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
     if (!stockSymbol.IsEmpty())
     {
         // Use Google for stock quotes
-        wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
-        //wxString paddedURL = wxT("\"") + stockURL + wxT("\"");
+        wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, ("STOCKURL"), mmex::DEFSTOCKURL);
+        //wxString paddedURL = ("\"") + stockURL + ("\"");
         //wxString httpString = wxString::Format(paddedURL, stockSymbol);
         //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL );
 
-        int yahooSite = stockURL.Find(wxT("yahoo"));
+        int yahooSite = stockURL.Find(("yahoo"));
         if ( yahooSite != wxNOT_FOUND )
         {
-            int hasSuffix = stockSymbol.Find(wxT("."));
+            int hasSuffix = stockSymbol.Find(("."));
             if ( hasSuffix == wxNOT_FOUND)
             {
-                wxString stockSuffix = mmDBWrapper::getInfoSettingValue(db_,wxT("HTTP_YAHOO_SUFFIX"), wxT(""));
+                wxString stockSuffix = mmDBWrapper::getInfoSettingValue(db_,("HTTP_YAHOO_SUFFIX"), (""));
                 if (! stockSuffix.IsEmpty() )
                     stockSymbol << stockSuffix;
             }
@@ -311,7 +311,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     wxString notes       = notes_->GetValue();
 
     wxString numSharesStr = numShares_->GetValue().Trim();
-    if (numSharesStr == wxT(""))
+    if (numSharesStr == (""))
     {
         mmShowErrorMessageInvalid(this, _("Num Shares"));
         return;

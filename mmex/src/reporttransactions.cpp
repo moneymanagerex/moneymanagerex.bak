@@ -63,7 +63,7 @@ wxString mmReportTransactions::getHTMLText()
     
     hb.startCenter();
     hb.startTable();
-    hb.startTable(wxT("95%"));
+    hb.startTable(("95%"));
 
     // Display the data Headings
     hb.startTableRow();
@@ -129,9 +129,9 @@ wxString mmReportTransactions::getHTMLText()
                 negativeTransAmount = true;
         }
 
-        wxString amtColour = negativeTransAmount ? wxT("RED") : wxT("BLACK");
+        wxString amtColour = negativeTransAmount ? ("RED") : ("BLACK");
 
-        if (refTrans[index]->reportCategAmountStr_ == wxT(""))
+        if (refTrans[index]->reportCategAmountStr_ == (""))
             hb.addTableCell(refTrans[index]->transAmtString_, true, false,false, amtColour);
         else
             hb.addTableCell(refTrans[index]->reportCategAmountStr_, true, false,false, amtColour);
@@ -142,12 +142,12 @@ wxString mmReportTransactions::getHTMLText()
         // Get the exchange rate for the selected account
         double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
         double transAmount = refTrans[index]->amt_ * dbRate;
-        if (refTrans[index]->reportCategAmountStr_ != wxT(""))
+        if (refTrans[index]->reportCategAmountStr_ != (""))
         {
             transAmount = refTrans[index]->reportCategAmount_ * dbRate;
         }
 
-        if (refTrans[index]->status_ != wxT("V"))
+        if (refTrans[index]->status_ != ("V"))
         {
             if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
                 total += transAmount;
@@ -186,40 +186,40 @@ wxString mmReportTransactions::getHTMLText()
     wxString filterDetails;
 
     if ( !transDialog_->refAccountStr_.IsEmpty())
-        filterDetails << wxT("<b>") << _("Account: ") << wxT("</b>") << transDialog_->refAccountStr_ << wxT("<br>");
+        filterDetails << ("<b>") << _("Account: ") << ("</b>") << transDialog_->refAccountStr_ << ("<br>");
     //Date range
     if ( !transDialog_->userDateRangeStr().IsEmpty())
-		filterDetails << wxT("<b>") << _("Date Range: ") << wxT("</b>") << transDialog_->userDateRangeStr() << wxT("<br>");
+		filterDetails << ("<b>") << _("Date Range: ") << ("</b>") << transDialog_->userDateRangeStr() << ("<br>");
 
     //Payees
     if ( !transDialog_->userPayeeStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Payee: ") << wxT("</b>") <<transDialog_->userPayeeStr() << wxT("<br>");
+        filterDetails << ("<b>") << _("Payee: ") << ("</b>") <<transDialog_->userPayeeStr() << ("<br>");
 
     //Category
     if ( !transDialog_->userCategoryStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Category: ") << wxT("</b>") <<transDialog_->userCategoryStr() << wxT("<br>");
+        filterDetails << ("<b>") << _("Category: ") << ("</b>") <<transDialog_->userCategoryStr() << ("<br>");
 	
 	//Status
     if ( !transDialog_->userStatusStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Status: ") << wxT("</b>") <<transDialog_->userStatusStr() << wxT("<br>");
+        filterDetails << ("<b>") << _("Status: ") << ("</b>") <<transDialog_->userStatusStr() << ("<br>");
 	//Type
     if ( !transDialog_->userTypeStr().IsEmpty())
-        filterDetails << wxT("<b>") << wxT("Type: ") << wxT("</b>") <<transDialog_->userTypeStr() << wxT("<br>");
+        filterDetails << ("<b>") << ("Type: ") << ("</b>") <<transDialog_->userTypeStr() << ("<br>");
 	//Amount Range
     if ( !transDialog_->userAmountRangeStr().IsEmpty())
-        filterDetails << wxT("<b>") << wxT("Amount Range: ") << wxT("</b>") <<transDialog_->userAmountRangeStr() << wxT("<br>");
+        filterDetails << ("<b>") << ("Amount Range: ") << ("</b>") <<transDialog_->userAmountRangeStr() << ("<br>");
 	//Number
     if ( !transDialog_->userTransNumberStr().IsEmpty())
-        filterDetails << wxT("<b>") << wxT("Number: ") << wxT("</b>") <<transDialog_->userTransNumberStr() << wxT("<br>");
+        filterDetails << ("<b>") << ("Number: ") << ("</b>") <<transDialog_->userTransNumberStr() << ("<br>");
 	//Notes
     if ( !transDialog_->userNotesStr().IsEmpty())
-        filterDetails << wxT("<b>") << wxT("Notes: ") << wxT("</b>") <<transDialog_->userNotesStr() << wxT("<br>");
+        filterDetails << ("<b>") << ("Notes: ") << ("</b>") <<transDialog_->userNotesStr() << ("<br>");
 	
     if ( !filterDetails.IsEmpty())
     {
         wxString filterDetailsStr;
         hb.addHorizontalLine();
-        filterDetailsStr << wxT("<b>") << _("Filtering Details: ") 
+        filterDetailsStr << ("<b>") << _("Filtering Details: ") 
         << wxT ("</b><br>") << filterDetails;
         hb.addHeaderItalic(0, filterDetailsStr );
     }

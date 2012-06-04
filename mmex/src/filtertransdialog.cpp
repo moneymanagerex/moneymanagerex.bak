@@ -244,8 +244,8 @@ void mmFilterTransactionsDialog::CreateControls()
     amountRangeCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(amountRangeCheckBox, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    amountMinEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL13, wxT(""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
-    amountMaxEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL14, wxT(""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+    amountMinEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL13, (""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+    amountMaxEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL14, (""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
     amountSizer->Add(amountMinEdit, 0, wxALIGN_LEFT|wxALL, 5);
@@ -411,7 +411,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
                     ignoreSubCateg = true;
                 if (!pBankTransaction->containsCategory(categID_, subcategID_, ignoreSubCateg))
                 {
-                    pBankTransaction->reportCategAmountStr_ = wxT("");
+                    pBankTransaction->reportCategAmountStr_ = ("");
                     continue;
                 }
 
@@ -439,9 +439,9 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
             if (typeCheckBox->GetValue())
             {
                 wxString transCode = pBankTransaction->transType_;
-                wxString transCodeSelectedWithdraval=wxT("-");
-                wxString transCodeSelectedDeposit=wxT("-");
-                wxString transCodeSelectedTransfer=wxT("-");
+                wxString transCodeSelectedWithdraval=("-");
+                wxString transCodeSelectedDeposit=("-");
+                wxString transCodeSelectedTransfer=("-");
                 if (cbTypeWithdrawal_->GetValue())
                     transCodeSelectedWithdraval = TRANS_TYPE_WITHDRAWAL_STR;
                 if (cbTypeDeposit_->GetValue())
@@ -544,7 +544,7 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
         }
         else
         {
-            catName.Replace(wxT("&"), wxT("&&"));
+            catName.Replace(("&"), ("&&"));
             btnCategory->SetLabel(catName);
         }
         
@@ -555,15 +555,15 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
     subcategID_ = dlg.subcategID_;
 
     wxString catName = core_->getCategoryName(dlg.categID_);
-    catName.Replace(wxT("&"), wxT("&&"));
+    catName.Replace(("&"), ("&&"));
     wxString categString = catName;
 
     if (dlg.subcategID_ != -1)
     {
         wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
             dlg.categID_, dlg.subcategID_);
-        subcatName.Replace(wxT("&"), wxT("&&"));
-        categString += wxT(" : ");
+        subcatName.Replace(("&"), ("&&"));
+        categString += (" : ");
         categString += subcatName;
     }
     
@@ -578,7 +578,7 @@ void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
         payeeID_ = dlg.getPayeeId();
         if (payeeID_ == -1)
         {
-            btnPayee->SetLabel(wxT("Select Payee"));
+            btnPayee->SetLabel(("Select Payee"));
             return;
         }
         wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, categID_, subcategID_);
@@ -648,9 +648,9 @@ wxString mmFilterTransactionsDialog::userTypeStr()
         if (cbTypeWithdrawal_->GetValue())
             transCode = TRANS_TYPE_WITHDRAWAL_STR;
         if (cbTypeDeposit_->GetValue())
-            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << TRANS_TYPE_DEPOSIT_STR;
+            transCode << (transCode.IsEmpty() ? ("") : (", ")) << TRANS_TYPE_DEPOSIT_STR;
         if (cbTypeTransfer_->GetValue())
-            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << TRANS_TYPE_TRANSFER_STR;
+            transCode << (transCode.IsEmpty() ? ("") : (", ")) << TRANS_TYPE_TRANSFER_STR;
     }
     return transCode;
 }

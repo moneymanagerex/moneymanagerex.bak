@@ -104,7 +104,7 @@ void prepareAndPrintPeriods
         wxString yyyy;
         yyyy << dtBegin.GetYear();
 
-        hb.addTableHeaderCell(mmGetNiceShortMonthName(dtBegin.GetMonth()) + wxT(" ") + yyyy);
+        hb.addTableHeaderCell(mmGetNiceShortMonthName(dtBegin.GetMonth()) + (" ") + yyyy);
     }
 }
 //----------------------------------------------------------------------------
@@ -131,11 +131,11 @@ void printRow
 
     hb.startTableRow();
 
-    wxString categ = q1.GetString(wxT("CATEGNAME"));
+    wxString categ = q1.GetString(("CATEGNAME"));
 
     if (subcat_id != g_NullSubCat) {
-        categ += wxT(": ");
-        categ += q1.GetString(wxT("SUBCATEGNAME"));
+        categ += (": ");
+        categ += q1.GetString(("SUBCATEGNAME"));
     }
 
     hb.addTableCell(categ, false, true);
@@ -147,7 +147,7 @@ void printRow
         const wxDateTime &dtBegin = i->first;
         const wxDateTime &dtEnd = i->second;
 
-        // wxLogDebug(wxT("begin=%s, end=%s"), dtBegin.Format().c_str(), dtEnd.Format().c_str());
+        // wxLogDebug(("begin=%s, end=%s"), dtBegin.Format().c_str(), dtEnd.Format().c_str());
 
         double month_amount = core.getAmountForCategory(cat_id, subcat_id, false,
             dtBegin, dtEnd, false, false, mmIniOptions::instance().ignoreFutureTransactions_
@@ -256,7 +256,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     const wxDateTime periodBegin = dummy.ResetTime();
 
-    // wxLogDebug(wxT("yea_begin=%s, yea_end=%s"), periodBegin.Format().c_str(), periodEnd.Format().c_str());
+    // wxLogDebug(("yea_begin=%s, yea_end=%s"), periodBegin.Format().c_str(), periodEnd.Format().c_str());
 
     // print header of report
 
@@ -282,14 +282,14 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     for (int last_cat_id = g_NullCategory; q1.NextRow();)
     {
-        int cat_id = q1.GetInt(wxT("CATEGID"));
+        int cat_id = q1.GetInt(("CATEGID"));
         
         if (last_cat_id != cat_id) { // category changed
             last_cat_id = cat_id;
             printRow(periodBegin, periodEnd, periods, q1, cat_id, g_NullSubCat, *core_, hb, columns_totals);
         }
 
-        int sc_idx = q1.FindColumnIndex(wxT("SUBCATEGID"));
+        int sc_idx = q1.FindColumnIndex(("SUBCATEGID"));
         
         if (!q1.IsNull(sc_idx)) {
             int subcat_id = q1.GetInt(sc_idx);

@@ -226,12 +226,12 @@ bool PieChart::Render( const wxString& title )
         {
             if ( mode == PIE_CHART_PERCENT )
                 dc.DrawText(
-                        data[i].key + wxT( " (" ) + wxString::Format( wxT( "%.2f" ), data[i].val ) + wxT( "%)" ),
+                        data[i].key + ( " (" ) + wxString::Format( ( "%.2f" ), data[i].val ) + ( "%)" ),
                         csize + 37,
                         40 + i * 18 - 11 );
             else
                 dc.DrawText(
-                        data[i].key, // + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")")
+                        data[i].key, // + (" (") + wxString::Format(("%.2f"), data[i].aval) + (")")
                         csize + 37,
                         40 + i * 18 - 11 );
         }
@@ -263,9 +263,9 @@ bool PieChart::Render( const wxString& title )
             wxString s;
 
             if ( mode == PIE_CHART_PERCENT )
-                s = data[j].key + wxT( " (" ) + wxString::Format( wxT( "%.2f" ), data[j].val ) + wxT( "%)" );
+                s = data[j].key + ( " (" ) + wxString::Format( ( "%.2f" ), data[j].val ) + ( "%)" );
             else
-                s = data[j].key; // + wxT(" (") + wxString::Format(wxT("%.2f"), data[j].aval) + wxT(")")
+                s = data[j].key; // + (" (") + wxString::Format(("%.2f"), data[j].aval) + (")")
 
             int l1;
 
@@ -423,7 +423,7 @@ bool BarChart::Render( const wxString& title )
             for ( size_t i = 0; i < data.size(); ++i )
             {
                 dc.DrawText(
-                        data[i].key /* + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")") */,
+                        data[i].key /* + (" (") + wxString::Format(("%.2f"), data[i].aval) + (")") */,
                         originLeft + csize + 30,
                         43 + i * 18 - dc.GetTextExtent( legend ).GetHeight() );
             }
@@ -433,7 +433,7 @@ bool BarChart::Render( const wxString& title )
             for ( size_t i = 0; i < serieLabel.size(); ++i )
             {
                 dc.DrawText(
-                        serieLabel[i] /* + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")") */,
+                        serieLabel[i] /* + (" (") + wxString::Format(("%.2f"), data[i].aval) + (")") */,
                         originLeft + csize + 30,
                         43 + i * 18 - dc.GetTextExtent( legend ).GetHeight() );
             }
@@ -469,7 +469,7 @@ bool BarChart::Render( const wxString& title )
             ClearFillColour();
             SetStrokeColour( *wxBLACK );
 
-            wxString label = wxString::Format( wxT( "%.0f" ), fi );
+            wxString label = wxString::Format( ( "%.0f" ), fi );
             dc.DrawText( label, 3, y - dc.GetTextExtent( label ).GetHeight() );
 
             // 1st entry skip grid, otherwise axis is overriden
@@ -495,7 +495,7 @@ bool BarChart::Render( const wxString& title )
 
             for ( int i = 0; i < static_cast<int>( data.size() ); ++i )
             {
-                wxString key = data[i].key /* + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")") */;
+                wxString key = data[i].key /* + (" (") + wxString::Format(("%.2f"), data[i].aval) + (")") */;
                 wxCoord x = originLeft + i * ( barwidth * static_cast<int>( serieLabel.size() ) ) + ( i + 1 ) * gap + labelOffset - ( dc.GetTextExtent( key ).GetWidth() / 2 );
                 wxCoord y = height - 10 - dc.GetTextExtent( key ).GetHeight();
                 dc.DrawText( key, x, y );
@@ -524,7 +524,7 @@ bool BarChart::Render( const wxString& title )
 
             for ( size_t i = 0; i < data.size(); ++i )
             {
-                wxString key = data[i].key /* + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")") */;
+                wxString key = data[i].key /* + (" (") + wxString::Format(("%.2f"), data[i].aval) + (")") */;
                 dc.DrawText(
                         key,
                         originLeft + i*barwidth + ( i + 1 )*gap + labelOffset /* - (dc.GetTextExtent(key).GetLength() / 2) */,
@@ -539,7 +539,7 @@ bool BarChart::Render( const wxString& title )
             ClearFillColour();
             SetStrokeColour( *wxBLACK );
 
-            wxString label = wxString::Format( wxT( "%.0f" ), fi );
+            wxString label = wxString::Format( ( "%.0f" ), fi );
             dc.DrawText( label, 3, y - dc.GetTextExtent( label ).GetHeight() );
 
             // 1st entry skip grid, otherwise axis is overriden
@@ -564,7 +564,7 @@ bool BarChart::Render( const wxString& title )
 
             for ( int i = 0; i < static_cast<int>( data.size() ); ++i )
             {
-                wxString key = data[i].key /* + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")") */;
+                wxString key = data[i].key /* + (" (") + wxString::Format(("%.2f"), data[i].aval) + (")") */;
                 wxCoord x = originLeft + i * ( barwidth * static_cast<int>( serieLabel.size() ) ) + ( i + 1 ) * gap + labelOffset /* - (dc.GetTextExtent(key).GetLength() / 2) */;
                 wxCoord y = height - 10 - dc.GetTextExtent( key ).GetHeight();
                 dc.DrawText( key, x, y );

@@ -93,7 +93,7 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-    wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(), wxT(""));
+    wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(), (""));
     int vertical_size_ = (filtd.GetCount()>10 ? 320 : 240);
     listBox_ = new wxListBox( this, IDD_LISTBOX_PAYEES, wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
@@ -246,9 +246,9 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
     {
         wxString deletePayeeErrMsg = _("Payee in use.");
         deletePayeeErrMsg 
-            << wxT("\n\n")
+            << ("\n\n")
             << _("Tip: Change all transactions using this Payee to another Payee\nusing the relocate command:")
-            << wxT("\n\n") << _("Tools -> Relocation of -> Payees");
+            << ("\n\n") << _("Tools -> Relocation of -> Payees");
         wxMessageBox(deletePayeeErrMsg,_("Organize Payees: Delete Error"),wxOK|wxICON_ERROR);
         return;
     }

@@ -37,7 +37,7 @@ namespace
 {
 
 //----------------------------------------------------------------------------
-const wxChar g_def_decimal_point = wxT('.');
+const wxChar g_def_decimal_point = ('.');
 const int g_def_scale = 100;
 
 //----------------------------------------------------------------------------
@@ -53,16 +53,16 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
     wxString lang;
 
     wxArrayString lang_files;
-    size_t cnt = wxDir::GetAllFiles(langPath, &lang_files, wxT("*.mo"));
+    size_t cnt = wxDir::GetAllFiles(langPath, &lang_files, ("*.mo"));
 
     if (!cnt)
     {
         if (verbose)
         {
-            wxString s = wxT("Can't find language files (.mo) at \"");
-            s << langPath << wxT('\"');
+            wxString s = ("Can't find language files (.mo) at \"");
+            s << langPath << ('\"');
 
-            wxMessageDialog dlg(parent, s, wxT("Error"), wxICON_ERROR);
+            wxMessageDialog dlg(parent, s, ("Error"), wxICON_ERROR);
             dlg.ShowModal();
         }
 
@@ -76,7 +76,7 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
     }
 
     lang_files.Sort(CaseInsensitiveCmp);
-    lang = wxGetSingleChoice(wxT("Please choose language"), wxT("Languages"), lang_files, parent);
+    lang = wxGetSingleChoice(("Please choose language"), ("Languages"), lang_files, parent);
 
     return lang.Lower();
 }
@@ -129,7 +129,7 @@ wchar_t get_group_separator(wxChar sep)
 wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_sz)
 {
     wxString val;
-    val.Printf(wxT("%.0f"), x);
+    val.Printf(("%.0f"), x);
 
     wxChar grp_sep = fmt.getGroupSeparator();
 
@@ -157,7 +157,7 @@ wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_
 
 wxString format_cents(const mmex::CurrencyFormatter &f, int cents)
 {
-    const wxChar* fmt[] = { wxT("%02d"), wxT("%01d"), wxT("%03d"), wxT("%04d") };
+    const wxString fmt[] = { ("%02d"), ("%01d"), ("%03d"), ("%04d") };
 
     wxASSERT(g_def_scale == 100);
     size_t i = 0; // "%02d" for g_def_scale
@@ -197,12 +197,12 @@ void DoubleToCurrency(const mmex::CurrencyFormatter &fmt, double val, wxString& 
         if (!pfx.empty())
         {
             s += pfx;
-            s += wxT(' ');
+            s += (' ');
         }
     }
 
     if (val < 0)
-        s += wxT('-'); // "minus" sign
+        s += ('-'); // "minus" sign
 
     int scale = fmt.getScale();
     double abs_val = fabs(mmRound(val*scale));
@@ -232,7 +232,7 @@ mmIniOptions::mmIniOptions()
     , enableReportIssues_ (true)
     , enableBeNotifiedForNewReleases_(true)
     , enableVisitWebsite_(true)
-    , fontSize_(wxT("3"))
+    , fontSize_(("3"))
     , enableCustomAboutDialog_(false)
     , disableCategoryModify_(false)
     , enableCustomTemplateDB_(false)
@@ -263,12 +263,12 @@ void correctEmptyFileExt(wxString ext, wxString & fileName)
 {
     wxFileName tempFileName(fileName);
     if (tempFileName.GetExt().IsEmpty())
-        fileName << wxT(".") << ext;
+        fileName << (".") << ext;
 }
 //----------------------------------------------------------------------------
 mmOptions::mmOptions()
         : dateFormat(mmex::DEFDATEFORMAT)
-        , language(wxT("english"))
+        , language(("english"))
         , databaseUpdated_(false)
         {}
 //----------------------------------------------------------------------------
@@ -281,52 +281,52 @@ mmOptions::instance()
 
 void mmOptions::loadOptions(wxSQLite3Database* db)
 {
-    dateFormat = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    dateFormat = mmDBWrapper::getInfoSettingValue(db, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
 
-    financialYearStartDayString_   = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
-    financialYearStartMonthString_ = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
+    financialYearStartDayString_   = mmDBWrapper::getInfoSettingValue(db, ("FINANCIAL_YEAR_START_DAY"), ("1"));
+    financialYearStartMonthString_ = mmDBWrapper::getInfoSettingValue(db, ("FINANCIAL_YEAR_START_MONTH"), ("7"));
 
 }
 //----------------------------------------------------------------------------
 
 void mmOptions::saveOptions(wxSQLite3Database* db)
 {
-    mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat);
+    mmDBWrapper::setInfoSettingValue(db, ("DATEFORMAT"), dateFormat);
 }
 // --------------------------------------------------------------------------
 
 void mmIniOptions::loadOptions(wxSQLite3Database* db)
 {
-    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLESTOCKS"), wxT("TRUE")) != wxT("TRUE")) expandStocksHome_ = false;
-    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEASSETS"), wxT("TRUE")) != wxT("TRUE")) enableAssets_ = false;
-    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEBUDGET"), wxT("TRUE")) != wxT("TRUE")) enableBudget_ = false;
-    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEGRAPHS"), wxT("TRUE")) != wxT("TRUE")) enableGraphs_ = false;
+    if (mmDBWrapper::getINISettingValue(db, ("ENABLESTOCKS"), ("TRUE")) != ("TRUE")) expandStocksHome_ = false;
+    if (mmDBWrapper::getINISettingValue(db, ("ENABLEASSETS"), ("TRUE")) != ("TRUE")) enableAssets_ = false;
+    if (mmDBWrapper::getINISettingValue(db, ("ENABLEBUDGET"), ("TRUE")) != ("TRUE")) enableBudget_ = false;
+    if (mmDBWrapper::getINISettingValue(db, ("ENABLEGRAPHS"), ("TRUE")) != ("TRUE")) enableGraphs_ = false;
 
-    fontSize_ = mmDBWrapper::getINISettingValue(db, wxT("HTMLFONTSIZE"), wxT("3"));
+    fontSize_ = mmDBWrapper::getINISettingValue(db, ("HTMLFONTSIZE"), ("3"));
 
-    if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_BANK_HOME"), wxT("TRUE")) != wxT("TRUE"))   expandBankHome_ = false;
-    if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_TERM_HOME"), wxT("FALSE")) != wxT("FALSE")) expandTermHome_ = true;
-    if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_BANK_TREE"), wxT("TRUE")) != wxT("TRUE"))   expandBankTree_ = false;
-    if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_TERM_TREE"), wxT("FALSE")) != wxT("FALSE")) expandTermTree_ = true;
+    if (mmDBWrapper::getINISettingValue(db, ("EXPAND_BANK_HOME"), ("TRUE")) != ("TRUE"))   expandBankHome_ = false;
+    if (mmDBWrapper::getINISettingValue(db, ("EXPAND_TERM_HOME"), ("FALSE")) != ("FALSE")) expandTermHome_ = true;
+    if (mmDBWrapper::getINISettingValue(db, ("EXPAND_BANK_TREE"), ("TRUE")) != ("TRUE"))   expandBankTree_ = false;
+    if (mmDBWrapper::getINISettingValue(db, ("EXPAND_TERM_TREE"), ("FALSE")) != ("FALSE")) expandTermTree_ = true;
 
-    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_FINANCIAL_YEARS, wxT("FALSE")) != wxT("FALSE")) budgetFinancialYears_ = true;
-    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_INCLUDE_TRANSFERS, wxT("FALSE")) != wxT("FALSE")) budgetIncludeTransfers_ = true;
-    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, wxT("FALSE")) != wxT("FALSE")) budgetSetupWithoutSummaries_ = true;
-    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, wxT("TRUE")) != wxT("TRUE")) budgetSummaryWithoutCategories_ = false;
-    if (mmDBWrapper::getINISettingValue(db, INIDB_IGNORE_FUTURE_TRANSACTIONS, wxT("FALSE")) != wxT("FALSE")) ignoreFutureTransactions_ = true;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_FINANCIAL_YEARS, ("FALSE")) != ("FALSE")) budgetFinancialYears_ = true;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_INCLUDE_TRANSFERS, ("FALSE")) != ("FALSE")) budgetIncludeTransfers_ = true;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, ("FALSE")) != ("FALSE")) budgetSetupWithoutSummaries_ = true;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, ("TRUE")) != ("TRUE")) budgetSummaryWithoutCategories_ = false;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_IGNORE_FUTURE_TRANSACTIONS, ("FALSE")) != ("FALSE")) ignoreFutureTransactions_ = true;
 
     // Read the preference as a string and convert to int
-    transPayeeSelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_PAYEE_NONE"), wxT("0")));
+    transPayeeSelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, ("TRANSACTION_PAYEE_NONE"), ("0")));
     // For the category selection, default behavior should remain that the last category used for the payee is selected.
     //  This is item 1 (0-indexed) in the list.
-    transCategorySelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_CATEGORY_NONE"), wxT("1")));
-    transStatusReconciled_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("0")));
-    transDateDefault_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_DATE_DEFAULT"), wxT("0")));
+    transCategorySelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, ("TRANSACTION_CATEGORY_NONE"), ("1")));
+    transStatusReconciled_ = wxAtoi(mmDBWrapper::getINISettingValue(db, ("TRANSACTION_STATUS_RECONCILED"), ("0")));
+    transDateDefault_ = wxAtoi(mmDBWrapper::getINISettingValue(db, ("TRANSACTION_DATE_DEFAULT"), ("0")));
 }
 
 void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
 {
-    mmIniOptions::instance().userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
+    mmIniOptions::instance().userNameString_ = mmDBWrapper::getInfoSettingValue(db, ("USERNAME"), (""));
 }
 
 void mmIniOptions::saveOptions(wxSQLite3Database* /*db*/)
@@ -336,9 +336,9 @@ void mmIniOptions::saveOptions(wxSQLite3Database* /*db*/)
 // ---------------------------------------------------------------------------
 void mmPlayTransactionSound(wxSQLite3Database* db_)
 {
-    wxString useSound = mmDBWrapper::getINISettingValue(db_, INIDB_USE_TRANSACTION_SOUND, wxT("TRUE"));
+    wxString useSound = mmDBWrapper::getINISettingValue(db_, INIDB_USE_TRANSACTION_SOUND, ("TRUE"));
 
-    if (useSound == wxT("TRUE"))
+    if (useSound == ("TRUE"))
     {
         wxSound registerSound(mmex::getPathResource(mmex::TRANS_SOUND));
         if (registerSound.IsOk())
@@ -367,9 +367,9 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
         if (verbose)
         {
             //TODO fix string for proper translation
-            wxString s = wxT("Directory of language files does not exist:\n\"");
-            s << langPath << wxT('\"');
-            wxMessageDialog dlg(parent, s, wxT("Error"), wxICON_ERROR);
+            wxString s = ("Directory of language files does not exist:\n\"");
+            s << langPath << ('\"');
+            wxMessageDialog dlg(parent, s, ("Error"), wxICON_ERROR);
             dlg.ShowModal();
         }
 
@@ -402,7 +402,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
 wxString mmReadyDisplayString(const wxString& orig)
 {
     wxString toReturn = orig;
-    toReturn.Replace(wxT("&"), wxT("&&"));
+    toReturn.Replace(("&"), ("&&"));
     return toReturn;
 }
 
@@ -410,7 +410,7 @@ wxString mmReadyDisplayString(const wxString& orig)
 wxString mmUnCleanString(const wxString& orig)
 {
     wxString toReturn = orig;
-    toReturn.Replace(wxT("''"), wxT("'"));
+    toReturn.Replace(("''"), ("'"));
     return toReturn;
 }
 
@@ -457,22 +457,22 @@ wxString mmGetNiceWeekDayName(int week_day)
 wxString mmGetNiceDateString(const wxDateTime &dt)
 {
     wxString dts = wxString() << mmGetNiceWeekDayName(dt.GetWeekDay())
-                              << wxT(", ") << mmGetNiceDateSimpleString(dt);
+                              << (", ") << mmGetNiceDateSimpleString(dt);
     return dts;
 }
 
 wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
 {
     wxString dateFmt = mmOptions::instance().dateFormat;
-    dateFmt.Replace(wxT("%Y%m%d"), wxT("%Y %m %d"));
-    dateFmt.Replace(wxT("."), wxT(" "));
-    dateFmt.Replace(wxT(","), wxT(" "));
-    dateFmt.Replace(wxT("/"), wxT(" "));
-    dateFmt.Replace(wxT("-"), wxT(" "));
-    dateFmt.Replace(wxT("%d"), wxString::Format(wxT("%d"), dt.GetDay()));
-    dateFmt.Replace(wxT("%Y"), wxString::Format(wxT("%d"), dt.GetYear()));
-    dateFmt.Replace(wxT("%y"), wxString::Format(wxT("%d"), dt.GetYear()).Mid(2,2));
-    dateFmt.Replace(wxT("%m"), mmGetNiceMonthName(dt.GetMonth()));
+    dateFmt.Replace(("%Y%m%d"), ("%Y %m %d"));
+    dateFmt.Replace(("."), (" "));
+    dateFmt.Replace((","), (" "));
+    dateFmt.Replace(("/"), (" "));
+    dateFmt.Replace(("-"), (" "));
+    dateFmt.Replace(("%d"), wxString::Format(("%d"), dt.GetDay()));
+    dateFmt.Replace(("%Y"), wxString::Format(("%d"), dt.GetYear()));
+    dateFmt.Replace(("%y"), wxString::Format(("%d"), dt.GetYear()).Mid(2,2));
+    dateFmt.Replace(("%m"), mmGetNiceMonthName(dt.GetMonth()));
 
     return dateFmt;
 }
@@ -491,14 +491,14 @@ void mmShowErrorMessageInvalid(wxWindow *parent, const wxString &message)
 
 wxString inQuotes(wxString label, wxString& delimiter)
 {
-    if (label.Contains(delimiter) || label.Contains(wxT("\"")))
+    if (label.Contains(delimiter) || label.Contains(("\"")))
     {
-        label.Replace(wxT("\""),wxT("\"\""), true);
-        label = wxString() << wxT("\"") << label << wxT("\"");
+        label.Replace(("\""),("\"\""), true);
+        label = wxString() << ("\"") << label << ("\"");
     }
 
-    label.Replace(wxT("\t"),wxT("    "), true);
-    label.Replace(wxT("\n"),wxT(" "), true);
+    label.Replace(("\t"),("    "), true);
+    label.Replace(("\n"),(" "), true);
     return label;
 }
 
@@ -511,8 +511,8 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     }
 
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
-    wxString q =  wxT("\"");
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, ("DELIMITER"), mmex::DEFDELIMTER);
+    wxString q =  ("\"");
 
     wxArrayString as = core->getAccountsName();
     wxSingleChoiceDialog scd(0, _("Choose Account to Export from:"),_("QIF Export"), as);
@@ -523,13 +523,13 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     if (acctName.IsEmpty())  return;
 
     wxString chooseExt;
-    chooseExt << _("QIF Files") << wxT(" (*.qif)|*.qif;*.QIF");
+    chooseExt << _("QIF Files") << (" (*.qif)|*.qif;*.QIF");
     wxString fileName = wxFileSelector(_("Choose QIF data file to Export"),
                         wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if (fileName.IsEmpty()) return;
 
-    correctEmptyFileExt(wxT("qif"), fileName);
+    correctEmptyFileExt(("qif"), fileName);
 
     wxFileOutputStream output(fileName);
     wxTextOutputStream text(output);
@@ -553,51 +553,51 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     int numRecords = 0;
 
-    text << wxT("!Account") << endl
-         << wxT("N") << acctName <<  endl
-         << wxT("TChecking") << endl
-         << wxT("^") <<  endl
-         << wxT("!Type:Cash") << endl;
+    text << ("!Account") << endl
+         << ("N") << acctName <<  endl
+         << ("TChecking") << endl
+         << ("^") <<  endl
+         << ("!Type:Cash") << endl;
 
     while (q1.NextRow())
     {
-        wxString transid = q1.GetString(wxT("TRANSID"));
-        wxString dateDBString = q1.GetString(wxT("DATE"));
+        wxString transid = q1.GetString(("TRANSID"));
+        wxString dateDBString = q1.GetString(("DATE"));
         wxDateTime dtdt = mmGetStorageStringAsDate(dateDBString);
         wxString dateString = mmGetDateForDisplay(db_, dtdt);
 
         int sid, cid;
-        wxString payee = mmDBWrapper::getPayee(db_, q1.GetInt(wxT("PAYEEID")), sid, cid);
-        wxString type = q1.GetString(wxT("TRANSACTIONTYPE"));
+        wxString payee = mmDBWrapper::getPayee(db_, q1.GetInt(("PAYEEID")), sid, cid);
+        wxString type = q1.GetString(("TRANSACTIONTYPE"));
 
-        wxString amount = adjustedExportAmount(amtSeparator, q1.GetString(wxT("AMOUNT")));
+        wxString amount = adjustedExportAmount(amtSeparator, q1.GetString(("AMOUNT")));
         //Amount should be formated
         double value = 0.0;
         mmex::formatCurrencyToDouble(amount, value);
         mmex::formatDoubleToCurrencyEdit(value, amount);
 
-        wxString toamount = q1.GetString(wxT("TOAMOUNT"));
+        wxString toamount = q1.GetString(("TOAMOUNT"));
         //Amount should be formated
         value = 0.0;
         mmex::formatCurrencyToDouble(toamount, value);
         mmex::formatDoubleToCurrencyEdit(value, toamount);
 
 
-        wxString transNum = q1.GetString(wxT("TRANSACTIONNUMBER"));
-        wxString categ = core->getCategoryName(q1.GetInt(wxT("CATEGID")));
+        wxString transNum = q1.GetString(("TRANSACTIONNUMBER"));
+        wxString categ = core->getCategoryName(q1.GetInt(("CATEGID")));
         wxString subcateg = mmDBWrapper::getSubCategoryName(db_,
-                            q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
-        wxString notes = mmUnCleanString(q1.GetString(wxT("NOTES")));
+                            q1.GetInt(("CATEGID")), q1.GetInt(("SUBCATEGID")));
+        wxString notes = mmUnCleanString(q1.GetString(("NOTES")));
 
         //
-        notes.Replace(wxT("\n"), wxT(" "));
+        notes.Replace(("\n"), (" "));
         wxString subcategStr = wxT ("") ;
 
-        if (type == wxT("Transfer"))
+        if (type == ("Transfer"))
         {
             subcategStr = type;
-            int tAccountID = q1.GetInt(wxT("TOACCOUNTID"));
-            int fAccountID = q1.GetInt(wxT("ACCOUNTID"));
+            int tAccountID = q1.GetInt(("TOACCOUNTID"));
+            int fAccountID = q1.GetInt(("ACCOUNTID"));
 
             wxString fromAccount = core->getAccountName(fAccountID);
             wxString toAccount = core->getAccountName(tAccountID);
@@ -612,19 +612,19 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
         }
         else
         {
-            subcategStr << categ << (subcateg != wxT("") ? wxT(":") : wxT("")) << subcateg;
+            subcategStr << categ << (subcateg != ("") ? (":") : ("")) << subcateg;
         }
 
-        text << wxT('D') << dateString << endl
-             << wxT('T') << (type == wxT("Withdrawal") ? wxT("-") : wxT("")) << amount << endl //FIXME: is T needed when Transfer?
-             << wxT('P') << payee << endl
-             << wxT('N') << transNum << endl
+        text << ('D') << dateString << endl
+             << ('T') << (type == ("Withdrawal") ? ("-") : ("")) << amount << endl //FIXME: is T needed when Transfer?
+             << ('P') << payee << endl
+             << ('N') << transNum << endl
              //Category or Transfer
-             << wxT('L') << subcategStr << endl
-             << wxT('M') << notes << endl;
-        if (type == wxT("Transfer"))
+             << ('L') << subcategStr << endl
+             << ('M') << notes << endl;
+        if (type == ("Transfer"))
         {
-            text << wxT('$') << amount << endl;
+            text << ('$') << amount << endl;
         }
 
         //if categ id is empty the transaction has been splited
@@ -642,30 +642,30 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
 
             while (q2.NextRow())
             {
-                wxString splitamount = adjustedExportAmount(amtSeparator,q2.GetString(wxT("SPLITTRANSAMOUNT")));
+                wxString splitamount = adjustedExportAmount(amtSeparator,q2.GetString(("SPLITTRANSAMOUNT")));
                 //Amount should be formated
                 value = 0.0;
                 mmex::formatCurrencyToDouble(splitamount, value);
                 mmex::formatDoubleToCurrencyEdit(value, splitamount);
-                wxString splitcateg = core->getCategoryName(q2.GetInt(wxT("CATEGID")));
+                wxString splitcateg = core->getCategoryName(q2.GetInt(("CATEGID")));
                 wxString splitsubcateg = mmDBWrapper::getSubCategoryName(db_,
-                                            q2.GetInt(wxT("CATEGID")), q2.GetInt(wxT("SUBCATEGID")));
-                text << wxT('S') << splitcateg << (splitsubcateg != wxT("") ? wxT(":") : wxT("")) << splitsubcateg << endl
-                << wxT('$') << (type == wxT("Withdrawal") ? wxT("-") : wxT("")) << splitamount << endl
+                                            q2.GetInt(("CATEGID")), q2.GetInt(("SUBCATEGID")));
+                text << ('S') << splitcateg << (splitsubcateg != ("") ? (":") : ("")) << splitsubcateg << endl
+                << ('$') << (type == ("Withdrawal") ? ("-") : ("")) << splitamount << endl
                 // E Split memo — any text to go with this split item. I saggest Category:Subcategory = Amount for earch line
-                << wxT('E') << splitcateg << (splitsubcateg != wxT("") ? wxT(":") : wxT("")) << splitsubcateg << (type == wxT("Withdrawal") ? wxT(" -") : wxT(" ")) << splitamount << endl;
+                << ('E') << splitcateg << (splitsubcateg != ("") ? (":") : ("")) << splitsubcateg << (type == ("Withdrawal") ? (" -") : (" ")) << splitamount << endl;
             }
 
             q2.Finalize();
         }
 
-        text << wxT('^') << endl;
+        text << ('^') << endl;
         numRecords++;
     }
 
     q1.Finalize();
 
-    wxString msg = wxString::Format(wxT("%d transactions exported"), numRecords);
+    wxString msg = wxString::Format(("%d transactions exported"), numRecords);
     mmShowErrorMessage(0, msg, _("Export to QIF"));
 }
 
@@ -676,28 +676,28 @@ wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
 
 wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString& dtstr, const wxString& date_format)
 {
-    //wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    //wxString date_format = mmDBWrapper::getInfoSettingValue(db, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
     wxString date_mask = date_format;
     if (date_format.IsEmpty())
         wxString date_mask = mmOptions::instance().dateFormat;
     wxString date = dtstr;
 
     //For correct date parsing, adjust separator format to: %x/%x/%x
-    date_mask.Replace(wxT("`"), wxT("/"));
-    date_mask.Replace(wxT("'"), wxT("/"));
-    date_mask.Replace(wxT("-"), wxT("/"));
-    date_mask.Replace(wxT("."), wxT("/"));
-    date_mask.Replace(wxT(","), wxT("/"));
-    date.Replace(wxT("`"), wxT("/"));
-    date.Replace(wxT("'"), wxT("/"));
-    date.Replace(wxT("-"), wxT("/"));
-    date.Replace(wxT("."), wxT("/"));
-    date.Replace(wxT(","), wxT("/"));
+    date_mask.Replace(("`"), ("/"));
+    date_mask.Replace(("'"), ("/"));
+    date_mask.Replace(("-"), ("/"));
+    date_mask.Replace(("."), ("/"));
+    date_mask.Replace((","), ("/"));
+    date.Replace(("`"), ("/"));
+    date.Replace(("'"), ("/"));
+    date.Replace(("-"), ("/"));
+    date.Replace(("."), ("/"));
+    date.Replace((","), ("/"));
 
     if (date.Len()<9)
-        date_mask.Replace(wxT("%Y"), wxT("%y"));
+        date_mask.Replace(("%Y"), ("%y"));
     else
-        date_mask.Replace(wxT("%y"), wxT("%Y"));
+        date_mask.Replace(("%y"), ("%Y"));
 
     wxDateTime dt;
     dt.ParseFormat(date, date_mask, wxDateTime::Now());
@@ -718,7 +718,7 @@ wxDateTime mmGetStorageStringAsDate(const wxString& str)
 
 wxColour mmGetColourFromString(const wxString& str)
 {
-    wxStringTokenizer tkz(str, wxT(","), wxTOKEN_RET_EMPTY_ALL);
+    wxStringTokenizer tkz(str, (","), wxTOKEN_RET_EMPTY_ALL);
     unsigned char red = 0xFF;
     unsigned char blue = 0xFF;
     unsigned char green = 0xFF;
@@ -747,25 +747,25 @@ wxColour mmGetColourFromString(const wxString& str)
 
 wxString mmGetStringFromColour(wxColour color)
 {
-    return wxString::Format(wxT("%d,%d,%d"), color.Red(), color.Green(), color.Blue());
+    return wxString::Format(("%d,%d,%d"), color.Red(), color.Green(), color.Blue());
 }
 
 void mmLoadColorsFromDatabase(wxSQLite3Database* db_)
 {
     mmColors::listAlternativeColor0 = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                      wxT("LISTALT0"), wxT("225,237,251")));
+                                      ("LISTALT0"), ("225,237,251")));
     mmColors::listAlternativeColor1 = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                      wxT("LISTALT1"), wxT("255,255,255")));
+                                      ("LISTALT1"), ("255,255,255")));
     mmColors::listBackColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                              wxT("LISTBACK"), wxT("255,255,255")));
+                              ("LISTBACK"), ("255,255,255")));
     mmColors::navTreeBkColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                               wxT("NAVTREE"), wxT("255,255,255")));
+                               ("NAVTREE"), ("255,255,255")));
     mmColors::listBorderColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                wxT("LISTBORDER"), wxT("0,0,0")));
+                                ("LISTBORDER"), ("0,0,0")));
     mmColors::listDetailsPanelColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                      wxT("LISTDETAILSPANEL"), wxT("244,247,251")));
+                                      ("LISTDETAILSPANEL"), ("244,247,251")));
     mmColors::listFutureDateColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                    wxT("LISTFUTUREDATES"), wxT("116,134,168")));
+                                    ("LISTFUTUREDATES"), ("116,134,168")));
 }
 
 
@@ -788,14 +788,14 @@ mmex::CurrencyFormatter::CurrencyFormatter()
 
 void mmex::CurrencyFormatter::loadDefaultSettings()
 {
-    m_pfx_symbol = wxT("$");
+    m_pfx_symbol = ("$");
     m_sfx_symbol.clear();
 
     m_decimal_point = g_def_decimal_point;
-    m_group_separator = wxT(',');
+    m_group_separator = (',');
 
-    m_unit_name = wxT("dollar");
-    m_cent_name = wxT("cent");
+    m_unit_name = ("dollar");
+    m_cent_name = ("cent");
 
     m_scale = g_def_scale;
 }
@@ -870,7 +870,7 @@ bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
 
     // adjust decimal point char to a decimal point.
     wxString gdp = fmt.getDecimalPoint();
-    if (s.Find(gdp)) s.Replace(gdp, wxT("."));
+    if (s.Find(gdp)) s.Replace(gdp, ("."));
 
     return !s.empty() && s.ToDouble(&val);
 }
@@ -879,11 +879,11 @@ bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 {
     // if number does not have a decimal point, add one to user requirements
-    int dp = strValue.Find(wxT("."));
+    int dp = strValue.Find(("."));
     if (dp < 0)
-        strValue << amtSeparator << wxT("0");
+        strValue << amtSeparator << ("0");
     else
-        strValue.Replace(wxT("."),amtSeparator);
+        strValue.Replace(("."),amtSeparator);
 
     return strValue;
 }
@@ -891,13 +891,13 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 int getTransformedTrxStatus(const wxString& in)
 {
     int out;
-    if (in == wxT("R"))
+    if (in == ("R"))
         out = (DEF_STATUS_RECONCILED);
-    else if (in == wxT("V"))
+    else if (in == ("V"))
         out = (DEF_STATUS_VOID);
-    else if (in == wxT("F"))
+    else if (in == ("F"))
         out = (DEF_STATUS_FOLLOWUP);
-    else if (in == wxT("D"))
+    else if (in == ("D"))
         out = (DEF_STATUS_DUPLICATE);
     else
         out = (DEF_STATUS_NONE);
@@ -909,15 +909,15 @@ wxString getTransformedTrxStatus(int in)
 {
     wxString statusStr = wxEmptyString;
     if (in == DEF_STATUS_RECONCILED)
-        statusStr = wxT("R");
+        statusStr = ("R");
     else if (in == DEF_STATUS_VOID)
-        statusStr = wxT("V");
+        statusStr = ("V");
     else if (in == DEF_STATUS_FOLLOWUP)
-        statusStr = wxT("F");
+        statusStr = ("F");
     else if (in == DEF_STATUS_DUPLICATE)
-        statusStr = wxT("D");
+        statusStr = ("D");
     else
-        statusStr = wxT("");
+        statusStr = ("");
 
     return statusStr;
 }
@@ -1021,36 +1021,36 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
     int i=0;
     //Single quotes will be used instead double quotes
     //Replace all single quotes first
-    line.Replace(wxT("'"), wxT("SingleQuotesReplacer12345"));
+    line.Replace(("'"), ("SingleQuotesReplacer12345"));
     //Replace double quotes that used twice to replacer
-    line.Replace(wxT("\"\"\"")+delimit+wxT("\"\"\""), wxT("DoubleQuotesReplacer12345\"")+delimit+wxT("\"DoubleQuotesReplacer12345"));
-    line.Replace(wxT("\"\"\"")+delimit, wxT("DoubleQuotesReplacer12345\"")+delimit);
-    line.Replace(delimit+wxT("\"\"\""), delimit+wxT("\"DoubleQuotesReplacer12345"));
-    line.Replace(wxT("\"\"")+delimit, wxT("DoubleQuotesReplacer12345")+delimit);
-    line.Replace(delimit+wxT("\"\""), delimit+wxT("DoubleQuotesReplacer12345"));
+    line.Replace(("\"\"\"")+delimit+("\"\"\""), ("DoubleQuotesReplacer12345\"")+delimit+("\"DoubleQuotesReplacer12345"));
+    line.Replace(("\"\"\"")+delimit, ("DoubleQuotesReplacer12345\"")+delimit);
+    line.Replace(delimit+("\"\"\""), delimit+("\"DoubleQuotesReplacer12345"));
+    line.Replace(("\"\"")+delimit, ("DoubleQuotesReplacer12345")+delimit);
+    line.Replace(delimit+("\"\""), delimit+("DoubleQuotesReplacer12345"));
 
     //replace delimiter to TAB and double quotes to single quotes
-    line.Replace(wxT("\"")+delimit+wxT("\""), wxT("'\t'"));
-    line.Replace(wxT("\"")+delimit, wxT("'\t"));
-    line.Replace(delimit+wxT("\""), wxT("\t'"));
-    line.Replace(wxT("\"\""), wxT("DoubleQuotesReplacer12345"));
-    line.Replace(wxT("\""), wxT("'"));
+    line.Replace(("\"")+delimit+("\""), ("'\t'"));
+    line.Replace(("\"")+delimit, ("'\t"));
+    line.Replace(delimit+("\""), ("\t'"));
+    line.Replace(("\"\""), ("DoubleQuotesReplacer12345"));
+    line.Replace(("\""), ("'"));
 
     wxString temp_line = wxEmptyString;
     wxString token;
-    wxStringTokenizer tkz1(line, wxT("'"));
+    wxStringTokenizer tkz1(line, ("'"));
 
     while (tkz1.HasMoreTokens())
     {
         token = tkz1.GetNextToken();
         if (0 == fmod((double)i,2))
-            token.Replace(delimit,wxT("\t"));
+            token.Replace(delimit,("\t"));
         temp_line << token;
         i++;
     };
     //Replace back all replacers to the original value
-    temp_line.Replace(wxT("DoubleQuotesReplacer12345"), wxT("\""));
-    temp_line.Replace(wxT("SingleQuotesReplacer12345"), wxT("'"));
+    temp_line.Replace(("DoubleQuotesReplacer12345"), ("\""));
+    temp_line.Replace(("SingleQuotesReplacer12345"), ("'"));
     line = temp_line;
 
     return line;
@@ -1088,26 +1088,26 @@ wxArrayString DateFormats() {
 
     wxArrayString DateFormat;
 
-    DateFormat.Add(wxT("%d/%m/%y"));
-    DateFormat.Add(wxT("%d/%m/%Y"));
-    DateFormat.Add(wxT("%d-%m-%y"));
-    DateFormat.Add(wxT("%d-%m-%Y"));
-    DateFormat.Add(wxT("%d.%m.%y"));
-    DateFormat.Add(wxT("%d.%m.%Y"));
-    DateFormat.Add(wxT("%d,%m,%y"));
-    DateFormat.Add(wxT("%d/%m'%Y"));
-    DateFormat.Add(wxT("%d/%m %Y"));
-    DateFormat.Add(wxT("%m/%d/%y"));
-    DateFormat.Add(wxT("%m/%d/%Y"));
-    DateFormat.Add(wxT("%m-%d-%y"));
-    DateFormat.Add(wxT("%m-%d-%Y"));
-    DateFormat.Add(wxT("%m/%d'%Y"));
-    DateFormat.Add(wxT("%y/%m/%d"));
-    DateFormat.Add(wxT("%y-%m-%d"));
-    DateFormat.Add(wxT("%Y/%m/%d"));
-    DateFormat.Add(wxT("%Y-%m-%d"));
-    DateFormat.Add(wxT("%Y.%m.%d"));
-    DateFormat.Add(wxT("%Y%m%d"));
+    DateFormat.Add(("%d/%m/%y"));
+    DateFormat.Add(("%d/%m/%Y"));
+    DateFormat.Add(("%d-%m-%y"));
+    DateFormat.Add(("%d-%m-%Y"));
+    DateFormat.Add(("%d.%m.%y"));
+    DateFormat.Add(("%d.%m.%Y"));
+    DateFormat.Add(("%d,%m,%y"));
+    DateFormat.Add(("%d/%m'%Y"));
+    DateFormat.Add(("%d/%m %Y"));
+    DateFormat.Add(("%m/%d/%y"));
+    DateFormat.Add(("%m/%d/%Y"));
+    DateFormat.Add(("%m-%d-%y"));
+    DateFormat.Add(("%m-%d-%Y"));
+    DateFormat.Add(("%m/%d'%Y"));
+    DateFormat.Add(("%y/%m/%d"));
+    DateFormat.Add(("%y-%m-%d"));
+    DateFormat.Add(("%Y/%m/%d"));
+    DateFormat.Add(("%Y-%m-%d"));
+    DateFormat.Add(("%Y.%m.%d"));
+    DateFormat.Add(("%Y%m%d"));
 
     return DateFormat;
 }
@@ -1116,26 +1116,26 @@ wxArrayString itemChoiceStrings() {
 
     wxArrayString itemChoice7Strings;
 
-    itemChoice7Strings.Add(wxT("DD/MM/YY"));
-    itemChoice7Strings.Add(wxT("DD/MM/YYYY"));
-    itemChoice7Strings.Add(wxT("DD-MM-YY"));
-    itemChoice7Strings.Add(wxT("DD-MM-YYYY"));
-    itemChoice7Strings.Add(wxT("DD.MM.YY"));
-    itemChoice7Strings.Add(wxT("DD.MM.YYYY"));
-    itemChoice7Strings.Add(wxT("DD,MM,YY"));
-    itemChoice7Strings.Add(wxT("DD/MM'YYYY"));
-    itemChoice7Strings.Add(wxT("DD/MM YYYY"));
-    itemChoice7Strings.Add(wxT("MM/DD/YY"));
-    itemChoice7Strings.Add(wxT("MM/DD/YYYY"));
-    itemChoice7Strings.Add(wxT("MM-DD-YY"));
-    itemChoice7Strings.Add(wxT("MM-DD-YYYY"));
-    itemChoice7Strings.Add(wxT("MM/DD'YYYY"));
-    itemChoice7Strings.Add(wxT("YY/MM/DD"));
-    itemChoice7Strings.Add(wxT("YY-MM-DD"));
-    itemChoice7Strings.Add(wxT("YYYY/MM/DD"));
-    itemChoice7Strings.Add(wxT("YYYY-MM-DD"));
-    itemChoice7Strings.Add(wxT("YYYY.MM.DD"));
-    itemChoice7Strings.Add(wxT("YYYYMMDD"));
+    itemChoice7Strings.Add(("DD/MM/YY"));
+    itemChoice7Strings.Add(("DD/MM/YYYY"));
+    itemChoice7Strings.Add(("DD-MM-YY"));
+    itemChoice7Strings.Add(("DD-MM-YYYY"));
+    itemChoice7Strings.Add(("DD.MM.YY"));
+    itemChoice7Strings.Add(("DD.MM.YYYY"));
+    itemChoice7Strings.Add(("DD,MM,YY"));
+    itemChoice7Strings.Add(("DD/MM'YYYY"));
+    itemChoice7Strings.Add(("DD/MM YYYY"));
+    itemChoice7Strings.Add(("MM/DD/YY"));
+    itemChoice7Strings.Add(("MM/DD/YYYY"));
+    itemChoice7Strings.Add(("MM-DD-YY"));
+    itemChoice7Strings.Add(("MM-DD-YYYY"));
+    itemChoice7Strings.Add(("MM/DD'YYYY"));
+    itemChoice7Strings.Add(("YY/MM/DD"));
+    itemChoice7Strings.Add(("YY-MM-DD"));
+    itemChoice7Strings.Add(("YYYY/MM/DD"));
+    itemChoice7Strings.Add(("YYYY-MM-DD"));
+    itemChoice7Strings.Add(("YYYY.MM.DD"));
+    itemChoice7Strings.Add(("YYYYMMDD"));
 
     return itemChoice7Strings;
 }

@@ -37,8 +37,8 @@ wxString mmReportIncomeExpenses::getHTMLText()
     double income = 0.0;
     core_->getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_);
 
-	hb.startTable(wxT("75%"));
-	hb.addTableHeaderRow(wxT(""), 2);
+	hb.startTable(("75%"));
+	hb.addTableHeaderRow((""), 2);
 	hb.startTableRow();
 	hb.startTableCell();
 
@@ -50,7 +50,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 	hb.endTableCell();
 	hb.startTableCell();
 
-	hb.startTable(wxT("95%"));
+	hb.startTable(("95%"));
 	hb.startTableRow();
 	hb.addTableHeaderCell(_("Type"));
 	hb.addTableHeaderCell(_("Amount"), true);
@@ -71,7 +71,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
 	hb.startTableRow();
 	hb.addTableCell(_("Expenses:"), false, true);
-	hb.addTableCell(expString, true, true, true, (expenses > income ? wxT("RED") : wxT("")));
+	hb.addTableCell(expString, true, true, true, (expenses > income ? ("RED") : ("")));
     hb.endTableRow();
 
     hb.addRowSeparator(2);

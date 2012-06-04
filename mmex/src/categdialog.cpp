@@ -147,7 +147,7 @@ void mmCategDialog::CreateControls()
     itemBoxSizer3->Add(treeCtrl_, 1, wxGROW|wxALL, 1);
 
     wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( this,
-        ID_DIALOG_CATEG_TEXTCTRL_CATNAME, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+        ID_DIALOG_CATEG_TEXTCTRL_CATNAME, (""), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemTextCtrl6, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemTextCtrl6->SetToolTip(_("Enter the name of the category to add or edit here"));
 
@@ -190,10 +190,10 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
     wxTextCtrl* textCtrl;
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_CATEG_TEXTCTRL_CATNAME);
     wxString text = textCtrl->GetValue();
-    if (text == wxT(""))
+    if (text == (""))
     {
         wxString errMsg = _("Category cannot be empty");
-        errMsg << wxT("          ");  // added to adjust dialog size
+        errMsg << ("          ");  // added to adjust dialog size
         wxMessageBox(errMsg, _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
         return;
     }
@@ -203,7 +203,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
         if (core_->categoryExists(text))
         {
             wxString errMsg = _("Category with same name exists");
-            errMsg << wxT("\n\n") << _("Tip: If category added now, check bottom of list.\nCategory will be in sorted order next time dialog appears");
+            errMsg << ("\n\n") << _("Tip: If category added now, check bottom of list.\nCategory will be in sorted order next time dialog appears");
             wxMessageBox(errMsg, _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
             return;
         }
@@ -260,13 +260,13 @@ void mmCategDialog::showCategDialogDeleteError(int error_code, bool category)
     wxASSERT(false);
     }
 
-    error_message << wxT("\n\n");
+    error_message << ("\n\n");
     if (category)
         error_message << _("Tip: Change all transactions using this category  to\nanother category using the relocate command:");
     else
         error_message << _("Tip: Change all transactions using this subcategory  to\nanother subcategory using the relocate command:");
 
-    error_message << wxT("\n\n") << _("Tools -> Relocation of -> Categories");
+    error_message << ("\n\n") << _("Tools -> Relocation of -> Categories");
 
     wxMessageBox(error_message, wxString() << _("Organise Categories: Delete Error"), wxOK|wxICON_WARNING);
 }
@@ -364,7 +364,7 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
     wxButton* deleteButton = (wxButton*)FindWindow(wxID_REMOVE);
     if (selectedItemId_ == root_ || !selectedItemId_)
     {
-        textCtrl->SetValue(wxT(""));
+        textCtrl->SetValue((""));
         selectButton->Disable();
         deleteButton->Disable();
         editButton->Disable();
@@ -408,7 +408,7 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
     if (!core_->updateCategory(categID, subcategID, text))
     {
         wxString errMsg = _("Update Failed");
-        errMsg << wxT("          ");  // added to adjust dialog size
+        errMsg << ("          ");  // added to adjust dialog size
         wxMessageBox(errMsg, _("Organise Categories"),wxOK|wxICON_ERROR);
         return;
     }

@@ -343,7 +343,7 @@ bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString&
 wxString mmCategoryList::GetCategoryString(int categID) const
 {
     wxString catName = this->getCategoryName(categID);
-    catName.Replace (wxT("&"), wxT("&&"));
+    catName.Replace (("&"), ("&&"));
 
     return catName;
 }
@@ -354,7 +354,7 @@ wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID) const
 //    wxString subcatName = subCategory_table_.GetName(categID, subCategID);
 
     wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), categID, subCategID);
-    subcatName.Replace (wxT("&"), wxT("&&"));
+    subcatName.Replace (("&"), ("&&"));
 
     return subcatName;
 }
@@ -364,7 +364,7 @@ wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID) cons
     wxString category    = GetCategoryString(categID);
     wxString subCategory = GetSubCategoryString(categID, subCategID);
     if (!subCategory.IsEmpty())
-        category<< wxT(":") << subCategory;
+        category<< (":") << subCategory;
     return category;
 }
 
@@ -413,8 +413,8 @@ int mmCategoryList::deleteCategoryWithConstraints(int categID)
 
     } catch(const wxSQLite3Exception& e)
     {
-        wxLogDebug(wxT("Database::deleteCategoryWithConstraints: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Delete Category with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        wxLogDebug(("Database::deleteCategoryWithConstraints: Exception"), e.GetMessage().c_str());
+        wxLogError(("Delete Category with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
         return ERR_CAT_USED5;
     }
 }
@@ -476,8 +476,8 @@ int mmCategoryList::deleteSubCategoryWithConstraints(int categID, int subcategID
 
     } catch(const wxSQLite3Exception& e)
     {
-        wxLogDebug(wxT("Database::deleteSubCategoryWithConstraints: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Delete SubCategory with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        wxLogDebug(("Database::deleteSubCategoryWithConstraints: Exception"), e.GetMessage().c_str());
+        wxLogError(("Delete SubCategory with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
         return ERR_CAT_USED5;
     }
 }

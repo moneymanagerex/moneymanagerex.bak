@@ -89,7 +89,7 @@ bool mmOptionsDialog::Create( wxWindow* parent, wxWindowID id,
     listFutureDateColor_   = mmColors::listFutureDateColor;
 
     currencyId_ = mmDBWrapper::getBaseCurrencySettings(db_);
-    dateFormat_ = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    dateFormat_ = mmDBWrapper::getInfoSettingValue(db_, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
 
     CreateControls();
     Centre();
@@ -171,7 +171,7 @@ void mmOptionsDialog::CreateControls()
         _("User Name"), wxDefaultPosition, wxDefaultSize, 0);
     headerStaticBoxSizer->Add(userNameText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxString userName = mmDBWrapper::getInfoSettingValue(db_, wxT("USERNAME"), wxT(""));
+    wxString userName = mmDBWrapper::getInfoSettingValue(db_, ("USERNAME"), (""));
     wxTextCtrl* userNameTextCtr = new wxTextCtrl(generalPanel, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME,
         userName, wxDefaultPosition, wxDefaultSize, 0);
     userNameTextCtr->SetToolTip(_("The User Name is used as a title for the database."));
@@ -222,7 +222,7 @@ void mmOptionsDialog::CreateControls()
 
     wxArrayString itemChoice7Strings = itemChoiceStrings();
     wxArrayString DateFormat = DateFormats();
-    wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
     size_t i=0;
     for(i; i<DateFormat.Count(); i++)
     {
@@ -239,11 +239,11 @@ void mmOptionsDialog::CreateControls()
                                wxCommandEventHandler(mmOptionsDialog::OnDateFormatChanged), NULL, this);
 
     wxStaticText* restartText = new wxStaticText( generalPanel, ID_DIALOG_OPTIONS_RESTART_REQUIRED,
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0);
+        (""), wxDefaultPosition, wxDefaultSize, 0);
     wxStaticText* sampleDateExampleText = new wxStaticText( generalPanel, wxID_ANY,
         _("New date format sample:"), wxDefaultPosition, wxDefaultSize, 0);
     wxStaticText* sampleDateText = new wxStaticText(generalPanel, ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE,
-        wxT("redefined elsewhere"), wxDefaultPosition, wxDefaultSize, 0);
+        ("redefined elsewhere"), wxDefaultPosition, wxDefaultSize, 0);
     dateFormatSettingStaticBoxSizerGrid->Add(restartText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -262,7 +262,7 @@ void mmOptionsDialog::CreateControls()
     financialYearStaticBoxSizerGrid->Add(itemStaticTextFYSDay, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString financialPeriodStartDay = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
+    wxString financialPeriodStartDay = mmDBWrapper::getInfoSettingValue(db_, ("FINANCIAL_YEAR_START_DAY"), ("1"));
     int day = wxAtoi(financialPeriodStartDay);
     wxSpinCtrl *textFPSDay = new wxSpinCtrl(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY,
         wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 31, day);
@@ -282,7 +282,7 @@ void mmOptionsDialog::CreateControls()
     monthSelection_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH,
         wxDefaultPosition, wxSize(100, -1), financialMonthsSelection);
     financialYearStaticBoxSizerGrid->Add(monthSelection_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    wxString financialPeriodStartMonth = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
+    wxString financialPeriodStartMonth = mmDBWrapper::getInfoSettingValue(db_, ("FINANCIAL_YEAR_START_MONTH"), ("7"));
 
     int monthItem = wxAtoi(financialPeriodStartMonth);
     monthSelection_->SetSelection(monthItem - 1);
@@ -296,13 +296,13 @@ void mmOptionsDialog::CreateControls()
 
     wxCheckBox* backupCheckBox = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP,
         _("Create a new backup when MMEX Start"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    backupCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("BACKUPDB"),false));
+    backupCheckBox->SetValue(GetIniDatabaseCheckboxValue(("BACKUPDB"),false));
     backupCheckBox->SetToolTip(_("When MMEX Starts,\ncreates the backup database: dbFile_start_YYYY-MM-DD.ext."));
     backupStaticBoxSizer->Add(backupCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxCheckBox* backupUpdateCheckBox = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE,
         _("Update database changes to database backup on exit."), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    backupUpdateCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("BACKUPDB_UPDATE"),false));
+    backupUpdateCheckBox->SetValue(GetIniDatabaseCheckboxValue(("BACKUPDB_UPDATE"),false));
     backupUpdateCheckBox->SetToolTip(_("When MMEX shuts down and changes made to database,\ncreates or updates the backup database: dbFile_update_YYYY-MM-DD.ext."));
     backupStaticBoxSizer->Add(backupUpdateCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -330,7 +330,7 @@ void mmOptionsDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, itemChoiceViewAccountTranslatedStrings);
     accountStaticBoxSizer->Add(choiceVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), VIEW_ACCOUNTS_ALL_STR);
+    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, ("VIEWACCOUNTS"), VIEW_ACCOUNTS_ALL_STR);
     row_id_ = 0;
     wxArrayString itemChoiceViewAccountStrings = viewAccountStrings(false, vAccts, row_id_);
     choiceVisible_->SetSelection(row_id_);
@@ -365,7 +365,7 @@ void mmOptionsDialog::CreateControls()
         itemChoiceViewTransStrings);
     dateFormatSettingStaticBoxSizerGrid2->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
+    wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, ("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     wxArrayString itemChoiceViewTransactionsString = viewTransactionsStrings(false, vTrans, row_id_);
     choiceTransVisible_->SetSelection(row_id_);
     choiceTransVisible_->SetToolTip(_("Specify which transactions are visible by default"));
@@ -382,18 +382,18 @@ void mmOptionsDialog::CreateControls()
 
     wxArrayString itemChoiceHTMLFontSize;
 
-    itemChoiceHTMLFontSize.Add(wxT("XSmall"));
-    itemChoiceHTMLFontSize.Add(wxT("Small"));
-    itemChoiceHTMLFontSize.Add(wxT("Normal"));
-    itemChoiceHTMLFontSize.Add(wxT("Large"));
-    itemChoiceHTMLFontSize.Add(wxT("XLarge"));
-    itemChoiceHTMLFontSize.Add(wxT("XXLarge"));
-    itemChoiceHTMLFontSize.Add(wxT("Huge"));
+    itemChoiceHTMLFontSize.Add(("XSmall"));
+    itemChoiceHTMLFontSize.Add(("Small"));
+    itemChoiceHTMLFontSize.Add(("Normal"));
+    itemChoiceHTMLFontSize.Add(("Large"));
+    itemChoiceHTMLFontSize.Add(("XLarge"));
+    itemChoiceHTMLFontSize.Add(("XXLarge"));
+    itemChoiceHTMLFontSize.Add(("Huge"));
 
     choiceFontSize_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_FONT_SIZE,
         wxDefaultPosition, wxSize(85, -1), itemChoiceHTMLFontSize);
 
-    int vFontSize = -1 + wxAtoi(mmDBWrapper::getINISettingValue(inidb_, wxT("HTMLFONTSIZE"), wxT("3")));
+    int vFontSize = -1 + wxAtoi(mmDBWrapper::getINISettingValue(inidb_, ("HTMLFONTSIZE"), ("3")));
     choiceFontSize_->SetSelection(vFontSize);
 
     choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
@@ -408,14 +408,14 @@ void mmOptionsDialog::CreateControls()
     // Expand Bank Tree
     wxCheckBox* expandBankCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_BANK_TREE,
         _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    expandBankCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_TREE"),true));
+    expandBankCheckBox->SetValue(GetIniDatabaseCheckboxValue(("EXPAND_BANK_TREE"),true));
     expandBankCheckBox->SetToolTip(_("Expand Bank Accounts in Trew View when tree is refreshed"));
     navTreeOptionsStaticBoxSizer->Add(expandBankCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Expand Term Tree
     wxCheckBox* expandTermCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_TERM_TREE,
         _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    expandTermCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_TREE"),false));
+    expandTermCheckBox->SetValue(GetIniDatabaseCheckboxValue(("EXPAND_TERM_TREE"),false));
     expandTermCheckBox->SetToolTip(_("Expand Term Accounts in Trew View when tree is refreshed"));
     navTreeOptionsStaticBoxSizer->Add(expandTermCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -428,21 +428,21 @@ void mmOptionsDialog::CreateControls()
     // Expand Bank Home
     wxCheckBox* expandBankHomeCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_BANK_HOME,
         _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    expandBankHomeCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_HOME"),true));
+    expandBankHomeCheckBox->SetValue(GetIniDatabaseCheckboxValue(("EXPAND_BANK_HOME"),true));
     expandBankHomeCheckBox->SetToolTip(_("Expand Bank Accounts on home page when page is refreshed"));
     homePageStaticBoxSizer->Add(expandBankHomeCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Expand Term Home
     wxCheckBox* itemCheckBoxExpandTermHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_TERM_HOME,
         _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    itemCheckBoxExpandTermHome->SetValue(GetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_HOME"),false));
+    itemCheckBoxExpandTermHome->SetValue(GetIniDatabaseCheckboxValue(("EXPAND_TERM_HOME"),false));
     itemCheckBoxExpandTermHome->SetToolTip(_("Expand Term Accounts on home page when page is refreshed"));
     homePageStaticBoxSizer->Add(itemCheckBoxExpandTermHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Expand Stock Home
     wxCheckBox* itemCheckBoxExpandStockHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME,
         _("Stock Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    itemCheckBoxExpandStockHome->SetValue(GetIniDatabaseCheckboxValue(wxT("ENABLESTOCKS"),true));
+    itemCheckBoxExpandStockHome->SetValue(GetIniDatabaseCheckboxValue(("ENABLESTOCKS"),true));
     itemCheckBoxExpandStockHome->SetToolTip(_("Expand Stock Accounts on home page when page is refreshed"));
     homePageStaticBoxSizer->Add(itemCheckBoxExpandStockHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -626,7 +626,7 @@ void mmOptionsDialog::CreateControls()
     itemStaticTextURL->SetFont(staticBoxFontSetting);
     itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
+    wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, ("STOCKURL"), mmex::DEFSTOCKURL);
     wxTextCtrl* itemTextCtrURL = new wxTextCtrl(othersPanel, ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizerStockURL->Add(itemTextCtrURL, 1, wxGROW|wxALIGN_LEFT|wxALL, 5);
     itemTextCtrURL->SetToolTip(_("Clear the field to Reset the value to system default."));
@@ -666,12 +666,12 @@ void mmOptionsDialog::CreateControls()
     importExportStaticBox2->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* importExportStaticBoxSizer2 = new wxStaticBoxSizer(importExportStaticBox2, wxVERTICAL);
 
-    delimit_ = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
+    delimit_ = mmDBWrapper::getInfoSettingValue(db_, ("DELIMITER"), mmex::DEFDELIMTER);
 
     // CSV Delimiter
     wxString choices[] = { _("Comma"), _("Semicolon"), _("TAB"), _("User Defined")};
     int num = sizeof(choices) / sizeof(wxString);
-    m_radio_box_ = new wxRadioBox(importExportPanel, ID_RADIO_BOX, wxT(""),
+    m_radio_box_ = new wxRadioBox(importExportPanel, ID_RADIO_BOX, (""),
         wxDefaultPosition, wxDefaultSize, num, choices, 4, wxRA_SPECIFY_COLS);
 
     textDelimiter_ = new wxTextCtrl(importExportPanel,
@@ -680,11 +680,11 @@ void mmOptionsDialog::CreateControls()
     textDelimiter_->SetMaxLength(1);
     textDelimiter_->Disable();
 
-    if (delimit_ == wxT(","))
+    if (delimit_ == (","))
         m_radio_box_->SetSelection(0);
-    else if (delimit_ == wxT(";"))
+    else if (delimit_ == (";"))
         m_radio_box_->SetSelection(1);
-    else if (delimit_ == wxT("\t"))
+    else if (delimit_ == ("\t"))
         m_radio_box_->SetSelection(2);
     else {
         m_radio_box_->SetSelection(3);
@@ -842,8 +842,8 @@ void mmOptionsDialog::OnColorChanged(wxCommandEvent& event)
             wxASSERT(false);
         }
         bn->SetBackgroundColour(col);
-        label = bn->GetLabel()+wxT("*");
-        label.Replace(wxT("****"), wxT("***"));
+        label = bn->GetLabel()+("*");
+        label.Replace(("****"), ("***"));
         bn->SetLabel(label);
     }
 }
@@ -851,11 +851,11 @@ void mmOptionsDialog::OnColorChanged(wxCommandEvent& event)
 void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& /*event*/)
 {
     // set the new colours to the default colours
-    navTreeBkColor_ = wxColour(wxT("WHITE"));
+    navTreeBkColor_ = wxColour(("WHITE"));
     listAlternativeColor0_ = wxColour(225, 237, 251);
-    listAlternativeColor1_ = wxColour(wxT("WHITE"));
-    listBackColor_ = wxColour(wxT("WHITE"));
-    listBorderColor_ = wxColour(wxT("BLACK"));
+    listAlternativeColor1_ = wxColour(("WHITE"));
+    listBackColor_ = wxColour(("WHITE"));
+    listBorderColor_ = wxColour(("BLACK"));
     listDetailsPanelColor_ = wxColour(244, 247, 251);
     listFutureDateColor_ = wxColour(116, 134, 168);
 
@@ -892,19 +892,19 @@ void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& /*event*/)
 void mmOptionsDialog::SetIniDatabaseCheckboxValue(wxString dbField, bool dbState)
 {
     if (dbState)
-        mmDBWrapper::setINISettingValue(inidb_, dbField, wxT("TRUE"));
+        mmDBWrapper::setINISettingValue(inidb_, dbField, ("TRUE"));
     else
-        mmDBWrapper::setINISettingValue(inidb_, dbField, wxT("FALSE"));
+        mmDBWrapper::setINISettingValue(inidb_, dbField, ("FALSE"));
 }
 
 bool mmOptionsDialog::GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState)
 {
-    wxString dbState = wxT("FALSE");
+    wxString dbState = ("FALSE");
     bool result = false;
 
     if (defaultState)
     {
-        dbState = wxT("TRUE");
+        dbState = ("TRUE");
         result = true;
     }
     if (mmDBWrapper::getINISettingValue(inidb_, dbField, dbState) != dbState)
@@ -921,15 +921,15 @@ void mmOptionsDialog::OnDelimiterSelected(wxCommandEvent& event)
     switch(m_radio_box_->GetSelection())
     {
         case 0:
-            delimit_ = wxT(",");
+            delimit_ = (",");
             textDelimiter_->Disable();
             break;
         case 1:
-            delimit_ = wxT(";");
+            delimit_ = (";");
             textDelimiter_->Disable();
             break;
         case 2:
-            delimit_ = wxT("\t");
+            delimit_ = ("\t");
             textDelimiter_->Disable();
             break;
         case 3:
@@ -949,7 +949,7 @@ void mmOptionsDialog::SaveViewAccountOptions()
     int selection = choiceVisible_->GetSelection();
     int row_id_ = 0;
     wxArrayString viewAcct = viewAccountStrings(false, wxEmptyString, row_id_);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWACCOUNTS"), viewAcct[selection]);
+    mmDBWrapper::setINISettingValue(inidb_, ("VIEWACCOUNTS"), viewAcct[selection]);
 }
 
 void mmOptionsDialog::SaveViewTransactionOptions()
@@ -957,21 +957,21 @@ void mmOptionsDialog::SaveViewTransactionOptions()
     int selection = choiceTransVisible_->GetSelection();
     int row_id_ = 0;
     wxArrayString ViewTransaction = viewTransactionsStrings(false, wxEmptyString, row_id_);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), ViewTransaction[selection]);
+    mmDBWrapper::setINISettingValue(inidb_, ("VIEWTRANSACTIONS"), ViewTransaction[selection]);
 }
 
 void mmOptionsDialog::SaveFinancialYearStart()
 {
     //Save Financial Year Start Day
     wxSpinCtrl* fysDay = (wxSpinCtrl*)FindWindow(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY);
-    wxString fysDayVal = wxString::Format(wxT("%d"),fysDay->GetValue());
+    wxString fysDayVal = wxString::Format(("%d"),fysDay->GetValue());
     mmOptions::instance().financialYearStartDayString_ = fysDayVal;
-    mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), fysDayVal);
+    mmDBWrapper::setInfoSettingValue(db_, ("FINANCIAL_YEAR_START_DAY"), fysDayVal);
 
     //Save Financial Year Start Month
     wxString fysMonthVal = wxString() << monthSelection_->GetSelection() + 1;
     mmOptions::instance().financialYearStartMonthString_ = fysMonthVal;
-    mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), fysMonthVal);
+    mmDBWrapper::setInfoSettingValue(db_, ("FINANCIAL_YEAR_START_MONTH"), fysMonthVal);
 }
 
 void mmOptionsDialog::SaveStocksUrl()
@@ -980,7 +980,7 @@ void mmOptionsDialog::SaveStocksUrl()
     wxString stockURL = url->GetValue();
     if (!stockURL.IsEmpty())
     {
-        mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKURL"), stockURL);
+        mmDBWrapper::setInfoSettingValue(db_, ("STOCKURL"), stockURL);
     }
     else
     {
@@ -1012,21 +1012,21 @@ void mmOptionsDialog::SaveGeneralPanelSettings()
 {
     wxTextCtrl* stun = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME);
     mmIniOptions::instance().userNameString_ = stun->GetValue();
-    mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), mmIniOptions::instance().userNameString_);
+    mmDBWrapper::setInfoSettingValue(db_, ("USERNAME"), mmIniOptions::instance().userNameString_);
 
     wxButton *languageButton = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     mmDBWrapper::setINISettingValue(inidb_, LANGUAGE_PARAMETER, languageButton->GetLabel().Lower());
     mmSelectLanguage(0, inidb_, false);
 
     mmDBWrapper::setBaseCurrencySettings(db_, currencyId_);
-    mmDBWrapper::setInfoSettingValue(db_, wxT("DATEFORMAT"), dateFormat_);
+    mmDBWrapper::setInfoSettingValue(db_, ("DATEFORMAT"), dateFormat_);
     SaveFinancialYearStart();
 
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
-    SetIniDatabaseCheckboxValue(wxT("BACKUPDB"), itemCheckBox->GetValue() );
+    SetIniDatabaseCheckboxValue(("BACKUPDB"), itemCheckBox->GetValue() );
 
     wxCheckBox* itemCheckBoxUpdate = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE);
-    SetIniDatabaseCheckboxValue(wxT("BACKUPDB_UPDATE"), itemCheckBoxUpdate->GetValue() );
+    SetIniDatabaseCheckboxValue(("BACKUPDB_UPDATE"), itemCheckBoxUpdate->GetValue() );
 }
 
 void mmOptionsDialog::SaveViewPanelSettings()
@@ -1035,28 +1035,28 @@ void mmOptionsDialog::SaveViewPanelSettings()
     SaveViewTransactionOptions();
 
     int size = choiceFontSize_->GetCurrentSelection() + 1;
-    mmIniOptions::instance().fontSize_ = wxString::Format(wxT("%d"), size);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("HTMLFONTSIZE"), mmIniOptions::instance().fontSize_);
+    mmIniOptions::instance().fontSize_ = wxString::Format(("%d"), size);
+    mmDBWrapper::setINISettingValue(inidb_, ("HTMLFONTSIZE"), mmIniOptions::instance().fontSize_);
 
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_TREE);
     mmIniOptions::instance().expandBankTree_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_TREE"),mmIniOptions::instance().expandBankTree_);
+    SetIniDatabaseCheckboxValue(("EXPAND_BANK_TREE"),mmIniOptions::instance().expandBankTree_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_TREE);
     mmIniOptions::instance().expandTermTree_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_TREE"),mmIniOptions::instance().expandTermTree_);
+    SetIniDatabaseCheckboxValue(("EXPAND_TERM_TREE"),mmIniOptions::instance().expandTermTree_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_HOME);
     mmIniOptions::instance().expandBankHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_HOME"),mmIniOptions::instance().expandBankHome_);
+    SetIniDatabaseCheckboxValue(("EXPAND_BANK_HOME"),mmIniOptions::instance().expandBankHome_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_HOME);
     mmIniOptions::instance().expandTermHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_HOME"),mmIniOptions::instance().expandTermHome_);
+    SetIniDatabaseCheckboxValue(("EXPAND_TERM_HOME"),mmIniOptions::instance().expandTermHome_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME);
     mmIniOptions::instance().expandStocksHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("ENABLESTOCKS"),mmIniOptions::instance().expandStocksHome_);
+    SetIniDatabaseCheckboxValue(("ENABLESTOCKS"),mmIniOptions::instance().expandStocksHome_);
 
     mmIniOptions::instance().budgetFinancialYears_ = cbBudgetFinancialYears_->GetValue();
     SetIniDatabaseCheckboxValue(INIDB_BUDGET_FINANCIAL_YEARS, mmIniOptions::instance().budgetFinancialYears_);
@@ -1084,36 +1084,36 @@ void mmOptionsDialog::SaveColourPanelSettings()
     mmColors::listDetailsPanelColor = listDetailsPanelColor_;
     mmColors::listFutureDateColor = listFutureDateColor_;
 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("LISTALT0"), mmGetStringFromColour(mmColors::listAlternativeColor0));
-    mmDBWrapper::setINISettingValue(inidb_, wxT("LISTALT1"), mmGetStringFromColour(mmColors::listAlternativeColor1));
-    mmDBWrapper::setINISettingValue(inidb_, wxT("LISTBACK"), mmGetStringFromColour(mmColors::listBackColor));
-    mmDBWrapper::setINISettingValue(inidb_, wxT("NAVTREE"),  mmGetStringFromColour(mmColors::navTreeBkColor));
-    mmDBWrapper::setINISettingValue(inidb_, wxT("LISTBORDER"), mmGetStringFromColour(mmColors::listBorderColor));
-    mmDBWrapper::setINISettingValue(inidb_, wxT("LISTDETAILSPANEL"), mmGetStringFromColour(mmColors::listDetailsPanelColor));
-    mmDBWrapper::setINISettingValue(inidb_, wxT("LISTFUTUREDATES"), mmGetStringFromColour(mmColors::listFutureDateColor));
+    mmDBWrapper::setINISettingValue(inidb_, ("LISTALT0"), mmGetStringFromColour(mmColors::listAlternativeColor0));
+    mmDBWrapper::setINISettingValue(inidb_, ("LISTALT1"), mmGetStringFromColour(mmColors::listAlternativeColor1));
+    mmDBWrapper::setINISettingValue(inidb_, ("LISTBACK"), mmGetStringFromColour(mmColors::listBackColor));
+    mmDBWrapper::setINISettingValue(inidb_, ("NAVTREE"),  mmGetStringFromColour(mmColors::navTreeBkColor));
+    mmDBWrapper::setINISettingValue(inidb_, ("LISTBORDER"), mmGetStringFromColour(mmColors::listBorderColor));
+    mmDBWrapper::setINISettingValue(inidb_, ("LISTDETAILSPANEL"), mmGetStringFromColour(mmColors::listDetailsPanelColor));
+    mmDBWrapper::setINISettingValue(inidb_, ("LISTFUTUREDATES"), mmGetStringFromColour(mmColors::listFutureDateColor));
 }
 
 void mmOptionsDialog::SaveOthersPanelSettings()
 {
     wxChoice* itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE);
     mmIniOptions::instance().transPayeeSelectionNone_ = itemChoice->GetSelection();
-    mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_PAYEE_NONE"),
-        wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transPayeeSelectionNone_));
+    mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_PAYEE_NONE"),
+        wxString::Format(("%d"), (int)mmIniOptions::instance().transPayeeSelectionNone_));
 
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY);
     mmIniOptions::instance().transCategorySelectionNone_ = itemChoice->GetSelection();
-    mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_CATEGORY_NONE"),
-        wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transCategorySelectionNone_));
+    mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_CATEGORY_NONE"),
+        wxString::Format(("%d"), (int)mmIniOptions::instance().transCategorySelectionNone_));
 
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
     mmIniOptions::instance().transStatusReconciled_ = itemChoice->GetSelection();
-    mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"),
-        wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transStatusReconciled_));
+    mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_STATUS_RECONCILED"),
+        wxString::Format(("%d"), (int)mmIniOptions::instance().transStatusReconciled_));
 
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE);
     mmIniOptions::instance().transDateDefault_ = itemChoice->GetSelection();
-    mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_DATE_DEFAULT"),
-        wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transDateDefault_));
+    mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_DATE_DEFAULT"),
+        wxString::Format(("%d"), (int)mmIniOptions::instance().transDateDefault_));
 
     SaveStocksUrl();
 
@@ -1128,7 +1128,7 @@ void mmOptionsDialog::SaveImportExportPanelSettings()
 {
     wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER);
     wxString delim = st->GetValue();
-    if (!delim.IsEmpty()) mmDBWrapper::setInfoSettingValue(db_, wxT("DELIMITER"), delim);
+    if (!delim.IsEmpty()) mmDBWrapper::setInfoSettingValue(db_, ("DELIMITER"), delim);
 }
 
 bool mmOptionsDialog::GetUpdateCurrencyRateSetting()

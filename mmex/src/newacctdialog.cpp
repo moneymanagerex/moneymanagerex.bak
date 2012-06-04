@@ -150,7 +150,7 @@ void mmNewAcctDialog::CreateControls()
         wxID_STATIC, _("Account Name:"));
     itemGridSizer2->Add(itemStaticText3, flags_main);
 
-    textAccountName_ = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNAME, wxT(""));
+    textAccountName_ = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNAME, (""));
     itemGridSizer2->Add(textAccountName_, flags_expand);
     textAccountName_->SetToolTip(_("Enter the Name of the Account. This name can be renamed at any time."));
 
@@ -224,7 +224,7 @@ void mmNewAcctDialog::CreateControls()
 
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this,
         ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE,
-        wxT(""), wxDefaultPosition, wxDefaultSize,
+        (""), wxDefaultPosition, wxDefaultSize,
         wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2));
     itemGridSizer2->Add(itemTextCtrl19, flags_expand);
     itemTextCtrl19->SetToolTip(_("Enter the initial balance in this account."));
@@ -251,7 +251,7 @@ void mmNewAcctDialog::CreateControls()
 
     wxTextCtrl* itemTextCtrl18 = new wxTextCtrl( this,
         ID_DIALOG_NEWACCT_TEXTCTRL_NOTES,
-        wxT(""), wxDefaultPosition, wxSize(150, 70), wxTE_MULTILINE );
+        (""), wxDefaultPosition, wxSize(150, 70), wxTE_MULTILINE );
     itemGridSizer2->Add(itemTextCtrl18, flags_expand);
     itemTextCtrl18->SetToolTip(_("Enter user notes and details about this account."));
 

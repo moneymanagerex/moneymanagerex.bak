@@ -22,27 +22,27 @@
 
 mmHTMLBuilder::mmHTMLBuilder() {
     // init colors from config
-    color0 = wxT("bgcolor=\"") + mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
-    color1 = wxT("bgcolor=\"") + mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
+    color0 = ("bgcolor=\"") + mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
+    color1 = ("bgcolor=\"") + mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
     // init font size from config
     fontSize = wxT ("\"") + mmIniOptions::instance().fontSize_ + wxT ("\"");
 }
 
 void mmHTMLBuilder::init()
 {
-    html += wxT("<html>\n<head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\"><title>");
+    html += ("<html>\n<head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\"><title>");
     html += mmex::getProgramName();
-    html += wxT(" - ");
+    html += (" - ");
     html += _("Report");
-    html += wxT("</title>\n</head><body bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
-    html += wxT("\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
-    html += wxString::Format(wxT("<font size=%s>\n"), fontSize.c_str());
+    html += ("</title>\n</head><body bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
+    html += ("\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
+    html += wxString::Format(("<font size=%s>\n"), fontSize.c_str());
 
     //if I need more space on the top of home page and reports I will delete user name from settings
     if (mmIniOptions::instance().userNameString_ != wxT (""))
     {
         int cols = 1;
-        startTable(wxT("100%"));
+        startTable(("100%"));
         startTableRow();
         if (mmIniOptions::instance().enableCustomLogo_)
         {
@@ -62,7 +62,7 @@ void mmHTMLBuilder::init()
 
 void mmHTMLBuilder::end()
 {
-    html += wxT("\n</font></body>\n</html>\n");
+    html += ("\n</font></body>\n</html>\n");
 }
 
 void mmHTMLBuilder::addHeader(int level, const wxString& header)
@@ -71,7 +71,7 @@ void mmHTMLBuilder::addHeader(int level, const wxString& header)
     if(!mmIniOptions::instance().fontSize_.ToLong(&font_size)) { font_size = 3; }
     font_size = level + font_size;
     if (font_size>7) font_size=7;
-    html += wxString::Format(wxT("<font size=\"%ld\"><b>%s</b></font><br>\n"), font_size, header.c_str());
+    html += wxString::Format(("<font size=\"%ld\"><b>%s</b></font><br>\n"), font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addHeaderItalic(int level, const wxString& header)
@@ -80,180 +80,180 @@ void mmHTMLBuilder::addHeaderItalic(int level, const wxString& header)
     if(!mmIniOptions::instance().fontSize_.ToLong(&font_size)) { font_size = 3; }
     font_size = level + font_size;
     if (font_size>7) font_size=7;
-    html += wxString::Format(wxT("<font size=\"%ld\"><i>%s</i></font><br>\n"), font_size, header.c_str());
+    html += wxString::Format(("<font size=\"%ld\"><i>%s</i></font><br>\n"), font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addParaText(const wxString& text)
 {
-    html += wxString::Format(wxT("<p><font size=%s>%s</font></p>\n"), fontSize.c_str(), text.c_str());
+    html += wxString::Format(("<p><font size=%s>%s</font></p>\n"), fontSize.c_str(), text.c_str());
 }
 
 void mmHTMLBuilder::addLineBreak()
 {
-    html += wxT("<br>\n");
+    html += ("<br>\n");
 }
 
 void mmHTMLBuilder::addHorizontalLine(int size)
 {
-    html += wxT("<hr");
+    html += ("<hr");
     if(size > 0)
-    html += wxString::Format(wxT(" size=\"%d\""), size);
-    html += wxT(">\n");
+    html += wxString::Format((" size=\"%d\""), size);
+    html += (">\n");
 }
 
 void mmHTMLBuilder::addImage(const wxString& src)
 {
     if(!src.empty())
-        html += wxT("<img src=\"") + src + wxT("\" border=\"0\">");
+        html += ("<img src=\"") + src + ("\" border=\"0\">");
 }
 
 void mmHTMLBuilder::startCenter()
 {
-    html += wxT("<center>");
+    html += ("<center>");
 }
 
 void mmHTMLBuilder::endCenter()
 {
-    html += wxT("</center>");
+    html += ("</center>");
 }
 
 void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign)
 {
-    html += wxT("<table cellspacing=\"1\"");
+    html += ("<table cellspacing=\"1\"");
     //Comment line above then uncomment line below for debug homepage
-    //html += wxT("<table border=\"2\" cellspacing=\"1\"");
+    //html += ("<table border=\"2\" cellspacing=\"1\"");
     if(!width.empty())
-        html += wxString::Format(wxT(" width=\"%s\""),width.c_str());
+        html += wxString::Format((" width=\"%s\""),width.c_str());
     if(!valign.empty())
-        html += wxString::Format(wxT(" valign=\"%s\""), valign.c_str());
-    html += wxT(">\n");
+        html += wxString::Format((" valign=\"%s\""), valign.c_str());
+    html += (">\n");
     bgswitch = true;
 }
 
 void mmHTMLBuilder::startTableRow()
 {
-    html << wxT("<tr ") << (bgswitch ? color1 : color0) << wxT(">");
+    html << ("<tr ") << (bgswitch ? color1 : color0) << (">");
 }
 
 void mmHTMLBuilder::startTableCell(const wxString& width)
 {
-    html += wxT("<td");
+    html += ("<td");
     if(!width.empty())
-        html += wxString::Format(wxT(" width=\"%s\""),width.c_str());
-    html += wxT(">");
+        html += wxString::Format((" width=\"%s\""),width.c_str());
+    html += (">");
 }
 
 void mmHTMLBuilder::addRowSeparator(int cols)
 {
 
-    html += wxT("<tr bgcolor=\"") + mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\" height=\"1\"><td height=\"1");
+    html += ("<tr bgcolor=\"") + mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX) + ("\" height=\"1\"><td height=\"1");
     if(cols > 1)
-        html += wxString::Format(wxT("\" colspan=\"%d"), cols);
-    html += wxT("\"></td></tr>\n");
+        html += wxString::Format(("\" colspan=\"%d"), cols);
+    html += ("\"></td></tr>\n");
     bgswitch = true;
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxString& value)
 {
-    html += wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
+    html += ("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + ("\"><td");
     if(cols - 1 > 1)
-        html += wxString::Format(wxT(" colspan=\"%d\""), cols - 1);
-    html += wxString::Format(wxT("><b><i>&nbsp;&nbsp;%s"), caption.c_str());
-    html += wxString::Format(wxT("</i></b></td><td nowrap align=\"right\"><b><i>%s</i></b></td></tr>\n"), value.c_str());
+        html += wxString::Format((" colspan=\"%d\""), cols - 1);
+    html += wxString::Format(("><b><i>&nbsp;&nbsp;%s"), caption.c_str());
+    html += wxString::Format(("</i></b></td><td nowrap align=\"right\"><b><i>%s</i></b></td></tr>\n"), value.c_str());
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data)
 {
-    html += wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
+    html += ("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + ("\"><td");
     if(cols - data.size() > 1)
-        html += wxString::Format(wxT(" colspan=\"%ld\""), cols - data.size());
-    html += wxT("><b><i>&nbsp;&nbsp;");
+        html += wxString::Format((" colspan=\"%ld\""), cols - data.size());
+    html += ("><b><i>&nbsp;&nbsp;");
     html += caption;
-    html += wxT("</i></b>");
+    html += ("</i></b>");
 
     for (unsigned long idx = 0; idx < data.size(); idx++)
     {
-        html += wxT("</td><td nowrap align=\"right\"><b><i>");
+        html += ("</td><td nowrap align=\"right\"><b><i>");
         html += data[idx];
-        html += wxT("</i></b>");
+        html += ("</i></b>");
     }
-    html += wxT("</td></tr>\n");
+    html += ("</td></tr>\n");
 }
 
 void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols)
 {
-    html += wxT("<tr><th align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"");
+    html += ("<tr><th align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"");
     if(cols > 1)
     {
-        html += wxT(" colspan=\"");
-        html += wxString::Format(wxT("%d"), cols);
-        html += wxT("\"");
+        html += (" colspan=\"");
+        html += wxString::Format(("%d"), cols);
+        html += ("\"");
     }
-    html += wxT("><b>&nbsp;");
+    html += ("><b>&nbsp;");
     html += value;
-    html += wxT("</b></th></tr>\n");
+    html += ("</b></th></tr>\n");
     bgswitch = true;
 }
 
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value, bool numeric)
 {
-    html += (numeric ? wxT("<th nowrap align=\"right\" ") : wxT("<th align=\"left\" "));
-    html += wxT(" valign=\"center\" bgcolor=\"#d5d6de\">");
+    html += (numeric ? ("<th nowrap align=\"right\" ") : ("<th align=\"left\" "));
+    html += (" valign=\"center\" bgcolor=\"#d5d6de\">");
     html += wxString::Format(wxT ("<b>&nbsp;%s</b></th>\n"), value.c_str());
     bgswitch = false;
 }
 
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value)
 {
-    html += wxT("<th nowrap align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\">");
-    html += wxT("<b>&nbsp;") + value + wxT("</b></th>\n");
+    html += ("<th nowrap align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\">");
+    html += ("<b>&nbsp;") + value + ("</b></th>\n");
     bgswitch = false;
 }
 
 void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor)
 {
-    html << (numeric ? wxT("<td nowrap align=\"right\" >") : wxT("<td>"));
+    html << (numeric ? ("<td nowrap align=\"right\" >") : ("<td>"));
 
     if(!fontColor.empty())
-        html += wxT("<font color=") + fontColor + wxT (">");
+        html += ("<font color=") + fontColor + wxT (">");
 
     if (!bold && !italic)    html += value;
-    else if (bold && italic) html += wxT("<b><i>") + value + wxT("</i></b>");
-    else if (bold)           html += wxT("<b>") + value + wxT("</b>");
-    else if (italic)         html += wxT("<i>") + value + wxT("</i>");
+    else if (bold && italic) html += ("<b><i>") + value + ("</i></b>");
+    else if (bold)           html += ("<b>") + value + ("</b>");
+    else if (italic)         html += ("<i>") + value + ("</i>");
 
     if(!fontColor.empty())
-        html += wxT("</font>");
-    html += wxT("</td>\n");
+        html += ("</font>");
+    html += ("</td>\n");
 }
 
 void mmHTMLBuilder::addTableCellLink(const wxString& href, const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor)
 {
-    addTableCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), numeric, italic, bold, fontColor);
+    addTableCell(("<a href=\"") + href + ("\">") + value + ("</a>\n"), numeric, italic, bold, fontColor);
 }
 
 void mmHTMLBuilder::addTableHeaderCellLink(const wxString& href, const wxString& value)
 {
-    addTableHeaderCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), false);
+    addTableHeaderCell(("<a href=\"") + href + ("\">") + value + ("</a>\n"), false);
 }
 
 void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href, const wxString& value, int cols)
 {
-    addTableHeaderRow(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), cols);
+    addTableHeaderRow(("<a href=\"") + href + ("\">") + value + ("</a>\n"), cols);
 }
 
 void mmHTMLBuilder::endTable()
 {
-    html += wxT("</table>\n");
+    html += ("</table>\n");
 }
 
 void mmHTMLBuilder::endTableRow()
 {
-    html += wxT("</tr>\n");
+    html += ("</tr>\n");
     bgswitch = !bgswitch;
 }
 
 void mmHTMLBuilder::endTableCell()
 {
-    html += wxT("</td>\n");
+    html += ("</td>\n");
 }

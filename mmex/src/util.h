@@ -69,44 +69,44 @@ private:
     wxString stringData_;
 };
 
-const wxString NAVTREECTRL_REPORTS = wxT("Reports");
-const wxString NAVTREECTRL_HELP = wxT("Help");
-const wxString NAVTREECTRL_CUSTOM_REPORTS = wxT("Custom_Reports");
-const wxString NAVTREECTRL_INVESTMENT = wxT("Stocks");
-const wxString NAVTREECTRL_BUDGET = wxT("Budgeting");
+const wxString NAVTREECTRL_REPORTS = ("Reports");
+const wxString NAVTREECTRL_HELP = ("Help");
+const wxString NAVTREECTRL_CUSTOM_REPORTS = ("Custom_Reports");
+const wxString NAVTREECTRL_INVESTMENT = ("Stocks");
+const wxString NAVTREECTRL_BUDGET = ("Budgeting");
 
-const wxString VIEW_TRANS_ALL_STR            = wxT("View All Transactions");
-const wxString VIEW_TRANS_RECONCILED_STR     = wxT("View Reconciled");
-const wxString VIEW_TRANS_NOT_RECONCILED_STR = wxT("View Not-Reconciled");
-const wxString VIEW_TRANS_UNRECONCILED_STR   = wxT("View UnReconciled");
-const wxString VIEW_TRANS_VOID               = wxT("View Void");
-const wxString VIEW_TRANS_FLAGGED            = wxT("View Flagged");
-const wxString VIEW_TRANS_DUPLICATES         = wxT("View Duplicates");
-const wxString VIEW_TRANS_TODAY_STR          = wxT("View Today"); 
-const wxString VIEW_TRANS_CURRENT_MONTH_STR  = wxT("View Current Month");
-const wxString VIEW_TRANS_LAST_30_DAYS_STR   = wxT("View Last 30 days");
-const wxString VIEW_TRANS_LAST_90_DAYS_STR   = wxT("View Last 90 days");
-const wxString VIEW_TRANS_LAST_MONTH_STR     = wxT("View Last Month");
-const wxString VIEW_TRANS_LAST_3MONTHS_STR   = wxT("View Last 3 Months");
+const wxString VIEW_TRANS_ALL_STR            = ("View All Transactions");
+const wxString VIEW_TRANS_RECONCILED_STR     = ("View Reconciled");
+const wxString VIEW_TRANS_NOT_RECONCILED_STR = ("View Not-Reconciled");
+const wxString VIEW_TRANS_UNRECONCILED_STR   = ("View UnReconciled");
+const wxString VIEW_TRANS_VOID               = ("View Void");
+const wxString VIEW_TRANS_FLAGGED            = ("View Flagged");
+const wxString VIEW_TRANS_DUPLICATES         = ("View Duplicates");
+const wxString VIEW_TRANS_TODAY_STR          = ("View Today"); 
+const wxString VIEW_TRANS_CURRENT_MONTH_STR  = ("View Current Month");
+const wxString VIEW_TRANS_LAST_30_DAYS_STR   = ("View Last 30 days");
+const wxString VIEW_TRANS_LAST_90_DAYS_STR   = ("View Last 90 days");
+const wxString VIEW_TRANS_LAST_MONTH_STR     = ("View Last Month");
+const wxString VIEW_TRANS_LAST_3MONTHS_STR   = ("View Last 3 Months");
 
-const wxString  VIEW_ACCOUNTS_ALL_STR       = wxT("ALL");
-const wxString  VIEW_ACCOUNTS_OPEN_STR      = wxT("Open");
-const wxString  VIEW_ACCOUNTS_FAVORITES_STR = wxT("Favorites");
+const wxString  VIEW_ACCOUNTS_ALL_STR       = ("ALL");
+const wxString  VIEW_ACCOUNTS_OPEN_STR      = ("Open");
+const wxString  VIEW_ACCOUNTS_FAVORITES_STR = ("Favorites");
 
-const wxString INIDB_UPDATE_CURRENCY_RATE   = wxT("UPDATECURRENCYRATE");
-const wxString INIDB_USE_TRANSACTION_SOUND  = wxT("USETRANSSOUND");
-const wxString INIDB_USE_ORG_DATE_COPYPASTE = wxT("USEORIGDATEONCOPYPASTE");
+const wxString INIDB_UPDATE_CURRENCY_RATE   = ("UPDATECURRENCYRATE");
+const wxString INIDB_USE_TRANSACTION_SOUND  = ("USETRANSSOUND");
+const wxString INIDB_USE_ORG_DATE_COPYPASTE = ("USEORIGDATEONCOPYPASTE");
 
-const wxString INIDB_BUDGET_FINANCIAL_YEARS       = wxT("BUDGET_FINANCIAL_YEARS");
-const wxString INIDB_BUDGET_INCLUDE_TRANSFERS     = wxT("BUDGET_INCLUDE_TRANSFERS");
-const wxString INIDB_BUDGET_SETUP_WITHOUT_SUMMARY = wxT("BUDGET_SETUP_WITHOUT_SUMMARY");
-const wxString INIDB_BUDGET_SUMMARY_WITHOUT_CATEG = wxT("BUDGET_SUMMARY_WITHOUT_CATEGORIES");
-const wxString INIDB_IGNORE_FUTURE_TRANSACTIONS   = wxT("IGNORE_FUTURE_TRANSACTIONS");
+const wxString INIDB_BUDGET_FINANCIAL_YEARS       = ("BUDGET_FINANCIAL_YEARS");
+const wxString INIDB_BUDGET_INCLUDE_TRANSFERS     = ("BUDGET_INCLUDE_TRANSFERS");
+const wxString INIDB_BUDGET_SETUP_WITHOUT_SUMMARY = ("BUDGET_SETUP_WITHOUT_SUMMARY");
+const wxString INIDB_BUDGET_SUMMARY_WITHOUT_CATEG = ("BUDGET_SUMMARY_WITHOUT_CATEGORIES");
+const wxString INIDB_IGNORE_FUTURE_TRANSACTIONS   = ("IGNORE_FUTURE_TRANSACTIONS");
 
-const wxString TIPS_BANKS  = wxT("checkingpanel");
-const wxString TIPS_BILLS  = wxT("billsdeposits");
-const wxString TIPS_STOCK  = wxT("investment");
-const wxString TIPS_ASSETS = wxT("assets");
+const wxString TIPS_BANKS  = ("checkingpanel");
+const wxString TIPS_BILLS  = ("billsdeposits");
+const wxString TIPS_STOCK  = ("investment");
+const wxString TIPS_ASSETS = ("assets");
 
 void mmShowErrorMessageInvalid( wxWindow *parent, const wxString &message );
 void mmShowErrorMessage( wxWindow *parent, const wxString &message, const wxString &messageheader );

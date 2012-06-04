@@ -56,7 +56,7 @@ TransFilterDialog::TransFilterDialog( mmCoreDB* core, wxWindow* parent, wxWindow
 
 //TransFilterDialog::~TransFilterDialog( )
 //{
-//    // wxMessageBox(wxT("Testing that dialog being destroyed"), wxT("Transaction Filter Destructor"));
+//    // wxMessageBox(("Testing that dialog being destroyed"), ("Transaction Filter Destructor"));
 //}
 
 // Initialize our variables
@@ -304,7 +304,7 @@ void TransFilterDialog::OnCategorySelect(wxCommandEvent& /*event*/)
             subCatName_ = mmReadyDisplayString(mmDBWrapper::getSubCategoryName(core_->db_.get(), dlg.categID_, dlg.subcategID_));
             if (!subCatName_.IsEmpty())
             {
-                categoryLabelName << wxT(":") << subCatName_;
+                categoryLabelName << (":") << subCatName_;
             }        
         }
         btnCategory_->SetLabel(categoryLabelName);
@@ -390,7 +390,7 @@ bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
     bool result = false;
     if ( cbCategory_->GetValue() )
     {
-        wxStringTokenizer tz(btnCategory_->GetLabelText(), wxT(":"));
+        wxStringTokenizer tz(btnCategory_->GetLabelText(), (":"));
         wxString token = tz.GetNextToken();
         if (category == token)
         {
