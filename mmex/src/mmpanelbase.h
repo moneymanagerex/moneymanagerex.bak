@@ -150,13 +150,11 @@ public:
 public:
     virtual void save_config(const mmListCtrl* list_ctrl, const wxString& module = "mmPanelBase")
     {
-        inidb_->Begin();
+        wxConfigBase *config = wxConfigBase::Get();
         for (int i = 0; i < list_ctrl->GetColumnCount(); ++i) 
         {
-            int width = list_ctrl->GetColumnWidth(i);
-            mmDBWrapper::setINISettingValue(inidb_, wxString::Format("%s_COL%d_WIDTH", module.c_str(), i), wxString() << width); 
+            config->Write(wxString::Format("%s_COL%d_WIDTH", module.c_str()), list_ctrl->GetColumnWidth(i));
         }
-        inidb_->Commit();
     }
 
     virtual wxString get_version() const

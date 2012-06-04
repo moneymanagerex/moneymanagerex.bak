@@ -125,12 +125,12 @@ void mmAssetsPanel::CreateControls()
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
 
     /* See if we can get data from inidb */
-    long col0, col1, col2, col3, col4;
-    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL0_WIDTH", "150").ToLong(&col0);
-    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL1_WIDTH", "-2").ToLong(&col1);
-    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL2_WIDTH", "-2").ToLong(&col2);
-    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL3_WIDTH", "-2").ToLong(&col3);
-    mmDBWrapper::getINISettingValue(inidb_, "ASSETS_COL4_WIDTH", "450").ToLong(&col4);
+    wxConfigBase *config = wxConfigBase::Get();
+    long col0 = config->ReadLong("ASSETS_COL0_WIDTH", 150);
+    long col1 = config->ReadLong("ASSETS_COL1_WIDTH", -2);
+    long col2 = config->ReadLong("ASSETS_COL2_WIDTH", -2);
+    long col3 = config->ReadLong("ASSETS_COL3_WIDTH", -2);
+    long col4 = config->ReadLong("ASSETS_COL4_WIDTH", 450);
 
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"), wxLIST_FORMAT_RIGHT, col0);
     m_listCtrlAssets->InsertColumn(COL_TYPE, _("Type"), wxLIST_FORMAT_RIGHT, col1);

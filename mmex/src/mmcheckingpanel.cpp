@@ -79,35 +79,13 @@ void createColumns(wxSQLite3Database *inidb_, mmListCtrl &lst)
     lst.InsertColumn(COL_BALANCE, _("Balance"), wxLIST_FORMAT_RIGHT);
     lst.InsertColumn(COL_NOTES, _("Notes"));
 
-    const int col_cnt = lst.GetColumnCount();
+    int col_cnt = lst.GetColumnCount();
     wxASSERT(col_cnt == COL_MAX);
 
-    // adjust columns' widths
-
-    const wxString def_widths[COL_MAX] =
-    {
-        ("80"),  // date
-        ("-2"),  // number
-        ("150"), // payee
-        ("-2"),  // C
-        ("-2"),  // category
-        ("-2"),  // withdrawal
-        ("-2"),  // deposit
-        ("-2"),  // balance
-        ("200")  // notes
-    };
-
+    wxConfigBase *config = wxConfigBase::Get();
     for (int i = 0; i < col_cnt; ++i)
     {
-        const wxChar *def_width = def_widths[i];
-        wxASSERT(def_width);
-
-        wxString name = wxString::Format(("CHECK_COL%d_WIDTH"), i);
-        wxString val = mmDBWrapper::getINISettingValue(inidb_, name, def_width);
-
-        long width = -1;
-
-        if (val.ToLong(&width)) lst.SetColumnWidth(i, width);
+        lst.SetColumnWidth(i, config->ReadLong(wxString::Format("CHECK_COL%d_WIDTH", i), 80));
     }
 }
 //----------------------------------------------------------------------------
