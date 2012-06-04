@@ -53,6 +53,8 @@ END_EVENT_TABLE()
 #include "../resources/preferences-other.xpm"
 #include "../resources/export-import.xpm"
 
+#define _MM_EX_OPTIONSDIALOG_CPP_REVISION_ID    "$Revision$"
+
 mmOptionsDialog::mmOptionsDialog( )
 {
 }
@@ -564,12 +566,12 @@ void mmOptionsDialog::CreateControls()
     wxStaticText* dateStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Date:"), wxDefaultPosition, wxDefaultSize);
 
-    wxArrayString defaultValues_;
-    defaultValues_.Add(_("None"));
-    defaultValues_.Add(_("Last Used"));
+    wxArrayString defaultValues;
+    defaultValues.Add(_("None"));
+    defaultValues.Add(_("Last Used"));
 
     wxChoice* defaultDateChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE,
-        wxDefaultPosition, wxSize(140, -1), defaultValues_);
+        wxDefaultPosition, wxSize(140, -1), defaultValues);
     defaultDateChoice->SetSelection(mmIniOptions::instance().transDateDefault_);
     newTransflexGridSizer->Add(dateStaticText,       0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     newTransflexGridSizer->Add(defaultDateChoice,    0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -579,7 +581,7 @@ void mmOptionsDialog::CreateControls()
         _("Default Payee:"), wxDefaultPosition, wxDefaultSize);
 
     wxChoice* defaultPayeeChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
-        wxDefaultPosition, defaultDateChoice->GetSize(), defaultValues_);
+        wxDefaultPosition, defaultDateChoice->GetSize(), defaultValues);
     defaultPayeeChoice->SetSelection(mmIniOptions::instance().transPayeeSelectionNone_);
     newTransflexGridSizer->Add(payeeStaticText,      0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     newTransflexGridSizer->Add(defaultPayeeChoice,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -589,10 +591,10 @@ void mmOptionsDialog::CreateControls()
         _("Default Category:"), wxDefaultPosition, wxDefaultSize);
 
 
-    defaultValues_[1]=(_("Last used for payee"));
+    defaultValues[1]=(_("Last used for payee"));
 
     wxChoice* defaultCategoryChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
-        wxDefaultPosition, defaultPayeeChoice->GetSize(), defaultValues_);
+        wxDefaultPosition, defaultPayeeChoice->GetSize(), defaultValues);
     defaultCategoryChoice->SetSelection(mmIniOptions::instance().transCategorySelectionNone_);
     newTransflexGridSizer->Add(categoryStaticText,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     newTransflexGridSizer->Add(defaultCategoryChoice,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -601,26 +603,31 @@ void mmOptionsDialog::CreateControls()
     wxStaticText* statusStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Status:"), wxDefaultPosition, defaultPayeeChoice->GetSize());
 
-    wxArrayString choiceStatusStrings;
-    choiceStatusStrings.Add(_("None"));
-    choiceStatusStrings.Add(_("Reconciled"));
-    choiceStatusStrings.Add(_("Void"));
-    choiceStatusStrings.Add(_("Follow up"));
-    choiceStatusStrings.Add(_("Duplicate"));
+    wxChoice* default_status = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
+        wxDefaultPosition, defaultDateChoice->GetSize());
+    wxString transaction_status[] = 
+    {
+        wxTRANSLATE("None"),
+        wxTRANSLATE("Reconciled"),
+        wxTRANSLATE("Void"),
+        wxTRANSLATE("Follow up"),
+        wxTRANSLATE("Duplicate")
+    };
+    for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
+        default_status->Append(wxGetTranslation(transaction_status[i]),
+        new wxStringClientData(transaction_status[i]));
 
-    wxChoice* defaultStatusChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
-        wxDefaultPosition, defaultDateChoice->GetSize(), choiceStatusStrings);
-    defaultStatusChoice->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+    default_status->SetSelection(mmIniOptions::instance().transStatusReconciled_);
 
-    newTransflexGridSizer->Add(statusStaticText,     0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(defaultStatusChoice,  0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(statusStaticText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(default_status,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //----------------------------------------------
     //a bit more space visual appearance
     othersPanelSizer->AddSpacer(10);
 
     wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxVERTICAL);
-    othersPanelSizer->Add(itemBoxSizerStockURL, 0, wxGROW|wxALIGN_LEFT|wxALL, 0);
+    othersPanelSizer->Add(itemBoxSizerStockURL, 0, wxGROW);
 
     wxStaticText* itemStaticTextURL = new wxStaticText(othersPanel, wxID_STATIC, _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0);
     itemStaticTextURL->SetFont(staticBoxFontSetting);
@@ -644,9 +651,9 @@ void mmOptionsDialog::CreateControls()
     cbUseSound_->SetToolTip(_("Select whether to use sounds when entering transactions"));
     othersPanelSizer->Add(cbUseSound_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    cbEnableCurrencyUpd_ = new wxCheckBox(othersPanel, wxID_ANY, _("Enable online currency update \n(Get data from European Central Bank)"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbEnableCurrencyUpd_ = new wxCheckBox(othersPanel, wxID_ANY, _("Enable online currency update \n(Get data from yahoo.com)"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbEnableCurrencyUpd_->SetValue(GetIniDatabaseCheckboxValue(INIDB_UPDATE_CURRENCY_RATE, false));
-    cbEnableCurrencyUpd_->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
+    cbEnableCurrencyUpd_->SetToolTip(_("Enable or disable get data from yahoo.com to update currency rate"));
     othersPanelSizer->Add(cbEnableCurrencyUpd_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     /*********************************************************************************************
@@ -672,10 +679,10 @@ void mmOptionsDialog::CreateControls()
     wxString choices[] = { _("Comma"), _("Semicolon"), _("TAB"), _("User Defined")};
     int num = sizeof(choices) / sizeof(wxString);
     m_radio_box_ = new wxRadioBox(importExportPanel, ID_RADIO_BOX, (""),
-        wxDefaultPosition, wxDefaultSize, num, choices, 4, wxRA_SPECIFY_COLS);
+        wxDefaultPosition, wxDefaultSize, num, choices, 4, wxRA_SPECIFY_ROWS);
 
     textDelimiter_ = new wxTextCtrl(importExportPanel,
-        ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER, delimit_, wxDefaultPosition, wxDefaultSize, 0);
+        ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER, delimit_, wxDefaultPosition, wxDefaultSize);
     textDelimiter_->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
     textDelimiter_->SetMaxLength(1);
     textDelimiter_->Disable();
