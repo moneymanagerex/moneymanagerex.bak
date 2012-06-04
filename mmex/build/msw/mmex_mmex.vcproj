@@ -2102,9 +2102,6 @@
 				RelativePath="..\..\src\filtertransdialog.cpp">
 			</File>
 			<File
-				RelativePath="..\..\src\guiid.cpp">
-			</File>
-			<File
 				RelativePath="..\..\src\htmlbuilder.cpp">
 			</File>
 			<File
