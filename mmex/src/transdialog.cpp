@@ -348,7 +348,6 @@ void mmTransDialog::CreateControls()
     };
     // Restrict choise if accounts number less than 2
     int size = sizeof(transaction_type)/sizeof(wxString);
-    wxSafeShowMessage(wxString()<<size, "");
     if (core_->getNumBankAccounts() < 2) size--;
     for(size_t i = 0; i < size; ++i)
     choiceTrans_->Append(wxGetTranslation(transaction_type[i]),
