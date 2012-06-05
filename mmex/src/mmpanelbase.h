@@ -153,7 +153,7 @@ public:
         wxConfigBase *config = wxConfigBase::Get();
         for (int i = 0; i < list_ctrl->GetColumnCount(); ++i) 
         {
-            config->Write(wxString::Format("%s_COL%d_WIDTH", module.c_str()), list_ctrl->GetColumnWidth(i));
+            config->Write(wxString::Format("%s_COL%d_WIDTH", module.c_str(), i), list_ctrl->GetColumnWidth(i));
         }
     }
 
