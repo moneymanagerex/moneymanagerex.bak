@@ -265,7 +265,11 @@ bool OnInitImpl(mmGUIApp &app)
     /* Load MMEX Custom Settings */
     mmIniOptions::instance().loadOptions(&inidb);
 
-    wxConfigBase *config = wxConfigBase::Get();
+    wxFileConfig *config = new wxFileConfig("", "",
+        mmex::GetSharedDir().GetPathWithSep()+ mmex::GetAppName() + ".conf",
+        "", wxCONFIG_USE_LOCAL_FILE|wxCONFIG_USE_SUBDIR );   
+    wxConfigBase::Set(config);
+
     /* Was App Maximized? */
     bool isMax = config->ReadBool("ISMAXIMIZED", false);
 
@@ -3308,6 +3312,8 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
     autoRepeatTransactionsTimer_.Stop();
+    delete wxConfigBase::Set((wxConfigBase *) NULL);
+    this->Destroy();
     Close(TRUE);
 }
 //----------------------------------------------------------------------------
