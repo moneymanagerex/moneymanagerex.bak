@@ -138,11 +138,9 @@ int mmImportQIF( mmCoreDB* core, wxString destinationAccountName = wxEmptyString
 
 void correctEmptyFileExt(wxString ext, wxString & fileName );
 
-void mmLoadColorsFromDatabase( wxSQLite3Database* db_ );
-wxColour mmGetColourFromString( const wxString& str );
-wxString mmGetStringFromColour( wxColour color );
+void mmLoadColorsFromDatabase();
 
-void mmPlayTransactionSound( wxSQLite3Database* db_ );
+void mmPlayTransactionSound();
 
 /*
    mmOptions caches the options for MMEX

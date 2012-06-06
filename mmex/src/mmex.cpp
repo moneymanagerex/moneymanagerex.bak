@@ -258,9 +258,6 @@ bool OnInitImpl(mmGUIApp &app)
 
     SETTING_V1.ensure(&inidb);
 
-    /* Load Colors from Database */
-    mmLoadColorsFromDatabase(&inidb);
-
     /* Load MMEX Custom Settings */
     mmIniOptions::instance().loadOptions(&inidb);
 
@@ -268,6 +265,9 @@ bool OnInitImpl(mmGUIApp &app)
         mmex::GetSharedDir().GetPathWithSep()+ mmex::GetAppName() + ".conf",
         "", wxCONFIG_USE_LOCAL_FILE|wxCONFIG_USE_SUBDIR );   
     wxConfigBase::Set(config);
+
+    /* Load Colors from Database */
+    mmLoadColorsFromDatabase();
 
     /* Was App Maximized? */
     bool isMax = config->ReadBool("ISMAXIMIZED", false);
