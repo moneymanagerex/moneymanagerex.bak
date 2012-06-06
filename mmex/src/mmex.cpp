@@ -62,7 +62,6 @@
 #include "customreportindex.h"
 #include "customreportdialog.h"
 #include <boost/version.hpp>
-#include "mmyahoo.h"
 #include <wx/aboutdlg.h>
 //----------------------------------------------------------------------------
 
@@ -380,9 +379,9 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, mmGUIFrame::OnExportToQIF)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, mmGUIFrame::OnImportQIF)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, mmGUIFrame::OnImportUniversalCSV)
-    EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWALL, mmGUIFrame::OnViewAllAccounts)
-    EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, mmGUIFrame::OnViewFavoriteAccounts)
-    EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, mmGUIFrame::OnViewOpenAccounts)
+    EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWALL, mmGUIFrame::OnTempViewAccounts)
+    EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, mmGUIFrame::OnTempViewAccounts)
+    EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, mmGUIFrame::OnTempViewAccounts)
 
     /* Custom Sql Reports */
     EVT_MENU(MENU_CUSTOM_SQL_REPORT_NEW, mmGUIFrame::OnNewCustomSqlReport)
@@ -1345,7 +1344,9 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     /* Load Nav Tree Control */
 
-    wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("ALL"));
+    //wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("ALL"));
+    wxConfigBase *config = wxConfigBase::Get();
+    wxString vAccts = config->Read("VIEWACCOUNTS", "ALL");
 
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->rangeAccount();
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
@@ -2454,56 +2455,24 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
         }
     }
 }
-//----------------------------------------------------------------------------
 
-void mmGUIFrame::OnViewAllAccounts(wxCommandEvent&)
+void mmGUIFrame::OnTempViewAccounts(wxCommandEvent& event)
 {
+    wxConfigBase *config = wxConfigBase::Get();
     //Get current settings for view accounts
-    wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("ALL"));
-
-    //Set view ALL
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("ALL"));
+	wxString old_view_type = config->Read("VIEWACCOUNTS", "ALL");
+    wxString view_type = "ALL";
+    if (event.GetId() == MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE) view_type = "Favorites";
+    else if (event.GetId() == MENU_TREEPOPUP_ACCOUNT_VIEWOPEN) view_type = "Open";
+    config->Write("VIEWACCOUNTS", view_type);
 
     //Refresh Navigation Panel
     mmGUIFrame::updateNavTreeControl();
 
     //Restore settings
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), vAccts);
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::OnViewFavoriteAccounts(wxCommandEvent&)
-{
-    //Get current settings for view accounts
-    wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("ALL"));
-
-    //Set view ALL
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("Favorites"));
-
-    //Refresh Navigation Panel
-    mmGUIFrame::updateNavTreeControl();
-
-    //Restore settings
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), vAccts);
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::OnViewOpenAccounts(wxCommandEvent&)
-{
-    //Get current settings for view accounts
-    wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("ALL"));
-
-    //Set view ALL
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("Open"));
-
-    //Refresh Navigation Panel
-    mmGUIFrame::updateNavTreeControl();
-
-    //Restore settings
-    mmDBWrapper::setINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), vAccts);
+	config->Write("VIEWACCOUNTS", old_view_type);
 }
 
-//----------------------------------------------------------------------------
 void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
     wxSizer *sizer = cleanupHomePanel();
@@ -3681,13 +3650,14 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     }
     site.RemoveLast(1);
 
-    mmYahoo* yahoo_ = new mmYahoo(m_inidb.get(), m_core->db_.get());
+    wxConfigBase *config = wxConfigBase::Get();
 
     //Sample:
     //http://finance.yahoo.com/d/quotes.csv?s=EURUSD=X+RUBUSD=X&f=sl1n&e=.csv
-    site = wxString() << ("http://") << yahoo_->Server_
+    site = wxString() << ("http://") 
+            << config->Read("HTTP_YAHOO_SERVER","download.finance.yahoo.com")
             << ("/d/quotes.csv?s=") << site;
-    site << ("&f=") << yahoo_->CSVColumns_ << ("&e=.csv");
+    site << ("&f=sl1n&e=.csv");
 
     wxString rates;
     int err_code = site_content(site, rates);

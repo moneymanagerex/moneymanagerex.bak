@@ -83,10 +83,9 @@ class YahooSettingsDialog : public wxDialog
 		wxTextCtrl* m_YahooServer;
 
 		wxButton* m_proxySettingsButton;
-        mmYahoo* m_yahoopointer;
 
 	public:
-		YahooSettingsDialog( mmYahoo* myp, wxWindow* parent, 
+		YahooSettingsDialog(wxWindow* parent, 
             int id = idYahooSettingsDialog, 
             wxString title = _("Options"), 
             wxPoint pos = wxDefaultPosition, 

@@ -31,22 +31,13 @@ public:
 
 private:
 public:  /// Really should change these to private and use accessors. One day.
-    enum
-    {
-        DS_NOTAUTOMATIC,
-        DS_NOTSTARTED,
-        DS_INPROGRESS,
-        DS_SUCCESSFUL,
-        DS_FAILED,
-        DS_OUTOFHOURS,
-    }  StocksRefreshStatus_;
 
     wxSQLite3Database*  inidb_;
     wxSQLite3Database*  db_;
     wxString            Suffix_;
     wxString            OpenTimeStr_;
     wxString            CloseTimeStr_;
-    long                UpdatingEnabled_;   // used as a boolean
+    bool                UpdatingEnabled_;
     wxDateTime          LastRefreshDT_;
     wxString            CSVColumns_;
     wxString            Server_;

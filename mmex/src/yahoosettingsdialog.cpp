@@ -26,6 +26,9 @@
 
 #else
 #include <wx/wx.h>
+#include <wx/config.h>
+#include <wx/confbase.h>
+#include <wx/fileconf.h>
 #endif //WX_PRECOMP
 
 #include "yahoosettingsdialog.h"
@@ -34,16 +37,15 @@
 BEGIN_EVENT_TABLE( YahooSettingsDialog, wxDialog )
 END_EVENT_TABLE()
 
-YahooSettingsDialog::YahooSettingsDialog( mmYahoo* myp,
-                                         wxWindow* parent,
+YahooSettingsDialog::YahooSettingsDialog( wxWindow* parent,
                                          int id,
                                          wxString title,
                                          wxPoint pos,
                                          wxSize size,
                                          int style )
-: wxDialog( parent, id, title, pos, size, style ),
-m_yahoopointer(myp)
+: wxDialog( parent, id, title, pos, size, style )
 {
+    wxConfigBase *config = wxConfigBase::Get();
     wxSizerFlags flags, flags_expand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 4);
     flags_expand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 4).Expand();
@@ -61,7 +63,7 @@ m_yahoopointer(myp)
     m_YahooServer = new wxTextCtrl(this, idYahooServer,
         _("finance.au.yahoo.com"));
     m_YahooServer->SetToolTip( _("Do not enter anything except the server name (or IP address, if you're feeling lucky)") );
-    m_YahooServer->SetValue(m_yahoopointer->Server_);
+    m_YahooServer->SetValue(config->Read("HTTP_YAHOO_SERVER","download.finance.yahoo.com"));
 
     fgSizer_main->Add(m_YahooServer, flags_expand);
 
@@ -71,7 +73,7 @@ m_yahoopointer(myp)
     m_YahooSuffix = new wxTextCtrl(this,
         idYahooSuffix, wxEmptyString);
     m_YahooSuffix->SetToolTip( _("Enter the suffix used by Yahoo for the market of your stocks. \nIf your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio.") );
-    m_YahooSuffix->SetValue(m_yahoopointer->Suffix_);
+    m_YahooSuffix->SetValue(config->Read("HTTP_YAHOO_SUFFIX", ""));
 
     fgSizer_main->Add(m_YahooSuffix, flags_expand);
 
@@ -90,7 +92,8 @@ m_yahoopointer(myp)
         wxDefaultSize, wxSP_ARROW_KEYS, 0, 10, 0);
     m_MarketOpenHour->SetToolTip( _("Allow for any delay in quotes") );
     long LongTemp;
-    m_yahoopointer->OpenTimeStr_.Mid(0,2).ToLong(&LongTemp);
+    //m_yahoopointer->OpenTimeStr_.Mid(0,2).ToLong(&LongTemp);
+    (config->Read("STOCKS_MARKET_OPEN_TIME", "10:15:00")).Mid(0,2).ToLong(&LongTemp);
     m_MarketOpenHour->SetValue(LongTemp);
 
     wxStaticText* m_staticText20 = new wxStaticText(this, wxID_STATIC, (" : "));
@@ -99,7 +102,8 @@ m_yahoopointer(myp)
         idMarketOpenMinute, wxEmptyString, wxDefaultPosition,
         wxDefaultSize, wxSP_ARROW_KEYS, 0, 59, 0);
     m_MarketOpenMinute->SetToolTip( _("Allow for any delay in quotes") );
-    m_yahoopointer->OpenTimeStr_.Mid(3,2).ToLong(&LongTemp);
+    //m_yahoopointer->OpenTimeStr_.Mid(3,2).ToLong(&LongTemp);
+    (config->Read("STOCKS_MARKET_OPEN_TIME", "10:15:00")).Mid(3,2).ToLong(&LongTemp);
     m_MarketOpenMinute->SetValue(LongTemp);
 
     fgSizer5->Add(m_MarketOpenHour, flags);
@@ -116,7 +120,8 @@ m_yahoopointer(myp)
         idMarketCloseHour, wxEmptyString,
         wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 23, 0);
     m_MarketCloseHour->SetToolTip(_("Allow for any delay in quotes"));
-    m_yahoopointer->CloseTimeStr_.Mid(0,2).ToLong(&LongTemp);
+    //m_yahoopointer->CloseTimeStr_.Mid(0,2).ToLong(&LongTemp);
+    (config->Read("STOCKS_MARKET_CLOSE_TIME", "16:40:00")).Mid(0,2).ToLong(&LongTemp);
     m_MarketCloseHour->SetValue(LongTemp);
 
     wxStaticText* m_staticText201 = new wxStaticText(this, wxID_STATIC, (" : "));
@@ -125,7 +130,8 @@ m_yahoopointer(myp)
         idMarketCloseMinute, wxEmptyString, wxDefaultPosition,
         wxDefaultSize, wxSP_ARROW_KEYS, 0, 59, 0);
     m_MarketCloseMinute->SetToolTip( _("Allow for any delay in quotes"));
-    m_yahoopointer->CloseTimeStr_.Mid(3,2).ToLong(&LongTemp);
+    //m_yahoopointer->CloseTimeStr_.Mid(3,2).ToLong(&LongTemp);
+    (config->Read("STOCKS_MARKET_CLOSE_TIME", "16:40:00")).Mid(3,2).ToLong(&LongTemp);
     m_MarketCloseMinute->SetValue(LongTemp);
 
     fgSizer6->Add(m_MarketCloseHour, flags);
@@ -135,14 +141,15 @@ m_yahoopointer(myp)
 
     m_checkBoxRefreshPrices = new wxCheckBox(this,
         idCBDoRefresh, _("&Refresh interval"));
-    m_checkBoxRefreshPrices->SetValue(m_yahoopointer->UpdatingEnabled_ ? true : false);
+    m_checkBoxRefreshPrices->SetValue(config->ReadBool("STOCKS_REFRESH_ENABLED", false));
 
     wxFlexGridSizer* fgSizer9 = new wxFlexGridSizer(1, 2, 0, 0);
+
 
     m_RefreshInterval = new wxSpinCtrl(this,
         idRefreshInterval, wxEmptyString, wxDefaultPosition,
         wxDefaultSize, wxSP_ARROW_KEYS, 1, 999, 5);
-    m_RefreshInterval->SetValue(m_yahoopointer->UpdateIntervalMinutes_);
+    m_RefreshInterval->SetValue(config->ReadLong("STOCKS_REFRESH_MINUTES", 30));
     m_RefreshInterval->SetToolTip(_("Refresh interval in minutes while market is open"));
 
     wxStaticText* label_minutes = new wxStaticText(this, wxID_STATIC, _("minutes"));
