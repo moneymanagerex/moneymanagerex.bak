@@ -129,6 +129,8 @@ wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString inpu
 
 void mmOptionsDialog::CreateControls()
 {
+    wxConfigBase *config = wxConfigBase::Get();
+
     wxSize imageSize(48, 48);
     m_imageList = new wxImageList(imageSize.GetWidth(), imageSize.GetHeight());
     m_imageList->Add(wxBitmap(view_xpm));
@@ -647,7 +649,7 @@ void mmOptionsDialog::CreateControls()
     othersPanelSizer->Add(cbUseOrgDateCopyPaste_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     cbUseSound_ = new wxCheckBox(othersPanel, wxID_ANY, _("Use Transaction Sound"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    cbUseSound_->SetValue(GetIniDatabaseCheckboxValue(INIDB_USE_TRANSACTION_SOUND,true));
+    cbUseSound_->SetValue(config->ReadBool(INIDB_USE_TRANSACTION_SOUND, true));
     cbUseSound_->SetToolTip(_("Select whether to use sounds when entering transactions"));
     othersPanelSizer->Add(cbUseSound_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -1083,6 +1085,7 @@ void mmOptionsDialog::SaveViewPanelSettings()
 
 void mmOptionsDialog::SaveColourPanelSettings()
 {
+    wxConfigBase *config = wxConfigBase::Get();
     mmColors::navTreeBkColor = navTreeBkColor_;
     mmColors::listAlternativeColor0 = listAlternativeColor0_;
     mmColors::listAlternativeColor1 = listAlternativeColor1_;
@@ -1091,17 +1094,18 @@ void mmOptionsDialog::SaveColourPanelSettings()
     mmColors::listDetailsPanelColor = listDetailsPanelColor_;
     mmColors::listFutureDateColor = listFutureDateColor_;
 
-    mmDBWrapper::setINISettingValue(inidb_, ("LISTALT0"), mmGetStringFromColour(mmColors::listAlternativeColor0));
-    mmDBWrapper::setINISettingValue(inidb_, ("LISTALT1"), mmGetStringFromColour(mmColors::listAlternativeColor1));
-    mmDBWrapper::setINISettingValue(inidb_, ("LISTBACK"), mmGetStringFromColour(mmColors::listBackColor));
-    mmDBWrapper::setINISettingValue(inidb_, ("NAVTREE"),  mmGetStringFromColour(mmColors::navTreeBkColor));
-    mmDBWrapper::setINISettingValue(inidb_, ("LISTBORDER"), mmGetStringFromColour(mmColors::listBorderColor));
-    mmDBWrapper::setINISettingValue(inidb_, ("LISTDETAILSPANEL"), mmGetStringFromColour(mmColors::listDetailsPanelColor));
-    mmDBWrapper::setINISettingValue(inidb_, ("LISTFUTUREDATES"), mmGetStringFromColour(mmColors::listFutureDateColor));
+    config->Write(("LISTALT0"), (navTreeBkColor_).GetAsString(wxC2S_CSS_SYNTAX));
+    config->Write(("LISTALT1"), (listAlternativeColor0_).GetAsString(wxC2S_CSS_SYNTAX));
+    config->Write(("LISTBACK"), (listAlternativeColor1_).GetAsString(wxC2S_CSS_SYNTAX));
+    config->Write(("NAVTREE"), (listBackColor_).GetAsString(wxC2S_CSS_SYNTAX));
+    config->Write(("LISTBORDER"), (listBorderColor_).GetAsString(wxC2S_CSS_SYNTAX));
+    config->Write(("LISTDETAILSPANEL"), (listDetailsPanelColor_).GetAsString(wxC2S_CSS_SYNTAX));
+    config->Write(("LISTFUTUREDATES"), (listFutureDateColor_).GetAsString(wxC2S_CSS_SYNTAX));
 }
 
 void mmOptionsDialog::SaveOthersPanelSettings()
 {
+    wxConfigBase *config = wxConfigBase::Get();
     wxChoice* itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE);
     mmIniOptions::instance().transPayeeSelectionNone_ = itemChoice->GetSelection();
     mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_PAYEE_NONE"),
@@ -1125,10 +1129,9 @@ void mmOptionsDialog::SaveOthersPanelSettings()
     SaveStocksUrl();
 
     SetIniDatabaseCheckboxValue(INIDB_USE_ORG_DATE_COPYPASTE, cbUseOrgDateCopyPaste_->GetValue());
-
-    SetIniDatabaseCheckboxValue(INIDB_USE_TRANSACTION_SOUND, cbUseSound_->GetValue());
-
     SetIniDatabaseCheckboxValue(INIDB_UPDATE_CURRENCY_RATE, cbEnableCurrencyUpd_->GetValue());
+
+    config->Write(INIDB_USE_TRANSACTION_SOUND, cbUseSound_->GetValue());
 }
 
 void mmOptionsDialog::SaveImportExportPanelSettings()

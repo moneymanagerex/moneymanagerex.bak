@@ -334,11 +334,12 @@ void mmIniOptions::saveOptions(wxSQLite3Database* /*db*/)
 }
 
 // ---------------------------------------------------------------------------
-void mmPlayTransactionSound(wxSQLite3Database* db_)
+void mmPlayTransactionSound()
 {
-    wxString useSound = mmDBWrapper::getINISettingValue(db_, INIDB_USE_TRANSACTION_SOUND, ("TRUE"));
+    wxConfigBase *config = wxConfigBase::Get();
+    bool useSound = config->ReadBool(INIDB_USE_TRANSACTION_SOUND, true);
 
-    if (useSound == ("TRUE"))
+    if (useSound)
     {
         wxSound registerSound(mmex::getPathResource(mmex::TRANS_SOUND));
         if (registerSound.IsOk())
@@ -716,67 +717,27 @@ wxDateTime mmGetStorageStringAsDate(const wxString& str)
     return dt;
 }
 
-wxColour mmGetColourFromString(const wxString& str)
+void mmLoadColorsFromDatabase()
 {
-    wxStringTokenizer tkz(str, (","), wxTOKEN_RET_EMPTY_ALL);
-    unsigned char red = 0xFF;
-    unsigned char blue = 0xFF;
-    unsigned char green = 0xFF;
-
-    if (tkz.HasMoreTokens())
-    {
-        long longVal;
-        tkz.GetNextToken().ToLong(&longVal);
-        red = longVal;
-
-        if (tkz.HasMoreTokens())
-        {
-            tkz.GetNextToken().ToLong(&longVal);
-            green = longVal;
-
-            if (tkz.HasMoreTokens())
-            {
-                tkz.GetNextToken().ToLong(&longVal);
-                blue = longVal;
-            }
-        }
-    }
-
-    return wxColour(red, green, blue);
-}
-
-wxString mmGetStringFromColour(wxColour color)
-{
-    return wxString::Format(("%d,%d,%d"), color.Red(), color.Green(), color.Blue());
-}
-
-void mmLoadColorsFromDatabase(wxSQLite3Database* db_)
-{
-    mmColors::listAlternativeColor0 = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                      ("LISTALT0"), ("225,237,251")));
-    mmColors::listAlternativeColor1 = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                      ("LISTALT1"), ("255,255,255")));
-    mmColors::listBackColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                              ("LISTBACK"), ("255,255,255")));
-    mmColors::navTreeBkColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                               ("NAVTREE"), ("255,255,255")));
-    mmColors::listBorderColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                ("LISTBORDER"), ("0,0,0")));
-    mmColors::listDetailsPanelColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                      ("LISTDETAILSPANEL"), ("244,247,251")));
-    mmColors::listFutureDateColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_,
-                                    ("LISTFUTUREDATES"), ("116,134,168")));
+    wxConfigBase *config = wxConfigBase::Get();
+    mmColors::listAlternativeColor0 = wxColor(config->Read("LISTALT0", "WHITE"));
+    mmColors::listAlternativeColor0 = wxColor(config->Read("LISTALT1", "rgb(225, 237, 251)"));
+    mmColors::listBackColor = wxColor(config->Read("LISTBACK", "WHITE"));
+    mmColors::navTreeBkColor = wxColor(config->Read("NAVTREE", "WHITE"));
+    mmColors::listBorderColor = wxColor(config->Read("LISTBORDER", "BLACK"));
+    mmColors::listDetailsPanelColor = wxColor(config->Read("LISTDETAILSPANEL", "rgb(244, 247, 251)"));
+    mmColors::listFutureDateColor = wxColor(config->Read("LISTFUTUREDATES", "rgb(116, 134, 168)"));
 }
 
 
 /* Set the default colors */
-wxColour mmColors::listAlternativeColor0 = wxColour(225, 237, 251);
-wxColour mmColors::listAlternativeColor1 = wxColour(255, 255, 255);
-wxColour mmColors::listBackColor = wxColour(255, 255, 255);
-wxColour mmColors::navTreeBkColor = wxColour(255, 255, 255);
-wxColour mmColors::listBorderColor = wxColour(0, 0, 0);
-wxColour mmColors::listDetailsPanelColor = wxColour(244, 247, 251);
-wxColour mmColors::listFutureDateColor = wxColour(116, 134, 168);
+wxColour mmColors::listAlternativeColor0 = wxColour("rgb(225, 237, 251)");
+wxColour mmColors::listAlternativeColor1 = wxColour("rgb(255, 255, 255)");
+wxColour mmColors::listBackColor = wxColour("rgb(255, 255, 255)");
+wxColour mmColors::navTreeBkColor = wxColour("rgb(255, 255, 255)");
+wxColour mmColors::listBorderColor = wxColour("rgb(0, 0, 0)");
+wxColour mmColors::listDetailsPanelColor = wxColour("rgb(244, 247, 251)");
+wxColour mmColors::listFutureDateColor = wxColour("rgb(116, 134, 168)");
 
 //----------------------------------------------------------------------------
 
