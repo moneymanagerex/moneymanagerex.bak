@@ -297,6 +297,7 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
 
 void mmIniOptions::loadOptions(wxSQLite3Database* db)
 {
+    wxConfigBase *config = wxConfigBase::Get();
     if (mmDBWrapper::getINISettingValue(db, ("ENABLESTOCKS"), ("TRUE")) != ("TRUE")) expandStocksHome_ = false;
     if (mmDBWrapper::getINISettingValue(db, ("ENABLEASSETS"), ("TRUE")) != ("TRUE")) enableAssets_ = false;
     if (mmDBWrapper::getINISettingValue(db, ("ENABLEBUDGET"), ("TRUE")) != ("TRUE")) enableBudget_ = false;
@@ -315,13 +316,12 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
     if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, ("TRUE")) != ("TRUE")) budgetSummaryWithoutCategories_ = false;
     if (mmDBWrapper::getINISettingValue(db, INIDB_IGNORE_FUTURE_TRANSACTIONS, ("FALSE")) != ("FALSE")) ignoreFutureTransactions_ = true;
 
-    // Read the preference as a string and convert to int
-    transPayeeSelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, ("TRANSACTION_PAYEE_NONE"), ("0")));
+    transPayeeSelectionNone_ = config->ReadLong("TRANSACTION_PAYEE_NONE", 0);
     // For the category selection, default behavior should remain that the last category used for the payee is selected.
     //  This is item 1 (0-indexed) in the list.
-    transCategorySelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, ("TRANSACTION_CATEGORY_NONE"), ("1")));
-    transStatusReconciled_ = wxAtoi(mmDBWrapper::getINISettingValue(db, ("TRANSACTION_STATUS_RECONCILED"), ("0")));
-    transDateDefault_ = wxAtoi(mmDBWrapper::getINISettingValue(db, ("TRANSACTION_DATE_DEFAULT"), ("0")));
+    transCategorySelectionNone_ = config->ReadLong("TRANSACTION_CATEGORY_NONE", 1);
+    transStatusReconciled_ = config->ReadLong("TRANSACTION_STATUS_RECONCILED", 0);
+    transDateDefault_ = config->ReadLong("TRANSACTION_DATE_DEFAULT", 0);
 }
 
 void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
