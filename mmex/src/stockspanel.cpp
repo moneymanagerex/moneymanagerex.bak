@@ -93,9 +93,11 @@ bool mmStocksPanel::Create(wxWindow *parent,
         listCtrlStock_->EnsureVisible(((int)trans_.size()) - 1);
 
     // Greg Newton
-    yahoo_ = new mmYahoo(inidb_, db_);
+    //yahoo_ = new mmYahoo(NULL, /*inidb_,*/ db_);
 
-    strLastUpdate_ = mmDBWrapper::getInfoSettingValue(db_, ("STOCKS_LAST_REFRESH_DATETIME"), (""));
+    wxConfigBase *config = wxConfigBase::Get();
+    //strLastUpdate_ = mmDBWrapper::getInfoSettingValue(db_, ("STOCKS_LAST_REFRESH_DATETIME"), (""));
+    strLastUpdate_ = config->Read("STOCKS_LAST_REFRESH_DATETIME", "");
 
     updateExtraStocksData(-1);
 
@@ -103,7 +105,7 @@ bool mmStocksPanel::Create(wxWindow *parent,
     StatusRefreshTimer_ = NULL;
 
     DownloadScheduleTimer_ = new wxTimer(this, ID_TIMER_SCHEDULE_STOCK);
-    DownloadScheduleTimer_->Start(yahoo_->UpdateIntervalMinutes_ * 60000, wxTIMER_CONTINUOUS);
+    DownloadScheduleTimer_->Start(config->ReadLong("STOCKS_REFRESH_MINUTES", 30) * 60000, wxTIMER_CONTINUOUS);
 
 #ifdef __WXMSW__
     Thaw();
@@ -126,8 +128,8 @@ mmStocksPanel::~mmStocksPanel()
         delete StatusRefreshTimer_;
     }
 
-    if (yahoo_) delete yahoo_;
-    this->save_config(listCtrlStock_, ("STOCKS"));
+    //if (yahoo_) delete yahoo_;
+    this->save_config(listCtrlStock_, "STOCKS");
 }
 
 void mmStocksPanel::CreateControls()
@@ -185,12 +187,7 @@ void mmStocksPanel::CreateControls()
     wxConfigBase *config = wxConfigBase::Get();
     for (int i = 0; i < COL_MAX; ++i)
     {
-        if (i==2 || i==3 || i==4 || i==5)
-            itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-        else
-            itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-
-        itemCol.SetText(wxString()<<columns[i]);
+        itemCol.SetText(wxString() << columns[i]);
         listCtrlStock_->InsertColumn(i, columns[i], (i<2 || i>5 ? wxLIST_FORMAT_LEFT : wxLIST_FORMAT_RIGHT));
 
         long col_x = config->ReadLong(wxString::Format("STOCKS_COL%i_WIDTH", i), -2);
@@ -387,16 +384,29 @@ void mmStocksPanel::OnRefreshQuotes(wxCommandEvent& WXUNUSED(event))
 
 void mmStocksPanel::OnHTTPSettings(wxCommandEvent& WXUNUSED(event))
 {
-    YahooSettingsDialog dlg(yahoo_, this);
+    YahooSettingsDialog dlg(this);
     if (dlg.ShowModal() == wxID_OK)
     {
+        wxConfigBase *config = wxConfigBase::Get();
         // Copy dialog values back to yahoo_->
-        yahoo_->UpdatingEnabled_ = dlg.m_checkBoxRefreshPrices->GetValue();
-        yahoo_->UpdateIntervalMinutes_ = dlg.m_RefreshInterval->GetValue();
-        yahoo_->Suffix_ = dlg.m_YahooSuffix->GetValue();
-        yahoo_->Server_ = dlg.m_YahooServer->GetValue();
-        yahoo_->OpenTimeStr_ = wxString::Format(("%02d:%02d:00"), dlg.m_MarketOpenHour->GetValue(),dlg.m_MarketOpenMinute->GetValue());
-        yahoo_->CloseTimeStr_ = wxString::Format(("%02d:%02d:00"), dlg.m_MarketCloseHour->GetValue(),dlg.m_MarketCloseMinute->GetValue());
+        //yahoo_->UpdatingEnabled_ = dlg.m_checkBoxRefreshPrices->GetValue();
+        config->Write("STOCKS_REFRESH_ENABLED", dlg.m_checkBoxRefreshPrices->GetValue());
+        //yahoo_->UpdateIntervalMinutes_ = dlg.m_RefreshInterval->GetValue();
+        config->Write("STOCKS_REFRESH_MINUTES", dlg.m_RefreshInterval->GetValue());
+        //yahoo_->Suffix_ = dlg.m_YahooSuffix->GetValue();
+        config->Write("HTTP_YAHOO_SUFFIX", dlg.m_YahooSuffix->GetValue());
+        //yahoo_->Server_ = dlg.m_YahooServer->GetValue();
+        config->Write("HTTP_YAHOO_SERVER", dlg.m_YahooServer->GetValue());
+        //yahoo_->OpenTimeStr_ = wxString::Format(("%02d:%02d:00"), dlg.m_MarketOpenHour->GetValue(),dlg.m_MarketOpenMinute->GetValue());
+        config->Write("STOCKS_MARKET_OPEN_TIME",
+            wxString::Format(("%02d:%02d:00"),
+            dlg.m_MarketOpenHour->GetValue(),
+            dlg.m_MarketOpenMinute->GetValue()));
+
+        //yahoo_->CloseTimeStr_ = wxString::Format(("%02d:%02d:00"), dlg.m_MarketCloseHour->GetValue(),dlg.m_MarketCloseMinute->GetValue());
+        config->Write("STOCKS_MARKET_CLOSE_TIME", wxString::Format(("%02d:%02d:00"),
+            dlg.m_MarketCloseHour->GetValue(),
+            dlg.m_MarketCloseMinute->GetValue()));
     }
 }
 
@@ -428,7 +438,7 @@ void mmStocksPanel::OrderDownloadIfRequired(void)
         if (DownloadIsRequired())
             OrderQuoteRefresh();
         else {
-             yahoo_->StocksRefreshStatus_ = mmYahoo::DS_OUTOFHOURS;
+            //yahoo_->StocksRefreshStatus_ = mmYahoo::DS_OUTOFHOURS;
             wxBitmap pic(led_yellow_xpm);
             m_LED->SetBitmap(pic);
         }
@@ -437,24 +447,33 @@ void mmStocksPanel::OrderDownloadIfRequired(void)
     {
         wxBitmap pic(led_off_xpm);
         m_LED->SetBitmap(pic);
-        yahoo_->StocksRefreshStatus_ = mmYahoo::DS_NOTAUTOMATIC;
+        //yahoo_->StocksRefreshStatus_ = mmYahoo::DS_NOTAUTOMATIC;
     }
 }
 
 /** Compare current time with market hours, and with last update time **/
 bool mmStocksPanel::DownloadIsRequired(void)
 {
+   wxConfigBase *config = wxConfigBase::Get();
    // If automatic updates are disabled, don't start a download.
-    if (!yahoo_->UpdatingEnabled_) return false;
-    if (!yahoo_->LastRefreshDT_.IsValid()) return true; // Invalid last update time, so let's do it!
+    if (!config->ReadBool("STOCKS_REFRESH_ENABLED", false)) return false;\
+    wxString datetime_str = config->Read("STOCKS_LAST_REFRESH_DATETIME", "");
+    wxDateTime LastRefreshDT;
+#if wxCHECK_VERSION(2,9,0)
+    if (!LastRefreshDT.ParseDateTime(datetime_str))
+#else 
+    if (!LastRefreshDT.ParseDateTime(datetime_str.GetData()))
+#endif
+    LastRefreshDT = wxInvalidDateTime;
+    if (LastRefreshDT.IsValid()) return true; // Invalid last update time, so let's do it!
 
     wxDateTime workingDateTime = wxDateTime::Now();
 
     // Get today's market open and close times
     wxDateTime MarketOpen = wxDateTime::Now();
     wxDateTime MarketClose = wxDateTime::Now();
-    MarketOpen.ParseTime(yahoo_->OpenTimeStr_);
-    MarketClose.ParseTime(yahoo_->CloseTimeStr_);
+    MarketOpen.ParseTime(config->Read("STOCKS_MARKET_OPEN_TIME", "10:15:00"));
+    MarketClose.ParseTime(config->Read("STOCKS_MARKET_CLOSE_TIME", "16:40:00"));
 
     // If today is a work day,
     if (workingDateTime.IsWorkDay())
@@ -478,9 +497,11 @@ bool mmStocksPanel::DownloadIsRequired(void)
     MarketOpen.ParseDate(workingDateTime.FormatISODate().GetData());
     MarketClose.ParseDate(workingDateTime.FormatISODate().GetData());
     // ParseDate resets time to 00:00, so we re-ParseTime
-    MarketOpen.ParseTime(yahoo_->OpenTimeStr_);
-    MarketClose.ParseTime(yahoo_->CloseTimeStr_);
-    if (yahoo_->LastRefreshDT_.IsEarlierThan(MarketClose)) return true;
+    MarketOpen.ParseTime(config->Read("STOCKS_MARKET_OPEN_TIME", "10:15:00"));
+    MarketClose.ParseTime(config->Read("STOCKS_MARKET_CLOSE_TIME", "16:40:00"));
+    wxDateTime refresh_datetime;
+    //FIXME:
+    //if (refresh_datetime.ParseTime(config->Read("STOCKS_LAST_REFRESH_DATETIME", "")).IsEarlierThan(MarketClose)) return true;
 
     return false;
 }
@@ -521,6 +542,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
      *                                                                                                              *
      ****************************************************************************************************************/
 
+    wxConfigBase *config = wxConfigBase::Get();
     DB_View_STOCK_V1::Data_Set all_stocks = STOCK_V1.all(db_);
     if (all_stocks.empty())
         return;
@@ -528,7 +550,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     wxString suffix, site;
     wxSortedArrayString symbols_array;
 
-    suffix = yahoo_->Suffix_.Upper();
+    suffix = config->Read("HTTP_YAHOO_SUFFIX", "").Upper();
     bool suffix_available = !suffix.IsEmpty();
 
     BOOST_FOREACH(const DB_View_STOCK_V1::Data &stock, all_stocks)
@@ -542,16 +564,17 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
     //Sample:
     //http://finance.yahoo.com/d/quotes.csv?s=SBER03.ME+GZPR.ME&f=sl1n&e=.csv
-    site = wxString() << ("http://") << yahoo_->Server_ << ("/d/quotes.csv?s=") << site;
-    site << ("&f=") << yahoo_->CSVColumns_ << ("&e=.csv");
+    site = wxString() << ("http://") << config->Read("HTTP_YAHOO_SERVER","download.finance.yahoo.com")
+        << ("/d/quotes.csv?s=") << site;
+    site << ("&f=") << ("sl1n") << ("&e=.csv");
 
-    yahoo_->StocksRefreshStatus_ = mmYahoo::DS_INPROGRESS;
+    //yahoo_->StocksRefreshStatus_ = mmYahoo::DS_INPROGRESS;
     wxString quotes;
 
     int err_code = site_content(site, quotes);
     if (err_code != wxID_OK)
     {
-        yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
+        //yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
         wxBitmap pic(led_red_xpm);
         m_LED->SetBitmap(pic);
         if (err_code != wxID_OK) {
@@ -635,8 +658,13 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     listCtrlStock_->RefreshItems(0, ((int)trans_.size()) - 1);
 
     // We are done!
-    yahoo_->LastRefreshDT_       = wxDateTime::Now();
-    yahoo_->StocksRefreshStatus_ = mmYahoo::DS_SUCCESSFUL;
+    //yahoo_->LastRefreshDT_       = wxDateTime::Now();
+
+    config->Write("STOCKS_LAST_REFRESH_DATETIME", 
+        wxString::Format(("%s %s"),
+        wxDateTime::Now().FormatISODate().c_str(),
+        wxDateTime::Now().FormatISOTime().c_str()));
+    //yahoo_->StocksRefreshStatus_ = mmYahoo::DS_SUCCESSFUL;
     wxBitmap pic(led_green_xpm);
     m_LED->SetBitmap(pic);
 }

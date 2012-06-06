@@ -250,9 +250,7 @@ private:
     void OnPopupEditAccount(wxCommandEvent& event);
     void OnPopupImportQIFile(wxCommandEvent& event);
 
-    void OnViewAllAccounts(wxCommandEvent& event);
-    void OnViewFavoriteAccounts(wxCommandEvent& event);
-    void OnViewOpenAccounts(wxCommandEvent& event);
+    void OnTempViewAccounts(wxCommandEvent& event);
 
     /* Custom SQL Report*/
     bool CustomSQLReportSelected(int& customSqlReportID, mmTreeItemData* iData );
