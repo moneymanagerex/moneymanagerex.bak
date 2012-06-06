@@ -635,7 +635,7 @@ void mmOptionsDialog::CreateControls()
     itemStaticTextURL->SetFont(staticBoxFontSetting);
     itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, ("STOCKURL"), mmex::DEFSTOCKURL);
+    wxString stockURL = config->Read("STOCKURL", mmex::DEFSTOCKURL);
     wxTextCtrl* itemTextCtrURL = new wxTextCtrl(othersPanel, ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizerStockURL->Add(itemTextCtrURL, 1, wxGROW|wxALIGN_LEFT|wxALL, 5);
     itemTextCtrURL->SetToolTip(_("Clear the field to Reset the value to system default."));
@@ -983,21 +983,6 @@ void mmOptionsDialog::SaveFinancialYearStart()
     mmDBWrapper::setInfoSettingValue(db_, ("FINANCIAL_YEAR_START_MONTH"), fysMonthVal);
 }
 
-void mmOptionsDialog::SaveStocksUrl()
-{
-    wxTextCtrl* url = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL);
-    wxString stockURL = url->GetValue();
-    if (!stockURL.IsEmpty())
-    {
-        mmDBWrapper::setInfoSettingValue(db_, ("STOCKURL"), stockURL);
-    }
-    else
-    {
-        // Clear database record: Allows value to reset to system default.
-        db_->ExecuteUpdate("delete from INFOTABLE_V1 where INFONAME = \"STOCKURL\";");
-    }
-}
-
 /// Saves the updated System Options to the appropriate databases.
 void mmOptionsDialog::SaveNewSystemSettings()
 {
@@ -1108,25 +1093,27 @@ void mmOptionsDialog::SaveOthersPanelSettings()
     wxConfigBase *config = wxConfigBase::Get();
     wxChoice* itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE);
     mmIniOptions::instance().transPayeeSelectionNone_ = itemChoice->GetSelection();
-    mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_PAYEE_NONE"),
+    config->Write("TRANSACTION_PAYEE_NONE",
         wxString::Format(("%d"), (int)mmIniOptions::instance().transPayeeSelectionNone_));
 
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY);
     mmIniOptions::instance().transCategorySelectionNone_ = itemChoice->GetSelection();
-    mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_CATEGORY_NONE"),
+    config->Write("TRANSACTION_CATEGORY_NONE",
         wxString::Format(("%d"), (int)mmIniOptions::instance().transCategorySelectionNone_));
 
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
     mmIniOptions::instance().transStatusReconciled_ = itemChoice->GetSelection();
-    mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_STATUS_RECONCILED"),
+    config->Write("TRANSACTION_STATUS_RECONCILED",
         wxString::Format(("%d"), (int)mmIniOptions::instance().transStatusReconciled_));
 
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE);
     mmIniOptions::instance().transDateDefault_ = itemChoice->GetSelection();
-    mmDBWrapper::setINISettingValue(inidb_, ("TRANSACTION_DATE_DEFAULT"),
+    config->Write("TRANSACTION_DATE_DEFAULT",
         wxString::Format(("%d"), (int)mmIniOptions::instance().transDateDefault_));
-
-    SaveStocksUrl();
+    
+    wxTextCtrl* url = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL);
+    wxString stockURL = url->GetValue();
+    config->Write("STOCKURL", stockURL);
 
     SetIniDatabaseCheckboxValue(INIDB_USE_ORG_DATE_COPYPASTE, cbUseOrgDateCopyPaste_->GetValue());
     SetIniDatabaseCheckboxValue(INIDB_UPDATE_CURRENCY_RATE, cbEnableCurrencyUpd_->GetValue());

@@ -184,7 +184,6 @@ private:
     void SaveViewAccountOptions();
     void SaveViewTransactionOptions();
     void SaveFinancialYearStart();
-    void SaveStocksUrl();
 
     void SaveGeneralPanelSettings();
     void SaveViewPanelSettings();
