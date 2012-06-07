@@ -146,7 +146,7 @@ private:
     void initVirtualListControl();
     void showTips();
     void updateExtraTransactionData(int selIndex);
-    void saveSettings();
+    void save_panel_settings();
 
     /* Getter for Virtual List Control */
     wxString getItem(long item, long column) const;

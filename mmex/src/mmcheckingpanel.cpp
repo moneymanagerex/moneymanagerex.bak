@@ -441,7 +441,7 @@ mmCheckingPanel::mmCheckingPanel
 mmCheckingPanel::~mmCheckingPanel()
 {
     this->save_config(m_listCtrlAccount, ("CHECK"));
-    saveSettings();
+    save_panel_settings();
 }
 //----------------------------------------------------------------------------
 
@@ -485,17 +485,11 @@ bool mmCheckingPanel::Create(
 /*
     Save data to ini database.
 */
-void mmCheckingPanel::saveSettings()
+void mmCheckingPanel::save_panel_settings()
 {
-    inidb_->Begin();
-    {
-        // sorting column index
-        mmDBWrapper::setINISettingValue(inidb_, ("CHECK_SORT_COL"), wxString() << g_sortcol);
-
-        // asc\desc sorting flag
-        mmDBWrapper::setINISettingValue(inidb_, ("CHECK_ASC"), wxString() << g_asc);
-    }
-    inidb_->Commit();
+    wxConfigBase *config = wxConfigBase::Get();
+    config->Write("CHECK_SORT_COL", (long)g_sortcol);
+    config->Write("CHECK_ASC", g_asc);
 }
 //----------------------------------------------------------------------------
 
@@ -546,6 +540,8 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
 
 void mmCheckingPanel::CreateControls()
 {
+    wxConfigBase *config = wxConfigBase::Get();
+
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
     wxSizerFlags flags;
@@ -614,23 +610,19 @@ void mmCheckingPanel::CreateControls()
     m_listCtrlAccount->setSortColumn(g_sortcol);
     m_listCtrlAccount->SetFocus();
 
+
     createColumns(inidb_, *m_listCtrlAccount);
 
-    {   // load the global variables
-        long val = COL_DEF_SORT;
-        wxString strVal = mmDBWrapper::getINISettingValue(inidb_, ("CHECK_SORT_COL"), wxString() << val);
-        if (strVal.ToLong(&val)) g_sortcol = toEColumn(val);
-        // --
-        val = 1; // asc sorting default
-        strVal = mmDBWrapper::getINISettingValue(inidb_, ("CHECK_ASC"), wxString() << val);
-        if (strVal.ToLong(&val)) g_asc = val != 0;
+    // load the global variables
+    long val = (long)COL_DEF_SORT;
+    g_sortcol = toEColumn(config->ReadLong("CHECK_SORT_COL", val));
+    g_asc = config->ReadBool("CHECK_ASC", true);
 
-        // --
-        m_listCtrlAccount->setSortColumn(g_sortcol);
-        m_listCtrlAccount->setSortOrder(g_asc);
-        m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(),
-            m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
-    }
+    // --
+    m_listCtrlAccount->setSortColumn(g_sortcol);
+    m_listCtrlAccount->setSortOrder(g_asc);
+    m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(),
+    m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
 
     wxPanel *itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);

@@ -22,10 +22,10 @@
 #include "guiid.h"
 #include "paths.h"
 #include "constants.h"
-//----------------------------------------------------------------------------
+
+#include <wx/tokenzr.h>
 #include <boost/scoped_ptr.hpp>
 #include <boost/foreach.hpp>
-//----------------------------------------------------------------------------
 #include <sqlite3.h>
 //----------------------------------------------------------------------------
 
@@ -201,71 +201,6 @@ const double g_defBASECONVRATE = 1.0;
 const char g_BaseCurrencyIdName[] = "BASECURRENCYID";
 
 //----------------------------------------------------------------------------
-void loadCurrencies(wxSQLite3Database* db)
-{
-    try{
-        static const char sql[] =
-        "select CURRENCYNAME, "
-               "PFX_SYMBOL, "
-               "SFX_SYMBOL, "
-               "DECIMAL_POINT, "
-               "GROUP_SEPARATOR, "
-               "UNIT_NAME, "
-               "CENT_NAME, "
-               "SCALE, "
-               "BASECONVRATE " // CURRENCY_SYMBOL not exists in this table
-        "from CURRENCYFORMATS_V1";
-
-        static const char sql2[] =
-        "insert into CURRENCYFORMATS_V1 ("
-          "CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, "
-          "UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
-        " ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, '' )";
-
-        wxString fName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
-        wxASSERT(wxFileName::FileExists(fName));
-
-        wxSQLite3Database currencies;
-        currencies.Open(fName, wxGetEmptyString(), WXSQLITE_OPEN_READONLY);
-
-        {
-            bool ok = currencies.TableExists(("CURRENCYFORMATS_V1"));
-            wxASSERT(ok);
-            ok = ok; // removes compiler's warning
-        }
-
-        wxSQLite3ResultSet rs = currencies.ExecuteQuery(sql);
-        wxSQLite3Statement st = db->PrepareStatement(sql2);
-
-        while(rs.NextRow())
-        {
-            int i = 0;
-            st.Bind(++i, rs.GetString(("CURRENCYNAME")));
-            st.Bind(++i, rs.GetString(("PFX_SYMBOL")));
-            st.Bind(++i, rs.GetString(("SFX_SYMBOL")));
-            st.Bind(++i, rs.GetString(("DECIMAL_POINT")));
-            st.Bind(++i, rs.GetString(("GROUP_SEPARATOR")));
-            st.Bind(++i, rs.GetString(("UNIT_NAME")));
-            st.Bind(++i, rs.GetString(("CENT_NAME")));
-            st.Bind(++i, rs.GetInt(("SCALE")));
-            st.Bind(++i, rs.GetDouble(("BASECONVRATE"), g_defBASECONVRATE));
-
-            wxASSERT(st.GetParamCount() == i);
-
-            st.ExecuteUpdate();
-            st.Reset();
-        }
-
-        st.Finalize();
-        rs.Finalize();
-
-        currencies.Close();
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(("Database::loadCurrencies: Exception"), e.GetMessage().c_str());
-        wxLogError(("insert into CURRENCYFORMATS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
 //----------------------------------------------------------------------------
 
 void
@@ -446,21 +381,47 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
 
     CURRENCYFORMATS_V1.ensure(db);
 
-    DB_View_CURRENCYFORMATS_V1::Data* us_dollar = CURRENCYFORMATS_V1.create();
-    us_dollar->CURRENCYNAME = ("US DOLLAR");
-    us_dollar->PFX_SYMBOL = ("$");
-    us_dollar->SFX_SYMBOL = ("");
-    us_dollar->DECIMAL_POINT = (",");
-    us_dollar->GROUP_SEPARATOR = (",");
-    us_dollar->UNIT_NAME = ("dollar");
-    us_dollar->CENT_NAME = ("cents");
-    us_dollar->SCALE = 100;
-    us_dollar->BASECONVRATE = 1.0;
-    us_dollar->CURRENCY_SYMBOL = ("USD");
+    wxSortedArrayString currencies;
+    currencies.Add(wxT("US Dollar  ;$;;,;,;dollar;cents;100;1;USD"));
+    currencies.Add(wxT("Swiss Franc;;Fr.;.;,;franc;centimes;100;1;CHF"));
+    wxString fileName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
+    wxASSERT(wxFileName::FileExists(fileName));
 
-    us_dollar->save(db);
+    if (!fileName.empty())
+    {
+        wxTextFile tFile(fileName);
+        if (tFile.Open())
+        {
+            wxString str;
+            for (str = tFile.GetFirstLine(); !tFile.Eof(); str = tFile.GetNextLine())
+            {
+                currencies.Add(str);
+            }
+        }
+        else 
+        {
+            wxMessageBox(_("Unable to open file."), _("Currencies"), wxOK|wxICON_WARNING);
+        }
+    }
+
+    for (int i = 0; i < currencies.Count(); ++i)
+    {
+        wxStringTokenizer tk(currencies[i], wxT(";"));   
+        DB_View_CURRENCYFORMATS_V1::Data* currency_data = CURRENCYFORMATS_V1.create();
+     
+        currency_data->CURRENCYNAME = tk.GetNextToken().Trim();
+        currency_data->PFX_SYMBOL = tk.GetNextToken();
+        currency_data->SFX_SYMBOL = tk.GetNextToken();
+        currency_data->DECIMAL_POINT = tk.GetNextToken();
+        currency_data->GROUP_SEPARATOR = tk.GetNextToken();
+        currency_data->UNIT_NAME = tk.GetNextToken();
+        currency_data->CENT_NAME = tk.GetNextToken();
+        currency_data->SCALE = wxAtoi(tk.GetNextToken());
+        currency_data->BASECONVRATE = wxAtoi(tk.GetNextToken());
+        currency_data->CURRENCY_SYMBOL = tk.GetNextToken();
     
-    loadCurrencies(db);
+        currency_data->save(db);
+    }    
 }
 
 bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
