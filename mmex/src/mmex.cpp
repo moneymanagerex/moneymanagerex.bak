@@ -594,8 +594,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     }
 
     // decide if we need to show app start dialog
-    wxString showBeginApp = mmDBWrapper::getINISettingValue(m_inidb.get(), ("SHOWBEGINAPP"), ("TRUE"));
-    bool from_scratch = showBeginApp == ("TRUE");
+    bool from_scratch = config->ReadBool("SHOWBEGINAPP", true);
 
     wxFileName dbpath = from_scratch ? wxGetEmptyString() : mmDBWrapper::getLastDbPath(m_inidb.get());
 
