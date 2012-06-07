@@ -581,8 +581,8 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     m_mgr.Update();
 
     // enable or disable online update currency rate
-    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(m_inidb.get(), INIDB_UPDATE_CURRENCY_RATE, ("FALSE"));
-    if(enableCurrencyUpd == ("TRUE"))
+    bool enableCurrencyUpd = config->ReadBool(INIDB_UPDATE_CURRENCY_RATE, true);
+    if(enableCurrencyUpd)
     {
         if (menuItemOnlineUpdateCurRate_)
             menuItemOnlineUpdateCurRate_->Enable(true);
