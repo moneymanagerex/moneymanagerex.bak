@@ -278,12 +278,11 @@ void mmTransDialog::CreateControls()
     
     wxDateTime trx_date_ = mmGetStorageStringAsDate(getLastTrxDate());
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, trx_date_,
-                                 wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
+                                 wxDefaultPosition, wxSize(130, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
 
     // Display the day of the week
-    wxString dateStr = mmGetNiceDateString(dpc_->GetValue());
-    dateStr = dateStr.substr(0,dateStr.Find(","));
+    wxString dateStr = mmGetShortWeekDayName(dpc_->GetValue().GetWeekDay());
     itemStaticTextWeek->SetLabel(dateStr);
 
 // change properties depending on system parameters
@@ -648,8 +647,7 @@ void mmTransDialog::OnSpinDown(wxSpinEvent& event)
 void mmTransDialog::OnDateChanged(wxDateEvent& event)
 {
     //get weekday name 
-    wxString dateStr = mmGetNiceDateString(event.GetDate());
-    dateStr = dateStr.substr(0,dateStr.Find(","));
+    wxString dateStr = mmGetShortWeekDayName(event.GetDate().GetWeekDay());
     itemStaticTextWeek->SetLabel(dateStr);
     event.Skip();
 }

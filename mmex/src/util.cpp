@@ -424,35 +424,56 @@ wxString mmGetNiceMonthName(int month)
 {
     static const wxString mon[12] =
     {
-        _("January"), _("February"), _("March"), _("April"), _("May "), _("June"),
-        _("July"), _("August"), _("September"), _("October"), _("November"), _("December")
+        wxTRANSLATE("January"), wxTRANSLATE("February"),
+        wxTRANSLATE("March"), wxTRANSLATE("April"),
+        wxTRANSLATE("May "), wxTRANSLATE("June"),
+        wxTRANSLATE("July"), wxTRANSLATE("August"),
+        wxTRANSLATE("September"), wxTRANSLATE("October"),
+        wxTRANSLATE("November"), wxTRANSLATE("December")
     };
 
     wxASSERT(month >= 0 && month < 12);
-    return mon[month];
+    return wxGetTranslation(mon[month]);
 }
 
 wxString mmGetNiceShortMonthName(int month)
 {
     static const wxString mon[12] =
     {
-        _("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
-        _("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec")
+        wxTRANSLATE("Jan"), wxTRANSLATE("Feb"), wxTRANSLATE("Mar"),
+        wxTRANSLATE("Apr"), wxTRANSLATE("May"), wxTRANSLATE("Jun"),
+        wxTRANSLATE("Jul"), wxTRANSLATE("Aug"), wxTRANSLATE("Sep"),
+        wxTRANSLATE("Oct"), wxTRANSLATE("Nov"), wxTRANSLATE("Dec")
     };
 
     wxASSERT(month >= 0 && month < 12);
-    return mon[month];
+    return wxGetTranslation(mon[month]);
 }
 
 wxString mmGetNiceWeekDayName(int week_day)
 {
     static const wxString gDaysInWeek[7] =
     {
-        _("Sunday"), _("Monday"), _("Tuesday"), _("Wednesday"),
-        _("Thursday"), _("Friday"), _("Saturday")
+        wxTRANSLATE("Sunday"), wxTRANSLATE("Monday"),
+        wxTRANSLATE("Tuesday"), wxTRANSLATE("Wednesday"),
+        wxTRANSLATE("Thursday"), wxTRANSLATE("Friday"),
+        wxTRANSLATE("Saturday")
     };
     wxASSERT(week_day >= 0 && week_day < 7);
-    return gDaysInWeek[week_day];
+    return wxGetTranslation(gDaysInWeek[week_day]);
+}
+
+wxString mmGetShortWeekDayName(const int week_day)
+{
+    static const wxString gDaysInWeek[7] =
+    {
+        wxTRANSLATE("Sun"), wxTRANSLATE("Mon"),
+        wxTRANSLATE("Tue"), wxTRANSLATE("Wed"),
+        wxTRANSLATE("Thu"), wxTRANSLATE("Fri"),
+        wxTRANSLATE("Sat")
+    };
+    wxASSERT(week_day >= 0 && week_day < 7);
+    return wxGetTranslation(gDaysInWeek[week_day]);
 }
 
 wxString mmGetNiceDateString(const wxDateTime &dt)
@@ -465,15 +486,15 @@ wxString mmGetNiceDateString(const wxDateTime &dt)
 wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
 {
     wxString dateFmt = mmOptions::instance().dateFormat;
-    dateFmt.Replace(("%Y%m%d"), ("%Y %m %d"));
-    dateFmt.Replace(("."), (" "));
-    dateFmt.Replace((","), (" "));
-    dateFmt.Replace(("/"), (" "));
-    dateFmt.Replace(("-"), (" "));
-    dateFmt.Replace(("%d"), wxString::Format(("%d"), dt.GetDay()));
-    dateFmt.Replace(("%Y"), wxString::Format(("%d"), dt.GetYear()));
-    dateFmt.Replace(("%y"), wxString::Format(("%d"), dt.GetYear()).Mid(2,2));
-    dateFmt.Replace(("%m"), mmGetNiceMonthName(dt.GetMonth()));
+    dateFmt.Replace("%Y%m%d", "%Y %m %d");
+    dateFmt.Replace(".", " ");
+    dateFmt.Replace(",", " ");
+    dateFmt.Replace("/", " ");
+    dateFmt.Replace("-", " ");
+    dateFmt.Replace("%d", wxString::Format("%d", dt.GetDay()));
+    dateFmt.Replace("%Y", wxString::Format("%d", dt.GetYear()));
+    dateFmt.Replace("%y", wxString::Format("%d", dt.GetYear()).Mid(2,2));
+    dateFmt.Replace("%m", mmGetNiceMonthName(dt.GetMonth()));
 
     return dateFmt;
 }
