@@ -76,17 +76,14 @@ bool mmAppStartDialog::Create( wxWindow* parent, wxWindowID id, const wxString& 
 
 mmAppStartDialog::~mmAppStartDialog()
 {
-    try {
-        wxString showBeginApp = itemCheckBox->GetValue() ? ("TRUE") : ("FALSE");
-        mmDBWrapper::setINISettingValue(inidb_, ("SHOWBEGINAPP"), showBeginApp);
-    } catch (...) {
-        wxASSERT(false);
-    }
+        wxConfigBase *config = wxConfigBase::Get();
+        config->Write("SHOWBEGINAPP", itemCheckBox->GetValue());
 }
 
 
 void mmAppStartDialog::CreateControls()
 {    
+    wxConfigBase *config = wxConfigBase::Get();
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
@@ -148,18 +145,14 @@ void mmAppStartDialog::CreateControls()
     itemCheckBox = new wxCheckBox( this, ID_CHECKBOX_APPSTART_SHOWAPPSTART, 
         showAppStartString, wxDefaultPosition, 
         wxDefaultSize, wxCHK_2STATE );
-    wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_, 
-        ("SHOWBEGINAPP"), wxGetEmptyString());
-    if (showBeginApp == ("TRUE") )
-        itemCheckBox->SetValue(true);
-    else
-        itemCheckBox->SetValue(false);
+
+    itemCheckBox->SetValue(config->ReadBool("SHOWBEGINAPP", false));
     itemBoxSizer10->Add(itemCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticLine* line = new wxStaticLine (this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
     itemBoxSizer2->Add(line, 0, wxGROW|wxALL, 5);
 
-    itemButtonClose_ = new wxButton( this, wxID_OK, _("Close"), wxDefaultPosition, wxDefaultSize, 0);
+    itemButtonClose_ = new wxButton( this, wxID_OK, _("Close"));
     itemButtonClose_->SetDefault();
     itemButtonClose_->SetFocus();
     itemBoxSizer2->Add(itemButtonClose_, 0, wxALIGN_RIGHT|wxALL, 10);
