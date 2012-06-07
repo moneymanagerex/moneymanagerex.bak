@@ -216,7 +216,7 @@ insertCategoryTree(wxSQLite3Database* db,
     bool ok = cat.GetParamCount() == 1;
     wxASSERT(ok);
 
-    cat.Bind(1, categoryName);
+    cat.Bind(1, wxGetTranslation(categoryName));
     cat.ExecuteUpdate();
     cat.Reset();
 
@@ -260,44 +260,44 @@ void createDefaultCategories(wxSQLite3Database* db)
         );
 
         const wxChar* BillsCategories[] = {_("Telephone"), _("Electricity"), _("Gas"), _("Internet"), _("Rent"), _("Cable TV"), _("Water"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Bills"), BillsCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Bills"), BillsCategories);
 
         const wxChar* FoodCategories[] = {_("Groceries"), _("Dining out"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Food"), FoodCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Food"), FoodCategories);
 
         const wxChar* LeisureCategories[] = {_("Movies"), _("Video Rental"), _("Magazines"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Leisure"), LeisureCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Leisure"), LeisureCategories);
 
         const wxChar* AutomobileCategories[] = {_("Maintenance"), _("Gas"), _("Parking"), _("Registration"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Automobile"), AutomobileCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Automobile"), AutomobileCategories);
 
         const wxChar* EducationCategories[] = {_("Books"), _("Tuition"), _("Others"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Education"), EducationCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Education"), EducationCategories);
 
         const wxChar* HomeneedsCategories[] = {_("Clothing"), _("Furnishing"), _("Others"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Homeneeds"), HomeneedsCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Homeneeds"), HomeneedsCategories);
 
         const wxChar* HealthcareCategories[] = {_("Health"), _("Dental"), _("Eyecare"), _("Physician"), _("Prescriptions"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Healthcare"), HealthcareCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Healthcare"), HealthcareCategories);
 
         const wxChar* InsuranceCategories[] = {_("Auto"), _("Life"), _("Home"), _("Health"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Insurance"), InsuranceCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Insurance"), InsuranceCategories);
 
         const wxChar* VacationCategories[] = {_("Travel"), _("Lodging"), _("Sightseeing"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Vacation"), VacationCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Vacation"), VacationCategories);
 
         const wxChar* TaxesCategories[] = {_("Income Tax"), _("House Tax"), _("Water Tax"), _("Others"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Taxes"), TaxesCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Taxes"), TaxesCategories);
 
-        insertCategoryTree(db, st_cat, st_subcat, _("Miscellaneous"), 0);
-        insertCategoryTree(db, st_cat, st_subcat, _("Gifts"), 0);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Miscellaneous"), 0);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Gifts"), 0);
 
         const wxChar* IncomeCategories[] = {_("Salary"), _("Reimbursement/Refunds"),  _("Investment Income"), 0};
-        insertCategoryTree(db, st_cat, st_subcat, _("Income"), IncomeCategories);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Income"), IncomeCategories);
 
-        insertCategoryTree(db, st_cat, st_subcat, _("Other Income"), 0);
-        insertCategoryTree(db, st_cat, st_subcat, _("Other Expenses"), 0);
-        insertCategoryTree(db, st_cat, st_subcat, _("Transfer"), 0);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Other Income"), 0);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Other Expenses"), 0);
+        insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Transfer"), 0);
 
         // cleanup
         st_subcat.Finalize();
