@@ -232,7 +232,7 @@ mmIniOptions::mmIniOptions()
     , enableReportIssues_ (true)
     , enableBeNotifiedForNewReleases_(true)
     , enableVisitWebsite_(true)
-    , fontSize_(("3"))
+    , font_size_(3)
     , enableCustomAboutDialog_(false)
     , disableCategoryModify_(false)
     , enableCustomTemplateDB_(false)
@@ -303,7 +303,7 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
     if (mmDBWrapper::getINISettingValue(db, ("ENABLEBUDGET"), ("TRUE")) != ("TRUE")) enableBudget_ = false;
     if (mmDBWrapper::getINISettingValue(db, ("ENABLEGRAPHS"), ("TRUE")) != ("TRUE")) enableGraphs_ = false;
 
-    fontSize_ = mmDBWrapper::getINISettingValue(db, ("HTMLFONTSIZE"), ("3"));
+    font_size_ = config->ReadLong("HTMLFONTSIZE", 3);
 
     if (mmDBWrapper::getINISettingValue(db, ("EXPAND_BANK_HOME"), ("TRUE")) != ("TRUE"))   expandBankHome_ = false;
     if (mmDBWrapper::getINISettingValue(db, ("EXPAND_TERM_HOME"), ("FALSE")) != ("FALSE")) expandTermHome_ = true;

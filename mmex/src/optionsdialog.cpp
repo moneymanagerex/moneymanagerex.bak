@@ -391,19 +391,18 @@ void mmOptionsDialog::CreateControls()
 
     wxArrayString itemChoiceHTMLFontSize;
 
-    itemChoiceHTMLFontSize.Add(("XSmall"));
-    itemChoiceHTMLFontSize.Add(("Small"));
-    itemChoiceHTMLFontSize.Add(("Normal"));
-    itemChoiceHTMLFontSize.Add(("Large"));
-    itemChoiceHTMLFontSize.Add(("XLarge"));
-    itemChoiceHTMLFontSize.Add(("XXLarge"));
-    itemChoiceHTMLFontSize.Add(("Huge"));
+    itemChoiceHTMLFontSize.Add("XSmall");
+    itemChoiceHTMLFontSize.Add("Small");
+    itemChoiceHTMLFontSize.Add("Normal");
+    itemChoiceHTMLFontSize.Add("Large");
+    itemChoiceHTMLFontSize.Add("XLarge");
+    itemChoiceHTMLFontSize.Add("XXLarge");
+    itemChoiceHTMLFontSize.Add("Huge");
 
     choiceFontSize_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_FONT_SIZE,
         wxDefaultPosition, wxSize(85, -1), itemChoiceHTMLFontSize);
 
-    int vFontSize = -1 + wxAtoi(mmDBWrapper::getINISettingValue(inidb_, ("HTMLFONTSIZE"), ("3")));
-    choiceFontSize_->SetSelection(vFontSize);
+    choiceFontSize_->SetSelection((int)config->ReadLong("HTMLFONTSIZE", 3) -1);
 
     choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
     fontSizeOptionStaticBoxSizer->Add(choiceFontSize_, 1, wxGROW|wxALL, 5);
@@ -1044,10 +1043,10 @@ void mmOptionsDialog::SaveViewPanelSettings()
 {
     SaveViewAccountOptions();
     SaveViewTransactionOptions();
+    wxConfigBase *config = wxConfigBase::Get();
 
-    int size = choiceFontSize_->GetCurrentSelection() + 1;
-    mmIniOptions::instance().fontSize_ = wxString::Format(("%d"), size);
-    mmDBWrapper::setINISettingValue(inidb_, ("HTMLFONTSIZE"), mmIniOptions::instance().fontSize_);
+    mmIniOptions::instance().font_size_ = (long)choiceFontSize_->GetCurrentSelection() + 1;
+    config->Write("HTMLFONTSIZE", mmIniOptions::instance().font_size_);
 
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_TREE);
     mmIniOptions::instance().expandBankTree_ = itemCheckBox->GetValue();
