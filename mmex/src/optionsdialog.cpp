@@ -915,19 +915,8 @@ void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& /*event*/)
 
 bool mmOptionsDialog::GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState)
 {
-    wxString dbState = ("FALSE");
-    bool result = false;
-
-    if (defaultState)
-    {
-        dbState = ("TRUE");
-        result = true;
-    }
-    if (mmDBWrapper::getINISettingValue(inidb_, dbField, dbState) != dbState)
-    {
-        result = !result;
-    }
-    return result;
+    wxConfigBase *config = wxConfigBase::Get();
+    return config->ReadBool(dbField, defaultState);
 }
 
 void mmOptionsDialog::OnDelimiterSelected(wxCommandEvent& event)
