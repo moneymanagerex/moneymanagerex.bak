@@ -130,6 +130,9 @@ wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString inpu
 void mmOptionsDialog::CreateControls()
 {
     wxConfigBase *config = wxConfigBase::Get();
+    
+    wxSizerFlags flags(1);
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
 
     wxSize imageSize(48, 48);
     m_imageList = new wxImageList(imageSize.GetWidth(), imageSize.GetHeight());
@@ -142,18 +145,21 @@ void mmOptionsDialog::CreateControls()
     wxBoxSizer* mainDialogSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(mainDialogSizer);
 
-    wxPanel* mainDialogPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    mainDialogSizer->Add(mainDialogPanel, 1, wxGROW|wxALL, 5);
+    wxPanel* mainDialogPanel = new wxPanel(this,
+        wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    mainDialogSizer->Add(mainDialogPanel, 0, wxGROW|wxALL, 5);
 
     wxBoxSizer* mainDialogPanelSizer = new wxBoxSizer(wxVERTICAL);
     mainDialogPanel->SetSizer(mainDialogPanelSizer);
 
-    wxListbook* newBook = new wxListbook(mainDialogPanel, ID_DIALOG_OPTIONS_LISTBOOK, wxDefaultPosition, wxDefaultSize, wxLB_LEFT);
+    wxListbook* newBook = new wxListbook(mainDialogPanel,
+        ID_DIALOG_OPTIONS_LISTBOOK, wxDefaultPosition, wxDefaultSize, wxLB_LEFT);
 
     /*********************************************************************************************
      General Panel
     **********************************************************************************************/
-    wxPanel* generalPanel = new wxPanel(newBook, ID_BOOK_PANELGENERAL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxPanel* generalPanel = new wxPanel(newBook,
+        ID_BOOK_PANELGENERAL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
     SetMinSize(wxSize(500,600));
     wxBoxSizer* generalPanelSizer = new wxBoxSizer(wxVERTICAL);
@@ -173,7 +179,7 @@ void mmOptionsDialog::CreateControls()
 
     wxStaticText* userNameText = new wxStaticText(generalPanel, wxID_STATIC,
         _("User Name"), wxDefaultPosition, wxDefaultSize, 0);
-    headerStaticBoxSizer->Add(userNameText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    headerStaticBoxSizer->Add(userNameText, flags);
 
     wxString userName = mmDBWrapper::getInfoSettingValue(db_, ("USERNAME"), (""));
     wxTextCtrl* userNameTextCtr = new wxTextCtrl(generalPanel, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME,
@@ -237,7 +243,7 @@ void mmOptionsDialog::CreateControls()
     choiceDateFormat_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT,
         wxDefaultPosition, wxSize(140, -1), itemChoice7Strings, 0);
     choiceDateFormat_->SetSelection(i);
-    dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, flags);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
     choiceDateFormat_->Connect(ID_DIALOG_OPTIONS_DATE_FORMAT, wxEVT_COMMAND_CHOICE_SELECTED,
                                wxCommandEventHandler(mmOptionsDialog::OnDateFormatChanged), NULL, this);
@@ -248,9 +254,9 @@ void mmOptionsDialog::CreateControls()
         _("New date format sample:"), wxDefaultPosition, wxDefaultSize, 0);
     wxStaticText* sampleDateText = new wxStaticText(generalPanel, ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE,
         ("redefined elsewhere"), wxDefaultPosition, wxDefaultSize, 0);
-    dateFormatSettingStaticBoxSizerGrid->Add(restartText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    dateFormatSettingStaticBoxSizerGrid->Add(restartText, flags);
+    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, flags);
+    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, flags);
     sampleDateText->SetLabel(wxDateTime::Now().Format(dateFormat_));
 
     // Financial Year Settings
@@ -285,7 +291,7 @@ void mmOptionsDialog::CreateControls()
     };
     monthSelection_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH,
         wxDefaultPosition, wxSize(100, -1), financialMonthsSelection);
-    financialYearStaticBoxSizerGrid->Add(monthSelection_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    financialYearStaticBoxSizerGrid->Add(monthSelection_, flags);
     wxString financialPeriodStartMonth = mmDBWrapper::getInfoSettingValue(db_, ("FINANCIAL_YEAR_START_MONTH"), ("7"));
 
     int monthItem = wxAtoi(financialPeriodStartMonth);
@@ -302,13 +308,13 @@ void mmOptionsDialog::CreateControls()
         _("Create a new backup when MMEX Start"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     backupCheckBox->SetValue(GetIniDatabaseCheckboxValue(("BACKUPDB"),false));
     backupCheckBox->SetToolTip(_("When MMEX Starts,\ncreates the backup database: dbFile_start_YYYY-MM-DD.ext."));
-    backupStaticBoxSizer->Add(backupCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    backupStaticBoxSizer->Add(backupCheckBox, flags);
 
     wxCheckBox* backupUpdateCheckBox = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE,
         _("Update database changes to database backup on exit."), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     backupUpdateCheckBox->SetValue(GetIniDatabaseCheckboxValue(("BACKUPDB_UPDATE"),false));
     backupUpdateCheckBox->SetToolTip(_("When MMEX shuts down and changes made to database,\ncreates or updates the backup database: dbFile_update_YYYY-MM-DD.ext."));
-    backupStaticBoxSizer->Add(backupUpdateCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    backupStaticBoxSizer->Add(backupUpdateCheckBox, flags);
 
     /*********************************************************************************************
      Views Panel
@@ -323,16 +329,16 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* accountStaticBoxSizer = new wxStaticBoxSizer(accountStaticBox, wxHORIZONTAL);
     viewsPanelSizer->Add(accountStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* accountStaticText = new wxStaticText( viewsPanel, wxID_STATIC,
-        _("Accounts Visible"), wxDefaultPosition, wxDefaultSize, 0);
-    accountStaticBoxSizer->Add(accountStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* accountStaticText = new wxStaticText( viewsPanel,
+        wxID_STATIC, _("Accounts Visible"));
+    accountStaticBoxSizer->Add(accountStaticText, flags);
 
     int row_id_ = 0;
     wxArrayString itemChoiceViewAccountTranslatedStrings = viewAccountStrings(true, wxEmptyString, row_id_);
 
     choiceVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_ACCOUNTS,
         wxDefaultPosition, wxDefaultSize, itemChoiceViewAccountTranslatedStrings);
-    accountStaticBoxSizer->Add(choiceVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    accountStaticBoxSizer->Add(choiceVisible_, 1, wxGROW|wxALL, 5);
 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, ("VIEWACCOUNTS"), VIEW_ACCOUNTS_ALL_STR);
     row_id_ = 0;
@@ -342,7 +348,8 @@ void mmOptionsDialog::CreateControls()
     choiceVisible_->SetToolTip(_("Specify which accounts are visible"));
 
     // Transaction View options
-    wxStaticBox* transOptionStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Transaction View Options"));
+    wxStaticBox* transOptionStaticBox = new wxStaticBox(viewsPanel,
+        wxID_ANY, _("Transaction View Options"));
     transOptionStaticBox->SetFont(staticBoxFontSetting);
 
     wxBoxSizer* transOptionStaticBoxSizer = new wxStaticBoxSizer(transOptionStaticBox, wxHORIZONTAL);
@@ -351,10 +358,9 @@ void mmOptionsDialog::CreateControls()
     wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid2 = new wxFlexGridSizer(0,2,0,5);
     transOptionStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid2);
 
-    wxStaticText* transVisibleStaticText = new wxStaticText(viewsPanel, wxID_STATIC,
-        _("Transactions Visible"), wxDefaultPosition, wxDefaultSize, 0);
-    dateFormatSettingStaticBoxSizerGrid2->Add(transVisibleStaticText, 0,
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* transVisibleStaticText = new wxStaticText(viewsPanel,
+        wxID_STATIC, _("Transactions Visible"));
+    dateFormatSettingStaticBoxSizerGrid2->Add(transVisibleStaticText, flags);
 
     wxArrayString itemChoiceViewTransStrings;
     itemChoiceViewTransStrings.Add(_("View All Transactions"));
@@ -365,9 +371,9 @@ void mmOptionsDialog::CreateControls()
     itemChoiceViewTransStrings.Add(_("View Last Month"));
     itemChoiceViewTransStrings.Add(_("View Last 3 Months"));
 
-    choiceTransVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxSize(220,-1),
-        itemChoiceViewTransStrings);
-    dateFormatSettingStaticBoxSizerGrid2->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    choiceTransVisible_ = new wxChoice(viewsPanel,
+        ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxSize(220,-1), itemChoiceViewTransStrings);
+    dateFormatSettingStaticBoxSizerGrid2->Add(choiceTransVisible_, 1, wxGROW|wxALL, 5);
 
     wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, ("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     wxArrayString itemChoiceViewTransactionsString = viewTransactionsStrings(false, vTrans, row_id_);
@@ -379,10 +385,9 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* fontSizeOptionStaticBoxSizer = new wxStaticBoxSizer(fontSizeOptionStaticBox, wxHORIZONTAL);
     viewsPanelSizer->Add(fontSizeOptionStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* reportFontSizeStaticText = new wxStaticText(viewsPanel, wxID_STATIC,
-        _("Report Font Size"), wxDefaultPosition, wxDefaultSize, 0);
-    fontSizeOptionStaticBoxSizer->Add(reportFontSizeStaticText, 0,
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* reportFontSizeStaticText = new wxStaticText(viewsPanel,
+        wxID_STATIC, _("Report Font Size"));
+    fontSizeOptionStaticBoxSizer->Add(reportFontSizeStaticText, flags);
 
     wxArrayString itemChoiceHTMLFontSize;
 
@@ -401,10 +406,11 @@ void mmOptionsDialog::CreateControls()
     choiceFontSize_->SetSelection(vFontSize);
 
     choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
-    fontSizeOptionStaticBoxSizer->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    fontSizeOptionStaticBoxSizer->Add(choiceFontSize_, 1, wxGROW|wxALL, 5);
 
     // Navigation Tree Expansion Options
-    wxStaticBox* navTreeOptionsStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Navigation Tree Expansion Options"));
+    wxStaticBox* navTreeOptionsStaticBox = new wxStaticBox(viewsPanel,
+        wxID_ANY, _("Navigation Tree Expansion Options"));
     navTreeOptionsStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* navTreeOptionsStaticBoxSizer = new wxStaticBoxSizer(navTreeOptionsStaticBox, wxHORIZONTAL);
     viewsPanelSizer->Add(navTreeOptionsStaticBoxSizer, 0, wxGROW|wxALL, 5);
@@ -414,14 +420,14 @@ void mmOptionsDialog::CreateControls()
         _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     expandBankCheckBox->SetValue(GetIniDatabaseCheckboxValue(("EXPAND_BANK_TREE"),true));
     expandBankCheckBox->SetToolTip(_("Expand Bank Accounts in Trew View when tree is refreshed"));
-    navTreeOptionsStaticBoxSizer->Add(expandBankCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    navTreeOptionsStaticBoxSizer->Add(expandBankCheckBox, flags);
 
     // Expand Term Tree
     wxCheckBox* expandTermCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_TERM_TREE,
         _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     expandTermCheckBox->SetValue(GetIniDatabaseCheckboxValue(("EXPAND_TERM_TREE"),false));
     expandTermCheckBox->SetToolTip(_("Expand Term Accounts in Trew View when tree is refreshed"));
-    navTreeOptionsStaticBoxSizer->Add(expandTermCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    navTreeOptionsStaticBoxSizer->Add(expandTermCheckBox, flags);
 
     // Home Page Expansion Options
     wxStaticBox* homePageStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Home Page Expansion Options"));
@@ -434,42 +440,48 @@ void mmOptionsDialog::CreateControls()
         _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     expandBankHomeCheckBox->SetValue(GetIniDatabaseCheckboxValue(("EXPAND_BANK_HOME"),true));
     expandBankHomeCheckBox->SetToolTip(_("Expand Bank Accounts on home page when page is refreshed"));
-    homePageStaticBoxSizer->Add(expandBankHomeCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    homePageStaticBoxSizer->Add(expandBankHomeCheckBox, flags);
 
     // Expand Term Home
     wxCheckBox* itemCheckBoxExpandTermHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_TERM_HOME,
         _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     itemCheckBoxExpandTermHome->SetValue(GetIniDatabaseCheckboxValue(("EXPAND_TERM_HOME"),false));
     itemCheckBoxExpandTermHome->SetToolTip(_("Expand Term Accounts on home page when page is refreshed"));
-    homePageStaticBoxSizer->Add(itemCheckBoxExpandTermHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    homePageStaticBoxSizer->Add(itemCheckBoxExpandTermHome, flags);
 
     // Expand Stock Home
-    wxCheckBox* itemCheckBoxExpandStockHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME,
+    wxCheckBox* itemCheckBoxExpandStockHome = new wxCheckBox(viewsPanel,
+        ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME,
         _("Stock Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     itemCheckBoxExpandStockHome->SetValue(GetIniDatabaseCheckboxValue(("ENABLESTOCKS"),true));
     itemCheckBoxExpandStockHome->SetToolTip(_("Expand Stock Accounts on home page when page is refreshed"));
-    homePageStaticBoxSizer->Add(itemCheckBoxExpandStockHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    homePageStaticBoxSizer->Add(itemCheckBoxExpandStockHome, flags);
 
 
-    cbBudgetFinancialYears_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Budgets as Financial Years"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbBudgetFinancialYears_ = new wxCheckBox(viewsPanel, wxID_ANY,
+        _("View Budgets as Financial Years"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbBudgetFinancialYears_->SetValue(GetIniDatabaseCheckboxValue(INIDB_BUDGET_FINANCIAL_YEARS, false));
-    viewsPanelSizer->Add(cbBudgetFinancialYears_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    viewsPanelSizer->Add(cbBudgetFinancialYears_, flags);
 
-    cbBudgetIncludeTransfers_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Budgets with 'transfer' transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbBudgetIncludeTransfers_ = new wxCheckBox(viewsPanel, wxID_ANY,
+        _("View Budgets with 'transfer' transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbBudgetIncludeTransfers_->SetValue(GetIniDatabaseCheckboxValue(INIDB_BUDGET_INCLUDE_TRANSFERS, false));
-    viewsPanelSizer->Add(cbBudgetIncludeTransfers_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    viewsPanelSizer->Add(cbBudgetIncludeTransfers_, flags);
 
-    cbBudgetSetupWithoutSummary_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Budgets Setup Without Budget Summaries"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbBudgetSetupWithoutSummary_ = new wxCheckBox(viewsPanel, wxID_ANY,
+        _("View Budgets Setup Without Budget Summaries"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbBudgetSetupWithoutSummary_->SetValue(GetIniDatabaseCheckboxValue(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, false));
-    viewsPanelSizer->Add(cbBudgetSetupWithoutSummary_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    viewsPanelSizer->Add(cbBudgetSetupWithoutSummary_, flags);
 
-    cbBudgetSummaryWithoutCateg_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Budget Summary Report without Categories"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbBudgetSummaryWithoutCateg_ = new wxCheckBox(viewsPanel, wxID_ANY,
+        _("View Budget Summary Report without Categories"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbBudgetSummaryWithoutCateg_->SetValue(GetIniDatabaseCheckboxValue(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, true));
-    viewsPanelSizer->Add(cbBudgetSummaryWithoutCateg_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    viewsPanelSizer->Add(cbBudgetSummaryWithoutCateg_, flags);
 
-    cbIgnoreFutureTransactions_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Reports without Future Transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbIgnoreFutureTransactions_ = new wxCheckBox(viewsPanel, wxID_ANY,
+        _("View Reports without Future Transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbIgnoreFutureTransactions_->SetValue(GetIniDatabaseCheckboxValue(INIDB_IGNORE_FUTURE_TRANSACTIONS, false));
-    viewsPanelSizer->Add(cbIgnoreFutureTransactions_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    viewsPanelSizer->Add(cbIgnoreFutureTransactions_, flags);
 
     /*********************************************************************************************
      Colours Panel
@@ -484,68 +496,68 @@ void mmOptionsDialog::CreateControls()
     colourPanelSizer->Add(colourSettingStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* colourPanelSizerGrid = new wxFlexGridSizer(0, 2, 10, 10);
-    colourSettingStaticBoxSizer->Add(colourPanelSizerGrid, 0, wxALL, 5);
+    colourSettingStaticBoxSizer->Add(colourPanelSizerGrid);
 
     wxStaticText* navTreeStaticText = new wxStaticText(colourPanel, wxID_STATIC, _("Nav Tree"));
     wxButton* navTreeButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE,
         _("Nav Tree"), wxDefaultPosition, wxSize(150,-1), 0);
     navTreeButton->SetToolTip(_("Specify the color for the nav tree"));
     navTreeButton->SetBackgroundColour(mmColors::navTreeBkColor);
-    colourPanelSizerGrid->Add(navTreeStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
-    colourPanelSizerGrid->Add(navTreeButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(navTreeStaticText, flags);
+    colourPanelSizerGrid->Add(navTreeButton, flags);
 
     wxStaticText* listBackgroundStaticText = new wxStaticText( colourPanel, wxID_STATIC, _("List Background"));
     wxButton* listBackgroundButton = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK,
         _("List Background"), wxDefaultPosition, navTreeButton->GetSize(), 0 );
     listBackgroundButton->SetToolTip(_("Specify the color for the list background"));
     listBackgroundButton->SetBackgroundColour(mmColors::listBackColor);
-    colourPanelSizerGrid->Add(listBackgroundStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
-    colourPanelSizerGrid->Add(listBackgroundButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listBackgroundStaticText, flags);
+    colourPanelSizerGrid->Add(listBackgroundButton, flags);
 
     wxStaticText* listRowZeroStaticText = new wxStaticText(colourPanel, wxID_STATIC, _("List Row 0"));
     wxButton* listRowZeroButton = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0,
         _("List Row 0"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     listRowZeroButton->SetToolTip(_("Specify the color for the list row 0"));
     listRowZeroButton->SetBackgroundColour(mmColors::listAlternativeColor0);
-    colourPanelSizerGrid->Add(listRowZeroStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
-    colourPanelSizerGrid->Add(listRowZeroButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listRowZeroStaticText, flags);
+    colourPanelSizerGrid->Add(listRowZeroButton, flags);
 
     wxStaticText* listRowOneStaticText = new wxStaticText( colourPanel, wxID_STATIC, _("List Row 1"));
     wxButton* listRowOneButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1,
         _("List Row 1"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     listRowOneButton->SetToolTip(_("Specify the color for the list row 1"));
     listRowOneButton->SetBackgroundColour(mmColors::listAlternativeColor1);
-    colourPanelSizerGrid->Add(listRowOneStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
-    colourPanelSizerGrid->Add(listRowOneButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listRowOneStaticText, flags);
+    colourPanelSizerGrid->Add(listRowOneButton, flags);
 
     wxStaticText* listBorderSaticText = new wxStaticText( colourPanel, wxID_STATIC, _("List Border"));
     wxButton* listBorderButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER,
         _("List Border"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     listBorderButton->SetToolTip(_("Specify the color for the list Border"));
     listBorderButton->SetBackgroundColour(mmColors::listBorderColor);
-    colourPanelSizerGrid->Add(listBorderSaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
-    colourPanelSizerGrid->Add(listBorderButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listBorderSaticText, flags);
+    colourPanelSizerGrid->Add(listBorderButton, flags);
 
     wxStaticText* listDetailsStaticText = new wxStaticText( colourPanel, wxID_STATIC, _("List Details"));
     wxButton* listDetailsButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS,
         _("List Details"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     listDetailsButton->SetToolTip(_("Specify the color for the list details"));
     listDetailsButton->SetBackgroundColour(mmColors::listDetailsPanelColor);
-    colourPanelSizerGrid->Add(listDetailsStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
-    colourPanelSizerGrid->Add(listDetailsButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(listDetailsStaticText, flags);
+    colourPanelSizerGrid->Add(listDetailsButton, flags);
 
     wxStaticText* futureTransStaticText = new wxStaticText( colourPanel, wxID_STATIC, _("Future Transactions"));
     wxButton* futureTransButton = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES,
         _("Future Transactions"), wxDefaultPosition, navTreeButton->GetSize(), 0);
     futureTransButton->SetToolTip(_("Specify the color for future transactions"));
     futureTransButton->SetBackgroundColour(mmColors::listFutureDateColor);
-    colourPanelSizerGrid->Add(futureTransStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
-    colourPanelSizerGrid->Add(futureTransButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    colourPanelSizerGrid->Add(futureTransStaticText, flags);
+    colourPanelSizerGrid->Add(futureTransButton, flags);
 
-    wxButton* restoreDefaultButton = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT,
-        _("Restore Defaults"), wxDefaultPosition, wxDefaultSize, 0);
+    wxButton* restoreDefaultButton = new wxButton(colourPanel,
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT, _("Restore Defaults"));
     restoreDefaultButton->SetToolTip(_("Restore Default Colors"));
-    colourPanelSizer->Add(restoreDefaultButton, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    colourPanelSizer->Add(restoreDefaultButton, 0);
 
     /*********************************************************************************************
      Others Panel
@@ -559,7 +571,7 @@ void mmOptionsDialog::CreateControls()
     transSettingsStaticBox->SetFont(staticBoxFontSetting);
 
     wxStaticBoxSizer* transSettingsStaticBoxSizer = new wxStaticBoxSizer(transSettingsStaticBox, wxVERTICAL);
-    othersPanelSizer->Add(transSettingsStaticBoxSizer, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 10);
+    othersPanelSizer->Add(transSettingsStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(0,2,5,5);
     transSettingsStaticBoxSizer->Add(newTransflexGridSizer);
@@ -575,8 +587,8 @@ void mmOptionsDialog::CreateControls()
     wxChoice* defaultDateChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE,
         wxDefaultPosition, wxSize(140, -1), defaultValues);
     defaultDateChoice->SetSelection(mmIniOptions::instance().transDateDefault_);
-    newTransflexGridSizer->Add(dateStaticText,       0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(defaultDateChoice,    0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(dateStaticText,flags);
+    newTransflexGridSizer->Add(defaultDateChoice, flags);
 
     //  Default Payee
     wxStaticText* payeeStaticText = new wxStaticText(othersPanel, wxID_STATIC,
@@ -585,27 +597,28 @@ void mmOptionsDialog::CreateControls()
     wxChoice* defaultPayeeChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
         wxDefaultPosition, defaultDateChoice->GetSize(), defaultValues);
     defaultPayeeChoice->SetSelection(mmIniOptions::instance().transPayeeSelectionNone_);
-    newTransflexGridSizer->Add(payeeStaticText,      0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(defaultPayeeChoice,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(payeeStaticText, flags);
+    newTransflexGridSizer->Add(defaultPayeeChoice, flags);
 
     //  Default Category
     wxStaticText* categoryStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Category:"), wxDefaultPosition, wxDefaultSize);
 
-
     defaultValues[1]=(_("Last used for payee"));
 
-    wxChoice* defaultCategoryChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
+    wxChoice* defaultCategoryChoice = new wxChoice(othersPanel,
+        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
         wxDefaultPosition, defaultPayeeChoice->GetSize(), defaultValues);
     defaultCategoryChoice->SetSelection(mmIniOptions::instance().transCategorySelectionNone_);
-    newTransflexGridSizer->Add(categoryStaticText,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(defaultCategoryChoice,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(categoryStaticText, flags);
+    newTransflexGridSizer->Add(defaultCategoryChoice, flags);
 
     //  Default Status
     wxStaticText* statusStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Status:"), wxDefaultPosition, defaultPayeeChoice->GetSize());
 
-    wxChoice* default_status = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
+    wxChoice* default_status = new wxChoice(othersPanel,
+        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
         wxDefaultPosition, defaultDateChoice->GetSize());
     wxString transaction_status[] = 
     {
@@ -621,8 +634,10 @@ void mmOptionsDialog::CreateControls()
 
     default_status->SetSelection(mmIniOptions::instance().transStatusReconciled_);
 
-    newTransflexGridSizer->Add(statusStaticText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(default_status,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(statusStaticText, flags);
+    newTransflexGridSizer->Add(default_status, flags);
+    newTransflexGridSizer->AddSpacer(10);
+    newTransflexGridSizer->AddSpacer(10);
 
     //----------------------------------------------
     //a bit more space visual appearance
@@ -631,32 +646,34 @@ void mmOptionsDialog::CreateControls()
     wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxVERTICAL);
     othersPanelSizer->Add(itemBoxSizerStockURL, 0, wxGROW);
 
-    wxStaticText* itemStaticTextURL = new wxStaticText(othersPanel, wxID_STATIC, _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticTextURL = new wxStaticText(othersPanel, wxID_STATIC,
+        _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0);
     itemStaticTextURL->SetFont(staticBoxFontSetting);
     itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxString stockURL = config->Read("STOCKURL", mmex::DEFSTOCKURL);
-    wxTextCtrl* itemTextCtrURL = new wxTextCtrl(othersPanel, ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, wxDefaultPosition, wxDefaultSize, 0);
+    wxTextCtrl* itemTextCtrURL = new wxTextCtrl(othersPanel, ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL,
+        config->Read("STOCKURL", mmex::DEFSTOCKURL));
     itemBoxSizerStockURL->Add(itemTextCtrURL, 1, wxGROW|wxALIGN_LEFT|wxALL, 5);
     itemTextCtrURL->SetToolTip(_("Clear the field to Reset the value to system default."));
 
     //a bit more space visual appearance
     othersPanelSizer->AddSpacer(15);
 
-    cbUseOrgDateCopyPaste_ = new wxCheckBox(othersPanel, wxID_ANY, _("Use Original Date when Pasting Transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbUseOrgDateCopyPaste_ = new wxCheckBox(othersPanel, wxID_ANY,
+        _("Use Original Date when Pasting Transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbUseOrgDateCopyPaste_->SetValue(GetIniDatabaseCheckboxValue(INIDB_USE_ORG_DATE_COPYPASTE, false));
     cbUseOrgDateCopyPaste_->SetToolTip(_("Select whether to use the original transaction date or current date when copying/pasting transactions"));
-    othersPanelSizer->Add(cbUseOrgDateCopyPaste_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    othersPanelSizer->Add(cbUseOrgDateCopyPaste_, flags);
 
     cbUseSound_ = new wxCheckBox(othersPanel, wxID_ANY, _("Use Transaction Sound"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbUseSound_->SetValue(config->ReadBool(INIDB_USE_TRANSACTION_SOUND, true));
     cbUseSound_->SetToolTip(_("Select whether to use sounds when entering transactions"));
-    othersPanelSizer->Add(cbUseSound_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    othersPanelSizer->Add(cbUseSound_, flags);
 
     cbEnableCurrencyUpd_ = new wxCheckBox(othersPanel, wxID_ANY, _("Enable online currency update \n(Get data from yahoo.com)"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbEnableCurrencyUpd_->SetValue(GetIniDatabaseCheckboxValue(INIDB_UPDATE_CURRENCY_RATE, false));
     cbEnableCurrencyUpd_->SetToolTip(_("Enable or disable get data from yahoo.com to update currency rate"));
-    othersPanelSizer->Add(cbEnableCurrencyUpd_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    othersPanelSizer->Add(cbEnableCurrencyUpd_, flags);
 
     /*********************************************************************************************
      Import/Export Panel
@@ -717,7 +734,7 @@ void mmOptionsDialog::CreateControls()
     newBook->InsertPage(3, importExportPanel, _("Import/Export"), false, 4);
     newBook->InsertPage(4, othersPanel, _("Others"), false, 3);
 
-    mainDialogPanelSizer->Add(newBook, 1, wxGROW|wxALL, 5);
+    mainDialogPanelSizer->Add(newBook, 0, wxGROW|wxALL, 5);
     mainDialogPanelSizer->Layout();
 
    /**********************************************************************************************
