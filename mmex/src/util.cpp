@@ -295,26 +295,26 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
 }
 // --------------------------------------------------------------------------
 
-void mmIniOptions::loadOptions(wxSQLite3Database* db)
+void mmIniOptions::loadOptions()
 {
     wxConfigBase *config = wxConfigBase::Get();
-    if (mmDBWrapper::getINISettingValue(db, ("ENABLESTOCKS"), ("TRUE")) != ("TRUE")) expandStocksHome_ = false;
-    if (mmDBWrapper::getINISettingValue(db, ("ENABLEASSETS"), ("TRUE")) != ("TRUE")) enableAssets_ = false;
-    if (mmDBWrapper::getINISettingValue(db, ("ENABLEBUDGET"), ("TRUE")) != ("TRUE")) enableBudget_ = false;
-    if (mmDBWrapper::getINISettingValue(db, ("ENABLEGRAPHS"), ("TRUE")) != ("TRUE")) enableGraphs_ = false;
+    expandStocksHome_ = config->ReadBool("ENABLESTOCKS", true);
+    enableAssets_ = config->ReadBool("ENABLEASSETS", true);
+    enableBudget_ = config->ReadBool("ENABLEBUDGET", true);
+    enableGraphs_ = config->ReadBool("ENABLEGRAPHS", true);
 
     font_size_ = config->ReadLong("HTMLFONTSIZE", 3);
 
-    if (mmDBWrapper::getINISettingValue(db, ("EXPAND_BANK_HOME"), ("TRUE")) != ("TRUE"))   expandBankHome_ = false;
-    if (mmDBWrapper::getINISettingValue(db, ("EXPAND_TERM_HOME"), ("FALSE")) != ("FALSE")) expandTermHome_ = true;
-    if (mmDBWrapper::getINISettingValue(db, ("EXPAND_BANK_TREE"), ("TRUE")) != ("TRUE"))   expandBankTree_ = false;
-    if (mmDBWrapper::getINISettingValue(db, ("EXPAND_TERM_TREE"), ("FALSE")) != ("FALSE")) expandTermTree_ = true;
+    expandBankHome_ = config->ReadBool("EXPAND_BANK_HOME", true);
+    expandTermHome_ = config->ReadBool("EXPAND_TERM_HOME", true);
+    expandBankTree_ = config->ReadBool("EXPAND_BANK_TREE", true);
+    expandTermTree_ = config->ReadBool("EXPAND_TERM_TREE", true);
 
-    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_FINANCIAL_YEARS, ("FALSE")) != ("FALSE")) budgetFinancialYears_ = true;
-    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_INCLUDE_TRANSFERS, ("FALSE")) != ("FALSE")) budgetIncludeTransfers_ = true;
-    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, ("FALSE")) != ("FALSE")) budgetSetupWithoutSummaries_ = true;
-    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, ("TRUE")) != ("TRUE")) budgetSummaryWithoutCategories_ = false;
-    if (mmDBWrapper::getINISettingValue(db, INIDB_IGNORE_FUTURE_TRANSACTIONS, ("FALSE")) != ("FALSE")) ignoreFutureTransactions_ = true;
+    budgetFinancialYears_ = config->ReadBool(INIDB_BUDGET_FINANCIAL_YEARS, false);
+    budgetIncludeTransfers_ = config->ReadBool(INIDB_BUDGET_INCLUDE_TRANSFERS, false);    
+    budgetSetupWithoutSummaries_ = config->ReadBool(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, false);
+    budgetSummaryWithoutCategories_ = config->ReadBool(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, true);
+    ignoreFutureTransactions_ = config->ReadBool(INIDB_IGNORE_FUTURE_TRANSACTIONS, false);
 
     transPayeeSelectionNone_ = config->ReadLong("TRANSACTION_PAYEE_NONE", 0);
     // For the category selection, default behavior should remain that the last category used for the payee is selected.
@@ -351,8 +351,9 @@ void mmPlayTransactionSound()
     locale.AddCatalog(lang) calls wxLogWarning and returns true for corrupted .mo file,
     so I should use locale.IsLoaded(lang) also.
 */
-wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool forced_show_dlg, bool save_setting)
+wxString mmSelectLanguage(wxWindow *parent, bool forced_show_dlg, bool save_setting)
 {
+    wxConfigBase *config = wxConfigBase::Get();
     wxString lang;
 
     const wxString langPath = mmex::getPathShared(mmex::LANG_DIR);
@@ -367,10 +368,8 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
     {
         if (verbose)
         {
-            //TODO fix string for proper translation
-            wxString s = ("Directory of language files does not exist:\n\"");
-            s << langPath << ('\"');
-            wxMessageDialog dlg(parent, s, ("Error"), wxICON_ERROR);
+            wxString s = wxString::Format("Directory of language files does not exist:\n\"%s\"", langPath);
+            wxMessageDialog dlg(parent, s, ("Error"), wxOK|wxICON_ERROR);
             dlg.ShowModal();
         }
 
@@ -379,7 +378,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
 
     if (!forced_show_dlg)
     {
-        lang = mmDBWrapper::getINISettingValue(inidb, LANGUAGE_PARAMETER);
+        lang = config->Read(LANGUAGE_PARAMETER, "");
         if (!lang.empty() && locale.AddCatalog(lang) && locale.IsLoaded(lang))
         {
             mmOptions::instance().language = lang;
@@ -394,7 +393,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
         bool ok = locale.AddCatalog(lang) && locale.IsLoaded(lang);
         if (!ok)  lang.clear(); // bad .mo file
         mmOptions::instance().language = lang;
-        mmDBWrapper::setINISettingValue(inidb, LANGUAGE_PARAMETER, lang);
+        config->Write(LANGUAGE_PARAMETER, lang);
     }
 
     return lang;
