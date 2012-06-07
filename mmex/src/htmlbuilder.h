@@ -110,7 +110,7 @@ private:
 	bool bgswitch;
 	wxString color0;
 	wxString color1;
-	wxString fontSize;
+	long font_size_;
 };
 
 #endif

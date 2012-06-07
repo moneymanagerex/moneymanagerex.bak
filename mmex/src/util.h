@@ -183,7 +183,7 @@ public:
     bool enableBeNotifiedForNewReleases_;
     bool enableVisitWebsite_;
     wxString logoName_;
-    wxString fontSize_;
+    long font_size_;
     bool enableCustomAboutDialog_;
     wxString aboutCompanyName_;
     bool disableCategoryModify_;

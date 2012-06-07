@@ -25,7 +25,7 @@ mmHTMLBuilder::mmHTMLBuilder() {
     color0 = ("bgcolor=\"") + mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
     color1 = ("bgcolor=\"") + mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
     // init font size from config
-    fontSize = wxT ("\"") + mmIniOptions::instance().fontSize_ + wxT ("\"");
+    font_size_ = mmIniOptions::instance().font_size_;
 }
 
 void mmHTMLBuilder::init()
@@ -36,7 +36,7 @@ void mmHTMLBuilder::init()
     html += _("Report");
     html += ("</title>\n</head><body bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
     html += ("\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
-    html += wxString::Format(("<font size=%s>\n"), fontSize.c_str());
+    html += wxString::Format(("<font size=\"%ld\">\n"), font_size_);
 
     //if I need more space on the top of home page and reports I will delete user name from settings
     if (mmIniOptions::instance().userNameString_ != wxT (""))
@@ -67,25 +67,21 @@ void mmHTMLBuilder::end()
 
 void mmHTMLBuilder::addHeader(int level, const wxString& header)
 {
-    long font_size;
-    if(!mmIniOptions::instance().fontSize_.ToLong(&font_size)) { font_size = 3; }
-    font_size = level + font_size;
-    if (font_size>7) font_size=7;
-    html += wxString::Format(("<font size=\"%ld\"><b>%s</b></font><br>\n"), font_size, header.c_str());
+    long header_font_size = (long)level + font_size_;
+    if (header_font_size > 7) header_font_size = 7;
+    html += wxString::Format(("<font size=\"%ld\"><b>%s</b></font><br>\n"), header_font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addHeaderItalic(int level, const wxString& header)
 {
-    long font_size;
-    if(!mmIniOptions::instance().fontSize_.ToLong(&font_size)) { font_size = 3; }
-    font_size = level + font_size;
-    if (font_size>7) font_size=7;
-    html += wxString::Format(("<font size=\"%ld\"><i>%s</i></font><br>\n"), font_size, header.c_str());
+    long header_font_size = (long)level + font_size_;
+    if (header_font_size > 7) header_font_size = 7;
+    html += wxString::Format(("<font size=\"%ld\"><i>%s</i></font><br>\n"), header_font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addParaText(const wxString& text)
 {
-    html += wxString::Format(("<p><font size=%s>%s</font></p>\n"), fontSize.c_str(), text.c_str());
+    html += wxString::Format(("<p><font size=\"%ld\">%s</font></p>\n"), font_size_, text.c_str());
 }
 
 void mmHTMLBuilder::addLineBreak()

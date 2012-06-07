@@ -243,6 +243,11 @@ bool OnInitImpl(mmGUIApp &app)
 {
     app.SetAppName(mmex::GetAppName());
 
+    wxFileConfig *config = new wxFileConfig("", "",
+        mmex::GetSharedDir().GetPathWithSep()+ mmex::GetAppName() + ".conf",
+        "", wxCONFIG_USE_LOCAL_FILE|wxCONFIG_USE_SUBDIR );   
+    wxConfigBase::Set(config);
+
     /* Setting Locale causes unexpected problems, so default to English Locale */
     app.getLocale().Init(wxLANGUAGE_ENGLISH);
 
@@ -260,11 +265,6 @@ bool OnInitImpl(mmGUIApp &app)
 
     /* Load MMEX Custom Settings */
     mmIniOptions::instance().loadOptions(&inidb);
-
-    wxFileConfig *config = new wxFileConfig("", "",
-        mmex::GetSharedDir().GetPathWithSep()+ mmex::GetAppName() + ".conf",
-        "", wxCONFIG_USE_LOCAL_FILE|wxCONFIG_USE_SUBDIR );   
-    wxConfigBase::Set(config);
 
     /* Load Colors from Database */
     mmLoadColorsFromDatabase();
