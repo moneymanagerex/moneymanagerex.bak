@@ -176,7 +176,6 @@ private:
     void OnColorChanged(wxCommandEvent& event);
     void OnRestoreDefaultColors(wxCommandEvent& event);
 
-    void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
     bool GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState);
 
     void OnDelimiterSelected(wxCommandEvent& event);

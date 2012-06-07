@@ -111,7 +111,7 @@ const wxString TIPS_ASSETS = ("assets");
 void mmShowErrorMessageInvalid( wxWindow *parent, const wxString &message );
 void mmShowErrorMessage( wxWindow *parent, const wxString &message, const wxString &messageheader );
 
-wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database *inidb, bool forced_show_dlg, bool save_setting = true);
+wxString mmSelectLanguage(wxWindow *parent, bool forced_show_dlg, bool save_setting = true);
 
 wxString mmGetDateForStorage( const wxDateTime &dt );
 wxDateTime mmGetStorageStringAsDate( const wxString& str );
@@ -168,7 +168,7 @@ class mmIniOptions
 public:
     mmIniOptions();
     static mmIniOptions& instance();
-    void loadOptions( wxSQLite3Database* db );
+    void loadOptions();
     void loadInfoOptions( wxSQLite3Database* db );
     void saveOptions( wxSQLite3Database* db );
 

@@ -193,10 +193,9 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* languageStaticBoxSizer = new wxStaticBoxSizer(languageStaticBox, wxHORIZONTAL);
     generalPanelSizer->Add(languageStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
 
-    currentLanguage_ = mmDBWrapper::getINISettingValue(inidb_, LANGUAGE_PARAMETER);
+    currentLanguage_ = config->Read(LANGUAGE_PARAMETER, "English");
     wxButton* languageButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_LANGUAGE,
-        currentLanguage_.Left(1).Upper() + currentLanguage_.SubString(1,currentLanguage_.Len()),
-        wxDefaultPosition, wxSize(150, -1), 0);
+        currentLanguage_.Capitalize(), wxDefaultPosition, wxSize(150, -1));
     languageButton->SetToolTip(_("Specify the language to use"));
     languageButton->Connect(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, wxEVT_COMMAND_BUTTON_CLICKED,
                             wxCommandEventHandler(mmOptionsDialog::OnLanguageChanged), NULL, this);
@@ -759,13 +758,13 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
     wxButton *btn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     wxASSERT(btn);
 
-    wxString lang = mmSelectLanguage(this, inidb_, true, false);
+    wxString lang = mmSelectLanguage(this, true, false);
     if (!lang.empty()) {
 
         // Advisable to restart GUI when user acknowledges the change.
         restartRequired_ = true;
 
-        btn->SetLabel(lang.Left(1).Upper() + lang.SubString(1,lang.Len()));
+        btn->SetLabel(lang.Capitalize());
     }
 }
 
@@ -914,14 +913,6 @@ void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& /*event*/)
     bn7->SetLabel(_("Future Transactions"));
 }
 
-void mmOptionsDialog::SetIniDatabaseCheckboxValue(wxString dbField, bool dbState)
-{
-    if (dbState)
-        mmDBWrapper::setINISettingValue(inidb_, dbField, ("TRUE"));
-    else
-        mmDBWrapper::setINISettingValue(inidb_, dbField, ("FALSE"));
-}
-
 bool mmOptionsDialog::GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState)
 {
     wxString dbState = ("FALSE");
@@ -1020,23 +1011,24 @@ void mmOptionsDialog::SaveNewSystemSettings()
 
 void mmOptionsDialog::SaveGeneralPanelSettings()
 {
+    wxConfigBase *config = wxConfigBase::Get();
     wxTextCtrl* stun = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME);
     mmIniOptions::instance().userNameString_ = stun->GetValue();
     mmDBWrapper::setInfoSettingValue(db_, ("USERNAME"), mmIniOptions::instance().userNameString_);
 
     wxButton *languageButton = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
-    mmDBWrapper::setINISettingValue(inidb_, LANGUAGE_PARAMETER, languageButton->GetLabel().Lower());
-    mmSelectLanguage(0, inidb_, false);
+    config->Write(LANGUAGE_PARAMETER, languageButton->GetLabel().Lower());
+    mmSelectLanguage(0, false);
 
     mmDBWrapper::setBaseCurrencySettings(db_, currencyId_);
     mmDBWrapper::setInfoSettingValue(db_, ("DATEFORMAT"), dateFormat_);
     SaveFinancialYearStart();
 
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
-    SetIniDatabaseCheckboxValue(("BACKUPDB"), itemCheckBox->GetValue() );
+    config->Write("BACKUPDB", itemCheckBox->GetValue());
 
     wxCheckBox* itemCheckBoxUpdate = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE);
-    SetIniDatabaseCheckboxValue(("BACKUPDB_UPDATE"), itemCheckBoxUpdate->GetValue() );
+    config->Write("BACKUPDB_UPDATE", itemCheckBoxUpdate->GetValue() );
 }
 
 void mmOptionsDialog::SaveViewPanelSettings()
@@ -1050,38 +1042,38 @@ void mmOptionsDialog::SaveViewPanelSettings()
 
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_TREE);
     mmIniOptions::instance().expandBankTree_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(("EXPAND_BANK_TREE"),mmIniOptions::instance().expandBankTree_);
+    config->Write("EXPAND_BANK_TREE", mmIniOptions::instance().expandBankTree_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_TREE);
     mmIniOptions::instance().expandTermTree_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(("EXPAND_TERM_TREE"),mmIniOptions::instance().expandTermTree_);
+    config->Write("EXPAND_TERM_TREE", mmIniOptions::instance().expandTermTree_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_HOME);
     mmIniOptions::instance().expandBankHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(("EXPAND_BANK_HOME"),mmIniOptions::instance().expandBankHome_);
+    config->Write("EXPAND_BANK_HOME", mmIniOptions::instance().expandBankHome_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_HOME);
     mmIniOptions::instance().expandTermHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(("EXPAND_TERM_HOME"),mmIniOptions::instance().expandTermHome_);
+    config->Write("EXPAND_TERM_HOME", mmIniOptions::instance().expandTermHome_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME);
     mmIniOptions::instance().expandStocksHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(("ENABLESTOCKS"),mmIniOptions::instance().expandStocksHome_);
+    config->Write("ENABLESTOCKS", mmIniOptions::instance().expandStocksHome_);
 
     mmIniOptions::instance().budgetFinancialYears_ = cbBudgetFinancialYears_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_BUDGET_FINANCIAL_YEARS, mmIniOptions::instance().budgetFinancialYears_);
+    config->Write(INIDB_BUDGET_FINANCIAL_YEARS, mmIniOptions::instance().budgetFinancialYears_);
 
     mmIniOptions::instance().budgetIncludeTransfers_ = cbBudgetIncludeTransfers_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_BUDGET_INCLUDE_TRANSFERS, mmIniOptions::instance().budgetIncludeTransfers_);
+    config->Write(INIDB_BUDGET_INCLUDE_TRANSFERS, mmIniOptions::instance().budgetIncludeTransfers_);
 
     mmIniOptions::instance().budgetSetupWithoutSummaries_ = cbBudgetSetupWithoutSummary_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, mmIniOptions::instance().budgetSetupWithoutSummaries_);
+    config->Write(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, mmIniOptions::instance().budgetSetupWithoutSummaries_);
 
     mmIniOptions::instance().budgetSummaryWithoutCategories_ = cbBudgetSummaryWithoutCateg_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, mmIniOptions::instance().budgetSummaryWithoutCategories_);
+    config->Write(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, mmIniOptions::instance().budgetSummaryWithoutCategories_);
 
     mmIniOptions::instance().ignoreFutureTransactions_ = cbIgnoreFutureTransactions_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_IGNORE_FUTURE_TRANSACTIONS, mmIniOptions::instance().ignoreFutureTransactions_);
+    config->Write(INIDB_IGNORE_FUTURE_TRANSACTIONS, mmIniOptions::instance().ignoreFutureTransactions_);
 }
 
 void mmOptionsDialog::SaveColourPanelSettings()
@@ -1131,8 +1123,8 @@ void mmOptionsDialog::SaveOthersPanelSettings()
     wxString stockURL = url->GetValue();
     config->Write("STOCKURL", stockURL);
 
-    SetIniDatabaseCheckboxValue(INIDB_USE_ORG_DATE_COPYPASTE, cbUseOrgDateCopyPaste_->GetValue());
-    SetIniDatabaseCheckboxValue(INIDB_UPDATE_CURRENCY_RATE, cbEnableCurrencyUpd_->GetValue());
+    config->Write(INIDB_USE_ORG_DATE_COPYPASTE, cbUseOrgDateCopyPaste_->GetValue());
+    config->Write(INIDB_UPDATE_CURRENCY_RATE, cbEnableCurrencyUpd_->GetValue());
 
     config->Write(INIDB_USE_TRANSACTION_SOUND, cbUseSound_->GetValue());
 }

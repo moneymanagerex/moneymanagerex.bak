@@ -264,7 +264,7 @@ bool OnInitImpl(mmGUIApp &app)
     SETTING_V1.ensure(&inidb);
 
     /* Load MMEX Custom Settings */
-    mmIniOptions::instance().loadOptions(&inidb);
+    mmIniOptions::instance().loadOptions();
 
     /* Load Colors from Database */
     mmLoadColorsFromDatabase();
@@ -278,7 +278,7 @@ bool OnInitImpl(mmGUIApp &app)
     long valw = config->ReadLong("SIZEW", 800);
     long valh = config->ReadLong("SIZEH", 600);
 
-    mmSelectLanguage(0, &inidb, false);
+    mmSelectLanguage(0, false);
 
     inidb.Close();
 
