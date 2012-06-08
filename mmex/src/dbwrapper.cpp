@@ -404,7 +404,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
         }
     }
 
-    for (int i = 0; i < currencies.Count(); ++i)
+    for (size_t i = 0; i < currencies.Count(); ++i)
     {
         wxStringTokenizer tk(currencies[i], wxT(";"));   
         DB_View_CURRENCYFORMATS_V1::Data* currency_data = CURRENCYFORMATS_V1.create();
