@@ -165,8 +165,7 @@ void setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, con
 wxString getINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal = wxGetEmptyString());
 void setINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
 
-wxString getLastDbPath(wxSQLite3Database *db, const wxString &defaultVal = wxGetEmptyString());
-void setLastDbPath(wxSQLite3Database *db, const wxString &path);
+wxString getLastDbPath(const wxString &defaultVal = wxGetEmptyString());
 
 /* Stocks API */
 double getStockInvestmentBalance(wxSQLite3Database* db, double& invested);
@@ -181,12 +180,6 @@ double getAssetValue(const DB_View_ASSETS_V1::Data& asset);
 
 } // namespace mmDBWrapper
 
-//----------------------------------------------------------------------------
-
-inline void mmDBWrapper::setLastDbPath(wxSQLite3Database *db, const wxString &path)
-{
-    setINISettingValue(db, ("LASTFILENAME"), path);
-}
 //----------------------------------------------------------------------------
 #endif // _MM_EX_DBWRAPPER_H_
 //----------------------------------------------------------------------------
