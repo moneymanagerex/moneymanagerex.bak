@@ -457,7 +457,9 @@ bool mmCheckingPanel::Create(
 #ifdef __WXMSW__
     Freeze();
 #endif        
-    m_currentView = mmDBWrapper::getINISettingValue(inidb_, ("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
+    wxConfigBase *config = wxConfigBase::Get();
+    m_currentView = config->Read("VIEWTRANSACTIONS", VIEW_TRANS_ALL_STR);
+
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);

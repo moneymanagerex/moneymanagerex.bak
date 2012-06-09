@@ -361,23 +361,27 @@ void mmOptionsDialog::CreateControls()
         wxID_STATIC, _("Transactions Visible"));
     dateFormatSettingStaticBoxSizerGrid2->Add(transVisibleStaticText, flags);
 
-    wxArrayString itemChoiceViewTransStrings;
-    itemChoiceViewTransStrings.Add(_("View All Transactions"));
-    itemChoiceViewTransStrings.Add(_("View Today"));
-    itemChoiceViewTransStrings.Add(_("View Current Month"));
-    itemChoiceViewTransStrings.Add(_("View Last 30 days"));
-    itemChoiceViewTransStrings.Add(_("View Last 90 days"));
-    itemChoiceViewTransStrings.Add(_("View Last Month"));
-    itemChoiceViewTransStrings.Add(_("View Last 3 Months"));
+    wxString itemChoiceViewTransStrings[] = {
+    wxTRANSLATE("View All Transactions"),
+    wxTRANSLATE("View Today"),
+    wxTRANSLATE("View Current Month"),
+    wxTRANSLATE("View Last 30 days"),
+    wxTRANSLATE("View Last 90 days"),
+    wxTRANSLATE("View Last Month"),
+    wxTRANSLATE("View Last 3 Months")
+    };
 
     choiceTransVisible_ = new wxChoice(viewsPanel,
-        ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxSize(220,-1), itemChoiceViewTransStrings);
-    dateFormatSettingStaticBoxSizerGrid2->Add(choiceTransVisible_, 1, wxGROW|wxALL, 5);
+        ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxSize(220,-1));
+    for(size_t i = 0; i < sizeof(itemChoiceViewTransStrings)/sizeof(wxString); ++i)
+        choiceTransVisible_->Append(wxGetTranslation(itemChoiceViewTransStrings[i]),
+        new wxStringClientData(itemChoiceViewTransStrings[i]));
 
-    wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, ("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
-    wxArrayString itemChoiceViewTransactionsString = viewTransactionsStrings(false, vTrans, row_id_);
-    choiceTransVisible_->SetSelection(row_id_);
+    choiceTransVisible_->SetStringSelection(
+        wxGetTranslation(config->Read("VIEWTRANSACTIONS", "View All Transactions")));
     choiceTransVisible_->SetToolTip(_("Specify which transactions are visible by default"));
+
+    dateFormatSettingStaticBoxSizerGrid2->Add(choiceTransVisible_, 1, wxGROW|wxALL, 5);
 
     wxStaticBox* fontSizeOptionStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Font Size Options"));
     fontSizeOptionStaticBox->SetFont(staticBoxFontSetting);
@@ -951,6 +955,7 @@ void mmOptionsDialog::OnDelimiterSelected(wxCommandEvent& event)
 
 void mmOptionsDialog::SaveViewAccountOptions()
 {
+    wxConfigBase *config = wxConfigBase::Get();
     int selection = choiceVisible_->GetSelection();
     int row_id_ = 0;
     wxArrayString viewAcct = viewAccountStrings(false, wxEmptyString, row_id_);
@@ -959,10 +964,11 @@ void mmOptionsDialog::SaveViewAccountOptions()
 
 void mmOptionsDialog::SaveViewTransactionOptions()
 {
-    int selection = choiceTransVisible_->GetSelection();
-    int row_id_ = 0;
-    wxArrayString ViewTransaction = viewTransactionsStrings(false, wxEmptyString, row_id_);
-    mmDBWrapper::setINISettingValue(inidb_, ("VIEWTRANSACTIONS"), ViewTransaction[selection]);
+    wxConfigBase *config = wxConfigBase::Get();
+    wxStringClientData* trans_visible_obj = (wxStringClientData *)choiceTransVisible_->GetClientObject(choiceTransVisible_->GetSelection());
+    wxString vTrans = "View All Transactions";
+    if (trans_visible_obj) vTrans = trans_visible_obj->GetData();
+    config->Write("VIEWTRANSACTIONS", vTrans);
 }
 
 void mmOptionsDialog::SaveFinancialYearStart()
