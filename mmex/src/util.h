@@ -379,7 +379,6 @@ struct CurrentMonth: public LastMonths<0, 0, CurrentData> { };
 int getTransformedTrxStatus(const wxString& in);
 wxString getTransformedTrxStatus(int in);
 wxString Tips(wxString type);
-wxArrayString viewTransactionsStrings(bool translated, wxString input_string, int& row_id);
 int site_content(const wxString& site, wxString& output);
 
 
