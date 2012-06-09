@@ -1652,9 +1652,10 @@ void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
 }
 //----------------------------------------------------------------------------
 
-wxString mmDBWrapper::getLastDbPath(wxSQLite3Database *db, const wxString &defaultVal)
+wxString mmDBWrapper::getLastDbPath(const wxString &defaultVal)
 {
-    wxString path = getINISettingValue(db, ("LASTFILENAME"), defaultVal);
+    wxConfigBase *config = wxConfigBase::Get();
+    wxString path = config->Read("LASTFILENAME", defaultVal);
 
     if (!mmex::isPortableMode()) {
         return path;

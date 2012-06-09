@@ -157,21 +157,14 @@ void mmAppStartDialog::CreateControls()
     itemButtonClose_->SetFocus();
     itemBoxSizer2->Add(itemButtonClose_, 0, wxALIGN_RIGHT|wxALL, 10);
 
-    if (inidb_)
+    wxString val = config->Read("LASTFILENAME", "");
+    if (val.IsEmpty())
     {
-        wxString val = mmDBWrapper::getLastDbPath(inidb_);
-        if (val.IsEmpty())
-        {
-            itemButton61->Disable();
-        }
-        else
-        {
-          itemButton61->SetToolTip(_("Open the previously opened database : ") + val);
-        }
+        itemButton61->Disable();
     }
     else
     {
-        itemButton61->Disable();
+      itemButton61->SetToolTip(_("Open the previously opened database : ") + val);
     }
 }
 

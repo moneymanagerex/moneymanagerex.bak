@@ -596,7 +596,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     // decide if we need to show app start dialog
     bool from_scratch = config->ReadBool("SHOWBEGINAPP", true);
 
-    wxFileName dbpath = from_scratch ? wxGetEmptyString() : mmDBWrapper::getLastDbPath(m_inidb.get());
+    wxFileName dbpath = from_scratch ? wxGetEmptyString() : mmDBWrapper::getLastDbPath();
 
     if (from_scratch || !dbpath.IsOk())
     {
@@ -877,10 +877,11 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 */
 void mmGUIFrame::saveConfigFile()
 {
-    wxFileName fname(fileName_);
-    mmDBWrapper::setLastDbPath(m_inidb.get(), fname.GetFullPath());
-
     wxConfigBase *config = wxConfigBase::Get();
+
+    wxFileName fname(fileName_);
+    config->Write("LASTFILENAME", fname.GetFullPath());
+
     /* Aui Settings */
     config->Write("AUIPERSPECTIVE", m_mgr.SavePerspective());
 
@@ -892,10 +893,10 @@ void mmGUIFrame::saveConfigFile()
     this->GetPosition(&valx, &valy);
     this->GetSize(&valw, &valh);
 
-    config->Write("ORIGINX", valx);
-    config->Write("ORIGINY", valx);
-    config->Write("SIZEW", valw);
-    config->Write("SIZEH", valh);
+    config->Write("ORIGINX", (long)valx);
+    config->Write("ORIGINY", (long)valx);
+    config->Write("SIZEW", (long)valw);
+    config->Write("SIZEH", (long)valh);
     config->Write("ISMAXIMIZED", this->IsMaximized());
 }
 //----------------------------------------------------------------------------
@@ -3881,6 +3882,7 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 
 void mmGUIFrame::showBeginAppDialog(bool fromScratch)
 {
+    wxConfigBase *config = wxConfigBase::Get();
     mmAppStartDialog dlg(m_inidb.get(), this);
     if (fromScratch) dlg.SetCloseButtonToExit();
     if (dlg.ShowModal() == wxID_OK)
@@ -3911,7 +3913,7 @@ void mmGUIFrame::showBeginAppDialog(bool fromScratch)
     }
     else if (rc == appStartDialog(APP_START_LAST_DB))
     {
-        wxFileName fname(mmDBWrapper::getLastDbPath(m_inidb.get()));
+        wxFileName fname(mmDBWrapper::getLastDbPath());
         if (fname.IsOk()) SetDatabaseFile(fname.GetFullPath());
     }
     else if (rc == -1)

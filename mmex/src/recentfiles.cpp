@@ -33,7 +33,8 @@ RecentDatabaseFiles::RecentDatabaseFiles(wxSQLite3Database* ini_db, wxMenu *menu
 {
     recentListSize_ = 6;
     dbIndexName_ = ("RECENT_DB_");
-    recentFileList_.Add(mmDBWrapper::getLastDbPath(mmex_inidb_));
+    wxConfigBase *config = wxConfigBase::Get();
+    recentFileList_.Add(config->Read("LASTFILENAME", ""));
     for (int index = 1; index < recentListSize_; index ++ )
     {
         recentFileList_.Add(wxEmptyString);
