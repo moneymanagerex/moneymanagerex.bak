@@ -1343,7 +1343,6 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     /* Load Nav Tree Control */
 
-    //wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), ("VIEWACCOUNTS"), ("ALL"));
     wxConfigBase *config = wxConfigBase::Get();
     wxString vAccts = config->Read("VIEWACCOUNTS", "ALL");
 

@@ -124,6 +124,7 @@ void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, const wxString& tot
 /* Checking Accounts */
 void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
 {
+    wxConfigBase *config = wxConfigBase::Get();
     // Only Show the account titles if we want to display Bank accounts.
     if ( frame_->expandedBankAccounts() ) 
         displaySummaryHeader(hb, _("Bank Account"));
@@ -131,7 +132,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
     double tRecBalance = 0.0;
 
     // Get account balances and display accounts if we want them displayed 
-    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, ("VIEWACCOUNTS"), ("ALL"));
+    wxString vAccts = config->Read ("VIEWACCOUNTS", "ALL");
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount();
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
@@ -184,6 +185,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
 /* Term Accounts */
 void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
 {
+    wxConfigBase *config = wxConfigBase::Get();
     double tTermBalance = 0.0;
     double tRecBalance  = 0.0;
 
@@ -192,7 +194,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
         displaySummaryHeader(hb, _("Term Account"));
 
     // Get account balances and add to totals, and display accounts if we want them displayed 
-    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, ("VIEWACCOUNTS"), ("ALL"));
+    wxString vAccts = config->Read("VIEWACCOUNTS", "ALL");
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount(); 
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
