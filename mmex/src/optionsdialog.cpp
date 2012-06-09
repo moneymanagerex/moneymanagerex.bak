@@ -339,7 +339,7 @@ void mmOptionsDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, itemChoiceViewAccountTranslatedStrings);
     accountStaticBoxSizer->Add(choiceVisible_, 1, wxGROW|wxALL, 5);
 
-    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, ("VIEWACCOUNTS"), VIEW_ACCOUNTS_ALL_STR);
+    wxString vAccts = config->Read("VIEWACCOUNTS", VIEW_ACCOUNTS_ALL_STR);
     row_id_ = 0;
     wxArrayString itemChoiceViewAccountStrings = viewAccountStrings(false, vAccts, row_id_);
     choiceVisible_->SetSelection(row_id_);
@@ -961,7 +961,7 @@ void mmOptionsDialog::SaveViewAccountOptions()
     int selection = choiceVisible_->GetSelection();
     int row_id_ = 0;
     wxArrayString viewAcct = viewAccountStrings(false, wxEmptyString, row_id_);
-    mmDBWrapper::setINISettingValue(inidb_, ("VIEWACCOUNTS"), viewAcct[selection]);
+    config->Write("VIEWACCOUNTS", viewAcct[selection]);
 }
 
 void mmOptionsDialog::SaveViewTransactionOptions()
