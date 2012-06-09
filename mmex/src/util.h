@@ -206,7 +206,7 @@ public:
    
     int transPayeeSelectionNone_;
     int transCategorySelectionNone_;
-    int transStatusReconciled_;
+    wxString transStatusReconciled_;
     int transDateDefault_;
 };
 
