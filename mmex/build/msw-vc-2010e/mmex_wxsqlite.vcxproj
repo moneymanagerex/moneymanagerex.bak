@@ -129,22 +129,6 @@
       <Configuration>Unicode Release Multilib WX_PYTHON_1</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32">
-      <Configuration>WXWIN_28_Unicode Debug Multilib WX_PYTHON_0</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="wxwin_29_debug|Win32">
-      <Configuration>wxwin_29_debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="wxwin_29_release|Win32">
-      <Configuration>wxwin_29_release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32">
-      <Configuration>WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>wxsqlite</ProjectName>
@@ -243,21 +227,6 @@
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
@@ -274,11 +243,6 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
@@ -378,15 +342,6 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -397,9 +352,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Monolithic WX_PYTHON_1|Win32'" Label="PropertySheets">
@@ -428,7 +380,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release Multilib WX_PYTHON_0|Win32'">vc-static-\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release Multilib WX_PYTHON_0|Win32'">vc-static-\wxsqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release Multilib WX_PYTHON_1|Win32'">vc-static-\</OutDir>
@@ -446,9 +398,7 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug Monolithic WX_PYTHON_1|Win32'">vc-static-d\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug Monolithic WX_PYTHON_1|Win32'">vc-static-d\wxsqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'">vc-static-u\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'">vc-static-29u\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'">vc-static-u\wxsqlite\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'">vc-static-29u\wxsqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_1|Win32'">vc-static-u\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_1|Win32'">vc-static-u\wxsqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_0|Win32'">vc-static-u\</OutDir>
@@ -456,13 +406,7 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'">vc-static-u\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'">vc-static-u\wxsqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'">vc-static-29ud\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'">vc-static-ud29\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\wxsqlite\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'">vc-static-29ud\wxsqlite\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\wxsqlite\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'">vc-static-ud29\wxsqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_1|Win32'">vc-static-ud\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_1|Win32'">vc-static-ud\wxsqlite\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Monolithic WX_PYTHON_0|Win32'">vc-static-ud\</OutDir>
@@ -771,35 +715,6 @@
       <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_release|Win32'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswu;$(WXWIN_29)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;NDEBUG;_UNICODE;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ObjectFileName>vc-static-29u\wxsqlite\</ObjectFileName>
-      <ProgramDataBaseFileName>vc-static-29u\wxsqlite.pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level4</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
-    </ClCompile>
-    <Lib>
-      <OutputFile>vc-static-29u\wxsqlite.lib</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-    </Lib>
-    <Midl>
-      <PreprocessorDefinitions>WIN32;_LIB;NDEBUG;_UNICODE;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>NDEBUG;_UNICODE;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_1|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -906,99 +821,6 @@
     </ClCompile>
     <Lib>
       <OutputFile>vc-static-ud\wxsqlite.lib</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-    </Lib>
-    <Midl>
-      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='wxwin_29_debug|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswud;$(WXWIN_29)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ObjectFileName>vc-static-29ud\wxsqlite\</ObjectFileName>
-      <ProgramDataBaseFileName>vc-static-29ud\wxsqlite.pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level4</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-    </ClCompile>
-    <Lib>
-      <OutputFile>vc-static-29ud\wxsqlite.lib</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-    </Lib>
-    <Midl>
-      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_28_Unicode Debug Multilib WX_PYTHON_0|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ObjectFileName>vc-static-ud\wxsqlite\</ObjectFileName>
-      <ProgramDataBaseFileName>vc-static-ud\wxsqlite.pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level4</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-    </ClCompile>
-    <Lib>
-      <OutputFile>vc-static-ud\wxsqlite.lib</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-    </Lib>
-    <Midl>
-      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='WXWIN_29_Unicode_Debug_Multilib WX_PYTHON_0|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswud;$(WXWIN_29)\include;..\..\lib\sqlite;..\..\lib\wxsqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_DEBUG;_UNICODE;__WXDEBUG__;__WXMSW__;NOPCH;SQLITE_HAS_CODEC;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ObjectFileName>vc-static-ud29\wxsqlite\</ObjectFileName>
-      <ProgramDataBaseFileName>vc-static-ud29\wxsqlite.pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level4</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-    </ClCompile>
-    <Lib>
-      <OutputFile>vc-static-ud29\wxsqlite.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Midl>

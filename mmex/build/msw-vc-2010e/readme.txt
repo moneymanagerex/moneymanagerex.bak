@@ -8,79 +8,80 @@ NOTE:   The directory msw-vc-2010e has the project files for:
         directory: mmex/build/msw
 
 
-   *** Prerequisites ***
+=====================================================================================
+   Setting up the Build Environment
+=====================================================================================
+1. Install Microsoft Visual C++ 2010e
 
-1. Install wxWidgets 2.8.10 and above in a directory like C:\wxWidgets-2.8.10
-   and then create an environment variable WXWIN to point to that directory.
+2. Install wxWidgets 2.9.3 or above in a directory like C:\cpp\wxWidgets-2.9.3
+   Ref: http://www.wxwidgets.org/
 
-2. Follow the instructions given by WxWidgets install on how to build it.
-   Build these configurations: Unicode Release, Unicode Debug, Release, Debug
-   (or only those you need).
+3. Unzip the Boost C++ Libraries to a directory like c:\cpp\boost_1_46_0
+   Ref: http://www.boost.org/
+   
+4. Build wxWidgets by following the instructions in the directory:
+     C:\CPP\wxWidgets-2.9.3\docs\msw\install.txt
+   Suggest the following:
+   * Using the MS IDE, Open the project file:
+     C:\CPP\wxWidgets-2.9.3\build\msw\wx_vc9.sln
+     - This will convert the project files to the MS VC++ 2010e format.
+   * Build the following configurations:
+     - Debug
+     - Release
 
-3. Install Boost C++ Libraries and create an environment variable BOOSTDIR
-   that points to directory where Boost were installed.
-
-4. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm.
+5  Create the following environment variables, assuming the libraries are
+   installed in the following directories:
+   -----------------------------------------------
+   Variable            Value          
+   -----------------------------------------------
+   BOOSTDIR            c:\cpp\boost_1_49_0
+   WXWIN               c:\cpp\wxWidgets-2.9.3
+   ----------------------------------------------- 
+   
+6. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm.
    This software requires to generate binary translation files from .po files.
    Append path to bin folder of installed software to PATH environment variable
    (usually "C:\Program Files\GnuWin32\bin").
-
-5. To build installation (setup) of MMEX download and install InnoSetup Quick Start Pack
+   Note: This step may not be necessary but is included incase it is.
+   
+7. To build installation (setup) of MMEX download and install InnoSetup Quick Start Pack
    (which includes InnoSetup itself and Inno Setup Preprocessor). Append path to folder
    of installed software (something like a "C:\Program Files\Inno Setup 5")
    to PATH environment variable.
 
 
-   *** Compiling using Microsoft Visual C++ 2010 Express IDE ***
+=====================================================================================
+   *** Compiling MMEX using Microsoft Visual C++ 2010 Express IDE ***
+              Using the directory: mmex/build/msw-vc-2010e
+=====================================================================================
 
-1. Ensure Prerequisites are complete with a build of wxWidgets 2.8.11 or greater
-   using "Unicode Release" and/or "Unicode Debug" depending on preferences below.
-   
-2  Use the directory: mmex/build/msw-vc-2010e
-
-3  Open the project file mmex/build/msw-vc-2010e/mmex.sln.
+1  Using the MS IDE, Open the project file: mmex/build/msw-vc-2010e/mmex.sln
    MS VC++ 2010e will set up the project files to the user's environment.
    
-4  In the Solution Explorer set the mmex project as the Startup Project
+4  Using the Solution Explorer, set the Startup Project to mmex
    
-3. Using the Build ->configurations Manager...
-   Select one of following configurations to build (accordingly to wxWidgets builds):
+3. Using the Build -> Configuration Manager...
+   Select one of following configurations to build (accordingly to wxWidgets build):
    "Unicode Release Multilib WX_PYTHON_0" <-- choice number one for most people
    "Unicode Debug Multilib WX_PYTHON_0"
 
 4. Build the solution...
 
 =====================================================================================
-Added support for multiple builds using wxWidgets 2.8.xx and wxWidgets 2.9.x
+Note: To build MMEX Release Version 0.9.9.x you will need do the following:
+1. Install wxWidgets 2.8.12 in a separate directory like: c:\cpp\wxWidgets-2.8.12
+   Note 1: As wxWidgets 2.8.12 does not support MS VC++ 2010e, the msw configuration
+           will need to be converted by a previous version of MS VC++ first. Then it
+           can be can be upgraded to use MS VC++ 2010e
+   Note 2: SubVersion 2492 and above can be built using wxWidgets 2.9.3
+           SubVersion 2491 and below will need wxWidgets 2.8.12
+           
+2. Build the wxWidgets 2.8.12 configurations:
+   Unicode Debug
+   Unicode Release
+   
+3. Change the environment variable WXWIN to c:\cpp\wxWidgets-2.8.12
+
+4. Build mmex using the same configurations described above.
 =====================================================================================
-Install wxWidgets 2.8.x and 2.9.x in separate locations
-
-Assuming that the following are installed in the following directories:
-BOOST               c:\cpp\boost_1_49_0
-wxWidgets 2.8.12    c:\cpp\wxWidgets-2.8.12
-wxWidgets 2.9.3     c:\cpp\wxWidgets-2.9.3
-
-Set up windows environment variables as follows:
-
-Variable            Value          
------------------------------------------------
-BOOSTDIR            c:\boost_1_49_0
-WXWIN               c:\cpp\wxWidgets-2.8.12
-WXWIN_29            c:\cpp\wxWidgets-2.9.3
-
-Select the following configurations:
-Builds      wxWidgets 2.8.12    wxWidgets 2.9.3
------------------------------------------------
-debug       Unicode Debug       Debug               
-release     Unicode Release     Release             
-
-
-MMEX        wxWidgets 2.8.12                        wxWidgets 2.9.3
----------------------------------------------------------------------
-Debug       Unicode Debug Multilib WX_PYTHON_0      wxwin_29_deug
-Release     Unicode Release Multilib WX_PYTHON_0    wxwin_29_release
----------------------------------------------------------------------
-
-=====================================================================================
-End of File
-=====================================================================================
+End of Document.

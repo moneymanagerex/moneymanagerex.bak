@@ -17,7 +17,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 	*** Prerequisites ***
 
 
-1. Install wxWidgets 2.8.10 and above in a directory like C:\wxWidgets-2.8.10
+1. Install wxWidgets 2.9.3 and above in a directory like C:\wxWidgets-2.9.3
    and then create an environment variable WXWIN to point to that directory.
 
 2. Follow the instructions given by WxWidgets install on how to build it.
@@ -64,8 +64,10 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
     Use the pre built files in the mmex/build/msw-vc-2010e directory.
     To use this directory, continue...
     
-1. Ensure Prerequisites are complete with a build of wxWidgets 2.8.11 or greater
-   using "Unicode Release" and/or "Unicode Debug" depending on preferences below.
+1. Ensure Prerequisites are complete with a build of wxWidgets 2.9.3 or greater
+   using "Release" and/or "Debug" depending on preferences below.
+   Note: Using wxWidgets 2.8.12 use the following configurations:
+      "Unicode Release" and/or "Unicode Debug"
    
 2  Copy the mmex/build/msw directory to mmex/build/msw-vc-2010e
 
@@ -75,7 +77,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 4  In the Solution Explorer set the mmex project as the Startup Project
    Add any missing files to the projects header and source structure.
    
-3. Using the Build ->configurations Manager...
+3. Using the Build ->Configuration Manager...
    Select one of following configurations to build (accordingly to wxWidgets builds):
    "Unicode Release Multilib WX_PYTHON_0" <-- choice number one for most people
    "Unicode Debug Multilib WX_PYTHON_0"

@@ -129,10 +129,6 @@
       <Configuration>Unicode Release Multilib WX_PYTHON_1</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="wxWin29_debug|Win32">
-      <Configuration>wxWin29_debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>mmex_tests</ProjectName>
@@ -227,11 +223,6 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='wxWin29_debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
@@ -351,9 +342,6 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wxWin29_debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -430,11 +418,8 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'">vc-static-u\mmex_tests\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Unicode Release Monolithic WX_PYTHON_1|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='wxWin29_debug|Win32'">vc-static-29ud\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\mmex_tests\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='wxWin29_debug|Win32'">vc-static-29ud\mmex_tests\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">true</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='wxWin29_debug|Win32'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_1|Win32'">vc-static-ud\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_1|Win32'">vc-static-ud\mmex_tests\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_1|Win32'">true</LinkIncremental>
@@ -511,7 +496,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-\wxsqlite.lib;vc-static-\sqlite.lib;wxmsw28_core.lib;wxmsw28_qa.lib;wxbase28_net.lib;wxmsw28_html.lib;wxbase28_xml.lib;wxmsw28_aui.lib;wxmsw28_adv.lib;wxbase28.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregex.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-\wxsqlite.lib;vc-static-\sqlite.lib;wxmsw29_core.lib;wxmsw29_qa.lib;wxbase29_net.lib;wxmsw29_html.lib;wxbase29_xml.lib;wxmsw29_aui.lib;wxmsw29_adv.lib;wxbase29.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregex.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -547,7 +532,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-\wxsqlite.lib;vc-static-\sqlite.lib;wxmsw28h_core.lib;wxmsw28h_qa.lib;wxbase28h_net.lib;wxmsw28h_html.lib;wxbase28h_xml.lib;wxmsw28h_aui.lib;wxmsw28h_adv.lib;wxbase28h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-\wxsqlite.lib;vc-static-\sqlite.lib;wxmsw29h_core.lib;wxmsw29h_qa.lib;wxbase29h_net.lib;wxmsw29h_html.lib;wxbase29h_xml.lib;wxmsw29h_aui.lib;wxmsw29h_adv.lib;wxbase29h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -583,7 +568,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-\wxsqlite.lib;vc-static-\sqlite.lib;wxmsw28.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregex.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-\wxsqlite.lib;vc-static-\sqlite.lib;wxmsw29.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregex.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -619,7 +604,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-\wxsqlite.lib;vc-static-\sqlite.lib;wxmsw28h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-\wxsqlite.lib;vc-static-\sqlite.lib;wxmsw29h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -656,7 +641,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-d\wxsqlite.lib;vc-static-d\sqlite.lib;wxmsw28d_core.lib;wxmsw28d_qa.lib;wxbase28d_net.lib;wxmsw28d_html.lib;wxbase28d_xml.lib;wxmsw28d_aui.lib;wxmsw28d_adv.lib;wxbase28d.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexd.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-d\wxsqlite.lib;vc-static-d\sqlite.lib;wxmsw29d_core.lib;wxmsw29d_qa.lib;wxbase29d_net.lib;wxmsw29d_html.lib;wxbase29d_xml.lib;wxmsw29d_aui.lib;wxmsw29d_adv.lib;wxbase29d.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexd.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-d\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -694,7 +679,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-d\wxsqlite.lib;vc-static-d\sqlite.lib;wxmsw28h_core.lib;wxmsw28h_qa.lib;wxbase28h_net.lib;wxmsw28h_html.lib;wxbase28h_xml.lib;wxmsw28h_aui.lib;wxmsw28h_adv.lib;wxbase28h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-d\wxsqlite.lib;vc-static-d\sqlite.lib;wxmsw29h_core.lib;wxmsw29h_qa.lib;wxbase29h_net.lib;wxmsw29h_html.lib;wxbase29h_xml.lib;wxmsw29h_aui.lib;wxmsw29h_adv.lib;wxbase29h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-d\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -732,7 +717,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-d\wxsqlite.lib;vc-static-d\sqlite.lib;wxmsw28d.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexd.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-d\wxsqlite.lib;vc-static-d\sqlite.lib;wxmsw29d.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexd.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-d\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -770,7 +755,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-d\wxsqlite.lib;vc-static-d\sqlite.lib;wxmsw28h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-d\wxsqlite.lib;vc-static-d\sqlite.lib;wxmsw29h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-d\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -807,7 +792,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-u\wxsqlite.lib;vc-static-u\sqlite.lib;wxmsw28u_core.lib;wxmsw28u_qa.lib;wxbase28u_net.lib;wxmsw28u_html.lib;wxbase28u_xml.lib;wxmsw28u_aui.lib;wxmsw28u_adv.lib;wxbase28u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-u\wxsqlite.lib;vc-static-u\sqlite.lib;wxmsw29u_core.lib;wxmsw29u_qa.lib;wxbase29u_net.lib;wxmsw29u_html.lib;wxbase29u_xml.lib;wxmsw29u_aui.lib;wxmsw29u_adv.lib;wxbase29u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-u\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -843,7 +828,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-u\wxsqlite.lib;vc-static-u\sqlite.lib;wxmsw28uh_core.lib;wxmsw28uh_qa.lib;wxbase28uh_net.lib;wxmsw28uh_html.lib;wxbase28uh_xml.lib;wxmsw28uh_aui.lib;wxmsw28uh_adv.lib;wxbase28uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-u\wxsqlite.lib;vc-static-u\sqlite.lib;wxmsw29uh_core.lib;wxmsw29uh_qa.lib;wxbase29uh_net.lib;wxmsw29uh_html.lib;wxbase29uh_xml.lib;wxmsw29uh_aui.lib;wxmsw29uh_adv.lib;wxbase29uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-u\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -879,7 +864,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-u\wxsqlite.lib;vc-static-u\sqlite.lib;wxmsw28u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-u\wxsqlite.lib;vc-static-u\sqlite.lib;wxmsw29u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-u\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -915,7 +900,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-u\wxsqlite.lib;vc-static-u\sqlite.lib;wxmsw28uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-u\wxsqlite.lib;vc-static-u\sqlite.lib;wxmsw29uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-u\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -937,7 +922,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\..\lib\sqlite;..\..\..\lib\wxsqlite;..\..\..\src;..\..\..\lib\UnitTest++;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;NOPCH;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -952,7 +937,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-ud\wxsqlite.lib;vc-static-ud\sqlite.lib;wxmsw28ud_core.lib;wxmsw28ud_qa.lib;wxbase28ud_net.lib;wxmsw28ud_html.lib;wxbase28ud_xml.lib;wxmsw28ud_aui.lib;wxmsw28ud_adv.lib;wxbase28ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-ud\wxsqlite.lib;vc-static-ud\sqlite.lib;wxmsw29ud_core.lib;wxmsw29ud_qa.lib;wxbase29ud_net.lib;wxmsw29ud_html.lib;wxbase29ud_xml.lib;wxmsw29ud_aui.lib;wxmsw29ud_adv.lib;wxbase29ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-ud\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -969,44 +954,6 @@
       <PreprocessorDefinitions>_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
       <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\..\lib\sqlite;..\..\..\lib\wxsqlite;..\..\..\src;..\..\..\lib\UnitTest++;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='wxWin29_debug|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswud;$(WXWIN_29)\include;$(BOOSTDIR);..\..\..\lib\sqlite;..\..\..\lib\wxsqlite;..\..\..\src;..\..\..\lib\UnitTest++;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;NOPCH;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ObjectFileName>vc-static-29ud\mmex_tests\</ObjectFileName>
-      <ProgramDataBaseFileName>vc-static-29ud\mmex_tests.pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level4</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-29ud\wxsqlite.lib;vc-static-29ud\sqlite.lib;wxmsw29ud_core.lib;wxmsw29ud_qa.lib;wxbase29ud_net.lib;wxmsw29ud_html.lib;wxbase29ud_xml.lib;wxmsw29ud_aui.lib;wxmsw29ud_adv.lib;wxbase29ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-29ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>vc-static-29ud\mmex_tests.exe</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(WXWIN_29)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>vc-static-29ud\mmex_tests.pdb</ProgramDatabaseFile>
-      <SubSystem>Console</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-    <Midl>
-      <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\..\lib\sqlite;..\..\..\lib\wxsqlite;..\..\..\src;..\..\..\lib\UnitTest++;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswud;$(WXWIN_29)\include;$(BOOSTDIR);..\..\..\lib\sqlite;..\..\..\lib\wxsqlite;..\..\..\src;..\..\..\lib\UnitTest++;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_1|Win32'">
@@ -1028,7 +975,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-ud\wxsqlite.lib;vc-static-ud\sqlite.lib;wxmsw28uh_core.lib;wxmsw28uh_qa.lib;wxbase28uh_net.lib;wxmsw28uh_html.lib;wxbase28uh_xml.lib;wxmsw28uh_aui.lib;wxmsw28uh_adv.lib;wxbase28uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-ud\wxsqlite.lib;vc-static-ud\sqlite.lib;wxmsw29uh_core.lib;wxmsw29uh_qa.lib;wxbase29uh_net.lib;wxmsw29uh_html.lib;wxbase29uh_xml.lib;wxmsw29uh_aui.lib;wxmsw29uh_adv.lib;wxbase29uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-ud\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1066,7 +1013,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-ud\wxsqlite.lib;vc-static-ud\sqlite.lib;wxmsw28ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-ud\wxsqlite.lib;vc-static-ud\sqlite.lib;wxmsw29ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-ud\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1104,7 +1051,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-ud\wxsqlite.lib;vc-static-ud\sqlite.lib;wxmsw28uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-static-ud\wxsqlite.lib;vc-static-ud\sqlite.lib;wxmsw29uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-static-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-static-ud\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1141,7 +1088,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-\wxsqlite.lib;vc-shared-\sqlite.lib;wxmsw28_core.lib;wxmsw28_qa.lib;wxbase28_net.lib;wxmsw28_html.lib;wxbase28_xml.lib;wxmsw28_aui.lib;wxmsw28_adv.lib;wxbase28.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregex.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-\wxsqlite.lib;vc-shared-\sqlite.lib;wxmsw29_core.lib;wxmsw29_qa.lib;wxbase29_net.lib;wxmsw29_html.lib;wxbase29_xml.lib;wxmsw29_aui.lib;wxmsw29_adv.lib;wxbase29.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregex.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1177,7 +1124,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-\wxsqlite.lib;vc-shared-\sqlite.lib;wxmsw28h_core.lib;wxmsw28h_qa.lib;wxbase28h_net.lib;wxmsw28h_html.lib;wxbase28h_xml.lib;wxmsw28h_aui.lib;wxmsw28h_adv.lib;wxbase28h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-\wxsqlite.lib;vc-shared-\sqlite.lib;wxmsw29h_core.lib;wxmsw29h_qa.lib;wxbase29h_net.lib;wxmsw29h_html.lib;wxbase29h_xml.lib;wxmsw29h_aui.lib;wxmsw29h_adv.lib;wxbase29h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1213,7 +1160,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-\wxsqlite.lib;vc-shared-\sqlite.lib;wxmsw28.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregex.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-\wxsqlite.lib;vc-shared-\sqlite.lib;wxmsw29.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregex.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1249,7 +1196,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-\wxsqlite.lib;vc-shared-\sqlite.lib;wxmsw28h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-\wxsqlite.lib;vc-shared-\sqlite.lib;wxmsw29h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1286,7 +1233,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-d\wxsqlite.lib;vc-shared-d\sqlite.lib;wxmsw28d_core.lib;wxmsw28d_qa.lib;wxbase28d_net.lib;wxmsw28d_html.lib;wxbase28d_xml.lib;wxmsw28d_aui.lib;wxmsw28d_adv.lib;wxbase28d.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexd.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-d\wxsqlite.lib;vc-shared-d\sqlite.lib;wxmsw29d_core.lib;wxmsw29d_qa.lib;wxbase29d_net.lib;wxmsw29d_html.lib;wxbase29d_xml.lib;wxmsw29d_aui.lib;wxmsw29d_adv.lib;wxbase29d.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexd.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-d\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1324,7 +1271,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-d\wxsqlite.lib;vc-shared-d\sqlite.lib;wxmsw28h_core.lib;wxmsw28h_qa.lib;wxbase28h_net.lib;wxmsw28h_html.lib;wxbase28h_xml.lib;wxmsw28h_aui.lib;wxmsw28h_adv.lib;wxbase28h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-d\wxsqlite.lib;vc-shared-d\sqlite.lib;wxmsw29h_core.lib;wxmsw29h_qa.lib;wxbase29h_net.lib;wxmsw29h_html.lib;wxbase29h_xml.lib;wxmsw29h_aui.lib;wxmsw29h_adv.lib;wxbase29h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-d\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1362,7 +1309,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-d\wxsqlite.lib;vc-shared-d\sqlite.lib;wxmsw28d.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexd.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-d\wxsqlite.lib;vc-shared-d\sqlite.lib;wxmsw29d.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexd.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-d\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1400,7 +1347,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-d\wxsqlite.lib;vc-shared-d\sqlite.lib;wxmsw28h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-d\wxsqlite.lib;vc-shared-d\sqlite.lib;wxmsw29h.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-d\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-d\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1437,7 +1384,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-u\wxsqlite.lib;vc-shared-u\sqlite.lib;wxmsw28u_core.lib;wxmsw28u_qa.lib;wxbase28u_net.lib;wxmsw28u_html.lib;wxbase28u_xml.lib;wxmsw28u_aui.lib;wxmsw28u_adv.lib;wxbase28u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-u\wxsqlite.lib;vc-shared-u\sqlite.lib;wxmsw29u_core.lib;wxmsw29u_qa.lib;wxbase29u_net.lib;wxmsw29u_html.lib;wxbase29u_xml.lib;wxmsw29u_aui.lib;wxmsw29u_adv.lib;wxbase29u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-u\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1473,7 +1420,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-u\wxsqlite.lib;vc-shared-u\sqlite.lib;wxmsw28uh_core.lib;wxmsw28uh_qa.lib;wxbase28uh_net.lib;wxmsw28uh_html.lib;wxbase28uh_xml.lib;wxmsw28uh_aui.lib;wxmsw28uh_adv.lib;wxbase28uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-u\wxsqlite.lib;vc-shared-u\sqlite.lib;wxmsw29uh_core.lib;wxmsw29uh_qa.lib;wxbase29uh_net.lib;wxmsw29uh_html.lib;wxbase29uh_xml.lib;wxmsw29uh_aui.lib;wxmsw29uh_adv.lib;wxbase29uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-u\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1509,7 +1456,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-u\wxsqlite.lib;vc-shared-u\sqlite.lib;wxmsw28u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-u\wxsqlite.lib;vc-shared-u\sqlite.lib;wxmsw29u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-u\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1545,7 +1492,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-u\wxsqlite.lib;vc-shared-u\sqlite.lib;wxmsw28uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-u\wxsqlite.lib;vc-shared-u\sqlite.lib;wxmsw29uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-u\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-u\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1582,7 +1529,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-ud\wxsqlite.lib;vc-shared-ud\sqlite.lib;wxmsw28ud_core.lib;wxmsw28ud_qa.lib;wxbase28ud_net.lib;wxmsw28ud_html.lib;wxbase28ud_xml.lib;wxmsw28ud_aui.lib;wxmsw28ud_adv.lib;wxbase28ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-ud\wxsqlite.lib;vc-shared-ud\sqlite.lib;wxmsw29ud_core.lib;wxmsw29ud_qa.lib;wxbase29ud_net.lib;wxmsw29ud_html.lib;wxbase29ud_xml.lib;wxmsw29ud_aui.lib;wxmsw29ud_adv.lib;wxbase29ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-ud\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1620,7 +1567,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-ud\wxsqlite.lib;vc-shared-ud\sqlite.lib;wxmsw28uh_core.lib;wxmsw28uh_qa.lib;wxbase28uh_net.lib;wxmsw28uh_html.lib;wxbase28uh_xml.lib;wxmsw28uh_aui.lib;wxmsw28uh_adv.lib;wxbase28uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-ud\wxsqlite.lib;vc-shared-ud\sqlite.lib;wxmsw29uh_core.lib;wxmsw29uh_qa.lib;wxbase29uh_net.lib;wxmsw29uh_html.lib;wxbase29uh_xml.lib;wxmsw29uh_aui.lib;wxmsw29uh_adv.lib;wxbase29uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-ud\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1658,7 +1605,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-ud\wxsqlite.lib;vc-shared-ud\sqlite.lib;wxmsw28ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-ud\wxsqlite.lib;vc-shared-ud\sqlite.lib;wxmsw29ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-ud\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1696,7 +1643,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-shared-ud\wxsqlite.lib;vc-shared-ud\sqlite.lib;wxmsw28uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vc-shared-ud\wxsqlite.lib;vc-shared-ud\sqlite.lib;wxmsw29uh.lib;wxtiffh.lib;wxjpegh.lib;wxpngh.lib;wxzlibh.lib;wxregexuh.lib;wxexpath.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;vc-shared-ud\UnitTestPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>vc-shared-ud\mmex_tests.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -1737,7 +1684,6 @@
     <ClCompile Include="..\..\..\src\tests\dbwrapper_test.cpp" />
     <ClCompile Include="..\..\..\src\fileviewerdialog.cpp" />
     <ClCompile Include="..\..\..\src\filtertransdialog.cpp" />
-    <ClCompile Include="..\..\..\src\guiid.cpp" />
     <ClCompile Include="..\..\..\src\htmlbuilder.cpp" />
     <ClCompile Include="..\..\..\src\maincurrencydialog.cpp" />
     <ClCompile Include="..\..\..\src\mmaccount.cpp" />
@@ -1860,7 +1806,6 @@
     <ClInclude Include="..\..\..\src\reportsummarystocks.h" />
     <ClInclude Include="..\..\..\src\reporttransactions.h" />
     <ClInclude Include="..\..\..\src\reporttransstats.h" />
-    <ClInclude Include="..\..\..\src\resource.h" />
     <ClInclude Include="..\..\..\src\tests\resource.h" />
     <ClInclude Include="..\..\..\src\splitdetailsdialog.h" />
     <ClInclude Include="..\..\..\src\splittransactionsdialog.h" />
