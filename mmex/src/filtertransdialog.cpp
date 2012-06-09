@@ -195,16 +195,21 @@ void mmFilterTransactionsDialog::CreateControls()
     statusCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(statusCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxArrayString choiceStatusStrings;
-    choiceStatusStrings.Add(_("None"));
-    choiceStatusStrings.Add(_("Reconciled"));
-    choiceStatusStrings.Add(_("Void"));
-    choiceStatusStrings.Add(_("Follow up"));
-    choiceStatusStrings.Add(_("Duplicate"));
+    wxString transaction_status[] = 
+    {
+        wxTRANSLATE("None"),
+        wxTRANSLATE("Reconciled"),
+        wxTRANSLATE("Void"),
+        wxTRANSLATE("Follow up"),
+        wxTRANSLATE("Duplicate")
+    };
 
-    choiceStatus = new wxChoice( itemPanel, ID_CHOICE7, wxDefaultPosition, wxDefaultSize, choiceStatusStrings);
+    choiceStatus = new wxChoice( itemPanel, ID_CHOICE7, wxDefaultPosition, wxDefaultSize);
+    for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
+        choiceStatus->Append(wxGetTranslation(transaction_status[i]),
+        new wxStringClientData(transaction_status[i]));
     itemPanelSizer->Add(choiceStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    choiceStatus->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+    choiceStatus->SetSelection(0);
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
     //--End of Row --------------------------------------------------------
 
@@ -432,7 +437,13 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 
             if (statusCheckBox->GetValue())
             {
-                if (getTransformedTrxStatus(choiceStatus->GetSelection()) != pBankTransaction->status_)
+                wxStringClientData* status_obj = (wxStringClientData *)choiceStatus->GetClientObject(choiceStatus->GetSelection());
+                wxString data;
+                wxString bank_trans_status = pBankTransaction->status_;
+                bank_trans_status = (bank_trans_status.IsEmpty() ? "N" : bank_trans_status.Left(1));
+                if (status_obj) data = status_obj->GetData().Left(1);
+
+                if (data != bank_trans_status)
                     continue; //skip
             }
 
@@ -449,7 +460,9 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
                 if (cbTypeTransfer_->GetValue())
                     transCodeSelectedTransfer = TRANS_TYPE_TRANSFER_STR;
 
-                if (transCodeSelectedWithdraval != transCode && transCodeSelectedDeposit != transCode && transCodeSelectedTransfer != transCode)
+                if (transCodeSelectedWithdraval != transCode 
+                    && transCodeSelectedDeposit != transCode
+                    && transCodeSelectedTransfer != transCode)
                     continue; // skip
             }
 

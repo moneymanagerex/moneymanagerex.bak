@@ -248,7 +248,7 @@ mmIniOptions::mmIniOptions()
     , ignoreFutureTransactions_(false)
     , transPayeeSelectionNone_(0)
     , transCategorySelectionNone_(0)
-    , transStatusReconciled_(0)
+    , transStatusReconciled_("None")
     , transDateDefault_(0)
     {}
 
@@ -320,7 +320,10 @@ void mmIniOptions::loadOptions()
     // For the category selection, default behavior should remain that the last category used for the payee is selected.
     //  This is item 1 (0-indexed) in the list.
     transCategorySelectionNone_ = config->ReadLong("TRANSACTION_CATEGORY_NONE", 1);
-    transStatusReconciled_ = config->ReadLong("TRANSACTION_STATUS_RECONCILED", 0);
+    wxString t = config->Read("TRANSACTION_STATUS_RECONCILED", "None");
+    if (t!= "None"|| t!="Reconciled" || t!="Void" || t!="Follow up" || t!="Duplicate")
+        t = "None";
+    transStatusReconciled_ = t;
     transDateDefault_ = config->ReadLong("TRANSACTION_DATE_DEFAULT", 0);
 }
 

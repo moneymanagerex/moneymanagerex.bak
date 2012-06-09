@@ -636,7 +636,7 @@ void mmOptionsDialog::CreateControls()
         default_status->Append(wxGetTranslation(transaction_status[i]),
         new wxStringClientData(transaction_status[i]));
 
-    default_status->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+    default_status->SetStringSelection(wxGetTranslation(mmIniOptions::instance().transStatusReconciled_));
 
     newTransflexGridSizer->Add(statusStaticText, flags);
     newTransflexGridSizer->Add(default_status, flags);
@@ -1107,9 +1107,11 @@ void mmOptionsDialog::SaveOthersPanelSettings()
         wxString::Format(("%d"), (int)mmIniOptions::instance().transCategorySelectionNone_));
 
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
-    mmIniOptions::instance().transStatusReconciled_ = itemChoice->GetSelection();
-    config->Write("TRANSACTION_STATUS_RECONCILED",
-        wxString::Format(("%d"), (int)mmIniOptions::instance().transStatusReconciled_));
+    wxStringClientData* trans_def_status_obj = (wxStringClientData *)itemChoice->GetClientObject(itemChoice->GetSelection());
+    wxString data = "None";
+    if (trans_def_status_obj) data = trans_def_status_obj->GetData();
+    mmIniOptions::instance().transStatusReconciled_ = data;
+    config->Write("TRANSACTION_STATUS_RECONCILED", data);
 
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE);
     mmIniOptions::instance().transDateDefault_ = itemChoice->GetSelection();

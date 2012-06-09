@@ -420,7 +420,7 @@ void mmBDDialog::CreateControls()
     choiceStatusStrings.Add(_("Duplicate"));
     choiceStatus_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_STATUS,
                                   wxDefaultPosition, wxSize(110, -1), choiceStatusStrings);
-    choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+    choiceStatus_->SetStringSelection(wxGetTranslation(mmIniOptions::instance().transStatusReconciled_));
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
     transPanelSizer->Add(staticTextStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);

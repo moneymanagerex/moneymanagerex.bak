@@ -325,7 +325,8 @@ void mmTransDialog::CreateControls()
     for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
         choiceStatus_->Append(wxGetTranslation(transaction_status[i]),
         new wxStringClientData(transaction_status[i]));
-    choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+    choiceStatus_->SetStringSelection(wxGetTranslation(mmIniOptions::instance().transStatusReconciled_));
+
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
     choiceStatus_->Connect(ID_DIALOG_TRANS_STATUS,
         wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceStatusChar), NULL, this);
