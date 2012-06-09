@@ -392,18 +392,20 @@ void mmOptionsDialog::CreateControls()
         wxID_STATIC, _("Report Font Size"));
     fontSizeOptionStaticBoxSizer->Add(reportFontSizeStaticText, flags);
 
-    wxArrayString itemChoiceHTMLFontSize;
-
-    itemChoiceHTMLFontSize.Add("XSmall");
-    itemChoiceHTMLFontSize.Add("Small");
-    itemChoiceHTMLFontSize.Add("Normal");
-    itemChoiceHTMLFontSize.Add("Large");
-    itemChoiceHTMLFontSize.Add("XLarge");
-    itemChoiceHTMLFontSize.Add("XXLarge");
-    itemChoiceHTMLFontSize.Add("Huge");
+    wxString itemChoiceFontSize[] = {
+        wxTRANSLATE("XSmall"),
+        wxTRANSLATE("Small"),
+        wxTRANSLATE("Normal"),
+        wxTRANSLATE("Large"),
+        wxTRANSLATE("XLarge"),
+        wxTRANSLATE("XXLarge"),
+        wxTRANSLATE("Huge")};
 
     choiceFontSize_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_FONT_SIZE,
-        wxDefaultPosition, wxSize(85, -1), itemChoiceHTMLFontSize);
+        wxDefaultPosition, wxSize(85, -1));
+        
+    for(size_t i = 0; i < sizeof(itemChoiceFontSize)/sizeof(wxString); ++i)
+        choiceFontSize_->Append(wxGetTranslation(itemChoiceFontSize[i]));
 
     choiceFontSize_->SetSelection((int)config->ReadLong("HTMLFONTSIZE", 3) -1);
 
