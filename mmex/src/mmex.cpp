@@ -620,6 +620,7 @@ mmGUIFrame::~mmGUIFrame()
 
 void mmGUIFrame::cleanup()
 {
+    wxConfigBase *config = wxConfigBase::Get();
     printer_.reset();
     if (recentFiles_) delete recentFiles_;
     if (!fileName_.IsEmpty())   saveConfigFile();
@@ -634,7 +635,7 @@ void mmGUIFrame::cleanup()
 
     /// Update the database according to user requirements
     if (mmOptions::instance().databaseUpdated_ &&
-       (mmDBWrapper::getINISettingValue(m_inidb.get(), ("BACKUPDB_UPDATE"), ("FALSE")) == ("TRUE")))
+       (config->ReadBool("BACKUPDB_UPDATE", false)))
     {
         BackupDatabase(fileName_, true);
     }
@@ -2895,6 +2896,7 @@ void mmGUIFrame::createToolBar()
 
 bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, bool openingNew)
 {
+    wxConfigBase *config = wxConfigBase::Get();
     if (m_core) m_core.reset();
 
     if (m_db)
@@ -2904,7 +2906,7 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
 
         /// Update the database according to user requirements
         if (mmOptions::instance().databaseUpdated_ &&
-           (mmDBWrapper::getINISettingValue(m_inidb.get(), ("BACKUPDB_UPDATE"), ("FALSE")) == ("TRUE")))
+           (config->ReadBool("BACKUPDB_UPDATE", false)))
         {
             BackupDatabase(fileName_, true);
             mmOptions::instance().databaseUpdated_ = false;
