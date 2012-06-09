@@ -1591,18 +1591,17 @@ void TransactionListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 
 void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
-    if (m_selectedForCopy != -1)
-    {
-        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(m_cp->inidb_, INIDB_USE_ORG_DATE_COPYPASTE, ("FALSE"));
-        bool useOriginal = false;
-        if (useOriginalDate == ("TRUE"))
-            useOriginal = true;
-        boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->core_->bTransactionList_.copyTransaction(m_cp->core_, m_selectedForCopy, useOriginal);
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
-        pCopiedTrans->updateAllData(m_cp->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
-        m_selectedIndex ++;
-        refreshVisualList();
-    }
+    if (m_selectedForCopy < 0) return;
+
+    wxConfigBase *config = wxConfigBase::Get();
+
+    bool useOriginal = config->ReadBool(INIDB_USE_ORG_DATE_COPYPASTE, false);
+    boost::shared_ptr<mmBankTransaction> pCopiedTrans =
+        m_cp->core_->bTransactionList_.copyTransaction(m_cp->core_, m_selectedForCopy, useOriginal);
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
+    pCopiedTrans->updateAllData(m_cp->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
+    m_selectedIndex ++;
+    refreshVisualList();
 }
 //----------------------------------------------------------------------------
 
