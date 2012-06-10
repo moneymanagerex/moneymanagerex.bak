@@ -140,7 +140,7 @@ int BudgetEntry_Table::GetEntryID(const wxString& year)
     int year_id = GetYearID(year);
 
     DB_View_BUDGETTABLE_V1::Data_Set record = BUDGETTABLE_V1.find(db_
-        , DB_View_BUDGETTABLE_V1::COL_CATEGID, year_id);
+        , DB_View_BUDGETTABLE_V1::COL_BUDGETYEARID, year_id);
 
     int entry_id = -1;
     if (record.size() > 0) entry_id = record[0].BUDGETENTRYID;
