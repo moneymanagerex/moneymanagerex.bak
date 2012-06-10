@@ -208,7 +208,7 @@ insertCategoryTree(wxSQLite3Database* db,
                    wxSQLite3Statement &cat,
                    wxSQLite3Statement &subcat,
                    const wxString &categoryName,
-                   const wxChar* subcats[] // must be NULL or ends with NULL
+                   const char* subcats[] // must be NULL or ends with NULL
                   )
 {
     wxASSERT(db);
@@ -238,7 +238,7 @@ insertCategoryTree(wxSQLite3Database* db,
 
     for (size_t i = 0; subcats[i]; ++i)
     {
-        subcat.Bind(name_idx, subcats[i]);
+        subcat.Bind(name_idx, wxGetTranslation(subcats[i]));
         subcat.ExecuteUpdate();
         subcat.Reset();
 
@@ -259,40 +259,52 @@ void createDefaultCategories(wxSQLite3Database* db)
           "values (:name, :id)"
         );
 
-        const wxChar* BillsCategories[] = {_("Telephone"), _("Electricity"), _("Gas"), _("Internet"), _("Rent"), _("Cable TV"), _("Water"), 0};
+        const char* BillsCategories[] = {wxTRANSLATE("Telephone"), wxTRANSLATE("Electricity"),
+            wxTRANSLATE("Gas"), wxTRANSLATE("Internet"), wxTRANSLATE("Rent"),
+            wxTRANSLATE("Cable TV"), wxTRANSLATE("Water"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Bills"), BillsCategories);
 
-        const wxChar* FoodCategories[] = {_("Groceries"), _("Dining out"), 0};
+        const char* FoodCategories[] = {wxTRANSLATE("Groceries"), wxTRANSLATE("Dining out"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Food"), FoodCategories);
 
-        const wxChar* LeisureCategories[] = {_("Movies"), _("Video Rental"), _("Magazines"), 0};
+        const char* LeisureCategories[] = {wxTRANSLATE("Movies"), wxTRANSLATE("Video Rental"),
+            wxTRANSLATE("Magazines"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Leisure"), LeisureCategories);
 
-        const wxChar* AutomobileCategories[] = {_("Maintenance"), _("Gas"), _("Parking"), _("Registration"), 0};
+        const char* AutomobileCategories[] = {wxTRANSLATE("Maintenance"), wxTRANSLATE("Gas"),
+            wxTRANSLATE("Parking"), wxTRANSLATE("Registration"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Automobile"), AutomobileCategories);
 
-        const wxChar* EducationCategories[] = {_("Books"), _("Tuition"), _("Others"), 0};
+        const char* EducationCategories[] = {wxTRANSLATE("Books"),
+            wxTRANSLATE("Tuition"), wxTRANSLATE("Others"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Education"), EducationCategories);
 
-        const wxChar* HomeneedsCategories[] = {_("Clothing"), _("Furnishing"), _("Others"), 0};
+        const char* HomeneedsCategories[] = {wxTRANSLATE("Clothing"),
+            wxTRANSLATE("Furnishing"), wxTRANSLATE("Others"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Homeneeds"), HomeneedsCategories);
 
-        const wxChar* HealthcareCategories[] = {_("Health"), _("Dental"), _("Eyecare"), _("Physician"), _("Prescriptions"), 0};
+        const char* HealthcareCategories[] = {wxTRANSLATE("Health"),
+            wxTRANSLATE("Dental"), wxTRANSLATE("Eyecare"),
+            wxTRANSLATE("Physician"), wxTRANSLATE("Prescriptions"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Healthcare"), HealthcareCategories);
 
-        const wxChar* InsuranceCategories[] = {_("Auto"), _("Life"), _("Home"), _("Health"), 0};
+        const char* InsuranceCategories[] = {wxTRANSLATE("Auto"),
+            wxTRANSLATE("Life"), wxTRANSLATE("Home"), wxTRANSLATE("Health"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Insurance"), InsuranceCategories);
 
-        const wxChar* VacationCategories[] = {_("Travel"), _("Lodging"), _("Sightseeing"), 0};
+        const char* VacationCategories[] = {wxTRANSLATE("Travel"),
+            wxTRANSLATE("Lodging"), wxTRANSLATE("Sightseeing"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Vacation"), VacationCategories);
 
-        const wxChar* TaxesCategories[] = {_("Income Tax"), _("House Tax"), _("Water Tax"), _("Others"), 0};
+        const char* TaxesCategories[] = {wxTRANSLATE("Income Tax"),
+            wxTRANSLATE("House Tax"), wxTRANSLATE("Water Tax"), wxTRANSLATE("Others"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Taxes"), TaxesCategories);
 
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Miscellaneous"), 0);
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Gifts"), 0);
 
-        const wxChar* IncomeCategories[] = {_("Salary"), _("Reimbursement/Refunds"),  _("Investment Income"), 0};
+        const char* IncomeCategories[] = {wxTRANSLATE("Salary"),
+            wxTRANSLATE("Reimbursement/Refunds"), wxTRANSLATE("Investment Income"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Income"), IncomeCategories);
 
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Other Income"), 0);
