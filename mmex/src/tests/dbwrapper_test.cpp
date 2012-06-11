@@ -44,6 +44,17 @@ wxString getDbPath()
 }
 //----------------------------------------------------------------------------
 
+void DumpDates(wxString msg, wxDateTime time_start, wxDateTime time_end)
+{
+    wxString message = msg;
+    msg << " - Test: "
+        << "Start: " << time_start.FormatISOTime()
+        << " End: " << time_end.FormatISOTime()
+        << "\n";
+
+    wxLogDebug(msg.c_str());
+}
+
 boost::shared_ptr<wxSQLite3Database> getDb()
 {
     static boost::shared_ptr<wxSQLite3Database> db_ptr(new wxSQLite3Database);
@@ -66,29 +77,45 @@ SUITE(dbwrapper)
 
 TEST(wxSQLite3Exception)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
     CHECK_THROW(db->ExecuteUpdate("update bad_table set bad_col = unknown_value"), wxSQLite3Exception);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("wxSQLite3Exception",time_start, time_end);
 }
 //----------------------------------------------------------------------------
 
 TEST(HasBackupSupport)
 {
+    wxDateTime time_start(wxDateTime::Now());
     bool ok = getDb().get()->HasBackupSupport();
     CHECK(ok);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("HasBackupSupport",time_start, time_end);
 }
 //----------------------------------------------------------------------------
 
 TEST(HasEncryptionSupport)
 {
+    wxDateTime time_start(wxDateTime::Now());
     bool ok = getDb().get()->HasEncryptionSupport();
     CHECK(ok);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("HasEncryptionSupport",time_start, time_end);
 }
 //----------------------------------------------------------------------------
 
 TEST(HasMetaDataSupport)
 {
+    wxDateTime time_start(wxDateTime::Now());
     bool ok = getDb().get()->HasMetaDataSupport();
     CHECK(ok);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("HasMetaDataSupport",time_start, time_end);
 }
 //----------------------------------------------------------------------------
 
@@ -101,6 +128,7 @@ TEST(HasSavepointSupport)
 
 TEST(ViewExists)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
 
     bool ok = mmDBWrapper::ViewExists(db, "I'm_not_exists");
@@ -115,11 +143,15 @@ TEST(ViewExists)
     CHECK(ok);
 
     db->ExecuteUpdate("drop view master_view");
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("ViewExists",time_start, time_end);
 }
 //----------------------------------------------------------------------------
 
 TEST(initDB)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
 
     mmDBWrapper::initDB(db, 0);
@@ -138,13 +170,16 @@ TEST(initDB)
     ok = db->TableExists(("SUBCATEGORY_V1"));
     CHECK(ok);
     CHECK(!SUBCATEGORY_V1.all(db).empty());
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("initDB",time_start, time_end);
 }
 //----------------------------------------------------------------------------
 
-#if 0    // fails test
-
+#if 1
 TEST(getCurrencySymbol)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
 
     wxString s;
@@ -158,22 +193,32 @@ TEST(getCurrencySymbol)
     if (currency)
         s = currency->CURRENCY_SYMBOL;
     CHECK(s.empty());
-}
 
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("getCurrencySymbol",time_start, time_end);
+}
 #endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(checkDBVersion)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
 
     bool ok = mmDBWrapper::checkDBVersion(db);
     CHECK(ok);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("checkDBVersion",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(addBudgetYear)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
 
     BudgetEntry_Table budget_table(db);
@@ -183,11 +228,17 @@ TEST(addBudgetYear)
 
     year_id = budget_table.AddYear(g_BudgetYear);
     CHECK(year_id > 0);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("addBudgetYear",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(getBudgetYearID)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
 
     BudgetYear_Table budget_year_table(db);
@@ -197,11 +248,18 @@ TEST(getBudgetYearID)
 
     year_id = budget_year_table.GetYearID(g_BudgetYear);
     CHECK(year_id > 0);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("getBudgetYearID",time_start, time_end);
 }
+
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(getBudgetYearForID)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
 
     BudgetYear_Table budget_year_table(db);
@@ -211,13 +269,19 @@ TEST(getBudgetYearForID)
 
     wxString year = budget_year_table.GetYear(year_id);
     CHECK(year == g_BudgetYear);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("getBudgetYearForID",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
-TEST(updateYearForID)
+#if 1
+TEST(getBudgetYearForID_2)
 {
-    wxSQLite3Database* db = getDb().get();
+    wxDateTime time_start(wxDateTime::Now());
 
+    wxSQLite3Database* db = getDb().get();
     BudgetEntry_Table budget_table(db);
 
     int year_id = budget_table.GetYearID(g_BudgetYear);
@@ -234,11 +298,18 @@ TEST(updateYearForID)
     budget_table.UpdateYear(g_BudgetYear, year_id);
     year = budget_table.GetYear(year_id);
     CHECK(year == g_BudgetYear);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("getBudgetYearForID_2",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(copyBudgetYear)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
     BudgetEntry_Table budget_table(db);
 
@@ -267,11 +338,18 @@ TEST(copyBudgetYear)
 
     ok = budget_table.CopyYear(base_year_id, new_year_id);
     CHECK(ok);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("copyBudgetYear",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(deleteBudgetYear)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
     BudgetEntry_Table budget_table(db);
 
@@ -280,21 +358,35 @@ TEST(deleteBudgetYear)
 
     deleted = budget_table.DeleteYear(g_BudgetYear);
     CHECK(deleted);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("deleteBudgetYear",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
+
 //----------------------------------------------------------------------------
+#if 1
 TEST(addCategory)
 {
+    wxDateTime time_start(wxDateTime::Now());
     wxSQLite3Database* db = getDb().get();
     Category_Table category_table(db);
 
     int cat_id = category_table.AddName(g_CategName);
     CHECK(cat_id > 0);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("addCategory",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(addSubCategory)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
 
     Category_Table category_table(db);
@@ -305,11 +397,18 @@ TEST(addSubCategory)
 
     int subcat_id = sub_category_table.AddName(g_SubCategName, cat_id);
     CHECK(subcat_id > 0);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("addSubCategory",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(getCategoryID)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
 
     Category_Table category_table(db);
@@ -319,11 +418,18 @@ TEST(getCategoryID)
 
     cat_id = category_table.GetID(("unknown category"));
     CHECK(cat_id == -1);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("getCategoryID",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(getSubCategoryID)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
 
     Category_Table category_table(db);
@@ -337,11 +443,18 @@ TEST(getSubCategoryID)
 
     subcat_id = subcategory_table.GetID(("unknown subcategory"), cat_id);
     CHECK(subcat_id == -1);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("getSubCategoryID",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(getCategoryName)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
 
     Category_Table category_table(db);
@@ -354,11 +467,18 @@ TEST(getCategoryName)
 
     name = category_table.GetName(0);
     CHECK(name.empty());
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("getCategoryName",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(getSubCategoryName)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
     Category_Table category_table(db);
     SubCategory_Table subcategory_table(db);
@@ -374,11 +494,18 @@ TEST(getSubCategoryName)
 
     sct_name = subcategory_table.GetName(cat_id, 0);
     CHECK(sct_name.empty());
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("getSubCategoryName",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(updateCategory)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
     Category_Table category_table(db);
     SubCategory_Table subcategory_table(db);
@@ -411,10 +538,18 @@ TEST(updateCategory)
 
     ok = subcategory_table.UpdateName(g_SubCategName, cat_id, sc_id); // restore
     CHECK(ok);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("updateCategory",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
+
+#if 1
 TEST(deleteSubCategoryWithConstraints)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
     Category_Table category_table(db);
     SubCategory_Table subcategory_table(db);
@@ -429,25 +564,35 @@ TEST(deleteSubCategoryWithConstraints)
 
     int ok = category_list.deleteSubCategoryWithConstraints(cat_id, subcat_id);
     CHECK(ok == wxID_OK);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("deleteSubCategoryWithConstraints",time_start, time_end);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(deleteCategoryWithConstraints)
 {
+    wxDateTime time_start(wxDateTime::Now());
+
     wxSQLite3Database* db = getDb().get();
     Category_Table category_table(db);
-
     int cat_id = category_table.GetID(g_CategName);
     CHECK(cat_id > 0);
 
     mmCategoryList category_list(getDb());
     int ok = category_list.deleteCategoryWithConstraints(cat_id);
     CHECK(ok == wxID_OK);
+
+    wxDateTime time_end(wxDateTime::Now());
+    DumpDates("deleteCategoryWithConstraints",time_start, time_end);
 }
-/*
-//----------------------------------------------------------------------------
+#endif
 //----------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
+#if 0
 TEST(getCurrencyID)
 {
     wxSQLite3Database &db = getDb();
@@ -458,8 +603,10 @@ TEST(getCurrencyID)
     id = mmDBWrapper::getCurrencyID(&db, ("unknown currency"));
     CHECK(id == -1);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 0
 TEST(getCurrencyName)
 {
     wxSQLite3Database &db = getDb();
@@ -475,8 +622,10 @@ TEST(getCurrencyName)
     name = mmDBWrapper::getCurrencyName(&db, -1);
     CHECK(name.empty());
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 0
 TEST(setBaseCurrencySettings)
 {
     wxSQLite3Database &db = getDb();
@@ -489,8 +638,10 @@ TEST(setBaseCurrencySettings)
     int base_id = mmDBWrapper::getBaseCurrencySettings(&db);
     CHECK(base_id == id);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 0
 TEST(getBaseCurrencySettings)
 {
     wxSQLite3Database &db = getDb();
@@ -501,74 +652,87 @@ TEST(getBaseCurrencySettings)
     int base_id = mmDBWrapper::getBaseCurrencySettings(&db);
     CHECK(base_id == id);
 }
+#endif
 //----------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
+#if 1
 TEST(loadBaseCurrencySettings)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
-    mmDBWrapper::loadBaseCurrencySettings(&db);
+    mmDBWrapper::loadBaseCurrencySettings(db);
     CHECK(true);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 0
 TEST(getCurrencyBaseConvRate)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
-    int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
+    int id = mmDBWrapper::getCurrencyID(db, g_CurrencyName);
     CHECK(id > 0);
 
-    double rate = mmDBWrapper::getCurrencyBaseConvRateForId(&db, id);
+    double rate = mmDBWrapper::getCurrencyBaseConvRateForId(db, id);
     CHECK(rate != 0.0);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 0
 TEST(loadSettings)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
-    int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
+    int id = mmDBWrapper::getCurrencyID(db, g_CurrencyName);
     CHECK(id > 0);
 
-    mmDBWrapper::loadSettings(&db, id);
+    mmDBWrapper::loadSettings(db, id);
 }
-//----------------------------------------------------------------------------
+#endif
 //----------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
+#if 1
 TEST(setInfoSettingValue)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
     const wxString name = ("settings name");
     const wxString val = ("settings value");
 
-    mmDBWrapper::setInfoSettingValue(&db, name, val);
+    mmDBWrapper::setInfoSettingValue(db, name, val);
 
-    wxString s = mmDBWrapper::getInfoSettingValue(&db, name, (""));
+    wxString s = mmDBWrapper::getInfoSettingValue(db, name, (""));
     CHECK(s == val);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(getInfoSettingValue)
 {
-    wxSQLite3Database &db = getDb();
+    wxSQLite3Database* db = getDb().get();
 
     const wxString name = ("wrong name");
     const wxString defVal = ("default value");
 
-    wxString s = mmDBWrapper::getInfoSettingValue(&db, name, defVal);
+    wxString s = mmDBWrapper::getInfoSettingValue(db, name, defVal);
     CHECK(s == defVal);
 
     // --
 
-    mmDBWrapper::setInfoSettingValue(&db, name, defVal);
-    s = mmDBWrapper::getInfoSettingValue(&db, name, (""));
+    mmDBWrapper::setInfoSettingValue(db, name, defVal);
+    s = mmDBWrapper::getInfoSettingValue(db, name, (""));
     CHECK(s == defVal);
 }
+#endif
 //----------------------------------------------------------------------------
+
 //----------------------------------------------------------------------------
-*/
+#if 1
 TEST(addPayee)
 {
     wxSQLite3Database* db = getDb().get();
@@ -587,7 +751,10 @@ TEST(addPayee)
     int id = payee_list.add(g_PayeeName);
     CHECK(id > 0);
 }
+#endif
 //----------------------------------------------------------------------------
+
+#if 1
 TEST(getPayeeID)
 {
     wxSQLite3Database* db = getDb().get();
@@ -609,11 +776,11 @@ TEST(getPayeeID)
     id = payee_list.getID(("bad payee name"));
     CHECK(id < 0);
 }
-
-
+#endif
 //----------------------------------------------------------------------------
-/*
-*/
+//----------------------------------------------------------------------------
+
+#if 1
 TEST(getPayee)
 {
     wxSQLite3Database* db = getDb().get();
@@ -637,8 +804,10 @@ TEST(getPayee)
     name = mmDBWrapper::getPayee(db, 0, cat, subc);
     CHECK(name.empty());
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(updatePayee)
 {
     wxSQLite3Database* db = getDb().get();
@@ -666,8 +835,10 @@ TEST(updatePayee)
     ok = mmDBWrapper::updatePayee(db, g_PayeeName, id, cat, subc);
     CHECK(ok);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(getAmountForPayee)
 {
     mmPayeeList payee_list(getDb());
@@ -686,8 +857,10 @@ TEST(getAmountForPayee)
     double amt = transaction_list.getAmountForPayee(payee_id, true,dt_begin, dt_end);
     CHECK(amt == 0.0);
 }
+#endif
 //----------------------------------------------------------------------------
 
+#if 1
 TEST(deletePayeeWithConstraints)
 {
     wxSQLite3Database* db = getDb().get();
@@ -707,9 +880,11 @@ TEST(deletePayeeWithConstraints)
     ok = mmDBWrapper::deletePayeeWithConstraints(db, 0);
     CHECK(ok); // returns true even for wrong id
 }
-//----------------------------------------------------------------------------
+#endif
 //----------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
+#if 1
 TEST(getNumAccounts)
 {
     mmAccountList account_list(getDb());
@@ -717,9 +892,9 @@ TEST(getNumAccounts)
 
     CHECK(!count);
 }
+#endif
 //----------------------------------------------------------------------------
-/*
-*/
+
 } // SUITE
 
 //----------------------------------------------------------------------------
