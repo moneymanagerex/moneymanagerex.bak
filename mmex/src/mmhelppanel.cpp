@@ -82,7 +82,8 @@ void mmHelpPanel::CreateControls()
     wxString helpHeader = mmex::getProgramName() + _(" Help");
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         helpHeader, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, ("")));
+    int font_size = this->GetFont().GetPointSize() + 2;
+    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, ("")));
 
     itemBoxSizerHeader->Add(buttonBack, 0, wxLEFT, 5);
     itemBoxSizerHeader->Add(buttonFordward, 0, wxLEFT|wxRIGHT, 5);
