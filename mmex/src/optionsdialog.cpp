@@ -130,9 +130,10 @@ wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString inpu
 void mmOptionsDialog::CreateControls()
 {
     wxConfigBase *config = wxConfigBase::Get();
-    
-    wxSizerFlags flags(1);
+
+    wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Expand();    
 
     wxSize imageSize(48, 48);
     m_imageList = new wxImageList(imageSize.GetWidth(), imageSize.GetHeight());
@@ -147,7 +148,7 @@ void mmOptionsDialog::CreateControls()
 
     wxPanel* mainDialogPanel = new wxPanel(this,
         wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    mainDialogSizer->Add(mainDialogPanel, 0, wxGROW|wxALL, 5);
+    mainDialogSizer->Add(mainDialogPanel, flagsExpand);
 
     wxBoxSizer* mainDialogPanelSizer = new wxBoxSizer(wxVERTICAL);
     mainDialogPanel->SetSizer(mainDialogPanelSizer);
@@ -166,32 +167,32 @@ void mmOptionsDialog::CreateControls()
     generalPanel->SetSizer(generalPanelSizer);
 
     // Display Header Settings
-    wxStaticBox* headerStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Display Heading"));
+    wxStaticBox* headerStaticBox = new wxStaticBox(generalPanel,
+        wxID_ANY, _("Display Heading"));
 
     // Define the staticBox font and set it as wxFONTWEIGHT_BOLD
     wxFont staticBoxFontSetting = headerStaticBox->GetFont();
     staticBoxFontSetting.SetWeight(wxFONTWEIGHT_BOLD);
-
     headerStaticBox->SetFont(staticBoxFontSetting);
 
     wxStaticBoxSizer* headerStaticBoxSizer = new wxStaticBoxSizer(headerStaticBox, wxHORIZONTAL);
-    generalPanelSizer->Add(headerStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    generalPanelSizer->Add(headerStaticBoxSizer, flagsExpand);
 
     wxStaticText* userNameText = new wxStaticText(generalPanel, wxID_STATIC,
-        _("User Name"), wxDefaultPosition, wxDefaultSize, 0);
+        _("User Name"));
     headerStaticBoxSizer->Add(userNameText, flags);
 
-    wxString userName = mmDBWrapper::getInfoSettingValue(db_, ("USERNAME"), (""));
-    wxTextCtrl* userNameTextCtr = new wxTextCtrl(generalPanel, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME,
-        userName, wxDefaultPosition, wxDefaultSize, 0);
+    wxString userName = mmDBWrapper::getInfoSettingValue(db_, "USERNAME", "");
+    wxTextCtrl* userNameTextCtr = new wxTextCtrl(generalPanel,
+        ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, userName);
     userNameTextCtr->SetToolTip(_("The User Name is used as a title for the database."));
-    headerStaticBoxSizer->Add(userNameTextCtr, 1, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    headerStaticBoxSizer->Add(userNameTextCtr, flagsExpand);
 
     // Language Settings
     wxStaticBox* languageStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Language"));
     languageStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* languageStaticBoxSizer = new wxStaticBoxSizer(languageStaticBox, wxHORIZONTAL);
-    generalPanelSizer->Add(languageStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    generalPanelSizer->Add(languageStaticBoxSizer, flagsExpand);
 
     currentLanguage_ = config->Read(LANGUAGE_PARAMETER, "English");
     wxButton* languageButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_LANGUAGE,
@@ -200,18 +201,18 @@ void mmOptionsDialog::CreateControls()
     languageButton->Connect(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, wxEVT_COMMAND_BUTTON_CLICKED,
                             wxCommandEventHandler(mmOptionsDialog::OnLanguageChanged), NULL, this);
 
-    languageStaticBoxSizer->Add(languageButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    languageStaticBoxSizer->Add(languageButton, flags);
 
     // Currency Settings
     wxStaticBox* currencyStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Currency"));
     currencyStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* currencyStaticBoxSizer = new wxStaticBoxSizer(currencyStaticBox, wxHORIZONTAL);
     currencyStaticBox->SetFont(staticBoxFontSetting);
-    generalPanelSizer->Add(currencyStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    generalPanelSizer->Add(currencyStaticBoxSizer, flagsExpand);
 
     wxStaticText* baseCurrencyText = new wxStaticText(generalPanel, wxID_STATIC,
-        _("Base Currency"), wxDefaultPosition, wxDefaultSize, 0);
-    currencyStaticBoxSizer->Add(baseCurrencyText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+        _("Base Currency"));
+    currencyStaticBoxSizer->Add(baseCurrencyText, flags);
 
     wxString currName = _("Set Currency");
     if (currencyId_ != -1)
@@ -219,14 +220,14 @@ void mmOptionsDialog::CreateControls()
     wxButton* baseCurrencyButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_CURRENCY,
         currName, wxDefaultPosition, wxSize(150, -1), 0);
     baseCurrencyButton->SetToolTip(_("Sets the default currency for the database."));
-    currencyStaticBoxSizer->Add(baseCurrencyButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    currencyStaticBoxSizer->Add(baseCurrencyButton, flags);
 
     // Date Format Settings
     wxStaticBox* dateFormatStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Date Format"));
     dateFormatStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* dateFormatStaticBoxSizer = new wxStaticBoxSizer(dateFormatStaticBox, wxVERTICAL);
     wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid = new wxFlexGridSizer(0,2,0,5);
-    generalPanelSizer->Add(dateFormatStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    generalPanelSizer->Add(dateFormatStaticBoxSizer, flagsExpand);
     dateFormatStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid);
 
     wxArrayString itemChoice7Strings = itemChoiceStrings();
@@ -240,19 +241,18 @@ void mmOptionsDialog::CreateControls()
     }
 
     choiceDateFormat_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT,
-        wxDefaultPosition, wxSize(140, -1), itemChoice7Strings, 0);
+        wxDefaultPosition, wxDefaultSize, itemChoice7Strings, 0);
     choiceDateFormat_->SetSelection(i);
     dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, flags);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
     choiceDateFormat_->Connect(ID_DIALOG_OPTIONS_DATE_FORMAT, wxEVT_COMMAND_CHOICE_SELECTED,
                                wxCommandEventHandler(mmOptionsDialog::OnDateFormatChanged), NULL, this);
 
-    wxStaticText* restartText = new wxStaticText( generalPanel, ID_DIALOG_OPTIONS_RESTART_REQUIRED,
-        (""), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* restartText = new wxStaticText( generalPanel, ID_DIALOG_OPTIONS_RESTART_REQUIRED, "");
     wxStaticText* sampleDateExampleText = new wxStaticText( generalPanel, wxID_ANY,
-        _("New date format sample:"), wxDefaultPosition, wxDefaultSize, 0);
+        _("New date format sample:"));
     wxStaticText* sampleDateText = new wxStaticText(generalPanel, ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE,
-        ("redefined elsewhere"), wxDefaultPosition, wxDefaultSize, 0);
+        "redefined elsewhere");
     dateFormatSettingStaticBoxSizerGrid->Add(restartText, flags);
     dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, flags);
     dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, flags);
@@ -263,13 +263,12 @@ void mmOptionsDialog::CreateControls()
     financialYearStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* financialYearStaticBoxSizer = new wxStaticBoxSizer(financialYearStaticBox, wxVERTICAL);
     wxFlexGridSizer* financialYearStaticBoxSizerGrid = new wxFlexGridSizer(0,2,0,0);
-    generalPanelSizer->Add(financialYearStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    generalPanelSizer->Add(financialYearStaticBoxSizer, flagsExpand);
     financialYearStaticBoxSizer->Add(financialYearStaticBoxSizerGrid);
 
     wxStaticText* itemStaticTextFYSDay = new wxStaticText(generalPanel, wxID_STATIC, _("Start Day"),
         wxDefaultPosition, wxDefaultSize, 0 );
-    financialYearStaticBoxSizerGrid->Add(itemStaticTextFYSDay, 0,
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    financialYearStaticBoxSizerGrid->Add(itemStaticTextFYSDay, flags);
 
     wxString financialPeriodStartDay = mmDBWrapper::getInfoSettingValue(db_, ("FINANCIAL_YEAR_START_DAY"), ("1"));
     int day = wxAtoi(financialPeriodStartDay);
@@ -277,12 +276,11 @@ void mmOptionsDialog::CreateControls()
         wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 31, day);
     textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
 
-    financialYearStaticBoxSizerGrid->Add(textFPSDay, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    financialYearStaticBoxSizerGrid->Add(textFPSDay, flags);
 
     wxStaticText* itemStaticTextSmonth = new wxStaticText(generalPanel, wxID_STATIC, _("Start Month"),
         wxDefaultPosition, wxDefaultSize, 0);
-    financialYearStaticBoxSizerGrid->Add(itemStaticTextSmonth, 0,
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    financialYearStaticBoxSizerGrid->Add(itemStaticTextSmonth, flags);
 
     wxArrayString financialMonthsSelection;
     for(int i=0; i<12; i++) {
@@ -301,7 +299,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* backupStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Database Backup"));
     backupStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* backupStaticBoxSizer = new wxStaticBoxSizer(backupStaticBox, wxVERTICAL);
-    generalPanelSizer->Add(backupStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    generalPanelSizer->Add(backupStaticBoxSizer, flagsExpand);
 
     wxCheckBox* backupCheckBox = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP,
         _("Create a new backup when MMEX Start"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
@@ -326,7 +324,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* accountStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Account View Options"));
     accountStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* accountStaticBoxSizer = new wxStaticBoxSizer(accountStaticBox, wxHORIZONTAL);
-    viewsPanelSizer->Add(accountStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    viewsPanelSizer->Add(accountStaticBoxSizer, flagsExpand);
 
     wxStaticText* accountStaticText = new wxStaticText( viewsPanel,
         wxID_STATIC, _("Accounts Visible"));
@@ -337,7 +335,7 @@ void mmOptionsDialog::CreateControls()
 
     choiceVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_ACCOUNTS,
         wxDefaultPosition, wxDefaultSize, itemChoiceViewAccountTranslatedStrings);
-    accountStaticBoxSizer->Add(choiceVisible_, 1, wxGROW|wxALL, 5);
+    accountStaticBoxSizer->Add(choiceVisible_, flagsExpand);
 
     wxString vAccts = config->Read("VIEWACCOUNTS", VIEW_ACCOUNTS_ALL_STR);
     row_id_ = 0;
@@ -352,7 +350,7 @@ void mmOptionsDialog::CreateControls()
     transOptionStaticBox->SetFont(staticBoxFontSetting);
 
     wxBoxSizer* transOptionStaticBoxSizer = new wxStaticBoxSizer(transOptionStaticBox, wxHORIZONTAL);
-    viewsPanelSizer->Add(transOptionStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    viewsPanelSizer->Add(transOptionStaticBoxSizer, flagsExpand);
 
     wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid2 = new wxFlexGridSizer(0,2,0,5);
     transOptionStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid2);
@@ -381,12 +379,12 @@ void mmOptionsDialog::CreateControls()
         wxGetTranslation(config->Read("VIEWTRANSACTIONS", "View All Transactions")));
     choiceTransVisible_->SetToolTip(_("Specify which transactions are visible by default"));
 
-    dateFormatSettingStaticBoxSizerGrid2->Add(choiceTransVisible_, 1, wxGROW|wxALL, 5);
+    dateFormatSettingStaticBoxSizerGrid2->Add(choiceTransVisible_, flagsExpand);
 
     wxStaticBox* fontSizeOptionStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Font Size Options"));
     fontSizeOptionStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* fontSizeOptionStaticBoxSizer = new wxStaticBoxSizer(fontSizeOptionStaticBox, wxHORIZONTAL);
-    viewsPanelSizer->Add(fontSizeOptionStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    viewsPanelSizer->Add(fontSizeOptionStaticBoxSizer, flagsExpand);
 
     wxStaticText* reportFontSizeStaticText = new wxStaticText(viewsPanel,
         wxID_STATIC, _("Report Font Size"));
@@ -410,14 +408,14 @@ void mmOptionsDialog::CreateControls()
     choiceFontSize_->SetSelection((int)config->ReadLong("HTMLFONTSIZE", 3) -1);
 
     choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
-    fontSizeOptionStaticBoxSizer->Add(choiceFontSize_, 1, wxGROW|wxALL, 5);
+    fontSizeOptionStaticBoxSizer->Add(choiceFontSize_, flagsExpand);
 
     // Navigation Tree Expansion Options
     wxStaticBox* navTreeOptionsStaticBox = new wxStaticBox(viewsPanel,
         wxID_ANY, _("Navigation Tree Expansion Options"));
     navTreeOptionsStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* navTreeOptionsStaticBoxSizer = new wxStaticBoxSizer(navTreeOptionsStaticBox, wxHORIZONTAL);
-    viewsPanelSizer->Add(navTreeOptionsStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    viewsPanelSizer->Add(navTreeOptionsStaticBoxSizer, flagsExpand);
 
     // Expand Bank Tree
     wxCheckBox* expandBankCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_BANK_TREE,
@@ -437,7 +435,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* homePageStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Home Page Expansion Options"));
     homePageStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* homePageStaticBoxSizer = new wxStaticBoxSizer(homePageStaticBox, wxVERTICAL);
-    viewsPanelSizer->Add(homePageStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    viewsPanelSizer->Add(homePageStaticBoxSizer, flagsExpand);
 
     // Expand Bank Home
     wxCheckBox* expandBankHomeCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_BANK_HOME,
@@ -497,7 +495,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* colourSettingStaticBox = new wxStaticBox(colourPanel, wxID_ANY, _("Colour Settings"));
     colourSettingStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* colourSettingStaticBoxSizer = new wxStaticBoxSizer(colourSettingStaticBox, wxVERTICAL);
-    colourPanelSizer->Add(colourSettingStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    colourPanelSizer->Add(colourSettingStaticBoxSizer, flagsExpand);
 
     wxFlexGridSizer* colourPanelSizerGrid = new wxFlexGridSizer(0, 2, 10, 10);
     colourSettingStaticBoxSizer->Add(colourPanelSizerGrid);
@@ -575,7 +573,7 @@ void mmOptionsDialog::CreateControls()
     transSettingsStaticBox->SetFont(staticBoxFontSetting);
 
     wxStaticBoxSizer* transSettingsStaticBoxSizer = new wxStaticBoxSizer(transSettingsStaticBox, wxVERTICAL);
-    othersPanelSizer->Add(transSettingsStaticBoxSizer, 0, wxGROW|wxALL, 5);
+    othersPanelSizer->Add(transSettingsStaticBoxSizer, flagsExpand);
 
     wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(0,2,5,5);
     transSettingsStaticBoxSizer->Add(newTransflexGridSizer);
@@ -648,16 +646,16 @@ void mmOptionsDialog::CreateControls()
     othersPanelSizer->AddSpacer(10);
 
     wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxVERTICAL);
-    othersPanelSizer->Add(itemBoxSizerStockURL, 0, wxGROW);
+    othersPanelSizer->Add(itemBoxSizerStockURL, flagsExpand);
 
     wxStaticText* itemStaticTextURL = new wxStaticText(othersPanel, wxID_STATIC,
-        _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0);
+        _("Stock Quote Web Page"));
     itemStaticTextURL->SetFont(staticBoxFontSetting);
-    itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizerStockURL->Add(itemStaticTextURL, flags);
 
     wxTextCtrl* itemTextCtrURL = new wxTextCtrl(othersPanel, ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL,
         config->Read("STOCKURL", mmex::DEFSTOCKURL));
-    itemBoxSizerStockURL->Add(itemTextCtrURL, 1, wxGROW|wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizerStockURL->Add(itemTextCtrURL, flagsExpand);
     itemTextCtrURL->SetToolTip(_("Clear the field to Reset the value to system default."));
 
     //a bit more space visual appearance
@@ -690,7 +688,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* importExportStaticBox = new wxStaticBox(importExportPanel, wxID_ANY, _("Import/Export Settings"));
     importExportStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* importExportStaticBoxSizer = new wxStaticBoxSizer(importExportStaticBox, wxVERTICAL);
-    importExportPanelSizer->Add(importExportStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    importExportPanelSizer->Add(importExportStaticBoxSizer, flagsExpand);
 
     wxStaticBox* importExportStaticBox2 = new wxStaticBox(importExportPanel, wxID_ANY, _("CSV Delimiter"));
     importExportStaticBox2->SetFont(staticBoxFontSetting);
@@ -738,7 +736,7 @@ void mmOptionsDialog::CreateControls()
     newBook->InsertPage(3, importExportPanel, _("Import/Export"), false, 4);
     newBook->InsertPage(4, othersPanel, _("Others"), false, 3);
 
-    mainDialogPanelSizer->Add(newBook, 0, wxGROW|wxALL, 5);
+    mainDialogPanelSizer->Add(newBook, flagsExpand);
     mainDialogPanelSizer->Layout();
 
    /**********************************************************************************************
@@ -752,8 +750,8 @@ void mmOptionsDialog::CreateControls()
     buttonPanel->SetSizer(buttonPanelSizer);
     mainDialogSizer->Add(buttonPanel, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxButton* itemButtonOK = new wxButton(buttonPanel, wxID_OK, _("&OK"));
-    wxButton* itemButtonCancel = new wxButton(buttonPanel, wxID_CANCEL, _("&Cancel"));
+    wxButton* itemButtonOK = new wxButton(buttonPanel, wxID_OK);
+    wxButton* itemButtonCancel = new wxButton(buttonPanel, wxID_CANCEL);
     buttonPanelSizer->Add(itemButtonOK, 0, wxALIGN_RIGHT|wxRIGHT, 5);
     buttonPanelSizer->Add(itemButtonCancel, 0, wxALIGN_RIGHT|wxRIGHT, 5);
     itemButtonOK->SetFocus();
