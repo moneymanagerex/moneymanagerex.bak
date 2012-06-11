@@ -63,6 +63,7 @@
 #include "customreportdialog.h"
 #include <boost/version.hpp>
 #include <wx/aboutdlg.h>
+
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -394,12 +395,8 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_TIMER(AUTO_REPEAT_TRANSACTIONS_TIMER_ID, mmGUIFrame::OnAutoRepeatTransactionsTimer)
 
     /* Recent Files */
-    EVT_MENU(MENU_RECENT_FILES_1, mmGUIFrame::OnRecentFiles_1)
-    EVT_MENU(MENU_RECENT_FILES_2, mmGUIFrame::OnRecentFiles_2)
-    EVT_MENU(MENU_RECENT_FILES_3, mmGUIFrame::OnRecentFiles_3)
-    EVT_MENU(MENU_RECENT_FILES_4, mmGUIFrame::OnRecentFiles_4)
-    EVT_MENU(MENU_RECENT_FILES_5, mmGUIFrame::OnRecentFiles_5)
     EVT_MENU(MENU_RECENT_FILES_CLEAR, mmGUIFrame::OnClearRecentFiles)
+    EVT_MENU_RANGE(wxID_FILE1, wxID_FILE9, mmGUIFrame::OnMRUFile)
 
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
@@ -565,7 +562,6 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     createMenu();
     createToolBar();
     createControls();
-    recentFiles_ = new RecentDatabaseFiles(m_inidb.get(), menuRecentFiles_);
 
     // add the toolbars to the manager
     m_mgr.AddPane(toolBar_, wxAuiPaneInfo().Name(("toolbar")).Caption(("Toolbar")).ToolbarPane().Top().LeftDockable(false).RightDockable(false));
@@ -622,7 +618,7 @@ void mmGUIFrame::cleanup()
 {
     wxConfigBase *config = wxConfigBase::Get();
     printer_.reset();
-    if (recentFiles_) delete recentFiles_;
+
     if (!fileName_.IsEmpty())   saveConfigFile();
 
     m_mgr.UnInit();
@@ -2557,25 +2553,35 @@ void mmGUIFrame::createMenu()
 
     wxMenu *menu_file = new wxMenu;
 
-    wxMenuItem* menuItemNew = new wxMenuItem(menu_file, MENU_NEW,_("&New Database\tCtrl-N"),_("New Database"));
+    wxMenuItem* menuItemNew = new wxMenuItem(menu_file,
+        MENU_NEW,_("&New Database\tCtrl-N"),_("New Database"));
     menuItemNew->SetBitmap(toolBarBitmaps[0]);
-    wxMenuItem* menuItemOpen = new wxMenuItem(menu_file, MENU_OPEN,_("&Open Database\tCtrl-O"),_("Open Database"));
+    wxMenuItem* menuItemOpen = new wxMenuItem(menu_file,
+        MENU_OPEN,_("&Open Database\tCtrl-O"),_("Open Database"));
     menuItemOpen->SetBitmap(toolBarBitmaps[1]);
-    wxMenuItem* menuItemSaveAs = new wxMenuItem(menu_file, MENU_SAVE_AS,_("Save Database &As"),_("Save Database As"));
+    wxMenuItem* menuItemSaveAs = new wxMenuItem(menu_file,
+        MENU_SAVE_AS,_("Save Database &As"),_("Save Database As"));
     menuItemSaveAs->SetBitmap(wxBitmap(saveas_xpm));
     menu_file->Append(menuItemNew);
     menu_file->Append(menuItemOpen);
     menu_file->Append(menuItemSaveAs);
     menu_file->AppendSeparator();
 
+    //Files History
+    wxConfigBase *config = wxConfigBase::Get();
+
     menuRecentFiles_ = new wxMenu;
+    history_ = new wxFileHistory(9, wxID_FILE1);
+    history_->UseMenu(menuRecentFiles_);
+    history_->Load(*config);
     menu_file->Append(MENU_RECENT_FILES, _("&Recent Files..."), menuRecentFiles_);
-    // Note: menuRecentFiles_ will be constructed by the class: RecentDatabaseFiles::setMenuFileItems()
-    wxMenuItem* menuClearRecentFiles = new wxMenuItem(menu_file, MENU_RECENT_FILES_CLEAR,_("&Clear Recent Files"));
+    wxMenuItem* menuClearRecentFiles = new wxMenuItem(menu_file,
+        MENU_RECENT_FILES_CLEAR,_("&Clear Recent Files"));
     menuClearRecentFiles->SetBitmap(toolBarBitmaps[9]);
     menu_file->Append(menuClearRecentFiles);
     menu_file->AppendSeparator();
 
+    //Export
     wxMenu* exportMenu = new wxMenu;
     exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files..."), _("Export to CSV"));
     exportMenu->Append(MENU_EXPORT_QIF, _("&QIF Files..."), _("Export to QIF"));
@@ -4583,6 +4589,7 @@ void mmGUIApp::OnFatalException()
 void mmGUIFrame::SetDatabaseFile(const wxString& dbFileName, bool newDatabase)
 {
     autoRepeatTransactionsTimer_.Stop();
+    wxConfigBase *config = wxConfigBase::Get();
     wxProgressDialog *progress = NULL;
     if (! newDatabase)
     {
@@ -4602,7 +4609,10 @@ void mmGUIFrame::SetDatabaseFile(const wxString& dbFileName, bool newDatabase)
     if (opened_ok)
     {
         if (progress) progress->Update(95);
-        recentFiles_->updateRecentList(dbFileName);
+        
+        history_->AddFileToHistory(dbFileName);
+        //history_->AddFilesToMenu(menuRecentFiles_);
+        history_->Save(*config);
     }
 
     if (progress)
@@ -4659,4 +4669,21 @@ void mmGUIFrame::BackupDatabase(const wxString& filename, bool updateRequired)
         wxFileName fnLastFile(backupFileArray.Last());
         if (fnLastFile.IsFileWritable()) wxRemoveFile(backupFileArray.Last());
     }
+}
+
+void mmGUIFrame::OnMRUFile(wxCommandEvent& event)
+{
+    wxString file(history_->GetHistoryFile(event.GetId() - wxID_FILE1));
+    SetDatabaseFile(file);
+
+}
+
+void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& event)
+{
+    wxConfigBase *config = wxConfigBase::Get();
+    size_t files_number = history_->GetCount();
+    for (size_t i=files_number-1; i>0; i--) {
+        history_->RemoveFileFromHistory(i);
+    }; 
+    history_->Save(*config);
 }
