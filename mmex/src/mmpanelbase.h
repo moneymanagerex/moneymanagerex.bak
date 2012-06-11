@@ -142,10 +142,9 @@ public:
     
     mmPanelBase() {}
     ~mmPanelBase() {}
-    mmPanelBase(wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core = 0): db_(db), inidb_(inidb), core_(core) {}
+    mmPanelBase(wxSQLite3Database* db, mmCoreDB* core = 0): db_(db), core_(core) {}
 
-    wxSQLite3Database* db_; //TODO remove
-    wxSQLite3Database* inidb_;
+    wxSQLite3Database* db_;
     mmCoreDB* core_;
 public:
     virtual void save_config(const mmListCtrl* list_ctrl, const wxString& module = "mmPanelBase")

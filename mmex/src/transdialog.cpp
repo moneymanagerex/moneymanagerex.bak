@@ -64,13 +64,11 @@ mmTransDialog::mmTransDialog(
     boost::shared_ptr<wxSQLite3Database> db, 
     mmCoreDB* core,
     int accountID, int transID, bool edit, 
-    wxSQLite3Database* inidb,
     wxWindow* parent, wxWindowID id, 
     const wxString& caption, const wxPoint& pos, 
     const wxSize& size, long style 
 ) :
     db_(db),
-    inidb_(inidb),
     core_(core),
     transID_(transID),
     accountID_(accountID),

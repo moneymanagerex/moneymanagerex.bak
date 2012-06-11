@@ -32,14 +32,13 @@ class mmAppStartDialog: public wxDialog
 
 public:
     mmAppStartDialog();
-    mmAppStartDialog(wxSQLite3Database* inidb, wxWindow* parent);
+    mmAppStartDialog(wxWindow* parent);
    ~mmAppStartDialog();
 
     int getReturnCode() const { return retCode_; }
     void SetCloseButtonToExit();
 
 private:
-    wxSQLite3Database* inidb_;
     wxCheckBox* itemCheckBox;
     wxButton* itemButtonClose_;
     int retCode_;

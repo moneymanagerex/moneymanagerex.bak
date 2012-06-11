@@ -80,7 +80,6 @@ public:
 
     mmCheckingPanel(
         mmCoreDB* core,
-        wxSQLite3Database* inidb, 
         int accountID, 
         wxWindow *parent,
         wxWindowID winid = wxID_ANY,

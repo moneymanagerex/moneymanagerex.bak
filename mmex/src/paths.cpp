@@ -31,7 +31,7 @@ namespace
 
 inline const wxString getSettingsFileName()
 {
-    return ("mmexini.db3");
+    return ("mmex.conf");
 }
 //----------------------------------------------------------------------------
 

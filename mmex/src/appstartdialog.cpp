@@ -41,15 +41,13 @@ END_EVENT_TABLE()
 
 
 mmAppStartDialog::mmAppStartDialog() : 
-        inidb_(),
         itemCheckBox(),
         retCode_(-1)
 {
 }
 
 
-mmAppStartDialog::mmAppStartDialog(wxSQLite3Database* inidb, wxWindow* parent) :
-        inidb_(inidb),
+mmAppStartDialog::mmAppStartDialog(wxWindow* parent) :
         itemCheckBox(),
         retCode_(-1)
 {
