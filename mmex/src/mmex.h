@@ -26,9 +26,9 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include "recentfiles.h"
 #include "guiid.h"
 #include "util.h"
+#include <wx/docview.h>
 //----------------------------------------------------------------------------
 class wxWizardEvent;
 class wxSQLite3Database;
@@ -275,15 +275,11 @@ private:
     void processPendingEvents();
 
     /* Recent Files */
-    RecentDatabaseFiles* recentFiles_;
     wxMenu *menuRecentFiles_;
+    wxFileHistory *history_;
 
-    void OnRecentFiles_1(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(1)); }
-    void OnRecentFiles_2(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(2)); }
-    void OnRecentFiles_3(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(3)); }
-    void OnRecentFiles_4(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(4)); }
-    void OnRecentFiles_5(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(5)); }
-    void OnClearRecentFiles(wxCommandEvent& /*event*/) { recentFiles_->clearRecentList(); }
+    void OnClearRecentFiles(wxCommandEvent& event);
+    void OnMRUFile(wxCommandEvent& event);
 
     /** Sets the database to the new database selected by the user */
     void SetDatabaseFile(const wxString& dbFileName, bool newDatabase = false);
