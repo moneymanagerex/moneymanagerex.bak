@@ -63,12 +63,12 @@ BEGIN_EVENT_TABLE(stocksListCtrl, mmListCtrl)
     EVT_LIST_KEY_DOWN(ID_PANEL_STOCKS_LISTCTRL,   stocksListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
 /*******************************************************/
-mmStocksPanel::mmStocksPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core,
+mmStocksPanel::mmStocksPanel(wxSQLite3Database* db, mmCoreDB* core,
                              int accountID,
                              wxWindow *parent,
                              wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
                              const wxString& name)
-        : mmPanelBase(db, inidb, core), accountID_(accountID)
+        : mmPanelBase(db, core), accountID_(accountID)
 {
     Create(parent, winid, pos, size, style, name);
 }
@@ -93,10 +93,8 @@ bool mmStocksPanel::Create(wxWindow *parent,
         listCtrlStock_->EnsureVisible(((int)trans_.size()) - 1);
 
     // Greg Newton
-    //yahoo_ = new mmYahoo(NULL, /*inidb_,*/ db_);
 
     wxConfigBase *config = wxConfigBase::Get();
-    //strLastUpdate_ = mmDBWrapper::getInfoSettingValue(db_, ("STOCKS_LAST_REFRESH_DATETIME"), (""));
     strLastUpdate_ = config->Read("STOCKS_LAST_REFRESH_DATETIME", "");
 
     updateExtraStocksData(-1);

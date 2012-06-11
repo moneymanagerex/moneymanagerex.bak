@@ -64,11 +64,11 @@ mmOptionsDialog::~mmOptionsDialog( )
     delete m_imageList;
 }
 
-mmOptionsDialog::mmOptionsDialog( mmCoreDB* core, wxSQLite3Database* inidb,
+mmOptionsDialog::mmOptionsDialog( mmCoreDB* core,
                                  wxWindow* parent, wxWindowID id,
                                  const wxString& caption,
                                  const wxPoint& pos, const wxSize& size, long style )
-                                 : core_(core), inidb_(inidb), db_(core->db_.get()),
+                                 : core_(core), db_(core->db_.get()),
                                  restartRequired_(false), changesApplied_(false)
 {
     Create(parent, id, caption, pos, size, style);
@@ -990,9 +990,7 @@ void mmOptionsDialog::SaveFinancialYearStart()
 /// Saves the updated System Options to the appropriate databases.
 void mmOptionsDialog::SaveNewSystemSettings()
 {
-    // initialize database saves -------------------------------------------------------------
     db_->Begin();
-    inidb_->Begin();
 
     // Save all the details for all the panels
     SaveGeneralPanelSettings();
@@ -1001,9 +999,7 @@ void mmOptionsDialog::SaveNewSystemSettings()
     SaveOthersPanelSettings();
     SaveImportExportPanelSettings();
 
-    // finalise database saves ---------------------------------------------------------------
     db_->Commit();
-    inidb_->Commit();
 }
 
 void mmOptionsDialog::SaveGeneralPanelSettings()

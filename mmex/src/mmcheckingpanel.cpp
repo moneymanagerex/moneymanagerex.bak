@@ -65,10 +65,8 @@ EColumn toEColumn(long col)
 /*
     Adds columns to list controls and setup their initial widths.
 */
-void createColumns(wxSQLite3Database *inidb_, mmListCtrl &lst)
+void createColumns(mmListCtrl &lst)
 {
-    wxASSERT(inidb_);
-
     lst.InsertColumn(COL_DATE_OR_TRANSACTION_ID, _("Date  "));
     lst.InsertColumn(COL_TRANSACTION_NUMBER, _("Number"), wxLIST_FORMAT_RIGHT);
     lst.InsertColumn(COL_PAYEE_STR, _("Payee"));
@@ -416,19 +414,17 @@ END_EVENT_TABLE();
 mmCheckingPanel::mmCheckingPanel
 (
     mmCoreDB* core,
-    wxSQLite3Database* inidb,
     int accountID,
     wxWindow *parent,
     wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
     const wxString& name
 ) :
-    mmPanelBase(NULL, inidb, core),
+    mmPanelBase(NULL, core),
     filteredBalance_(0.0),
     m_listCtrlAccount(),
     m_AccountID(accountID)
 {
     wxASSERT(core_);
-    wxASSERT(inidb_);
 
     Create(parent, winid, pos, size, style, name);
 }
@@ -613,7 +609,7 @@ void mmCheckingPanel::CreateControls()
     m_listCtrlAccount->SetFocus();
 
 
-    createColumns(inidb_, *m_listCtrlAccount);
+    createColumns(*m_listCtrlAccount);
 
     // load the global variables
     long val = (long)COL_DEF_SORT;
@@ -1720,7 +1716,7 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
     if (m_selectedIndex != -1)
     {
         mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(),
-           m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
+           m_cp->m_trans[m_selectedIndex]->transactionID(), true, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
             refreshVisualList();
@@ -1731,7 +1727,7 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 
 void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 0, false, m_cp->inidb_, this);
+    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 0, false, this);
 
     if ( dlg.ShowModal() == wxID_OK )
     {
@@ -1747,7 +1743,7 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
     {
         wxDateTime transTime = m_cp->m_trans[m_selectedIndex]->date_;
         mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(),
-            m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
+            m_cp->m_trans[m_selectedIndex]->transactionID(), true, this);
 
         dlg.SetDialogToDuplicateTransaction();
         if ( dlg.ShowModal() == wxID_OK )
@@ -1797,8 +1793,7 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
         if ( m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR )
         {
             mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(),
-                              m_cp->m_trans[m_selectedIndex]->transactionID(), true,
-                              m_cp->inidb_, this);
+                              m_cp->m_trans[m_selectedIndex]->transactionID(), true, this);
             if ( dlg.ShowModal() == wxID_OK )
             {
                 refreshVisualList();
@@ -1837,7 +1832,7 @@ void TransactionListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     if (m_selectedIndex != -1)
     {
         mmTransDialog dlg(m_cp->getDb(), m_cp->core_,  m_cp->accountID(),
-            m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
+            m_cp->m_trans[m_selectedIndex]->transactionID(), true, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
             m_cp->initVirtualListControl();

@@ -34,8 +34,7 @@ END_EVENT_TABLE()
 
 
 mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
-            wxSQLite3Database* db, 
-            wxSQLite3Database* inidb, 
+            wxSQLite3Database* db,
             mmCoreDB* core, 
             const wxString& topCategories,
             wxWindow *parent,
@@ -44,7 +43,7 @@ mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
             const wxSize& size,
             long style,
             const wxString& name )
-: mmPanelBase(db, inidb, core), frame_(frame), topCategories_(topCategories)
+: mmPanelBase(db, core), frame_(frame), topCategories_(topCategories)
 {
     frame_->setHomePageActive();
     Create(parent, winid, pos, size, style, name);

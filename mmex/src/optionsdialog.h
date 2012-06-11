@@ -96,7 +96,7 @@ class mmOptionsDialog: public wxDialog
 
 public:
     mmOptionsDialog( );
-    mmOptionsDialog( mmCoreDB* db, wxSQLite3Database* inidb,
+    mmOptionsDialog( mmCoreDB* db,
         wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME,
         const wxString& caption = SYMBOL_MMOPTIONSDIALOG_TITLE,
         const wxPoint& pos = SYMBOL_MMOPTIONSDIALOG_POSITION,
@@ -117,7 +117,6 @@ private:
     /// System database access variables
     mmCoreDB* core_;
     wxSQLite3Database* db_;
-    wxSQLite3Database* inidb_;
 
     /// Dialog specific controls
     wxImageList* m_imageList;

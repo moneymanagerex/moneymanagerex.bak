@@ -62,12 +62,12 @@ inline bool sortTransactionsByRemainingDays(const mmBDTransactionHolder &p1, con
 
 } // namespace
 
-mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
+mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db,
             mmCoreDB* core,
             wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
-            : mmPanelBase(db, inidb, core), m_imageList(), listCtrlBD_()
+            : mmPanelBase(db, core), m_imageList(), listCtrlBD_()
 {
     Create(parent, winid, pos, size, style, name);
 }
@@ -154,7 +154,7 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlBD_->InsertColumn(7, _("Notes"));
 
     wxConfigBase *config = wxConfigBase::Get();
-    /* See if we can get data from inidb */
+
     long col0 = config->ReadLong("BD_COL0_WIDTH", 140);
     long col1 = config->ReadLong("BD_COL1_WIDTH", -2);
     long col2 = config->ReadLong("BD_COL2_WIDTH", -2);

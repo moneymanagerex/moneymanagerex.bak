@@ -115,7 +115,6 @@ private:
 
     /* handles to SQLite Database */
     boost::shared_ptr<wxSQLite3Database> m_db;
-    boost::shared_ptr<wxSQLite3Database> m_inidb;
 
     /* Currently open file name */
     wxString fileName_;
@@ -179,7 +178,6 @@ private:
     void createStocksAccountPage(int accountID);
     void createBudgetingPage(int budgetYearID);
     void createControls();
-    void loadConfigFile();
     void saveConfigFile();
     void menuEnableItems(bool enable);
     void menuPrintingEnable(bool enable);

@@ -40,11 +40,11 @@ BEGIN_EVENT_TABLE(budgetingListCtrl, wxListCtrl)
 
 END_EVENT_TABLE()
 /*******************************************************/
-mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
+mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name 
            ) : 
-    mmPanelBase(db, inidb, core),
+    mmPanelBase(db, core),
     listCtrlBudget_(),
     budgetYearID_(budgetYearID),
     mainFrame_(mainFrame)
@@ -256,7 +256,7 @@ void mmBudgetingPanel::CreateControls()
     listCtrlBudget_->InsertColumn(5, _("Actual"), wxLIST_FORMAT_RIGHT);
 
     wxConfigBase *config = wxConfigBase::Get();
-    /* See if we can get data from inidb */
+
     long col0 = config->ReadLong("BUDGET_COL0_WIDTH", 80);
     long col1 = config->ReadLong("BUDGET_COL1_WIDTH", 80);
     long col2 = config->ReadLong("BUDGET_COL2_WIDTH", 80);

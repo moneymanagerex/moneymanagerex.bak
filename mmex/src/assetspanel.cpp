@@ -57,8 +57,8 @@ BEGIN_EVENT_TABLE(assetsListCtrl, mmListCtrl)
 END_EVENT_TABLE()
 /*******************************************************/
 
-mmAssetsPanel::mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core) :
-    mmPanelBase(db, inidb, core)
+mmAssetsPanel::mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, mmCoreDB* core) :
+    mmPanelBase(db, core)
     , m_listCtrlAssets(0), m_new_button(0), m_edit_button(0), m_delete_button(0)
     , m_sum(0), m_detail(0)
 {
@@ -124,7 +124,6 @@ void mmAssetsPanel::CreateControls()
         IDC_PANEL_ASSETS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
 
-    /* See if we can get data from inidb */
     wxConfigBase *config = wxConfigBase::Get();
     long col0 = config->ReadLong("ASSETS_COL0_WIDTH", 150);
     long col1 = config->ReadLong("ASSETS_COL1_WIDTH", -2);

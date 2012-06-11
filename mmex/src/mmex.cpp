@@ -257,12 +257,6 @@ bool OnInitImpl(mmGUIApp &app)
     wxImage::AddHandler(new wxJPEGHandler());
     wxImage::AddHandler(new wxPNGHandler());
 
-    /* Get INI DB for loading settings */
-    wxSQLite3Database inidb;
-
-    inidb.Open(mmex::getPathUser(mmex::SETTINGS));
-
-    SETTING_V1.ensure(&inidb);
 
     /* Load MMEX Custom Settings */
     mmIniOptions::instance().loadOptions();
@@ -280,8 +274,6 @@ bool OnInitImpl(mmGUIApp &app)
     long valh = config->ReadLong("SIZEH", 600);
 
     mmSelectLanguage(0, false);
-
-    inidb.Close();
 
     mmGUIFrame *frame = new mmGUIFrame(mmex::getProgramName(), wxPoint(valx, valy), wxSize(valw, valh));
     bool ok = frame->Show();
@@ -553,7 +545,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     wxString printHeaderBase = mmex::getProgramName();
     printer_-> SetHeader( printHeaderBase + ("(@PAGENUM@/@PAGESCNT@)<hr>"), wxPAGE_ALL);
 
-    loadConfigFile(); // load from Settings DB
+    //loadConfigFile(); // load from Settings DB
     restorePrinterValues();
 
     custRepIndex_ = new customSQLReportIndex();
@@ -619,7 +611,7 @@ void mmGUIFrame::cleanup()
     wxConfigBase *config = wxConfigBase::Get();
     printer_.reset();
 
-    if (!fileName_.IsEmpty())   saveConfigFile();
+    //if (!fileName_.IsEmpty())   saveConfigFile();
 
     m_mgr.UnInit();
 
@@ -635,8 +627,6 @@ void mmGUIFrame::cleanup()
     {
         BackupDatabase(fileName_, true);
     }
-
-    if (m_inidb) m_inidb->Close();
 }
 //----------------------------------------------------------------------------
 // process all events waiting in the event queue if any.
@@ -895,12 +885,6 @@ void mmGUIFrame::saveConfigFile()
     config->Write("SIZEW", (long)valw);
     config->Write("SIZEH", (long)valh);
     config->Write("ISMAXIMIZED", this->IsMaximized());
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::loadConfigFile()
-{
-    m_inidb = mmDBWrapper::Open(mmex::getPathUser(mmex::SETTINGS));
 }
 //----------------------------------------------------------------------------
 
@@ -1583,7 +1567,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 #endif
                     wxSizer *sizer = cleanupHomePanel();
                 
-                    panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), m_core.get(), data, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+                    panelCurrent_ = new mmStocksPanel(m_db.get(), m_core.get(), data, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
                     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 5);
                     
                     homePanel->Layout();
@@ -2473,7 +2457,7 @@ void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmBudgetingPanel(m_db.get(), m_inidb.get(), m_core.get(), this, budgetYearID,
+    panelCurrent_ = new mmBudgetingPanel(m_db.get(), m_core.get(), this, budgetYearID,
         homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
@@ -2493,7 +2477,6 @@ void mmGUIFrame::createHomePage()
     }
     panelCurrent_ = new mmHomePagePanel(this
             , m_db.get()
-            , m_inidb.get()
             , m_core.get()
             , m_topCategories
             , homePanel
@@ -2938,7 +2921,7 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         && passwordCheckPassed)
     {
         /* Do a backup before opening */
-        if (mmDBWrapper::getINISettingValue(m_inidb.get(), ("BACKUPDB"), ("FALSE")) == ("TRUE"))
+        if (config->ReadBool ("BACKUPDB", false))
         {
             BackupDatabase(fileName);
         }
@@ -3006,7 +2989,7 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
             msgStr = _("Password not entered for encrypted Database.\n");
 
         msgStr << fileName;
-        wxMessageBox(msgStr, dialogErrorMessageHeading, wxICON_ERROR);
+        wxMessageBox(msgStr, dialogErrorMessageHeading, wxOK|wxICON_ERROR);
         menuEnableItems(false);
         return false;
     }
@@ -3450,9 +3433,9 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
 
 void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
 {
-    if (!m_db.get() || !m_inidb) return;
+    if (!m_db.get()) return;
 
-    mmOptionsDialog systemOptions(m_core.get(), m_inidb.get(), this);
+    mmOptionsDialog systemOptions(m_core.get(), this);
     if (systemOptions.ShowModal() == wxID_OK && systemOptions.AppliedChanges())
     {
         systemOptions.SaveNewSystemSettings();
@@ -3891,7 +3874,7 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 void mmGUIFrame::showBeginAppDialog(bool fromScratch)
 {
     wxConfigBase *config = wxConfigBase::Get();
-    mmAppStartDialog dlg(m_inidb.get(), this);
+    mmAppStartDialog dlg(this);
     if (fromScratch) dlg.SetCloseButtonToExit();
     if (dlg.ShowModal() == wxID_OK)
     {
@@ -3959,7 +3942,7 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& WXUNUSED(event))
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmBillsDepositsPanel(m_db.get(), m_inidb.get(), m_core.get(), homePanel, ID_PANEL3,
+    panelCurrent_ = new mmBillsDepositsPanel(m_db.get(), m_core.get(), homePanel, ID_PANEL3,
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
@@ -3972,7 +3955,7 @@ void mmGUIFrame::createStocksAccountPage(int accountID)
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), m_core.get(),
+    panelCurrent_ = new mmStocksPanel(m_db.get(), m_core.get(),
                                         accountID, homePanel, ID_PANEL3,
                                         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL
                                        );
@@ -3993,7 +3976,7 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmCheckingPanel(m_core.get(), m_inidb.get(),
+    panelCurrent_ = new mmCheckingPanel(m_core.get(),
                                         accountID, homePanel, ID_PANEL3,
                                         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL
                                        );
@@ -4013,7 +3996,7 @@ void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
 void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 {
     wxSizer *sizer = cleanupHomePanel();
-    panelCurrent_ = new mmAssetsPanel(homePanel, m_db.get(), m_inidb.get(), m_core.get());
+    panelCurrent_ = new mmAssetsPanel(homePanel, m_db.get(), m_core.get());
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
     wxStatusBar *sb = GetStatusBar();
     if (sb) sb->SetStatusText(panelCurrent_->get_version());

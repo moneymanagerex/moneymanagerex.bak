@@ -22,7 +22,7 @@
 #include "mmyahoo.h"
 
 /** There is NO default constructor - we need a settings database to talk to **/
-mmYahoo::mmYahoo(wxSQLite3Database* inidb, wxSQLite3Database* db) : inidb_(inidb), db_(db)
+mmYahoo::mmYahoo(wxSQLite3Database* db) : db_(db)
 {
     ReadSettings();
 }
@@ -37,21 +37,12 @@ mmYahoo::~mmYahoo()
 void mmYahoo::ReadSettings()
 {
     wxConfigBase *config = wxConfigBase::Get();
-    // Get values from mmexini.db3
-    ////mmDBWrapper::getINISettingValue(inidb_, ("STOCKS_REFRESH_ENABLED"), 
-    ////                                        ("0")).ToLong(&UpdatingEnabled_);
+
     UpdatingEnabled_ = config->ReadBool("STOCKS_REFRESH_ENABLED", false);
     
-    // Get values from user database
-    /*OpenTimeStr_  = mmDBWrapper::getInfoSettingValue(db_, ("STOCKS_MARKET_OPEN_TIME"), 
-                                                          ("10:15:00")).GetData() ;
-    CloseTimeStr_ = mmDBWrapper::getInfoSettingValue(db_, ("STOCKS_MARKET_CLOSE_TIME"), 
-                                                          ("16:40:00")).GetData() ;*/
     OpenTimeStr_ = config->Read("STOCKS_MARKET_OPEN_TIME", "10:15:00");
     CloseTimeStr_ = config->Read("STOCKS_MARKET_CLOSE_TIME", "16:40:00");
     
-    // Get time of last update from user database
-    ////wxString datetime_str = mmDBWrapper::getInfoSettingValue(db_, ("STOCKS_LAST_REFRESH_DATETIME"), (""));
     wxString datetime_str = config->Read("STOCKS_LAST_REFRESH_DATETIME", "");
 
 #if wxCHECK_VERSION(2,9,0)
@@ -62,23 +53,16 @@ void mmYahoo::ReadSettings()
 
     LastRefreshDT_ = wxInvalidDateTime;
 
-    //mmDBWrapper::getInfoSettingValue(db_, ("STOCKS_REFRESH_MINUTES"), ("30")).ToLong(&UpdateIntervalMinutes_);
     config->Read("STOCKS_REFRESH_MINUTES", "30").ToLong(&UpdateIntervalMinutes_);
 
-    // Server
-    //Server_ = mmDBWrapper::getInfoSettingValue(db_,("HTTP_YAHOO_SERVER"),("download.finance.yahoo.com"));
-    //Suffix_ = mmDBWrapper::getInfoSettingValue(db_,("HTTP_YAHOO_SUFFIX"), (""));
     Server_ = config->Read("HTTP_YAHOO_SERVER","download.finance.yahoo.com");
     Suffix_ = config->Read("HTTP_YAHOO_SUFFIX", "");
 
-    //TODO:Store CSVColumns_ in config / INI item
-    // CSVColumns_ = ("snghl1c1vd1t1");
     CSVColumns_ = ("sl1n");  /// Extreme basic version - only symbol & current price & name
     CSVTemporaryFile_.Clear();
 
     // Proxy
     long LongTemp;
-    //mmDBWrapper::getINISettingValue(inidb_, ("HTTP_USE_PROXY"), ("0")).ToLong(&LongTemp);
     config->Read("HTTP_USE_PROXY", "0").ToLong(&LongTemp);
 }
 
@@ -88,28 +72,16 @@ void mmYahoo::ReadSettings()
 void mmYahoo::WriteSettings()
 {
     wxConfigBase *config = wxConfigBase::Get();
-    // Status - Save to mmexini.db3
-    //mmDBWrapper::setINISettingValue(inidb_, ("STOCKS_REFRESH_ENABLED"), wxString::Format(("%ld"), UpdatingEnabled_));
     config->Write("STOCKS_REFRESH_ENABLED", UpdatingEnabled_);
-    // Save to user database
-    //mmDBWrapper::setInfoSettingValue(db_, ("STOCKS_MARKET_OPEN_TIME"), OpenTimeStr_) ;
-    //mmDBWrapper::setInfoSettingValue(db_, ("STOCKS_MARKET_CLOSE_TIME"), CloseTimeStr_) ;
     config->Write("STOCKS_MARKET_OPEN_TIME", OpenTimeStr_);
     config->Write("STOCKS_MARKET_CLOSE_TIME", CloseTimeStr_) ;
     if (LastRefreshDT_.IsValid() )
     {
-        //mmDBWrapper::setInfoSettingValue(db_, ("STOCKS_LAST_REFRESH_DATETIME"), wxString::Format(("%s %s"),
-        //                                      LastRefreshDT_.FormatISODate().c_str(),LastRefreshDT_.FormatISOTime().c_str()));
         config->Write("STOCKS_LAST_REFRESH_DATETIME",
             wxString::Format(("%s %s"),
             LastRefreshDT_.FormatISODate().c_str(),LastRefreshDT_.FormatISOTime().c_str()));
     }
-    //mmDBWrapper::setInfoSettingValue(db_, ("STOCKS_REFRESH_MINUTES"),wxString::Format(("%ld"),UpdateIntervalMinutes_));
     config->Write("STOCKS_REFRESH_MINUTES", UpdateIntervalMinutes_);
-    // Server
-    //mmDBWrapper::setInfoSettingValue(db_,("STOCKS_MARKET_CLOSE_TIME"), CloseTimeStr_) ;
     config->Write("STOCKS_MARKET_CLOSE_TIME", CloseTimeStr_) ;
-    //mmDBWrapper::setInfoSettingValue(db_,("HTTP_YAHOO_SUFFIX"),Suffix_);
     config->Write("HTTP_YAHOO_SUFFIX", Suffix_);
 }
-
