@@ -144,7 +144,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         initBudgetEntryFields(th, budgetYearID_);
         th.categID_ = q1.GetInt(("CATEGID"));
         th.catStr_  = q1.GetString(("CATEGNAME"));
-        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
+        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_, th.id_);
 
         // Set the estimated amount for the year
         setBudgetYearlyEstimate(th);
@@ -225,7 +225,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             thsub.subcategID_ = q2.GetInt(("SUBCATEGID"));
             thsub.subCatStr_  = q2.GetString(("SUBCATEGNAME"));
 
-            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
+            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_, thsub.id_);
  
             // Set the estimated amount for the year
             setBudgetYearlyEstimate(thsub);

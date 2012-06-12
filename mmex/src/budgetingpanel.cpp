@@ -293,7 +293,7 @@ bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
     } 
     else if (currentView_ == _("View Budget Category Summary")) 
     {
-        if ((budgetEntry.id_ < 0.0)) result = true;
+        if ((budgetEntry.id_ < 0)) result = true;
     } 
     else 
     {
@@ -370,7 +370,7 @@ void mmBudgetingPanel::initVirtualListControl()
         th.categID_ = q1.GetInt(("CATEGID"));
         th.catStr_ = q1.GetString(("CATEGNAME"));
 
-        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
+        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_, th.id_);
         budgetDetails.setBudgetEstimate(th, monthlyBudget);
         if (th.estimated_ < 0)
             estExpenses += th.estimated_;
@@ -427,7 +427,7 @@ void mmBudgetingPanel::initVirtualListControl()
             thsub.subcategID_ = q2.GetInt(("SUBCATEGID"));
             thsub.subCatStr_   = q2.GetString(("SUBCATEGNAME"));
 
-            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
+            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_,  thsub.id_);
             budgetDetails.setBudgetEstimate(thsub, monthlyBudget);
             if (thsub.estimated_ < 0) 
                 estExpenses += thsub.estimated_;
@@ -567,7 +567,9 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
     if (cp_->trans_[selectedIndex_].id_ >= 0)
     {
         mmBudgetEntryDialog dlg(
-            cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, cp_->budgetYearID_,
+            cp_->db_, cp_->core_,
+            cp_->trans_[selectedIndex_].id_,
+            cp_->budgetYearID_,
             cp_->trans_[selectedIndex_].categID_,
             cp_->trans_[selectedIndex_].subcategID_,
             cp_->trans_[selectedIndex_].estimatedStr_,
