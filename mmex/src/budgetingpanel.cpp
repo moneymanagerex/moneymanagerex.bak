@@ -199,23 +199,21 @@ void mmBudgetingPanel::CreateControls()
             _("Viewing All Budget Categories"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, flags);
 
-    wxSize distSize(170, 20);
-
     wxStaticText* itemStaticText100 = new wxStaticText( headerPanel, wxID_ANY, _("Income......."),
         wxDefaultPosition, wxSize(75, 20), 0);
-    itemStaticText100->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, "1234567890"));
+    itemStaticText100->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ""));
 
     wxStaticText* itemStaticText101 = new wxStaticText( headerPanel,
-        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
-    itemStaticText101->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, "1234567890"));
+        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_EST, _("Estimated: ") );
+    itemStaticText101->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ""));
 
     wxStaticText* itemStaticText102 = new wxStaticText( headerPanel, 
-        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
-    itemStaticText102->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, "1234567890"));
+        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_ACT, _("Actual: ") );
+    itemStaticText102->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ""));
 
     wxStaticText* itemStaticText103 = new wxStaticText( headerPanel, 
-        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
-    itemStaticText103->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, "1234567890"));
+        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF, _("Difference: ") );
+    itemStaticText103->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ""));
 
     wxBoxSizer* itemIncomeSizer = new wxBoxSizer(wxHORIZONTAL);
     itemIncomeSizer->Add(itemStaticText100, flags);
@@ -229,15 +227,15 @@ void mmBudgetingPanel::CreateControls()
     itemStaticText200->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText201 = new wxStaticText( headerPanel, 
-        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
+        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_EST, _("Estimated: ") );
     itemStaticText201->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText202 = new wxStaticText( headerPanel, 
-        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
+        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_ACT, _("Actual: ") );
     itemStaticText202->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxStaticText* itemStaticText203 = new wxStaticText( headerPanel, 
-        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
+        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_DIF, _("Difference: ") );
     itemStaticText203->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxBoxSizer* itemExpenseSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -251,7 +249,6 @@ void mmBudgetingPanel::CreateControls()
     listCtrlBudget_ = new budgetingListCtrl( this, this, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    //listCtrlBudget_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlBudget_->InsertColumn(0, _("Category  "));
     listCtrlBudget_->InsertColumn(1, _("Sub Category"));
     listCtrlBudget_->InsertColumn(2, _("Frequency"));
@@ -521,6 +518,7 @@ void mmBudgetingPanel::initVirtualListControl()
 void budgetingListCtrl::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
+    //RefreshItem(selectedIndex_);
 }
 
 wxString mmBudgetingPanel::getItem(long item, long column)
@@ -577,11 +575,10 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
             cp_->trans_[selectedIndex_].subcategID_,
             cp_->trans_[selectedIndex_].estimatedStr_,
             cp_->trans_[selectedIndex_].actualStr_, this);
-        if ( dlg.ShowModal() == wxID_OK )
-        {
-            cp_->initVirtualListControl();
-            RefreshItem(selectedIndex_);
-        }
+
+        dlg.ShowModal();
+        cp_->initVirtualListControl();
+        RefreshItem(selectedIndex_);
     }
 }
 
