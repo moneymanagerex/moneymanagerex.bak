@@ -584,9 +584,6 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
 
 void mmBudgetingPanel::OnFilterChanged(wxMouseEvent& event)
 {
-
-    int e = event.GetEventType();
-
     wxMenu menu;
     menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("Viewing All Budget Categories"));
     menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
