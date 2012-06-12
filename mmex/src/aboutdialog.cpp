@@ -41,8 +41,7 @@ IMPLEMENT_DYNAMIC_CLASS(mmAboutDialog, wxDialog)
 BEGIN_EVENT_TABLE(mmAboutDialog, wxDialog)
 END_EVENT_TABLE()
 
-mmAboutDialog::mmAboutDialog( wxSQLite3Database* inidb, wxWindow* parent) :
-        inidb_(inidb)
+mmAboutDialog::mmAboutDialog( wxWindow* parent) 
 {
     wxString caption = _("About ") + mmex::getProgramName();
     Create(parent, ID_DIALOG_ABOUT, caption, wxDefaultPosition,
