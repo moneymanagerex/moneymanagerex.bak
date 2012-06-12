@@ -993,22 +993,8 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString nextOccurDate = dpcbd_->GetValue().FormatISODate();
 
-    if (choiceStatus_->GetSelection() == DEF_STATUS_NONE)
-    {
-        status = (""); // nothing yet
-    }
-    else if (choiceStatus_->GetSelection() == DEF_STATUS_RECONCILED)
-    {
-        status = ("R");
-    }
-    else if (choiceStatus_->GetSelection() == DEF_STATUS_VOID)
-    {
-        status = ("V");
-    }
-    else if (choiceStatus_->GetSelection() == DEF_STATUS_FOLLOWUP)
-    {
-        status = ("F");
-    }
+    status = wxString("URVFD").Mid(choiceStatus_->GetSelection(), 1);
+    status.Replace("U","");
 
     wxString date1 = dpc_->GetValue().FormatISODate();
 
