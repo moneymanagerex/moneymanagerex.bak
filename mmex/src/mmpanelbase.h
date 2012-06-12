@@ -83,18 +83,18 @@ public:
         , m_attr1(new wxListItemAttr(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont))
         , m_attr2(new wxListItemAttr(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont))
     {
-        m_imageList->Add(wxBitmap(reconciled_xpm));
-        m_imageList->Add(wxBitmap(void_xpm));
-        m_imageList->Add(wxBitmap(flag_xpm));
-        m_imageList->Add(wxBitmap(empty_xpm));
-        m_imageList->Add(wxBitmap(unreconciled_xpm));
-        m_imageList->Add(wxBitmap(uparrow_xpm));
-        m_imageList->Add(wxBitmap(downarrow_xpm));
-        m_imageList->Add(wxBitmap(duplicate_xpm));
-        m_imageList->Add(wxBitmap(trans_from_xpm));
-        m_imageList->Add(wxBitmap(trans_into_xpm));
-        m_imageList->Add(wxBitmap(trans_transfer_xpm));
-        m_imageList->Add(wxBitmap(assets_xpm));
+        m_imageList->Add(wxBitmap(wxImage(reconciled_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(void_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(flag_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(empty_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(unreconciled_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(uparrow_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(downarrow_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(duplicate_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(trans_from_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(trans_into_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(trans_transfer_xpm)));
+        m_imageList->Add(wxBitmap(wxImage(assets_xpm)));
         
         SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     }

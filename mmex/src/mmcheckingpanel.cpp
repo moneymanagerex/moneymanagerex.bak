@@ -1491,7 +1491,7 @@ int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
     int res = -1;
     if(column == COL_DATE_OR_TRANSACTION_ID)
     {
-        res = ICON_NONE;
+        res = ICON_UNRECONCILED;
         wxString status = m_cp->getItem(item, COL_STATUS);
         if ( status == ("F"))
             res = ICON_FOLLOWUP;
