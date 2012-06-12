@@ -293,6 +293,7 @@ void mmTransDialog::CreateControls()
     //dpc_ -> SetFocus();
     //Another events does not working
     dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KEY_UP, wxKeyEventHandler(mmTransDialog::OnButtonDateChar), NULL, this);
+    dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KILL_FOCUS, wxFocusEventHandler(mmTransDialog::OnKillDateFocus), NULL, this);
 #endif
 
     spinCtrl_ = new wxSpinButton(itemPanel7,
@@ -1558,4 +1559,9 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
    core_->bTransactionList_.getBankTransactionPtr(accountID_,
        transID_)->getSplitTransactions(core_, splitTransEntries.get());
    split_.get()->entries_ = splitTransEntries->entries_;
+}
+void mmTransDialog::OnKillDateFocus(wxFocusEvent& event)
+{
+    choiceStatus_->SetFocus();
+    event.Skip();
 }

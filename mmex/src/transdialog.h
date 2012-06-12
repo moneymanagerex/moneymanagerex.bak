@@ -86,6 +86,7 @@ public:
     void OnButtonPayeeMouse(wxMouseEvent& event); 
     void OnButtonToAccountMouse(wxMouseEvent& event); 
     void OnButtonDateChar(wxKeyEvent& event);
+    void OnKillDateFocus(wxFocusEvent& event);
 
     void SetDialogToDuplicateTransaction();
 
