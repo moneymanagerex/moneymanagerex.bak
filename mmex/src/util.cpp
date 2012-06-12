@@ -874,35 +874,14 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 
 int getTransformedTrxStatus(const wxString& in)
 {
-    int out;
-    if (in == ("R"))
-        out = (DEF_STATUS_RECONCILED);
-    else if (in == ("V"))
-        out = (DEF_STATUS_VOID);
-    else if (in == ("F"))
-        out = (DEF_STATUS_FOLLOWUP);
-    else if (in == ("D"))
-        out = (DEF_STATUS_DUPLICATE);
-    else
-        out = (DEF_STATUS_NONE);
-
-    return out;
+    if (in.IsEmpty()) return 0;
+    return wxString ("URVFD").Find(in);
 }
 
 wxString getTransformedTrxStatus(int in)
 {
-    wxString statusStr = wxEmptyString;
-    if (in == DEF_STATUS_RECONCILED)
-        statusStr = ("R");
-    else if (in == DEF_STATUS_VOID)
-        statusStr = ("V");
-    else if (in == DEF_STATUS_FOLLOWUP)
-        statusStr = ("F");
-    else if (in == DEF_STATUS_DUPLICATE)
-        statusStr = ("D");
-    else
-        statusStr = ("");
-
+    wxString statusStr = wxString("URVFD").Mid(in, 1);
+    statusStr.Replace("U","");
     return statusStr;
 }
 
