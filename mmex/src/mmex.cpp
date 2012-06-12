@@ -3874,7 +3874,6 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 
 void mmGUIFrame::showBeginAppDialog(bool fromScratch)
 {
-    wxConfigBase *config = wxConfigBase::Get();
     mmAppStartDialog dlg(this);
     if (fromScratch) dlg.SetCloseButtonToExit();
     if (dlg.ShowModal() == wxID_OK)
@@ -4659,10 +4658,9 @@ void mmGUIFrame::OnMRUFile(wxCommandEvent& event)
 {
     wxString file(history_->GetHistoryFile(event.GetId() - wxID_FILE1));
     SetDatabaseFile(file);
-
 }
 
-void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& event)
+void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& /*event*/)
 {
     wxConfigBase *config = wxConfigBase::Get();
     size_t files_number = history_->GetCount();
