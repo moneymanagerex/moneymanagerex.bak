@@ -147,9 +147,6 @@
     <ClCompile Include="..\..\src\qifimport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\recentfiles.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\relocatecategorydialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -372,9 +369,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\platfdep.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\recentfiles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\relocatecategorydialog.h">
