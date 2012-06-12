@@ -127,6 +127,7 @@ public:
     wxString currentView_;
     int budgetYearID_;
     mmGUIFrame* mainFrame_;
+    void OnFilterChanged(wxMouseEvent& event);
 
     bool displayEntryAllowed(mmBudgetEntryHolder& budgetEntry);
 };

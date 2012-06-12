@@ -144,6 +144,9 @@ void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
 
 void mmBudgetingPanel::CreateControls()
 {    
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 4);
+
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
@@ -174,52 +177,52 @@ void mmBudgetingPanel::CreateControls()
         yearStr = wxString() << _("Month: ") << yearStr;
     }
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_REPORTS_STATIC_HEADER, 
-        _("Budget Setup for ") + yearStr, wxDefaultPosition, wxDefaultSize, 0 );
+        _("Budget Setup for ") + yearStr);
     int font_size = this->GetFont().GetPointSize();
     itemStaticText9->SetFont(wxFont(font_size+2, wxSWISS, wxNORMAL, wxBOLD, FALSE, ("")));
-    itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
+    itemBoxSizerVHeader->Add(itemStaticText9, flags);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, 0, wxALL, 1);
+    itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, flags);
 
-#if 0
-    wxBitmap itemStaticBitmap3Bitmap(rightarrow_xpm);
+    wxBitmap itemStaticBitmap3Bitmap(wxBitmap(wxImage(rightarrow_xpm).Scale(16,16)));
     wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, 
         ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW, 
-        itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemBoxSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemStaticBitmap3->SetEventHandler( this ); 
-#endif
+        itemStaticBitmap3Bitmap);
+    itemBoxSizerHHeader2->Add(itemStaticBitmap3, flags);
+    //itemStaticBitmap3->SetEventHandler( this ); 
+    itemStaticBitmap3->Connect(ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN,
+        wxMouseEventHandler(mmBudgetingPanel::OnFilterChanged), NULL, this);
 
     wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_PANELVIEW, 
             _("Viewing All Budget Categories"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
+    itemBoxSizerHHeader2->Add(itemStaticText18, flags);
 
     wxSize distSize(170, 20);
 
     wxStaticText* itemStaticText100 = new wxStaticText( headerPanel, wxID_ANY, _("Income......."),
-        wxDefaultPosition, wxSize(75, 20), 0 );
-    itemStaticText100->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
+        wxDefaultPosition, wxSize(75, 20), 0);
+    itemStaticText100->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, "1234567890"));
 
     wxStaticText* itemStaticText101 = new wxStaticText( headerPanel,
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
-    itemStaticText101->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
+    itemStaticText101->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, "1234567890"));
 
     wxStaticText* itemStaticText102 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
-    itemStaticText102->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
+    itemStaticText102->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, "1234567890"));
 
     wxStaticText* itemStaticText103 = new wxStaticText( headerPanel, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
-    itemStaticText103->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
+    itemStaticText103->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, "1234567890"));
 
     wxBoxSizer* itemIncomeSizer = new wxBoxSizer(wxHORIZONTAL);
-    itemIncomeSizer->Add(itemStaticText100, 0, wxALL, 0);
-    itemIncomeSizer->Add(itemStaticText101, 0, wxALL, 0);
-    itemIncomeSizer->Add(itemStaticText102, 0, wxALL, 0);
-    itemIncomeSizer->Add(itemStaticText103, 0, wxALL, 0);
-    itemBoxSizerVHeader->Add(itemIncomeSizer, 0, wxALL, 1);
+    itemIncomeSizer->Add(itemStaticText100, flags);
+    itemIncomeSizer->Add(itemStaticText101, flags);
+    itemIncomeSizer->Add(itemStaticText102, flags);
+    itemIncomeSizer->Add(itemStaticText103, flags);
+    itemBoxSizerVHeader->Add(itemIncomeSizer, flags);
 
     wxStaticText* itemStaticText200 = new wxStaticText( headerPanel, wxID_ANY, _("Expenses..."),
         wxDefaultPosition, wxSize(75, 20), 0 );
@@ -238,11 +241,11 @@ void mmBudgetingPanel::CreateControls()
     itemStaticText203->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, ("")));
 
     wxBoxSizer* itemExpenseSizer = new wxBoxSizer(wxHORIZONTAL);
-    itemExpenseSizer->Add(itemStaticText200, 0, wxALL, 0);
-    itemExpenseSizer->Add(itemStaticText201, 0, wxALL, 0);
-    itemExpenseSizer->Add(itemStaticText202, 0, wxALL, 0);
-    itemExpenseSizer->Add(itemStaticText203, 0, wxALL, 0);
-    itemBoxSizerVHeader->Add(itemExpenseSizer, 0, wxALL, 1);
+    itemExpenseSizer->Add(itemStaticText200, flags);
+    itemExpenseSizer->Add(itemStaticText201, flags);
+    itemExpenseSizer->Add(itemStaticText202, flags);
+    itemExpenseSizer->Add(itemStaticText203, flags);
+    itemBoxSizerVHeader->Add(itemExpenseSizer, flags);
     /* ---------------------- */
 
     listCtrlBudget_ = new budgetingListCtrl( this, this, 
@@ -581,3 +584,21 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
         }
     }
 }
+
+void mmBudgetingPanel::OnFilterChanged(wxMouseEvent& event)
+{
+
+    int e = event.GetEventType();
+
+    wxMenu menu;
+    menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("Viewing All Budget Categories"));
+    menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
+    menu.Append(MENU_VIEW_INCOMEBUDGETENTRIES, _("View Income Budget Categories"));
+    menu.Append(MENU_VIEW_EXPENSEBUDGETENTRIES, _("View Budget Category Summary"));
+    menu.Append(MENU_VIEW_SUMMARYBUDGETENTRIES, _("View Budget Category Summary"));
+
+    PopupMenu(&menu, event.GetPosition());
+
+    event.Skip();
+}
+
