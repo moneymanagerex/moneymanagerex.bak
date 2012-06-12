@@ -119,7 +119,7 @@ private:
 
     wxDatePickerCtrl* dpc_;
     wxSpinButton *spinCtrl_;
-    wxStaticText* itemStaticTextWeek;
+    wxStaticText* itemStaticTextWeek_;
     int categID_;
     int subcategID_;
     int payeeID_;

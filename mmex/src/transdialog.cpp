@@ -163,10 +163,9 @@ void mmTransDialog::dataToControls()
         wxDateTime trx_date_ = mmGetStorageStringAsDate(dateString);
         wxString dt = mmGetDateForDisplay(db_.get(), trx_date_);
         dpc_->SetValue(trx_date_);
-        //process date change event for set weekday name
-        wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE),
-            trx_date_, wxEVT_DATE_CHANGED);
-        GetEventHandler()->ProcessEvent(dateEvent);
+
+        wxString dateStr = mmGetShortWeekDayName(trx_date_.GetWeekDay());
+        itemStaticTextWeek_->SetLabel(dateStr);
 
         wxString transNumString = q1.GetString("TRANSACTIONNUMBER");
         wxString statusString  = q1.GetString("STATUS");
@@ -272,7 +271,7 @@ void mmTransDialog::CreateControls()
     // Date --------------------------------------------
     wxStaticText* date_text = new wxStaticText(itemPanel7, wxID_STATIC, _("Date"));
     //Text field for day of the week
-    itemStaticTextWeek = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_WEEK, "");
+    itemStaticTextWeek_ = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_WEEK, "");
     
     wxDateTime trx_date_ = mmGetStorageStringAsDate(getLastTrxDate());
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, trx_date_,
@@ -281,7 +280,7 @@ void mmTransDialog::CreateControls()
 
     // Display the day of the week
     wxString dateStr = mmGetShortWeekDayName(dpc_->GetValue().GetWeekDay());
-    itemStaticTextWeek->SetLabel(dateStr);
+    itemStaticTextWeek_->SetLabel(dateStr);
 
 // change properties depending on system parameters
     wxSize spinCtrlSize = wxSize(18,22);
@@ -306,7 +305,7 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemBoxSizer118);
     itemBoxSizer118->Add(dpc_);
     itemBoxSizer118->Add(spinCtrl_, 0, wxLEFT, interval);   
-    itemBoxSizer118->Add(itemStaticTextWeek, 0, wxLEFT, 10);   
+    itemBoxSizer118->Add(itemStaticTextWeek_, 0, wxLEFT, 10);   
 
     // Status --------------------------------------------
     wxStaticText* status_text = new wxStaticText(itemPanel7, wxID_STATIC, _("Status"));
@@ -633,9 +632,14 @@ void mmTransDialog::OnSpinDown(wxSpinEvent& event)
 
 void mmTransDialog::OnDateChanged(wxDateEvent& event)
 {
-    //get weekday name 
+    if (!dpc_->GetValue().IsValid())
+    {
+        event.Skip();
+        dpc_->SetValue(wxDateTime::Now());
+        return;
+    }
     wxString dateStr = mmGetShortWeekDayName(event.GetDate().GetWeekDay());
-    itemStaticTextWeek->SetLabel(dateStr);
+    itemStaticTextWeek_->SetLabel(dateStr);
     event.Skip();
 }
 
