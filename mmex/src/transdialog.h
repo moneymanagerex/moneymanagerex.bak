@@ -81,9 +81,6 @@ public:
     void OnSplitChecked(wxCommandEvent& event);
     void onNoteSelected(wxCommandEvent& event);
     void changeFocus(wxChildFocusEvent& event);
-    void onTextEntered(wxCommandEvent& event);
-    void onChoiceTransChar(wxKeyEvent& event);
-    void onChoiceStatusChar(wxKeyEvent& event);
     void OnButtonPayeeChar(wxKeyEvent& event);
     void OnButtonToAccountChar(wxKeyEvent& event);
     void OnButtonPayeeMouse(wxMouseEvent& event); 

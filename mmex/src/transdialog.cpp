@@ -291,7 +291,7 @@ void mmTransDialog::CreateControls()
     spinCtrlSize = wxSize(16,-1);
     interval = 0;
     //In linux by default nothing in focus therefore keystrokes does not working
-    dpc_ -> SetFocus();
+    //dpc_ -> SetFocus();
     //Another events does not working
     dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KEY_UP, wxKeyEventHandler(mmTransDialog::OnButtonDateChar), NULL, this);
 #endif
@@ -326,8 +326,6 @@ void mmTransDialog::CreateControls()
     choiceStatus_->SetStringSelection(wxGetTranslation(mmIniOptions::instance().transStatusReconciled_));
 
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
-    choiceStatus_->Connect(ID_DIALOG_TRANS_STATUS,
-        wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceStatusChar), NULL, this);
     
     itemFlexGridSizer8->Add(status_text, flags);
     itemFlexGridSizer8->Add(choiceStatus_);
@@ -353,8 +351,6 @@ void mmTransDialog::CreateControls()
 
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
-    choiceTrans_->Connect(ID_DIALOG_TRANS_TYPE,
-        wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceTransChar), NULL, this);
 
     cAdvanced_ = new wxCheckBox(itemPanel7,
         ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"),
@@ -377,19 +373,13 @@ void mmTransDialog::CreateControls()
 
     textAmount_ = new wxTextCtrl( itemPanel7,
         ID_DIALOG_TRANS_TEXTAMOUNT, "", wxDefaultPosition, wxSize(110, -1), 
-        //use wxTE_PROCESS_ENTER flag when creating the control to generate EVT_TEXT_ENTER events
-        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+        wxALIGN_RIGHT, wxFloatingPointValidator<float>(2) );
     textAmount_->SetToolTip(amountNormalTip_);
-    textAmount_->Connect(ID_DIALOG_TRANS_TEXTAMOUNT,
-        wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     toTextAmount_ = new wxTextCtrl( itemPanel7,
         ID_DIALOG_TRANS_TOTEXTAMOUNT, "", wxDefaultPosition, wxSize(110, -1), 
-        wxALIGN_RIGHT|wxTE_PROCESS_ENTER, wxFloatingPointValidator<float>(2) );
+        wxALIGN_RIGHT, wxFloatingPointValidator<float>(2) );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
-
-    toTextAmount_->Connect(ID_DIALOG_TRANS_TOTEXTAMOUNT,
-        wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
     amountSizer->Add(textAmount_);
@@ -467,8 +457,6 @@ void mmTransDialog::CreateControls()
     textNumber_ = new wxTextCtrl(itemPanel7,
         ID_DIALOG_TRANS_TEXTNUMBER, "", wxDefaultPosition, wxSize(185, -1), wxTE_PROCESS_ENTER);
     textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
-    textNumber_->Connect(ID_DIALOG_TRANS_TEXTNUMBER,
-        wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     bAuto_ = new wxButton(itemPanel7,
         ID_DIALOG_TRANS_BUTTONTRANSNUM, "...", wxDefaultPosition, wxSize(40, -1), 0 );
@@ -484,10 +472,10 @@ void mmTransDialog::CreateControls()
 
     // Notes  ---------------------------------------------
     wxStaticText* notesStaticText = new wxStaticText(itemPanel7,
-        wxID_STATIC, _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_STATIC, _("Notes"));
 
     textNotes_ = new wxTextCtrl(itemPanel7,
-        ID_DIALOG_TRANS_TEXTNOTES, "", wxDefaultPosition, wxSize(225,80), wxTE_MULTILINE );
+        ID_DIALOG_TRANS_TEXTNOTES, "", wxDefaultPosition, wxSize(225,80), wxTE_MULTILINE);
     textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
 
     bFrequentUsedNotes_ = new wxButton(itemPanel7,
@@ -1295,34 +1283,13 @@ void mmTransDialog::changeFocus(wxChildFocusEvent& event)
 void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 {
     if (richText_)
+    {
+        wxButton* cancelButton = (wxButton*)FindWindow(wxID_CANCEL);
+        cancelButton->SetFocus();        
         return;
+    }
     else
         EndModal(wxID_CANCEL);
-}
-
-void mmTransDialog::onTextEntered(wxCommandEvent& event)
-{
-    double amount;
-    wxString amountStr;
-    if (object_id == ID_DIALOG_TRANS_TEXTAMOUNT) {
-        amountStr = textAmount_->GetValue().Trim();
-        if (mmex::formatCurrencyToDouble(amountStr, amount)) {
-            mmex::formatDoubleToCurrencyEdit(amount,amountStr);
-            textAmount_->SetValue(amountStr);
-        }
-    }
-    else if (object_id == ID_DIALOG_TRANS_TOTEXTAMOUNT) {
-        amountStr = toTextAmount_->GetValue().Trim();
-        if (mmex::formatCurrencyToDouble(amountStr, amount)) {
-            mmex::formatDoubleToCurrencyEdit(amount,amountStr);
-            toTextAmount_->SetValue(amountStr);
-        }
-    }
-    else if (object_id == ID_DIALOG_TRANS_TEXTNUMBER) {
-		textNotes_->SetFocus();
-	}
-   
-    event.Skip();
 }
 
 void mmTransDialog::activateSplitTransactionsDlg()
@@ -1424,54 +1391,6 @@ void mmTransDialog::OnButtonDateChar(wxKeyEvent& event)
         wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
         GetEventHandler()->ProcessEvent(dateEvent);
     
-        event.Skip();
-    }
-}
-
-void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
-{
-    int i = choiceTrans_->GetSelection();
-    if (event.GetKeyCode()==WXK_DOWN) 
-    {
-        if (i < (core_->getNumBankAccounts() > 1 ? DEF_TRANSFER : DEF_DEPOSIT)) 
-        {
-            choiceTrans_->SetSelection(++i);
-        }
-    } 
-    else if (event.GetKeyCode()==WXK_UP)
-    {
-        if (i > DEF_WITHDRAWAL)
-        {
-            choiceTrans_->SetSelection(--i);
-        }
-    } 
-    else 
-    {
-        event.Skip();
-    }
-    updateControlsForTransType();
-}
-
-void mmTransDialog::onChoiceStatusChar(wxKeyEvent& event)
-{
-    wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_STATUS);
-    int i = choice->GetSelection();
-    if (event.GetKeyCode()==WXK_DOWN) 
-    {
-        if (i < DEF_STATUS_DUPLICATE) 
-        {
-            choice->SetSelection(++i);
-        }
-    } 
-    else if (event.GetKeyCode()==WXK_UP) 
-    {
-        if (i > DEF_STATUS_NONE) 
-        {
-            choice->SetSelection(--i);
-        }
-    } 
-    else 
-    {
         event.Skip();
     }
 }
