@@ -52,18 +52,13 @@ wxString mmex::getProgramWebSite()
 
 wxString mmex::getProgramDescription()
 {
-    wxString description = _("wxWidgets-based application!");
-    description << ("\n\n") << _("System: ")
-                << wxPlatformInfo::Get().GetOperatingSystemIdName()
-                << ("\n\n")
-                << _("Released under the GNU GPL License")
-                << ("\n\n")
+    wxString description = _("Released under the GNU GPL License");
+    description << ("\n\n")
                 << wxVERSION_STRING
                 << (",  Boost C++ ") << (BOOST_VERSION/100000) << ('.')
                 << (BOOST_VERSION / 100 % 1000) << ('.')
                 << (BOOST_VERSION % 100) << (",\n")
                 << ("SQLite3 ") << wxSQLite3Database::GetVersion()
-                << (",  wxSQLite by Ulrich Telle")
-                << ("\n\n");
+                << (",  wxSQLite 0.0.2");
     return description;
 }

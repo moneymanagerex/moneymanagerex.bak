@@ -85,17 +85,17 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer->Add(itemStaticBitmap3, 0, wxALIGN_CENTER|wxALL, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( this, wxID_STATIC,
-        wxString(_("Version: ")) + mmex::getProgramVersion(), wxDefaultPosition, wxDefaultSize, 0);
+        wxString(_("Version: ")) + mmex::getProgramVersion());
     int font_size = this->GetFont().GetPointSize() + 2;
     itemStaticText6->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
     itemBoxSizer->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxStaticText* itemStaticText88 = new wxStaticText( this, wxID_STATIC,
-        mmex::getProgramCopyright(), wxDefaultPosition, wxDefaultSize, 0);
+        mmex::getProgramCopyright());
 
-    wxStaticText* itemStaticText7 = new wxStaticText( this, wxID_STATIC,
-        mmex::getProgramDescription(), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer->Add(itemStaticText7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText7 = new wxStaticText( this,
+        wxID_STATIC, mmex::getProgramDescription());
+    itemBoxSizer->Add(itemStaticText7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     //Read data from file
     wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);

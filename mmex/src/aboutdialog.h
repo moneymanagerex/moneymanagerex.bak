@@ -32,7 +32,8 @@ public:
     mmAboutDialog(wxWindow* parent);
 
 private:
-    bool Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
+    bool Create(wxWindow* parent, wxWindowID id,
+        const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
     void CreateControls();
     void OnVersionHistory(wxCommandEvent& event);
     void OnContributerList(wxCommandEvent& event);

@@ -16,6 +16,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+#include "aboutdialog.h"
 #include "mmex.h"
 #include "mmcheckingpanel.h"
 #include "budgetingpanel.h"
@@ -3754,7 +3755,8 @@ void mmGUIFrame::OnFacebook(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    wxIcon logo(money_xpm);
+    mmAboutDialog(this).ShowModal();
+/*    wxIcon logo(money_xpm);
     wxAboutDialogInfo aboutInfo;
     aboutInfo.SetIcon(logo);
     aboutInfo.SetName(_("Version: "));
@@ -3787,6 +3789,7 @@ void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
     if (data.GetCount() > 3) aboutInfo.AddArtist(data[3]);
 
     wxAboutBox(aboutInfo);
+*/
 }
 //----------------------------------------------------------------------------
 
