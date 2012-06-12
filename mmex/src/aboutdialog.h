@@ -22,20 +22,16 @@
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
-class wxSQLite3Database;
-
 class mmAboutDialog : public wxDialog
 {
     DECLARE_DYNAMIC_CLASS(mmAboutDialog)
     DECLARE_EVENT_TABLE()
 
 public:
-    mmAboutDialog() : inidb_() {}
-    mmAboutDialog(wxSQLite3Database* inidb, wxWindow* parent);
+    mmAboutDialog() {}
+    mmAboutDialog(wxWindow* parent);
 
 private:
-    wxSQLite3Database* inidb_;
-
     bool Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
     void CreateControls();
     void OnVersionHistory(wxCommandEvent& event);
