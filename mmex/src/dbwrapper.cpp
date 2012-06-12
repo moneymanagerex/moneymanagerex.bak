@@ -1299,10 +1299,10 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
  }
 
 bool mmDBWrapper::getBudgetEntry(wxSQLite3Database* db, int budgetYearID,
-                                int categID, int subCategID, wxString& period, double& amount)
+                                int categID, int subCategID, wxString& period, double& amount, int& id)
 {
     static const char sql[] =
-    "select PERIOD, "
+    "select BUDGETENTRYID, PERIOD, "
            "AMOUNT "
     "from BUDGETTABLE_V1 "
     "WHERE BUDGETYEARID = ? AND "
@@ -1323,6 +1323,7 @@ bool mmDBWrapper::getBudgetEntry(wxSQLite3Database* db, int budgetYearID,
         found = true;
         period = q1.GetString(("PERIOD"), ("None"));
         amount = q1.GetDouble(("AMOUNT"));
+        id = q1.GetDouble(("BUDGETENTRYID"));
     }
 
     st.Finalize();

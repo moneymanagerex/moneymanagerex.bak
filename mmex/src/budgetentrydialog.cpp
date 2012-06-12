@@ -41,7 +41,7 @@ mmBudgetEntryDialog::mmBudgetEntryDialog( )
 { }
 
 mmBudgetEntryDialog::mmBudgetEntryDialog( wxSQLite3Database* db, mmCoreDB* core,
-                                            int budget_entry_id,
+                                         int budget_entry_id,
                                          int budgetYearID, int categID, int subcategID,
                                          const wxString& categoryEstimate, const wxString& CategoryActual,
                                          wxWindow* parent, 
@@ -75,6 +75,7 @@ bool mmBudgetEntryDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmBudgetEntryDialog::fillControls()
 {
+
     if (!db_) return;
 
     DB_View_BUDGETTABLE_V1::Data* budget = BUDGETTABLE_V1.get(budget_entry_id_, db_);
@@ -82,26 +83,7 @@ void mmBudgetEntryDialog::fillControls()
 
     double amt = budget->AMOUNT;
 
-    if (budget->PERIOD == ("None"))
-        itemChoice_->SetSelection(DEF_FREQ_NONE);
-    else if (budget->PERIOD == ("Monthly"))
-        itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
-    else if (budget->PERIOD == ("Yearly"))
-        itemChoice_->SetSelection(DEF_FREQ_YEARLY);
-    else if (budget->PERIOD == ("Weekly"))
-        itemChoice_->SetSelection(DEF_FREQ_WEEKLY);
-    else if (budget->PERIOD == ("Bi-Weekly"))
-        itemChoice_->SetSelection(DEF_FREQ_BIWEEKLY);
-    else if (budget->PERIOD == ("Bi-Monthly"))
-        itemChoice_->SetSelection(DEF_FREQ_BIMONTHLY);
-    else if (budget->PERIOD == ("Quarterly"))
-        itemChoice_->SetSelection(DEF_FREQ_QUARTERLY);
-    else if (budget->PERIOD == ("Half-Yearly"))
-        itemChoice_->SetSelection(DEF_FREQ_HALFYEARLY);
-    else if (budget->PERIOD == ("Daily"))
-        itemChoice_->SetSelection(DEF_FREQ_DAILY);
-    else
-        wxASSERT(false);
+    itemChoice_->SetStringSelection(wxGetTranslation(budget->PERIOD));
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     wxString displayAmtString = ("0");
