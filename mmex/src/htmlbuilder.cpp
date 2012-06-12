@@ -22,8 +22,8 @@
 
 mmHTMLBuilder::mmHTMLBuilder() {
     // init colors from config
-    color0 = ("bgcolor=\"") + mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
-    color1 = ("bgcolor=\"") + mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
+    color0 = ("bgcolor=\"") + mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX) + ("\"");
+    color1 = ("bgcolor=\"") + mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX) + ("\"");
     // init font size from config
     font_size_ = mmIniOptions::instance().font_size_;
 }
@@ -39,7 +39,7 @@ void mmHTMLBuilder::init()
     html += wxString::Format(("<font size=\"%ld\">\n"), font_size_);
 
     //if I need more space on the top of home page and reports I will delete user name from settings
-    if (mmIniOptions::instance().userNameString_ != wxT (""))
+    if (mmIniOptions::instance().userNameString_ != (""))
     {
         int cols = 1;
         startTable(("100%"));
@@ -193,9 +193,9 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols)
 
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value, bool numeric)
 {
-    html += (numeric ? ("<th nowrap align=\"right\" ") : ("<th align=\"left\" "));
-    html += (" valign=\"center\" bgcolor=\"#d5d6de\">");
-    html += wxString::Format(wxT ("<b>&nbsp;%s</b></th>\n"), value.c_str());
+    html += numeric ? "<th nowrap align=\"right\" " : "<th align=\"left\" ";
+    html += " valign=\"center\" bgcolor=\"#d5d6de\">";
+    html += wxString::Format("<b>&nbsp;%s</b></th>\n", value.c_str());
     bgswitch = false;
 }
 
@@ -208,10 +208,10 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value)
 
 void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor)
 {
-    html << (numeric ? ("<td nowrap align=\"right\" >") : ("<td>"));
+    html << (numeric ? "<td nowrap align=\"right\" >" : "<td>");
 
     if(!fontColor.empty())
-        html += ("<font color=") + fontColor + wxT (">");
+        html += "<font color=" + fontColor + ">";
 
     if (!bold && !italic)    html += value;
     else if (bold && italic) html += ("<b><i>") + value + ("</i></b>");

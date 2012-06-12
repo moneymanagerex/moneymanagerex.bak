@@ -1,16 +1,16 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
- 
+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -33,9 +33,9 @@ BEGIN_EVENT_TABLE(mmHtmlWindow, wxHtmlWindow)
 END_EVENT_TABLE()
 
 
-mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
+mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
             wxSQLite3Database* db,
-            mmCoreDB* core, 
+            mmCoreDB* core,
             const wxString& topCategories,
             wxWindow *parent,
             wxWindowID winid,
@@ -125,12 +125,12 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
 {
     wxConfigBase *config = wxConfigBase::Get();
     // Only Show the account titles if we want to display Bank accounts.
-    if ( frame_->expandedBankAccounts() ) 
+    if ( frame_->expandedBankAccounts() )
         displaySummaryHeader(hb, _("Bank Account"));
 
     double tRecBalance = 0.0;
 
-    // Get account balances and display accounts if we want them displayed 
+    // Get account balances and display accounts if we want them displayed
     wxString vAccts = config->Read ("VIEWACCOUNTS", "ALL");
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount();
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
@@ -150,7 +150,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
         tRecBalance += reconciledBal * rate;
 
         // Display the individual Checking account links if we want to display them
-        if ( frame_->expandedBankAccounts() ) 
+        if ( frame_->expandedBankAccounts() )
         {
             double income = 0.0;
             double expenses = 0.0;
@@ -192,9 +192,9 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
     if ( frame_->expandedTermAccounts() )
         displaySummaryHeader(hb, _("Term Account"));
 
-    // Get account balances and add to totals, and display accounts if we want them displayed 
+    // Get account balances and add to totals, and display accounts if we want them displayed
     wxString vAccts = config->Read("VIEWACCOUNTS", "ALL");
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount(); 
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount();
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
         const mmAccount* pTA= it->get();
@@ -257,7 +257,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
     if (frame_->expandedStockAccounts())
         displayStocksHeader(hb,_("Stocks"));
 
-    static const char sql[] = 
+    static const char sql[] =
     "select "
     "c.BASECONVRATE, "
     "st.heldat as ACCOUNTID, a.accountname as ACCOUNTNAME, "
@@ -269,7 +269,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
     "left join currencyformats_v1 c on c.currencyid=a.currencyid "
     "    where st.purchasedate<=date ('now','localtime') "
     "and a.status='Open' "
-    "group by st.heldat "; 
+    "group by st.heldat ";
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while(q1.NextRow())
@@ -288,11 +288,11 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
 
         mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
         mmex::formatDoubleToCurrency(stockGain, tGainStr);
-        
+
         // if Stock accounts being displayed, include income/expense totals on home page.
         //tIncome += income * baseconvrate;
         //tExpenses += expenses * baseconvrate;
-        stTotalBalance += stockBalance * baseconvrate; 
+        stTotalBalance += stockBalance * baseconvrate;
         //We can hide or show Stocks on Home Page
         if (frame_->expandedStockAccounts())
         {
@@ -324,8 +324,8 @@ void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
     if (mmIniOptions::instance().enableAssets_)
     {
         hb.startTableRow();
-        hb.addTableCellLink(("Assets"), _("Assets"), false, true);
-        hb.addTableCell(wxT (""), true);
+        hb.addTableCellLink("Assets", _("Assets"), false, true);
+        hb.addTableCell("", true);
         hb.addTableCell(assetBalanceStr, true);
         hb.endTableRow();
         hb.addRowSeparator(3);
@@ -337,7 +337,7 @@ void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
 //* Currencies *//
 void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
 {
-    static const char sql2[] = 
+    static const char sql2[] =
         "select ACCOUNTID, CURRENCYNAME, BALANCE, BASECONVRATE from ( "
         "select t.accountid as ACCOUNTID, c.currencyname as CURRENCYNAME, "
         "total (t.BALANCE) as BALANCE, "
@@ -371,11 +371,11 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql2);
     q1 = db_->ExecuteQuery(sql2);
-        
+
     //Determine how many currencies used
     int curnumber = 0;
     while(q1.NextRow())
-        curnumber+=1;   
+        curnumber+=1;
 
     if (curnumber > 1 )
     {
@@ -398,12 +398,12 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
 
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(accountId).lock();
             wxASSERT(pCurrencyPtr);
-        
+
             wxString tBalanceStr;
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
             mmex::formatDoubleToCurrencyEdit(convRate, convRateStr);
-       
+
             hb.startTableRow();
             hb.addTableCell(currencyStr);
             hb.addTableCell(convRateStr, true);
@@ -434,7 +434,7 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     if (mmIniOptions::instance().ignoreFutureTransactions_) monthHeading = _("Current Month to Date");
 
     hb.addTableHeaderRow(wxString() << _("Income vs Expenses: ") << monthHeading, 2);
-    
+
     hb.startTableRow();
     //hb.startTableCell(("50%\" align=\"center"));
     hb.startTableCell();
@@ -538,7 +538,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
         //for Withdrawal amount should be negative
         if (th.transType_== TRANS_TYPE_WITHDRAWAL_STR)
         {
-            th.transAmtString_= wxT ("-") + th.transAmtString_;
+            th.transAmtString_= "-" + th.transAmtString_;
             th.amt_ = -th.amt_;
         }
 
@@ -599,7 +599,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
                 wxString displayBDAmtString;
                 mmex::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
-           
+
                 hb.startTableRow();
                 hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
                 hb.addTableCell(displayBDAmtString, true);
@@ -617,8 +617,8 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 {
     mmex::CurrencyFormatter::instance().loadDefaultSettings();
     mmDBWrapper::loadBaseCurrencySettings(db_);
-    
-    static const char sql3[] = 
+
+    static const char sql3[] =
         "select NUMBER, "
         "CATEG|| (Case SUBCATEG when '' then '' else ':'||  SUBCATEG end ) as SUBCATEGORY "
         ", AMOUNT "
@@ -644,7 +644,7 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
         "and CANS.STATUS <> 'V' "
         "group by CATEG, SUBCATEG "
         "order by ABS (AMOUNT) DESC, CATEG, SUBCATEG "
-        ") where AMOUNT < 0 " 
+        ") where AMOUNT < 0 "
         "limit 7 ";
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql3);
@@ -689,7 +689,7 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 */
 }
 
-void mmHomePagePanel::displayStatistics(mmHTMLBuilder& hb) 
+void mmHomePagePanel::displayStatistics(mmHTMLBuilder& hb)
 {
     int countFollowUp = core_->countFollowupTransactions();
     hb.addLineBreak();
@@ -707,7 +707,7 @@ void mmHomePagePanel::displayStatistics(mmHTMLBuilder& hb)
     }
 
     hb.startTableRow();
-    hb.addTableCell( _("Total Transactions: "));  
+    hb.addTableCell( _("Total Transactions: "));
     hb.addTableCell(wxString::Format(("%ld"), core_->bTransactionList_.transactions_.size()), true, true, true);
     hb.endTableRow();
     hb.addRowSeparator(2);
@@ -747,33 +747,33 @@ void mmHomePagePanel::updateAccounts()
     //hb.addLineBreak();
 
     hb.startCenter();
-    hb.startTable(("98%"), ("top")); 
+    hb.startTable(("98%"), ("top"));
     hb.startTableRow();
 
     double tBalance = 0.0;
     double tIncome = 0.0;
     double tExpenses = 0.0;
 
-    hb.startTableCell(("50%\" align=\"center")); 
+    hb.startTableCell(("50%\" align=\"center"));
 
-    hb.startTable(("95%")); 
+    hb.startTable(("95%"));
     displayCheckingAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
     if ( frame_->hasActiveTermAccounts() )
         displayTermAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
     if (core_->accountList_.has_stock_account()) displayStocks(hb,tBalance /*,tIncome,tExpenses */);
     displayAssets(hb, tBalance);
-    hb.endTable(); 
- 
+    hb.endTable();
+
     displayCurrencies(hb); // Will display Currency summary when more than one currency is used.
 
     displayGrandTotals(hb, tBalance);
- 
-    displayTopTransactions(hb); 
+
+    displayTopTransactions(hb);
     hb.endTableCell();
 
-    hb.startTableCell(("50%\" align=\"center")); 
+    hb.startTableCell(("50%\" align=\"center"));
     displayIncomeVsExpenses(hb, tIncome, tExpenses); //Also displays the Income vs Expenses graph.
-    displayBillsAndDeposits(hb); 
+    displayBillsAndDeposits(hb);
     displayStatistics(hb);
     hb.endTableCell();
     hb.endTableRow();
@@ -785,13 +785,13 @@ void mmHomePagePanel::updateAccounts()
 }
 
 void mmHomePagePanel::CreateControls()
-{    
+{
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    htmlWindow_ = new mmHtmlWindow( this, frame_, core_, 
-        ID_PANEL_HOMEPAGE_HTMLWINDOW, 
-        wxDefaultPosition, wxDefaultSize, 
+    htmlWindow_ = new mmHtmlWindow( this, frame_, core_,
+        ID_PANEL_HOMEPAGE_HTMLWINDOW,
+        wxDefaultPosition, wxDefaultSize,
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 0);
 }
@@ -830,7 +830,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         frame_->setGotoAccountID(id);
         frame_->setAccountNavTreeSection(core_->getAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
-        frame_->GetEventHandler()->AddPendingEvent(evt); 
+        frame_->GetEventHandler()->AddPendingEvent(evt);
     }
 }
 

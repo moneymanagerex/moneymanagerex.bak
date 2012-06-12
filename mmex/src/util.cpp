@@ -311,7 +311,7 @@ void mmIniOptions::loadOptions()
     expandTermTree_ = config->ReadBool("EXPAND_TERM_TREE", true);
 
     budgetFinancialYears_ = config->ReadBool(INIDB_BUDGET_FINANCIAL_YEARS, false);
-    budgetIncludeTransfers_ = config->ReadBool(INIDB_BUDGET_INCLUDE_TRANSFERS, false);    
+    budgetIncludeTransfers_ = config->ReadBool(INIDB_BUDGET_INCLUDE_TRANSFERS, false);
     budgetSetupWithoutSummaries_ = config->ReadBool(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, false);
     budgetSummaryWithoutCategories_ = config->ReadBool(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, true);
     ignoreFutureTransactions_ = config->ReadBool(INIDB_IGNORE_FUTURE_TRANSACTIONS, false);
@@ -614,8 +614,8 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
         wxString notes = mmUnCleanString(q1.GetString(("NOTES")));
 
         //
-        notes.Replace(("\n"), (" "));
-        wxString subcategStr = wxT ("") ;
+        notes.Replace("\n", " ");
+        wxString subcategStr = "" ;
 
         if (type == ("Transfer"))
         {
@@ -631,7 +631,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
                 amount = toamount;
             } else if (fAccountID == fromAccountID) {
                 payee = toAccount;
-                amount = wxT ('-') + amount;
+                amount ='-' + amount;
             }
         }
         else
@@ -923,7 +923,7 @@ wxString Tips(wxString type)
             case 12 : tipsStr = _("Organize Categories Dialog Tip: Pressing the h key will cycle through all categories starting with the letter h"); break ;
             case 13 : tipsStr = _("Organize Categories Dialog Tip: Pressing 2 key combination will cycle through all categories starting with that key combination. Example: Pressing ho will select Homeneeds, Home, House Tax, etc..."); break ;
             case 14 : tipsStr = _("Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."); break ;
-    
+
             case 15 : tipsStr = _("Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."); break ;
             case 16 : tipsStr = _("Tip to get out of debt: Establish an emergency fund."); break ;
             case 17 : tipsStr = _("Tip to get out of debt: Stop acquiring new debt."); break ;
