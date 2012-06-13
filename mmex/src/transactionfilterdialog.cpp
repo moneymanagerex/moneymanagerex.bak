@@ -179,11 +179,19 @@ void TransFilterDialog::CreateControls()
                               wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbType_->SetValue(FALSE);
     
-    wxArrayString choiceTypeStrings;
-    choiceTypeStrings.Add(_("Withdrawal"));
-    choiceTypeStrings.Add(_("Deposit"));
-    choiceTypeStrings.Add(_("Transfer"));
-    choiceType_ = new wxChoice( itemPanel, wxID_ANY,wxDefaultPosition, wxSize(fieldWidth,-1), choiceTypeStrings);
+    choiceType_ = new wxChoice(itemPanel, wxID_ANY,wxDefaultPosition, wxSize(fieldWidth,-1));
+    wxString transaction_type[] =
+    {
+        wxTRANSLATE("Withdrawal"),
+        wxTRANSLATE("Deposit"),
+        wxTRANSLATE("Transfer")
+    };
+    size_t size = sizeof(transaction_type)/sizeof(wxString);
+    if (core_->getNumBankAccounts() < 2) size--;
+    for(size_t i = 0; i < size; ++i)
+    choiceType_->Append(wxGetTranslation(transaction_type[i]),
+        new wxStringClientData(transaction_type[i]));
+
     choiceType_->SetSelection(0);
     choiceType_->SetToolTip(_("Specify the type of transaction."));
 
@@ -437,15 +445,9 @@ bool TransFilterDialog::byType(wxString type)
     bool result = false;
     if ( cbType_->GetValue() )
     {
-        wxString transCodeStr;
-        int tCode = choiceType_->GetSelection();
-
-        if (tCode == DEF_WITHDRAWAL)
-            transCodeStr = TRANS_TYPE_WITHDRAWAL_STR;
-        else if (tCode == DEF_DEPOSIT)
-            transCodeStr = TRANS_TYPE_DEPOSIT_STR;
-        else if (tCode == DEF_TRANSFER)
-            transCodeStr = TRANS_TYPE_TRANSFER_STR;
+        wxString transCodeStr = "";
+        wxStringClientData* type_obj = (wxStringClientData *)choiceType_->GetClientObject(choiceType_->GetSelection());
+        if (type_obj) transCodeStr = type_obj->GetData();
 
         if (type == transCodeStr )
             result = true;
