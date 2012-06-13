@@ -57,10 +57,10 @@ BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
     EVT_TEXT(ID_DIALOG_BD_TEXTCTRL_NUM_TIMES,mmBDDialog::OnPeriodChange)
 END_EVENT_TABLE()
 
-const wxString payeeDepositTip_ = "Specify where the transaction is coming from";
-const wxString payeeWithdrawalTip_ = "Specify where the transaction is going to";
-const wxString amountNormalTip_ = "Specify the amount for this transaction";
-const wxString amountTransferTip_ = "Specify the amount to be transfered";
+const wxString payeeDepositTip_ = wxTRANSLATE("Specify where the transaction is coming from");
+const wxString payeeWithdrawalTip_ = wxTRANSLATE("Specify where the transaction is going to");
+const wxString amountNormalTip_ = wxTRANSLATE("Specify the amount for this transaction");
+const wxString amountTransferTip_ = wxTRANSLATE("Specify the amount to be transfered");
 
 mmBDDialog::mmBDDialog( )
 {
