@@ -123,10 +123,6 @@ private:
     bool advancedToTransAmountSet_;
     boost::shared_ptr<mmSplitTransactionEntries> split_;
 
-    wxString payeeDepositTip_;
-    wxString payeeWithdrawalTip_;
-    wxString amountNormalTip_;
-    wxString amountTransferTip_;
     wxSpinButton *spinNextOccDate_;
     wxSpinButton *spinTransDate_;
 
