@@ -121,15 +121,18 @@ void mmFilterTransactionsDialog::CreateControls()
 {    
     int fieldWidth = 210;
 
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxTOP|wxLEFT, 0);
+
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     this->SetSizer(itemBoxSizer2);
     
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer3, flags);
 
     wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, _(" Specify "));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
-    itemBoxSizer3->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer3->Add(itemStaticBoxSizer4, flags);
     
     this->SetSizer(itemBoxSizer2);
 
@@ -139,25 +142,26 @@ void mmFilterTransactionsDialog::CreateControls()
     wxPanel* itemPanel = new wxPanel( this, ID_PANEL11, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel, 1, wxGROW|wxALL, 5);
 
-    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(9, 2, 0, 0);
+    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(0, 2, 10, 10);
     itemPanel->SetSizer(itemPanelSizer);
 
     //--Start of Row --------------------------------------------------------
     accountCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXACCOUNT, _("Account: "), 
                                       wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     accountCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(accountCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(accountCheckBox, flags);
 
     wxArrayString as = core_->getAccountsName();
    
-    accountDropDown = new wxChoice( itemPanel, ID_CHOICE4, wxDefaultPosition, wxSize(fieldWidth,-1), as, 0 );
-    itemPanelSizer->Add(accountDropDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    accountDropDown = new wxChoice(itemPanel, ID_CHOICE4, wxDefaultPosition, wxSize(fieldWidth,-1), as, 0 );
+    accountDropDown->SetSelection(0);
+    itemPanelSizer->Add(accountDropDown, flags);
     //--End of Row --------------------------------------------------------
 
     dateRangeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXDATERANGE, _("Date Range: "),
                                         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     dateRangeCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(dateRangeCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(dateRangeCheckBox, flags);
 
     fromDateCtrl = new wxDatePickerCtrl( itemPanel, ID_CHOICE5, wxDefaultDateTime, 
                                          wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
@@ -165,35 +169,36 @@ void mmFilterTransactionsDialog::CreateControls()
                                           wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
 
     wxBoxSizer* dateSizer = new wxBoxSizer(wxHORIZONTAL);
-    dateSizer->Add(fromDateCtrl, 0, wxALIGN_LEFT|wxALL, 5);
-    dateSizer->Add(toDateControl, 0, wxALIGN_LEFT|wxALL, 5);
-    itemPanelSizer->Add(dateSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    dateSizer->Add(fromDateCtrl, flags);
+    dateSizer->AddSpacer(10);
+    dateSizer->Add(toDateControl, flags);
+    itemPanelSizer->Add(dateSizer, flags);
     //--End of Row --------------------------------------------------------
     
     payeeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXPAYEE, _("Payee: "), 
                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     payeeCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(payeeCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(payeeCheckBox, flags);
 
     btnPayee = new wxButton( itemPanel, ID_BUTTONPAYEE, _("Select Payee"), 
                              wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
-    itemPanelSizer->Add(btnPayee, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(btnPayee, flags);
     //--End of Row --------------------------------------------------------
 
     categoryCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXCATEGORY, _("Category: "), 
                                        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     categoryCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(categoryCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(categoryCheckBox, flags);
 
     btnCategory = new wxButton( itemPanel, ID_BUTTONCATEGORY, _("Select Category"), 
                                 wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
-    itemPanelSizer->Add(btnCategory, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(btnCategory, flags);
     //--End of Row --------------------------------------------------------
 
     statusCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXSTATUS, _("Status: "), 
                                      wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     statusCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(statusCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(statusCheckBox, flags);
 
     wxString transaction_status[] = 
     {
@@ -208,7 +213,7 @@ void mmFilterTransactionsDialog::CreateControls()
     for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
         choiceStatus->Append(wxGetTranslation(transaction_status[i]),
         new wxStringClientData(transaction_status[i]));
-    itemPanelSizer->Add(choiceStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(choiceStatus, flags);
     choiceStatus->SetSelection(0);
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
     //--End of Row --------------------------------------------------------
@@ -235,45 +240,50 @@ void mmFilterTransactionsDialog::CreateControls()
     cbTypeTransfer_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_TRANSFER, _("Transfer"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbTypeTransfer_->Enable(false);
 
-    itemPanelSizer->Add(typeCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(typeSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    typeSizer ->Add(choiceType, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    typeSizer ->Add(cbTypeWithdrawal_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
-    typeSizer ->Add(cbTypeDeposit_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
-    typeSizer ->Add(cbTypeTransfer_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
+    itemPanelSizer->Add(typeCheckBox, flags);
+    itemPanelSizer->Add(typeSizer, flags);
+    typeSizer ->Add(choiceType, flags);
+    typeSizer ->Add(cbTypeWithdrawal_, flags);
+    typeSizer ->Add(cbTypeDeposit_, flags);
+    typeSizer ->Add(cbTypeTransfer_, flags);
     
     //--End of Row --------------------------------------------------------
 
-    amountRangeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXAMOUNTRANGE, _("Amount Range: "), 
-                                          wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    amountRangeCheckBox = new wxCheckBox(itemPanel, ID_CHECKBOXAMOUNTRANGE, _("Amount Range: "), 
+                                         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     amountRangeCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(amountRangeCheckBox, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(amountRangeCheckBox, flags);
 
-    amountMinEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL13, (""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
-    amountMaxEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL14, (""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
+    amountMinEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL13, (""),
+        wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER,
+        wxFloatingPointValidator<float>(2));
+    amountMaxEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL14, (""),
+        wxDefaultPosition, wxSize(fieldWidth/2-5,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER,
+        wxFloatingPointValidator<float>(2) );
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
-    amountSizer->Add(amountMinEdit, 0, wxALIGN_LEFT|wxALL, 5);
-    amountSizer->Add(amountMaxEdit, 0, wxALIGN_LEFT|wxALL, 5);
-    itemPanelSizer->Add(amountSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    amountSizer->Add(amountMinEdit, flags);
+    amountSizer->AddSpacer(10);
+    amountSizer->Add(amountMaxEdit, flags);
+    itemPanelSizer->Add(amountSizer, flags);
     //--End of Row --------------------------------------------------------
 
     transNumberCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXTRANSNUM, _("Number: "),
                                           wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     transNumberCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(transNumberCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(transNumberCheckBox, flags);
 
-    transNumberEdit = new wxTextCtrl( itemPanel, ID_TEXTTRANSNUM, _T(""), wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
-    itemPanelSizer->Add(transNumberEdit, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    transNumberEdit = new wxTextCtrl( itemPanel, ID_TEXTTRANSNUM, "", wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
+    itemPanelSizer->Add(transNumberEdit, flags);
     //--End of Row --------------------------------------------------------
 
     notesCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXNOTES, _("Notes: "), 
                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     notesCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(notesCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(notesCheckBox, flags);
 
-    notesEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL15, _T(""), wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
-    itemPanelSizer->Add(notesEdit, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    notesEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL15, "", wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
+    itemPanelSizer->Add(notesEdit, flags);
     //--End of Row --------------------------------------------------------
 
     /******************************************************************************
