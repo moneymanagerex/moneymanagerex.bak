@@ -141,9 +141,9 @@ void mmBDDialog::dataToControls()
     choiceStatus_->SetSelection(getTransformedTrxStatus(statusString));
 
     wxString nextOccurrString = billsdeposit->NEXTOCCURRENCEDATE;
-    int numRepeatStr = billsdeposit->NUMOCCURRENCES;
-    if (numRepeatStr > 0)
-        textNumRepeats_->SetValue(wxString::Format("%d", numRepeatStr));
+    int numRepeat = billsdeposit->NUMOCCURRENCES;
+    if (numRepeat > 0)
+        textNumRepeats_->SetValue(wxString::Format("%d", numRepeat));
 
     wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
     wxString dtnostr = mmGetDateForDisplay(db_, dtno);
