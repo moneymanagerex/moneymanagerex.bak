@@ -88,7 +88,9 @@ bool TransFilterDialog::Create( wxWindow* parent, wxWindowID id,
 // Creates the controls and sizers
 void TransFilterDialog::CreateControls()
 {
-    int fieldWidth = 202;
+    int fieldWidth = 212;
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 0);
 
     wxBoxSizer* thisSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(thisSizer);
@@ -103,7 +105,7 @@ void TransFilterDialog::CreateControls()
     wxPanel* itemPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer->Add(itemPanel, 1, wxGROW|wxALL, 5);
 
-    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(8, 2, 0, 0);
+    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(0, 2, 10, 10);
     itemPanel->SetSizer(itemPanelSizer);
 
     //--Start of Row --------------------------------------------------------
@@ -116,11 +118,12 @@ void TransFilterDialog::CreateControls()
                                          wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
     dpDateEnd_   = new wxDatePickerCtrl( itemPanel, wxID_ANY, wxDefaultDateTime, 
                                          wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
-    dateSizer->Add(dpDateStart_, 0, wxALIGN_LEFT|wxALL, 5);
-    dateSizer->Add(dpDateEnd_,   0, wxALIGN_LEFT|wxALL, 5);
+    dateSizer->Add(dpDateStart_, flags);
+    dateSizer->AddSpacer(10);
+    dateSizer->Add(dpDateEnd_, flags);
 
-    itemPanelSizer->Add(cbDateRange_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(dateSizer,    0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    itemPanelSizer->Add(cbDateRange_, flags);
+    itemPanelSizer->Add(dateSizer, flags);
     //--End of Row --------------------------------------------------------
     
     cbPayee_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_PAYEE, _("Payee"), 
@@ -130,8 +133,8 @@ void TransFilterDialog::CreateControls()
     btnPayee_ = new wxButton( itemPanel, ID_DIALOG_TRANSFILTER_BTN_PAYEE, _("Select Payee"), 
                               wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
 
-    itemPanelSizer->Add(cbPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(btnPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(cbPayee_, flags);
+    itemPanelSizer->Add(btnPayee_, flags);
     //--End of Row --------------------------------------------------------
 
     cbSplitCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Split Category"), 
@@ -139,7 +142,7 @@ void TransFilterDialog::CreateControls()
     cbSplitCategory_->SetValue(FALSE);
     cbSplitCategory_->SetToolTip(_("Filter Split categories. Include the category for further filtering."));
     itemPanelSizer->AddSpacer(20);
-    itemPanelSizer->Add(cbSplitCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(cbSplitCategory_, flags);
     //--End of Row --------------------------------------------------------
 
     cbCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Category"), 
@@ -149,8 +152,8 @@ void TransFilterDialog::CreateControls()
     btnCategory_ = new wxButton( itemPanel, ID_DIALOG_TRANSFILTER_BTN_CATEGORY, _("Select Category"), 
                                  wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
 
-    itemPanelSizer->Add(cbCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(btnCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(cbCategory_, flags);
+    itemPanelSizer->Add(btnCategory_, flags);
     //--End of Row --------------------------------------------------------
 
     cbStatus_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_STATUS, _("Status"), 
@@ -168,8 +171,8 @@ void TransFilterDialog::CreateControls()
     choiceStatus_->SetStringSelection(wxGetTranslation(mmIniOptions::instance().transStatusReconciled_));
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
-    itemPanelSizer->Add(cbStatus_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(choiceStatus_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(cbStatus_, flags);
+    itemPanelSizer->Add(choiceStatus_, flags);
     //--End of Row --------------------------------------------------------
 
     cbType_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE, _("Type"), 
@@ -184,44 +187,44 @@ void TransFilterDialog::CreateControls()
     choiceType_->SetSelection(0);
     choiceType_->SetToolTip(_("Specify the type of transaction."));
 
-    itemPanelSizer->Add(cbType_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(choiceType_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(cbType_, flags);
+    itemPanelSizer->Add(choiceType_, flags);
     //--End of Row --------------------------------------------------------
 
     cbTransNumber_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TRANS_NUM, _("Number"),
                                      wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbTransNumber_->SetValue(FALSE);
-    txtTransNumber_ = new wxTextCtrl( itemPanel, wxID_ANY, _T(""), wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
+    txtTransNumber_ = new wxTextCtrl( itemPanel, wxID_ANY, "", wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
 
-    itemPanelSizer->Add(cbTransNumber_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(txtTransNumber_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(cbTransNumber_, flags);
+    itemPanelSizer->Add(txtTransNumber_, flags);
     //--End of Row --------------------------------------------------------
 
     cbNotes_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TRANS_NOTES, _("Notes"),
                                      wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbNotes_->SetValue(FALSE);
-    txtNotes_ = new wxTextCtrl( itemPanel, wxID_ANY, _T(""),wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
+    txtNotes_ = new wxTextCtrl( itemPanel, wxID_ANY, "",wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
     txtNotes_->SetToolTip(_("Will search for the given text in the Notes field"));
 
-    itemPanelSizer->Add(cbNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(txtNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(cbNotes_, flags);
+    itemPanelSizer->Add(txtNotes_, flags);
     //--End of Row --------------------------------------------------------
     /******************************************************************************
      Button Panel with OK/Cancel buttons   
     *******************************************************************************/
     wxPanel* buttonPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    thisSizer->Add(buttonPanel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    thisSizer->Add(buttonPanel, flags.Border(wxALL, 5).Right());
 
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
 
-    wxButton* btnOK = new wxButton( buttonPanel, wxID_OK, _("&OK"));
+    wxButton* btnOK = new wxButton( buttonPanel, wxID_OK);
     btnOK->SetToolTip(_("Activates the filter: Will add selected items to display"));
-    buttonPanelSizer->Add(btnOK, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    buttonPanelSizer->Add(btnOK, flags);
 
-    wxButton* btnCancel = new wxButton( buttonPanel, wxID_CANCEL, _("&Cancel"));
+    wxButton* btnCancel = new wxButton( buttonPanel, wxID_CANCEL);
     btnCancel->SetToolTip(_("Deactivates the filter"));
-    buttonPanelSizer->Add(btnCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    buttonPanelSizer->Add(btnCancel, flags);
     btnCancel->SetFocus();
 }
 

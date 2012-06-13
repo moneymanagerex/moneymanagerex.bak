@@ -872,16 +872,16 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
     return strValue;
 }
 
-int getTransformedTrxStatus(const wxString& in)
+int getTransformedTrxStatus(const wxString in)
 {
     if (in.IsEmpty()) return 0;
-    return wxString ("URVFD").Find(in);
+    return wxString ("NRVFD").Find(in);
 }
 
-wxString getTransformedTrxStatus(int in)
+wxString getTransformedTrxStatus(const int in)
 {
-    wxString statusStr = wxString("URVFD").Mid(in, 1);
-    statusStr.Replace("U","");
+    wxString statusStr = wxString("NRVFD").Mid(in, 1);
+    statusStr.Replace("N","");
     return statusStr;
 }
 
