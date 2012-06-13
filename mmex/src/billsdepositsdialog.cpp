@@ -173,12 +173,7 @@ void mmBDDialog::dataToControls()
     if (repeatSel == 0) // if none
         textNumRepeats_->SetValue("");
 
-    if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
-        choiceTrans_->SetSelection(DEF_WITHDRAWAL);
-    else if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
-        choiceTrans_->SetSelection(DEF_DEPOSIT);
-    else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
-        choiceTrans_->SetSelection(DEF_TRANSFER);
+    choiceTrans_->SetStringSelection(wxGetTranslation(transTypeString));
     updateControlsForTransType();
 
     payeeID_ = billsdeposit->PAYEEID;
@@ -422,10 +417,10 @@ void mmBDDialog::CreateControls()
     transPanelSizer->Add(transDateBoxSizer, flags);
 
     // Status --------------------------------------------
-    wxStaticText* staticTextStatus = new wxStaticText( transactionPanel, wxID_STATIC, _("Status"));
+    wxStaticText* staticTextStatus = new wxStaticText(transactionPanel, wxID_STATIC, _("Status"));
 
-    choiceStatus_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_STATUS,
-        wxDefaultPosition, wxSize(110, -1));
+    choiceStatus_ = new wxChoice(transactionPanel, ID_DIALOG_TRANS_STATUS,
+        wxDefaultPosition, wxDefaultSize);
     wxString transaction_status[] = 
     {
         wxTRANSLATE("None"),

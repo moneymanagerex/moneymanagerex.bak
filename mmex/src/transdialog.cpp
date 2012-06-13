@@ -179,14 +179,8 @@ void mmTransDialog::dataToControls()
             edit_currency_rate = toTransAmount_ / transAmount;
         }        
       
-        choiceStatus_->SetSelection(getTransformedTrxStatus(statusString));
-
-        if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
-            choiceTrans_->SetSelection(DEF_WITHDRAWAL);
-        else if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
-            choiceTrans_->SetSelection(DEF_DEPOSIT);
-        else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
-            choiceTrans_->SetSelection(DEF_TRANSFER);
+        choiceStatus_->SetStringSelection(wxGetTranslation(statusString));
+        choiceTrans_->SetStringSelection(wxGetTranslation(transTypeString));
         updateControlsForTransType();
 
         payeeID_ = q1.GetInt("PAYEEID");
@@ -311,7 +305,7 @@ void mmTransDialog::CreateControls()
     // Status --------------------------------------------
     wxStaticText* status_text = new wxStaticText(itemPanel7, wxID_STATIC, _("Status"));
     choiceStatus_ = new wxChoice(itemPanel7,
-        ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1));
+        ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxDefaultSize);
     wxString transaction_status[] = 
     {
         wxTRANSLATE("None"),
