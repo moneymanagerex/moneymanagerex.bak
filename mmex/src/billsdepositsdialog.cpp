@@ -292,7 +292,7 @@ void mmBDDialog::CreateControls()
     repeatDetailsStaticBoxSizer->Add(itemFlexGridSizer5, flagsCenter);
 
     wxStaticText* staticTextAccName = new wxStaticText( this, wxID_STATIC, _("Account Name") );
-    itemFlexGridSizer5->Add(staticTextAccName, flagsCenter);
+    itemFlexGridSizer5->Add(staticTextAccName, flags);
     itemAccountName_ = new wxButton( this, ID_DIALOG_BD_COMBOBOX_ACCOUNTNAME, _("Select Account"),
                                      wxDefaultPosition, wxSize(180, -1) );
     if (core_->getNumBankAccounts() == 1)
@@ -302,7 +302,7 @@ void mmBDDialog::CreateControls()
         itemAccountName_->SetLabel(accNameStr);
         accountID_= core_->getAccountID(accNameStr);
     };
-    itemFlexGridSizer5->Add(itemAccountName_, flagsCenter);
+    itemFlexGridSizer5->Add(itemAccountName_, flags);
     itemAccountName_->SetToolTip(_("Specify the Account that will own the repeating transaction"));
 
 // change properties depending on system parameters
@@ -446,13 +446,21 @@ void mmBDDialog::CreateControls()
     // Type --------------------------------------------
     wxStaticText* staticTextType = new wxStaticText( transactionPanel, wxID_STATIC, _("Type"));
 
-    wxArrayString choiceTypeStrings;
-    choiceTypeStrings.Add(_("Withdrawal"));
-    choiceTypeStrings.Add(_("Deposit"));
-    if (core_->getNumBankAccounts() > 1)
-        choiceTypeStrings.Add(_("Transfer"));
     choiceTrans_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_TYPE,
-                                 wxDefaultPosition, wxSize(110, -1), choiceTypeStrings);
+                                 wxDefaultPosition, wxSize(110, -1));
+    wxString transaction_type[] =
+    {
+        wxTRANSLATE("Withdrawal"),
+        wxTRANSLATE("Deposit"),
+        wxTRANSLATE("Transfer")
+    };
+    size_t size = sizeof(transaction_type)/sizeof(wxString);
+    // Restrict choise if accounts number less than 2
+    if (core_->getNumBankAccounts() < 2) size--;
+    for(size_t i = 0; i < size; ++i)
+    choiceTrans_->Append(wxGetTranslation(transaction_type[i]),
+        new wxStringClientData(transaction_type[i]));
+
     choiceTrans_->SetSelection(DEF_WITHDRAWAL);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
     cAdvanced_ = new wxCheckBox( transactionPanel, ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"),
@@ -556,10 +564,10 @@ void mmBDDialog::CreateControls()
     wxBoxSizer* buttonsPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonsPanel->SetSizer(buttonsPanelSizer);
 
-    wxButton* okButton = new wxButton( buttonsPanel, wxID_OK, _("OK"));
-    buttonsPanelSizer->Add(okButton, flags);
+    wxButton* okButton = new wxButton( buttonsPanel, wxID_OK);
+    buttonsPanelSizer->Add(okButton, flags.Border(wxRIGHT|wxBOTTOM, 10));
 
-    wxButton* cancelButton = new wxButton( buttonsPanel, wxID_CANCEL, _("Cancel"));
+    wxButton* cancelButton = new wxButton( buttonsPanel, wxID_CANCEL);
     buttonsPanelSizer->Add(cancelButton, flags);
     cancelButton->SetFocus();
 
@@ -865,13 +873,8 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString transCode;
 
-    int tCode = choiceTrans_->GetSelection();
-    if (tCode == DEF_WITHDRAWAL)
-        transCode = TRANS_TYPE_WITHDRAWAL_STR;
-    else if (tCode == DEF_DEPOSIT)
-        transCode = TRANS_TYPE_DEPOSIT_STR;
-    else if (tCode == DEF_TRANSFER)
-        transCode = TRANS_TYPE_TRANSFER_STR;
+    wxStringClientData* type_obj = (wxStringClientData *)choiceTrans_->GetClientObject(choiceTrans_->GetSelection());
+    if (type_obj) transCode = type_obj->GetData();
 
     if (payeeID_ == -1)
     {
