@@ -4,23 +4,23 @@ Quicken Interchange Format (QIF) files
 Ref: http://en.wikipedia.org/wiki/Quicken_Interchange_Format
      http://www.respmech.com/mym2qifw/qif_new.htm
 
-The Quicken interchange format (QIF) is a specially formatted text (ASCII) file that 
-enables Quicken transactions to be moved from one Quicken account register into 
+The Quicken interchange format (QIF) is a specially formatted text (ASCII) file that
+enables Quicken transactions to be moved from one Quicken account register into
 another Quicken account register, or to or from other programs that support the QIF format.
 
-Note: For Quicken to translate data from a text file into the Quicken register as transactions, 
+Note: For Quicken to translate data from a text file into the Quicken register as transactions,
 the text file must be in the QIF format.
 
 Required File Formatting
 
-Each transaction must end with a symbol, indicating the end of entry. Each item in the 
-transaction must display on a separate line. When Quicken exports an account register or list, 
-it adds a line to the top of the file that identifies the type of account or list. Listed below 
+Each transaction must end with a symbol, indicating the end of entry. Each item in the
+transaction must display on a separate line. When Quicken exports an account register or list,
+it adds a line to the top of the file that identifies the type of account or list. Listed below
 are the header lines Quicken adds to the exported files:
 
 Header              Type of data
-!Type:Bank 	        Bank account transactions
-!Type:Cash 	        Cash account transactions
+!Type:Bank          Bank account transactions
+!Type:Cash          Cash account transactions
 !Type:CCard         Credit card account transactions
 !Type:Invst         Investment account transactions
 !Type:Oth A         Asset account transactions
@@ -31,16 +31,16 @@ Header              Type of data
 !Type:Class         Class list
 !Type:Memorized     Memorized transaction list
 
-Quicken can be configured to import all transfers, regardless of whether Ignore Transfers 
-is selected when the file is imported. To do this, add a line to the file being imported 
-into the Quicken account. Use a text editor or word processor to put the following line 
+Quicken can be configured to import all transfers, regardless of whether Ignore Transfers
+is selected when the file is imported. To do this, add a line to the file being imported
+into the Quicken account. Use a text editor or word processor to put the following line
 immediately after the header line at the top of the file:
 
     !Option:AllXfr
 
 Items for Non-Investment Accounts
 
-Each item in a bank, cash, credit card, other liability, or other asset account must 
+Each item in a bank, cash, credit card, other liability, or other asset account must
 begin with a letter that indicates the field in the Quicken
 register. The non-split items can be in any sequence:
 Field  Indicator Explanations
@@ -57,7 +57,7 @@ E      Memo in split
 $      Dollar amount of split
 ^      End of entry
 
-Note: Repeat the S, E, and $ lines as many times as needed for additional items in a split. 
+Note: Repeat the S, E, and $ lines as many times as needed for additional items in a split.
 If an item is omitted from the transaction in the QIF file, Quicken treats it as a blank item.
 
 Items for Investment Accounts
@@ -78,38 +78,38 @@ $      Amount transferred
 
 Items for Account Information
 
-The account header !Account is used in two places, at the start of an account list and the 
+The account header !Account is used in two places, at the start of an account list and the
 start of a list of transactions to specify to which account they belong.
 Field  Indicator Explanation
-N 	Name
-T 	Type of account
-D 	Description
-L 	Credit limit (only for credit card account)
-/ 	Statement balance date
-$ 	Statement balance
-^ 	End of entry
+N   Name
+T   Type of account
+D   Description
+L   Credit limit (only for credit card account)
+/   Statement balance date
+$   Statement balance
+^   End of entry
 
 Items for a Category List
-Field 	Indicator Explanation
-N 	Category name:subcategory name
-D 	Description
-T 	Tax related if included, not tax related if omitted
-I 	Income category
-E 	Expense category (if category is unspecified, Quicken assumes expense type)
-B 	Budget amount (only in a Budget Amounts QIF file)
-R 	Tax schedule information
-^ 	End of entry
+Field   Indicator Explanation
+N   Category name:subcategory name
+D   Description
+T   Tax related if included, not tax related if omitted
+I   Income category
+E   Expense category (if category is unspecified, Quicken assumes expense type)
+B   Budget amount (only in a Budget Amounts QIF file)
+R   Tax schedule information
+^   End of entry
 
 Items for a Class List
-Field 	Indicator Explanation
-N 	Class name
-D 	Description
-^ 	End of entry
-  	 
+Field   Indicator Explanation
+N   Class name
+D   Description
+^   End of entry
+
 
 Items for a Memorized Transaction List
 
-Immediately preceding the ^ character, each entry must end with one of the following file 
+Immediately preceding the ^ character, each entry must end with one of the following file
 indicators to specify the transaction type.
 
     KC
@@ -122,100 +122,100 @@ indicators to specify the transaction type.
 
     KE
 
-With that exception, memorized transaction entries have the same format as regular 
-transaction entries (non-investment accounts). However, the Date or Num field is included. 
-All items are optional, but if an amortization record is included, all seven amortization 
+With that exception, memorized transaction entries have the same format as regular
+transaction entries (non-investment accounts). However, the Date or Num field is included.
+All items are optional, but if an amortization record is included, all seven amortization
 lines must also be included.
 
-Field 	Indicator Explanation
-KC 	Check transaction
-KD 	Deposit transaction
-KP 	Payment transaction
-KI 	Investment transaction
-KE 	Electronic payee transaction
-T 	Amount
-C 	Cleared status
-P 	Payee
-M 	Memo
-A 	Address
-L 	Category or Transfer/Class
-S 	Category/class in split
-E 	Memo in split
-$ 	Dollar amount of split
-1 	Amortization: First payment date
-2 	Amortization: Total years for loan
-3 	Amortization: Number of payments already made
-4 	Amortization: Number of periods per year
-5 	Amortization: Interest rate
-6 	Amortization: Current loan balance
-7 	Amortization: Original loan amount
-^ 	End of entry
+Field   Indicator Explanation
+KC  Check transaction
+KD  Deposit transaction
+KP  Payment transaction
+KI  Investment transaction
+KE  Electronic payee transaction
+T   Amount
+C   Cleared status
+P   Payee
+M   Memo
+A   Address
+L   Category or Transfer/Class
+S   Category/class in split
+E   Memo in split
+$   Dollar amount of split
+1   Amortization: First payment date
+2   Amortization: Total years for loan
+3   Amortization: Number of payments already made
+4   Amortization: Number of periods per year
+5   Amortization: Interest rate
+6   Amortization: Current loan balance
+7   Amortization: Original loan amount
+^   End of entry
 
 Examples of QIF files
 
 Normal Transactions Example
-Transaction Item 	Comment (not in file)
-!Type:Bank 	Header
-D6/ 1/94 	Date
-T-1,000.00 	Amount
-N1005 	Check number
-PBank Of Mortgage 	Payee
-L[linda] 	Category
-S[linda] 	First category in split
-$-253.64 	First amount in split
-SMort Int 	Second category in split
-$=746.36 	Second amount in split
-^ 	End of transaction
-D6/ 2/94 	Date
-T75.00 	Amount
-PDeposit 	Payee
-^ 	End of transaction
-D6/ 3/94 	Date
-T-10.00 	Amount
-PAnthony Hopkins 	Payee
-MFilm 	Memo
-LEntertain 	Category
-AP.O. Box 27027 	Address (line 1)
-ATucson, AZ 	Address (line 2)
-A85726 	Address (line 3)
-A 	Address (line 4)
-A 	Address (line 5)
-A 	Address (line 6)
-^ 	End of transaction
+Transaction Item    Comment (not in file)
+!Type:Bank  Header
+D6/ 1/94    Date
+T-1,000.00  Amount
+N1005   Check number
+PBank Of Mortgage   Payee
+L[linda]    Category
+S[linda]    First category in split
+$-253.64    First amount in split
+SMort Int   Second category in split
+$=746.36    Second amount in split
+^   End of transaction
+D6/ 2/94    Date
+T75.00  Amount
+PDeposit    Payee
+^   End of transaction
+D6/ 3/94    Date
+T-10.00     Amount
+PAnthony Hopkins    Payee
+MFilm   Memo
+LEntertain  Category
+AP.O. Box 27027     Address (line 1)
+ATucson, AZ     Address (line 2)
+A85726  Address (line 3)
+A   Address (line 4)
+A   Address (line 5)
+A   Address (line 6)
+^   End of transaction
 
 Investment Example
-Transaction Item 	Comment (not in file)
-!Type:Invst 	Header line
-D8/25/93 	Date
-NShrsIn 	Action (optional)
-Yibm4 	Security
-I11.260 	Price
-Q88.81 	Quantity
-CX 	Cleared status
-T1,000.00 	Amount
-MOpening 	Balance Memo
-^ 	End of transaction
-D8/25/93 	Date
-NBuyX 	Action
-Yibm4 	Security
-I11.030 	Price
-Q9.066 	Quantity
-T100.00 	Amount
-MEst. price as of 8/25/93 	Memo
-L[CHECKING] 	Account for transfer
-$100.00 	Amount transferred
-^ 	End of transaction
+Transaction Item    Comment (not in file)
+!Type:Invst     Header line
+D8/25/93    Date
+NShrsIn     Action (optional)
+Yibm4   Security
+I11.260     Price
+Q88.81  Quantity
+CX  Cleared status
+T1,000.00   Amount
+MOpening    Balance Memo
+^   End of transaction
+D8/25/93    Date
+NBuyX   Action
+Yibm4   Security
+I11.030     Price
+Q9.066  Quantity
+T100.00     Amount
+MEst. price as of 8/25/93   Memo
+L[CHECKING]     Account for transfer
+$100.00     Amount transferred
+^   End of transaction
 
 Memorized List Example
-Transaction Item 	Comment (not in file)
-!Type:Memorized 	Header line
-T-50.00 	Amount
-POakwood Gardens 	Payee
-MRent 	Memo
-KC 	Check transaction
-^ 	End of transaction
+Transaction Item    Comment (not in file)
+!Type:Memorized     Header line
+T-50.00     Amount
+POakwood Gardens    Payee
+MRent   Memo
+KC  Check transaction
+^   End of transaction
 
-*/	 
+*/
 
 #include "util.h"
 #include "dbwrapper.h"
@@ -225,7 +225,7 @@ KC 	Check transaction
 #include "mmcoredb.h"
 #include "platfdep.h"
 
-enum qifAccountInfoType 
+enum qifAccountInfoType
 {
     Name        = 1, // N
     AccountType = 2, // T
@@ -237,7 +237,7 @@ enum qifAccountInfoType
     UnknownInfo = 8
 };
 
-enum qifLineType 
+enum qifLineType
 {
     AcctType    = 1, // !
     Date        = 2, // D
@@ -247,12 +247,12 @@ enum qifLineType
     EOTLT       = 6, // ^
     TransNumber = 7, // N
     Status      = 8, // C
-    UnknownType = 9, 
+    UnknownType = 9,
     Memo        = 10, // M
-    Category    = 11,  // L 
-    CategorySplit  = 12,  // S 
-    MemoSplit      = 13,  // E 
-    AmountSplit    = 14   // '$' 
+    Category    = 11,  // L
+    CategorySplit  = 12,  // S
+    MemoSplit      = 13,  // E
+    AmountSplit    = 14   // '$'
 };
 
 qifAccountInfoType accountInfoType(const wxString& line)
@@ -338,7 +338,7 @@ bool isLineOK(const wxString& line)
         (fChar == 'L') ||
         (fChar == 'T') ||
         (fChar == 'S') ||
-        (fChar == 'E') || 
+        (fChar == 'E') ||
         (fChar == '/') ||
         (fChar == '$') ||
         (fChar == 'U'))
@@ -383,7 +383,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
     }
 
     if (!warning_message()) return -1;
-    
+
     wxString acctName;
     if (destinationAccountName == wxEmptyString)
     {
@@ -406,7 +406,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
     wxString chooseExt;
     chooseExt << _("QIF Files ") << ("(*.qif)|*.qif;*.QIF|")
               << _("All Files ") << ("(*.*)|*.*");
-    wxString fileName = wxFileSelector(_("Choose QIF data file to import"), 
+    wxString fileName = wxFileSelector(_("Choose QIF data file to import"),
         wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
     wxFileName logFile = mmex::GetLogDir(true);
     logFile.SetFullName(fileName);
@@ -435,31 +435,31 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         double val = 0.0;
 
         std::vector<int> QIF_transID;
-		core->db_.get()->Begin();
+        core->db_.get()->Begin();
 
-		wxProgressDialog dlg(_("QIF Import"), _("Transactions imported from QIF: "), 100, 
+        wxProgressDialog dlg(_("QIF Import"), _("Transactions imported from QIF: "), 100,
             NULL, wxPD_AUTO_HIDE |  wxPD_CAN_ABORT);
         while(!input.Eof())
-        {   
-			wxString progressMsg;
-			progressMsg << _("Transactions imported from QIF") << ("\n") 
+        {
+            wxString progressMsg;
+            progressMsg << _("Transactions imported from QIF") << ("\n")
                         << _("to account ") << acctName << (": ") << numImported;
             dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *99), progressMsg);
 
-			if (!dlg.Update(-1)) // if cancel clicked
-			{
-				canceledbyuser = true;
-				break; // abort processing
-			}
+            if (!dlg.Update(-1)) // if cancel clicked
+            {
+                canceledbyuser = true;
+                break; // abort processing
+            }
 
             readLine = getFileLine(text, numLines);
             if (readLine.Length() == 0)
                 continue;
 
-            bool isOK = isLineOK(readLine);  
+            bool isOK = isLineOK(readLine);
             if (!isOK)
             {
-                log << _("Line: ") << numLines << ("  ") << _(" Unknown QIF line: ") << readLine << endl;                    
+                log << _("Line: ") << numLines << ("  ") << _(" Unknown QIF line: ") << readLine << endl;
                 continue;
             }
 
@@ -470,7 +470,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     (!accountType.CmpNoCase(("Type:Cash"))) ||
                     (!accountType.CmpNoCase(("Type:CCard"))))
                 {
-                    log << _("Importing account type: ") << accountType << endl;      
+                    log << _("Importing account type: ") << accountType << endl;
                     continue;
                 }
 
@@ -480,12 +480,12 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     // Need to read till we get to end of account information
                     while( (readLine = getFileLine(text, numLines) ) != ("^"))
                     {
-						numLines++;
+                        numLines++;
                         int i = accountInfoType(readLine);
                         if (i == Name)
                         {
                             log << _("Line: " ) << numLines << _(" : ")
-                                << getLineData(readLine) << _(" account name ") << endl;    
+                                << getLineData(readLine) << _(" account name ") << endl;
                             continue;
                         }
                         else if (i == AccountType || i == Description || i == CreditLimit || i  == BalanceDate || i == Balance)
@@ -495,9 +495,9 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     }
                     continue;
                 }
-                
+
                 // ignore these type of lines
-                if ( accountType == ("Option:AutoSwitch") ) 
+                if ( accountType == ("Option:AutoSwitch") )
                 {
                     while((readLine = getFileLine(text, numLines)) != ("^"))
                     {
@@ -509,7 +509,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 {
                     continue;
                 }
-                else if ( accountType == ("Type:Cat") ) 
+                else if ( accountType == ("Type:Cat") )
                 {
                     bool reading = true;
                     while( reading )
@@ -524,11 +524,11 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 // we do not know how to process this type yet
                 wxString errMsgStr = _("Cannot process these QIF Account Types yet.");
                 wxString errLineMsgStr = wxString() << _("Line: ") << numLines << ("  ") << readLine;
-                
+
                 log << errLineMsgStr << endl;
                 log << errMsgStr << endl;
                 wxMessageBox( errLineMsgStr + ("\n\n") + errMsgStr, _("QIF Import"), wxICON_ERROR);
-                
+
                 // exit: while(!input.Eof()) loop and allow to exit routine and allow user to save or abort
                 break;
                 // return -1;
@@ -546,18 +546,18 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 
                 if (!core->payeeExists(payee))
                 {
-                    log << _("Payee Added: ") << payee << endl;   
+                    log << _("Payee Added: ") << payee << endl;
                     payeeID = core->addPayee(payee);
                 }
                 else
                     payeeID = core->getPayeeID(payee);
-                
+
                 continue;
             }
             else if (lineType(readLine) == Amount)
             {
                 amount = getLineData(readLine);
-              
+
                 if (!mmex::formatCurrencyToDouble(amount, val))
                 {
                     log << _("Line: " ) << numLines << _(" invalid amount, skipping.") << endl;
@@ -579,7 +579,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
             {
                 dt = getLineData(readLine);
 
-			    dtdt = mmParseDisplayStringToDate(db_, dt, date_format);
+                dtdt = mmParseDisplayStringToDate(db_, dt, date_format);
                 convDate = dtdt.FormatISODate();
                 continue;
             }
@@ -598,7 +598,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 categ = getLineData(readLine);
 
                 wxStringTokenizer cattkz(categ, (":"));
-                
+
                 if (cattkz.HasMoreTokens())
                     cat = cattkz.GetNextToken();
                 if (cattkz.HasMoreTokens())
@@ -629,7 +629,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 
                 if (dt.Trim().IsEmpty())
                 {
-                    log << _("Date is empty, ") << endl; 
+                    log << _("Date is empty, ") << endl;
                 }
                 else if (type.Trim().IsEmpty())
                 {
@@ -650,14 +650,14 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     if (!core->payeeExists(payee))
                     {
                         payeeID = core->addPayee(payee);
-                        log << _("Payee Added: ") << payee << endl;    
+                        log << _("Payee Added: ") << payee << endl;
                     }
                     else
                     {
                         payeeID = core->getPayeeID(payee);
                     }
                 }
-                
+
                 if (categ.Trim().IsEmpty())
                 {
                     // check if category exists for this payee.
@@ -678,12 +678,12 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 if(dt.Trim().IsEmpty()  || type.Trim().IsEmpty() || amount.Trim().IsEmpty())
                 {
                     log << _("Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had ");
-                    log << _(" payee ") << payee << _(" type ") << type 
-                        << _(" amount ") << amount << _(" date ") << convDate 
+                    log << _(" payee ") << payee << _(" type ") << type
+                        << _(" amount ") << amount << _(" date ") << convDate
                         << endl;
 
                     continue;
-				}
+                }
 
                 int toAccountID = -1;
 
@@ -714,17 +714,17 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 transNum.clear();
                 categID = -1;
                 val = 0.0;
-                convDate = wxDateTime::Now().FormatISODate();                        
-				continue;
-			}
+                convDate = wxDateTime::Now().FormatISODate();
+                continue;
+            }
         }
 
         dlg.Update(100);
 
         log << _("Transactions imported from QIF: ") << numImported << endl;
-        wxString confirmMsg; 
-        confirmMsg  << _("Total Imported : ") << numImported << wxT ("\n\n")
-                    << _("Log file written to : ") << logFile.GetFullPath() << wxT ("\n\n")
+        wxString confirmMsg;
+        confirmMsg  << _("Total Imported : ") << numImported << "\n\n"
+                    << _("Log file written to : ") << logFile.GetFullPath() << "\n\n"
                     << _("Please confirm saving...");
         if (!canceledbyuser && wxMessageBox(confirmMsg, _("QIF Import"),wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
             canceledbyuser = true;
@@ -732,12 +732,12 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         // Since all database transactions are only in memory,
         if (!canceledbyuser)
         {
-            // we need to save them to the database. 
+            // we need to save them to the database.
             core->db_.get()->Commit();
             log << endl << _("Transactions saved to database in account: ") << acctName << endl;
-		}
-		else 
-		{
+        }
+        else
+        {
             // we need to remove the transactions from the transaction list
             while (numImported > 0)
             {
@@ -747,9 +747,9 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
             }
             // and discard the database changes.
             core->db_.get()->Rollback();
-			log  << endl << _("Imported transactions discarded by user!") << endl;
+            log  << endl << _("Imported transactions discarded by user!") << endl;
         }
-		        
+
         outputLog.Close();
         //clear the vector to avoid memory leak - done at same level created.
         QIF_transID.clear();
@@ -757,7 +757,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 
     if ( !fileName.IsEmpty() )
     fileviewer(logFile.GetFullPath(), 0).ShowModal();
-    
+
     return fromAccountID;
 }
 
