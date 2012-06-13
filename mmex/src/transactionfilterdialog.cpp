@@ -160,14 +160,19 @@ void TransFilterDialog::CreateControls()
                                 wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbStatus_->SetValue(FALSE);
 
-    wxArrayString choiceStatusStrings;
-    choiceStatusStrings.Add(_("None"));
-    choiceStatusStrings.Add(_("Reconciled"));
-    choiceStatusStrings.Add(_("Void"));
-    choiceStatusStrings.Add(_("Follow up"));
-    choiceStatusStrings.Add(_("Duplicate"));
-
-    choiceStatus_ = new wxChoice( itemPanel, wxID_ANY, wxDefaultPosition, wxSize(fieldWidth,-1), choiceStatusStrings);
+    choiceStatus_ = new wxChoice( itemPanel, wxID_ANY, wxDefaultPosition, wxSize(fieldWidth,-1));
+    wxString transaction_status[] = 
+    {
+        wxTRANSLATE("None"),
+        wxTRANSLATE("Reconciled"),
+        wxTRANSLATE("Void"),
+        wxTRANSLATE("Follow up"),
+        wxTRANSLATE("Duplicate")
+    };
+    for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
+        choiceStatus_->Append(wxGetTranslation(transaction_status[i]),
+        new wxStringClientData(transaction_status[i].Left(1)));
+    
     choiceStatus_->SetStringSelection(wxGetTranslation(mmIniOptions::instance().transStatusReconciled_));
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
@@ -175,7 +180,7 @@ void TransFilterDialog::CreateControls()
     itemPanelSizer->Add(choiceStatus_, flags);
     //--End of Row --------------------------------------------------------
 
-    cbType_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE, _("Type"), 
+    cbType_ = new wxCheckBox(itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE, _("Type"), 
                               wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbType_->SetValue(FALSE);
     
@@ -199,19 +204,19 @@ void TransFilterDialog::CreateControls()
     itemPanelSizer->Add(choiceType_, flags);
     //--End of Row --------------------------------------------------------
 
-    cbTransNumber_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TRANS_NUM, _("Number"),
-                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTransNumber_ = new wxCheckBox(itemPanel, ID_DIALOG_TRANSFILTER_CB_TRANS_NUM, _("Number"),
+                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbTransNumber_->SetValue(FALSE);
-    txtTransNumber_ = new wxTextCtrl( itemPanel, wxID_ANY, "", wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
+    txtTransNumber_ = new wxTextCtrl( itemPanel, wxID_ANY, "", wxDefaultPosition, wxSize(fieldWidth,-1), 0);
 
     itemPanelSizer->Add(cbTransNumber_, flags);
     itemPanelSizer->Add(txtTransNumber_, flags);
     //--End of Row --------------------------------------------------------
 
-    cbNotes_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TRANS_NOTES, _("Notes"),
-                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbNotes_ = new wxCheckBox(itemPanel, ID_DIALOG_TRANSFILTER_CB_TRANS_NOTES, _("Notes"),
+                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     cbNotes_->SetValue(FALSE);
-    txtNotes_ = new wxTextCtrl( itemPanel, wxID_ANY, "",wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
+    txtNotes_ = new wxTextCtrl( itemPanel, wxID_ANY, "",wxDefaultPosition, wxSize(fieldWidth,-1), 0);
     txtNotes_->SetToolTip(_("Will search for the given text in the Notes field"));
 
     itemPanelSizer->Add(cbNotes_, flags);
@@ -425,63 +430,42 @@ bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
 
 bool TransFilterDialog::byStatus( wxString status )
 {
-    bool result = false;
-    if ( cbStatus_->GetValue() )
-    {
-        wxString statusStr = getTransformedTrxStatus(choiceStatus_->GetSelection());
-        if (status == statusStr )
-        {
-            result = true;
-        }
-    } 
-    else
-        result = true;
+    if (!cbStatus_->GetValue()) return false;
 
-    return result; 
+    wxStringClientData* status_obj = (wxStringClientData *)choiceStatus_->GetClientObject(choiceStatus_->GetSelection());
+    wxString statusStr ="?";
+    if (status_obj) statusStr = status_obj->GetData();
+    statusStr.Replace("N","");
+
+    return (status == statusStr);
 }
 
 bool TransFilterDialog::byType(wxString type)
 {
-    bool result = false;
-    if ( cbType_->GetValue() )
-    {
-        wxString transCodeStr = "";
-        wxStringClientData* type_obj = (wxStringClientData *)choiceType_->GetClientObject(choiceType_->GetSelection());
-        if (type_obj) transCodeStr = type_obj->GetData();
+    if (!cbType_->GetValue()) return false;
+    wxString transCodeStr = "?";
+    wxStringClientData* type_obj = (wxStringClientData *)choiceType_->GetClientObject(choiceType_->GetSelection());
+    if (type_obj) transCodeStr = type_obj->GetData();
 
-        if (type == transCodeStr )
-            result = true;
-    }
-    else
-        result = true;
-
-    return result; 
+    return (type == transCodeStr);
 }
 
 bool TransFilterDialog::searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, wxString sourceStr)
 {
-    bool result = false;
-    if ( chkBox->GetValue() ) {
-        if (txtCtrl->GetValue().IsEmpty()) {
-            if (sourceStr.IsEmpty()) {
-                result = true;
-            }
-        } else if (sourceStr.Trim().Lower().Find(txtCtrl->GetValue().Trim().Lower()) != wxNOT_FOUND ) {
-            result = true;
-        }
-    } else {
-        result = true;
-    }
-
-    return result; 
+    if (!chkBox->GetValue()) return false;
+    else if (sourceStr.IsEmpty() && txtCtrl->GetValue().IsEmpty()) return true;
+    else if (txtCtrl->GetValue().IsEmpty()) return false;
+    else if (sourceStr.Trim().Lower().Find(txtCtrl->GetValue().Trim().Lower()) != wxNOT_FOUND)
+        return true;
+    return false;
 }
 
 bool TransFilterDialog::byTransNumber(wxString trNum)
 {
-    return searchResult(cbTransNumber_,txtTransNumber_,trNum);
+    return searchResult(cbTransNumber_, txtTransNumber_, trNum);
 }
 
 bool TransFilterDialog::byNotes(wxString notes)
 {
-    return searchResult(cbNotes_,txtNotes_,notes);
+    return searchResult(cbNotes_, txtNotes_, notes);
 }
