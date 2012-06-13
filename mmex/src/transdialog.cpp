@@ -1093,8 +1093,11 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString transNum = textNumber_->GetValue();
     wxString notes = textNotes_->GetValue();
-    wxString status = getTransformedTrxStatus(choiceStatus_->GetSelection());
-
+    wxString status;
+    wxStringClientData* status_obj = (wxStringClientData *)choiceStatus_->GetClientObject(choiceStatus_->GetSelection());
+    if (status_obj) status = status_obj->GetData().Left(1);
+    status.Replace("N", "");
+    
     wxString date1 = dpc_->GetValue().FormatISODate();
 
     boost::shared_ptr<mmBankTransaction> pTransaction;

@@ -376,8 +376,8 @@ struct CurrentMonth: public LastMonths<0, 0, CurrentData> { };
 
 }; // namespace DateTimeProviders
 
-int getTransformedTrxStatus(const wxString& in);
-wxString getTransformedTrxStatus(int in);
+int getTransformedTrxStatus(const wxString in);
+wxString getTransformedTrxStatus(const int in);
 wxString Tips(wxString type);
 int site_content(const wxString& site, wxString& output);
 
