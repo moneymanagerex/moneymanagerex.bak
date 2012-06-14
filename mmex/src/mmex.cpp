@@ -4579,8 +4579,9 @@ void mmGUIFrame::SetDatabaseFile(const wxString& dbFileName, bool newDatabase)
     wxProgressDialog *progress = NULL;
     if (! newDatabase)
     {
-        progress = new wxProgressDialog( _("Setting new Database file"), _("Please wait while the new database is being loaded."), 100, this);
-        progress->Update(20);
+        progress = new wxProgressDialog( _("Setting new Database file"),
+            _("Please wait while the new database is being loaded."), 100, this);
+        progress->Update(33);
     }
 
     // Ensure database is in a steady state first
@@ -4590,29 +4591,26 @@ void mmGUIFrame::SetDatabaseFile(const wxString& dbFileName, bool newDatabase)
         createHomePage();
     }
 
-    if (progress) progress->Update(40);
-    bool opened_ok = openFile(dbFileName, newDatabase);
-    if (opened_ok)
+    if (progress) progress->Update(65);
+
+    if (openFile(dbFileName, newDatabase))
     {
-        if (progress) progress->Update(95);
+        if (progress) progress->Update(80);
         
         history_->AddFileToHistory(dbFileName);
-        //history_->AddFilesToMenu(menuRecentFiles_);
+        config->Write("LASTFILENAME", dbFileName);
         history_->Save(*config);
+        if (progress) progress->Update(100);
     }
-
-    if (progress)
-    {
-        progress->Update(100);
-        progress->Destroy();
-    }
-
-    if (!opened_ok)
+    else
     {
         createHomePage();
+        if (progress) progress->Update(90);
         updateNavTreeControl();
+        if (progress) progress->Update(100);
         showBeginAppDialog(true);
     }
+
 }
 
 void mmGUIFrame::BackupDatabase(const wxString& filename, bool updateRequired)
