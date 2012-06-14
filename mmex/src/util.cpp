@@ -978,34 +978,6 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
     return line;
 }
 
-wxString DisplayDate2FormatDate(wxString strDate)
-{
-    wxArrayString DateFormat = date_format_mask();
-    wxArrayString itemChoice7Strings = date_format();
-
-    for(size_t i=0; i<DateFormat.Count(); i++)
-    {
-        if(strDate == itemChoice7Strings[i])
-            return DateFormat[i];
-    }
-
-    return DateFormat[0];
-}
-
-wxString FormatDate2DisplayDate(wxString strDate)
-{
-    wxArrayString DateFormat = date_format_mask();
-    wxArrayString itemChoice7Strings = date_format();
-
-    for(size_t i=0; i<DateFormat.Count(); i++)
-    {
-        if(strDate == DateFormat[i])
-            return itemChoice7Strings[i];
-    }
-
-    return itemChoice7Strings[0];
-}
-
 wxArrayString date_format_mask() {
 
     wxArrayString DateFormat;

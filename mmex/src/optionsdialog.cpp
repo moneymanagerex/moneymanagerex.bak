@@ -234,9 +234,9 @@ void mmOptionsDialog::CreateControls()
     wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
 
     choiceDateFormat_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT);
-    for(int i=0; i<DateFormatMask.Count(); i++)
+    for(int i = 0; i < DateFormatMask.Count(); i++)
     {
-        choiceDateFormat_->Append(date_format()[i], new wxStringClientData(date_format_mask()[i]));
+        choiceDateFormat_->Append(date_format()[i], new wxStringClientData(DateFormatMask[i]));
         if (default_date_format == DateFormatMask[i]) choiceDateFormat_->SetSelection(i);
     }
 
@@ -245,11 +245,11 @@ void mmOptionsDialog::CreateControls()
                                wxCommandEventHandler(mmOptionsDialog::OnDateFormatChanged), NULL, this);
     dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, flags);
 
-    wxStaticText* restartText = new wxStaticText( generalPanel, ID_DIALOG_OPTIONS_RESTART_REQUIRED, "");
-    wxStaticText* sampleDateExampleText = new wxStaticText( generalPanel, wxID_ANY,
-        _("New date format sample:"));
-    wxStaticText* sampleDateText = new wxStaticText(generalPanel, ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE,
-        "redefined elsewhere");
+    wxStaticText* restartText = new wxStaticText(generalPanel, ID_DIALOG_OPTIONS_RESTART_REQUIRED, "");
+    wxStaticText* sampleDateExampleText = new wxStaticText( generalPanel,
+        wxID_ANY, _("New date format sample:"));
+    wxStaticText* sampleDateText = new wxStaticText(generalPanel,
+        ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE, "redefined elsewhere");
     dateFormatSettingStaticBoxSizerGrid->Add(restartText, flags);
     dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, flags);
     dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, flags);

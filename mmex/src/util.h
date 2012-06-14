@@ -123,8 +123,6 @@ wxString mmGetNiceMonthName(const int month );
 wxString mmGetNiceShortMonthName(const int month );
 wxString mmGetNiceWeekDayName(const int week_day );
 wxString mmGetShortWeekDayName(const int week_day);
-wxString DisplayDate2FormatDate(wxString strDate);
-wxString FormatDate2DisplayDate(wxString strDate);
 wxArrayString date_format_mask();
 wxArrayString date_format();
 
