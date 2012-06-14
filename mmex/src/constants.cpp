@@ -23,11 +23,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "defs.h"
 #include <boost/version.hpp>
 
+#define _MM_EX_REVISION_ID    "$ Rev.: 2598 $"
+
 //----------------------------------------------------------------------------
 
 wxString mmex::getProgramName()
 {
-    return wxString(("MoneyManagerEx"));
+    return wxString("MoneyManagerEx %s");
 }
 
 wxString mmex::getProgramVersion()
@@ -37,7 +39,7 @@ wxString mmex::getProgramVersion()
      for when a development version is created for release.
      ******************************************************/
     //return wxString(("0.9.9.0 DEV:SVN-xxxx"));
-    return ("0.10.0.0");
+    return wxString::Format(("0.10.0.0 %s"), _MM_EX_REVISION_ID);
 }
 
 wxString mmex::getProgramCopyright()
@@ -59,6 +61,6 @@ wxString mmex::getProgramDescription()
                 << (BOOST_VERSION / 100 % 1000) << ('.')
                 << (BOOST_VERSION % 100) << (",\n")
                 << ("SQLite3 ") << wxSQLite3Database::GetVersion()
-                << (",  wxSQLite 0.0.2");
+                << (",  wxSQLite 3.0.0");
     return description;
 }
