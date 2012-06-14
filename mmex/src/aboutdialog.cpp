@@ -80,20 +80,20 @@ void mmAboutDialog::CreateControls()
     wxBitmap itemStaticBitmap3Bitmap(money_xpm);
 
     wxStaticBitmap* itemStaticBitmap3 = 0;
-    itemStaticBitmap3 = new wxStaticBitmap( this, wxID_STATIC,
-        itemStaticBitmap3Bitmap, wxDefaultPosition);
-    itemBoxSizer->Add(itemStaticBitmap3, 0, wxALIGN_CENTER|wxALL, 5);
+    itemStaticBitmap3 = new wxStaticBitmap(this,
+        wxID_STATIC, itemStaticBitmap3Bitmap);
+    itemBoxSizer->Add(itemStaticBitmap3, 0, wxALIGN_CENTER|wxTOP, 5);
 
-    wxStaticText* itemStaticText6 = new wxStaticText( this, wxID_STATIC,
+    wxStaticText* versionStaticText = new wxStaticText( this, wxID_STATIC,
         wxString(_("Version: ")) + mmex::getProgramVersion());
     int font_size = this->GetFont().GetPointSize() + 2;
-    itemStaticText6->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
-    itemBoxSizer->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+    versionStaticText->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
+    itemBoxSizer->Add(versionStaticText, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText88 = new wxStaticText( this, wxID_STATIC,
-        mmex::getProgramCopyright());
+    wxStaticText* itemStaticText88 = new wxStaticText(this,
+        wxID_STATIC, mmex::getProgramCopyright());
 
-    wxStaticText* itemStaticText7 = new wxStaticText( this,
+    wxStaticText* itemStaticText7 = new wxStaticText(this,
         wxID_STATIC, mmex::getProgramDescription());
     itemBoxSizer->Add(itemStaticText7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -102,7 +102,7 @@ void mmAboutDialog::CreateControls()
     wxFileInputStream input(filePath);
     wxTextInputStream text(input);
     wxArrayString data;
-    data.Add((""));
+    data.Add("");
 
     int part = 0;
     while (!input.Eof())
@@ -112,14 +112,14 @@ void mmAboutDialog::CreateControls()
             data[part] << line;
         else {
             ++part;
-            data.Add((""));
+            data.Add("");
         }
     }
 
     //Create tabs
     //Developers
     wxNotebook* about_notebook = new wxNotebook(this,
-        wxID_ANY, wxDefaultPosition, wxSize(400, 200), wxNB_MULTILINE );
+        wxID_ANY, wxDefaultPosition, wxSize(450, 200), wxNB_MULTILINE );
     developers_tab_ = new wxNotebookPage(about_notebook, wxID_ANY);
     about_notebook->AddPage(developers_tab_, _("Developers"));
     wxBoxSizer *developers_sizer = new wxBoxSizer(wxVERTICAL);
@@ -140,28 +140,30 @@ void mmAboutDialog::CreateControls()
     wxBoxSizer *sponsors_sizer = new wxBoxSizer(wxVERTICAL);
     sponsors_tab_->SetSizer(sponsors_sizer);
 
+    wxSize internal_size = developers_tab_->GetBestVirtualSize();
+
     wxTextCtrl* developers_text = new wxTextCtrl( developers_tab_,
-        wxID_STATIC, data[0], wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+        wxID_STATIC, data[0], wxDefaultPosition, internal_size, wxTE_MULTILINE );
     developers_text->SetEditable(false);
     developers_sizer->Add(developers_text, 1, wxEXPAND);
 
     if (data.GetCount() > 1) {
         wxTextCtrl* translators_text = new wxTextCtrl( translators_tab_,
-            wxID_STATIC, data[1], wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+            wxID_STATIC, data[1], wxDefaultPosition, internal_size, wxTE_MULTILINE );
         translators_text->SetEditable(false);
         translators_sizer->Add(translators_text, 1, wxEXPAND);
     }
 
     if (data.GetCount() > 2) {
         wxTextCtrl* artwork_text = new wxTextCtrl( artwork_tab_,
-            wxID_STATIC, data[2], wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+            wxID_STATIC, data[2], wxDefaultPosition, internal_size, wxTE_MULTILINE );
         artwork_text->SetEditable(false);
         artwork_sizer->Add(artwork_text, 1, wxEXPAND);
     }
 
     if (data.GetCount() > 3) {
         wxTextCtrl* sponsors_text = new wxTextCtrl( sponsors_tab_,
-            wxID_STATIC, data[3], wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+            wxID_STATIC, data[3], wxDefaultPosition, internal_size, wxTE_MULTILINE );
         sponsors_text->SetEditable(false);
         sponsors_sizer->Add(sponsors_text, 1, wxEXPAND);
     }
@@ -174,5 +176,5 @@ void mmAboutDialog::CreateControls()
     wxButton* itemButton19 = new wxButton(this, wxID_OK);
     itemButton19->SetDefault();
     itemButton19->SetFocus();
-    itemBoxSizer->Add(itemButton19, 0, wxALIGN_RIGHT|wxALL, 10);
+    itemBoxSizer->Add(itemButton19, 0, wxALIGN_CENTER|wxALL, 10);
 }
