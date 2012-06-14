@@ -478,14 +478,14 @@ wxString mmGetShortWeekDayName(const int week_day)
     return wxGetTranslation(gDaysInWeek[week_day]);
 }
 
-wxString mmGetNiceDateString(const wxDateTime &dt)
+wxString mmGetNiceDateString(const wxDateTime dt)
 {
     wxString dts = wxString() << mmGetNiceWeekDayName(dt.GetWeekDay())
                               << (", ") << mmGetNiceDateSimpleString(dt);
     return dts;
 }
 
-wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
+wxString mmGetNiceDateSimpleString(const wxDateTime dt)
 {
     wxString dateFmt = mmOptions::instance().dateFormat;
     dateFmt.Replace("%Y%m%d", "%Y %m %d");
@@ -693,12 +693,12 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     mmShowErrorMessage(0, msg, _("Export to QIF"));
 }
 
-wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
+wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime dt)
 {
     return dt.Format(mmOptions::instance().dateFormat);
 }
 
-wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString& dtstr, const wxString& date_format)
+wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString dtstr, const wxString date_format)
 {
     //wxString date_format = mmDBWrapper::getInfoSettingValue(db, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
     wxString date_mask = date_format;
@@ -728,12 +728,12 @@ wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString&
     return dt;
 }
 
-wxString mmGetDateForStorage(const wxDateTime &dt)
+wxString mmGetDateForStorage(const wxDateTime dt)
 {
     return dt.FormatISODate();
 }
 
-wxDateTime mmGetStorageStringAsDate(const wxString& str)
+wxDateTime mmGetStorageStringAsDate(const wxString str)
 {
     wxDateTime dt;
     dt.ParseDate(str.GetData());
@@ -980,8 +980,8 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
 
 wxString DisplayDate2FormatDate(wxString strDate)
 {
-    wxArrayString DateFormat = DateFormats();
-    wxArrayString itemChoice7Strings = itemChoiceStrings();
+    wxArrayString DateFormat = date_format_mask();
+    wxArrayString itemChoice7Strings = date_format();
 
     for(size_t i=0; i<DateFormat.Count(); i++)
     {
@@ -994,8 +994,8 @@ wxString DisplayDate2FormatDate(wxString strDate)
 
 wxString FormatDate2DisplayDate(wxString strDate)
 {
-    wxArrayString DateFormat = DateFormats();
-    wxArrayString itemChoice7Strings = itemChoiceStrings();
+    wxArrayString DateFormat = date_format_mask();
+    wxArrayString itemChoice7Strings = date_format();
 
     for(size_t i=0; i<DateFormat.Count(); i++)
     {
@@ -1006,7 +1006,7 @@ wxString FormatDate2DisplayDate(wxString strDate)
     return itemChoice7Strings[0];
 }
 
-wxArrayString DateFormats() {
+wxArrayString date_format_mask() {
 
     wxArrayString DateFormat;
 
@@ -1034,7 +1034,7 @@ wxArrayString DateFormats() {
     return DateFormat;
 }
 
-wxArrayString itemChoiceStrings() {
+wxArrayString date_format() {
 
     wxArrayString itemChoice7Strings;
 

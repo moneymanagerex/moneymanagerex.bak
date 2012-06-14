@@ -230,23 +230,20 @@ void mmOptionsDialog::CreateControls()
     generalPanelSizer->Add(dateFormatStaticBoxSizer, flagsExpand);
     dateFormatStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid);
 
-    wxArrayString itemChoice7Strings = itemChoiceStrings();
-    wxArrayString DateFormat = DateFormats();
+    wxArrayString DateFormatMask = date_format_mask();
     wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
-    size_t i=0;
-    for(i; i<DateFormat.Count(); i++)
+
+    choiceDateFormat_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT);
+    for(int i=0; i<DateFormatMask.Count(); i++)
     {
-        if(default_date_format == DateFormat[i])
-            break;
+        choiceDateFormat_->Append(date_format()[i], new wxStringClientData(date_format_mask()[i]));
+        if (default_date_format == DateFormatMask[i]) choiceDateFormat_->SetSelection(i);
     }
 
-    choiceDateFormat_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT,
-        wxDefaultPosition, wxDefaultSize, itemChoice7Strings, 0);
-    choiceDateFormat_->SetSelection(i);
-    dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, flags);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
     choiceDateFormat_->Connect(ID_DIALOG_OPTIONS_DATE_FORMAT, wxEVT_COMMAND_CHOICE_SELECTED,
                                wxCommandEventHandler(mmOptionsDialog::OnDateFormatChanged), NULL, this);
+    dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, flags);
 
     wxStaticText* restartText = new wxStaticText( generalPanel, ID_DIALOG_OPTIONS_RESTART_REQUIRED, "");
     wxStaticText* sampleDateExampleText = new wxStaticText( generalPanel, wxID_ANY,
@@ -790,7 +787,8 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 {
-    dateFormat_ = DisplayDate2FormatDate(choiceDateFormat_->GetStringSelection());
+    wxStringClientData* date_mask_obj = (wxStringClientData *)choiceDateFormat_->GetClientObject(choiceDateFormat_->GetSelection());
+    if (date_mask_obj) dateFormat_ = date_mask_obj->GetData();
 
     wxStaticText* restart_required = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_RESTART_REQUIRED);
     restart_required->SetLabel(_("Requires MMEX Restart"));

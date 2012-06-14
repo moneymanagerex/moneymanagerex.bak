@@ -113,20 +113,20 @@ void mmShowErrorMessage( wxWindow *parent, const wxString &message, const wxStri
 
 wxString mmSelectLanguage(wxWindow *parent, bool forced_show_dlg, bool save_setting = true);
 
-wxString mmGetDateForStorage( const wxDateTime &dt );
-wxDateTime mmGetStorageStringAsDate( const wxString& str );
-wxString mmGetDateForDisplay( wxSQLite3Database* db, const wxDateTime &dt );
-wxDateTime mmParseDisplayStringToDate( wxSQLite3Database* db, const wxString& dt, const wxString& date_format );
-wxString mmGetNiceDateString( const wxDateTime &dt );
-wxString mmGetNiceDateSimpleString( const wxDateTime &dt );
+wxString mmGetDateForStorage( const wxDateTime dt );
+wxDateTime mmGetStorageStringAsDate( const wxString str );
+wxString mmGetDateForDisplay( wxSQLite3Database* db, const wxDateTime dt );
+wxDateTime mmParseDisplayStringToDate( wxSQLite3Database* db, const wxString dt, const wxString date_format );
+wxString mmGetNiceDateString( const wxDateTime dt );
+wxString mmGetNiceDateSimpleString( const wxDateTime dt );
 wxString mmGetNiceMonthName(const int month );
 wxString mmGetNiceShortMonthName(const int month );
 wxString mmGetNiceWeekDayName(const int week_day );
 wxString mmGetShortWeekDayName(const int week_day);
 wxString DisplayDate2FormatDate(wxString strDate);
 wxString FormatDate2DisplayDate(wxString strDate);
-wxArrayString DateFormats();
-wxArrayString itemChoiceStrings();
+wxArrayString date_format_mask();
+wxArrayString date_format();
 
 wxString inQuotes(wxString label, wxString& delimiter);
 wxString csv2tab_separated_values(wxString line, wxString& delimit);

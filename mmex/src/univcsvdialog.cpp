@@ -260,8 +260,8 @@ void mmUnivCSVDialog::CreateControls()
     itemStaticText66->SetFont(staticBoxFontSetting);
     //itemStaticText66->Enable(!this->is_importer_);
 
-    wxArrayString itemChoice7Strings = itemChoiceStrings();
-    wxArrayString DateFormat = DateFormats();
+    wxArrayString itemChoice7Strings = date_format();
+    wxArrayString DateFormat = date_format_mask();
     wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
     size_t i=0;
     for(; i<DateFormat.Count(); i++)
