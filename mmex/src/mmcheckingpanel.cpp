@@ -1374,18 +1374,24 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         if (mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status))
         m_cp->m_trans[i]->status_ = status;
     }
-
-    //FIXME
-    m_cp->initVirtualListControl();
-    RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
-
     m_cp->core_->db_.get()->Commit();
 
-    m_cp->setAccountSummary();
-    if (m_selectedIndex > -1) {
-        SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-        SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+    m_cp->initVirtualListControl();
+    if (m_cp->m_trans.size() > 1)
+    {
+	    RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
+	    if (m_selectedIndex > -1) {
+	        SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+	        SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+	    }
+	}
+    else
+    {
+        m_cp->enableEditDeleteButtons(false);
+        m_cp->showTips();
     }
+
+    m_cp->setAccountSummary();
 
 }
 //----------------------------------------------------------------------------
