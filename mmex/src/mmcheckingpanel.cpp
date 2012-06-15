@@ -1399,6 +1399,7 @@ void TransactionListCtrl::OnColClick(wxListEvent& event)
     setColumnImage(m_sortCol, m_asc ? ICON_ASC : ICON_DESC);
 
     m_cp->sortTable();
+	if (m_cp->m_trans.size()>0)
     RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
 }
 //----------------------------------------------------------------------------
