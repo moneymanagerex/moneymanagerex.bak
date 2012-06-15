@@ -297,13 +297,13 @@ public:
     void OnMoveTransaction(wxCommandEvent& event);
     /// Displays the split categories for the selected transaction
     void OnViewSplitTransaction(wxCommandEvent& event);
+    long m_selectedIndex;
 
 private:
     DECLARE_NO_COPY_CLASS(TransactionListCtrl)
     DECLARE_EVENT_TABLE()
 
     mmCheckingPanel *m_cp;
-    long m_selectedIndex;
     long m_selectedForCopy;
 
     wxListItemAttr* m_attr3; // style, for future dates
@@ -955,16 +955,15 @@ void mmCheckingPanel::initVirtualListControl()
 
     m_listCtrlAccount->SetItemCount(numTransactions);
 
+	if (m_listCtrlAccount->GetItemCount() <= m_listCtrlAccount->m_selectedIndex)
+		m_listCtrlAccount->m_selectedIndex--;
+
     if (m_trans.size() > 1)
     {
         if (g_asc)
-        {
             m_listCtrlAccount->EnsureVisible(static_cast<long>(m_trans.size()) - 1);
-        }
         else
-        {
             m_listCtrlAccount->EnsureVisible(0);
-        }
     }
 
     setAccountSummary();
@@ -1329,7 +1328,6 @@ void TransactionListCtrl::OnMarkTransactionDB(const wxString& status)
     //  any changes need to be reflected.  Even if we are viewing all transactions,
     //  the register needs to be updated so the balance col is correct (eg a trans
     //  was changed from unreconciled to void).
-    DeleteAllItems();
 
     m_cp->initVirtualListControl();
 }
@@ -1372,13 +1370,9 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         m_cp->m_trans[i]->status_ = status;
     }
 
-//     if (m_cp->m_currentView != VIEW_TRANS_ALL_STR)
-    {
-        DeleteAllItems();
-
-        m_cp->initVirtualListControl();
-        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
-    }
+	//FIXME
+	m_cp->initVirtualListControl();
+	RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
 
     m_cp->core_->db_.get()->Commit();
 
