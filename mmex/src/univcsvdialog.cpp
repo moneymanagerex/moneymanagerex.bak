@@ -123,6 +123,9 @@ bool mmUnivCSVDialog::Create(wxWindow* parent, wxWindowID id,
 
 void mmUnivCSVDialog::CreateControls()
 {
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxLEFT|wxTOP, 5);
+
     // Define the staticBox font and set it as wxFONTWEIGHT_BOLD
     wxFont staticBoxFontSetting = this->GetFont();
     staticBoxFontSetting.SetWeight(wxFONTWEIGHT_BOLD);
@@ -152,23 +155,23 @@ void mmUnivCSVDialog::CreateControls()
      //Add Remove Area
     wxPanel* itemPanel_AddRemove = new wxPanel(this, ID_PANEL10,
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer3->Add(itemPanel_AddRemove, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+    itemBoxSizer3->Add(itemPanel_AddRemove, flags);
 
     wxBoxSizer* itemBoxSizer_AddRemove = new wxBoxSizer(wxVERTICAL);
     itemPanel_AddRemove->SetSizer(itemBoxSizer_AddRemove);
 
     //Add button
     m_button_add_= new wxButton(itemPanel_AddRemove, wxID_ADD);
-    itemBoxSizer_AddRemove->Add(m_button_add_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_AddRemove->Add(m_button_add_, flags);
 
     //Remove button
     m_button_remove_ = new wxButton(itemPanel_AddRemove, wxID_REMOVE);
-    itemBoxSizer_AddRemove->Add(m_button_remove_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_AddRemove->Add(m_button_remove_, flags);
 
     //Standard MMEX CSV
     wxButton* itemButton_standard = new wxButton(itemPanel_AddRemove, wxID_STANDARD, _("&MMEX format"),
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer_AddRemove->Add(itemButton_standard, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_AddRemove->Add(itemButton_standard, flags);
     itemButton_standard->SetToolTip(_("MMEX standard format"));
 
     //ListBox of attribute order
@@ -186,22 +189,22 @@ void mmUnivCSVDialog::CreateControls()
 
     //Move Up button
     wxButton* itemButton_MoveUp = new wxButton(itemPanel_Arranger, wxID_UP);
-    itemBoxSizer_Arranger->Add(itemButton_MoveUp, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_Arranger->Add(itemButton_MoveUp, flags);
     itemButton_MoveUp -> SetToolTip (_("Move Up"));
 
     //Move down button
     wxButton* itemButton_MoveDown = new wxButton(itemPanel_Arranger, wxID_DOWN);
-    itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_Arranger->Add(itemButton_MoveDown, flags);
     itemButton_MoveDown -> SetToolTip (_("Move Down"));
 
     //Load Template button
     wxButton* itemButton_Load = new wxButton(itemPanel_Arranger, wxID_OPEN);
-    itemBoxSizer_Arranger->Add(itemButton_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_Arranger->Add(itemButton_Load, flags);
     itemButton_Load -> SetToolTip (_("Load Template"));
 
     //Save As Template button
     wxButton* itemButton_Save = new wxButton(itemPanel_Arranger, wxID_SAVEAS, _("Save As..."));
-    itemBoxSizer_Arranger->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_Arranger->Add(itemButton_Save, flags);
     itemButton_Save -> SetToolTip (_("Save Template"));
 
     wxStaticLine*  m_staticline1 = new wxStaticLine(this,
@@ -219,7 +222,7 @@ void mmUnivCSVDialog::CreateControls()
 
         wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6,
             wxID_ANY, _("File Name:"), wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        itemBoxSizer7->Add(itemStaticText5, flags);
         itemStaticText5->SetFont(staticBoxFontSetting);
 
         m_text_ctrl_ = new wxTextCtrl(itemPanel6, ID_FILE_NAME,
@@ -244,7 +247,7 @@ void mmUnivCSVDialog::CreateControls()
     //TODO replace to _("Account: ")
     wxStaticText* itemStaticText6 = new wxStaticText(itemPanel7, wxID_ANY,
         _("Account  :"));
-    itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer8->Add(itemStaticText6, flags);
     itemStaticText6->SetFont(staticBoxFontSetting);
 
     wxArrayString as = core_->getAccountsName();
@@ -256,7 +259,7 @@ void mmUnivCSVDialog::CreateControls()
     itemBoxSizer2->Add(m_staticline2, 0, wxEXPAND | wxALL, 5 );
 
     wxStaticText* itemStaticText66 = new wxStaticText(itemPanel7, wxID_ANY, wxString() << ("    ") << _("Date Format") << (": "), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer8->Add(itemStaticText66, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer8->Add(itemStaticText66, flags);
     itemStaticText66->SetFont(staticBoxFontSetting);
 
     wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
@@ -564,8 +567,8 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
             wxTextOutputStream log(outputLog);
 
             /* date, payeename, amount(+/-), Number, status, category : subcategory, notes */
-            int countNumTotal = 0;
-            int countImported = 0;
+            long countNumTotal = 0;
+            long countImported = 0;
 
             std::vector<int> CSV_transID;
 
@@ -610,9 +613,9 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                 int numTokens = (int)tkz.CountTokens();
                 if (numTokens < (int)csvFieldOrder_.size())
                 {
-                    log << _("Line : ") << countNumTotal
+                    log << _("Line: ") << wxString::Format("%ld", countNumTotal)
                         << _(" file contains insufficient number of tokens") << endl;
-                    *log_field_ << _("Line : ") << countNumTotal
+                    *log_field_ << _("Line: ") << wxString::Format("%ld", countNumTotal)
                         << _(" file contains insufficient number of tokens") << ("\n");
                     continue;
                 }
@@ -635,10 +638,10 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                 if (dt_.Trim().IsEmpty() || payeeID_ == -1 ||
                     amount_.Trim().IsEmpty() ||  type_.Trim().IsEmpty())
                 {
-                    log << _("Line : ") << countNumTotal
-                        << _(" One of the following fields: Date, Payee, Amount, Type is missing, skipping") << endl;
-                    *log_field_ << _("Line : ") << countNumTotal
-                        << _(" One of the following fields: Date, Payee, Amount, Type is missing, skipping") << ("\n");
+                    log << _("Line: ") << wxString::Format("%ld", countNumTotal)
+                        << _(" One of the following fields: Date, Payee, Amount, Type is missing, skipping.") << endl;
+                    *log_field_ << _("Line: ") << wxString::Format("%ld", countNumTotal)
+                        << _(" One of the following fields: Date, Payee, Amount, Type is missing, skipping.") << ("\n");
                     continue;
                 }
 
@@ -693,15 +696,15 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                CSV_transID.push_back(transID);
 
                countImported++;
-               log << _("Line : ") << countNumTotal << _(" imported OK.") << endl;
-               *log_field_ << _("Line : ") << countNumTotal << _(" imported OK.") << ("\n");
+               log << wxString::Format(_("Line : %ld imported OK."), countNumTotal) << endl;
+               *log_field_ << wxString::Format(_("Line : %ld imported OK."), countNumTotal) << ("\n");
             }
 
             progressDlg->Destroy();
 
-            wxString msg = wxString::Format(_("Total Lines : %d"), countNumTotal);
+            wxString msg = wxString::Format(_("Total Lines : %ld"), countNumTotal);
             msg << wxT ("\n");
-            msg << wxString::Format(_("Total Imported : %d"), countImported);
+            msg << wxString::Format(_("Total Imported : %ld"), countImported);
             msg << wxT ("\n\n");
             msg << wxString::Format(_("Log file written to : %s"), logFile.GetFullPath().c_str());
             msg << wxT ("\n\n");
@@ -741,6 +744,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
             *log_field_ << msg;
 
             outputLog.Close();
+            tFile.Close();
             //clear the vector to avoid memory leak - done at same level created.
             CSV_transID.clear();
         }
@@ -768,14 +772,14 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                             wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
         if (fileName.empty()) return;
 
-        correctEmptyFileExt(("csv"),fileName);
+        correctEmptyFileExt("csv",fileName);
 
         wxFileOutputStream output(fileName);
         wxTextOutputStream text(output);
         wxString buffer;
         wxDateTime trx_date;
 
-        int numRecords = 0;
+        long numRecords = 0;
 
         for(std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator it = core_->bTransactionList_.transactions_.begin();
                 it != core_->bTransactionList_.transactions_.end();
@@ -787,7 +791,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                 if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR) continue; //TODO
                 double amount = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR ? pBankTransaction->amt_ : - pBankTransaction->amt_;
 
-                buffer = ("");
+                buffer.clear();
                 for (std::vector<int>::const_iterator sit = csvFieldOrder_.begin(); sit != csvFieldOrder_.end(); ++ sit)
                 {
                     switch (*sit)
@@ -836,7 +840,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
             }
         }
 
-        wxString msg = wxString::Format(("%d transactions exported"), numRecords);
+        wxString msg = wxString::Format(("Transactions exported: %ld"), numRecords);
         mmShowErrorMessage(0, msg, _("Export to CSV"));
     }
 }
