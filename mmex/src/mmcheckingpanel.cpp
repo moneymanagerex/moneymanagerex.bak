@@ -589,9 +589,7 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, flags);
 
     wxStaticText* itemStaticText10 = new wxStaticText(this,
-            ID_PANEL_CHECKING_STATIC_BALHEADER,
-            ("<----------the-plase-holder-------------------------------->"),
-            wxDefaultPosition, wxDefaultSize);
+            ID_PANEL_CHECKING_STATIC_BALHEADER, (""));
     itemBoxSizerHHeader->Add(itemStaticText10, 0, wxEXPAND);
 
     /* ---------------------- */
@@ -620,7 +618,7 @@ void mmCheckingPanel::CreateControls()
     m_listCtrlAccount->setSortColumn(g_sortcol);
     m_listCtrlAccount->setSortOrder(g_asc);
     m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(),
-    m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
+        m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
 
     wxPanel *itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
