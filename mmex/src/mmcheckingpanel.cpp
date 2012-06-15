@@ -452,7 +452,7 @@ bool mmCheckingPanel::Create(
 
 #ifdef __WXMSW__
     Freeze();
-#endif        
+#endif
     wxConfigBase *config = wxConfigBase::Get();
     m_currentView = config->Read("VIEWTRANSACTIONS", VIEW_TRANS_ALL_STR);
 
@@ -955,8 +955,8 @@ void mmCheckingPanel::initVirtualListControl()
 
     m_listCtrlAccount->SetItemCount(numTransactions);
 
-	if (m_listCtrlAccount->GetItemCount() <= m_listCtrlAccount->m_selectedIndex)
-		m_listCtrlAccount->m_selectedIndex--;
+    if (m_listCtrlAccount->GetItemCount() <= m_listCtrlAccount->m_selectedIndex)
+        m_listCtrlAccount->m_selectedIndex--;
 
     if (m_trans.size() > 1)
     {
@@ -964,6 +964,11 @@ void mmCheckingPanel::initVirtualListControl()
             m_listCtrlAccount->EnsureVisible(static_cast<long>(m_trans.size()) - 1);
         else
             m_listCtrlAccount->EnsureVisible(0);
+    }
+    else
+    {
+        enableEditDeleteButtons(false);
+        showTips();
     }
 
     setAccountSummary();
@@ -1217,7 +1222,7 @@ void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
     m_listCtrlAccount->DeleteAllItems();
     initVirtualListControl();
     if (!all_trans_.empty())
-	    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+        m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 
 }
 
@@ -1236,8 +1241,8 @@ void mmCheckingPanel::OnFilterResetToViewAll(wxMouseEvent& event) {
 
     m_listCtrlAccount->DeleteAllItems();
     initVirtualListControl();
-	if (!all_trans_.empty())
-	    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+    if (!all_trans_.empty())
+        m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 
 }
 
@@ -1370,9 +1375,9 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         m_cp->m_trans[i]->status_ = status;
     }
 
-	//FIXME
-	m_cp->initVirtualListControl();
-	RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
+    //FIXME
+    m_cp->initVirtualListControl();
+    RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
 
     m_cp->core_->db_.get()->Commit();
 
@@ -1399,7 +1404,7 @@ void TransactionListCtrl::OnColClick(wxListEvent& event)
     setColumnImage(m_sortCol, m_asc ? ICON_ASC : ICON_DESC);
 
     m_cp->sortTable();
-	if (m_cp->m_trans.size()>0)
+    if (m_cp->m_trans.size()>0)
     RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
 }
 //----------------------------------------------------------------------------
