@@ -321,8 +321,7 @@ void mmUnivCSVDialog::CreateControls()
 
     if (this->is_importer_)
     {
-        wxButton* itemButton_Import = new wxButton(itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import"),
-            wxDefaultPosition, wxDefaultSize, 0);
+        wxButton* itemButton_Import = new wxButton(itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import"));
         itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
         itemButton_Import -> SetToolTip (_("Import File"));
     }
@@ -453,7 +452,7 @@ void mmUnivCSVDialog::OnLoad(wxCommandEvent& /*event*/)
       wxTextFile tFile(fileName);
       if (!tFile.Open())
       {
-         wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxICON_WARNING);
+         wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxOK|wxICON_WARNING);
          return;
       }
       csvFieldOrder_.clear();
@@ -500,7 +499,7 @@ void mmUnivCSVDialog::OnSave(wxCommandEvent& /*event*/)
         //if the file does exist, then skip to else section
         if (!tFile.Exists() && !tFile.Create())
         {
-            wxMessageBox(_("Unable to write to file."), _("Universal CSV Import"), wxICON_WARNING);
+            wxMessageBox(_("Unable to write to file."), _("Universal CSV Import"), wxOK|wxICON_WARNING);
             return;
         }
         else
@@ -527,7 +526,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
         !isIndexPresent(UNIV_CSV_DEPOSIT))))
     {
          wxMessageBox(_("Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."),
-                      _("Universal CSV Import"), wxICON_WARNING);
+                      _("Universal CSV Import"), wxOK|wxICON_WARNING);
          return;
     }
 
@@ -543,14 +542,19 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
         wxString fileName = m_text_ctrl_->GetValue();
-        if (fileName.IsEmpty())
+        wxFileName csv_file(fileName);
+        if (fileName.IsEmpty() || !csv_file.FileExists())
         {
             return;
         }
         else
         {
-            wxFileInputStream input(fileName);
-            wxTextInputStream text(input);
+            wxTextFile tFile(fileName);
+            if (!tFile.Open())
+            {
+                 wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxOK|wxICON_WARNING);
+                 return;
+            }
 
             wxFileName logFile = mmex::GetLogDir(true);
             logFile.SetFullName(fileName);
@@ -565,23 +569,23 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 
             std::vector<int> CSV_transID;
 
-            wxProgressDialog progressDlg(_("Universal CSV Import"), _("Transactions imported from CSV: "), 100,
+            wxProgressDialog* progressDlg = new wxProgressDialog(_("Universal CSV Import"),
+                _("Transactions imported from CSV: "), 100,
                 NULL, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
             db_->Begin();
 
-            while (!input.Eof())
+            wxString line;
+            for (line = tFile.GetFirstLine(); !tFile.Eof(); line = tFile.GetNextLine())
             {
                 wxString progressMsg;
                 progressMsg << _("Transactions imported from CSV\nto account ") << acctName << (": ") << countImported;
-                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *99), progressMsg);
-
-                if (!progressDlg.Update(-1)) // if cancel clicked
+                if (!progressDlg->Update(static_cast<int>((static_cast<double>(countImported)/100.0
+                    - countNumTotal/100) *99), progressMsg))
                 {
                     canceledbyuser = true;
                     break; // abort processing
                 }
 
-                wxString line = text.ReadLine();
                 if (!line.IsEmpty())
                     ++countNumTotal;
                 else
@@ -601,6 +605,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                 val_ = 0.0;
 
                 line = csv2tab_separated_values(line, delimit_);
+
                 wxStringTokenizer tkz(line, ("\t"), wxTOKEN_RET_EMPTY_ALL);
                 int numTokens = (int)tkz.CountTokens();
                 if (numTokens < (int)csvFieldOrder_.size())
@@ -615,7 +620,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                 std::vector<wxString> tokens;
                 while (tkz.HasMoreTokens())
                 {
-                    wxString token = tkz.GetNextToken();       
+                    wxString token = tkz.GetNextToken();
                     tokens.push_back(token);
                 }
 
@@ -692,7 +697,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                *log_field_ << _("Line : ") << countNumTotal << _(" imported OK.") << ("\n");
             }
 
-            progressDlg.Update(100);
+            progressDlg->Destroy();
 
             wxString msg = wxString::Format(_("Total Lines : %d"), countNumTotal);
             msg << wxT ("\n");
@@ -860,10 +865,6 @@ void mmUnivCSVDialog::update_preview()
     //TODO re use code in OnImport & OnExport
     if (this->is_importer_)
     {
-        wxString date_format = mmOptions::instance().dateFormat;;
-        wxStringClientData* date_mask_obj = (wxStringClientData *)choiceDateFormat_->GetClientObject(choiceDateFormat_->GetSelection());
-        if (date_mask_obj) date_format = date_mask_obj->GetData();
-
         wxString fileName = m_text_ctrl_->GetValue();
         wxFileName csv_file(fileName);
 
@@ -872,7 +873,7 @@ void mmUnivCSVDialog::update_preview()
             wxTextFile tFile(fileName);
             if (!tFile.Open())
             {
-                 wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxICON_WARNING);
+                 wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxOK|wxICON_WARNING);
                  return;
             }
 
@@ -900,9 +901,7 @@ void mmUnivCSVDialog::update_preview()
                         break;
                     else
                     {
-                        if (col == date_position) token = mmParseDisplayStringToDate(db_, token, date_format).Format(date_format);
                         m_list_ctrl_->SetItem(itemIndex, col, token);
-
                     }
                 }
 
