@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -71,7 +71,7 @@ void TransFilterDialog::Init()
     txtTransNumber_->Enable(false);
     txtNotes_->Enable(false);
 }
-    
+
 // Creation
 bool TransFilterDialog::Create( wxWindow* parent, wxWindowID id,
     const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
@@ -114,9 +114,9 @@ void TransFilterDialog::CreateControls()
     cbDateRange_->SetValue(FALSE);
 
     wxBoxSizer* dateSizer = new wxBoxSizer(wxHORIZONTAL);
-    dpDateStart_ = new wxDatePickerCtrl( itemPanel, wxID_ANY, wxDefaultDateTime, 
+    dpDateStart_ = new wxDatePickerCtrl( itemPanel, wxID_ANY, wxDefaultDateTime,
                                          wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
-    dpDateEnd_   = new wxDatePickerCtrl( itemPanel, wxID_ANY, wxDefaultDateTime, 
+    dpDateEnd_   = new wxDatePickerCtrl( itemPanel, wxID_ANY, wxDefaultDateTime,
                                          wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
     dateSizer->Add(dpDateStart_, flags);
     dateSizer->AddSpacer(10);
@@ -125,19 +125,19 @@ void TransFilterDialog::CreateControls()
     itemPanelSizer->Add(cbDateRange_, flags);
     itemPanelSizer->Add(dateSizer, flags);
     //--End of Row --------------------------------------------------------
-    
-    cbPayee_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_PAYEE, _("Payee"), 
+
+    cbPayee_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_PAYEE, _("Payee"),
                                wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbPayee_->SetValue(FALSE);
 
-    btnPayee_ = new wxButton( itemPanel, ID_DIALOG_TRANSFILTER_BTN_PAYEE, _("Select Payee"), 
+    btnPayee_ = new wxButton( itemPanel, ID_DIALOG_TRANSFILTER_BTN_PAYEE, _("Select Payee"),
                               wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
 
     itemPanelSizer->Add(cbPayee_, flags);
     itemPanelSizer->Add(btnPayee_, flags);
     //--End of Row --------------------------------------------------------
 
-    cbSplitCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Split Category"), 
+    cbSplitCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Split Category"),
                                   wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbSplitCategory_->SetValue(FALSE);
     cbSplitCategory_->SetToolTip(_("Filter Split categories. Include the category for further filtering."));
@@ -145,23 +145,23 @@ void TransFilterDialog::CreateControls()
     itemPanelSizer->Add(cbSplitCategory_, flags);
     //--End of Row --------------------------------------------------------
 
-    cbCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Category"), 
+    cbCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Category"),
                                   wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbCategory_->SetValue(FALSE);
 
-    btnCategory_ = new wxButton( itemPanel, ID_DIALOG_TRANSFILTER_BTN_CATEGORY, _("Select Category"), 
+    btnCategory_ = new wxButton( itemPanel, ID_DIALOG_TRANSFILTER_BTN_CATEGORY, _("Select Category"),
                                  wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
 
     itemPanelSizer->Add(cbCategory_, flags);
     itemPanelSizer->Add(btnCategory_, flags);
     //--End of Row --------------------------------------------------------
 
-    cbStatus_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_STATUS, _("Status"), 
+    cbStatus_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_STATUS, _("Status"),
                                 wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbStatus_->SetValue(FALSE);
 
     choiceStatus_ = new wxChoice( itemPanel, wxID_ANY, wxDefaultPosition, wxSize(fieldWidth,-1));
-    wxString transaction_status[] = 
+    wxString transaction_status[] =
     {
         wxTRANSLATE("None"),
         wxTRANSLATE("Reconciled"),
@@ -172,7 +172,7 @@ void TransFilterDialog::CreateControls()
     for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
         choiceStatus_->Append(wxGetTranslation(transaction_status[i]),
         new wxStringClientData(transaction_status[i].Left(1)));
-    
+
     choiceStatus_->SetStringSelection(wxGetTranslation(mmIniOptions::instance().transStatusReconciled_));
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
@@ -180,10 +180,10 @@ void TransFilterDialog::CreateControls()
     itemPanelSizer->Add(choiceStatus_, flags);
     //--End of Row --------------------------------------------------------
 
-    cbType_ = new wxCheckBox(itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE, _("Type"), 
+    cbType_ = new wxCheckBox(itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE, _("Type"),
                               wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbType_->SetValue(FALSE);
-    
+
     choiceType_ = new wxChoice(itemPanel, wxID_ANY,wxDefaultPosition, wxSize(fieldWidth,-1));
     wxString transaction_type[] =
     {
@@ -223,7 +223,7 @@ void TransFilterDialog::CreateControls()
     itemPanelSizer->Add(txtNotes_, flags);
     //--End of Row --------------------------------------------------------
     /******************************************************************************
-     Button Panel with OK/Cancel buttons   
+     Button Panel with OK/Cancel buttons
     *******************************************************************************/
     wxPanel* buttonPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     thisSizer->Add(buttonPanel, flags.Border(wxALL, 5).Right());
@@ -246,11 +246,11 @@ void TransFilterDialog::OnButtonOK( wxCommandEvent& /*event*/ )
     if (cbDateRange_->GetValue() || cbPayee_->GetValue()  ||
         cbCategory_->GetValue()  || cbStatus_->GetValue() ||
         cbType_->GetValue()      || cbTransNumber_->GetValue() ||
-        cbNotes_->GetValue()     || cbSplitCategory_->GetValue() 
+        cbNotes_->GetValue()     || cbSplitCategory_->GetValue()
        )
     {
         EndModal(wxID_OK);
-    } 
+    }
     else
     {
         EndModal(wxID_CANCEL);
@@ -321,7 +321,7 @@ void TransFilterDialog::OnCategorySelect(wxCommandEvent& /*event*/)
             if (!subCatName_.IsEmpty())
             {
                 categoryLabelName << (":") << subCatName_;
-            }        
+            }
         }
         btnCategory_->SetLabel(categoryLabelName);
     }
@@ -341,7 +341,7 @@ bool TransFilterDialog::byDateRange(wxDateTime transDate)
             result = true;
         else if (transDate.IsBetween(dtBegin, dtEnd))
             result = true;
-    } 
+    }
     else
         result = true;
 
@@ -357,7 +357,7 @@ bool TransFilterDialog::byPayee(wxString payee)
         {
             result = true;
         }
-    } 
+    }
     else
         result = true;
 
@@ -420,17 +420,17 @@ bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
                 result = true;
             }
         }
-    } 
+    }
     else
     {
         result = true;
     }
-    return result; 
+    return result;
 }
 
 bool TransFilterDialog::byStatus( wxString status )
 {
-    if (!cbStatus_->GetValue()) return false;
+    if (!cbStatus_->GetValue()) return true;
 
     wxStringClientData* status_obj = (wxStringClientData *)choiceStatus_->GetClientObject(choiceStatus_->GetSelection());
     wxString statusStr ="?";
@@ -442,7 +442,7 @@ bool TransFilterDialog::byStatus( wxString status )
 
 bool TransFilterDialog::byType(wxString type)
 {
-    if (!cbType_->GetValue()) return false;
+    if (!cbType_->GetValue()) return true;
     wxString transCodeStr = "?";
     wxStringClientData* type_obj = (wxStringClientData *)choiceType_->GetClientObject(choiceType_->GetSelection());
     if (type_obj) transCodeStr = type_obj->GetData();
