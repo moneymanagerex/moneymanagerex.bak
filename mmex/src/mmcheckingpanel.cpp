@@ -1057,7 +1057,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         wxString messageStr;
         messageStr << _("Transaction Filter")<< _("  will interfere with this filtering.") << ("\n\n");
         messageStr << _("Please deactivate: ") << _("Transaction Filter");
-        wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
+        wxMessageBox(messageStr,_("Transaction Filter"),wxOK|wxICON_WARNING);
         return;
     }
 
