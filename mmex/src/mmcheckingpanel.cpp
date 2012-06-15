@@ -1217,7 +1217,8 @@ void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
 
     m_listCtrlAccount->DeleteAllItems();
     initVirtualListControl();
-    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+    if (!all_trans_.empty())
+	    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 
 }
 
@@ -1236,7 +1237,8 @@ void mmCheckingPanel::OnFilterResetToViewAll(wxMouseEvent& event) {
 
     m_listCtrlAccount->DeleteAllItems();
     initVirtualListControl();
-    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+	if (!all_trans_.empty())
+	    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 
 }
 
