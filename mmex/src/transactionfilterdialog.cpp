@@ -452,7 +452,7 @@ bool TransFilterDialog::byType(wxString type)
 
 bool TransFilterDialog::searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, wxString sourceStr)
 {
-    if (!chkBox->GetValue()) return false;
+    if (!chkBox->GetValue()) return true;
     else if (sourceStr.IsEmpty() && txtCtrl->GetValue().IsEmpty()) return true;
     else if (txtCtrl->GetValue().IsEmpty()) return false;
     else if (sourceStr.Trim().Lower().Find(txtCtrl->GetValue().Trim().Lower()) != wxNOT_FOUND)
