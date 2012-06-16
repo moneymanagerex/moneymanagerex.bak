@@ -234,7 +234,7 @@ void mmOptionsDialog::CreateControls()
     wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
 
     choiceDateFormat_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT);
-    for(int i = 0; i < DateFormatMask.Count(); i++)
+    for(size_t i = 0; i < DateFormatMask.Count(); ++i)
     {
         choiceDateFormat_->Append(date_format()[i], new wxStringClientData(DateFormatMask[i]));
         if (default_date_format == DateFormatMask[i]) choiceDateFormat_->SetSelection(i);
