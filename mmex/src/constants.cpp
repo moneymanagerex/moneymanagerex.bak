@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "defs.h"
 #include <boost/version.hpp>
 
-#define _MM_EX_REVISION_ID    "$Rev$"
-
 //----------------------------------------------------------------------------
 
 wxString mmex::getProgramName()
