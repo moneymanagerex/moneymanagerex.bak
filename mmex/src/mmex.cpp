@@ -4593,25 +4593,26 @@ void mmGUIFrame::SetDatabaseFile(const wxString& dbFileName, bool newDatabase)
     }
 
     if (progress) progress->Update(65);
-
     if (openFile(dbFileName, newDatabase))
     {
         if (progress) progress->Update(80);
-        
         history_->AddFileToHistory(dbFileName);
         config->Write("LASTFILENAME", dbFileName);
         history_->Save(*config);
-        if (progress) progress->Update(100);
     }
     else
     {
         createHomePage();
         if (progress) progress->Update(90);
         updateNavTreeControl();
-        if (progress) progress->Update(100);
         showBeginAppDialog(true);
     }
 
+    if (progress)
+    {
+        progress->Update(100);
+        progress->Destroy();
+    }
 }
 
 void mmGUIFrame::BackupDatabase(const wxString& filename, bool updateRequired)
