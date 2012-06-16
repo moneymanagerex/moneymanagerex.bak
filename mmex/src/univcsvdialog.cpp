@@ -265,7 +265,7 @@ void mmUnivCSVDialog::CreateControls()
     wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, ("DATEFORMAT"), mmex::DEFDATEFORMAT);
     wxArrayString DateFormatMask = date_format_mask();
     choiceDateFormat_ = new wxChoice(itemPanel7, ID_UNIVCSVDIALOG_DATE_FORMAT, wxDefaultPosition, wxDefaultSize);
-    for(int i = 0; i < DateFormatMask.Count(); i++)
+    for(size_t i = 0; i < DateFormatMask.Count(); ++i)
     {
         choiceDateFormat_->Append(date_format()[i], new wxStringClientData(DateFormatMask[i]));
         if (default_date_format == DateFormatMask[i]) choiceDateFormat_->SetSelection(i);
