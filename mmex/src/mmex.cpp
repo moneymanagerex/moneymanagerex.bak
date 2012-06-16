@@ -17,51 +17,51 @@
  ********************************************************/
 
 #include "aboutdialog.h"
-#include "mmex.h"
-#include "mmcheckingpanel.h"
-#include "budgetingpanel.h"
-#include "billsdepositspanel.h"
-#include "mmhomepagepanel.h"
-#include "mmreportspanel.h"
-#include "mmhelppanel.h"
-#include "stockspanel.h"
-#include "assetspanel.h"
-#include "univcsvdialog.h"
-#include "htmlbuilder.h"
-#include "reportsummary.h"
-#include "reportcategexp.h"
-#include "reportpayee.h"
-#include "reportincexpenses.h"
-#include "reportbudgetingperf.h"
-#include "reportincexpesestime.h"
-#include "reportincexpensesfinancialperiod.h"
-#include "reportsummarystocks.h"
-#include "reportsummaryassets.h"
-#include "reporttransactions.h"
-#include "reportcashflow.h"
-#include "reporttransstats.h"
-#include "reportcategovertimeperf.h"
-#include "reportbudgetcategorysummary.h"
-#include "mmgraphtopcategories.h"
 #include "appstartdialog.h"
-#include "newacctdialog.h"
-#include "categdialog.h"
-#include "payeedialog.h"
-#include "relocatecategorydialog.h"
-#include "relocatepayeedialog.h"
-#include "budgetyeardialog.h"
-#include "optionsdialog.h"
-#include "currencydialog.h"
-#include "maincurrencydialog.h"
-#include "filtertransdialog.h"
+#include "assetspanel.h"
 #include "billsdepositsdialog.h"
-#include "dbwrapper.h"
-#include "paths.h"
+#include "billsdepositspanel.h"
+#include "budgetingpanel.h"
+#include "budgetyeardialog.h"
+#include "categdialog.h"
 #include "constants.h"
-#include "platfdep.h"
+#include "currencydialog.h"
+#include "customreportdialog.h"
 #include "customreportdisplay.h"
 #include "customreportindex.h"
-#include "customreportdialog.h"
+#include "dbwrapper.h"
+#include "filtertransdialog.h"
+#include "htmlbuilder.h"
+#include "maincurrencydialog.h"
+#include "mmcheckingpanel.h"
+#include "mmex.h"
+#include "mmgraphtopcategories.h"
+#include "mmhelppanel.h"
+#include "mmhomepagepanel.h"
+#include "mmreportspanel.h"
+#include "newacctdialog.h"
+#include "optionsdialog.h"
+#include "paths.h"
+#include "payeedialog.h"
+#include "platfdep.h"
+#include "relocatecategorydialog.h"
+#include "relocatepayeedialog.h"
+#include "reportbudgetcategorysummary.h"
+#include "reportbudgetingperf.h"
+#include "reportcashflow.h"
+#include "reportcategexp.h"
+#include "reportcategovertimeperf.h"
+#include "reportincexpenses.h"
+#include "reportincexpensesfinancialperiod.h"
+#include "reportincexpesestime.h"
+#include "reportpayee.h"
+#include "reportsummary.h"
+#include "reportsummaryassets.h"
+#include "reportsummarystocks.h"
+#include "reporttransactions.h"
+#include "reporttransstats.h"
+#include "stockspanel.h"
+#include "univcsvdialog.h"
 #include <boost/version.hpp>
 #include <wx/aboutdlg.h>
 
@@ -134,8 +134,6 @@
 //----------------------------------------------------------------------------
 #include "mmex_db_view.h"
 #include <boost/foreach.hpp>
-
-#define _MM_EX_MMEX_CPP_REVISION_ID    "$Revision$"
 
 class mmPrintableBase;
 
@@ -536,7 +534,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     m_mgr.SetManagedWindow(this);
     CreateStatusBar();
     wxStatusBar *sb = GetStatusBar();
-    if (sb) sb->SetStatusText((_MM_EX_MMEX_CPP_REVISION_ID));
+    if (sb) sb->SetStatusText(_MM_EX_REVISION_ID);
 
     SetIcon(mmex::getProgramIcon());
     SetMinSize(wxSize(800,200));

@@ -323,6 +323,23 @@ enum
     MENU_TREEPOPUP_ACCOUNT_VIEWOPEN,
     AUTO_REPEAT_TRANSACTIONS_TIMER_ID,
 
+    /*UnivCSV Dialogue*/
+    ID_UNIVCSVDIALOG_DATE_FORMAT,
+    ID_LISTBOX,
+    ID_PANEL10,
+    ID_PANEL_LOGS,
+    ID_UNIVCSVBUTTON_IMPORT,
+    ID_UNIVCSVBUTTON_EXPORT,
+    ID_LISTBOX_CANDICATE,
+    wxID_SEARCH,
+    wxID_RADIO_BOX,
+    wxID_STANDARD,
+    wxID_ACCOUNT,
+    ID_UD_DELIMIT,
+    ID_FILE_NAME,
+    SYMBOL_UNIVCSVDIALOG_IDNAME,
+
+
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_GUIID_H_

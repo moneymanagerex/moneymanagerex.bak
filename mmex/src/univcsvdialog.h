@@ -41,23 +41,6 @@
 #define wxFIXED_MINSIZE 0
 #endif
 
-enum {
-    ID_UNIVCSVDIALOG_DATE_FORMAT = wxID_HIGHEST + 1,
-    ID_LISTBOX,
-    ID_PANEL10,
-    ID_PANEL_LOGS,
-    ID_UNIVCSVBUTTON_IMPORT,
-    ID_UNIVCSVBUTTON_EXPORT,
-    ID_LISTBOX_CANDICATE,
-    wxID_SEARCH,
-    wxID_RADIO_BOX,
-    wxID_STANDARD,
-    wxID_ACCOUNT,
-    ID_UD_DELIMIT,
-    ID_FILE_NAME,
-    SYMBOL_UNIVCSVDIALOG_IDNAME,
-};
-
 class mmCoreDB;
 
 class mmUnivCSVDialog: public wxDialog
