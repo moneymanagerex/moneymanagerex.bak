@@ -256,7 +256,7 @@ void mmTransDialog::CreateControls()
     wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel7, 0, wxGROW|wxALL, 10);
 
-    wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(10, 2, 10, 10);
+    wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(0, 2, 10, 10);
     itemPanel7->SetSizer(itemFlexGridSizer8);
 
     wxSizerFlags flags(1);
@@ -267,14 +267,14 @@ void mmTransDialog::CreateControls()
     //Text field for day of the week
     itemStaticTextWeek_ = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_WEEK, "");
     
-    wxDateTime trx_date_ = mmGetStorageStringAsDate(getLastTrxDate());
-    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, trx_date_,
-                                 wxDefaultPosition, wxSize(130, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
+    wxDateTime trx_date = mmGetStorageStringAsDate(getLastTrxDate());
+    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, trx_date,
+                                 wxDefaultPosition, wxSize(130, -1),
+                                 wxDP_DROPDOWN|wxDP_SHOWCENTURY|wxDP_ALLOWNONE);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
 
     // Display the day of the week
-    wxString dateStr = mmGetShortWeekDayName(dpc_->GetValue().GetWeekDay());
-    itemStaticTextWeek_->SetLabel(dateStr);
+    itemStaticTextWeek_->SetLabel(mmGetShortWeekDayName(trx_date.GetWeekDay()));
 
 // change properties depending on system parameters
     wxSize spinCtrlSize = wxSize(18,22);
@@ -283,10 +283,7 @@ void mmTransDialog::CreateControls()
 #ifdef __WXGTK__
     spinCtrlSize = wxSize(16,-1);
     interval = 0;
-    //In linux by default nothing in focus therefore keystrokes does not working
-    //dpc_ -> SetFocus();
-    //Another events does not working
-    dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KEY_UP, wxKeyEventHandler(mmTransDialog::OnButtonDateChar), NULL, this);
+    dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KEY_DOWN, wxKeyEventHandler(mmTransDialog::OnButtonDateChar), NULL, this);
     dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KILL_FOCUS, wxFocusEventHandler(mmTransDialog::OnKillDateFocus), NULL, this);
 #endif
 
@@ -304,8 +301,7 @@ void mmTransDialog::CreateControls()
 
     // Status --------------------------------------------
     wxStaticText* status_text = new wxStaticText(itemPanel7, wxID_STATIC, _("Status"));
-    choiceStatus_ = new wxChoice(itemPanel7,
-        ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxDefaultSize);
+    choiceStatus_ = new wxChoice(itemPanel7, ID_DIALOG_TRANS_STATUS);
     wxString transaction_status[] = 
     {
         wxTRANSLATE("None"),
@@ -326,7 +322,7 @@ void mmTransDialog::CreateControls()
 
     // Type --------------------------------------------
     wxStaticText* type_text = new wxStaticText(itemPanel7,
-        wxID_STATIC, _("Type"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_STATIC, _("Type"));
     
     choiceTrans_ = new wxChoice(itemPanel7,
         ID_DIALOG_TRANS_TYPE, wxDefaultPosition, wxSize(110, -1));
@@ -383,7 +379,7 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(amountSizer);
 
     // Payee ---------------------------------------------
-    wxStaticText* itemStaticText9 = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, _("Payee"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText9 = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, _("Payee"));
 
     wxString payeeName = resetPayeeString();
     wxString categString;
@@ -406,7 +402,7 @@ void mmTransDialog::CreateControls()
             categString = resetCategoryString();
     }
 
-    bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(225, -1), 0 );
+    bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(225, -1));
     payeeWithdrawalTip_ = _("Specify where the transaction is going to");
     payeeDepositTip_    = _("Specify where the transaction is coming from");
     bPayee_->SetToolTip(payeeWithdrawalTip_);
@@ -418,7 +414,7 @@ void mmTransDialog::CreateControls()
 
     // Payee Alternate ------------------------------------------------
     wxStaticText* itemStaticText13 = new wxStaticText(itemPanel7,
-        ID_DIALOG_TRANS_STATIC_FROM, " ", wxDefaultPosition, wxDefaultSize, 0 );
+        ID_DIALOG_TRANS_STATIC_FROM, " ");
     bTo_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTO,
         _("Select To Acct"), wxDefaultPosition, wxSize(225, -1), 0 );
     bTo_->SetToolTip(_("Specify which account the transfer is going to"));
@@ -589,7 +585,7 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
     if (as.IsEmpty()){
         return;
     }
-    wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
+    wxSingleChoiceDialog scd(this, _("Account name"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
     {
         wxString acctName = scd.GetStringSelection();
@@ -600,40 +596,31 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
 
 void mmTransDialog::OnSpinUp(wxSpinEvent& event)
 {
-    wxString dateStr = dpc_->GetValue().FormatISODate();
-    wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+    wxDateTime date = dpc_->GetValue();
     date = date.Add(wxDateSpan::Days(1));
     dpc_->SetValue (date);
     
-    //process date change event for set weekday name
-    wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
-    GetEventHandler()->ProcessEvent(dateEvent);
+    itemStaticTextWeek_->SetLabel(mmGetShortWeekDayName(date.GetWeekDay()));
 
     event.Skip();
 }
 
 void mmTransDialog::OnSpinDown(wxSpinEvent& event)
 {
-    wxString dateStr = dpc_->GetValue().FormatISODate();
-    wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+    wxDateTime date = dpc_->GetValue();
     date = date.Add(wxDateSpan::Days(-1));
     dpc_->SetValue (date);
 
-    wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
-    GetEventHandler()->ProcessEvent(dateEvent);
+    itemStaticTextWeek_->SetLabel(mmGetShortWeekDayName(date.GetWeekDay()));
 
     event.Skip();
 }
 
 void mmTransDialog::OnDateChanged(wxDateEvent& event)
 {
-    if (!dpc_->GetValue().IsValid())
-    {
-        event.Skip();
-        dpc_->SetValue(wxDateTime::Now());
-        return;
-    }
-    wxString dateStr = mmGetShortWeekDayName(event.GetDate().GetWeekDay());
+    wxString dateStr = "";
+    if (event.GetDate().IsValid())
+        dateStr = mmGetShortWeekDayName(dpc_->GetValue().GetWeekDay());
     itemStaticTextWeek_->SetLabel(dateStr);
     event.Skip();
 }
@@ -1277,9 +1264,8 @@ void mmTransDialog::changeFocus(wxChildFocusEvent& event)
     wxWindow *w = event.GetWindow();
     if ( w ) {
         object_id = w->GetId();
-        richText_ = (object_id == ID_DIALOG_TRANS_TEXTNOTES ? true : false);
+        richText_ = (object_id == ID_DIALOG_TRANS_TEXTNOTES);
     }
-      
 }
 
 void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
@@ -1378,21 +1364,19 @@ void mmTransDialog::OnButtonDateChar(wxKeyEvent& event)
 {
     if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT)) {
         int i;
-        if (event.GetKeyCode()==WXK_DOWN) i=-1;
-        else if (event.GetKeyCode()==WXK_UP) i=1;
+        if (event.GetKeyCode() == WXK_DOWN) i = -1;
+        else if (event.GetKeyCode() == WXK_UP) i = 1;
         else return;
-        wxString dateStr = dpc_->GetValue().FormatISODate();
-        wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
-        if (!wxGetKeyState(WXK_CONTROL))
+
+        wxDateTime date = dpc_->GetValue();
+        if (!wxGetKeyState(WXK_SHIFT))
             date = date.Add(wxDateSpan::Days(i));
         else
             date = date.Add(wxDateSpan::Months(i));
         
         dpc_->SetValue (date);
-        //process date change event for set weekday name
-        wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
-        GetEventHandler()->ProcessEvent(dateEvent);
-    
+        itemStaticTextWeek_->SetLabel(mmGetShortWeekDayName(date.GetWeekDay()));
+
         event.Skip();
     }
 }
@@ -1557,6 +1541,7 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
        transID_)->getSplitTransactions(core_, splitTransEntries.get());
    split_.get()->entries_ = splitTransEntries->entries_;
 }
+
 void mmTransDialog::OnKillDateFocus(wxFocusEvent& event)
 {
     choiceStatus_->SetFocus();
