@@ -47,7 +47,12 @@ wxString mmex::getProgramCopyright()
 
 wxString mmex::getProgramWebSite()
 {
-    return ("http://codelathe.com/mmex\n");
+    return ("http://codelathe.com/mmex");
+}
+
+wxString mmex::getProgramFacebookSite()
+{
+    return ("http://www.facebook.com/pages/Money-Manager-Ex/242286559144586");
 }
 
 wxString mmex::getProgramDescription()

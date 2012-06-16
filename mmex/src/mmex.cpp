@@ -3745,7 +3745,7 @@ void mmGUIFrame::OnBeNotified(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnFacebook(wxCommandEvent& /*event*/)
 {
-    wxString url = ("http://www.facebook.com/pages/Money-Manager-Ex/242286559144586");
+    wxString url = mmex::getProgramFacebookSite();
     wxLaunchDefaultBrowser(url);
 }
 
