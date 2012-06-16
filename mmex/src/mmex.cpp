@@ -534,7 +534,10 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     m_mgr.SetManagedWindow(this);
     CreateStatusBar();
     wxStatusBar *sb = GetStatusBar();
-    if (sb) sb->SetStatusText(_MM_EX_REVISION_ID);
+    wxString mmex_revision = _MM_EX_REVISION_ID;
+    mmex_revision.Replace("$", "");
+    mmex_revision.Replace("Rev:", _("Revision:"));
+    if (sb) sb->SetStatusText(mmex_revision);
 
     SetIcon(mmex::getProgramIcon());
     SetMinSize(wxSize(800,200));
