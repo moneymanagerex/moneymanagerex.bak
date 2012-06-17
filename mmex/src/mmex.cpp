@@ -3275,7 +3275,6 @@ void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
     autoRepeatTransactionsTimer_.Stop();
     delete wxConfigBase::Set((wxConfigBase *) NULL);
-    this->Destroy();
     Close(TRUE);
 }
 //----------------------------------------------------------------------------
@@ -3914,6 +3913,10 @@ void mmGUIFrame::showBeginAppDialog(bool fromScratch)
     else if (rc == -1)
     {
         /* Do Nothing in this case */
+    }
+    else if (rc == appStartDialog(APP_CLOSE))
+    {
+        Close();
     }
 }
 //----------------------------------------------------------------------------
