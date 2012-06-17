@@ -3914,7 +3914,7 @@ void mmGUIFrame::showBeginAppDialog(bool fromScratch)
     {
         /* Do Nothing in this case */
     }
-    else if (rc == appStartDialog(APP_CLOSE))
+    else if (rc == appStartDialog(APP_CLOSE) && fromScratch)
     {
         Close();
     }
