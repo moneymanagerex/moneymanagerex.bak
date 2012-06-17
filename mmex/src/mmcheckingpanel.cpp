@@ -1764,7 +1764,8 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 void TransactionListCtrl::refreshVisualList()
 {
     m_cp->initVirtualListControl();
-    RefreshItems(0, m_cp->all_trans_.empty() ? 0: m_cp->all_trans_.size() - 1);
+    if(m_cp->all_trans_.size() > 0)
+        RefreshItems(0, m_cp->all_trans_.size() - 1);
     if ((m_selectedIndex + 1) != (long)m_cp->m_trans.size() && (m_selectedIndex > 0))
     {
         m_selectedIndex--;
