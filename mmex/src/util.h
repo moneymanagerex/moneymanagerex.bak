@@ -25,7 +25,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/static_assert.hpp>
 
-enum appStartDialog {APP_START_NEW_DB, APP_START_OPEN, APP_START_HELP, APP_START_WEB, APP_START_LAST_DB};
+enum appStartDialog {APP_CLOSE, APP_START_NEW_DB, APP_START_OPEN, APP_START_HELP, APP_START_WEB, APP_START_LAST_DB};
 
 class mmCoreDB;
 class mmCurrency;

@@ -52,7 +52,8 @@ mmAppStartDialog::mmAppStartDialog(wxWindow* parent) :
         retCode_(-1)
 {
     wxString caption = mmex::getProgramName() + _(" Start Page");
-    Create(parent, ID_DIALOG_APPSTART, caption, wxDefaultPosition, wxSize(400, 300), wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX);
+    Create(parent, ID_DIALOG_APPSTART, caption, wxDefaultPosition,
+        wxSize(400, 300), wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX);
 }
 
 bool mmAppStartDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, 
@@ -149,6 +150,8 @@ void mmAppStartDialog::CreateControls()
     itemButtonClose_->SetDefault();
     itemButtonClose_->SetFocus();
     itemBoxSizer3->Add(itemButtonClose_, wxSizerFlags(0).Right().Border(wxTOP, 5));
+    itemButtonClose_->Connect(wxID_CANCEL, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmAppStartDialog::OnClose), NULL, this);
+
 
     wxString val = config->Read("LASTFILENAME", "");
     if (val.IsEmpty())
@@ -165,13 +168,13 @@ void mmAppStartDialog::SetCloseButtonToExit()
 void mmAppStartDialog::OnButtonAppstartNewDatabaseClick( wxCommandEvent& /*event*/ )
 {
     retCode_ = appStartDialog(APP_START_NEW_DB);
-    Close(TRUE);   
+    EndModal(wxID_CLOSE);
 }
 
 void mmAppStartDialog::OnButtonAppstartOpenDatabaseClick( wxCommandEvent& /*event*/ )
 {
     retCode_ = appStartDialog(APP_START_OPEN);
-    Close(TRUE);   
+    EndModal(wxID_CLOSE);
 }
 
 void mmAppStartDialog::OnButtonAppstartHelpClick( wxCommandEvent& /*event*/ )
@@ -204,6 +207,12 @@ void mmAppStartDialog::OnButtonAppstartWebsiteClick( wxCommandEvent& /*event*/ )
 void mmAppStartDialog::OnButtonAppstartLastDatabaseClick( wxCommandEvent& /*event*/ )
 {
     retCode_ = appStartDialog(APP_START_LAST_DB);
-    Close(TRUE);   
+    EndModal(wxID_CLOSE);
+}
+
+void mmAppStartDialog::OnClose( wxCommandEvent& /*event*/ )
+{
+    retCode_ = appStartDialog(APP_CLOSE);
+    EndModal(wxID_EXIT);
 }
 
