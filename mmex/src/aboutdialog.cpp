@@ -74,28 +74,31 @@ bool mmAboutDialog::Create(wxWindow* parent,
 
 void mmAboutDialog::CreateControls()
 {
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_CENTER).Border(wxALL, 5);
+
     wxBoxSizer* itemBoxSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer);
 
     wxBitmap itemStaticBitmap3Bitmap(money_xpm);
 
-    wxStaticBitmap* itemStaticBitmap3 = 0;
+    wxStaticBitmap* itemStaticBitmap3;
     itemStaticBitmap3 = new wxStaticBitmap(this,
         wxID_STATIC, itemStaticBitmap3Bitmap);
-    itemBoxSizer->Add(itemStaticBitmap3, 0, wxALIGN_CENTER|wxTOP, 5);
+    itemBoxSizer->Add(itemStaticBitmap3, flags);
 
     wxStaticText* versionStaticText = new wxStaticText( this, wxID_STATIC,
         wxString(_("Version: ")) + mmex::getProgramVersion());
     int font_size = this->GetFont().GetPointSize() + 2;
     versionStaticText->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
-    itemBoxSizer->Add(versionStaticText, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM, 5);
+    itemBoxSizer->Add(versionStaticText, flags);
 
     wxStaticText* itemStaticText88 = new wxStaticText(this,
         wxID_STATIC, mmex::getProgramCopyright());
 
     wxStaticText* itemStaticText7 = new wxStaticText(this,
         wxID_STATIC, mmex::getProgramDescription());
-    itemBoxSizer->Add(itemStaticText7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer->Add(itemStaticText7, flags);
 
     //Read data from file
     wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
@@ -168,13 +171,13 @@ void mmAboutDialog::CreateControls()
         sponsors_sizer->Add(sponsors_text, 1, wxEXPAND);
     }
 
-    itemBoxSizer->Add(about_notebook, 0, wxALIGN_CENTER|wxALL, 15);
+    itemBoxSizer->Add(about_notebook, flags);
     about_notebook->Layout();
 
-    itemBoxSizer->Add(itemStaticText88, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer->Add(itemStaticText88, flags);
 
-    wxButton* itemButton19 = new wxButton(this, wxID_OK);
-    itemButton19->SetDefault();
-    itemButton19->SetFocus();
-    itemBoxSizer->Add(itemButton19, 0, wxALIGN_CENTER|wxALL, 10);
+    wxButton* button_OK = new wxButton(this, wxID_OK);
+    button_OK->SetDefault();
+    button_OK->SetFocus();
+    itemBoxSizer->Add(button_OK, flags);
 }
