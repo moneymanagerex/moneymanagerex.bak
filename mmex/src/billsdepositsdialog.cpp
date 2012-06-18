@@ -262,8 +262,9 @@ void mmBDDialog::CreateControls()
     repeatTransBoxSizer->Add(calendarStaticBoxSizer, flagsCenter);
 
     //TODO: Set these up as user selectable. Some users wish to have monday first in calendar!
-    bool startSunday = true;
-    bool showSuroundingWeeks = true;
+    wxConfigBase *config = wxConfigBase::Get();
+    bool startSunday = config->ReadBool("CAL_SUNDAY_FIRST", true);
+    bool showSuroundingWeeks = config->ReadBool("CAL_SHOW_SURROUNDING_WEEKS", true);
 
     int style = wxSUNKEN_BORDER| wxCAL_SHOW_HOLIDAYS| wxCAL_SEQUENTIAL_MONTH_SELECTION;
     if (startSunday)
@@ -279,7 +280,8 @@ void mmBDDialog::CreateControls()
     calendarStaticBoxSizer->Add(calendarCtrl_, flagsCenter);
 
     /* Bills & Deposits Details */
-    wxStaticBox* repeatDetailsStaticBox = new wxStaticBox(this, wxID_ANY, _("Repeating Transaction Details"));
+    wxStaticBox* repeatDetailsStaticBox = new wxStaticBox(this,
+        wxID_ANY, _("Repeating Transaction Details"));
     repeatDetailsStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* repeatDetailsStaticBoxSizer = new wxStaticBoxSizer(repeatDetailsStaticBox, wxHORIZONTAL);
     repeatTransBoxSizer->Add(repeatDetailsStaticBoxSizer, flagsExpand);
