@@ -1913,22 +1913,18 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
     //wxString searchString = event.GetString().c_str();
 
     wxSearchCtrl* st = (wxSearchCtrl*)FindWindow(wxID_FIND);
-    wxString searchString = st->GetValue().Lower();
+    wxString searchString = wxString(st->GetValue().Lower()) << "*";
 
     if (!searchString.IsEmpty())
     {
         int selectedItem = m_listCtrlAccount->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED)-1;
         if (selectedItem < 0)
-        selectedItem = m_listCtrlAccount->GetItemCount()-1;
-
-        wxString t;
+            selectedItem = m_listCtrlAccount->GetItemCount()-1;
 
         for (int i = selectedItem; i >= 0; --i)
         {
-            t=getItem(i, COL_NOTES);
-            if (t.Lower().Find(searchString)!=wxNOT_FOUND)
+            if (getItem(i, COL_NOTES).Lower().Matches(searchString))
             {
-
                 //First of all any items should be unselected
                 int cursel = m_listCtrlAccount->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
                 if (cursel != wxNOT_FOUND)

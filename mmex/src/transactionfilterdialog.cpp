@@ -455,7 +455,7 @@ bool TransFilterDialog::searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, c
     if (!chkBox->GetValue()) return true;
     else if (sourceStr.IsEmpty() && txtCtrl->GetValue().IsEmpty()) return true;
     else if (txtCtrl->GetValue().IsEmpty()) return false;
-    else if (sourceStr.Lower().Matches(txtCtrl->GetValue().Trim().Lower()))
+    else if (sourceStr.Lower().Matches(txtCtrl->GetValue().Trim().Lower()+"*"))
         return true;
     return false;
 }
