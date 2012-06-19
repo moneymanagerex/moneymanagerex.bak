@@ -48,14 +48,14 @@ public:
 //  Destructor - Currently used for testing only
 //  ~TransFilterDialog( );
 
-    bool byDateRange(wxDateTime transDate);
-    bool byPayee(wxString payee);
+    bool byDateRange(const wxDateTime transDate);
+    bool byPayee(const wxString payee);
     bool bySplitCategory(mmBankTransaction* trans);
-    bool byCategory(wxString category, wxString subCategory);
-    bool byStatus(wxString status );
-    bool byType(wxString type);
-    bool byTransNumber(wxString trNum);
-    bool byNotes(wxString notes); 
+    bool byCategory(const wxString category,const wxString subCategory);
+    bool byStatus(const wxString status );
+    bool byType(const wxString type);
+    bool byTransNumber(const wxString trNum);
+    bool byNotes(const wxString notes); 
 
 private:
     // Define our variables
@@ -107,6 +107,6 @@ private:
     void OnCategorySelect(wxCommandEvent& event);
 
     void OnButtonOK( wxCommandEvent& event );
-    bool searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, wxString sourceStr);
+    bool searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, const wxString sourceStr);
 };
 #endif
