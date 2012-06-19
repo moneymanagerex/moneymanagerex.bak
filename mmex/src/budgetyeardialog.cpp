@@ -105,12 +105,12 @@ void mmBudgetYearDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer5, 1, wxGROW|wxALL, 5);
 
     wxButton* itemButton7 = new wxButton( this, wxID_ADD, 
-        _("&Add Year"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("&Add Year"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL);
     itemButton7->SetToolTip(_("Add a new budget year"));
 
     wxButton* itemBudgetMonth = new wxButton( this, ID_DIALOG_BUDGETYEAR_BUTTON_ADD_MONTH, 
-        _("&Add Month"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("&Add Month"));
     itemBoxSizer5->Add(itemBudgetMonth, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     itemBudgetMonth->SetToolTip(_("Add a new budget month"));
 
@@ -127,10 +127,10 @@ void mmBudgetYearDialog::CreateControls()
     wxBoxSizer* itemButtonSizer = new wxBoxSizer(wxHORIZONTAL);
     itemPanel25->SetSizer(itemButtonSizer);
 
-    wxButton* itemButtonOK = new wxButton( itemPanel25, wxID_OK, _("&OK"));
+    wxButton* itemButtonOK = new wxButton( itemPanel25, wxID_OK);
     itemButtonSizer->Add(itemButtonOK, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxBOTTOM, 5);
 
-    wxButton* itemButtonCancel = new wxButton( itemPanel25, wxID_CANCEL, _("&Cancel"));
+    wxButton* itemButtonCancel = new wxButton( itemPanel25, wxID_CANCEL);
     itemButtonSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxBOTTOM, 5);
 	itemButtonCancel->SetFocus();
 }
