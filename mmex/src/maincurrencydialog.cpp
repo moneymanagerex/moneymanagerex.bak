@@ -97,9 +97,16 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
+    wxFont font_bold = this->GetFont();
+    font_bold.SetWeight(wxFONTWEIGHT_BOLD);
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
+
+
     wxStaticText* itemStaticText3 = new wxStaticText( this, wxID_STATIC, 
-       _("Currency List"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
+       _("Currency List"));
+    itemStaticText3->SetFont(font_bold);
+    itemBoxSizer2->Add(itemStaticText3 , flags);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
@@ -110,30 +117,27 @@ void mmMainCurrencyDialog::CreateControls()
 
     wxPanel* itemPanel5 = new wxPanel( this, ID_PANEL10, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer2->Add(itemPanel5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+    itemBoxSizer2->Add(itemPanel5, flags.Center().Border(0));
 
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel5->SetSizer(itemBoxSizer6);
 
-    wxButton* itemButton7 = new wxButton( itemPanel5, wxID_ADD, _("Add"), 
-        wxDefaultPosition, wxDefaultSize, 4 );
-    itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    wxButton* itemButton7 = new wxButton( itemPanel5, wxID_ADD);
+    itemBoxSizer6->Add(itemButton7, flags.Border(wxALL, 5));
 
-    itemButtonEdit_ = new wxButton( itemPanel5, wxID_EDIT, _("&Edit"), 
-        wxDefaultPosition, wxDefaultSize, 4 );
-    itemBoxSizer6->Add(itemButtonEdit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemButtonEdit_ = new wxButton( itemPanel5, wxID_EDIT);
+    itemBoxSizer6->Add(itemButtonEdit_, flags);
     itemButtonEdit_->Disable();
 
-    itemButtonDelete_ = new wxButton( itemPanel5, wxID_REMOVE, _("Remove"), 
-        wxDefaultPosition, wxDefaultSize, 4 );
-    itemBoxSizer6->Add(itemButtonDelete_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemButtonDelete_ = new wxButton(itemPanel5, wxID_REMOVE);
+    itemBoxSizer6->Add(itemButtonDelete_, flags);
     itemButtonDelete_->Disable();
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 4);
+    itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW);
 
     wxButton* itemButtonSelect = new wxButton( this, wxID_SELECTALL, _("&Select"));
-    itemBoxSizer9->Add(itemButtonSelect,  4, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer9->Add(itemButtonSelect, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     //itemButtonSelect->SetToolTip(_("Select the currently selected currency as the selected currency for the account"));
 
     if(bEnableSelect_ == false) {
@@ -141,8 +145,8 @@ void mmMainCurrencyDialog::CreateControls()
     }
 
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
-    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Cancel"));
-    itemBoxSizer9->Add(itemCancelButton,  0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
+    itemBoxSizer9->Add(itemCancelButton, flags);
     itemCancelButton->SetFocus();
 }
 
