@@ -330,7 +330,7 @@ void TransFilterDialog::OnCategorySelect(wxCommandEvent& /*event*/)
 /****************************************************************************************
 Interface Methods
 *****************************************************************************************/
-bool TransFilterDialog::byDateRange(wxDateTime transDate)
+bool TransFilterDialog::byDateRange(const wxDateTime transDate)
 {
     bool result = false;
     if (cbDateRange_->GetValue())
@@ -348,7 +348,7 @@ bool TransFilterDialog::byDateRange(wxDateTime transDate)
     return result;
 }
 
-bool TransFilterDialog::byPayee(wxString payee)
+bool TransFilterDialog::byPayee(const wxString payee)
 {
     bool result = false;
     if (cbPayee_->GetValue())
@@ -398,7 +398,7 @@ bool TransFilterDialog::bySplitCategory(mmBankTransaction* trans)
     return result;
 }
 
-bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
+bool TransFilterDialog::byCategory(const wxString category, const wxString subCategory)
 {
     // ignore the category test when split category checkbox is active
     if (cbSplitCategory_->GetValue()) return true;
@@ -428,7 +428,7 @@ bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
     return result;
 }
 
-bool TransFilterDialog::byStatus( wxString status )
+bool TransFilterDialog::byStatus(const wxString status )
 {
     if (!cbStatus_->GetValue()) return true;
 
@@ -440,7 +440,7 @@ bool TransFilterDialog::byStatus( wxString status )
     return (status == statusStr);
 }
 
-bool TransFilterDialog::byType(wxString type)
+bool TransFilterDialog::byType(const wxString type)
 {
     if (!cbType_->GetValue()) return true;
     wxString transCodeStr = "?";
@@ -450,22 +450,22 @@ bool TransFilterDialog::byType(wxString type)
     return (type == transCodeStr);
 }
 
-bool TransFilterDialog::searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, wxString sourceStr)
+bool TransFilterDialog::searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, const wxString sourceStr)
 {
     if (!chkBox->GetValue()) return true;
     else if (sourceStr.IsEmpty() && txtCtrl->GetValue().IsEmpty()) return true;
     else if (txtCtrl->GetValue().IsEmpty()) return false;
-    else if (sourceStr.Trim().Lower().Find(txtCtrl->GetValue().Trim().Lower()) != wxNOT_FOUND)
+    else if (sourceStr.Lower().Matches(txtCtrl->GetValue().Trim().Lower()))
         return true;
     return false;
 }
 
-bool TransFilterDialog::byTransNumber(wxString trNum)
+bool TransFilterDialog::byTransNumber(const wxString trNum)
 {
     return searchResult(cbTransNumber_, txtTransNumber_, trNum);
 }
 
-bool TransFilterDialog::byNotes(wxString notes)
+bool TransFilterDialog::byNotes(const wxString notes)
 {
     return searchResult(cbNotes_, txtNotes_, notes);
 }
