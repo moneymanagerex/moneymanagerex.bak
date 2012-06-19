@@ -106,24 +106,27 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
 
 void mmBillsDepositsPanel::CreateControls()
 {
+    wxConfigBase *config = wxConfigBase::Get();
+
+    wxSizerFlags flags;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxTOP|wxLEFT, 5);
+
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
-    //this->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition,
+    wxPanel* headerPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition,
         wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
-    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer9->Add(headerPanel, flags);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
-    //headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER,
-        _("Repeating Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("Repeating Transactions"));
     int font_size = this->GetFont().GetPointSize() + 2;
     itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, ("")));
-    itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
+    itemBoxSizerVHeader->Add(itemStaticText9, flags);
 
     /* ---------------------- */
     wxSplitterWindow* itemSplitterWindowBillsDeposit = new wxSplitterWindow( this,
@@ -139,7 +142,6 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlBD_ = new billsDepositsListCtrl( this, itemSplitterWindowBillsDeposit,
         ID_PANEL_BD_LISTCTRL, wxDefaultPosition, wxDefaultSize,
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    //listCtrlBD_->SetBackgroundColour(mmColors::listDetailsPanelColor);
     listCtrlBD_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlBD_->InsertColumn(0, _("Payee"));
     listCtrlBD_->InsertColumn(1, _("Account"));
@@ -154,25 +156,14 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlBD_->InsertColumn(6, _("Remaining Days"));
     listCtrlBD_->InsertColumn(7, _("Notes"));
 
-    wxConfigBase *config = wxConfigBase::Get();
-
-    long col0 = config->ReadLong("BD_COL0_WIDTH", 140);
-    long col1 = config->ReadLong("BD_COL1_WIDTH", -2);
-    long col2 = config->ReadLong("BD_COL2_WIDTH", -2);
-    long col3 = config->ReadLong("BD_COL3_WIDTH", -2);
-    long col4 = config->ReadLong("BD_COL4_WIDTH", -2);
-    long col5 = config->ReadLong("BD_COL5_WIDTH", -2);
-    long col6 = config->ReadLong("BD_COL6_WIDTH", -2);
-    long col7 = config->ReadLong("BD_COL7_WIDTH", -2);
-
-    listCtrlBD_->SetColumnWidth(0, col0);
-    listCtrlBD_->SetColumnWidth(1, col1);
-    listCtrlBD_->SetColumnWidth(2, col2);
-    listCtrlBD_->SetColumnWidth(3, col3);
-    listCtrlBD_->SetColumnWidth(4, col4);
-    listCtrlBD_->SetColumnWidth(5, col5);
-    listCtrlBD_->SetColumnWidth(6, col6);
-    listCtrlBD_->SetColumnWidth(7, col7);
+    listCtrlBD_->SetColumnWidth(0, config->ReadLong("BD_COL0_WIDTH", 140));
+    listCtrlBD_->SetColumnWidth(1, config->ReadLong("BD_COL1_WIDTH", -2));
+    listCtrlBD_->SetColumnWidth(2, config->ReadLong("BD_COL2_WIDTH", -2));
+    listCtrlBD_->SetColumnWidth(3, config->ReadLong("BD_COL3_WIDTH", -2));
+    listCtrlBD_->SetColumnWidth(4, config->ReadLong("BD_COL4_WIDTH", -2));
+    listCtrlBD_->SetColumnWidth(5, config->ReadLong("BD_COL5_WIDTH", -2));
+    listCtrlBD_->SetColumnWidth(6, config->ReadLong("BD_COL6_WIDTH", -2));
+    listCtrlBD_->SetColumnWidth(7, config->ReadLong("BD_COL7_WIDTH", -2));
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindowBillsDeposit, ID_PANEL1,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
@@ -180,49 +171,46 @@ void mmBillsDepositsPanel::CreateControls()
     itemSplitterWindowBillsDeposit->SplitHorizontally(listCtrlBD_, itemPanel12);
     itemSplitterWindowBillsDeposit->SetMinimumPaneSize(100);
     itemSplitterWindowBillsDeposit->SetSashGravity(1.0);
-    itemBoxSizer9->Add(itemSplitterWindowBillsDeposit, 1, wxGROW|wxALL, 1);
+    itemBoxSizer9->Add(itemSplitterWindowBillsDeposit, 1, wxGROW|wxTOP|wxLEFT, 5);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
-    //itemPanel12->SetBackgroundColour(mmColors::listBackColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer4->Add(itemBoxSizer5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, wxID_NEW, _("&New"));
+    wxButton* itemButton6 = new wxButton( itemPanel12, wxID_NEW);
     itemButton6->SetToolTip(_("New Bills & Deposit Series"));
-    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton6, flags);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT, _("&Edit"));
+    wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT);
     itemButton81->SetToolTip(_("Edit Bills & Deposit Series"));
-    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton81, flags);
     itemButton81->Enable(false);
 
-    wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE, _("&Delete"));
+    wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE);
     itemButton7->SetToolTip(_("Delete Bills & Deposit Series"));
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton7, flags);
     itemButton7->Enable(false);
 
-    wxButton* itemButton8 = new wxButton( itemPanel12, wxID_PASTE, _("En&ter"),
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton8 = new wxButton( itemPanel12, wxID_PASTE, _("En&ter"));
     itemButton8->SetToolTip(_("Enter Next Bills & Deposit Occurrence"));
-    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(itemButton8, flags);
     itemButton8->Enable(false);
 
     wxButton* buttonSkipTrans = new wxButton( itemPanel12, wxID_IGNORE, _("&Skip"));
     buttonSkipTrans->SetToolTip(_("Skip Next Bills & Deposit Occurrence"));
-    itemBoxSizer5->Add(buttonSkipTrans, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer5->Add(buttonSkipTrans, flags);
     buttonSkipTrans->Enable(false);
 
     //Infobar-mini
-    wxStaticText* itemStaticText444 = new wxStaticText(itemPanel12, ID_PANEL_BD_STATIC_MINI, (""),
-                                                       wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer5->Add(itemStaticText444, 1, wxGROW|wxTOP, 12);
+    wxStaticText* itemStaticText444 = new wxStaticText(itemPanel12, ID_PANEL_BD_STATIC_MINI, "");
+    itemBoxSizer5->Add(itemStaticText444, flags.Expand().Border(wxALL, 12));
 
     //Infobar
-    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, (""),
+    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, "",
     wxPoint(-1,-1), wxSize(200, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
-    itemBoxSizer4->Add(text, 1, wxGROW|wxLEFT|wxRIGHT, 14);
+    itemBoxSizer4->Add(text, 1, wxGROW|wxLEFT|wxRIGHT|wxTOP, 5);
 
     mmBillsDepositsPanel::updateBottomPanelData(-1);
 }
@@ -507,7 +495,8 @@ void billsDepositsListCtrl::RefreshList()
 {
     int refID = cp_->trans_[selectedIndex_].id_;
     cp_->initVirtualListControl();
-    RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+    if (cp_->trans_.size()>0)
+        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     int newIndex = LastSelected(refID);
     if (newIndex < 0)      // item deleted from list.
         ++ selectedIndex_; // Advance to next item in list
