@@ -147,8 +147,8 @@ void mmCategDialog::CreateControls()
     itemBoxSizer3->Add(treeCtrl_, 1, wxGROW|wxALL, 1);
 
     wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( this,
-        ID_DIALOG_CATEG_TEXTCTRL_CATNAME, "", wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemTextCtrl6, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+        ID_DIALOG_CATEG_TEXTCTRL_CATNAME, "");
+    itemBoxSizer2->Add(itemTextCtrl6, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 6);
     itemTextCtrl6->SetToolTip(_("Enter the name of the category to add or edit here"));
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
