@@ -737,8 +737,19 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     if (!tr) return ("");
 
     DB_View_CHECKINGACCOUNT_V1::Data* checking = CHECKINGACCOUNT_V1.get(tr->transactionID(), core_->db_.get());
-    //TODO
-    return checking->to_string();
+    //TODO TODO FIXME
+    //Refresh needed after update
+    wxString out = "";
+    if (checking->TRANSCODE == "Transfer")
+    {
+        out << checking->TRANSAMOUNT << "<->" << checking->TOTRANSAMOUNT;
+    } else
+    {
+        wxDateTime dt;
+        dt.ParseDate(checking->TRANSDATE);
+        out = mmGetShortWeekDayName(dt.GetWeekDay());
+    }
+    return out;
 }
 //---------------------------
 void mmCheckingPanel::showTips()
@@ -1377,12 +1388,12 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
     m_cp->initVirtualListControl();
     if (m_cp->m_trans.size() > 1)
     {
-	    RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
-	    if (m_selectedIndex > -1) {
-	        SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-	        SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-	    }
-	}
+        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
+        if (m_selectedIndex > -1) {
+            SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+            SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        }
+    }
     else
     {
         m_cp->enableEditDeleteButtons(false);
