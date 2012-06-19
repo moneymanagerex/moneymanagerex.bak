@@ -159,163 +159,145 @@ void mmCurrencyDialog::OnCurrencyTypeChanged(wxCommandEvent& /*event*/)
 
 void mmCurrencyDialog::CreateControls()
 {    
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxTOP|wxLEFT, 0);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 0).Expand();
+
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxFlexGridSizer* itemFlexGridSizer3 = new wxFlexGridSizer(10, 2, 0, 0);
-    itemFlexGridSizer3->AddGrowableCol(1);
-    itemBoxSizer2->Add(itemFlexGridSizer3, 0, wxALL, 5);
+    wxFlexGridSizer* itemFlexGridSizer3 = new wxFlexGridSizer(0, 2, 10, 10);
+    itemBoxSizer2->Add(itemFlexGridSizer3, 0, wxALL, 10);
 
     //--------------------------
-    wxStaticText* itemStaticText4 = new wxStaticText( this, wxID_STATIC, _("Currency Name"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText4, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText4 = new wxStaticText( this, wxID_STATIC, _("Currency Name"));
+    itemFlexGridSizer3->Add(itemStaticText4, flags);
 
     wxString* itemChoice5Strings = NULL;
     currencyChoice_ = new wxChoice( this, ID_DIALOG_CURRENCY_CHOICE, 
         wxDefaultPosition, wxDefaultSize, 0, itemChoice5Strings, 0 );
-    itemFlexGridSizer3->Add(currencyChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer3->Add(currencyChoice_, flags);
     currencyChoice_->Enable(false);
     
-     wxStaticText* itemStaticText26 = new wxStaticText( this, wxID_STATIC, _("Currency Symbol"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText26, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+     wxStaticText* itemStaticText26 = new wxStaticText( this, wxID_STATIC, _("Currency Symbol"));
+    itemFlexGridSizer3->Add(itemStaticText26, flags);
 
-    wxArrayString currency_symbols;
-    currency_symbols.Add(("USD"));
-    currency_symbols.Add(("EUR"));
-    currency_symbols.Add(("AUD"));
-    currency_symbols.Add(("BGN"));
-    currency_symbols.Add(("BRL"));
-    currency_symbols.Add(("CAD"));
-    currency_symbols.Add(("CHF"));
-    currency_symbols.Add(("CNY"));
-    currency_symbols.Add(("CZK"));
-    currency_symbols.Add(("DKK"));
-    currency_symbols.Add(("EEK"));
-    currency_symbols.Add(("GBP"));
-    currency_symbols.Add(("HKD"));
-    currency_symbols.Add(("HRK"));
-    currency_symbols.Add(("HUF"));
-    currency_symbols.Add(("IDR"));
-    currency_symbols.Add(("ISK"));
-    currency_symbols.Add(("JPY"));
-    currency_symbols.Add(("KRW"));
-    currency_symbols.Add(("LTL"));
-    currency_symbols.Add(("LVL"));
-    currency_symbols.Add(("MXN"));
-    currency_symbols.Add(("MYR"));
-    currency_symbols.Add(("NOK"));
-    currency_symbols.Add(("NZD"));
-    currency_symbols.Add(("PHP"));
-    currency_symbols.Add(("PLN"));
-    currency_symbols.Add(("RON"));
-    currency_symbols.Add(("RUB"));
-    currency_symbols.Add(("SEK"));
-    currency_symbols.Add(("SGD"));
-    currency_symbols.Add(("SKK"));
-    currency_symbols.Add(("THB"));
-    currency_symbols.Add(("TRY"));
-    currency_symbols.Add(("UAH"));
-    currency_symbols.Add(("ZAR"));
+    wxComboBox* symbols_box = new wxComboBox( this, ID_DIALOG_CURRENCY_TEXT_SYMBOL);
+    symbols_box->Append("USD");
+    symbols_box->Append("EUR");
+    symbols_box->Append("AUD");
+    symbols_box->Append("BGN");
+    symbols_box->Append("BRL");
+    symbols_box->Append("CAD");
+    symbols_box->Append("CHF");
+    symbols_box->Append("CNY");
+    symbols_box->Append("CZK");
+    symbols_box->Append("DKK");
+    symbols_box->Append("EEK");
+    symbols_box->Append("GBP");
+    symbols_box->Append("HKD");
+    symbols_box->Append("HRK");
+    symbols_box->Append("HUF");
+    symbols_box->Append("IDR");
+    symbols_box->Append("ISK");
+    symbols_box->Append("JPY");
+    symbols_box->Append("KRW");
+    symbols_box->Append("LTL");
+    symbols_box->Append("LVL");
+    symbols_box->Append("MXN");
+    symbols_box->Append("MYR");
+    symbols_box->Append("NOK");
+    symbols_box->Append("NZD");
+    symbols_box->Append("PHP");
+    symbols_box->Append("PLN");
+    symbols_box->Append("RON");
+    symbols_box->Append("RUB");
+    symbols_box->Append("SEK");
+    symbols_box->Append("SGD");
+    symbols_box->Append("SKK");
+    symbols_box->Append("THB");
+    symbols_box->Append("TRY");
+    symbols_box->Append("UAH");
+    symbols_box->Append("ZAR");
 
-    wxComboBox* itemComboBox27 = new wxComboBox( this, ID_DIALOG_CURRENCY_TEXT_SYMBOL, (""),
-        wxDefaultPosition, wxDefaultSize, currency_symbols);
-    itemFlexGridSizer3->Add(itemComboBox27, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemFlexGridSizer3->Add(symbols_box, flagsExpand);
 
-    wxStaticText* itemStaticText14 = new wxStaticText( this, wxID_STATIC, _("Unit Name"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText14, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* unit_name = new wxStaticText( this, wxID_STATIC, _("Unit Name"));
+    itemFlexGridSizer3->Add(unit_name, flags);
 
-    wxTextCtrl* itemTextCtrl15 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_UNIT, (""),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* unit_name_ctrl = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_UNIT, "");
+    itemFlexGridSizer3->Add(unit_name_ctrl, flagsExpand);
 
-    wxStaticText* itemStaticText16 = new wxStaticText( this, wxID_STATIC, _("Cents Name"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText16, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* cent_name = new wxStaticText( this, wxID_STATIC, _("Cents Name"));
+    itemFlexGridSizer3->Add(cent_name, flags);
 
-    wxTextCtrl* itemTextCtrl17 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_CENTS, (""),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* cent_name_ctrl = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_CENTS, (""));
+    itemFlexGridSizer3->Add(cent_name_ctrl, flagsExpand);
 
-    wxStaticText* itemStaticText6 = new wxStaticText( this, wxID_STATIC, _("Prefix Symbol"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText6, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* prefix_symbol = new wxStaticText( this, wxID_STATIC, _("Prefix Symbol"));
+    itemFlexGridSizer3->Add(prefix_symbol, flags);
 
-    wxTextCtrl* itemTextCtrl7 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_PFX, (""),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl7, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* prefix_symbol_ctrl = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_PFX, (""));
+    itemFlexGridSizer3->Add(prefix_symbol_ctrl, flagsExpand);
 
-    wxStaticText* itemStaticText8 = new wxStaticText( this, wxID_STATIC, _("Suffix Symbol"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText8, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText8 = new wxStaticText( this, wxID_STATIC, _("Suffix Symbol"));
+    itemFlexGridSizer3->Add(itemStaticText8, flags);
 
-    wxTextCtrl* itemTextCtrl9 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SFX, (""),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* itemTextCtrl9 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SFX, (""));
+    itemFlexGridSizer3->Add(itemTextCtrl9, flagsExpand);
 
-    wxStaticText* itemStaticText10 = new wxStaticText( this, wxID_STATIC, _("Decimal Char"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText10, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText10 = new wxStaticText( this, wxID_STATIC, _("Decimal Char"));
+    itemFlexGridSizer3->Add(itemStaticText10, flags);
 
-    wxTextCtrl* itemTextCtrl11 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_DECIMAL, (""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* itemTextCtrl11 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_DECIMAL, (""));
+    itemFlexGridSizer3->Add(itemTextCtrl11, flagsExpand);
 
-    wxStaticText* itemStaticText12 = new wxStaticText( this, wxID_STATIC, _("Grouping Char"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText12, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText12 = new wxStaticText( this, wxID_STATIC, _("Grouping Char"));
+    itemFlexGridSizer3->Add(itemStaticText12, flags);
 
-    wxTextCtrl* itemTextCtrl13 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_GROUP, (""),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxTextCtrl* itemTextCtrl13 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_GROUP, (""));
+    itemFlexGridSizer3->Add(itemTextCtrl13, flagsExpand);
 
-    wxStaticText* itemStaticText18 = new wxStaticText( this, wxID_STATIC, _("Scale"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText18, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText18 = new wxStaticText( this, wxID_STATIC, _("Scale"));
+    itemFlexGridSizer3->Add(itemStaticText18, flags);
 
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SCALE, (""), 
         wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
-    itemFlexGridSizer3->Add(itemTextCtrl19, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemFlexGridSizer3->Add(itemTextCtrl19, flagsExpand);
     
-    wxStaticText* itemStaticText81 = new wxStaticText( this, wxID_STATIC, _("Conversion to Base Rate"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText81, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText81 = new wxStaticText( this, wxID_STATIC, _("Conversion to Base Rate"));
+    itemFlexGridSizer3->Add(itemStaticText81, flags);
 
     wxTextCtrl* itemTextCtrl82 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_BASECONVRATE, (""),
         wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<float>(2) );
-    itemFlexGridSizer3->Add(itemTextCtrl82, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemFlexGridSizer3->Add(itemTextCtrl82, flagsExpand);
     itemTextCtrl82->SetToolTip(_("Other currency conversion rate. Set Base Currency to 1."));
     //--------------------------
     wxStaticBox* itemStaticBox_02 = new wxStaticBox(this, wxID_ANY, _("Base Rate Conversion Sample:"));
     wxStaticBoxSizer* itemStaticBoxSizer_02 = new wxStaticBoxSizer(itemStaticBox_02, wxHORIZONTAL);
-    itemBoxSizer2->Add(itemStaticBoxSizer_02, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemStaticBoxSizer_02, flagsExpand.Border(wxALL, 5));
 
-    wxStaticText*  sampleText2_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_CONVERSION, (""),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticBoxSizer_02->Add(sampleText2_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText*  sampleText2_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_CONVERSION, (""));
+    itemStaticBoxSizer_02->Add(sampleText2_, flags.Border(wxALL, 5));
 
     //--------------------------
     wxStaticBox* itemStaticBox_01 = new wxStaticBox(this, wxID_ANY, _("Value Display Sample:"));
     wxStaticBoxSizer* itemStaticBoxSizer_01 = new wxStaticBoxSizer(itemStaticBox_01, wxHORIZONTAL);
-    itemBoxSizer2->Add(itemStaticBoxSizer_01, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemStaticBoxSizer_01, flagsExpand);
 
-    wxStaticText*  sampleText_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_SAMPLE, (""),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticBoxSizer_01->Add(sampleText_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText*  sampleText_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_SAMPLE, "");
+    itemStaticBoxSizer_01->Add(sampleText_, flags);
  
     //--------------------------
     wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer22, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer22, flags.Center().Border(0));
 
-    wxButton* itemButton24 = new wxButton( this, ID_DIALOG_CURRENCY_BUTTON_UPDATE, _("&Update"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer22->Add(itemButton24, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxButton* itemButton24 = new wxButton( this, ID_DIALOG_CURRENCY_BUTTON_UPDATE, _("&Update"));
+    itemBoxSizer22->Add(itemButton24, flags.Border(wxALL, 5));
     itemButton24->SetToolTip(_("Save any changes made"));
 
     wxButton* itemButton25 = new wxButton( this, wxID_CANCEL, _("&Close"));
-    itemBoxSizer22->Add(itemButton25, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer22->Add(itemButton25, flags);
     itemButton25->SetToolTip(_("Any changes will be lost without update"));
 }
 
