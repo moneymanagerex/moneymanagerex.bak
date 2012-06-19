@@ -159,8 +159,7 @@ void mmTransDialog::dataToControls()
         subcategID_ = q1.GetInt("SUBCATEGID");
         accountID_ = q1.GetInt("ACCOUNTID");
        
-        wxString dateString = q1.GetString("TRANSDATE");
-        wxDateTime trx_date_ = mmGetStorageStringAsDate(dateString);
+        wxDateTime trx_date_ = mmGetStorageStringAsDate(q1.GetString("TRANSDATE"));
         wxString dt = mmGetDateForDisplay(db_.get(), trx_date_);
         dpc_->SetValue(trx_date_);
 
@@ -169,6 +168,7 @@ void mmTransDialog::dataToControls()
 
         wxString transNumString = q1.GetString("TRANSACTIONNUMBER");
         wxString statusString  = q1.GetString("STATUS");
+        if (statusString == "") statusString="N"; 
         wxString notesString  = q1.GetString("NOTES");
         wxString transTypeString = q1.GetString("TRANSCODE");
         double transAmount = q1.GetDouble("TRANSAMOUNT");
@@ -179,7 +179,7 @@ void mmTransDialog::dataToControls()
             edit_currency_rate = toTransAmount_ / transAmount;
         }        
       
-        choiceStatus_->SetStringSelection(wxGetTranslation(statusString));
+        choiceStatus_->SetSelection(wxString("NRVFD").Find(statusString));
         choiceTrans_->SetStringSelection(wxGetTranslation(transTypeString));
         updateControlsForTransType();
 
