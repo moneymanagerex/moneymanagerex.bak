@@ -146,7 +146,7 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanel->SetSizer(itemPanelSizer);
 
     //--Start of Row --------------------------------------------------------
-    accountCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXACCOUNT, _("Account: "), 
+    accountCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXACCOUNT, _("Account:"), 
                                       wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     accountCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(accountCheckBox, flags.Border(wxALL, 0));
@@ -158,7 +158,7 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanelSizer->Add(accountDropDown, flags);
     //--End of Row --------------------------------------------------------
 
-    dateRangeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXDATERANGE, _("Date Range: "),
+    dateRangeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXDATERANGE, _("Date Range:"),
                                         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     dateRangeCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(dateRangeCheckBox, flags);
@@ -175,7 +175,7 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanelSizer->Add(dateSizer, flags);
     //--End of Row --------------------------------------------------------
     
-    payeeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXPAYEE, _("Payee: "), 
+    payeeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXPAYEE, _("Payee:"), 
                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     payeeCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(payeeCheckBox, flags);
@@ -185,7 +185,7 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanelSizer->Add(btnPayee, flags);
     //--End of Row --------------------------------------------------------
 
-    categoryCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXCATEGORY, _("Category: "), 
+    categoryCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXCATEGORY, _("Category:"), 
                                        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     categoryCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(categoryCheckBox, flags);
@@ -195,7 +195,7 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanelSizer->Add(btnCategory, flags);
     //--End of Row --------------------------------------------------------
 
-    statusCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXSTATUS, _("Status: "), 
+    statusCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXSTATUS, _("Status:"), 
                                      wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     statusCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(statusCheckBox, flags);
@@ -218,7 +218,7 @@ void mmFilterTransactionsDialog::CreateControls()
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
     //--End of Row --------------------------------------------------------
 
-    typeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXTYPE, _("Type: "), 
+    typeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXTYPE, _("Type:"), 
                                    wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     typeCheckBox->SetValue(FALSE);
     
@@ -252,7 +252,7 @@ void mmFilterTransactionsDialog::CreateControls()
     
     //--End of Row --------------------------------------------------------
 
-    amountRangeCheckBox = new wxCheckBox(itemPanel, ID_CHECKBOXAMOUNTRANGE, _("Amount Range: "), 
+    amountRangeCheckBox = new wxCheckBox(itemPanel, ID_CHECKBOXAMOUNTRANGE, _("Amount Range:"), 
                                          wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     amountRangeCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(amountRangeCheckBox, flags);
@@ -271,7 +271,7 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanelSizer->Add(amountSizer, flags);
     //--End of Row --------------------------------------------------------
 
-    transNumberCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXTRANSNUM, _("Number: "),
+    transNumberCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXTRANSNUM, _("Number:"),
                                           wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     transNumberCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(transNumberCheckBox, flags);
@@ -280,7 +280,7 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanelSizer->Add(transNumberEdit, flags);
     //--End of Row --------------------------------------------------------
 
-    notesCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXNOTES, _("Notes: "), 
+    notesCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXNOTES, _("Notes:"), 
                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     notesCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(notesCheckBox, flags);
@@ -323,16 +323,10 @@ void mmFilterTransactionsDialog::CreateControls()
  * Should we show tooltips?
  */
 
-bool mmFilterTransactionsDialog::ShowToolTips()
-{
-    return TRUE;
-}
-
 void mmFilterTransactionsDialog::OnCheckboxaccountClick( wxCommandEvent& /*event*/ )
 {
     accountDropDown->Enable(accountCheckBox->GetValue());
 }
-
 
 void mmFilterTransactionsDialog::OnCheckboxDateRangeClick( wxCommandEvent& /*event*/ )
 {
@@ -604,7 +598,7 @@ void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
         payeeID_ = dlg.getPayeeId();
         if (payeeID_ == -1)
         {
-            btnPayee->SetLabel(("Select Payee"));
+            btnPayee->SetLabel(_("Select Payee"));
             return;
         }
         wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, categID_, subcategID_);
@@ -631,7 +625,7 @@ wxString mmFilterTransactionsDialog::userDateRangeStr()
     {
         wxString dtBegin = mmGetDateForDisplay(db_, fromDateCtrl->GetValue());
         wxString dtEnd = mmGetDateForDisplay(db_, toDateControl->GetValue());
-        dateStr << _("From ") << dtBegin << _(" to ") << dtEnd;
+        dateStr = wxString::Format(_("From %s to %s"), dtBegin , dtEnd);
     }
     return dateStr;
 }
@@ -688,7 +682,7 @@ wxString mmFilterTransactionsDialog::userAmountRangeStr()
     {
         wxString minamt = amountMinEdit->GetValue();
         wxString maxamt = amountMaxEdit->GetValue();
-        amountRangeStr << _("Min: ") << minamt << _(" Max: ") << maxamt;
+        amountRangeStr = wxString::Format(_("Min: %s  Max: %s" ), minamt, maxamt);
     }
     return amountRangeStr;
 }

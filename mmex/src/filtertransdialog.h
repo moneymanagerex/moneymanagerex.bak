@@ -126,9 +126,6 @@ public:
     void OnCategs(wxCommandEvent& event);
     void OnPayee(wxCommandEvent& event);
 
-    /// Should we show tooltips?
-    static bool ShowToolTips();
-
     wxCheckBox* accountCheckBox;
     wxChoice* accountDropDown;
     wxCheckBox* dateRangeCheckBox;

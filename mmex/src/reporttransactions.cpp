@@ -51,15 +51,10 @@ wxString mmReportTransactions::getHTMLText()
         transHeading += wxString() << _("for Account: ") << refAccountStr_;
     hb.addHeader(2, transHeading);
 
-    bool includeDateRange = false; 
     wxDateTime startDate = wxDateTime(wxDateTime::Now());
     wxDateTime endDate = wxDateTime(wxDateTime::Now());
-    if (transDialog_->getDateRange(startDate, endDate))
-    {
-        includeDateRange = true;
-    }
     mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, startDate, endDate, includeDateRange);
+    dateDisplay.DisplayDateHeading(hb, startDate, endDate, false);
     
     hb.startCenter();
     hb.startTable();
