@@ -122,7 +122,7 @@ void mmFilterTransactionsDialog::CreateControls()
     int fieldWidth = 210;
 
     wxSizerFlags flags;
-    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxTOP|wxLEFT, 0);
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
 
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     this->SetSizer(itemBoxSizer2);
@@ -149,7 +149,7 @@ void mmFilterTransactionsDialog::CreateControls()
     accountCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXACCOUNT, _("Account: "), 
                                       wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     accountCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(accountCheckBox, flags);
+    itemPanelSizer->Add(accountCheckBox, flags.Border(wxALL, 0));
 
     wxArrayString as = core_->getAccountsName();
    
@@ -233,11 +233,14 @@ void mmFilterTransactionsDialog::CreateControls()
     choiceType->SetToolTip(_("Specify the type of transaction."));
 
     wxBoxSizer* typeSizer = new wxBoxSizer(wxVERTICAL);
-    cbTypeWithdrawal_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_WITHDRAWAL, _("Withdrawal"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTypeWithdrawal_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_WITHDRAWAL,
+        _("Withdrawal"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbTypeWithdrawal_->Enable(false);
-    cbTypeDeposit_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_DEPOSIT, _("Deposit"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTypeDeposit_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_DEPOSIT,
+        _("Deposit"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbTypeDeposit_->Enable(false);
-    cbTypeTransfer_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_TRANSFER, _("Transfer"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTypeTransfer_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_TRANSFER,
+        _("Transfer"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbTypeTransfer_->Enable(false);
 
     itemPanelSizer->Add(typeCheckBox, flags);
@@ -290,16 +293,16 @@ void mmFilterTransactionsDialog::CreateControls()
      Button Panel with OK/Cancel buttons   
     *******************************************************************************/
     wxPanel* buttonPanel = new wxPanel( this, ID_PANEL12, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer3->Add(buttonPanel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer3->Add(buttonPanel, flags.Center().Border(wxALL, 5));
 
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
 
     wxButton* itemButton30 = new wxButton( buttonPanel, wxID_OK);
-    buttonPanelSizer->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    buttonPanelSizer->Add(itemButton30, flags);
 
     wxButton* itemButtonCancel = new wxButton( buttonPanel, wxID_CANCEL);
-    buttonPanelSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    buttonPanelSizer->Add(itemButtonCancel, flags);
     itemButtonCancel->SetFocus();
     
     // disable all controls at startup
@@ -511,7 +514,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
             {
                 wxString notes = notesEdit->GetValue().Trim().Lower();
                 wxString orig = pBankTransaction->notes_.Lower();
-                if (!orig.Contains(notes))
+                if (!orig.Matches(notes+"*"))
                     continue;
             }
         
