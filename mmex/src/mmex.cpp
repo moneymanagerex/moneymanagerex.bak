@@ -4227,23 +4227,22 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
 {
-//    wxProgressDialog* progressBar = new wxProgressDialog(_("Report printing in progress")
-//        , wxEmptyString, 100, NULL, wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
     //Use Shared pointer to ensure object gets destroyed if SQL Script errors hijack the object.
     boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, this, forEdit ));
     int dialogStatus = dlg->ShowModal();
-    wxBeginBusyCursor(wxHOURGLASS_CURSOR);
     while (dialogStatus == wxID_MORE)
     {
         if (dlg->sqlQuery() != (""))
         {
-            mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), dlg->sqlReportTitle(), dlg->sqlQuery());
+            wxProgressDialog* progressBar = new wxProgressDialog(_("Report printing in progress"),
+                wxEmptyString, 100, NULL, wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
+            mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), dlg->sqlReportTitle(), dlg->sqlQuery(), progressBar);
             menuPrintingEnable(true);
             createReportsPage(csr);
+            progressBar->Destroy();
         }
         dialogStatus = dlg->ShowModal();
     }
-    wxEndBusyCursor();
 
     if (dialogStatus == wxID_OK) updateNavTreeControl();
 

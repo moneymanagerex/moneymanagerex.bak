@@ -99,9 +99,8 @@ wxString mmCustomSQLReport::getHTMLText()
         if (progressBar_)
         {
             progress++;
-            if (progress > 99) progress = 1;
             progressMsg = wxString() << _("Lines prepared: ") << progress;
-            if(!progressBar_->Update(progress, progressMsg))
+            if(!progressBar_->Update(static_cast<int>((static_cast<double>(progress)/100.0 - progress/100) *99), progressMsg))
             {
                 hb.clear();
                 hb.addHeader(2, _("SQL query discarded by user"));
@@ -138,9 +137,6 @@ wxString mmCustomSQLReport::getHTMLText()
          hb.addHeader(2, _("Data Insertion completed"));
 
     hb.end();
-
-    progressMsg = wxString() << _("Lines prepared: ") << progress << _(" Completed");
-    if (progressBar_) progressBar_->Update(90, progressMsg);
 
     return hb.getHTMLText();
 }
