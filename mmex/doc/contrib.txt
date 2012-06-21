@@ -49,15 +49,18 @@ Englsh (UK)
 French
 -- Berry As, Jean-Christophe, bipop,
 -- drambeau, Ben, Ghislain Baudichaud
+-- Phira
 German
 -- Schrempfi, goe, STiGMaTa_ch,
 -- Kai Kajus Noack
 Greek
 -- Panagiotis Pentzeridis
+-- Polvar
 Hebrew
 -- Ykpui
 Hungarian
 -- Csaba, Zoltan Levardy [zlevardy]
+-- Toroka
 Indonesian
 -- Dindin
 Italian
