@@ -378,7 +378,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
     wxSQLite3Database* db_ = core->db_.get();
 
     if ( core->getNumAccounts() == 0 ) {
-        wxMessageBox(_( "No account available for import"), _("QIF Import"), wxICON_WARNING );
+        wxMessageBox(_( "No account available for import"), _("QIF Import"), wxOK|wxICON_WARNING );
         return -1;
     }
 
@@ -410,7 +410,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
     wxFileName logFile = mmex::GetLogDir(true);
     logFile.SetFullName(fileName);
-    logFile.SetExt(("log"));
+    logFile.SetExt("log");
     bool canceledbyuser = false;
 
     if ( !fileName.IsEmpty() )
@@ -667,10 +667,10 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     {
                         log << _("Category is empty, marking transaction as Unknown category") << endl;
 
-                        categID = core->getCategoryID(("Unknown"));
+                        categID = core->getCategoryID("Unknown");
                         if (categID == -1)
                         {
-                            categID =  core->addCategory(("Unknown"));
+                            categID =  core->addCategory("Unknown");
                         }
                     }
                 }
@@ -760,4 +760,3 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 
     return fromAccountID;
 }
-
