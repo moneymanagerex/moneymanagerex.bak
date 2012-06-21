@@ -3183,7 +3183,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 
     if (newFileName == oldFileName) // on case-sensitive FS uses case-sensitive comparison
     {
-        wxMessageDialog dlg(this, _("Can't copy file to itself"), _("Save database file as"), wxICON_WARNING);
+        wxMessageDialog dlg(this, _("Can't copy file to itself"), _("Save database file as"), wxOK|wxICON_WARNING);
         dlg.ShowModal();
         return;
     }
@@ -3257,7 +3257,7 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
 {
     if (m_core.get()->getNumAccounts() == 0)
     {
-        wxMessageBox(_("No account available to import"),_("Universal CSV Import"), wxICON_WARNING );
+        wxMessageBox(_("No account available to import"),_("Universal CSV Import"), wxOK|wxICON_WARNING );
         return;
     }
 
@@ -3549,9 +3549,9 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     int err_code = site_content(site, page);
     if (err_code != wxID_OK) {
         if (err_code == 2)
-            wxMessageBox(_("Cannot get data from WWW!"), update_check_heading, wxICON_WARNING);
+            wxMessageBox(_("Cannot get data from WWW!"), update_check_heading, wxOK|wxICON_WARNING);
         else if (err_code == 1)
-            wxMessageBox(_("Unable to connect!"), update_check_heading, wxICON_WARNING);
+            wxMessageBox(_("Unable to connect!"), update_check_heading, wxOK|wxICON_WARNING);
         return;
     }
 
@@ -3625,7 +3625,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 
     if(base_symbol.IsEmpty())
     {
-        wxMessageBox(_("Could not find base currency symbol!"), _("Update Currency Rate"), wxICON_WARNING);
+        wxMessageBox(_("Could not find base currency symbol!"), _("Update Currency Rate"), wxOK|wxICON_WARNING);
         return;
     }
 
@@ -3655,9 +3655,9 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     int err_code = site_content(site, rates);
     if (err_code != wxID_OK) {
         if (err_code == 2)
-            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxICON_WARNING);
+            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxOK|wxICON_WARNING);
         else if (err_code == 1)
-            wxMessageBox(_("Unable to connect!"), _("Error"), wxICON_WARNING);
+            wxMessageBox(_("Unable to connect!"), _("Error"), wxOK|wxICON_WARNING);
         return;
     }
 
@@ -4028,7 +4028,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
 {
     if (m_core->accountList_.accounts_.size() == 0)
     {
-        wxMessageBox(_("No account available to edit!"), _("Accounts"), wxICON_WARNING);
+        wxMessageBox(_("No account available to edit!"), _("Accounts"), wxOK|wxICON_WARNING);
         return;
     }
 
@@ -4069,7 +4069,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
 {
     if (m_core->accountList_.accounts_.size() == 0)
     {
-        wxMessageBox(_("No account available to delete!"), _("Accounts"), wxICON_WARNING);
+        wxMessageBox(_("No account available to delete!"), _("Accounts"), wxOK|wxICON_WARNING);
         return;
     }
 
@@ -4388,7 +4388,7 @@ bool wxNewDatabaseWizardPage1::TransferDataFromWindow()
 {
     if ( currencyID_ == -1)
     {
-        wxMessageBox(_("Base Currency Not Set"), _("New Database"), wxICON_WARNING | wxOK, this);
+        wxMessageBox(_("Base Currency Not Set"), _("New Database"), wxOK|wxICON_WARNING, this);
 
         return false;
     }
@@ -4422,7 +4422,7 @@ bool wxAddAccountPage1::TransferDataFromWindow()
 {
     if ( textAccountName_->GetValue().empty())
     {
-        wxMessageBox(_("Account Name Invalid"), _("New Account"), wxICON_WARNING | wxOK, this);
+        wxMessageBox(_("Account Name Invalid"), _("New Account"), wxOK|wxICON_WARNING, this);
         return false;
     }
     parent_->accountName_ = textAccountName_->GetValue().Trim();
@@ -4481,7 +4481,7 @@ bool wxAddAccountPage2::TransferDataFromWindow()
         wxString errorMsg;
         errorMsg << _("Base Account Currency Not set.") << ("\n")
                  << _("Set that first using Tools->Options menu and then add a new account.");
-        wxMessageBox( errorMsg, _("New Account"), wxICON_WARNING | wxOK, this);
+        wxMessageBox( errorMsg, _("New Account"), wxOK|wxICON_WARNING, this);
         return false;
     }
 
