@@ -35,7 +35,7 @@ wxString mmCustomSQLReport::getHTMLText()
 {
     mmHTMLBuilder hb;
     hb.init();
-    displayReportHeader(hb, wxString() << _("Custom SQL Report: ") << reportTitle_ );
+    displayReportHeader(hb, _("Custom SQL Report: ") + reportTitle_ );
     hb.startCenter();
     hb.startTable(("90%"));
 
@@ -58,7 +58,7 @@ wxString mmCustomSQLReport::getHTMLText()
         lower.Contains(("delete")) ||
         lower.Contains(("insert")))
     {
-        wxMessageDialog msgDlg(0, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO);
+        wxMessageDialog msgDlg(0, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO|wxICON_WARNING);
         if (msgDlg.ShowModal() != wxID_YES) {
             hb.addHeader(2, _("SQL query discarded by user"));
             hb.end();
@@ -72,7 +72,7 @@ wxString mmCustomSQLReport::getHTMLText()
     }
     catch(const wxSQLite3Exception& e)
     {
-        wxSafeShowMessage(("Error"),e.GetMessage().c_str());
+        wxSafeShowMessage("Error",e.GetMessage().c_str());
         return wxString::Format(_("Error: %s"), e.GetMessage().c_str());
     }
 
@@ -140,7 +140,7 @@ wxString mmCustomSQLReport::getHTMLText()
     hb.end();
 
     progressMsg = wxString() << _("Lines prepared: ") << progress << _(" Completed");
-    progressBar_->Update(90, progressMsg);
+    if (progressBar_) progressBar_->Update(90, progressMsg);
 
     return hb.getHTMLText();
 }
