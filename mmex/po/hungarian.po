@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-27 17:42+0300\n"
-"PO-Revision-Date: 2012-03-27 17:42+0300\n"
-"Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
+"PO-Revision-Date: 2012-05-29 11:48+0100\n"
+"Last-Translator: Török Árpád <torokar@gmail.com>\n"
 "Language-Team: TheZeal Software\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,81 +19,77 @@ msgstr ""
 "X-Poedit-SearchPath-0: src\n"
 
 #: src/customreportdialog.cpp:80
-#, fuzzy
 msgid "Report Title:"
-msgstr "Importálás"
+msgstr "Jelentés címe: "
 
 #: src/customreportdialog.cpp:84
 msgid "Report Title is used as the file name of the SQL script."
-msgstr ""
+msgstr "A jelentés címe lesz az SQL szkript fájl neve."
 
 #: src/customreportdialog.cpp:87
 msgid "Heading"
-msgstr ""
+msgstr "Fejléc"
 
 #: src/customreportdialog.cpp:90
 msgid "Sub-Menu"
-msgstr ""
+msgstr "Almenü"
 
 #: src/customreportdialog.cpp:96
 msgid "SQL Source Script:"
-msgstr ""
+msgstr "SQL forrás szkript: "
 
 #: src/customreportdialog.cpp:121
-#, fuzzy
 msgid "&Open"
-msgstr "Nyitott"
+msgstr "Megnyitás"
 
 #: src/customreportdialog.cpp:123
 msgid "Locate and load an SQL script file into the script area."
-msgstr ""
+msgstr "SQL szkript fájl keresése és betöltése a szkript területre."
 
 #: src/customreportdialog.cpp:125
 msgid "&Save"
-msgstr ""
+msgstr "Menté&s"
 
 #: src/customreportdialog.cpp:127
 msgid "Save SQL script to file name set by the Report Title."
-msgstr ""
+msgstr "Az SQL szkript mentése a jelentés címe által megadott fájlba."
 
 #: src/customreportdialog.cpp:129
 msgid "&Run"
-msgstr ""
+msgstr "Futtat"
 
 #: src/customreportdialog.cpp:131
 msgid "Test script. Save before running. SQL errors will result in loss of script."
-msgstr ""
+msgstr "Szkript tesztelése. Futtatás előtt mentse, az SQL hibák a szkript elvesztését okozhatják."
 
 #: src/customreportdialog.cpp:133
 msgid "&Clear"
-msgstr ""
+msgstr "Töröl"
 
 #: src/customreportdialog.cpp:135
 msgid "Clear the SQL Source script area"
-msgstr ""
+msgstr "Az SQL szkript terület törlése."
 
 #: src/customreportdialog.cpp:137
 #: src/currencydialog.cpp:320
-#, fuzzy
 msgid "&Close"
 msgstr "Bezárás"
 
 #: src/customreportdialog.cpp:139
 msgid "Save changes before closing. Changes without Save will be lost."
-msgstr ""
+msgstr "Bezárás előtt mentse a változásokat. Mentés nélkül a változások elvesznek."
 
 #: src/customreportdialog.cpp:184
 msgid "Load Custom SQL file:"
-msgstr ""
+msgstr "Kivonatolt SQL fájl betöltése: "
 
 #: src/customreportdialog.cpp:210
-#, fuzzy
 msgid "Unable to open file."
-msgstr "Nincs kapcsolat!"
+msgstr "A fájlt nem lehet megnyitni!"
 
 #: src/customreportdialog.cpp:220
 msgid "Please supply the Report Title before saving"
-msgstr ""
+msgstr "Kérem, írja be a jelentés címét mentés előtt!"
 
 #: src/customreportdialog.cpp:242
 msgid ""
@@ -102,33 +98,34 @@ msgid ""
 "OK....: Insert before selected entry\n"
 "Cancel: Add at bottom of List."
 msgstr ""
+"adja meg a helyet: \n"
+"\n"
+"Rendben: a kiválasztott tétel elé illesztés\n"
+"Mégsem: a lista végére."
 
 #: src/customreportdialog.cpp:261
 msgid "Unable to write to file."
-msgstr ""
+msgstr "A fájl nem írható."
 
 #: src/customreportdialog.cpp:293
 msgid "SQL Query will modify your Data. Proceed??"
-msgstr ""
+msgstr "Az SQL lekérdezés módosítani fogja az adatait. Folytassam "
 
 #: src/customreportdialog.cpp:293
 msgid "Warning"
-msgstr ""
+msgstr "Figyelmeztetés"
 
 #: src/reportbudgetcategorysummary.cpp:100
-#, fuzzy
 msgid "Budget Categories for "
-msgstr "Minden költségvetés kategória mutatása"
+msgstr "Minden költségvetési kategória mutatása"
 
 #: src/reportbudgetcategorysummary.cpp:102
-#, fuzzy
 msgid "Budget Category Summary for "
-msgstr "Költségvetési év "
+msgstr "Költségvetési tételek összesítő"
 
 #: src/reportbudgetcategorysummary.cpp:103
-#, fuzzy
 msgid "( Estimated Vs Actual )"
-msgstr "Becsült bevételek: Jelenlegi bevételek:"
+msgstr "(Becsült - Tényleges)"
 
 #: src/reportbudgetcategorysummary.cpp:115
 #: src/mmhomepagepanel.cpp:661
@@ -140,7 +137,7 @@ msgstr "Kategória"
 
 #: src/reportbudgetcategorysummary.cpp:116
 msgid "Sub Category"
-msgstr "Al-kategória"
+msgstr "Alkategória"
 
 #: src/reportbudgetcategorysummary.cpp:117
 #: src/mmhomepagepanel.cpp:453
@@ -165,39 +162,33 @@ msgid "Actual"
 msgstr "Jelenlegi"
 
 #: src/reportbudgetcategorysummary.cpp:309
-#, fuzzy
 msgid "Estimated Income: "
-msgstr "Becsült bevételek: Jelenlegi bevételek:"
+msgstr "Becsült bevétel: "
 
 #: src/reportbudgetcategorysummary.cpp:310
-#, fuzzy
 msgid "Actual Income: "
-msgstr "Bevétel:"
+msgstr "Tényleges bevétel: "
 
 #: src/reportbudgetcategorysummary.cpp:311
-#, fuzzy
 msgid "Difference Income: "
-msgstr "Bevétel"
+msgstr "Bevétel különbözete: "
 
 #: src/reportbudgetcategorysummary.cpp:313
-#, fuzzy
 msgid "Estimated Expenses: "
-msgstr "Becsült kiadások: Jelenlegi kiadások: "
+msgstr "Becsült költségek: "
 
 #: src/reportbudgetcategorysummary.cpp:314
-#, fuzzy
 msgid "Actual Expenses: "
-msgstr "Kiadás: "
+msgstr "Tényleges költségek: "
 
 #: src/reportbudgetcategorysummary.cpp:315
-#, fuzzy
 msgid "Difference Expenses: "
-msgstr "Kiadás"
+msgstr "Kiadások különbözete: "
 
 #: src/mmhomepagepanel.cpp:89
 #: src/filtertransdialog.cpp:199
 msgid "Reconciled"
-msgstr "Kiegyenlítve"
+msgstr "Visszaigazolt"
 
 #: src/mmhomepagepanel.cpp:90
 msgid "Balance"
@@ -213,29 +204,24 @@ msgstr "Összes"
 
 #: src/mmhomepagepanel.cpp:112
 #: src/mmhomepagepanel.cpp:312
-#, fuzzy
 msgid "Stocks Total:"
-msgstr "Összesen:"
+msgstr "Részvények összesen: "
 
 #: src/mmhomepagepanel.cpp:132
-#, fuzzy
 msgid "Bank Account"
-msgstr "Bankszámlák"
+msgstr "Bankszámla"
 
 #: src/mmhomepagepanel.cpp:184
-#, fuzzy
 msgid "Bank Accounts Total:"
-msgstr "Bankszámlák"
+msgstr "Bankszámlák összesen: "
 
 #: src/mmhomepagepanel.cpp:195
-#, fuzzy
 msgid "Term Account"
-msgstr "Kiinduló számla"
+msgstr "Időszaki számla"
 
 #: src/mmhomepagepanel.cpp:246
-#, fuzzy
 msgid "Term Accounts Total:"
-msgstr "Kiinduló számla"
+msgstr "Időszaki számlák összesen: "
 
 #: src/mmhomepagepanel.cpp:260
 msgid "Stocks"
@@ -251,9 +237,8 @@ msgid "Currency"
 msgstr "Pénznem"
 
 #: src/mmhomepagepanel.cpp:388
-#, fuzzy
 msgid "Base Rate"
-msgstr " dátum"
+msgstr "Alapárfolyam"
 
 #: src/mmhomepagepanel.cpp:389
 #: src/mmhomepagepanel.cpp:663
@@ -265,14 +250,12 @@ msgid "Current Month"
 msgstr "Jelenlegi hónap"
 
 #: src/mmhomepagepanel.cpp:436
-#, fuzzy
 msgid "Current Month to Date"
-msgstr "Jelenlegi hónap"
+msgstr "Jelenlegi hónap máig"
 
 #: src/mmhomepagepanel.cpp:438
-#, fuzzy
 msgid "Income vs Expenses: "
-msgstr "Bevételek és kiadások"
+msgstr "Bevételek - kiadások: "
 
 #: src/mmhomepagepanel.cpp:452
 #: src/reporttransactions.cpp:75
@@ -281,18 +264,16 @@ msgid "Type"
 msgstr "Típus"
 
 #: src/mmhomepagepanel.cpp:457
-#, fuzzy
 msgid "Income:"
-msgstr "Bevétel:"
+msgstr "Bevétel: "
 
 #: src/mmhomepagepanel.cpp:462
-#, fuzzy
 msgid "Expenses:"
-msgstr "Kiadás: "
+msgstr "Kiadások: "
 
 #: src/mmhomepagepanel.cpp:468
 msgid "Difference:"
-msgstr ""
+msgstr "Különbözet: "
 
 #: src/mmhomepagepanel.cpp:516
 msgid " days remaining"
@@ -301,7 +282,7 @@ msgstr " nap van hátra"
 #: src/mmhomepagepanel.cpp:521
 #: src/mmhomepagepanel.cpp:528
 msgid "Inactive"
-msgstr ""
+msgstr "Inaktív"
 
 #: src/mmhomepagepanel.cpp:526
 msgid " days overdue!"
@@ -312,9 +293,8 @@ msgid "Upcoming Transactions"
 msgstr "Esedékes ügyletek"
 
 #: src/mmhomepagepanel.cpp:656
-#, fuzzy
 msgid "Top Withdrawals: "
-msgstr "Kivét"
+msgstr "Legnagyobb kivétek: "
 
 #: src/mmhomepagepanel.cpp:656
 msgid "Last 30 Days"
@@ -322,26 +302,23 @@ msgstr "Elmúlt 30 nap"
 
 #: src/mmhomepagepanel.cpp:662
 msgid "Quantity"
-msgstr ""
+msgstr "Mennyiség"
 
 #: src/mmhomepagepanel.cpp:701
 msgid "Transaction Statistics"
 msgstr "Ügylet statisztikák "
 
 #: src/mmhomepagepanel.cpp:706
-#, fuzzy
 msgid "Follow Up On Transactions: "
-msgstr "Esedékes ügyletek"
+msgstr "Egyeztetendő ügyletek: "
 
 #: src/mmhomepagepanel.cpp:712
-#, fuzzy
 msgid "Total Transactions: "
-msgstr "ügylet összesen"
+msgstr "Tranzakciók összesen: "
 
 #: src/mmhomepagepanel.cpp:727
-#, fuzzy
 msgid "Grand Total:"
-msgstr "Összesen:"
+msgstr "Összes összesen: "
 
 #: src/mmhomepagepanel.cpp:747
 msgid "Today's Date: "
@@ -349,12 +326,11 @@ msgstr "Mai dátum: "
 
 #: src/mmhomepagepanel.cpp:809
 msgid "Repeating Transactions"
-msgstr "Sorozatos ügyletek"
+msgstr "Rendszeres ügyletek"
 
 #: src/categdialog.cpp:79
-#, fuzzy
 msgid "Categories"
-msgstr "Kategória"
+msgstr "Kategóriák"
 
 #: src/categdialog.cpp:151
 msgid "Enter the name of the category to add or edit here"
@@ -362,9 +338,8 @@ msgstr "Adja meg a létrehozandó kategória nevét, vagy szerkessze itt"
 
 #: src/categdialog.cpp:157
 #: src/payeedialog.cpp:112
-#, fuzzy
 msgid "Add"
-msgstr "Hozáadás"
+msgstr "Hozzáad"
 
 #: src/categdialog.cpp:159
 msgid "Add a new category"
@@ -372,9 +347,8 @@ msgstr "Új kategória hozzáadása"
 
 #: src/categdialog.cpp:162
 #: src/payeedialog.cpp:117
-#, fuzzy
 msgid "&Edit"
-msgstr "Szerkesztés"
+msgstr "Sz&erkesztés"
 
 #: src/categdialog.cpp:164
 msgid "Edit the name of an existing category"
@@ -382,9 +356,8 @@ msgstr "Létező kategória nevének szerkesztése"
 
 #: src/categdialog.cpp:167
 #: src/payeedialog.cpp:122
-#, fuzzy
 msgid "Remove"
-msgstr "Eltávolít"
+msgstr "Eltávolít "
 
 #: src/categdialog.cpp:169
 msgid "Delete an existing category. The category cannot be used by existing transactions."
@@ -392,9 +365,8 @@ msgstr "Létező kategória törlése. A kategória nem lehet használatban"
 
 #: src/categdialog.cpp:175
 #: src/payeedialog.cpp:130
-#, fuzzy
 msgid "&Select"
-msgstr "Választ"
+msgstr "Kivála&szt"
 
 #: src/categdialog.cpp:177
 msgid "Select the currently selected category as the selected category for the transaction"
@@ -403,7 +375,6 @@ msgstr "A jelenleg kijelölt kategória hozzárendelése az ügylethez"
 #: src/categdialog.cpp:180
 #: src/filtertransdialog.cpp:285
 #: src/payeedialog.cpp:136
-#, fuzzy
 msgid "&Cancel"
 msgstr "Mégsem"
 
@@ -415,9 +386,8 @@ msgstr "A kategória nem lehet üres"
 #: src/categdialog.cpp:207
 #: src/categdialog.cpp:228
 #: src/categdialog.cpp:241
-#, fuzzy
 msgid "Organise Categories: Adding Error"
-msgstr "Kategóriák kezelése"
+msgstr "Kategóriák rendezése: hibás hozzáadás!"
 
 #: src/categdialog.cpp:205
 msgid "Category with same name exists"
@@ -428,6 +398,8 @@ msgid ""
 "Tip: If category added now, check bottom of list.\n"
 "Category will be in sorted order next time dialog appears"
 msgstr ""
+"Tanács: a most hozzáadott kategóriát a lista alján keresse.\n"
+"A kategóriákat a párbeszéd következő megnyitásakor rendezi sorba."
 
 #: src/categdialog.cpp:227
 msgid "Sub Category with same name exists"
@@ -438,85 +410,76 @@ msgid "Invalid Parent Category. Choose Root or Main Category node."
 msgstr "Érvénytelen fő-kategória. Válasszon a gyökérből."
 
 #: src/categdialog.cpp:248
-#, fuzzy
 msgid "Tip: Change all transactions using this "
-msgstr "Minden ügylet mutatása"
+msgstr "Javaslat: ennek alapján változtassa meg a tranzakciókat."
 
 #: src/categdialog.cpp:250
-#, fuzzy
 msgid "Sub-Category"
-msgstr "Al-kategória"
+msgstr "Alkategória"
 
 #: src/categdialog.cpp:257
 msgid ""
 " to\n"
 "another "
 msgstr ""
+"...nak/nek\n"
+"más"
 
 #: src/categdialog.cpp:264
 msgid " using the relocate command:"
-msgstr ""
+msgstr "az áthelyezés parancs használata: "
 
 #: src/categdialog.cpp:264
 msgid "Tools -> Relocation of -> Categories"
-msgstr ""
+msgstr "Eszközök -> "
 
 #: src/categdialog.cpp:266
-#, fuzzy
 msgid "Organise Categories: Delete Error"
-msgstr "Kategóriák kezelése"
+msgstr "Kategóriák kezelése: törlési hiba!"
 
 #: src/categdialog.cpp:288
-#, fuzzy
 msgid "Category in use."
-msgstr "A kategória használatban van"
+msgstr "A kategória használatban van."
 
 #: src/categdialog.cpp:296
-#, fuzzy
 msgid "Sub-Category in use."
-msgstr "Az al-kategória használatban van"
+msgstr "Az alkategória használatban van"
 
 #: src/categdialog.cpp:405
 msgid "Update Failed"
 msgstr "Sikertelen frissítés"
 
 #: src/categdialog.cpp:407
-#, fuzzy
 msgid "Organise Categories"
-msgstr "Kategóriák kezelése"
+msgstr "Kategóriák rendezése"
 
 #: src/filtertransdialog.cpp:129
-#, fuzzy
 msgid " Specify "
-msgstr "Típus megadása"
+msgstr "Meghatározás"
 
 #: src/filtertransdialog.cpp:145
 #: src/reporttransactions.cpp:189
-#, fuzzy
 msgid "Account: "
-msgstr "Bankszámlák"
+msgstr "Számla: "
 
 #: src/filtertransdialog.cpp:156
 #: src/reporttransactions.cpp:192
-#, fuzzy
 msgid "Date Range: "
-msgstr "Időtartomány megadása"
+msgstr "Időszak: "
 
 #: src/filtertransdialog.cpp:172
 #: src/reporttransactions.cpp:196
-#, fuzzy
 msgid "Payee: "
-msgstr "Kedvezményezett"
+msgstr "Kedvezményezett: "
 
 #: src/filtertransdialog.cpp:177
 msgid "Select Payee"
-msgstr "Kedvezményezett választása"
+msgstr "Kedvezményezett"
 
 #: src/filtertransdialog.cpp:182
 #: src/reporttransactions.cpp:200
-#, fuzzy
 msgid "Category: "
-msgstr "Kategória"
+msgstr "Kategória: "
 
 #: src/filtertransdialog.cpp:187
 #: src/filtertransdialog.cpp:530
@@ -525,9 +488,8 @@ msgstr "Kategória választása"
 
 #: src/filtertransdialog.cpp:192
 #: src/reporttransactions.cpp:204
-#, fuzzy
 msgid "Status: "
-msgstr "Állapot"
+msgstr "Állapot: "
 
 #: src/filtertransdialog.cpp:198
 msgid "None"
@@ -539,21 +501,19 @@ msgstr "Érvénytelen"
 
 #: src/filtertransdialog.cpp:201
 msgid "Follow up"
-msgstr "Folyamatban"
+msgstr "Egyeztetendő"
 
 #: src/filtertransdialog.cpp:202
-#, fuzzy
 msgid "Duplicate"
-msgstr "Dátum"
+msgstr "Duplikálás"
 
 #: src/filtertransdialog.cpp:207
 msgid "Specify the status for the transaction"
 msgstr "Adja meg az ügylet állapotát"
 
 #: src/filtertransdialog.cpp:210
-#, fuzzy
 msgid "Type: "
-msgstr "Típus"
+msgstr "Típus: "
 
 #: src/filtertransdialog.cpp:215
 #: src/filtertransdialog.cpp:225
@@ -578,22 +538,18 @@ msgid "Specify the type of transaction."
 msgstr "Az ügylet típusának megadása"
 
 #: src/filtertransdialog.cpp:241
-#, fuzzy
 msgid "Amount Range: "
-msgstr "Összeghatár megadása"
+msgstr "Összeghatár: "
 
 #: src/filtertransdialog.cpp:255
-#, fuzzy
 msgid "Number: "
-msgstr "Azonosító"
+msgstr "Szám: "
 
 #: src/filtertransdialog.cpp:264
-#, fuzzy
 msgid "Notes: "
-msgstr "Jegyzet: \n"
+msgstr "Megjegyzések: "
 
 #: src/filtertransdialog.cpp:282
-#, fuzzy
 msgid "&OK"
 msgstr "Rendben"
 
@@ -610,41 +566,36 @@ msgid "Error"
 msgstr "Hiba"
 
 #: src/filtertransdialog.cpp:607
-#, fuzzy
 msgid "From "
-msgstr "Ekkortól: "
+msgstr "ekkortól: "
 
 #: src/filtertransdialog.cpp:607
 msgid " to "
-msgstr ""
+msgstr "eddig: "
 
 #: src/filtertransdialog.cpp:664
-#, fuzzy
 msgid "Min: "
-msgstr "Emelkedés/süllyedés"
+msgstr "Min.: "
 
 #: src/filtertransdialog.cpp:664
 msgid " Max: "
-msgstr ""
+msgstr "Max.: "
 
 #: src/payeedialog.cpp:66
 msgid "Organize Payees"
 msgstr "Kedvezményezettek kezelése"
 
 #: src/payeedialog.cpp:90
-#, fuzzy
 msgid "Find Payee: "
-msgstr "Kedvezményezett"
+msgstr "Keresett kedvezményezett: "
 
 #: src/payeedialog.cpp:101
-#, fuzzy
 msgid "Filter Payees: "
-msgstr "Kedvezményezett"
+msgstr "Kedvezményezettek szűrése: "
 
 #: src/payeedialog.cpp:106
-#, c-format
 msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
-msgstr ""
+msgstr "Írjon be egy keresési karaktersort. A % jelet több, az _ jelet pedig egy karakter helyettesítésére használhatja."
 
 #: src/payeedialog.cpp:114
 msgid "Add a new payee name"
@@ -663,59 +614,54 @@ msgid "Select the currently selected payee as the selected payee for the transac
 msgstr "Adja hozzá a kijelölt kedvezményezettet az ügylethez"
 
 #: src/payeedialog.cpp:216
-#, fuzzy
 msgid "Enter the name for the new payee:"
-msgstr "Írja be a vagyontárgy nevét"
+msgstr "Írja be az új kedvezményezett nevét: "
 
 #: src/payeedialog.cpp:216
 #: src/payeedialog.cpp:223
-#, fuzzy
 msgid "Organize Payees: Add Payee"
-msgstr "Kedvezményezettek kezelése"
+msgstr "Kedvezményezettek kezelése: kedvezményezett hozzáadása."
 
 #: src/payeedialog.cpp:223
 msgid "Payee with same name exists"
 msgstr "Már van ilyen nevű kedvezményezett"
 
 #: src/payeedialog.cpp:243
-#, fuzzy
 msgid "Payee in use."
-msgstr "A kedvezményezett foglalt"
+msgstr "A kedvezményezett foglalt."
 
 #: src/payeedialog.cpp:246
 msgid ""
 "Tip: Change all transactions using this Payee to another Payee\n"
 "using the relocate command:"
 msgstr ""
+"Tanács: az áthelyezés parancsot használhatja, hogy az adott\n"
+"kedvezményezett tranzakcióit más kedvezményezettre váltsa át:"
 
 #: src/payeedialog.cpp:247
 msgid "Tools -> Relocation of -> Payees"
-msgstr ""
+msgstr "Eszközök -> Áthelyezés -> Kedvezményezettek"
 
 #: src/payeedialog.cpp:248
-#, fuzzy
 msgid "Organize Payees: Delete Error"
-msgstr "Kedvezményezettek kezelése"
+msgstr "Kedvezményezettek kezelése: törlési hiba!"
 
 #: src/payeedialog.cpp:273
-#, fuzzy, c-format
+#, c-format
 msgid "Enter a new name for %s"
-msgstr "Írja be a vagyontárgy nevét"
+msgstr "Írjon be új nevet %s helyett"
 
 #: src/payeedialog.cpp:274
-#, fuzzy
 msgid "Edit Payee Name"
-msgstr "Kedvezményezett hozzáadása"
+msgstr "Kedvezményezett nevének szerkesztése"
 
 #: src/reporttransactions.cpp:49
-#, fuzzy
 msgid "Transaction List "
-msgstr "Ügyletek listája"
+msgstr "Tranzakciós lista "
 
 #: src/reporttransactions.cpp:51
-#, fuzzy
 msgid "for Account: "
-msgstr "Célszámla"
+msgstr "célszámla: "
 
 #: src/reporttransactions.cpp:70
 msgid "Date"
@@ -723,7 +669,7 @@ msgstr "Dátum"
 
 #: src/reporttransactions.cpp:71
 msgid "Account"
-msgstr "Bankszámla"
+msgstr "Számla"
 
 #: src/reporttransactions.cpp:72
 msgid "Payee"
@@ -743,33 +689,31 @@ msgstr "Megjegyzés"
 
 #: src/reporttransactions.cpp:174
 msgid "Total Amount: "
-msgstr "Teljes összeg"
+msgstr "Végösszeg: "
 
 #: src/reporttransactions.cpp:182
 msgid "<b>Note:</b> Transactions contain <b>'transfers'</b> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."
-msgstr ""
+msgstr "<b>Megjegyzés:</b> a tranzakciók <b>\"átutalást\"</b> jelentenek, akár növelve, akár csökkentve a <b>\"Végösszeget\"</b> az utoljára kiválasztott számlaszám függvényében."
 
 #: src/reporttransactions.cpp:222
-#, fuzzy
 msgid "Filtering Details: "
-msgstr "Kedvezményezett"
+msgstr "Szűrési feltételek: "
 
 #: src/currencydialog.cpp:138
 msgid "Converted to:"
-msgstr ""
+msgstr "átváltva erre: "
 
 #: src/currencydialog.cpp:150
 msgid "Shown As: "
-msgstr ""
+msgstr "Megjelenítve mint: "
 
 #: src/currencydialog.cpp:173
 msgid "Currency Name"
 msgstr "Pénznem neve"
 
 #: src/currencydialog.cpp:183
-#, fuzzy
 msgid "Currency Symbol"
-msgstr "Pénznem neve"
+msgstr "Pénz jele"
 
 #: src/currencydialog.cpp:229
 msgid "Unit Name"
@@ -793,7 +737,7 @@ msgstr "Tizedesjel"
 
 #: src/currencydialog.cpp:269
 msgid "Grouping Char"
-msgstr "elválasztójel"
+msgstr "Ezres elválasztójel"
 
 #: src/currencydialog.cpp:277
 msgid "Scale"
@@ -805,170 +749,163 @@ msgstr "Konverzió az alap árfolyamra"
 
 #: src/currencydialog.cpp:292
 msgid "Other currency conversion rate. Set Base Currency to 1."
-msgstr ""
+msgstr "Más váltási árfolyam. Az alap valutát 1. helyen szerepel."
 
 #: src/currencydialog.cpp:294
 msgid "Base Rate Conversion Sample:"
-msgstr ""
+msgstr "Alap váltási árfolyam példa: "
 
 #: src/currencydialog.cpp:303
 msgid "Value Display Sample:"
-msgstr ""
+msgstr "A megjelenített példa értéke: "
 
 #: src/currencydialog.cpp:315
-#, fuzzy
 msgid "&Update"
 msgstr "Frissítés"
 
 #: src/currencydialog.cpp:318
 msgid "Save any changes made"
-msgstr ""
+msgstr "Mentse az összes változást!"
 
 #: src/currencydialog.cpp:322
 msgid "Any changes will be lost without update"
-msgstr ""
+msgstr "Frissítés nélkül valamennyi változás elveszik!"
 
 #: src/currencydialog.cpp:343
-#, fuzzy
 msgid "Scale should be greater than zero"
-msgstr "Alap átváltási aránynak nagyobbnak kell lennie mint 0.0"
+msgstr "A váltási árfolyam nagyobb kell legyen mint 0.0"
 
 #: src/currencydialog.cpp:352
-#, fuzzy
 msgid "Base Conversion Rate should be positive"
-msgstr "Alap átváltási aránynak nagyobbnak kell lennie mint 0.0"
+msgstr "Az átváltási árfolyam pozitív legyen"
 
 #: src/util.cpp:422
 msgid "January"
-msgstr "Január"
+msgstr "január"
 
 #: src/util.cpp:422
 msgid "February"
-msgstr "Február"
+msgstr "február"
 
 #: src/util.cpp:422
 msgid "March"
-msgstr "Március"
+msgstr "március"
 
 #: src/util.cpp:422
 msgid "April"
-msgstr "Április"
+msgstr "április"
 
 #: src/util.cpp:422
 msgid "May "
-msgstr "Május"
+msgstr "május"
 
 #: src/util.cpp:422
 msgid "June"
-msgstr "Június"
+msgstr "június"
 
 #: src/util.cpp:423
 msgid "July"
-msgstr "Július"
+msgstr "július"
 
 #: src/util.cpp:423
 msgid "August"
-msgstr "Augusztus"
+msgstr "augusztus"
 
 #: src/util.cpp:423
 msgid "September"
-msgstr "Szeptember"
+msgstr "szeptember"
 
 #: src/util.cpp:423
 msgid "October"
-msgstr "Október"
+msgstr "október"
 
 #: src/util.cpp:423
 msgid "November"
-msgstr "November"
+msgstr "november"
 
 #: src/util.cpp:423
 msgid "December"
-msgstr "December"
+msgstr "december"
 
 #: src/util.cpp:434
 msgid "Jan"
-msgstr "Jan"
+msgstr "jan."
 
 #: src/util.cpp:434
 msgid "Feb"
-msgstr "Feb"
+msgstr "feb."
 
 #: src/util.cpp:434
-#, fuzzy
 msgid "Mar"
-msgstr "Március"
+msgstr "márc."
 
 #: src/util.cpp:434
-#, fuzzy
 msgid "Apr"
-msgstr "Április"
+msgstr "ápr."
 
 #: src/util.cpp:434
 msgid "May"
-msgstr "Máj"
+msgstr "máj."
 
 #: src/util.cpp:434
-#, fuzzy
 msgid "Jun"
-msgstr "Június"
+msgstr "jún."
 
 #: src/util.cpp:435
-#, fuzzy
 msgid "Jul"
-msgstr "Július"
+msgstr "júl."
 
 #: src/util.cpp:435
 msgid "Aug"
-msgstr "Aug"
+msgstr "aug."
 
 #: src/util.cpp:435
 msgid "Sep"
-msgstr "Szep"
+msgstr "szept."
 
 #: src/util.cpp:435
 msgid "Oct"
-msgstr "Okt"
+msgstr "okt."
 
 #: src/util.cpp:435
 msgid "Nov"
-msgstr "Nov"
+msgstr "nov."
 
 #: src/util.cpp:435
 msgid "Dec"
-msgstr "Dec"
+msgstr "dec."
 
 #: src/util.cpp:446
 msgid "Sunday"
-msgstr "Vasárnap"
+msgstr "vasárnap"
 
 #: src/util.cpp:446
 msgid "Monday"
-msgstr "Hétfő"
+msgstr "hétfő"
 
 #: src/util.cpp:446
 msgid "Tuesday"
-msgstr "Kedd"
+msgstr "kedd"
 
 #: src/util.cpp:446
 msgid "Wednesday"
-msgstr "Szerda"
+msgstr "szerda"
 
 #: src/util.cpp:447
 msgid "Thursday"
-msgstr "Csütörtök"
+msgstr "csütörtök"
 
 #: src/util.cpp:447
 msgid "Friday"
-msgstr "Péntek"
+msgstr "péntek"
 
 #: src/util.cpp:447
 msgid "Saturday"
-msgstr "Szombat"
+msgstr "szombat"
 
 #: src/util.cpp:484
 msgid "Entry "
-msgstr "Beviteli hiba: "
+msgstr "Bevitel "
 
 #: src/util.cpp:484
 msgid " is invalid."
@@ -979,284 +916,261 @@ msgid "Invalid Entry"
 msgstr "Érvénytelen bejegyzés"
 
 #: src/util.cpp:499
-#, fuzzy
 msgid "No Account available for export"
-msgstr "Nincs bankszámla! Nem tudok exportálni!"
+msgstr "Exportálásra nincs elérhető számla!"
 
 #: src/util.cpp:499
 #: src/util.cpp:508
-#, fuzzy
 msgid "QIF Export"
-msgstr "&Exportálás"
+msgstr "QIF Exportálás"
 
 #: src/util.cpp:508
 msgid "Choose Account to Export from:"
-msgstr "Válasszon bankszámlát az exportáláshoz:"
+msgstr "Válasszon számlát az exportáláshoz: "
 
 #: src/util.cpp:516
-#, fuzzy
 msgid "QIF Files"
-msgstr "&Importálás QIF-ből"
+msgstr "QIF-fájlok"
 
 #: src/util.cpp:517
-#, fuzzy
 msgid "Choose QIF data file to Export"
-msgstr "Válasszon QIF fájlt az importáláshoz"
+msgstr "Válasszon QIF adatfájlt az exporthoz!"
 
 #: src/util.cpp:659
-#, fuzzy
 msgid "Export to QIF"
-msgstr "CSV-be exportálás"
+msgstr "QIF-be exportálás"
 
 #: src/util.cpp:899
 msgid "MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth."
-msgstr ""
+msgstr "Az MMEX lehetővé teszi, hogy meghatározott vagyontárgyait, mint például autók, házak, telkek stb., számon tartsa. A vagyontárgyak értéke évente meghatározott összeggel emelkedhet, csökkenhet, vagy akár változatlanul is hagyható. A vagyontárgyak teljes értéke az Ön pénzügyi helyzetében megjelenik."
 
 #: src/util.cpp:903
 msgid "Using MMEX it is possible to track stocks/mutual funds investments."
-msgstr ""
+msgstr "Az MMEX használatával a részvények és közös befektetései is követhetők."
 
 #: src/util.cpp:908
 msgid "MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "
-msgstr ""
+msgstr "Az MMEX lehetővé teszi a rendszeres kifizetések megjelenítését a tranzakciók között. Ezek a tranzakciók lehetnek akár jövőbeni rendszeres befizetések, akár átutalások. A tranzakciók figyelmeztetést generálnak az esemény bekövetkezése körüli időben, ami az Összesítő lapon az esedékesség előtt 14 nappal megjelenik."
 
 #: src/util.cpp:909
 msgid "Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."
-msgstr ""
+msgstr "Tanács: ezek a tranzakciók aktiválhatóak, lehetővé téve a felhasználónak akár az összeg, akár az esedékesség pontosítását."
 
 #: src/util.cpp:916
 msgid "Recommendation: Always backup your .mmb database file regularly."
-msgstr ""
+msgstr "Javaslat: rendszeresen készítsen másolatot az .mmb adatfájljáról."
 
 #: src/util.cpp:917
 msgid "Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."
-msgstr ""
+msgstr "Javaslat: amennyiben az MMEX új verziójára frissít, győződjön meg arról, hogy az .mmb adatfájljáról készített másolatot."
 
 #: src/util.cpp:918
 msgid "Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."
-msgstr ""
+msgstr "Javaslat: használja a \"Másolás\" (CRTL+C), és a \"Beillesztés\" (CTRL+V) parancsokat a gyakran alkalmazott tranzakcióknál."
 
 #: src/util.cpp:919
 msgid "Tip: Remember to make backups of your .mmb."
-msgstr ""
+msgstr "Tanács: ne felejtsen el másolatot készíteni az .mmb fájljáról!"
 
 #: src/util.cpp:920
 msgid "Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."
-msgstr ""
+msgstr "Tanács: az .mmb fájl nem titkosított, ami azt jelenti, hogy bárki, aki ért hozzá, megnyithatja és olvashatja a tartalmát. Vagyis, ha fontos pénzügyi adatokat tárol, gondoskodjon azok megfelelő védelméről."
 
 #: src/util.cpp:921
 msgid "Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."
-msgstr ""
+msgstr "Tanács: tranzakció visszaigazoltként megjelöléséhez válassza ki az ügyletet és üsse le az \"r\", vagy \"R\" betűt. Ha rendezetlen, akkor elegendő az \"u\", vagy \"U\" leütése."
 
 #: src/util.cpp:922
 msgid "Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."
-msgstr ""
+msgstr "Tanács: tranzakció figyeltként megjelöléséhez elegendő kiválasztani azt és leütni az \"f\", vagy \"F\" betűt."
 
 #: src/util.cpp:923
 msgid "Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."
-msgstr ""
+msgstr "Tanács: az MMEX lehetővé teszi valamennyi megtekinthető jelentés kinyomtatását. A nyomtatási beállítások a Fájl->Nyomtatás alatt érhetők el."
 
 #: src/util.cpp:924
 msgid "Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "
-msgstr ""
+msgstr "Tanács: az MMEX működése részben módosítható az Eszközök->Beállítások párbeszédablakban. "
 
 #: src/util.cpp:925
 msgid "Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."
-msgstr ""
+msgstr "Tanács: meghatározott típusú tranzakciókról kivonat nyomtatásához egyszerűen szűréssel válassza ki a kívánt ügyleteket, majd a menüből indítsa a nyomtatást."
 
 #: src/util.cpp:926
 msgid "Tip: Set exchange rate for currencies in case if you have accounts with different currencies."
-msgstr ""
+msgstr "Tanács: amennyiben több, eltérő pénznemben vezetett számlája van, állítsa be a váltási árfolyamokat. "
 
 #: src/util.cpp:928
 msgid "Organize Categories Dialog Tip: Pressing the h key will cycle through all categories starting with the letter h"
-msgstr ""
+msgstr "Tanács a kategóriák rendezése párbeszédhez: adott betű nyomva tartásával az azzal kezdődő kategóriák között fog léptetni."
 
 #: src/util.cpp:929
 msgid "Organize Categories Dialog Tip: Pressing 2 key combination will cycle through all categories starting with that key combination. Example: Pressing ho will select Homeneeds, Home, House Tax, etc..."
-msgstr ""
+msgstr "Tanács a kategóriák rendezése párbeszédhez: két betű lenyomásával az adott betűkkel kezdődő kategóriák között léptethet. Pl. \"ho\" lenyomására \"Homeneeds\", \"Home\" stb. között léptet."
 
 #: src/util.cpp:930
 msgid "Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."
-msgstr ""
+msgstr "Tanács kedvezményezettek párbeszédhez: a % helyettesítő karakterrel szűrhet. Például: amíg a %c hatására Chemist és Doctor is megjelenik, addig %c%m-re csak a Chemist."
 
 #: src/util.cpp:932
-#, c-format
 msgid "Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."
-msgstr ""
+msgstr "Tanács adósság elkerüléséhez: előbb vegyen le magának 10%-ot, amit nehezen elérhető számlára vezet át. Gondoskodjon arról, hogy az adott számláról pénzt levenni nehezen legyen (be kell menni a bankba). Vagyis megfontoltan és költségek árán juthat hozzá."
 
 #: src/util.cpp:933
 msgid "Tip to get out of debt: Establish an emergency fund."
-msgstr ""
+msgstr "Tanács adósság elkerüléséhez: különítsen el biztonsági tartalékot. "
 
 #: src/util.cpp:934
 msgid "Tip to get out of debt: Stop acquiring new debt."
-msgstr ""
+msgstr "Tanács adósság elkerüléséhez: ne vegyen fel újabb kölcsönöket."
 
 #: src/util.cpp:935
 msgid "Tip to get out of debt: Create a realistic budget for your expenses."
-msgstr ""
+msgstr "Tanács adósság elkerüléséhez: készítsen reális kiadási költségvetést."
 
 #: src/util.cpp:936
 msgid "Tip to get out of debt: Spend less than you earn."
-msgstr ""
+msgstr "Tanács adósság elkerüléséhez: költsön kevesebbet, mint a bevételei."
 
 #: src/util.cpp:937
 msgid "Tip to get out of debt: Pay more than the minimum."
-msgstr ""
+msgstr "Tanács adósság elkerüléséhez: tervezze felül a kifizetéseket."
 
 #: src/util.cpp:938
 msgid "Before going to a shop and buy something: take the time making a list of what you really need. In the shop buy what is in your list."
-msgstr ""
+msgstr "Boltba menetel és vásárlás előtt: készítsen listát a tényleges szükségletekről. A boltban csak a listán szereplő cikkeket vegye meg."
 
 #: src/util.cpp:949
 msgid "View All Transactions"
 msgstr "Minden ügylet mutatása"
 
 #: src/util.cpp:950
-#, fuzzy
 msgid "View Today"
-msgstr "30 nap mutatása"
+msgstr "Mai nap mutatása"
 
 #: src/util.cpp:951
-#, fuzzy
 msgid "View Current Month"
-msgstr "Jelenlegi hónap"
+msgstr "Jelen hónap mutatása"
 
 #: src/util.cpp:952
-#, fuzzy
 msgid "View Last 30 days"
-msgstr "30 nap mutatása"
+msgstr "Elmúlt 30 nap mutatása"
 
 #: src/util.cpp:953
-#, fuzzy
 msgid "View Last 90 days"
-msgstr "90 nap mutatása"
+msgstr "Elmúlt 90 nap mutatása"
 
 #: src/util.cpp:954
 msgid "View Last Month"
-msgstr ""
+msgstr "Előző hónap megtekintése"
 
 #: src/util.cpp:955
-#, fuzzy
 msgid "View Last 3 Months"
-msgstr "Jelenlegi hónap"
+msgstr "Elmúlt 3 hónap mutatása"
 
 #: src/util.cpp:956
 msgid "View Reconciled"
-msgstr "Teljesültek mutatása"
+msgstr "Visszaigazolt mutatása"
 
 #: src/util.cpp:957
-#, fuzzy
 msgid "View Not-Reconciled"
-msgstr "Teljesültek mutatása"
+msgstr "Rendezetlenek mutatása"
 
 #: src/util.cpp:958
 msgid "View UnReconciled"
-msgstr "Teljesítetlenek mutatása"
+msgstr "Rendezetlenek mutatása"
 
 #: src/recentfiles.cpp:94
 msgid "Empty"
-msgstr ""
+msgstr "Üres"
 
 #: src/mmhelppanel.cpp:80
 msgid "&Back"
-msgstr ""
+msgstr "Vissza"
 
 #: src/mmhelppanel.cpp:81
 msgid "&Forward"
-msgstr ""
+msgstr "Előre"
 
 #: src/mmhelppanel.cpp:83
-#, fuzzy
 msgid " Help"
-msgstr "Súgó"
+msgstr "Súgó "
 
 #: src/appstartdialog.cpp:56
-#, fuzzy
 msgid " Start Page"
-msgstr "Indítóablak"
+msgstr " Indítólap"
 
 #: src/appstartdialog.cpp:110
 msgid "Open Last Opened Database"
 msgstr "Utoljára megnyitott adatbázis megnyitása"
 
 #: src/appstartdialog.cpp:114
-#, fuzzy
 msgid "Create a New Database"
-msgstr "Új Money Manager fájl létrehozása"
+msgstr "Új adatbázis létrehozása"
 
 #: src/appstartdialog.cpp:115
 msgid "Create a new database file to get started"
 msgstr "Új adatbázis fájl létrehozása a kezdéshez"
 
 #: src/appstartdialog.cpp:119
-#, fuzzy
 msgid "Open Existing Database"
-msgstr "Utoljára megnyitott adatbázis megnyitása"
+msgstr "Létező adatbázis megnyitása"
 
 #: src/appstartdialog.cpp:120
-#, fuzzy
 msgid "Open an already created database file with extension (*.mmb)"
-msgstr "Létező .mmb kiterjesztésű MMEX adatbázis megnyitása"
+msgstr "Létező .mmb kiterjesztésű adatbázis megnyitása"
 
 #: src/appstartdialog.cpp:124
 msgid "Read Documentation"
-msgstr "Dokumentáció"
+msgstr "Olvassa el a dokumentációt"
 
 #: src/appstartdialog.cpp:125
 msgid "Read the user manual"
-msgstr "Kézikönyv"
+msgstr "Olvassa el a kézikönyvet"
 
 #: src/appstartdialog.cpp:131
 msgid "Visit Website for more information"
-msgstr "Hivatalos weboldal"
+msgstr "További információ a weboldalon"
 
 #: src/appstartdialog.cpp:133
-#, fuzzy
 msgid "Open the "
-msgstr "&Adatbázis megnyitása\tCtrl-O"
+msgstr "Nyissa meg a ..."
 
 #: src/appstartdialog.cpp:135
-#, fuzzy
 msgid " website for latest news, updates etc"
-msgstr "Legutóbbi Money Manager hírek a web-en"
+msgstr " hírek, frissítések stb. weblap"
 
 #: src/appstartdialog.cpp:144
-#, fuzzy
 msgid "Show this window next time "
-msgstr "Mutassa ezt az ablakot a Money Manager következő indulásakor"
+msgstr "Legközelebb is mutassa ezt az ablakot, amikor az "
 
 #: src/appstartdialog.cpp:146
-#, fuzzy
 msgid " starts"
-msgstr "Állapot"
+msgstr "  elindul."
 
 #: src/appstartdialog.cpp:162
-#, fuzzy
 msgid "Close"
-msgstr "Bezárás"
+msgstr "Bezárás "
 
 #: src/appstartdialog.cpp:176
 msgid "Open the previously opened database : "
-msgstr "Az előszőleg használt adatbázis :"
+msgstr "Nyissa meg az előzőleg használt adatbázist : "
 
 #: src/appstartdialog.cpp:187
 msgid "Exit"
-msgstr ""
+msgstr "Kilépés"
 
 #: src/reportbudgetingperf.cpp:106
-#, fuzzy
 msgid "Budget Performance for "
-msgstr "Költségvetés működése"
+msgstr "... Költségvetési szereplése"
 
 #: src/reportbudgetingperf.cpp:131
 msgid "Overall"
-msgstr ""
+msgstr "Összesen"
 
 #: src/reportbudgetingperf.cpp:132
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/billsdepositspanel.cpp:175
 msgid "Next Due Date"
@@ -1269,50 +1183,43 @@ msgstr "Hátralévő napok"
 #: src/billsdepositspanel.cpp:216
 #: src/assetspanel.cpp:205
 #: src/mmcheckingpanel.cpp:735
-#, fuzzy
 msgid "&New"
 msgstr "Új"
 
 #: src/billsdepositspanel.cpp:217
-#, fuzzy
 msgid "New Bills & Deposit Series"
-msgstr "Új számla vagy betét sorozat"
+msgstr "Új rendszeres számla- és betéti átutalás"
 
 #: src/billsdepositspanel.cpp:221
-#, fuzzy
 msgid "Edit Bills & Deposit Series"
-msgstr "Számlák vagy betétek szerkesztése"
+msgstr "Rendszeres számla- és betéti átutalás szerkesztése"
 
 #: src/billsdepositspanel.cpp:225
 #: src/assetspanel.cpp:214
 #: src/mmcheckingpanel.cpp:744
 #: src/mmcheckingpanel.cpp:1510
-#, fuzzy
 msgid "&Delete"
 msgstr "Törlés"
 
 #: src/billsdepositspanel.cpp:226
-#, fuzzy
 msgid "Delete Bills & Deposit Series"
-msgstr "Számla vagy betét sorozat törlése"
+msgstr "Rendszeres számla- és betéti átutalás törlése"
 
 #: src/billsdepositspanel.cpp:230
 msgid "En&ter"
-msgstr ""
+msgstr "Belépés"
 
 #: src/billsdepositspanel.cpp:232
-#, fuzzy
 msgid "Enter Next Bills & Deposit Occurrence"
-msgstr "A kijelölt számla vagy betét esemény bejegyzése a számlába"
+msgstr "A rendszeres számla- és betéti átutalás következő esedékessége"
 
 #: src/billsdepositspanel.cpp:236
 msgid "&Skip"
-msgstr ""
+msgstr "Átlép"
 
 #: src/billsdepositspanel.cpp:237
-#, fuzzy
 msgid "Skip Next Bills & Deposit Occurrence"
-msgstr "A kijelölt számla vagy betét esemény bejegyzése a számlába"
+msgstr "A következő rendszeres számla- és betéti átutalás kihagyása"
 
 #: src/billsdepositspanel.cpp:332
 #: src/billsdepositsdialog.cpp:351
@@ -1352,82 +1259,74 @@ msgstr "Évente"
 #: src/billsdepositspanel.cpp:360
 #: src/billsdepositsdialog.cpp:358
 msgid "Four Months"
-msgstr "Négyhavonta"
+msgstr "Négy hónap"
 
 #: src/billsdepositspanel.cpp:364
 #: src/billsdepositsdialog.cpp:359
 msgid "Four Weeks"
-msgstr "Négyhetente"
+msgstr "Négy hét"
 
 #: src/billsdepositspanel.cpp:368
 #: src/billsdepositsdialog.cpp:360
 msgid "Daily"
-msgstr ""
+msgstr "Napi"
 
 #: src/billsdepositspanel.cpp:372
 #: src/billsdepositspanel.cpp:376
 msgid "In "
-msgstr ""
+msgstr "Következő"
 
 #: src/billsdepositspanel.cpp:372
 #: src/billsdepositspanel.cpp:380
 msgid " Days"
-msgstr ""
+msgstr " napban"
 
 #: src/billsdepositspanel.cpp:376
 #: src/billsdepositspanel.cpp:384
-#, fuzzy
 msgid " Months"
-msgstr "Hónap"
+msgstr " Hónapok"
 
 #: src/billsdepositspanel.cpp:380
 #: src/billsdepositspanel.cpp:384
 msgid "Every "
-msgstr ""
+msgstr "Minden"
 
 #: src/billsdepositspanel.cpp:466
-#, fuzzy
 msgid "Enter next Occurrence..."
-msgstr "Következő esemény bevitele"
+msgstr "Következő esedékesség..."
 
 #: src/billsdepositspanel.cpp:468
-#, fuzzy
 msgid "Skip next Occurrence"
-msgstr "Ekkor esedékes"
+msgstr "Következő esedékes kihagyása"
 
 #: src/billsdepositspanel.cpp:470
-#, fuzzy
 msgid "&New Bills && Deposit Series..."
-msgstr "&Új számla vagy betét sorozat"
+msgstr "Új rendszeres számla- és betéti átutalás..."
 
 #: src/billsdepositspanel.cpp:471
-#, fuzzy
 msgid "&Edit Bills && Deposit Series..."
-msgstr "&Számla vagy betét sorozat szerkesztése"
+msgstr "Rendszeres számla- és betéti átutalás szerkesztése..."
 
 #: src/billsdepositspanel.cpp:472
-#, fuzzy
 msgid "&Delete Bills && Deposit Series..."
-msgstr "&Számla vagy betét sorozat törlése"
+msgstr "Rendszeres számla- és betéti átutalás törlése..."
 
 #: src/billsdepositspanel.cpp:578
 msgid "Do you really want to delete the series?"
-msgstr "Valóban törölni akarja a sorozatot?"
+msgstr "Valóban törölni akarja a rendszere átutalást?"
 
 #: src/billsdepositspanel.cpp:579
 msgid "Confirm Series Deletion"
-msgstr "Sorozat törlésének jóváhagyása"
+msgstr "Rendszeres utalás törlésének jóváhagyása"
 
 #: src/billsdepositsdialog.cpp:60
-#, fuzzy
 msgid "Repeat Transaction - Auto Execution Checking"
-msgstr "Ütemezett ügyletek részletei"
+msgstr "Tranzakció ismétlése - automatikus végrehajtás jóváhagyással."
 
 #: src/billsdepositsdialog.cpp:204
 #: src/billsdepositsdialog.cpp:1199
-#, fuzzy
 msgid "Split Category"
-msgstr "Kategória választása"
+msgstr "Kategória bontása"
 
 #: src/billsdepositsdialog.cpp:268
 msgid "Transaction Details"
@@ -1435,15 +1334,15 @@ msgstr "Ügylet részletei"
 
 #: src/billsdepositsdialog.cpp:274
 msgid "Calendar"
-msgstr ""
+msgstr "Naptár"
 
 #: src/billsdepositsdialog.cpp:296
 msgid "Repeating Transaction Details"
-msgstr "Ütemezett ügyletek részletei"
+msgstr "Rendszeres ügyletek részletei"
 
 #: src/billsdepositsdialog.cpp:303
 msgid "Account Name"
-msgstr "Bankszámla neve"
+msgstr "Számla neve"
 
 #: src/billsdepositsdialog.cpp:305
 #: src/billsdepositsdialog.cpp:596
@@ -1453,14 +1352,12 @@ msgid "Select Account"
 msgstr "Számla kiválasztása"
 
 #: src/billsdepositsdialog.cpp:315
-#, fuzzy
 msgid "Specify the Account that will own the repeating transaction"
-msgstr "Adjon meg egy összeget ehhez az ügylethez"
+msgstr "Határozza meg az rendszeres tranzakció számláját"
 
 #: src/billsdepositsdialog.cpp:328
-#, fuzzy
 msgid "Next Occurrence"
-msgstr "Ekkor esedékes"
+msgstr "Következő esedékesség"
 
 #: src/billsdepositsdialog.cpp:331
 msgid "Specify the date of the next bill or deposit"
@@ -1468,36 +1365,36 @@ msgstr "Adja meg a következő számla vagy betét dátumát"
 
 #: src/billsdepositsdialog.cpp:335
 msgid "Retard or advance the date of the 'next occurrence"
-msgstr ""
+msgstr "A következő esedékesség dátumának előrehozása, vagy eltolása."
 
 #: src/billsdepositsdialog.cpp:346
 #: src/billsdepositsdialog.cpp:1344
 msgid "Repeats"
-msgstr "Ütemezés"
+msgstr "Ismétlődik"
 
 #: src/billsdepositsdialog.cpp:361
 msgid "In (x) Days"
-msgstr ""
+msgstr "(x) napon belül"
 
 #: src/billsdepositsdialog.cpp:362
 msgid "In (x) Months"
-msgstr ""
+msgstr "(x) hónapon belül"
 
 #: src/billsdepositsdialog.cpp:363
 msgid "Every (x) Days"
-msgstr ""
+msgstr "Minden (x.) nap"
 
 #: src/billsdepositsdialog.cpp:364
 msgid "Every (x) Months"
-msgstr ""
+msgstr "Minden (x.) hónap"
 
 #: src/billsdepositsdialog.cpp:370
 msgid "Next"
-msgstr ""
+msgstr "Következő"
 
 #: src/billsdepositsdialog.cpp:372
 msgid "Advance the Next Occurance Date with the specified values"
-msgstr ""
+msgstr "A következő esedékesség dátumát az adott értékkel növelje."
 
 #: src/billsdepositsdialog.cpp:380
 #: src/billsdepositsdialog.cpp:1384
@@ -1506,28 +1403,27 @@ msgstr "Ismétlődés száma"
 
 #: src/billsdepositsdialog.cpp:391
 msgid "Set to 'Auto Execute' on the 'Next Occurrence' date."
-msgstr ""
+msgstr "A következő esedékesség napján automatikusan végrehajtásra kerül."
 
 #: src/billsdepositsdialog.cpp:392
 msgid "Automatic Execution will require user acknowledgement."
-msgstr ""
+msgstr "Az automatikus végrehajtás jóváhagyást igényel."
 
 #: src/billsdepositsdialog.cpp:395
 msgid "Set 'Auto Execute' without user acknowlegement."
-msgstr ""
+msgstr "Automatikus végrehajtás jóváhagyás nélkül."
 
 #: src/billsdepositsdialog.cpp:397
 msgid "Automatic Execution will occur without user interaction"
-msgstr ""
+msgstr "Az automatikus végrehajtás beavatkozás nélkül megtörténik."
 
 #: src/billsdepositsdialog.cpp:415
 msgid "Specify the date of the transaction"
 msgstr "Adja meg az átutalás dátumát"
 
 #: src/billsdepositsdialog.cpp:418
-#, fuzzy
 msgid "Retard or advance the date of the transaction"
-msgstr "Adja meg az átutalás dátumát"
+msgstr "Késleltesse, vagy hozza előre a tranzakciót"
 
 #: src/billsdepositsdialog.cpp:455
 msgid "Specify the type of transactions to be created."
@@ -1538,9 +1434,8 @@ msgid "Advanced"
 msgstr "Haladó"
 
 #: src/billsdepositsdialog.cpp:459
-#, fuzzy
 msgid "Allows the setting of different amounts in the FROM and TO accounts."
-msgstr "Adja meg az átutalást fogadó számlát"
+msgstr "Engedélyezi a -tól/től és -nak/nek számlákon eltérő összeg szerepeltetését"
 
 #: src/billsdepositsdialog.cpp:469
 #: src/billsdepositsdialog.cpp:775
@@ -1548,42 +1443,36 @@ msgid "Specify the amount for this transaction"
 msgstr "Adjon meg egy összeget ehhez az ügylethez"
 
 #: src/billsdepositsdialog.cpp:470
-#, fuzzy
 msgid "Specify the amount to be transfered"
-msgstr "Adjon meg egy összeget ehhez az ügylethez"
+msgstr "Határozza meg az átutalás összegét!"
 
 #: src/billsdepositsdialog.cpp:480
-#, fuzzy
 msgid "Specify the transfer amount in the To Account"
-msgstr "Adja meg az átutalást fogadó számlát"
+msgstr "A fogadó számlán adja  átutalandó összeget"
 
 #: src/billsdepositsdialog.cpp:494
-#, fuzzy
 msgid "Specify where the transaction is going to"
-msgstr "Adja meg, hogy az ügylet hová indul, vagy honnan jön"
+msgstr "Határozza meg, hogy a tranzakció hová irányul"
 
 #: src/billsdepositsdialog.cpp:495
-#, fuzzy
 msgid "Specify where the transaction is coming from"
-msgstr "Adja meg, hogy az ügylet hová indul, vagy honnan jön"
+msgstr "Határozza meg, hogy a tranzakció honnan származik"
 
 #: src/billsdepositsdialog.cpp:504
 msgid "Select To Acct"
 msgstr "Válasszon"
 
 #: src/billsdepositsdialog.cpp:506
-#, fuzzy
 msgid "Specify which account the transfer is going to"
-msgstr "Adja meg az átutalás kiinduló számláját"
+msgstr "Jelölje meg az átutalást fogadó számlát"
 
 #: src/billsdepositsdialog.cpp:512
 msgid "Split"
-msgstr ""
+msgstr "Bontás"
 
 #: src/billsdepositsdialog.cpp:515
-#, fuzzy
 msgid "Use split Categories"
-msgstr "Kategória választása"
+msgstr "Bontott kategóriák használata"
 
 #: src/billsdepositsdialog.cpp:533
 msgid "Specify any associated check number or transaction number"
@@ -1602,24 +1491,21 @@ msgid "Cancel"
 msgstr "Mégsem"
 
 #: src/billsdepositsdialog.cpp:596
-#, fuzzy
 msgid "Choose Bank Account or Term Account"
-msgstr "Bankszámlák kiválasztása"
+msgstr "Bankszámla, vagy időszaki számla kiválasztása"
 
 #: src/billsdepositsdialog.cpp:614
 #: src/billsdepositsdialog.cpp:695
-#, fuzzy
 msgid "Account name"
-msgstr "Bankszámla neve"
+msgstr "A számla neve "
 
 #: src/billsdepositsdialog.cpp:774
 msgid "Specify where the transaction is going to or coming from "
 msgstr "Adja meg, hogy az ügylet hová indul, vagy honnan jön"
 
 #: src/billsdepositsdialog.cpp:778
-#, fuzzy
 msgid "Specify which account the transfer is comming from"
-msgstr "Adja meg az átutalás kiinduló számláját"
+msgstr "Adja meg, hogy az átutalás mely számláról érkezik"
 
 #: src/billsdepositsdialog.cpp:781
 msgid "Specify to whom the transaction is going to or coming from "
@@ -1657,72 +1543,65 @@ msgid "Category "
 msgstr "Kategória"
 
 #: src/billsdepositsdialog.cpp:928
-#, fuzzy
 msgid "Advanced Amount"
-msgstr "Haladó"
+msgstr "Előleg"
 
 #: src/billsdepositsdialog.cpp:946
 msgid "To Account "
-msgstr "Célszámla"
+msgstr "Célszámla "
 
 #: src/billsdepositsdialog.cpp:952
 msgid "From and To Account cannot be the same."
 msgstr "A kiinduló és a célszámla nem lehet azonos"
 
 #: src/billsdepositsdialog.cpp:1298
-#, fuzzy
 msgid "Specify the transfer amount in the From Account"
-msgstr "Adja meg az átutalást fogadó számlát"
+msgstr "Adja meg az átutalást összegét az eredeztető számlán"
 
 #: src/billsdepositsdialog.cpp:1345
-#, fuzzy
 msgid "Activates"
-msgstr "Növekvő"
+msgstr "Érvényesít"
 
 #: src/billsdepositsdialog.cpp:1347
 msgid "Period: Days"
-msgstr ""
+msgstr "Gyakoriság: napokban"
 
 #: src/billsdepositsdialog.cpp:1348
-#, fuzzy
 msgid "Period: Months"
-msgstr "Négyhavonta"
+msgstr "Gyakoriság: havonta"
 
 #: src/billsdepositsdialog.cpp:1357
 #: src/billsdepositsdialog.cpp:1371
 msgid "Specify period in Days to activate."
-msgstr ""
+msgstr "A bekapcsoláshoz határozza meg a gyakoriságot napokban."
 
 #: src/billsdepositsdialog.cpp:1357
 #: src/billsdepositsdialog.cpp:1364
 msgid "Becomes blank when not active."
-msgstr ""
+msgstr "Üressé válik, ha nem aktív."
 
 #: src/billsdepositsdialog.cpp:1364
 #: src/billsdepositsdialog.cpp:1378
-#, fuzzy
 msgid "Specify period in Months to activate."
-msgstr "Adja meg a létrehozandó számla típusát."
+msgstr "Hónapokban adja meg az érvényesítés időszakát"
 
 #: src/billsdepositsdialog.cpp:1371
 #: src/billsdepositsdialog.cpp:1378
 msgid "Leave blank when not active."
-msgstr ""
+msgstr "Hagyja üresen, ha nem aktív."
 
 #: src/billsdepositsdialog.cpp:1385
-#, fuzzy
 msgid "Specify the number of times this series repeats."
-msgstr "Adja meg a megbízás ismétlődésének számát. Hagyja üresen, ha a megbízás határozatlan idejű"
+msgstr "Adja meg a megbízás ismétlődésének számát."
 
 #: src/billsdepositsdialog.cpp:1385
-#, fuzzy
 msgid "Leave blank if this series continues forever."
-msgstr "Adja meg a megbízás ismétlődésének számát. Hagyja üresen, ha a megbízás határozatlan idejű"
+msgstr "Ha lejárat nélküli, akkor hagyja üresen. "
 
 #: src/assetspanel.cpp:137
 #: src/reportincexpesestime.cpp:112
 msgid "Total:"
-msgstr "Összesen:"
+msgstr "Összesen: "
 
 #: src/assetspanel.cpp:157
 #: src/assetdialog.cpp:188
@@ -1779,12 +1658,11 @@ msgstr "Vagyontárgy törlésének jóváhagyása"
 
 #: src/assetspanel.cpp:444
 msgid "Thank you! "
-msgstr ""
+msgstr "Köszönöm!"
 
 #: src/assetspanel.cpp:444
-#, fuzzy
 msgid "App"
-msgstr "Április"
+msgstr "Alkalmazás"
 
 #: src/reportincexpenses.cpp:48
 #: src/mmex.cpp:1258
@@ -1803,37 +1681,31 @@ msgstr "Nem-nulla költségvetésű kategóriák mutatása"
 
 #: src/budgetingpanel.cpp:132
 #: src/budgetingpanel.cpp:165
-#, fuzzy
 msgid "View Income Budget Categories"
-msgstr "Minden költségvetés kategória mutatása"
+msgstr "Minden bevételi kategória mutatása"
 
 #: src/budgetingpanel.cpp:137
 #: src/budgetingpanel.cpp:166
-#, fuzzy
 msgid "View Expense Budget Categories"
-msgstr "Minden költségvetés kategória mutatása"
+msgstr "Minden kiadási kategória mutatása"
 
 #: src/budgetingpanel.cpp:142
 #: src/budgetingpanel.cpp:168
 #: src/budgetingpanel.cpp:339
-#, fuzzy
 msgid "View Budget Category Summary"
-msgstr "Minden költségvetés kategória mutatása"
+msgstr "Költségvetés kategóriák összesítése"
 
 #: src/budgetingpanel.cpp:196
-#, fuzzy
 msgid "Financial Year: "
-msgstr "Múlt év"
+msgstr "Pénzügyi év: "
 
 #: src/budgetingpanel.cpp:200
-#, fuzzy
 msgid "Year: "
-msgstr "Évente"
+msgstr "Év: "
 
 #: src/budgetingpanel.cpp:205
-#, fuzzy
 msgid "Month: "
-msgstr "Hónap"
+msgstr "Hónap: "
 
 #: src/budgetingpanel.cpp:208
 msgid "Budget Setup for "
@@ -1844,37 +1716,33 @@ msgid "Viewing All Budget Categories"
 msgstr "Minden költségvetés kategória mutatása"
 
 #: src/budgetingpanel.cpp:229
-#, fuzzy
 msgid "Income......."
-msgstr "Bevétel"
+msgstr "Bevétel..."
 
 #: src/budgetingpanel.cpp:234
 #: src/budgetingpanel.cpp:257
 #: src/budgetingpanel.cpp:541
 #: src/budgetingpanel.cpp:551
-#, fuzzy
 msgid "Estimated: "
-msgstr "Becsült"
+msgstr "Becsült: "
 
 #: src/budgetingpanel.cpp:238
 #: src/budgetingpanel.cpp:261
 #: src/budgetingpanel.cpp:544
 #: src/budgetingpanel.cpp:554
-#, fuzzy
 msgid "Actual: "
-msgstr "Jelenlegi"
+msgstr "Tényleges: "
 
 #: src/budgetingpanel.cpp:242
 #: src/budgetingpanel.cpp:265
 #: src/budgetingpanel.cpp:548
 #: src/budgetingpanel.cpp:558
 msgid "Difference: "
-msgstr ""
+msgstr "Különbség: "
 
 #: src/budgetingpanel.cpp:252
-#, fuzzy
 msgid "Expenses..."
-msgstr "Kiadás"
+msgstr "Kiadások..."
 
 #: src/budgetingpanel.cpp:288
 msgid "Category  "
@@ -1885,13 +1753,14 @@ msgid ""
 "Fatal error occured.\n"
 "Application will be terminated."
 msgstr ""
+"Végzetes hiba!\n"
+"Az alkalmazás bezár."
 
 #: src/mmex.cpp:434
 msgid "Add Account Wizard"
-msgstr "Bankszámla varázsló hozzáadása"
+msgstr "Számla hozzáadása varázsló "
 
 #: src/mmex.cpp:442
-#, fuzzy
 msgid ""
 " models all transactions as belonging to accounts.\n"
 "\n"
@@ -1900,13 +1769,12 @@ msgid ""
 "To help you get started, begin by making a list of all\n"
 "financial institutions where you hold an account."
 msgstr ""
-"A Money Manager úgy ábrázolja az ügyleteket, \n"
-"ahogy azok a bankszámlákhoz kapcsolódnak.\n"
+" az ügyleteket számlák szerint mutatja.\n"
 "\n"
-"A következő lépésekben a varázslóval létrehozhat\n"
-"egy új számlát a programban.\n"
-"A könnyebb kezdés érdekében ajánlatos létrehozni\n"
-"egy listát az összes olyan pénzintézetről, ahol számlája van."
+"A következő lapok segítenek új számla létrehozásában.\n"
+"\n"
+"Az egyszerűbb indulás érdekében tanácsos felállítani\n"
+"egy listát a pénzintézetekről, ahol számlát vezet."
 
 #: src/mmex.cpp:476
 msgid "New Database Wizard"
@@ -1914,12 +1782,11 @@ msgstr "Új adatbázis varázsló"
 
 #: src/mmex.cpp:497
 msgid "The next pages will help you create a new database."
-msgstr ""
+msgstr "A következő lapok segítenek új adatbázis felállításában."
 
 #: src/mmex.cpp:498
-#, fuzzy
 msgid "Your database file is stored with an extension of .mmb."
-msgstr "Létező .mmb kiterjesztésű MMEX adatbázis megnyitása"
+msgstr "Az adatbázisfájl .mmb kiterjesztéssel lesz elmentve."
 
 #: src/mmex.cpp:499
 msgid ""
@@ -1928,6 +1795,10 @@ msgid ""
 "setting: 'Backup before opening', and store your backups\n"
 "in a separate location."
 msgstr ""
+"Mivel a fájl fontos pénzügyi adatokat tartalmaz, \n"
+"javasoljuk naponta készítsen másolatot a következő opció\n"
+"beállításával: \"Másolat készítése megnyitás előtt\", illetve\n"
+"a másolatok eltérő helyen történő elhelyezését."
 
 #: src/mmex.cpp:500
 msgid ""
@@ -1935,6 +1806,9 @@ msgid ""
 "using the option: 'Save database as' and changing the\n"
 "file type before saving."
 msgstr ""
+"Igény esetén az adatbázis később is titkosítható\n"
+"az \"Adatbázis mentése másként\" opcióval, ahol \n"
+"a fájl típusát mentés előtt .emb-re változtathatja."
 
 #: src/mmex.cpp:732
 #: src/mmex.cpp:1051
@@ -1947,22 +1821,20 @@ msgstr "Bankszámlák"
 #: src/mmex.cpp:1059
 #: src/optionsdialog.cpp:500
 #: src/optionsdialog.cpp:520
-#, fuzzy
 msgid "Term Accounts"
-msgstr "Kiinduló számla"
+msgstr "Időszaki számlák"
 
 #: src/mmex.cpp:840
-#, fuzzy
 msgid " Auto Repeat Transactions"
-msgstr "Sorozatos ügyletek"
+msgstr "Automatikusan ismétlődő ügyletek"
 
 #: src/mmex.cpp:1023
 msgid "Navigation"
-msgstr "Navigálás"
+msgstr "Navigáció"
 
 #: src/mmex.cpp:1045
 msgid "Home Page"
-msgstr "Összesítő oldal"
+msgstr "Összesítő lap"
 
 #: src/mmex.cpp:1086
 #: src/mmex.cpp:1582
@@ -1976,11 +1848,11 @@ msgstr "Kimutatások"
 
 #: src/mmex.cpp:1098
 msgid "Custom SQL Reports"
-msgstr ""
+msgstr "Kivonatolt SQL jelentések"
 
 #: src/mmex.cpp:1131
 msgid "Summary of Accounts"
-msgstr "Bankszámlák összegzése"
+msgstr "Számlák összegzése"
 
 #: src/mmex.cpp:1143
 #: src/mmex.cpp:1895
@@ -1993,7 +1865,7 @@ msgstr "Hová ment a pénz"
 #: src/mmex.cpp:1233
 #: src/mmex.cpp:1261
 msgid "Last Calendar Month"
-msgstr "Utolsó naptári hónap"
+msgstr "Előző naptári hónapban"
 
 #: src/mmex.cpp:1158
 #: src/mmex.cpp:1186
@@ -2001,7 +1873,7 @@ msgstr "Utolsó naptári hónap"
 #: src/mmex.cpp:1242
 #: src/mmex.cpp:1270
 msgid "Last Year"
-msgstr "Múlt év"
+msgstr "Tavaly"
 
 #: src/mmex.cpp:1161
 #: src/mmex.cpp:1189
@@ -2009,36 +1881,32 @@ msgstr "Múlt év"
 #: src/mmex.cpp:1245
 #: src/mmex.cpp:1273
 msgid "Current Year"
-msgstr "Idei év"
+msgstr "Idén"
 
 #: src/mmex.cpp:1166
 #: src/mmex.cpp:1194
 #: src/mmex.cpp:1222
 #: src/mmex.cpp:1250
 #: src/mmex.cpp:1278
-#, fuzzy
 msgid "Last Financial Year"
-msgstr "Múlt év"
+msgstr "Múlt pénzügyi évben"
 
 #: src/mmex.cpp:1169
 #: src/mmex.cpp:1197
 #: src/mmex.cpp:1225
 #: src/mmex.cpp:1253
 #: src/mmex.cpp:1281
-#, fuzzy
 msgid "Current Financial Year"
-msgstr "Idei év"
+msgstr "Jelen pénzügyi évben"
 
 #: src/mmex.cpp:1174
 #: src/mmex.cpp:1792
-#, fuzzy
 msgid "Where the Money Comes From"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz érkezett"
 
 #: src/mmex.cpp:1230
-#, fuzzy
 msgid "Payees"
-msgstr "Kedvezményezett"
+msgstr "Kedvezményezettek"
 
 #: src/mmex.cpp:1285
 #: src/mmex.cpp:2093
@@ -2056,9 +1924,8 @@ msgstr "Költségvetés működése"
 
 #: src/mmex.cpp:1312
 #: src/mmex.cpp:1573
-#, fuzzy
 msgid "Budget Category Summary"
-msgstr "Költségvetési év bevitele"
+msgstr "Költségvetési kategóriák összesítése"
 
 #: src/mmex.cpp:1340
 #: src/mmex.cpp:3464
@@ -2066,14 +1933,12 @@ msgid "Cash Flow"
 msgstr "Cash Flow"
 
 #: src/mmex.cpp:1343
-#, fuzzy
 msgid "Cash Flow - With Bank Accounts"
-msgstr "Cash Flow - meghatározott számlák"
+msgstr "Cash Flow - bankszámlák szerint"
 
 #: src/mmex.cpp:1348
-#, fuzzy
 msgid "Cash Flow - With Term Accounts"
-msgstr "Cash Flow - meghatározott számlák"
+msgstr "Cash Flow - időszaki számlák szerint"
 
 #: src/mmex.cpp:1352
 msgid "Cash Flow - Specific Accounts"
@@ -2085,264 +1950,223 @@ msgstr "Súgó"
 
 #: src/mmex.cpp:1558
 msgid "Budget report being generated... Please wait."
-msgstr ""
+msgstr "A költségvetési jelentés készül. Kérem várjon!"
 
 #: src/mmex.cpp:1687
-#, fuzzy
 msgid "Category Report"
-msgstr "Kategória"
+msgstr "Kategória-jelentés"
 
 #: src/mmex.cpp:1687
 msgid "Category Report being generated... Please wait."
-msgstr ""
+msgstr "A kategóriákról jelentés készül. Kérem várjon!"
 
 #: src/mmex.cpp:1707
-#, fuzzy
 msgid "Categories - Last Calendar Month"
-msgstr "Utolsó naptári hónap"
+msgstr "Kategóriák - előző naptári hónapban"
 
 #: src/mmex.cpp:1718
-#, fuzzy
 msgid "Categories - Last 30 Days"
-msgstr "Elmúlt 30 nap"
+msgstr "Kategóriák - elmúlt 30 napban"
 
 #: src/mmex.cpp:1729
-#, fuzzy
 msgid "Categories - Current Month"
-msgstr "Jelenlegi hónap"
+msgstr "Kategóriák - ebben a hónapban"
 
 #: src/mmex.cpp:1732
-#, fuzzy
 msgid "Categories - Current Month to Date"
-msgstr "Jelenlegi hónap"
+msgstr "Kategóriák - ebben a hónapban máig"
 
 #: src/mmex.cpp:1749
-#, fuzzy
 msgid "Categories - Last Year"
-msgstr "Elmúlt 30 nap"
+msgstr "Kategóriák - tavaly"
 
 #: src/mmex.cpp:1764
-#, fuzzy
 msgid "Categories - Current Year"
-msgstr "Idei év"
+msgstr "Kategóriák - idén"
 
 #: src/mmex.cpp:1774
-#, fuzzy
 msgid "Categories - Last Financial Year"
-msgstr "Elmúlt 30 nap"
+msgstr "Kategóriák - előző pénzügyi évben"
 
 #: src/mmex.cpp:1783
 msgid "Categories - Current Financial Year"
-msgstr ""
+msgstr "Kategóriák - ebben a pénzügyi évben"
 
 #: src/mmex.cpp:1809
-#, fuzzy
 msgid "Where the Money Comes From - Last Calendar Month"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz jött - előző hónapban"
 
 #: src/mmex.cpp:1820
-#, fuzzy
 msgid "Where the Money Comes From - Last 30 days"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz jött - előző 30 napban"
 
 #: src/mmex.cpp:1831
-#, fuzzy
 msgid "Where the Money Comes From - Current Month"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz jött - ebben hónapban"
 
 #: src/mmex.cpp:1834
-#, fuzzy
 msgid "Where the Money Comes From - Current Month to Date"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz jött - ebben a hónapban máig"
 
 #: src/mmex.cpp:1851
-#, fuzzy
 msgid "Where the Money Comes From - Last year"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz jött - tavaly"
 
 #: src/mmex.cpp:1866
-#, fuzzy
 msgid "Where the Money Comes From - Current Year"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz jött - idén"
 
 #: src/mmex.cpp:1876
-#, fuzzy
 msgid "Where the Money Comes From - Last Financial Year"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz jött - előző pénzügyi évben"
 
 #: src/mmex.cpp:1886
-#, fuzzy
 msgid "Where the Money Comes From - Current Financial Year"
-msgstr "Hová ment a pénz"
+msgstr "Ahonnan a pénz jött - ebben a pénzügyi évben"
 
 #: src/mmex.cpp:1912
-#, fuzzy
 msgid "Where the Money Goes - Last Calendar Month"
-msgstr "Utolsó naptári hónap"
+msgstr "Ahová a pénz ment - előző hónapban"
 
 #: src/mmex.cpp:1923
-#, fuzzy
 msgid "Where the Money Goes - Last 30 Days"
-msgstr "Hová ment a pénz"
+msgstr "Ahová a pénz ment - előző 30 napban"
 
 #: src/mmex.cpp:1934
-#, fuzzy
 msgid "Where the Money Goes - Current Month"
-msgstr "Hová ment a pénz"
+msgstr "Ahová a pénz ment - ebben a hónapban"
 
 #: src/mmex.cpp:1937
-#, fuzzy
 msgid "Where the Money Goes - Current Month to Date"
-msgstr "Hová ment a pénz"
+msgstr "Ahová a pénz ment - ebben a hónapban máig"
 
 #: src/mmex.cpp:1954
-#, fuzzy
 msgid "Where the Money Goes - Last Year"
-msgstr "Hová ment a pénz"
+msgstr "Ahová a pénz ment - tavaly"
 
 #: src/mmex.cpp:1969
-#, fuzzy
 msgid "Where the Money Goes - Current Year"
-msgstr "Hová ment a pénz"
+msgstr "Ahová a pénz ment - idén"
 
 #: src/mmex.cpp:1979
-#, fuzzy
 msgid "Where the Money Goes - Last Financial Year"
-msgstr "Elmúlt 30 nap"
+msgstr "Ahová a pénz ment - előző pénzügyi évben"
 
 #: src/mmex.cpp:1988
-#, fuzzy
 msgid "Where the Money Goes - Current Financial Year"
-msgstr "Idei év"
+msgstr "Ahová a pénz ment - ebben a pénzügyi évben"
 
 #: src/mmex.cpp:2021
-#, fuzzy
 msgid "Income vs Expenses - Last Calendar Month"
-msgstr "Bevételek és kiadások: Ehavi"
+msgstr "Bevételek és kiadások - előző hónapban"
 
 #: src/mmex.cpp:2032
-#, fuzzy
 msgid "Income vs Expenses - Last 30 Days"
-msgstr "Összes bevétel és kiadás"
+msgstr "Bevételek és kiadások - előző 30 napban"
 
 #: src/mmex.cpp:2043
-#, fuzzy
 msgid "Income vs Expenses - Current Month"
-msgstr "Bevételek és kiadások: Ehavi"
+msgstr "Bevételek és kiadások - ebben a hónapban"
 
 #: src/mmex.cpp:2046
-#, fuzzy
 msgid "Income vs Expenses - Current Month to Date"
-msgstr "Bevételek és kiadások: Ehavi"
+msgstr "Bevételek és kiadások - ebben a hónapban máig"
 
 #: src/mmex.cpp:2100
-#, fuzzy
 msgid "Payee Report"
-msgstr "Kedvezményezett"
+msgstr "Kedvezményezett kimutatás"
 
 #: src/mmex.cpp:2120
-#, fuzzy
 msgid "Payees - Last Calendar Month"
-msgstr "Utolsó naptári hónap"
+msgstr "Kedvezményezettek - múlt hónapban"
 
 #: src/mmex.cpp:2132
-#, fuzzy
 msgid "Payees - Last 30 Days"
-msgstr "Elmúlt 30 nap"
+msgstr "Kedvezményezettek - elmúlt 30 napban"
 
 #: src/mmex.cpp:2145
-#, fuzzy
 msgid "Payees - Current Month"
-msgstr "Jelenlegi hónap"
+msgstr "Kedvezményezettek - ebben a hónapban"
 
 #: src/mmex.cpp:2148
-#, fuzzy
 msgid "Payees - Current Month to Date"
-msgstr "Jelenlegi hónap"
+msgstr "Kedvezményezettek - ebben a hónapban máig"
 
 #: src/mmex.cpp:2167
-#, fuzzy
 msgid "Payees - Last Year"
-msgstr "Elmúlt 30 nap"
+msgstr "Kedvezményezettek - tavaly"
 
 #: src/mmex.cpp:2184
-#, fuzzy
 msgid "Payees - Current Year"
-msgstr "Idei év"
+msgstr "Kedvezményezettek - idén"
 
 #: src/mmex.cpp:2197
-#, fuzzy
 msgid "Payees - Last Financial Year"
-msgstr "Elmúlt 30 nap"
+msgstr "Kedvezményezettek - elmúlt pénzügyi évben"
 
 #: src/mmex.cpp:2207
-#, fuzzy
 msgid "Payees - Current Financial Year"
-msgstr "Idei év"
+msgstr "Kedvezményezettek - ebben a pénzügyi évben"
 
 #: src/mmex.cpp:2338
 msgid "Do you really want to delete the account?"
-msgstr "Valóban törli a bankszámlát?"
+msgstr "Valóban törli a számlát?"
 
 #: src/mmex.cpp:2339
 #: src/mmex.cpp:4177
 msgid "Confirm Account Deletion"
-msgstr "Bankszámla törlésének jóváhagyása"
+msgstr "Számlatörlés jóváhagyása"
 
 #: src/mmex.cpp:2363
 msgid "MMEX has been opened without an active database."
-msgstr ""
+msgstr "Az MMEX-et aktív adatbázis nélkül nyitották meg."
 
 #: src/mmex.cpp:2363
 msgid "MMEX: Menu Popup Error"
-msgstr ""
+msgstr "MMEX: hiba a felugró menüvel!"
 
 #: src/mmex.cpp:2385
 #: src/mmex.cpp:2430
 #: src/mmex.cpp:2729
 msgid "&Edit Account"
-msgstr "&Bankszámla szerkesztése"
+msgstr "Számla szerkesztése"
 
 #: src/mmex.cpp:2386
 #: src/mmex.cpp:2429
 #: src/mmex.cpp:2735
 msgid "&Delete Account"
-msgstr "&Bankszámla törlése"
+msgstr "Számla törlése"
 
 #: src/mmex.cpp:2391
-#, fuzzy
 msgid "Import &QIF File"
-msgstr "Importálás"
+msgstr "&QIF fájl Importálása"
 
 #: src/mmex.cpp:2394
 msgid "&Launch Account Website"
-msgstr "Bankszámla weboldalának betöltése"
+msgstr "Számla weboldalának betöltése"
 
 #: src/mmex.cpp:2428
 #: src/mmex.cpp:2719
 msgid "New &Account"
-msgstr "Új &bankszámla"
+msgstr "Új számla"
 
 #: src/mmex.cpp:2431
-#, fuzzy
 msgid "Account &List (Home)"
-msgstr "Bankszámlák &listája"
+msgstr "Számlák &listája"
 
 #: src/mmex.cpp:2440
 #: src/mmex.cpp:2444
 #: src/mmex.cpp:2630
 #: src/mmex.cpp:2636
-#, fuzzy
 msgid "&CSV Files..."
-msgstr "&CSV fájlok"
+msgstr "&CSV fájlok.."
 
 #: src/mmex.cpp:2441
 #: src/mmex.cpp:2445
 #: src/mmex.cpp:2631
 #: src/mmex.cpp:2637
-#, fuzzy
 msgid "&QIF Files..."
-msgstr "&Importálás QIF-ből"
+msgstr "&QIF fájlok..."
 
 #: src/mmex.cpp:2442
 #: src/mmex.cpp:2633
@@ -2351,9 +2175,8 @@ msgstr "&Exportálás"
 
 #: src/mmex.cpp:2446
 #: src/mmex.cpp:2638
-#, fuzzy
 msgid "&Import"
-msgstr "Importálás"
+msgstr "&Importálás"
 
 #: src/mmex.cpp:2451
 #: src/optionsdialog.cpp:201
@@ -2374,16 +2197,15 @@ msgstr "Kedvencek"
 #: src/mmex.cpp:2454
 #: src/optionsdialog.cpp:406
 msgid "Accounts Visible"
-msgstr "Látható bankszámlák"
+msgstr "Megjelenített számlák"
 
 #: src/mmex.cpp:2465
 msgid "Edit Custom Report"
-msgstr ""
+msgstr "Kivonatos jelentés szerkesztése"
 
 #: src/mmex.cpp:2466
-#, fuzzy
 msgid "Delete Custom Report"
-msgstr "Vagyontárgy Törlése"
+msgstr "Kivonatolt jelentés Törlése"
 
 #: src/mmex.cpp:2610
 msgid "&New Database\tCtrl-N"
@@ -2392,9 +2214,8 @@ msgstr "&Új adatbázis\tCtrl-N"
 #: src/mmex.cpp:2610
 #: src/mmex.cpp:2927
 #: src/mmex.cpp:4469
-#, fuzzy
 msgid "New Database"
-msgstr "Új adatbázis varázsló"
+msgstr "Új adatbázis"
 
 #: src/mmex.cpp:2612
 msgid "&Open Database\tCtrl-O"
@@ -2402,26 +2223,24 @@ msgstr "&Adatbázis megnyitása\tCtrl-O"
 
 #: src/mmex.cpp:2612
 #: src/mmex.cpp:2928
-#, fuzzy
 msgid "Open Database"
-msgstr "&Adatbázis megnyitása\tCtrl-O"
+msgstr "&Adatbázis megnyitása (CTRL+o)"
 
 #: src/mmex.cpp:2614
 msgid "Save Database &As"
 msgstr "Adatbázis mentése &másként"
 
 #: src/mmex.cpp:2614
-#, fuzzy
 msgid "Save Database As"
-msgstr "Adatbázis mentése &másként"
+msgstr "Adatbázis mentése másként "
 
 #: src/mmex.cpp:2622
 msgid "&Recent Files..."
-msgstr ""
+msgstr "Legutóbbi fájlok"
 
 #: src/mmex.cpp:2624
 msgid "&Clear Recent Files"
-msgstr ""
+msgstr "Legutóbbi fájlok lista törlése"
 
 #: src/mmex.cpp:2630
 msgid "Export to CSV"
@@ -2444,9 +2263,8 @@ msgid "Import from QIF"
 msgstr "Importálás QIF-ből"
 
 #: src/mmex.cpp:2643
-#, fuzzy
 msgid "Page Set&up..."
-msgstr "Oldalbeállítás"
+msgstr "Oldalbeállítás..."
 
 #: src/mmex.cpp:2643
 msgid "Setup page printing options"
@@ -2454,27 +2272,24 @@ msgstr "Nyomtatási beállítások"
 
 #: src/mmex.cpp:2649
 #: src/mmex.cpp:2655
-#, fuzzy
 msgid "Current &View"
-msgstr "Jelenlegi nézet"
+msgstr "Jelenlegi nézet "
 
 #: src/mmex.cpp:2649
 msgid "Preview current report"
 msgstr "Jelenlegi jelentés előnézete"
 
 #: src/mmex.cpp:2651
-#, fuzzy
 msgid "Print Pre&view..."
-msgstr "Nyomtatási kép"
+msgstr "Nyomtatási előnézet"
 
 #: src/mmex.cpp:2655
 msgid "Print current report"
 msgstr "Jelenlegi jelentés nyomtatása"
 
 #: src/mmex.cpp:2658
-#, fuzzy
 msgid "&Print..."
-msgstr "Nyomtatás..."
+msgstr "Nyomtatás...."
 
 #: src/mmex.cpp:2663
 msgid "E&xit\tAlt-X"
@@ -2493,114 +2308,104 @@ msgid "Show/Hide the toolbar"
 msgstr "Eszköztár megjelenítése/elrejtése"
 
 #: src/mmex.cpp:2672
-#, fuzzy
 msgid "&Navigation"
-msgstr "Navigálás"
+msgstr "Navigáció "
 
 #: src/mmex.cpp:2672
 msgid "Show/Hide the Navigation tree control"
-msgstr "Navigációs fa meglelenítése/elrejtése"
+msgstr "Navigációs fa megjelenítése/elrejtése"
 
 #: src/mmex.cpp:2674
-#, fuzzy
 msgid "&Bank Accounts"
-msgstr "Bankszámlák"
+msgstr "&Bankszámlák "
 
 #: src/mmex.cpp:2674
 msgid "Show/Hide Bank Accounts on Summary page"
-msgstr ""
+msgstr "Az összesítő lapon a bankszámlákat megjelenítése, vagy elrejtése. "
 
 #: src/mmex.cpp:2676
-#, fuzzy
 msgid "Term &Accounts"
-msgstr "&Bankszámlák"
+msgstr "Időszaki b&ankszámlák"
 
 #: src/mmex.cpp:2676
 msgid "Show/Hide Term Accounts on Summary page"
-msgstr ""
+msgstr "Az összesítő lapon az Időszaki számlák megjelenítése."
 
 #: src/mmex.cpp:2678
-#, fuzzy
 msgid "&Stock Accounts"
-msgstr "Bankszámlák"
+msgstr "Részvényszámlák"
 
 #: src/mmex.cpp:2678
 msgid "Show/Hide Stock Accounts on Summary page"
-msgstr ""
+msgstr "Az összesítő lapon a befektetési számlákat mutassa, vagy rejtse el."
 
 #: src/mmex.cpp:2680
-#, fuzzy
 msgid "Budgets: As &Financial Years"
-msgstr "Idei év"
+msgstr "Költségvetés: pénzügyi év szerint"
 
 #: src/mmex.cpp:2680
 msgid "Display Budgets in Financial Year Format"
-msgstr ""
+msgstr "A költségvetést pénzügyi év formátumban mutassa."
 
 #: src/mmex.cpp:2682
 msgid "Budgets: &Include Transfers in Totals"
-msgstr ""
+msgstr "Költségvetések: belevenni az átutalásokat összesen"
 
 #: src/mmex.cpp:2682
-#, fuzzy
 msgid "Include the transfer transactions in the Budget Totals"
-msgstr " ügyletek importálva QIF-ből"
+msgstr " Átutalások beszámítása a költségvetés összesébe"
 
 #: src/mmex.cpp:2684
-#, fuzzy
 msgid "Budget Setup: &Without Summaries"
-msgstr "Költségvetési év "
+msgstr "Költségvetési összeállítása: összesítők nélkül "
 
 #: src/mmex.cpp:2684
 msgid "Display the Budget Setup without category summaries"
-msgstr ""
+msgstr "A költségvetés beállítását a kategóriák nélkül mutassa"
 
 #: src/mmex.cpp:2686
 msgid "Budget Summary: Include &Categories"
-msgstr ""
+msgstr "Költségvetési összesítő: kategóriákkal együtt"
 
 #: src/mmex.cpp:2686
 msgid "Include the categories in the Budget Category Summary"
-msgstr ""
+msgstr "A kategóriákat a \"Költségvetési kategóriák összesítő\" tartalmazza!"
 
 #: src/mmex.cpp:2688
-#, fuzzy
 msgid "Ignore F&uture Transactions"
-msgstr "Ügyletek szűrése"
+msgstr "Jövőben tranzakciók figyelmen kívül hagyása"
 
 #: src/mmex.cpp:2688
-#, fuzzy
 msgid "Ignore Future transactions"
-msgstr "Ügyletek szűrése"
+msgstr "Jövőben tranzakciók figyelmen kívül hagyása"
 
 #: src/mmex.cpp:2719
 #: src/mmex.cpp:2931
 #: src/mmex.cpp:4503
 #: src/mmex.cpp:4562
 msgid "New Account"
-msgstr "Új Bankszámla"
+msgstr "Új számla"
 
 #: src/mmex.cpp:2725
 msgid "Account &List"
-msgstr "Bankszámlák &listája"
+msgstr "Számlák &lista"
 
 #: src/mmex.cpp:2725
 #: src/mmex.cpp:2932
 msgid "Show Account List"
-msgstr "Bankszámlák listája"
+msgstr "Számlalista mutatása"
 
 #: src/mmex.cpp:2729
 msgid "Edit Account"
-msgstr "Bankszámla szerkesztése"
+msgstr "Számla szerkesztése"
 
 #: src/mmex.cpp:2735
 msgid "Delete Account from database"
-msgstr "Bankszámla törlése az adatbázisból"
+msgstr "Számla törlése az adatbázisból."
 
 #: src/mmex.cpp:2747
-#, fuzzy
 msgid "Organize &Categories..."
-msgstr "&Kategóriák kezelése"
+msgstr "&Kategóriák rendezése..."
 
 #: src/mmex.cpp:2747
 #: src/mmex.cpp:2934
@@ -2608,14 +2413,12 @@ msgid "Organize Categories"
 msgstr "Kategóriák kezelése"
 
 #: src/mmex.cpp:2752
-#, fuzzy
 msgid "Organize &Payees..."
-msgstr "&Kedvezményezettek kezelése"
+msgstr "&Kedvezményezettek rendezése"
 
 #: src/mmex.cpp:2757
-#, fuzzy
 msgid "Organize Currency..."
-msgstr "Pénznem kezelése"
+msgstr "Pénznem kezelése..."
 
 #: src/mmex.cpp:2757
 #: src/mmex.cpp:2936
@@ -2623,123 +2426,109 @@ msgid "Organize Currency"
 msgstr "Pénznem kezelése"
 
 #: src/mmex.cpp:2763
-#, fuzzy
 msgid "&Categories..."
-msgstr "Kategória"
+msgstr "Kategóriák..."
 
 #: src/mmex.cpp:2763
 msgid "Reassign all categories to another category"
-msgstr ""
+msgstr "Minden kategória átsorolása egy másikba."
 
 #: src/mmex.cpp:2766
-#, fuzzy
 msgid "&Payees..."
-msgstr "Kedvezményezett"
+msgstr "Kedvezményezettek..."
 
 #: src/mmex.cpp:2766
 msgid "Reassign all payees to another payee"
-msgstr ""
+msgstr "Az összes kedvezményezett átsorolása egy másikba."
 
 #: src/mmex.cpp:2770
 msgid "Relocation of..."
-msgstr ""
+msgstr "Áthelyezendő..."
 
 #: src/mmex.cpp:2770
-#, fuzzy
 msgid "Relocate Categories && Payees"
-msgstr "Elmúlt 30 nap"
+msgstr "Kategóriák és kedvezményezettek áthelyezése"
 
 #: src/mmex.cpp:2777
-#, fuzzy
 msgid "&Budget Setup"
-msgstr "Költségvetés beállítása"
+msgstr "Költségvetés beállítása "
 
 #: src/mmex.cpp:2785
-#, fuzzy
 msgid "&Repeating Transactions"
-msgstr "Sorozatos ügyletek"
+msgstr "&Rendszeres ügyletek"
 
 #: src/mmex.cpp:2785
 msgid "Bills && Deposits"
 msgstr "Számlák vagy betétek"
 
 #: src/mmex.cpp:2792
-#, fuzzy
 msgid "&Assets"
-msgstr "Vagyon"
+msgstr "V&agyontárgyak"
 
 #: src/mmex.cpp:2800
-#, fuzzy
 msgid "&Transaction Report Filter..."
-msgstr "Ügyletek szűrése"
+msgstr "Ügyletek szűrése..."
 
 #: src/mmex.cpp:2800
 #: src/mmex.cpp:2938
-#, fuzzy
 msgid "Transaction Report Filter"
-msgstr "Ügylet lekérdezések"
+msgstr "Ügyletek szűrése"
 
 #: src/mmex.cpp:2810
 msgid "New..."
-msgstr ""
+msgstr "Új..."
 
 #: src/mmex.cpp:2810
 msgid "Create a new SQL report"
-msgstr ""
+msgstr "Új SQL jelentés készítése"
 
 #: src/mmex.cpp:2812
-#, fuzzy
 msgid "Edit..."
-msgstr "Szerkesztés"
+msgstr "Szerkesztés..."
 
 #: src/mmex.cpp:2812
-#, fuzzy
 msgid "Edit an existing SQL report"
-msgstr "Létező kategória nevének szerkesztése"
+msgstr "Létező SQL kimutatás szerkesztése"
 
 #: src/mmex.cpp:2814
-#, fuzzy
 msgid "Delete..."
-msgstr "Törlés"
+msgstr "Törlés..."
 
 #: src/mmex.cpp:2814
 msgid "Remove a file from the Custom SQL Reports menu"
-msgstr ""
+msgstr "Fájl eltávolítása kivonatos SQL jelentések menüjéből "
 
 #: src/mmex.cpp:2820
 msgid "Custom SQL Reports..."
-msgstr ""
+msgstr "Kivonatos SQL jelentések..."
 
 #: src/mmex.cpp:2820
 msgid "Create or modify SQL reports for the Reports section"
-msgstr ""
+msgstr "A jelentési részhez SQL jelentések készítése, vagy módosítása"
 
 #: src/mmex.cpp:2825
-#, fuzzy
 msgid "&Options..."
-msgstr "&Beállítások"
+msgstr "&Beállítások..."
 
 #: src/mmex.cpp:2825
-#, fuzzy
 msgid "Show the Options Dialog"
-msgstr "Beállítások ablak"
+msgstr "Beállítások párbeszéd megjelenítése"
 
 #: src/mmex.cpp:2832
 msgid "Convert Encrypted &DB"
-msgstr ""
+msgstr "Titkosított adatbázis betöltése."
 
 #: src/mmex.cpp:2833
 msgid "Convert Encrypted DB to Non-Encrypted DB"
-msgstr ""
+msgstr "Titkosított adatbázis átalakítás nyílttá."
 
 #: src/mmex.cpp:2839
-#, fuzzy
 msgid "Online &Update Currency Rate"
-msgstr "Alap pénznem nincs beállítva"
+msgstr "Árfolyam online frissítése"
 
 #: src/mmex.cpp:2840
 msgid "Online update currency rate"
-msgstr ""
+msgstr "Átváltási árfolyam online frissítése"
 
 #: src/mmex.cpp:2847
 msgid "&Help\tCtrl-F1"
@@ -2747,12 +2536,11 @@ msgstr "&Súgó\tCtrl-F1"
 
 #: src/mmex.cpp:2847
 msgid "Show the Help file"
-msgstr ""
+msgstr "Segítség megjelenítése"
 
 #: src/mmex.cpp:2852
-#, fuzzy
 msgid "&Show App Start Dialog"
-msgstr "Mutassa az indítóablakot"
+msgstr "Mutassa a programindító ablakot"
 
 #: src/mmex.cpp:2852
 msgid "App Start Dialog"
@@ -2768,24 +2556,23 @@ msgstr "Frissítések keresése"
 
 #: src/mmex.cpp:2869
 msgid "Visit MMEX Forum or &Report New Issues."
-msgstr ""
+msgstr "Ugrás az MMEX fórumra és visszajelzés."
 
 #: src/mmex.cpp:2869
-#, fuzzy
 msgid "Visit the MMEX forum. See existing user comments, or report new issues with the software."
-msgstr "A szoftverrel kapcsolatos észrevételek elküldése a levelezőlistára."
+msgstr "Látogassa meg az MMEX fórumát. Tekintse meg a felhasználói észrevételeket, vagy küldjön új jelentést a szoftverről."
 
 #: src/mmex.cpp:2877
 msgid "Register/View Release &Notifications."
-msgstr ""
+msgstr "Kiadói értesítők - regisztrálás, vagy megtekintés"
 
 #: src/mmex.cpp:2877
 msgid "Sign up to Notification Mailing List or View existing announcements."
-msgstr ""
+msgstr "Feliratkozás a levelező listára, vagy bejelentések megtekintése."
 
 #: src/mmex.cpp:2883
 msgid "Visit us on Facebook"
-msgstr ""
+msgstr "Látogasson meg minket a Facebook-on."
 
 #: src/mmex.cpp:2888
 msgid "&About..."
@@ -2801,7 +2588,7 @@ msgstr "&Fájl"
 
 #: src/mmex.cpp:2894
 msgid "&Accounts"
-msgstr "&Bankszámlák"
+msgstr "&Számlák"
 
 #: src/mmex.cpp:2895
 msgid "&Tools"
@@ -2821,7 +2608,7 @@ msgstr "Új"
 
 #: src/mmex.cpp:2932
 msgid "Account List"
-msgstr "Bankszámlák listája"
+msgstr "Számlák listája"
 
 #: src/mmex.cpp:2934
 msgid "Show Organize Categories Dialog"
@@ -2837,47 +2624,40 @@ msgstr "Pénznemkezelő ablak mutatása"
 
 #: src/mmex.cpp:2940
 msgid "Custom SQL Manager"
-msgstr ""
+msgstr "Kivonatos SQL szervező"
 
 #: src/mmex.cpp:2940
 msgid "Create new Custom SQL Reports"
-msgstr ""
+msgstr "Új kivonatos SQL jelentés összeállítása"
 
 #: src/mmex.cpp:2970
 msgid "Enter database's password"
-msgstr ""
+msgstr "Adja meg az adatbázis jelszavát!"
 
 #: src/mmex.cpp:2975
-#, fuzzy
 msgid "Opening MMEX Database - Error"
-msgstr "Utoljára megnyitott adatbázis megnyitása"
+msgstr "MMEX adatbázis megnyitási hiba"
 
 #: src/mmex.cpp:2996
 #: src/mmex.cpp:3044
-#, fuzzy
 msgid " - No File opened "
-msgstr "Money Manager EX - nincs megnyitott fájl"
+msgstr " - Nincs megnyitott fájl"
 
 #: src/mmex.cpp:2998
-#, fuzzy
 msgid "Sorry. The Database version is too old or Database password is incorrect"
-msgstr "Sajnálom. Az adatbázis túl régi, vagy a jelszó helytelen"
+msgstr "Sajnálom. Az adatbázis túl régi, vagy a jelszó helytelen."
 
 #: src/mmex.cpp:3047
-#, fuzzy
 msgid "Cannot locate previously opened database.\n"
-msgstr "Az előszőleg használt adatbázis :"
+msgstr "Nem találok előzőleg megnyitott adatbázist.\n"
 
 #: src/mmex.cpp:3049
 msgid "Password not entered for encrypted Database.\n"
-msgstr ""
+msgstr "Nem adta meg a titkosított adatbázis jelszavát.\n"
 
 #: src/mmex.cpp:3051
-#, fuzzy
 msgid "Do you want to browse to locate another file?"
-msgstr ""
-"Nem található az előzőleg megnyitott .mmb adatbázis.\n"
-"Meg akarja keresni a fájlt?"
+msgstr "Akar másik fájlt keresni?"
 
 #: src/mmex.cpp:3069
 #: src/mmcheckingpanel.cpp:527
@@ -2890,69 +2670,60 @@ msgstr "Adatbázis megnyitása és hibaellenőrzés"
 
 #: src/mmex.cpp:3080
 msgid "portable mode"
-msgstr ""
+msgstr "hordozható mód"
 
 #: src/mmex.cpp:3134
-#, fuzzy
 msgid "Choose database file to create"
-msgstr "Válasszon QIF fájlt az importáláshoz"
+msgstr "Adja meg az adatbázisfájl nevét"
 
 #: src/mmex.cpp:3156
-#, fuzzy
 msgid "Choose database file to open"
-msgstr "Válasszon QIF fájlt az importáláshoz"
+msgstr "Válassza ki a megnyitni kívánt adatbázis"
 
 #: src/mmex.cpp:3172
-#, fuzzy
 msgid "Choose Encrypted database file to open"
-msgstr "Válasszon QIF fájlt az importáláshoz"
+msgstr "Válassza ki a titkosított adatbázisfájlt!"
 
 #: src/mmex.cpp:3182
-#, fuzzy
 msgid "Enter password for database"
-msgstr "Hiba az adatbázis megnyitásakor"
+msgstr "Adja meg az adatbázis jelszavát."
 
 #: src/mmex.cpp:3187
-#, fuzzy
 msgid "Choose database file to Save As"
-msgstr "Válasszon QIF fájlt az importáláshoz"
+msgstr "A másként mentéshez válasszon ki egy adatbázisfájlt"
 
 #: src/mmex.cpp:3209
 msgid "Converted DB!"
-msgstr ""
+msgstr "Konvetrált adatbázis"
 
 #: src/mmex.cpp:3209
 msgid "MMEX message"
-msgstr ""
+msgstr "MMEX üzenet"
 
 #: src/mmex.cpp:3224
 #: src/mmex.cpp:3244
-#, fuzzy
 msgid "Save database file as"
-msgstr "Adatbázis mentése &másként"
+msgstr "Adatbázis mentése másként "
 
 #: src/mmex.cpp:3244
 msgid "Can't copy file to itself"
-msgstr ""
+msgstr "A fájl nem másolható önmagára."
 
 #: src/mmex.cpp:3257
-#, fuzzy
 msgid "Enter password for new database"
-msgstr "Hiba az adatbázis megnyitásakor"
+msgstr "Adja meg az új adatbázis jelszavát"
 
 #: src/mmex.cpp:3318
-#, fuzzy
 msgid "No account available to import"
-msgstr "Nincs bankszámla! Nem tudok exportálni!"
+msgstr "Nincs importáláshoz elérhető számla!"
 
 #: src/mmex.cpp:3318
-#, fuzzy
 msgid "Universal CSV Import"
-msgstr "CSV importálás"
+msgstr "Univerzális CSV importálása"
 
 #: src/mmex.cpp:3360
 msgid "Term Account views have been temporarly turned on."
-msgstr ""
+msgstr "Az időszaki számlák megjelenítése időlegesen bekapcsolva."
 
 #: src/mmex.cpp:3361
 msgid ""
@@ -2961,40 +2732,42 @@ msgid ""
 "Tools -> Options\n"
 "View Options"
 msgstr ""
+"A megjelenítés megtartatása a menü\n"
+"\n"
+"Eszközök->Beállítások\n"
+"Nézet beállításainál választható ki."
 
 #: src/mmex.cpp:3363
 msgid "This message will not be displayed in future."
-msgstr ""
+msgstr "Ez az üzenet nem jelenik meg a jövőben."
 
 #: src/mmex.cpp:3364
-#, fuzzy
 msgid "Initial Term Account Activation"
-msgstr "Bankszámla törlésének jóváhagyása"
+msgstr "Időszaki számla kezdeti beállítása"
 
 #: src/mmex.cpp:3464
 msgid "Choose Accounts"
-msgstr "Bankszámlák kiválasztása"
+msgstr "Számlák kiválasztása"
 
 #: src/mmex.cpp:3509
 msgid "MMEX Options have been updated."
-msgstr ""
+msgstr "Az MMEX opciói frissültek."
 
 #: src/mmex.cpp:3513
 msgid "Recommendation: Shut down and restart MMEX."
-msgstr ""
+msgstr "Javaslat: zárja be és indítsa újra az MMEX-et."
 
 #: src/mmex.cpp:3514
 msgid "This will allow all MMEX option updates to take effect."
-msgstr ""
+msgstr "Ezzel engedélyezi az MMEX opciók frissítésének hatálybalépését."
 
 #: src/mmex.cpp:3516
-#, fuzzy
 msgid "New MMEX Options"
-msgstr "Nézet beállításai"
+msgstr "Új MMEX opció"
 
 #: src/mmex.cpp:3589
 msgid "System: "
-msgstr ""
+msgstr "Rendszer: "
 
 #: src/mmex.cpp:3605
 #: src/mmex.cpp:3680
@@ -3004,7 +2777,7 @@ msgstr "Nincs kapcsolat!"
 #: src/mmex.cpp:3606
 #: src/mmex.cpp:3655
 msgid "MMEX System Information Check"
-msgstr ""
+msgstr "Az MMEX rendszerinformációk ellenőrzése"
 
 #: src/mmex.cpp:3644
 msgid "New update available!"
@@ -3016,12 +2789,11 @@ msgstr "Ez a legújabb verzió!"
 
 #: src/mmex.cpp:3654
 msgid "Proceed to website: "
-msgstr ""
+msgstr "Belépés a következő internetoldalra: "
 
 #: src/mmex.cpp:3670
-#, fuzzy
 msgid "No database!"
-msgstr "Új adatbázis varázsló"
+msgstr "Nem adatbázis!"
 
 #: src/mmex.cpp:3670
 #: src/mmex.cpp:3680
@@ -3034,133 +2806,122 @@ msgstr "Új adatbázis varázsló"
 #: src/mmex.cpp:3739
 #: src/mmex.cpp:3745
 #: src/mmex.cpp:3791
-#, fuzzy
 msgid "Update Currency Rate"
-msgstr "Alap pénznem nincs beállítva"
+msgstr "Valutaárfolyam frissítése"
 
 #: src/mmex.cpp:3688
 msgid "Cannot get data from WWW!"
-msgstr ""
+msgstr "Az internetoldalról nem jönnek adatok!"
 
 #: src/mmex.cpp:3695
 msgid "Incorrect XML data (#1)!"
-msgstr ""
+msgstr "Szabálytalan XML adat (#1)!"
 
 #: src/mmex.cpp:3707
 msgid "Incorrect XML data (#2)!"
-msgstr ""
+msgstr "Szabálytalan XML adat (#2)!"
 
 #: src/mmex.cpp:3717
 msgid "Incorrect XML data (#3)!"
-msgstr ""
+msgstr "Szabálytalan XML adat (#3)!"
 
 #: src/mmex.cpp:3723
 msgid "Incorrect XML data (#4)!"
-msgstr ""
+msgstr "Szabálytalan XML adat (#4)!"
 
 #: src/mmex.cpp:3729
 msgid "Incorrect XML data (#5)!"
-msgstr ""
+msgstr "Szabálytalan XML adat (#5)!"
 
 #: src/mmex.cpp:3739
 msgid "Incorrect XML data (#6)!"
-msgstr ""
+msgstr "Szabálytalan XML adat (#6)!"
 
 #: src/mmex.cpp:3745
 msgid "Incorrect XML data (#7)!"
-msgstr ""
+msgstr "Szabálytalan XML adat (#7)!"
 
 #: src/mmex.cpp:3791
 msgid "Could not find base currency symbol!"
-msgstr ""
+msgstr "Az alap pénznem jele nem található!"
 
 #: src/mmex.cpp:3805
 #: src/mmex.cpp:3827
-#, fuzzy
 msgid "Currency rate updated"
-msgstr "Pénznem kezelő"
+msgstr "Valutaárfolyam frissítve"
 
 #: src/mmex.cpp:4111
-#, fuzzy
 msgid "No account available to edit!"
-msgstr "Nincs bankszámla!"
+msgstr "Nincs szerkeszthető számla!"
 
 #: src/mmex.cpp:4111
 #: src/mmex.cpp:4128
 #: src/mmex.cpp:4152
 #: src/mmex.cpp:4169
 msgid "Accounts"
-msgstr "Bankszámlák"
+msgstr "Számlák"
 
 #: src/mmex.cpp:4128
 msgid "Choose Account to Edit"
-msgstr "Válasszon egy számlát a szerkesztéshez"
+msgstr "Válassza ki a szerkesztendő számlát"
 
 #: src/mmex.cpp:4152
-#, fuzzy
 msgid "No account available to delete!"
-msgstr "Nincs bankszámla!"
+msgstr "Nincs törölhető számla!"
 
 #: src/mmex.cpp:4169
 msgid "Choose Account to Delete"
-msgstr "Válasszon egy bankszámlát a törléshez"
+msgstr "Válassza ki a törlendő számlát"
 
 #: src/mmex.cpp:4175
-#, fuzzy
 msgid "Are you sure you want to delete\n"
-msgstr "Valóban törli a vagyontárgyat?"
+msgstr "Valóban törli akarja?\n"
 
 #: src/mmex.cpp:4176
-#, fuzzy
 msgid " account: "
-msgstr " összeg"
+msgstr " számla: "
 
 #: src/mmex.cpp:4285
-#, fuzzy
 msgid "Category Relocation Completed."
-msgstr "A kategória nem lehet üres"
+msgstr "A kategóriaáthelyezés befejezve."
 
 #: src/mmex.cpp:4286
 #: src/mmex.cpp:4301
 msgid " records have been updated in the database."
-msgstr ""
+msgstr " Az adatbázis bejegyzései frissítve."
 
 #: src/mmex.cpp:4287
 #: src/mmex.cpp:4302
 msgid "MMEX must be shutdown and restarted for all the changes to be seen."
-msgstr ""
+msgstr "A változások megjelenítéséhez az MMEX-et újra kell indítani."
 
 #: src/mmex.cpp:4288
-#, fuzzy
 msgid "Category Relocation Result"
-msgstr "A kategória nem lehet üres"
+msgstr "A kategóriaáthelyezés eredménye"
 
 #: src/mmex.cpp:4300
-#, fuzzy
 msgid "Payee Relocation Completed."
-msgstr "A kategória nem lehet üres"
+msgstr "Kedvezményezett áthelyezése befejezve."
 
 #: src/mmex.cpp:4303
 msgid "Payee Relocation Result"
-msgstr ""
+msgstr "Kedvezményezett áthelyezésének eredménye"
 
 #: src/mmex.cpp:4343
 msgid " to Edit:"
-msgstr ""
+msgstr " szerkesztésre: "
 
 #: src/mmex.cpp:4364
-#, fuzzy
 msgid " to Delete:"
-msgstr "Törlés"
+msgstr " törlendő: "
 
 #: src/mmex.cpp:4379
 msgid "Delete the Custom Report Title:"
-msgstr ""
+msgstr "A törlendő kivonatos jelentés címe: "
 
 #: src/mmex.cpp:4388
-#, fuzzy
 msgid "Do you want to delete the SQL file as well?"
-msgstr "Valóban törölni akarja a sorozatot?"
+msgstr "Valóban törölni akarja az SQL fájlt is?"
 
 #: src/mmex.cpp:4423
 #: src/optionsdialog.cpp:299
@@ -3172,31 +2933,29 @@ msgid "Base Currency for account"
 msgstr "A számla alap pénzneme"
 
 #: src/mmex.cpp:4441
-#, fuzzy
 msgid ""
 "Specify the base (or default) currency to be used for the\n"
 "database. The base currency can later be changed by using\n"
 "the options dialog. New accounts, will use this currency by\n"
 "default, and can be changed when editing account details."
 msgstr ""
-"\n"
-"Adja meg az adatbázis által használt alapértelmezett \n"
-"pénznemet. Szükség esetén ez minden egyes \n"
-"bankszámlán külön beállítható.\n"
+"Adja meg az adatbázis által alapértelmezetten használt  \n"
+"pénznemet. Az alapértelmezett pénznem a Beállítások\n"
+"menüpontban, vagy a számlák által használ pénznem\n"
+"a számla beállításainál bármikor módosítható."
 
 #: src/mmex.cpp:4449
 #: src/optionsdialog.cpp:266
-#, fuzzy
 msgid "User Name"
-msgstr "Pénzegység"
+msgstr "Felhasználó neve"
 
 #: src/mmex.cpp:4456
 msgid "(Optional) Specify a title or your name."
-msgstr ""
+msgstr "Tetszőleges - adjon meg egy címet, vagy a nevét."
 
 #: src/mmex.cpp:4457
 msgid "Used as a database title for displayed and printed reports."
-msgstr ""
+msgstr "A megjelenített és nyomtatott jelentésekben az adatbázis neveként használt."
 
 #: src/mmex.cpp:4469
 msgid "Base Currency Not Set"
@@ -3204,27 +2963,23 @@ msgstr "Alap pénznem nincs beállítva"
 
 #: src/mmex.cpp:4486
 msgid "Name of the Account"
-msgstr "A bankszámla neve"
+msgstr "A számla neve"
 
 #: src/mmex.cpp:4490
-#, fuzzy
 msgid "Specify a descriptive name for the account."
-msgstr "Adja meg az ügylet állapotát"
+msgstr "A számlának megfelelően beszédes nevet adjon."
 
 #: src/mmex.cpp:4491
-#, fuzzy
 msgid ""
 "This is generally the name of a financial institution\n"
 "where the account is held. For example: 'ABC Bank'."
 msgstr ""
-"\n"
-"Adjon meg egy nevet a létrehozandó bankszámlához. \n"
-"Ez lehet azonos is  a bankszámlát kezelő pénzintézet nevével. \n"
+"Ez általában a számlát kezelő pénzintézet neve lehet. \n"
 "Például: 'ABC Bank'."
 
 #: src/mmex.cpp:4503
 msgid "Account Name Invalid"
-msgstr "A bankszámla neve érvénytelen"
+msgstr "Érvénytelen számlanév"
 
 #: src/mmex.cpp:4516
 msgid "Checking/Savings"
@@ -3236,7 +2991,7 @@ msgstr "Befektetési számla"
 
 #: src/mmex.cpp:4518
 msgid "Term"
-msgstr ""
+msgstr "Időszaki számla"
 
 #: src/mmex.cpp:4521
 msgid "Specify the type of account to be created."
@@ -3244,34 +2999,27 @@ msgstr "Adja meg a létrehozandó számla típusát."
 
 #: src/mmex.cpp:4525
 msgid "Type of Account"
-msgstr "Bankszámla típusa"
+msgstr "Számla típusa"
 
 #: src/mmex.cpp:4530
-#, fuzzy
 msgid "Select the type of account you want to create:"
-msgstr "Adja meg a létrehozandó számla típusát."
+msgstr "Válassza ki a létrehozandó számla típusát: "
 
 #: src/mmex.cpp:4531
-#, fuzzy
 msgid ""
 "General bank accounts cover a wide variety of account\n"
 "types like Checking, Savings and Credit card type accounts."
 msgstr ""
-"\n"
-"Adja meg a létrehozandó bankszámla típusát:\n"
-"\n"
-"A bankszámláknak sok féle változata létezik,\n"
-" mint például megtakarítási, hitelkártya és folyószámla."
+"Sokféle számla létezik, mint például \n"
+"megtakarítási, hitelkártya- és folyószámla."
 
 #: src/mmex.cpp:4535
-#, fuzzy
 msgid ""
 "Investment accounts are specialized accounts that only\n"
 "have stock/mutual fund investments associated with them."
 msgstr ""
-"\n"
-"A befektetési számlák olyan speciális számlák, amelyek  \n"
-"csak értékpapírokat és részvényeket tárolnak\n"
+"A befektetési számlák olyan speciális számlák, amelyeken \n"
+"csak értékpapírokat és részvényeket tárolnak."
 
 #: src/mmex.cpp:4539
 msgid ""
@@ -3280,28 +3028,26 @@ msgid ""
 "can have regular money coming in and out, being outside the\n"
 "general income stream."
 msgstr ""
+"Időszaki számlák olyan különleges, megtakarítási célú számlák,\n"
+"mint a határidős betétek és kötvények számlái. Ezeken \n"
+"a szokásos bevételi folyamatoktól elkülönült rendszeres \n"
+"pénzmozgás lehetséges. "
 
 #: src/mmex.cpp:4560
-#, fuzzy
 msgid "Base Account Currency Not set."
-msgstr "Alap pénznem nincs beállítva"
+msgstr "Alap pénznem nincs beállítva."
 
 #: src/mmex.cpp:4561
-#, fuzzy
 msgid "Set that first using Tools->Options menu and then add a new account."
-msgstr ""
-"Alap pénznem nincs beállítva. \n"
-"Kattintson az Eszközök->Beállítások menüpontra,\n"
-" majd hozzon létre új számlát"
+msgstr "Először ezt állítsa be az Eszközök->Beállításokban, majd hozzon létre új számlát."
 
 #: src/mmex.cpp:4665
-#, fuzzy
 msgid "Setting new Database file"
-msgstr "Adatbázis mentése &másként"
+msgstr "Új adatbázisfájl létrehozása"
 
 #: src/mmex.cpp:4665
 msgid "Please wait while the new database is being loaded."
-msgstr ""
+msgstr "Kérem várjon, amíg az új adatbázis betöltődik!"
 
 #: src/mmgraphincexpensesmonth.cpp:19
 #: src/reportincexpesestime.cpp:41
@@ -3315,11 +3061,11 @@ msgstr "Kiadás"
 
 #: src/optionsdialog.cpp:254
 msgid "Display Heading"
-msgstr ""
+msgstr "Fejléc megjelenítése"
 
 #: src/optionsdialog.cpp:272
 msgid "The User Name is used as a title for the database."
-msgstr ""
+msgstr "A felhasználó neve az adatbázis címe is egyben. "
 
 #: src/optionsdialog.cpp:276
 msgid "Language"
@@ -3334,84 +3080,80 @@ msgid "Base Currency"
 msgstr "Alap pénznem"
 
 #: src/optionsdialog.cpp:304
-#, fuzzy
 msgid "Sets the default currency for the database."
-msgstr "Adja meg a bankszámla által használt pénznemet."
+msgstr "Adja meg a adatbázis által használt pénznemet."
 
 #: src/optionsdialog.cpp:308
 msgid "Date Format"
-msgstr "Dátum formátum"
+msgstr "Dátumformátum"
 
 #: src/optionsdialog.cpp:320
 msgid "Specify the date format for display"
-msgstr "Adja meg a kijelzendő dátum formátumát"
+msgstr "Adja meg a dátum megjelenítési formáját"
 
 #: src/optionsdialog.cpp:324
-#, fuzzy
 msgid "Set"
-msgstr "Választ"
+msgstr "Beállít"
 
 #: src/optionsdialog.cpp:328
 msgid "New date format sample:"
-msgstr ""
+msgstr "Új dátumformátum minta: "
 
 #: src/optionsdialog.cpp:336
-#, fuzzy
 msgid "Financial Year"
-msgstr "Múlt év"
+msgstr "Pénzügyi év"
 
 #: src/optionsdialog.cpp:343
-#, fuzzy
 msgid "Start Day"
-msgstr "Indítóablak"
+msgstr "Indító nap"
 
 #: src/optionsdialog.cpp:352
 msgid "Specify Day for start of financial year"
-msgstr ""
+msgstr "Határozza meg a pénzügyi év kezdőnapját!"
 
 #: src/optionsdialog.cpp:356
-#, fuzzy
 msgid "Start Month"
-msgstr "Jelenlegi hónap"
+msgstr "Induló hónap"
 
 #: src/optionsdialog.cpp:372
-#, fuzzy
 msgid "Specify month for start of financial year"
-msgstr "Adjon meg egy összeget ehhez az ügylethez"
+msgstr "Határozza meg a pénzügyi év induló hónapját"
 
 #: src/optionsdialog.cpp:375
-#, fuzzy
 msgid "Database Backup"
-msgstr "Nincs adatbázis megnyitva"
+msgstr "Adatbázis másolat"
 
 #: src/optionsdialog.cpp:381
-#, fuzzy
 msgid "Create a new backup when MMEX Start"
-msgstr "Új adatbázis fájl létrehozása a kezdéshez"
+msgstr "Új másolat készítése MMEX indulásakor"
 
 #: src/optionsdialog.cpp:383
 msgid ""
 "When MMEX Starts,\n"
 "creates the backup database: dbFile_start_YYYY-MM-DD.ext."
 msgstr ""
+"Az MMEX indulásakor\n"
+"dbFile_start_ÉÉÉÉ-HH-NN.ext néven másolatot készít."
 
 #: src/optionsdialog.cpp:387
 msgid "Update database changes to database backup on exit."
-msgstr ""
+msgstr "Az adatbázis változásait kilépéskor a másolaton érvényesítse."
 
 #: src/optionsdialog.cpp:389
 msgid ""
 "When MMEX shuts down and changes made to database,\n"
 "creates or updates the backup database: dbFile_update_YYYY-MM-DD.ext."
 msgstr ""
+"Az MMEX bezáráskor az adatbázis módosítása esetén\n"
+"dbFile_start_ÉÉÉÉ-HH-NN.ext nevű másolatot létrehozza, vagy módosítja."
 
 #: src/optionsdialog.cpp:400
 msgid "Account View Options"
-msgstr "Bankszámla nézeteinek beállításai"
+msgstr "Számlanézet beállításai"
 
 #: src/optionsdialog.cpp:421
 msgid "Specify which accounts are visible"
-msgstr "Adja meg, hogy mely bankszámlák látszódjanak"
+msgstr "Adja meg, hogy mely számlák látszódjanak"
 
 #: src/optionsdialog.cpp:424
 msgid "Transaction View Options"
@@ -3419,87 +3161,79 @@ msgstr "Ügylet nézeteinek beállítása"
 
 #: src/optionsdialog.cpp:434
 msgid "Transactions Visible"
-msgstr "Látható ügyletek"
+msgstr "Megjelenített ügyletek"
 
 #: src/optionsdialog.cpp:454
 msgid "Specify which transactions are visible by default"
 msgstr "Adja meg, hogy mely ügyletek jelenjenek meg"
 
 #: src/optionsdialog.cpp:456
-#, fuzzy
 msgid "Font Size Options"
-msgstr "Bankszámla nézeteinek beállításai"
+msgstr "Betűméret opciók"
 
 #: src/optionsdialog.cpp:462
 msgid "Report Font Size"
-msgstr ""
+msgstr "Jelentés betűmérete"
 
 #: src/optionsdialog.cpp:482
 msgid "Specify which font size is used on the report tables"
-msgstr ""
+msgstr "Határozza meg a jelentés táblázataiban alkalmazott betűméretet."
 
 #: src/optionsdialog.cpp:486
 msgid "Navigation Tree Expansion Options"
-msgstr ""
+msgstr "A navigáció faszerkezet beállítási megnyitáskor."
 
 #: src/optionsdialog.cpp:495
 msgid "Expand Bank Accounts in Trew View when tree is refreshed"
-msgstr ""
+msgstr "A bankszámlákat fanézet formájában bontsa ki, ha a fa frissítésre került"
 
 #: src/optionsdialog.cpp:502
 msgid "Expand Term Accounts in Trew View when tree is refreshed"
-msgstr ""
+msgstr "Az időszaki számlákat fanézet formájában bontsa ki, ha a fa frissítésre került"
 
 #: src/optionsdialog.cpp:506
-#, fuzzy
 msgid "Home Page Expansion Options"
-msgstr "Összesítő oldal"
+msgstr "Összesítő lap beállítása megnyitáskor."
 
 #: src/optionsdialog.cpp:515
 msgid "Expand Bank Accounts on home page when page is refreshed"
-msgstr ""
+msgstr "A bankszámlákat az Összesítő lapon bontsa ki, ha a lap frissítésre került."
 
 #: src/optionsdialog.cpp:522
 msgid "Expand Term Accounts on home page when page is refreshed"
-msgstr ""
+msgstr "Az időszaki számlákat az Összesítő lapon bontsa ki, ha a lap frissítésre került"
 
 #: src/optionsdialog.cpp:527
-#, fuzzy
 msgid "Stock Accounts"
-msgstr "Bankszámlák"
+msgstr "Részvényszámlák"
 
 #: src/optionsdialog.cpp:529
 msgid "Expand Stock Accounts on home page when page is refreshed"
-msgstr ""
+msgstr "A befektetési számlákat az Összesítő lapon bontsa ki, ha a lap frissítésre került "
 
 #: src/optionsdialog.cpp:533
-#, fuzzy
 msgid "View Budgets as Financial Years"
-msgstr "Elmúlt 30 nap"
+msgstr "Költségvetés pénzügyi évben"
 
 #: src/optionsdialog.cpp:537
-#, fuzzy
 msgid "View Budgets with 'transfer' transactions"
-msgstr "Megjelölt ügyletek mutatása"
+msgstr "Költségvetés átutalásokon keresztül"
 
 #: src/optionsdialog.cpp:541
 msgid "View Budgets Setup Without Budget Summaries"
-msgstr ""
+msgstr "Költségvetés összesítések nélkül"
 
 #: src/optionsdialog.cpp:545
-#, fuzzy
 msgid "View Budget Summary Report without Categories"
-msgstr "Minden költségvetés kategória mutatása"
+msgstr "Költségvetési kimutatás kategóriák nélkül "
 
 #: src/optionsdialog.cpp:549
-#, fuzzy
 msgid "View Reports without Future Transactions"
-msgstr "Teljesített ügyletek mutatása"
+msgstr "Kimutatás a jövőbeni tranzakciók nélkül"
 
 #: src/optionsdialog.cpp:560
-#, fuzzy
 msgid "Colour Settings"
-msgstr "Beállítások áttekintése"
+msgstr "Színbeállítások"
 
 #: src/optionsdialog.cpp:568
 #: src/optionsdialog.cpp:570
@@ -3522,20 +3256,20 @@ msgstr "Adja meg a háttér színét"
 #: src/optionsdialog.cpp:584
 #: src/optionsdialog.cpp:586
 msgid "List Row 0"
-msgstr "0-dik fejléc"
+msgstr "0. fejléc"
 
 #: src/optionsdialog.cpp:587
 msgid "Specify the color for the list row 0"
-msgstr "Adja meg a 0-dik fejléc színét"
+msgstr "Adja meg a 0. fejléc színét"
 
 #: src/optionsdialog.cpp:592
 #: src/optionsdialog.cpp:594
 msgid "List Row 1"
-msgstr "1-es fejléc"
+msgstr "1. fejléc"
 
 #: src/optionsdialog.cpp:595
 msgid "Specify the color for the list row 1"
-msgstr "Adja meg az 1-es fejléc színét"
+msgstr "Adja meg az 1. fejléc színét"
 
 #: src/optionsdialog.cpp:600
 #: src/optionsdialog.cpp:602
@@ -3557,14 +3291,12 @@ msgstr "Adja meg a lista részleteinek színét"
 
 #: src/optionsdialog.cpp:616
 #: src/optionsdialog.cpp:618
-#, fuzzy
 msgid "Future Transactions"
-msgstr "Ügyletek szűrése"
+msgstr "Jövőbeni ügyletek"
 
 #: src/optionsdialog.cpp:619
-#, fuzzy
 msgid "Specify the color for future transactions"
-msgstr "Válasszon kategóriát ehhez az ügylethez"
+msgstr "Válasszon színjelölést a jövőbeni ügyletekhez"
 
 #: src/optionsdialog.cpp:625
 msgid "Restore Defaults"
@@ -3575,38 +3307,32 @@ msgid "Restore Default Colors"
 msgstr "Színek visszaállítása"
 
 #: src/optionsdialog.cpp:637
-#, fuzzy
 msgid "New Transaction Dialog Settings"
-msgstr "Ügylet szerkesztése"
+msgstr "Új tranzakció párbeszéd beállítása"
 
 #: src/optionsdialog.cpp:645
-#, fuzzy
 msgid "Default Date:"
-msgstr "Kedvezményezett választása"
+msgstr "Alapértelmezett dátum: "
 
 #: src/optionsdialog.cpp:649
-#, fuzzy
 msgid "Last Used"
-msgstr "Múlt év"
+msgstr "Utoljára használt"
 
 #: src/optionsdialog.cpp:657
-#, fuzzy
 msgid "Default Payee:"
-msgstr "Kedvezményezett választása"
+msgstr "Alapértelmezett kedvezményezett: "
 
 #: src/optionsdialog.cpp:665
-#, fuzzy
 msgid "Default Category:"
-msgstr "Kategória választása"
+msgstr "Alapértelmezett kategória: "
 
 #: src/optionsdialog.cpp:668
 msgid "Last used for payee"
-msgstr ""
+msgstr "Az utoljára alkalmazott kedvezményezett"
 
 #: src/optionsdialog.cpp:676
-#, fuzzy
 msgid "Default Status:"
-msgstr "Bankszámla állapota: "
+msgstr "Alapértelmezett állapot: "
 
 #: src/optionsdialog.cpp:707
 msgid "Stock Quote Web Page"
@@ -3614,36 +3340,35 @@ msgstr "Tőzsdeinformációs weboldal"
 
 #: src/optionsdialog.cpp:714
 msgid "Clear the field to Reset the value to system default."
-msgstr ""
+msgstr "A rendszer alapbeállításaihoz való visszatéréshez törölje a mezőt."
 
 #: src/optionsdialog.cpp:719
-#, fuzzy
 msgid "Use Original Date when Pasting Transactions"
-msgstr "Sorozatos ügyletek"
+msgstr "Ügyletek másolásakor az eredeti dátumot használja"
 
 #: src/optionsdialog.cpp:721
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr ""
+msgstr "Határozza meg, hogy másoláskor a tranzakció eredeti dátumát, vagy a jelenlegi dátumot használja-e."
 
 #: src/optionsdialog.cpp:724
-#, fuzzy
 msgid "Use Transaction Sound"
-msgstr "Új ügylet"
+msgstr "Hangjelzés az ügyletekhez."
 
 #: src/optionsdialog.cpp:726
-#, fuzzy
 msgid "Select whether to use sounds when entering transactions"
-msgstr "Adja meg az ügylet állapotát"
+msgstr "Határozza meg, hogy a tranzakcióknál mikor legyen hangvisszajelzés"
 
 #: src/optionsdialog.cpp:729
 msgid ""
 "Enable online currency update \n"
 "(Get data from European Central Bank)"
 msgstr ""
+"Online árfolyamfrissítés engedélyezése\n"
+" (az Európai Központi Bank adatai alapján)"
 
 #: src/optionsdialog.cpp:731
 msgid "Enable or disable get data from European Central Bank to update currency rate"
-msgstr ""
+msgstr "Engedélyezi, vagy tiltja adatok letöltését az Európai Központi Banktól az árfolyamfrissítéshez."
 
 #: src/optionsdialog.cpp:742
 msgid "Import/Export Settings"
@@ -3655,19 +3380,19 @@ msgstr "CSV elválasztójel"
 
 #: src/optionsdialog.cpp:759
 msgid "User Defined"
-msgstr ""
+msgstr "Felhasználói beállítás"
 
 #: src/optionsdialog.cpp:760
 msgid "Comma"
-msgstr ""
+msgstr "Vessző"
 
 #: src/optionsdialog.cpp:763
 msgid "Semicolon"
-msgstr ""
+msgstr "Pontosvessző"
 
 #: src/optionsdialog.cpp:766
 msgid "TAB"
-msgstr ""
+msgstr "Léptetés (TAB)"
 
 #: src/optionsdialog.cpp:770
 msgid "Specify the delimiter to use when importing/exporting CSV files"
@@ -3686,32 +3411,28 @@ msgid "Colors"
 msgstr "Színek"
 
 #: src/optionsdialog.cpp:790
-#, fuzzy
 msgid "Import/Export"
-msgstr "Import/Export beállítások"
+msgstr "Import/Export"
 
 #: src/optionsdialog.cpp:791
 msgid "Others"
-msgstr "Egyebek"
+msgstr "Egyéb"
 
 #: src/optionsdialog.cpp:838
-#, fuzzy
 msgid "Remember to update currency rate"
-msgstr "Alap pénznem nincs beállítva"
+msgstr "Ne feledkezzen el az árfolyamfrissítésről!"
 
 #: src/optionsdialog.cpp:838
-#, fuzzy
 msgid "Important note"
-msgstr "Importálás"
+msgstr "Fontos megjegyzés"
 
 #: src/optionsdialog.cpp:864
 msgid " : Requires MMEX Restart"
-msgstr ""
+msgstr " : Az MMEX újraindítását igényli!"
 
 #: src/qifimport.cpp:370
-#, fuzzy
 msgid "No account available for import"
-msgstr "Nincs bankszámla! Nem tudok exportálni!"
+msgstr "Nincs Importálható számla"
 
 #: src/qifimport.cpp:370
 #: src/qifimport.cpp:377
@@ -3720,30 +3441,27 @@ msgstr "Nincs bankszámla! Nem tudok exportálni!"
 #: src/qifimport.cpp:569
 #: src/qifimport.cpp:767
 msgid "QIF Import"
-msgstr ""
+msgstr "QIF import"
 
 #: src/qifimport.cpp:375
 msgid "To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX."
-msgstr ""
+msgstr "QIF fájlok helyes importálásához annak és az MMEX dátumformátumának egyeznie kell."
 
 #: src/qifimport.cpp:376
-#, fuzzy
 msgid "Are you are sure you want to proceed with the import?"
-msgstr "Valóban törli a vagyontárgyat?"
+msgstr "Valóban folytatni akarja az importálást?"
 
 #: src/qifimport.cpp:389
 msgid "Choose Account to import to:"
-msgstr "Válasszon bankszámlát az importáláshoz:"
+msgstr "Válasszon számlát az importáláshoz: "
 
 #: src/qifimport.cpp:404
-#, fuzzy
 msgid "QIF Files "
-msgstr "&Importálás QIF-ből"
+msgstr "QIF-fájlok"
 
 #: src/qifimport.cpp:405
-#, fuzzy
 msgid "All Files "
-msgstr "&CSV fájlok"
+msgstr "Minden fájl"
 
 #: src/qifimport.cpp:406
 msgid "Choose QIF data file to import"
@@ -3751,56 +3469,48 @@ msgstr "Válasszon QIF fájlt az importáláshoz"
 
 #: src/qifimport.cpp:442
 #: src/qifimport.cpp:762
-#, fuzzy
 msgid "Transactions imported from QIF: "
-msgstr " ügyletek importálva QIF-ből"
+msgstr " Ügyletek importálva QIF-ből: "
 
 #: src/qifimport.cpp:447
-#, fuzzy
 msgid "Transactions imported from QIF"
-msgstr " ügyletek importálva QIF-ből"
+msgstr " Ügyletek importálva QIF-ből"
 
 #: src/qifimport.cpp:448
-#, fuzzy
 msgid "to account "
-msgstr " összeg"
+msgstr "számlára"
 
 #: src/qifimport.cpp:464
 #: src/qifimport.cpp:498
 #: src/qifimport.cpp:565
 #: src/qifimport.cpp:601
-#, fuzzy
 msgid "Line: "
-msgstr "Sor :"
+msgstr "Sor :  "
 
 #: src/qifimport.cpp:464
-#, fuzzy
 msgid " Unknown QIF line: "
-msgstr " helytelen QIF sor típus"
+msgstr "Ismeretlen QIF sor: "
 
 #: src/qifimport.cpp:475
-#, fuzzy
 msgid "Importing account type: "
-msgstr "Bankszámla típusának importálása"
+msgstr "Az importálandó számla típusa: "
 
 #: src/qifimport.cpp:498
 msgid " : "
-msgstr ""
+msgstr " : "
 
 #: src/qifimport.cpp:499
 msgid " account name "
 msgstr " számla név"
 
 #: src/qifimport.cpp:564
-#, fuzzy
 msgid "Cannot process these QIF Account Types yet."
-msgstr " a bankszámla típusa még nincs feldolgozva"
+msgstr " Ezeket a QIF számlatípusokat még nem tudom feldolgozni."
 
 #: src/qifimport.cpp:586
 #: src/qifimport.cpp:700
-#, fuzzy
 msgid "Payee Added: "
-msgstr "Kedvezményezett"
+msgstr "Hozzáadott kedvezményezett: "
 
 #: src/qifimport.cpp:601
 msgid " invalid amount, skipping."
@@ -3843,31 +3553,29 @@ msgid " date "
 msgstr " dátum"
 
 #: src/qifimport.cpp:764
-#, fuzzy
 msgid "Total Imported : "
-msgstr "Teljes összeg"
+msgstr "Összesen importált:"
 
 #: src/qifimport.cpp:765
 msgid "Log file written to : "
-msgstr ""
+msgstr "A log fájl címe: "
 
 #: src/qifimport.cpp:766
-#, fuzzy
 msgid "Please confirm saving..."
-msgstr "Kérem várjon"
+msgstr "Erősítse meg a mentést..."
 
 #: src/qifimport.cpp:775
 msgid "Transactions saved to database in account: "
-msgstr ""
+msgstr "A tranzakció az adatbázisban a következő számlára mentve: "
 
 #: src/qifimport.cpp:788
 msgid "Imported transactions discarded by user!"
-msgstr ""
+msgstr "Tranzakciók importálását a felhasználó kikapcsolta!"
 
 #: src/chart.cpp:218
 #: src/chart.cpp:415
 msgid "Legend:"
-msgstr ""
+msgstr "Jelmagyarázat: "
 
 #: src/reporttransstats.cpp:23
 msgid "Transaction Statistics for "
@@ -3879,18 +3587,16 @@ msgid "Month"
 msgstr "Hónap"
 
 #: src/reportincexpesestime.cpp:24
-#, fuzzy
 msgid "Income vs Expenses for Year: "
-msgstr "Bevételek és kiadások : "
+msgstr "Éves bevételek-kiadások : "
 
 #: src/reportincexpesestime.cpp:39
-#, fuzzy
 msgid "Year"
-msgstr "Évente"
+msgstr "Év"
 
 #: src/reportincexpesestime.cpp:43
 msgid "Difference"
-msgstr ""
+msgstr "Különbség"
 
 #: src/mmcheckingpanel.cpp:101
 msgid "Date  "
@@ -3902,71 +3608,61 @@ msgstr "Adatbázis olvasása"
 
 #: src/mmcheckingpanel.cpp:578
 msgid "View Reconciled Transactions"
-msgstr "Teljesített ügyletek mutatása"
+msgstr "Visszaigazolt ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:579
 msgid "View Un-Reconciled Transactions"
-msgstr "Befejezetlen ügyletek mutatása"
+msgstr "Rendezetlen ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:580
-#, fuzzy
 msgid "View All Except Reconciled Transactions"
-msgstr "Teljesített ügyletek mutatása"
+msgstr "Visszaigazolt ügyletek kivételével mutassa mind"
 
 #: src/mmcheckingpanel.cpp:581
 msgid "View Void Transactions"
 msgstr "Érvénytelen ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:582
-#, fuzzy
 msgid "View \"Follow Up\" Transactions"
-msgstr "Minden ügylet mutatása"
+msgstr "Egyzetetésre kijelölt ügylet mutatása"
 
 #: src/mmcheckingpanel.cpp:583
-#, fuzzy
 msgid "View Duplicate Transactions"
-msgstr "Megjelölt ügyletek mutatása"
+msgstr "Az duplikált ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:585
-#, fuzzy
 msgid "View Transactions for today"
-msgstr "Az elmúlt 30 nap ügyletei"
+msgstr "A mai ügyletek"
 
 #: src/mmcheckingpanel.cpp:586
-#, fuzzy
 msgid "View Transactions for current month"
-msgstr "Az elmúlt 3 hónap ügyletei"
+msgstr "Az e havi ügyletek"
 
 #: src/mmcheckingpanel.cpp:587
-#, fuzzy
 msgid "View Transactions for last 30 days"
-msgstr "Az elmúlt 30 nap ügyletei"
+msgstr "Az elmúlt 30 nap ügyletei "
 
 #: src/mmcheckingpanel.cpp:588
-#, fuzzy
 msgid "View Transactions for last 90 days"
-msgstr "Az elmúlt 30 nap ügyletei"
+msgstr "Az elmúlt 90 nap ügyletei"
 
 #: src/mmcheckingpanel.cpp:589
-#, fuzzy
 msgid "View Transactions for last month"
-msgstr "Az elmúlt 3 hónap ügyletei"
+msgstr "A múlt hónap ügyletei"
 
 #: src/mmcheckingpanel.cpp:590
-#, fuzzy
 msgid "View Transactions for last 3 months"
-msgstr "Az elmúlt 3 hónap ügyletei"
+msgstr "Az elmúlt 3 hónap ügyletei "
 
 #: src/mmcheckingpanel.cpp:592
 #: src/mmcheckingpanel.cpp:1508
 msgid "Delete all transactions in current view"
-msgstr "Minden ügylet törlése ebben a nézetben"
+msgstr "Minden ügylet törlése a lapon"
 
 #: src/mmcheckingpanel.cpp:593
 #: src/mmcheckingpanel.cpp:1509
-#, fuzzy
 msgid "Delete Viewed \"Follow Up\" Trans."
-msgstr "Minden ügylet mutatása"
+msgstr "Az egyeztetésre jelölt ügyletek törlése  a lapon."
 
 #: src/mmcheckingpanel.cpp:659
 #: src/mmcheckingpanel.cpp:1273
@@ -3980,55 +3676,48 @@ msgid "New Transaction"
 msgstr "Új ügylet"
 
 #: src/mmcheckingpanel.cpp:740
-#, fuzzy
 msgid "Edit selected transaction"
-msgstr "Ügylet törlése"
+msgstr "A kiválasztott ügyletek szerkesztése"
 
 #: src/mmcheckingpanel.cpp:745
-#, fuzzy
 msgid "Delete selected transaction"
-msgstr "Minden megjelölt ügylet törlése"
+msgstr "A kijelölt ügylet törlése"
 
 #: src/mmcheckingpanel.cpp:749
-#, fuzzy
 msgid "&Move"
-msgstr "Eltávolít"
+msgstr "Mozgat"
 
 #: src/mmcheckingpanel.cpp:750
 msgid "Move selected transaction to another account"
-msgstr ""
+msgstr "A kiválasztott tranzakció átvitele más számlára"
 
 #: src/mmcheckingpanel.cpp:755
-#, fuzzy
 msgid "Search"
-msgstr "Március"
+msgstr "Keres"
 
 #: src/mmcheckingpanel.cpp:757
 msgid "Enter any string to find it in the nearest transaction notes"
-msgstr ""
+msgstr "Vigye be a tranzakciók megjegyzésében keresni kívánt karaktereket "
 
 #: src/mmcheckingpanel.cpp:895
-#, fuzzy
 msgid "to "
-msgstr " Eddig: "
+msgstr " eddig:  "
 
 #: src/mmcheckingpanel.cpp:970
-#, fuzzy
 msgid "Account Bal: "
-msgstr "Bankszámlák"
+msgstr "Számlaegyenleg: "
 
 #: src/mmcheckingpanel.cpp:971
-#, fuzzy
 msgid "Reconciled Bal: "
-msgstr "Kiegyenlítve"
+msgstr "Visszaigazolt egyenleg: "
 
 #: src/mmcheckingpanel.cpp:972
 msgid "Diff: "
-msgstr ""
+msgstr "Különb.: "
 
 #: src/mmcheckingpanel.cpp:973
 msgid "Displayed Bal: "
-msgstr ""
+msgstr "Megjelenített egyenleg: "
 
 #: src/mmcheckingpanel.cpp:1057
 msgid "Account View : "
@@ -4043,77 +3732,66 @@ msgstr "Minden ügylet mutatása"
 #: src/mmcheckingpanel.cpp:1247
 #: src/mmcheckingpanel.cpp:1290
 msgid "Viewing Reconciled transactions"
-msgstr "Teljesített ügyletek mutatása"
+msgstr "Visszaigazolt ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:1248
-#, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
-msgstr "Teljesített ügyletek mutatása"
+msgstr "Visszaigazolt ügyletek kivételével mind mutatása"
 
 #: src/mmcheckingpanel.cpp:1249
 #: src/mmcheckingpanel.cpp:1300
 msgid "Viewing Un-Reconciled transactions"
-msgstr "Teljesítetlen ügyletek mutatása"
+msgstr "Rendezetlen ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:1250
 #: src/mmcheckingpanel.cpp:1320
-#, fuzzy
 msgid "Viewing transactions for today"
-msgstr "Az elmúlt 30 nap ügyleteinek mutatása"
+msgstr "A mai ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:1251
 #: src/mmcheckingpanel.cpp:1325
-#, fuzzy
 msgid "Viewing transactions for current month"
-msgstr "Az elmúlt 3 hónap ügyleteinek mutatása"
+msgstr "Az e havi ügyleteinek mutatása"
 
 #: src/mmcheckingpanel.cpp:1252
 #: src/mmcheckingpanel.cpp:1330
-#, fuzzy
 msgid "Viewing transactions for last 30 days"
-msgstr "Az elmúlt 30 nap ügyleteinek mutatása"
+msgstr "Az elmúlt 30 nap ügyletei"
 
 #: src/mmcheckingpanel.cpp:1253
 #: src/mmcheckingpanel.cpp:1335
-#, fuzzy
 msgid "Viewing transactions for last 90 days"
-msgstr "Az elmúlt 30 nap ügyleteinek mutatása"
+msgstr "Az elmúlt 90 nap ügyleteinek mutatása"
 
 #: src/mmcheckingpanel.cpp:1254
 #: src/mmcheckingpanel.cpp:1345
-#, fuzzy
 msgid "Viewing transactions for last month"
-msgstr "Az elmúlt 3 hónap ügyleteinek mutatása"
+msgstr "Az elmúlt hónap ügyleteinek mutatása"
 
 #: src/mmcheckingpanel.cpp:1255
 #: src/mmcheckingpanel.cpp:1340
-#, fuzzy
 msgid "Viewing transactions for last 3 months"
-msgstr "Az elmúlt 3 hónap ügyleteinek mutatása"
+msgstr "Az elmúlt 3 hónap ügyletei"
 
 #: src/mmcheckingpanel.cpp:1273
 msgid "  will interfere with this filtering."
-msgstr ""
+msgstr " ütközni fog ezzel a szűréssel."
 
 #: src/mmcheckingpanel.cpp:1274
-#, fuzzy
 msgid "Please deactivate: "
-msgstr "Kérem várjon"
+msgstr "Kérem deaktiválja: "
 
 #: src/mmcheckingpanel.cpp:1295
-#, fuzzy
 msgid "Viewing All except Reconciled Transactions"
-msgstr "Teljesített ügyletek mutatása"
+msgstr "Visszaigazolt ügyletek kivételével mind mutatása"
 
 #: src/mmcheckingpanel.cpp:1305
-#, fuzzy
 msgid "Viewing Follow-Up transactions"
-msgstr "Minden ügylet mutatása"
+msgstr "Egyeztetésre kijelölt ügylet mutatása"
 
 #: src/mmcheckingpanel.cpp:1310
-#, fuzzy
 msgid "Viewing duplicate transactions"
-msgstr "Megjelölt ügyletek mutatása"
+msgstr "Az duplikált ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:1315
 msgid "Viewing Void transactions"
@@ -4121,7 +3799,7 @@ msgstr "Érvénytelen ügyletek mutatása"
 
 #: src/mmcheckingpanel.cpp:1373
 msgid "Do you really want to delete all the transactions shown?"
-msgstr "Minden látható ügyletet töröl?"
+msgstr "Minden megjelenített ügyletet töröl?"
 
 #: src/mmcheckingpanel.cpp:1374
 #: src/mmcheckingpanel.cpp:1389
@@ -4130,9 +3808,8 @@ msgid "Confirm Transaction Deletion"
 msgstr "Ügylet törlésének jóváhagyása"
 
 #: src/mmcheckingpanel.cpp:1388
-#, fuzzy
 msgid "Do you really want to delete all the \"Follow Up\" transactions shown?"
-msgstr "Minden megjelölt ügyletet töröl?"
+msgstr "Valóban törölni akarja az összes mutatott, egyeztetésre jelölt ügyletet?"
 
 #: src/mmcheckingpanel.cpp:1483
 msgid "&New Transaction"
@@ -4140,30 +3817,27 @@ msgstr "&Új ügylet"
 
 #: src/mmcheckingpanel.cpp:1485
 msgid "&Edit Transaction"
-msgstr "&Ügylet szerkestése"
+msgstr "&Ügylet szerkesztése"
 
 #: src/mmcheckingpanel.cpp:1487
 msgid "&Copy Transaction"
 msgstr "&Ügylet másolása"
 
 #: src/mmcheckingpanel.cpp:1489
-#, fuzzy
 msgid "&Duplicate Transaction"
-msgstr "Megjelölt ügyletek mutatása"
+msgstr "Ügylet duplikálása"
 
 #: src/mmcheckingpanel.cpp:1491
-#, fuzzy
 msgid "&Move Transaction"
-msgstr "&Új ügylet"
+msgstr "Ügylet mozgatása"
 
 #: src/mmcheckingpanel.cpp:1493
 msgid "&Paste Transaction"
 msgstr "&Ügylet beillesztése"
 
 #: src/mmcheckingpanel.cpp:1498
-#, fuzzy
 msgid "&View Split Categories"
-msgstr "Minden költségvetés kategória mutatása"
+msgstr "Bontott kategóriák mutatása"
 
 #: src/mmcheckingpanel.cpp:1505
 msgid "&Delete Transaction"
@@ -4171,11 +3845,11 @@ msgstr "&Ügylet törlése"
 
 #: src/mmcheckingpanel.cpp:1514
 msgid "Mark As &Reconciled"
-msgstr "Megjelölés &teljesítettként"
+msgstr "Megjelölés &visszaigazoltként"
 
 #: src/mmcheckingpanel.cpp:1516
 msgid "Mark As &Unreconciled"
-msgstr "Megjelölés &teljesítetlenként"
+msgstr "Megjelölés &rendezetlenként"
 
 #: src/mmcheckingpanel.cpp:1518
 msgid "Mark As &Void"
@@ -4186,17 +3860,16 @@ msgid "Mark For &Followup"
 msgstr "Megjelölés &folyamatban-ként"
 
 #: src/mmcheckingpanel.cpp:1522
-#, fuzzy
 msgid "Mark As &Duplicate"
-msgstr "Megjelölés &érvénytelenként"
+msgstr "Megjelölés duplikáltként"
 
 #: src/mmcheckingpanel.cpp:1527
 msgid "as Reconciled"
-msgstr "teljesítettként"
+msgstr "Visszaigazoltként"
 
 #: src/mmcheckingpanel.cpp:1528
 msgid "as Unreconciled"
-msgstr "teljesítetlenként"
+msgstr "rendezetlenként"
 
 #: src/mmcheckingpanel.cpp:1529
 msgid "as Void"
@@ -4208,35 +3881,31 @@ msgstr "folyamatban-ként"
 
 #: src/mmcheckingpanel.cpp:1531
 msgid "as Duplicate"
-msgstr ""
+msgstr "Duplikáltként"
 
 #: src/mmcheckingpanel.cpp:1532
-#, fuzzy
 msgid "Mark all being viewed"
-msgstr "Minden kijelölése"
+msgstr "Mindet megjelöli"
 
 #: src/mmcheckingpanel.cpp:1900
-#, fuzzy
 msgid "Do you really want to delete the selected transaction?"
-msgstr "Valóban törli az ügyletet?"
+msgstr "Valóban törli a kijelölt ügyletet?"
 
 #: src/mmcheckingpanel.cpp:2021
-#, fuzzy
 msgid "Moving Transaction from "
-msgstr "Az elmúlt 30 nap ügyletei"
+msgstr "Ügylet mozgatása innen"
 
 #: src/mmcheckingpanel.cpp:2021
 msgid " to..."
-msgstr ""
+msgstr "...nak/nek"
 
 #: src/mmcheckingpanel.cpp:2022
-#, fuzzy
 msgid "Select the destination Account "
-msgstr "Válasszon célszámlát"
+msgstr "Válassza ki a célszámlát"
 
 #: src/assetdialog.cpp:58
 msgid "New/Edit Asset"
-msgstr "Új/Vagyontárgy szerkesztése"
+msgstr "Új vagyontárgy/ Vagyontárgy szerkesztése"
 
 #: src/assetdialog.cpp:175
 msgid "Asset Details"
@@ -4248,7 +3917,7 @@ msgstr "Írja be a vagyontárgy nevét"
 
 #: src/assetdialog.cpp:204
 msgid "Specify the date of purchase of asset"
-msgstr "Adja meg a vagyontárgy vásárlásának dátumát"
+msgstr "Adja meg a vagyontárgy beszerzésének dátumát"
 
 #: src/assetdialog.cpp:207
 msgid "Asset Type"
@@ -4256,7 +3925,7 @@ msgstr "Vagyontárgy típusa"
 
 #: src/assetdialog.cpp:212
 msgid "Property"
-msgstr "Leírás"
+msgstr "Tulajdonjog"
 
 #: src/assetdialog.cpp:213
 msgid "Automobile"
@@ -4268,7 +3937,7 @@ msgstr "Háztartási eszköz"
 
 #: src/assetdialog.cpp:215
 msgid "Art"
-msgstr "Művelődés"
+msgstr "Műalkotás"
 
 #: src/assetdialog.cpp:216
 msgid "Jewellery"
@@ -4303,14 +3972,12 @@ msgid "Specify if the value of the asset changes over time"
 msgstr "Adja meg, hogy a vagyontárgy értéke változik-e az idő folyamán"
 
 #: src/assetdialog.cpp:250
-#, fuzzy
 msgid "% Rate"
-msgstr " dátum"
+msgstr " % arány"
 
 #: src/assetdialog.cpp:254
-#, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
-msgstr "Adja meg a vagyontárgy értékváltozásának arányát %-ban"
+msgstr "Adja meg a vagyontárgy éves értékváltozásának  %-ban"
 
 #: src/assetdialog.cpp:262
 msgid "Enter notes associated with this asset"
@@ -4327,15 +3994,15 @@ msgstr "Az értékváltozás aránya"
 
 #: src/newacctdialog.cpp:145
 msgid "Account Name:"
-msgstr "Bankszámla neve: "
+msgstr "Számla neve: "
 
 #: src/newacctdialog.cpp:152
 msgid "Enter the Name of the Account. This name can be renamed at any time."
-msgstr "Adja meg a bankszámla nevét. Ez bármikor megváltoztatható."
+msgstr "Adja meg a számla nevét. Ez bármikor megváltoztatható."
 
 #: src/newacctdialog.cpp:155
 msgid "Account Type:"
-msgstr "Bankszámla típusa: "
+msgstr "Számla típusa: "
 
 #: src/newacctdialog.cpp:160
 msgid "Checking"
@@ -4347,15 +4014,15 @@ msgstr "Számlaszám: "
 
 #: src/newacctdialog.cpp:179
 msgid "Enter the Account Number associated with this account."
-msgstr "Adja meg a bankszámlához tartozó számlaszámot."
+msgstr "Adja meg a számlához tartozó számlaszámot."
 
 #: src/newacctdialog.cpp:182
 msgid "Held At:"
-msgstr "Befektetési számla: "
+msgstr "Kezelő:: "
 
 #: src/newacctdialog.cpp:190
 msgid "Enter the name of the financial institution in which the account is held."
-msgstr "Adja meg a bankszámlát kezelő pénzintézet nevét."
+msgstr "Adja meg a számlát vezető pénzintézet nevét."
 
 #: src/newacctdialog.cpp:192
 msgid "Website:"
@@ -4375,7 +4042,7 @@ msgstr "Írja be a pénzintézet elérhetőségeit"
 
 #: src/newacctdialog.cpp:213
 msgid "Access Info:"
-msgstr "Jelszavak: "
+msgstr "Belépési adatok: "
 
 #: src/newacctdialog.cpp:220
 msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
@@ -4383,7 +4050,7 @@ msgstr "Írja be a hitelesítési információkat a pénzintézethez. Figyelem, 
 
 #: src/newacctdialog.cpp:222
 msgid "Account Status:"
-msgstr "Bankszámla állapota: "
+msgstr "A számla állapota: "
 
 #: src/newacctdialog.cpp:228
 msgid "Closed"
@@ -4399,7 +4066,7 @@ msgstr "Kezdőtőke: "
 
 #: src/newacctdialog.cpp:246
 msgid "Enter the initial balance in this account."
-msgstr "Adja meg a bankszámla kezdőtőkéjét."
+msgstr "Adja meg a számla kezdő egyenlegét."
 
 #: src/newacctdialog.cpp:249
 msgid "Currency:"
@@ -4411,7 +4078,7 @@ msgstr "Pénznem választása"
 
 #: src/newacctdialog.cpp:264
 msgid "Specify the currency to be used by this account."
-msgstr "Adja meg a bankszámla által használt pénznemet."
+msgstr "Adja meg a számlán használt pénznemet."
 
 #: src/newacctdialog.cpp:267
 msgid "Notes:"
@@ -4423,19 +4090,19 @@ msgstr "Adjon megjegyzést a számlához"
 
 #: src/newacctdialog.cpp:279
 msgid "Favorite Account"
-msgstr "Kedvenc bankszámla"
+msgstr "Kedvenc számla"
 
 #: src/newacctdialog.cpp:283
 msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
-msgstr "Ezt válassza, ha a bankszámla gyakran használatban van. A számlák listájában ez jelenik meg elsőként."
+msgstr "Ezt válassza, ha a számlát gyakran használja. A számlák listájában ez jelenik meg elsőként."
 
 #: src/newacctdialog.cpp:326
 msgid "Account Name "
-msgstr "Bankszámla neve"
+msgstr "Számla neve"
 
 #: src/newacctdialog.cpp:333
 msgid "Account Name already exists"
-msgstr "Már van ilyen bankszámla"
+msgstr "Létező számlanév"
 
 #: src/newacctdialog.cpp:392
 msgid "Init Balance "
@@ -4446,73 +4113,64 @@ msgid "REPORTS"
 msgstr "KIMUTATÁSOK"
 
 #: src/reportincexpensesfinancialperiod.cpp:61
-#, fuzzy
 msgid "Income vs Expenses for Financial Year: "
-msgstr "Bevételek és kiadások : "
+msgstr "Bevételek-kiadások a pénzügyi évben: "
 
 #: src/budgetyeardialog.cpp:107
-#, fuzzy
 msgid "&Add Year"
-msgstr "Költségvetési év hozzáadása"
+msgstr "Év hozzáadása"
 
 #: src/budgetyeardialog.cpp:109
 msgid "Add a new budget year"
 msgstr "Új költségvetési év hozzáadása"
 
 #: src/budgetyeardialog.cpp:112
-#, fuzzy
 msgid "&Add Month"
-msgstr "Hónap"
+msgstr "Hónap hozzáadása"
 
 #: src/budgetyeardialog.cpp:114
-#, fuzzy
 msgid "Add a new budget month"
-msgstr "Új költségvetési év hozzáadása"
+msgstr "Új költségvetési hónap hozzáadása"
 
 #: src/budgetyeardialog.cpp:119
-#, fuzzy
 msgid "Delete existing budget"
-msgstr "Jelenlegi költségvetési év törlése"
+msgstr "Jelenlegi költségvetés törlése"
 
 #: src/relocatepayeedialog.cpp:77
 msgid "Relocate all source payees to the destination payee"
-msgstr ""
+msgstr "Valamennyi forrás áthelyezése a kijelölt kedvezményezetthez."
 
 #: src/relocatepayeedialog.cpp:80
 msgid "Relocate:"
-msgstr ""
+msgstr "Áthelyezés: "
 
 #: src/relocatepayeedialog.cpp:82
-#, fuzzy
 msgid "Source Payee"
-msgstr "Kedvezményezett választása"
+msgstr "Kedvezményezettből"
 
 #: src/relocatepayeedialog.cpp:84
-#, fuzzy
 msgid "to:"
-msgstr " Eddig: "
+msgstr " Ide:  "
 
 #: src/relocatepayeedialog.cpp:86
 msgid "Destination Payee"
-msgstr ""
+msgstr "Kedvezményezettbe"
 
 #: src/relocatepayeedialog.cpp:160
-#, fuzzy
 msgid "Please Confirm:"
-msgstr "Kérem várjon"
+msgstr "Kérem erősítse meg: "
 
 #: src/relocatepayeedialog.cpp:161
 msgid "Changing all payees of: "
-msgstr ""
+msgstr "A következő kedvezményezetteinek változtatása: "
 
 #: src/relocatepayeedialog.cpp:161
-#, fuzzy
 msgid "to payee: "
-msgstr " kedvezményezett"
+msgstr " kedvezményezett: "
 
 #: src/relocatepayeedialog.cpp:163
 msgid "Payee Relocation Confirmation"
-msgstr ""
+msgstr "Kedvezményezett áthelyezésének jóváhagyása"
 
 #: src/relocatepayeedialog.cpp:176
 #: src/dbwrapper.cpp:101
@@ -4556,415 +4214,390 @@ msgstr ""
 #: src/dbwrapper.cpp:1990
 #: src/dbwrapper.cpp:2072
 #: src/dbwrapper.cpp:2255
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s"
-msgstr "Hiba"
+msgstr "Hiba: %s"
 
 #: src/reportpayee.cpp:103
-#, fuzzy
 msgid "Payees Total: "
-msgstr "Kategória"
+msgstr "Kedvezményezettek összesen: "
 
 #: src/splitdetailsdialog.cpp:91
-#, fuzzy
 msgid "Split Transaction Details"
-msgstr "Ügylet részletei"
+msgstr "Ügylet részleteinek bontása"
 
 #: src/splitdetailsdialog.cpp:165
-#, fuzzy
 msgid "Invalid Category Entered "
-msgstr "Érvénytelen összeget adott meg"
+msgstr "Érvénytelen kategóriát adott meg"
 
 #: src/aboutdialog.cpp:73
-#, fuzzy
 msgid "About "
-msgstr "Összeg"
+msgstr "Névjegy"
 
 #: src/aboutdialog.cpp:132
-#, fuzzy
 msgid "Version: "
-msgstr "Verzió történet"
+msgstr "Verzió: "
 
 #: src/aboutdialog.cpp:147
-#, fuzzy
 msgid "  and contributors from around the world"
-msgstr "és a közreműködők világszerte."
+msgstr " és a közreműködők világszerte."
 
 #: src/aboutdialog.cpp:152
 msgid "Released under the GNU GPL License"
-msgstr "A GNU GPL licensz alapján terjesztve"
+msgstr "A GNU GPL licenc alapján terjesztve"
 
 #: src/aboutdialog.cpp:168
 msgid "Version History"
 msgstr "Verzió történet"
 
 #: src/aboutdialog.cpp:173
-#, fuzzy
 msgid "Contributors"
-msgstr "Közreműködők"
+msgstr "Közreműködők "
 
 #: src/aboutdialog.cpp:181
 msgid "Using Language : "
 msgstr "Használt nyelv : "
 
 #: src/reportcategexp.cpp:162
-#, fuzzy
 msgid "Category Total: "
-msgstr "Kategória"
+msgstr "Kategória összes: "
 
 #: src/reportcategexp.cpp:182
-#, fuzzy
 msgid "Grand Total: "
-msgstr "Összesen: %s"
+msgstr "Összes összesen: "
 
 #: src/yahoosettingsdialog.cpp:60
 msgid "Yahoo Server"
-msgstr ""
+msgstr "Yahoo szerver"
 
 #: src/yahoosettingsdialog.cpp:64
 msgid "finance.au.yahoo.com"
-msgstr ""
+msgstr "finance.au.yahoo.com"
 
 #: src/yahoosettingsdialog.cpp:65
 msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
-msgstr ""
+msgstr "Ne írjon be mást csak a szerver nevét (vagy IP címét, ha ettől boldogabb)"
 
 #: src/yahoosettingsdialog.cpp:71
 msgid "Yahoo Suffix"
-msgstr ""
+msgstr "Yahoo-kiterjesztés"
 
 #: src/yahoosettingsdialog.cpp:76
 msgid ""
 "Enter the suffix used by Yahoo for the market of your stocks. \n"
 "If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
 msgstr ""
+"A részvényeit forgalmazó tőzsde Yahoo-kiterjesztését írja be. \n"
+"Ha részvényeit több piacon forgatja, hagyja üresen és a kiterjesztéseket a portfóliójában szereplő szimbólumok mellé írja."
 
 #: src/yahoosettingsdialog.cpp:81
 msgid "Market open from"
-msgstr ""
+msgstr "Tőzsde nyit: "
 
 #: src/yahoosettingsdialog.cpp:90
 #: src/yahoosettingsdialog.cpp:101
 #: src/yahoosettingsdialog.cpp:118
 #: src/yahoosettingsdialog.cpp:129
 msgid "Allow for any delay in quotes"
-msgstr ""
+msgstr "A jegyzésekben a késleltetés engedélyezett"
 
 #: src/yahoosettingsdialog.cpp:97
 #: src/yahoosettingsdialog.cpp:125
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: src/yahoosettingsdialog.cpp:109
 msgid "to"
-msgstr ""
+msgstr "...nak/nek"
 
 #: src/yahoosettingsdialog.cpp:138
 msgid "&Refresh prices every"
-msgstr ""
+msgstr "Árak frissítési periódusa "
 
 #: src/yahoosettingsdialog.cpp:161
 msgid "minutes while market is open"
-msgstr ""
+msgstr "perc, amíg a tőzsde nyitva"
 
 #: src/reportcategovertimeperf.cpp:239
 #, c-format
 msgid "Category Income/Expenses Over Last %d Months "
-msgstr ""
+msgstr "A kategória Bevételei/Kiadásai az utóbbi %d hónapban "
 
 #: src/htmlbuilder.cpp:36
-#, fuzzy
 msgid "Report"
-msgstr "Kimutatások"
+msgstr "Kimutatás"
 
 #: src/dbwrapper.cpp:162
 msgid "Telephone"
-msgstr ""
+msgstr "Telefon"
 
 #: src/dbwrapper.cpp:162
 msgid "Electricity"
-msgstr ""
+msgstr "Villany"
 
 #: src/dbwrapper.cpp:162
 #: src/dbwrapper.cpp:171
 msgid "Gas"
-msgstr ""
+msgstr "Üzemanyag/gáz"
 
 #: src/dbwrapper.cpp:162
-#, fuzzy
 msgid "Internet"
-msgstr "Befektetési számla"
+msgstr "Internet"
 
 #: src/dbwrapper.cpp:162
-#, fuzzy
 msgid "Rent"
-msgstr "Kimutatások"
+msgstr "Bérlet"
 
 #: src/dbwrapper.cpp:162
 msgid "Cable TV"
-msgstr ""
+msgstr "Kábel TV"
 
 #: src/dbwrapper.cpp:162
-#, fuzzy
 msgid "Water"
-msgstr "Dátum"
+msgstr "Víz"
 
 #: src/dbwrapper.cpp:163
 msgid "Bills"
-msgstr ""
+msgstr "Számlák"
 
 #: src/dbwrapper.cpp:165
 msgid "Groceries"
-msgstr ""
+msgstr "Élelmiszer"
 
 #: src/dbwrapper.cpp:165
 msgid "Dining out"
-msgstr ""
+msgstr "Éttermi kiadások"
 
 #: src/dbwrapper.cpp:166
 msgid "Food"
-msgstr ""
+msgstr "Étel"
 
 #: src/dbwrapper.cpp:168
 msgid "Movies"
-msgstr ""
+msgstr "Mozi"
 
 #: src/dbwrapper.cpp:168
 msgid "Video Rental"
-msgstr ""
+msgstr "Videókölcsönzés"
 
 #: src/dbwrapper.cpp:168
 msgid "Magazines"
-msgstr ""
+msgstr "Újságok"
 
 #: src/dbwrapper.cpp:169
 msgid "Leisure"
-msgstr ""
+msgstr "Pihenés"
 
 #: src/dbwrapper.cpp:171
 msgid "Maintenance"
-msgstr ""
+msgstr "Karbantartás"
 
 #: src/dbwrapper.cpp:171
 msgid "Parking"
-msgstr ""
+msgstr "Parkolás"
 
 #: src/dbwrapper.cpp:171
 msgid "Registration"
-msgstr ""
+msgstr "Üzemben tartás "
 
 #: src/dbwrapper.cpp:174
 msgid "Books"
-msgstr ""
+msgstr "Könyvek"
 
 #: src/dbwrapper.cpp:174
 msgid "Tuition"
-msgstr ""
+msgstr "Tanítás"
 
 #: src/dbwrapper.cpp:175
 msgid "Education"
-msgstr ""
+msgstr "Oktatás"
 
 #: src/dbwrapper.cpp:177
-#, fuzzy
 msgid "Clothing"
-msgstr "Folyószámla"
+msgstr "Ruházat"
 
 #: src/dbwrapper.cpp:177
 msgid "Furnishing"
-msgstr ""
+msgstr "Bútor"
 
 #: src/dbwrapper.cpp:178
 msgid "Homeneeds"
-msgstr ""
+msgstr "Háztartás"
 
 #: src/dbwrapper.cpp:180
 #: src/dbwrapper.cpp:183
-#, fuzzy
 msgid "Health"
-msgstr "Befektetési számla"
+msgstr "Egészség"
 
 #: src/dbwrapper.cpp:180
-#, fuzzy
 msgid "Dental"
-msgstr "Általános"
+msgstr "Fogorvos"
 
 #: src/dbwrapper.cpp:180
 msgid "Eyecare"
-msgstr ""
+msgstr "Szemészet, optika"
 
 #: src/dbwrapper.cpp:180
 msgid "Physician"
-msgstr ""
+msgstr "Orvos"
 
 #: src/dbwrapper.cpp:180
-#, fuzzy
 msgid "Prescriptions"
-msgstr "Ügylet"
+msgstr "Receptek"
 
 #: src/dbwrapper.cpp:181
 msgid "Healthcare"
-msgstr ""
+msgstr "Egészségügy"
 
 #: src/dbwrapper.cpp:183
-#, fuzzy
 msgid "Auto"
-msgstr "Összeg"
+msgstr "Autó"
 
 #: src/dbwrapper.cpp:183
 msgid "Life"
-msgstr ""
+msgstr "Élet"
 
 #: src/dbwrapper.cpp:183
-#, fuzzy
 msgid "Home"
-msgstr "Összesítő oldal"
+msgstr "Lakás"
 
 #: src/dbwrapper.cpp:184
 msgid "Insurance"
-msgstr ""
+msgstr "Biztosítás"
 
 #: src/dbwrapper.cpp:186
 msgid "Travel"
-msgstr ""
+msgstr "Utazás"
 
 #: src/dbwrapper.cpp:186
-#, fuzzy
 msgid "Lodging"
-msgstr "Költségvetés"
+msgstr "Szállás"
 
 #: src/dbwrapper.cpp:186
 msgid "Sightseeing"
-msgstr ""
+msgstr "Városnézés"
 
 #: src/dbwrapper.cpp:187
-#, fuzzy
 msgid "Vacation"
-msgstr "Navigálás"
+msgstr "Vakáció"
 
 #: src/dbwrapper.cpp:189
-#, fuzzy
 msgid "Income Tax"
-msgstr "Bevétel"
+msgstr "Jövedelemadó"
 
 #: src/dbwrapper.cpp:189
 msgid "House Tax"
-msgstr ""
+msgstr "Házadó"
 
 #: src/dbwrapper.cpp:189
 msgid "Water Tax"
-msgstr ""
+msgstr "Vízdíj"
 
 #: src/dbwrapper.cpp:190
 msgid "Taxes"
-msgstr ""
+msgstr "Adók"
 
 #: src/dbwrapper.cpp:192
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Vegyes"
 
 #: src/dbwrapper.cpp:193
 msgid "Gifts"
-msgstr ""
+msgstr "Ajándékok"
 
 #: src/dbwrapper.cpp:195
-#, fuzzy
 msgid "Salary"
-msgstr "Összegzés"
+msgstr "Fizetés"
 
 #: src/dbwrapper.cpp:195
 msgid "Reimbursement/Refunds"
-msgstr ""
+msgstr "Visszatérítések, illetve visszafizetések"
 
 #: src/dbwrapper.cpp:195
-#, fuzzy
 msgid "Investment Income"
-msgstr "Befektetési számla"
+msgstr "Befektetések hozama"
 
 #: src/dbwrapper.cpp:198
-#, fuzzy
 msgid "Other Income"
-msgstr "Bevétel"
+msgstr "Egyéb bevétel"
 
 #: src/dbwrapper.cpp:199
-#, fuzzy
 msgid "Other Expenses"
-msgstr "Kiadás"
+msgstr "Egyéb kiadás"
 
 #: src/dbwrapper.cpp:1514
 #, c-format
 msgid "Set Info Setting Value %s = %s. Error: %s"
-msgstr ""
+msgstr "Info. érték beállítása %s = %s. Hiba: %s"
 
 #: src/dbwrapper.cpp:2333
 #, c-format
 msgid "Write error: %s"
-msgstr ""
+msgstr "Íráshiba: %s"
 
 #: src/dbwrapper.cpp:2341
-#, fuzzy
 msgid "When database file opening:"
-msgstr "Válasszon QIF fájlt az importáláshoz"
+msgstr "Az adatbázis nyitásakor: "
 
 #: src/dbwrapper.cpp:2345
-#, fuzzy
 msgid "Can't open file"
-msgstr "Nincs kapcsolat!"
+msgstr "Nem tudom megnyitni a fájlt"
 
 #: src/dbwrapper.cpp:2345
 msgid "You must specify path to another database file"
-msgstr ""
+msgstr "Adja meg egy másik adatbázis elérési útját"
 
 #: src/dbwrapper.cpp:2349
 msgid "An incorrect password given for an encrypted file"
-msgstr ""
+msgstr "A titkosított fájlhoz megadott jelszó helytelen!"
 
 #: src/dbwrapper.cpp:2350
 msgid "or"
-msgstr ""
+msgstr "vagy"
 
 #: src/dbwrapper.cpp:2351
 msgid "Attempt to open a File that is not a database file"
-msgstr ""
+msgstr "Nem adatbázis fájlt próbál megnyitni"
 
 #: src/dbwrapper.cpp:2358
-#, fuzzy
 msgid "Database::open: Exception"
-msgstr "Nincs adatbázis megnyitva"
+msgstr "Adatbázis::open: Kivétel"
 
 #: src/dbwrapper.cpp:2360
 msgid "Continue ?"
-msgstr ""
+msgstr "Folytatja?"
 
 #: src/budgetyearentrydialog.cpp:44
-#, fuzzy
 msgid "Budget Month Entry"
-msgstr "Költségvetési év bevitele"
+msgstr "Költségvetési hónap bevitele"
 
 #: src/budgetyearentrydialog.cpp:72
 msgid "Budget Year:"
-msgstr "Költségvetési év:"
+msgstr "Költségvetési év: "
 
 #: src/budgetyearentrydialog.cpp:79
 msgid ""
 "Specify the required year.\n"
 "Use Spin buttons to increase or decrease the year."
 msgstr ""
+"Határozza meg a keresett évet! \n"
+"Használja a nyilakat az évszám növelésére, vagy csökkentésére!"
 
 #: src/budgetyearentrydialog.cpp:85
-#, fuzzy
 msgid "Budget Month:"
-msgstr "Jelenlegi hónap"
+msgstr "Költségvetési hónap: "
 
 #: src/budgetyearentrydialog.cpp:92
 msgid ""
 "Specify the required month.\n"
 "Use Spin buttons to increase or decrease the month."
 msgstr ""
+"Határozza meg a hónapot!\n"
+"Használja a nyilakat a hónap görgetésére!"
 
 #: src/budgetyearentrydialog.cpp:97
 msgid "Base Budget On:"
-msgstr "Költségvetési alap:"
+msgstr "Költségvetési alap: "
 
 #: src/budgetyearentrydialog.cpp:108
 msgid "Specify year to base budget on."
@@ -4979,34 +4612,29 @@ msgid "Stock Investments"
 msgstr "Befektetések"
 
 #: src/reportsummary.cpp:167
-#, fuzzy
 msgid "Total Balance on all Accounts"
-msgstr "A teljes egyenleg az összes bankszámlán: "
+msgstr "Az összes számla egyenlege: "
 
 #: src/reportcashflow.cpp:35
-#, fuzzy, c-format
+#, c-format
 msgid "Cash Flow Forecast for %d Years Ahead"
-msgstr "Cash Flow előrejelzés minden számlához"
+msgstr "Cash Flow előrejelzés %d évre előre"
 
 #: src/reportcashflow.cpp:37
-#, fuzzy
 msgid "Accounts: "
-msgstr "Bankszámlák"
+msgstr "Számlák: "
 
 #: src/reportcashflow.cpp:41
-#, fuzzy
 msgid "All Accounts"
-msgstr "Bankszámlák"
+msgstr "Összes számla"
 
 #: src/reportcashflow.cpp:43
-#, fuzzy
 msgid "All Bank Accounts"
-msgstr "Bankszámlák"
+msgstr "Összes bankszámla"
 
 #: src/reportcashflow.cpp:45
-#, fuzzy
 msgid "All Term Accounts"
-msgstr "Kiinduló számla"
+msgstr "Összes időszaki számla"
 
 #: src/maincurrencydialog.cpp:101
 msgid "Currency List"
@@ -5014,26 +4642,27 @@ msgstr "Pénznem lista"
 
 #: src/maincurrencydialog.cpp:167
 msgid "Name of Currency to Add"
-msgstr "Pénznem nevének hozzáadása"
+msgstr "A hozzáadni kíván pénz neve."
 
 #: src/maincurrencydialog.cpp:167
 msgid "Add Currency"
 msgstr "Pénznem hozzáadása"
 
 #: src/maincurrencydialog.cpp:185
-#, fuzzy
 msgid "Attempt to Add a currency which already exists!"
-msgstr "A pénznem már létezik!"
+msgstr "Létező pénznemet akar felvenni!"
 
 #: src/maincurrencydialog.cpp:245
 msgid ""
 "Attempt to delete a currency being used by an account\n"
 " or as the base currency."
 msgstr ""
+"Az alap pénznemet, vagy egy számla által használatban\n"
+"lévő pénznemet kísérel meg törölni."
 
 #: src/maincurrencydialog.cpp:249
 msgid "Please confirm deletion of a selected Currency"
-msgstr ""
+msgstr "Erősítse meg a kiválasztott pénznem törlését!"
 
 #: src/maincurrencydialog.cpp:250
 #: src/maincurrencydialog.cpp:261
@@ -5050,9 +4679,8 @@ msgid "Symbol"
 msgstr "Jel"
 
 #: src/reportsummarystocks.cpp:170
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Vásárlás dátuma"
+msgstr "Beszerzés dátuma "
 
 #: src/reportsummarystocks.cpp:172
 #: src/stockdialog.cpp:190
@@ -5095,9 +4723,8 @@ msgid "Specify the purchase date of the stock investment"
 msgstr "Adja meg az értékpapír vásárlásának dátumát"
 
 #: src/stockdialog.cpp:179
-#, fuzzy
 msgid "Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"
-msgstr "Adja meg az értékpapír tözsdei jelét"
+msgstr "Adja meg az értékpapír tőzsdei jelét. (opcionális) Tegye hozzá a tőzsdéét is. pl. IBM.BE"
 
 #: src/stockdialog.cpp:182
 msgid "Number of Shares"
@@ -5124,13 +4751,12 @@ msgid "Enter notes associated with this investment"
 msgstr "Adjon megjegyzést az értékpapírhoz"
 
 #: src/stockdialog.cpp:233
-#, fuzzy
 msgid "Display Stock Web Page"
-msgstr "Tőzsdeinformációs weboldal"
+msgstr "Tőzsdeinformációs weboldal megjelenítése"
 
 #: src/stockdialog.cpp:235
 msgid "Will display the web page for the specified Stock symbol"
-msgstr ""
+msgstr "A kiválasztott részvényjelzéshez tartozó weblap megjelenítése"
 
 #: src/stockdialog.cpp:262
 msgid "Choose Investment Account"
@@ -5158,7 +4784,7 @@ msgstr "Összeg(+/-)"
 
 #: src/univcsvdialog.cpp:92
 msgid "SubCategory"
-msgstr "Al-kategória"
+msgstr "Alkategória"
 
 #: src/univcsvdialog.cpp:93
 msgid "Transaction Number"
@@ -5166,160 +4792,140 @@ msgstr "Ügylet száma"
 
 #: src/univcsvdialog.cpp:95
 msgid "Don't Care"
-msgstr "Nem számít"
+msgstr "Lényegtelen"
 
 #: src/univcsvdialog.cpp:128
 msgid "Specify the order of fields in the CSV file"
-msgstr "Adja meg a mezők sorrendjét a CSV-ben"
+msgstr "Határozza meg a mezők sorrendjét a CSV-ben"
 
 #: src/univcsvdialog.cpp:173
-#, fuzzy
 msgid "&Up"
-msgstr "Frissítés"
+msgstr "Fel"
 
 #: src/univcsvdialog.cpp:176
-#, fuzzy
 msgid "Move Up"
-msgstr "Eltávolít"
+msgstr "Mozgatás felfele"
 
 #: src/univcsvdialog.cpp:179
 msgid "&Down"
-msgstr ""
+msgstr "Le"
 
 #: src/univcsvdialog.cpp:182
 msgid "Move &Down"
-msgstr ""
+msgstr "Mozgatás lefelé"
 
 #: src/univcsvdialog.cpp:185
 msgid "&MMEX format"
-msgstr ""
+msgstr "&MMEX formátum"
 
 #: src/univcsvdialog.cpp:188
 msgid "MMEX standard format"
-msgstr ""
+msgstr "MMEX szabvány formátuma"
 
 #: src/univcsvdialog.cpp:194
 msgid "Load Template"
-msgstr ""
+msgstr "Sablon betöltése"
 
 #: src/univcsvdialog.cpp:197
-#, fuzzy
 msgid "Save As..."
-msgstr "Kedvezményezett"
+msgstr "Mentés mint ..."
 
 #: src/univcsvdialog.cpp:200
 msgid "Save Template"
-msgstr ""
+msgstr "Sablon mentése"
 
 #: src/univcsvdialog.cpp:214
-#, fuzzy
 msgid "File Name:"
-msgstr "Pénzegység"
+msgstr "Fájlnév: "
 
 #: src/univcsvdialog.cpp:220
-#, fuzzy
 msgid "&Search"
-msgstr "Március"
+msgstr "Keres"
 
 #: src/univcsvdialog.cpp:231
-#, fuzzy
 msgid "Account  :"
-msgstr "Bankszámla"
+msgstr "Számla: "
 
 #: src/univcsvdialog.cpp:269
-#, fuzzy
 msgid "Import File"
-msgstr "Importálás"
+msgstr "Fájlimportálás"
 
 #: src/univcsvdialog.cpp:276
-#, fuzzy
 msgid "Export File"
-msgstr "Importálás"
+msgstr "Exportálás"
 
 #: src/univcsvdialog.cpp:373
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #: src/univcsvdialog.cpp:378
-#, fuzzy
 msgid "Choose Universal CSV format file to load"
-msgstr "Válasszon CSV fájlt az exportáláshoz"
+msgstr "Betöltéshez válassza ki a CSV formátumot "
 
 #: src/univcsvdialog.cpp:421
-#, fuzzy
 msgid "Choose Universal CSV format file to save"
-msgstr "Válasszon CSV fájlt az exportáláshoz"
+msgstr "Válassza ki a CSV formátumot a mentéshez"
 
 #: src/univcsvdialog.cpp:458
-#, fuzzy
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
-msgstr "Érvénytelen mezőket adott meg a CSV importhoz! Legalább a dátum, összeg és kedvezményezett kell!"
+msgstr "Érvénytelen mezőket adott meg a CSV importhoz! Legalább a dátum, összeg és kedvezményezett szükséges!"
 
 #: src/univcsvdialog.cpp:500
-#, fuzzy
 msgid "Transactions imported from CSV: "
-msgstr " ügyletek importálva QIF-ből"
+msgstr "CSV-ből importált ügyletek: "
 
 #: src/univcsvdialog.cpp:507
-#, fuzzy
 msgid ""
 "Transactions imported from CSV\n"
 "to account "
-msgstr " ügyletek importálva QIF-ből"
+msgstr ""
+"Ügyletek CSV-ből importálva\n"
+"a számlához"
 
 #: src/univcsvdialog.cpp:562
 #: src/univcsvdialog.cpp:585
 #: src/univcsvdialog.cpp:642
 msgid "Line : "
-msgstr "Sor :"
+msgstr "Sor : "
 
 #: src/univcsvdialog.cpp:563
 msgid " file contains insufficient number of tokens"
 msgstr " a fájl elégtelen mennyiségű jelzést tartalmaz"
 
 #: src/univcsvdialog.cpp:586
-#, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
-msgstr " néhány mező: dátum, kedvezményezett, összeg, típus nincs kitöltve, átugrás"
+msgstr "A következő mezők egyike: dátum, kedvezményezett, összeg, típus hiányzik. Átlépve. "
 
 #: src/univcsvdialog.cpp:642
 msgid " imported OK."
 msgstr " Sikeres importálás"
 
 #: src/univcsvdialog.cpp:647
-#, fuzzy, c-format
+#, c-format
 msgid "Total Lines : %d"
-msgstr "Teljes vagyon :"
+msgstr "Sorok száma: %d"
 
 #: src/univcsvdialog.cpp:649
-#, fuzzy, c-format
+#, c-format
 msgid "Total Imported : %d"
-msgstr "Teljes összeg"
+msgstr "Összesen importált: %d"
 
 #: src/univcsvdialog.cpp:651
 #, c-format
 msgid "Log file written to : %s"
-msgstr ""
+msgstr "A logfájl neve: %s"
 
 #: src/univcsvdialog.cpp:655
-#, fuzzy
 msgid "Importing CSV"
-msgstr "Importálás CSV-ből"
+msgstr "CSV importálása"
 
 #: src/univcsvdialog.cpp:659
-#, fuzzy
 msgid "Imported transactions have been flagged so you can review them."
-msgstr ""
-"Sorok száma : %d.\n"
-"Importálva : %d\n"
-"Naplófájl : %s.\n"
-"\n"
-"Az importált ügyletek megjelölve, így ellenőrizheti azokat."
+msgstr "Az importált ügyletek megjelölve, így ellenőrizheti azokat."
 
 #: src/univcsvdialog.cpp:702
-#, fuzzy
 msgid "CSV Files"
-msgstr "&CSV fájlok"
+msgstr "&CSV fájlok "
 
 #: src/univcsvdialog.cpp:703
 msgid "Choose CSV data file to Export"
@@ -5327,99 +4933,92 @@ msgstr "Válasszon CSV fájlt az exportáláshoz"
 
 #: src/univcsvdialog.cpp:781
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: src/univcsvdialog.cpp:970
-#, fuzzy
 msgid "Choose CSV data file to import"
-msgstr "Válasszon CSV fájlt az exportáláshoz"
+msgstr "Válasszon CSV adatfájlt az importhoz"
 
 #: src/mmpayee.cpp:63
-#, fuzzy, c-format
+#, c-format
 msgid "Add Payee. Error: %s"
-msgstr "Kedvezményezett hozzáadása"
+msgstr "Kedvezményezett hozzáadása. Hiba: %s !"
 
 #: src/transdialog.cpp:440
 msgid "Specify the category for this transaction"
 msgstr "Válasszon kategóriát ehhez az ügylethez"
 
 #: src/transdialog.cpp:453
-#, fuzzy
 msgid "Populate Transaction #"
-msgstr "&Ügylet beillesztése"
+msgstr "&Ügylet beillesztése #"
 
 #: src/transdialog.cpp:469
 msgid "Select one of the frequently used notes"
-msgstr ""
+msgstr "Válassza ki a gyakran használt megjegyzések egyikét"
 
 #: src/transdialog.cpp:1596
-#, fuzzy
 msgid "Duplicate Transaction"
-msgstr "Megjelölt ügyletek mutatása"
+msgstr "Ügylet duplikálása"
 
 #: src/mmtransaction.cpp:196
 msgid "Payee not found in database for Account: "
-msgstr ""
+msgstr "Az adatbázisában a számlához nem rendelt kedvezményezett: "
 
 #: src/mmtransaction.cpp:199
 msgid "Subsequent errors not displayed."
-msgstr ""
+msgstr "A további hibák nincsenek megjelenítve."
 
 #: src/mmtransaction.cpp:200
 msgid "MMEX DATABASE ERROR"
-msgstr ""
+msgstr "MMEX ADATBÁZIS HIBA"
 
 #: src/customreportindex.cpp:47
 msgid "Report Name[|Report Filename.sql[|SUB]]"
-msgstr ""
+msgstr "Jelentés neve[|Report Filename.sql[|SUB]]"
 
 #: src/customreportindex.cpp:168
 msgid "Select the Custom SQL Report"
-msgstr ""
+msgstr "Válasszon ki egy kivonatolt SQL jelentést"
 
 #: src/customreportindex.cpp:279
 msgid "Cannot locate file: "
-msgstr ""
+msgstr "Nem találom a következő fájlt: "
 
 #: src/relocatecategorydialog.cpp:85
 msgid "Relocate all source categories to the destination category"
-msgstr ""
+msgstr "A forráskategóriák áthelyezése a célkategóriába"
 
 #: src/relocatecategorydialog.cpp:90
-#, fuzzy
 msgid "Source Category"
-msgstr "Al-kategória"
+msgstr "Forrás kategória"
 
 #: src/relocatecategorydialog.cpp:94
-#, fuzzy
 msgid "Destination Category"
-msgstr "Kategória választása"
+msgstr "Célkategória"
 
 #: src/relocatecategorydialog.cpp:174
 msgid "Changing all categories of: "
-msgstr ""
+msgstr "A következő kategóriáinak megváltoztatása: "
 
 #: src/relocatecategorydialog.cpp:174
-#, fuzzy
 msgid "to category: "
-msgstr "Kategória: \n"
+msgstr " kategóriára:"
 
 #: src/relocatecategorydialog.cpp:176
 msgid "Category Relocation Confirmation"
-msgstr ""
+msgstr "Kategóriaáthelyezés jóváhagyása"
 
 #: src/stockspanel.cpp:193
 msgid "Idle"
-msgstr ""
+msgstr "Függő"
 
 #: src/stockspanel.cpp:222
 msgid "Share Name"
 msgstr "Értékpapír neve"
 
 #: src/stockspanel.cpp:240
-#, fuzzy
 msgid "Current"
-msgstr "Pénznem"
+msgstr "Jelenlegi"
 
 #: src/stockspanel.cpp:281
 msgid "New Stock Investment"
@@ -5435,52 +5034,48 @@ msgstr "Befektetés törlése"
 
 #: src/stockspanel.cpp:294
 msgid "&Refresh"
-msgstr ""
+msgstr "F&rissítés"
 
 #: src/stockspanel.cpp:296
 msgid "Refresh Stock Prices from Yahoo"
-msgstr ""
+msgstr "Részvényárfolyamok frissítése Yahoo-ról"
 
 #: src/stockspanel.cpp:299
-#, fuzzy
 msgid "&Settings"
-msgstr "Beállítások áttekintése"
+msgstr "Beállítások"
 
 #: src/stockspanel.cpp:301
 msgid "Change settings for automatic refresh"
-msgstr ""
+msgstr "Az automatikus frissítés beállításainak megváltoztatása"
 
 #: src/stockspanel.cpp:324
 msgid "Stock Investments: "
+msgstr "Értékpapír befektetések: "
+
+#: src/stockspanel.cpp:353
+msgid "Total: "
+msgstr "Összesen: "
+
+#: src/stockspanel.cpp:353
+msgid "Invested: "
 msgstr "Befektetések: "
 
-#: src/stockspanel.cpp:353
-#, fuzzy
-msgid "Total: "
-msgstr "Összesen:"
-
-#: src/stockspanel.cpp:353
-#, fuzzy
-msgid "Invested: "
-msgstr "Befektetési számla"
-
 #: src/stockspanel.cpp:355
-#, fuzzy
 msgid "Gain: "
-msgstr "Emelkedés/süllyedés"
+msgstr "Nyereség: "
 
 #: src/stockspanel.cpp:357
 msgid "Loss: "
-msgstr ""
+msgstr "Veszteség: "
 
 #: src/stockspanel.cpp:499
 #, c-format
 msgid "%s on %s"
-msgstr ""
+msgstr "%s a %s-ból/ből"
 
 #: src/stockspanel.cpp:502
 msgid "never!"
-msgstr ""
+msgstr "soha!"
 
 #: src/stockspanel.cpp:507
 #, c-format
@@ -5488,6 +5083,8 @@ msgid ""
 "Automatic stock quote refresh is disabled. \n"
 "Last update: %s"
 msgstr ""
+"Az automatikus részvényárfolyam-frissítés kikapcsolva.\n"
+"Utolsó frissítés: %s"
 
 #: src/stockspanel.cpp:513
 #, c-format
@@ -5495,10 +5092,12 @@ msgid ""
 "Automatic stock quote refresh idle - Out of Hours. \n"
 "Last update: %s"
 msgstr ""
+"Az automatikus részvényárfolyam-frissítés felfüggesztve - időn kívül.\n"
+"Utolsó frissítés: %s"
 
 #: src/stockspanel.cpp:519
 msgid "Automatic stock quote refresh in progress..."
-msgstr ""
+msgstr "Az automatikus részvényárfolyam-frissítés folyamatban..."
 
 #: src/stockspanel.cpp:525
 #, c-format
@@ -5506,6 +5105,8 @@ msgid ""
 "Automatic stock quote refresh successful. \n"
 "Last update: %s"
 msgstr ""
+"Az automatikus részvényárfolyam-frissítés sikeres.\n"
+"Utolsó frissítés: %s"
 
 #: src/stockspanel.cpp:531
 #, c-format
@@ -5513,6 +5114,8 @@ msgid ""
 "Automatic stock quote refresh Failed. \n"
 "Last successful update: %s"
 msgstr ""
+"Az automatikus részvényárfolyam-frissítés sikertelen. \n"
+"Utolsó sikeres frissítés: %s"
 
 #: src/stockspanel.cpp:538
 #, c-format
@@ -5520,11 +5123,13 @@ msgid ""
 "Automatic stock quote refresh not started. \n"
 "Last update: %s"
 msgstr ""
+"Az automatikus részvényárfolyam-frissítés nem indult el.\n"
+"Utolsó frissítés: %s"
 
 #: src/stockspanel.cpp:688
 #: src/stockspanel.cpp:696
 msgid "Stock Download"
-msgstr ""
+msgstr "Részvényletöltés"
 
 #: src/stockspanel.cpp:840
 msgid "&New Stock Investment"
@@ -5539,9 +5144,8 @@ msgid "&Delete Stock Investment"
 msgstr "&Befektetés törlése"
 
 #: src/stockspanel.cpp:931
-#, fuzzy
 msgid "Symbol: "
-msgstr "Jel"
+msgstr "Jel: "
 
 #: src/stockspanel.cpp:1013
 msgid "Do you really want to delete the stock investment?"
@@ -5556,52 +5160,44 @@ msgid "Summary of Assets"
 msgstr "Vagyon összegzése"
 
 #: src/reportsummaryassets.cpp:91
-#, fuzzy
 msgid "Total Assets: "
-msgstr "Teljes vagyon :"
+msgstr "Teljes vagyon :  "
 
 #: src/reportbudget.cpp:102
 msgid "From: "
 msgstr "Ekkortól: "
 
 #: src/reportbudget.cpp:103
-#, fuzzy
 msgid "to: "
-msgstr " Eddig: "
+msgstr "Ide:  "
 
 #: src/splittransactionsdialog.cpp:105
-#, fuzzy
 msgid " Split Category Details"
-msgstr "Kategória választása"
+msgstr "Kategória részleteinek bontása"
 
 #: src/splittransactionsdialog.cpp:130
-#, fuzzy
 msgid " Total:"
-msgstr "Összesen:"
+msgstr "Összesen: "
 
 #: src/splittransactionsdialog.cpp:174
-#, fuzzy
 msgid "&Select Category"
-msgstr "Kategória választása"
+msgstr "Kategória választása "
 
 #: src/budgetentrydialog.cpp:143
-#, fuzzy
 msgid "Estimated:"
-msgstr "Becsült"
+msgstr "Becsült: "
 
 #: src/budgetentrydialog.cpp:145
-#, fuzzy
 msgid "Actual:"
-msgstr "Jelenlegi"
+msgstr "Jelenlegi:"
 
 #: src/budgetentrydialog.cpp:153
-#, fuzzy
 msgid "Sub Category: "
-msgstr "Al-kategória: \n"
+msgstr "Alkategória: "
 
 #: src/budgetentrydialog.cpp:166
 msgid "Type:"
-msgstr "Típus"
+msgstr "Típus: "
 
 #: src/budgetentrydialog.cpp:170
 msgid "Expense"
@@ -5613,11 +5209,11 @@ msgstr "Adja meg, hogy a kategória bevétel vagy kiadás kategória"
 
 #: src/budgetentrydialog.cpp:180
 msgid "Frequency:"
-msgstr "Gyakoriság:"
+msgstr "Gyakoriság: "
 
 #: src/budgetentrydialog.cpp:198
 msgid "Specify the frequency of the expense or deposit"
-msgstr "Adja meg a kiadás, vagy betét gyakorságát"
+msgstr "Adja meg a kiadás, vagy betét gyakoriságát"
 
 #: src/budgetentrydialog.cpp:202
 msgid "Amount:"
@@ -5629,106 +5225,95 @@ msgstr "A kategória költségvetési összegének bevitele"
 
 #: src/customreportdisplay.cpp:43
 msgid "Custom SQL Report: "
-msgstr ""
+msgstr "Kivonatos SQL jelentés: "
 
 #: src/transactionfilterdialog.cpp:94
-#, fuzzy
 msgid " Filter Settings "
-msgstr "Beállítások áttekintése"
+msgstr " Szűrési beállítások"
 
 #: src/transactionfilterdialog.cpp:108
-#, fuzzy
 msgid "Date Range"
-msgstr "Időtartomány megadása"
+msgstr "Időtartomány"
 
 #: src/transactionfilterdialog.cpp:138
 msgid "Filter Split categories. Include the category for further filtering."
-msgstr ""
+msgstr "Bontott kategóriák szűrése. Kategória felvétele a további szűrésbe."
 
 #: src/transactionfilterdialog.cpp:202
 msgid "Will search for the given text in the Notes field"
-msgstr ""
+msgstr "Az adott szöveg keresése a megjegyzés mezőben"
 
 #: src/transactionfilterdialog.cpp:217
 msgid "Activates the filter: Will add selected items to display"
-msgstr ""
+msgstr "Szűrő aktiválása: a kiválasztott elemeket jeleníti meg."
 
 #: src/transactionfilterdialog.cpp:221
 msgid "Deactivates the filter"
-msgstr ""
+msgstr "Szűrő kikapcsolása"
 
 #: src/relocatepayeedialog.h:24
-#, fuzzy
 msgid "Relocate Payee Dialog"
-msgstr "Kedvezményezett-kezelő ablak mutatása"
+msgstr "Kedvezményezett áthelyezése párbeszédablak"
 
 #: src/stockdialog.h:23
 msgid "New/Edit Stock Investment"
-msgstr "Új/Befektetés szerkesztése"
+msgstr "Új befektetés, Befektetés szerkesztése"
 
 #: src/univcsvdialog.h:28
-#, fuzzy
 msgid "Universal CSV Dialog"
-msgstr "CSV importálás"
+msgstr "CSV párbeszédablak"
 
 #: src/customreportdialog.h:26
 msgid "Custom SQL Reports Manager"
-msgstr ""
+msgstr "Kivonatolt SQL jelentések szervező"
 
 #: src/transdialog.h:24
 msgid "New/Edit Transaction"
-msgstr "Új/Ügylet szerkesztése"
+msgstr "Új ügylet, Ügylet szerkesztése"
 
 #: src/currencydialog.h:23
 msgid "Currency Manager"
 msgstr "Pénznem kezelő"
 
 #: src/transactionfilterdialog.h:26
-#, fuzzy
 msgid "MMEX Account View: Transaction Filter"
-msgstr "Ügyletek szűrése"
+msgstr "MMEX számlanézet: Ügyletek szűrése."
 
 #: src/fileviewerdialog.h:26
 msgid "View File Contents"
 msgstr "Fájltartalom mutatása"
 
 #: src/relocatecategorydialog.h:24
-#, fuzzy
 msgid "Relocate Category Dialog"
-msgstr "Kategória választása"
+msgstr "Kategória áthelyezés párbeszédablak"
 
 #: src/billsdepositsdialog.h:24
 msgid "New/Edit Repeating Transaction"
-msgstr "Új/Ütemezett ügylet szerkesztése"
+msgstr "Új rendszeres ügylet, illetve szerkesztése"
 
 #: src/budgetyearentrydialog.h:23
 msgid "Budget Year Entry"
 msgstr "Költségvetési év bevitele"
 
 #: src/budgetyeardialog.h:23
-#, fuzzy
 msgid "Budget Editor"
-msgstr "Költségvetési év szerkesztő"
+msgstr "Költségvetésszerkesztő"
 
 #: src/splitdetailsdialog.h:34
-#, fuzzy
 msgid "Split Detail Dialog"
-msgstr "Indítóablak"
+msgstr "Részletek bontása párbeszéd"
 
 #: src/yahoosettingsdialog.h:108
-#, fuzzy
 msgid "Options"
-msgstr "&Beállítások"
+msgstr "&Beállítások "
 
 #: src/budgetentrydialog.h:23
-#, fuzzy
 msgid "Budget Entry Details"
-msgstr "Költségvetés bevitele"
+msgstr "Költségvetés bevitele részletezés"
 
 #: src/splittransactionsdialog.h:44
-#, fuzzy
 msgid "Split Transaction Dialog"
-msgstr "Ügylet szerkesztése"
+msgstr "Ügylet bontása párbeszédablak"
 
 #, fuzzy
 #~ msgid "Delete all \"Follow Up\" transactions"

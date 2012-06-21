@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-27 17:41+0300\n"
-"PO-Revision-Date: 2012-03-27 17:41+0300\n"
-"Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
+"PO-Revision-Date: 2012-06-17 10:23+0200\n"
+"Last-Translator: Pol Vardakis <polvardakis@gmail.com>\n"
 "Language-Team: TheZeal Software\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,80 +19,77 @@ msgstr ""
 "X-Poedit-SearchPath-0: src\n"
 
 #: src/customreportdialog.cpp:80
-#, fuzzy
 msgid "Report Title:"
-msgstr "Εισαγωγή"
+msgstr "Τίτλος έκθεσης:"
 
 #: src/customreportdialog.cpp:84
 msgid "Report Title is used as the file name of the SQL script."
-msgstr ""
+msgstr "Ο τίτλος της έκθεσης χρησιμοποιείται ως το όνομα του αρχείου στο σενάριο SQL."
 
 #: src/customreportdialog.cpp:87
 msgid "Heading"
-msgstr ""
+msgstr "Τίτλος"
 
 #: src/customreportdialog.cpp:90
 msgid "Sub-Menu"
-msgstr ""
+msgstr "Υπομενού"
 
 #: src/customreportdialog.cpp:96
 msgid "SQL Source Script:"
-msgstr ""
+msgstr "Σενάριο πηγής SQL:"
 
 #: src/customreportdialog.cpp:121
-#, fuzzy
 msgid "&Open"
-msgstr "Ανοικτός"
+msgstr "&Άνοιγμα"
 
 #: src/customreportdialog.cpp:123
 msgid "Locate and load an SQL script file into the script area."
-msgstr ""
+msgstr "Εντοπισμός και φόρτωση ενός αρχείου σεναρίου SQL στην περιοχή σεναρίου."
 
 #: src/customreportdialog.cpp:125
 msgid "&Save"
-msgstr ""
+msgstr "&Αποθήκευση"
 
 #: src/customreportdialog.cpp:127
 msgid "Save SQL script to file name set by the Report Title."
-msgstr ""
+msgstr "Αποθήκευση του σεναρίου SQL στο αρχείο με το όνομα που τέθηκε στον τίτλο της έκθεσης."
 
 #: src/customreportdialog.cpp:129
 msgid "&Run"
-msgstr ""
+msgstr "&Εκτέλεση"
 
 #: src/customreportdialog.cpp:131
 msgid "Test script. Save before running. SQL errors will result in loss of script."
-msgstr ""
+msgstr "Δοκιμάστε το σενάριο. Αποθηκεύστε πριν την εκτέλεση. Τα σφάλματα SQL θα έχουν ως αποτέλεσμα την απώλεια του σεναρίου."
 
 #: src/customreportdialog.cpp:133
 msgid "&Clear"
-msgstr ""
+msgstr "&Καθαρισμός"
 
 #: src/customreportdialog.cpp:135
 msgid "Clear the SQL Source script area"
-msgstr ""
+msgstr "Καθαρισμός της περιοχής σεναρίου SQL"
 
 #: src/customreportdialog.cpp:137
 #: src/currencydialog.cpp:320
-#, fuzzy
 msgid "&Close"
-msgstr "Κλειστός"
+msgstr "&Κλείσιμο"
 
 #: src/customreportdialog.cpp:139
 msgid "Save changes before closing. Changes without Save will be lost."
-msgstr ""
+msgstr "Αποθηκεύστε τις αλλαγές πριν το κλείσιμο. Οι αλλαγές χωρίς αποθήκευση θα χαθούν."
 
 #: src/customreportdialog.cpp:184
 msgid "Load Custom SQL file:"
-msgstr ""
+msgstr "Φόρτωση προσαρμοσμένου αρχείου SQL:"
 
 #: src/customreportdialog.cpp:210
 msgid "Unable to open file."
-msgstr ""
+msgstr "Αδυναμία ανοίγματος αρχείου."
 
 #: src/customreportdialog.cpp:220
 msgid "Please supply the Report Title before saving"
-msgstr ""
+msgstr "Παρακαλούμε δώστε τον τίτλο της έκθεσης πριν την αποθήκευση"
 
 #: src/customreportdialog.cpp:242
 msgid ""
@@ -101,33 +98,34 @@ msgid ""
 "OK....: Insert before selected entry\n"
 "Cancel: Add at bottom of List."
 msgstr ""
+" τοποθεσία εισαγωγής:\n"
+"\n"
+"OK....: Εισαγωγή πριν την επιλεγμένη εισαγωγή\n"
+"Άκυρο: Προσθήκη στο κάτω μέρος της λίστας."
 
 #: src/customreportdialog.cpp:261
 msgid "Unable to write to file."
-msgstr ""
+msgstr "Αδυναμία εγγραφής στο αρχείο."
 
 #: src/customreportdialog.cpp:293
 msgid "SQL Query will modify your Data. Proceed??"
-msgstr ""
+msgstr "Το ερώτημα SQL θα τροποποιήσει τα δεδομένα σας. Να προχωρήσει;"
 
 #: src/customreportdialog.cpp:293
 msgid "Warning"
-msgstr ""
+msgstr "Προειδοποίηση"
 
 #: src/reportbudgetcategorysummary.cpp:100
-#, fuzzy
 msgid "Budget Categories for "
-msgstr "Επιθεωρείστε όλες τις προϋπολογισμένες κατηγορίες"
+msgstr "Κατηγορίες προϋπολογισμού για "
 
 #: src/reportbudgetcategorysummary.cpp:102
-#, fuzzy
 msgid "Budget Category Summary for "
-msgstr "Αρχικό στήσιμο προϋπολογισμού"
+msgstr "Περίληψη κατηγοριών προϋπολογισμού για "
 
 #: src/reportbudgetcategorysummary.cpp:103
-#, fuzzy
 msgid "( Estimated Vs Actual )"
-msgstr "Εκτιμόμενο Εσοδο: Παρόν Εσοδο: "
+msgstr "(Εκτιμώμενα προς πραγματικά)"
 
 #: src/reportbudgetcategorysummary.cpp:115
 #: src/mmhomepagepanel.cpp:661
@@ -155,51 +153,44 @@ msgstr "Συχνότητα"
 #: src/reportbudgetingperf.cpp:196
 #: src/reportbudgetingperf.cpp:286
 msgid "Estimated"
-msgstr "Εκτιμημένα"
+msgstr "Εκτιμώμενα"
 
 #: src/reportbudgetcategorysummary.cpp:120
 #: src/reportbudgetingperf.cpp:207
 #: src/reportbudgetingperf.cpp:296
 msgid "Actual"
-msgstr "Πραγματικό"
+msgstr "Πραγματικά"
 
 #: src/reportbudgetcategorysummary.cpp:309
-#, fuzzy
 msgid "Estimated Income: "
-msgstr "Εκτιμόμενο Εσοδο: Παρόν Εσοδο: "
+msgstr "Εκτιμώμενα έσοδα: "
 
 #: src/reportbudgetcategorysummary.cpp:310
-#, fuzzy
 msgid "Actual Income: "
-msgstr "Εσοδα"
+msgstr "Πραγματικά έσοδα: "
 
 #: src/reportbudgetcategorysummary.cpp:311
-#, fuzzy
 msgid "Difference Income: "
-msgstr "Εσοδα"
+msgstr "Διαφορά εσόδων: "
 
 #: src/reportbudgetcategorysummary.cpp:313
-#, fuzzy
 msgid "Estimated Expenses: "
-msgstr "Εκτιμόμενα Εξοδα: Πραγματικά Εξοδα:"
+msgstr "Εκτιμώμενα έξοδα: "
 
 #: src/reportbudgetcategorysummary.cpp:314
-#, fuzzy
 msgid "Actual Expenses: "
-msgstr "Εξοδα"
+msgstr "Πραγματικά έξοδα: "
 
 #: src/reportbudgetcategorysummary.cpp:315
-#, fuzzy
 msgid "Difference Expenses: "
-msgstr "Εξοδα"
+msgstr "Διαφορά εξόδων: "
 
 #: src/mmhomepagepanel.cpp:89
 #: src/filtertransdialog.cpp:199
 msgid "Reconciled"
-msgstr "Εναρμονισμένο"
+msgstr "Τακτοποιημένο"
 
 #: src/mmhomepagepanel.cpp:90
-#, fuzzy
 msgid "Balance"
 msgstr "Υπόλοιπο"
 
@@ -209,33 +200,28 @@ msgstr "Κέρδη/Ζημιές"
 
 #: src/mmhomepagepanel.cpp:98
 msgid "Total"
-msgstr ""
+msgstr "Σύνολο"
 
 #: src/mmhomepagepanel.cpp:112
 #: src/mmhomepagepanel.cpp:312
-#, fuzzy
 msgid "Stocks Total:"
-msgstr "Μετοχές"
+msgstr "Σύνολο μετοχών:"
 
 #: src/mmhomepagepanel.cpp:132
-#, fuzzy
 msgid "Bank Account"
-msgstr "Λογαριασμοί "
+msgstr "Τραπεζικός λογαριασμός"
 
 #: src/mmhomepagepanel.cpp:184
-#, fuzzy
 msgid "Bank Accounts Total:"
-msgstr "Λογαριασμοί "
+msgstr "Σύνολο τραπεζικών λογαριασμών:"
 
 #: src/mmhomepagepanel.cpp:195
-#, fuzzy
 msgid "Term Account"
-msgstr "Από Λογαριασμό"
+msgstr "Προθεσμιακός λογαριασμός"
 
 #: src/mmhomepagepanel.cpp:246
-#, fuzzy
 msgid "Term Accounts Total:"
-msgstr "Από Λογαριασμό"
+msgstr "Σύνολο προθεσμιακών λογαριασμών:"
 
 #: src/mmhomepagepanel.cpp:260
 msgid "Stocks"
@@ -244,16 +230,15 @@ msgstr "Μετοχές"
 #: src/mmhomepagepanel.cpp:329
 #: src/mmhomepagepanel.cpp:815
 msgid "Assets"
-msgstr ""
+msgstr "Περιουσιακά στοιχεία"
 
 #: src/mmhomepagepanel.cpp:387
 msgid "Currency"
 msgstr "Νόμισμα"
 
 #: src/mmhomepagepanel.cpp:388
-#, fuzzy
 msgid "Base Rate"
-msgstr "Διόρθωση"
+msgstr "Βασική ισοτιμία"
 
 #: src/mmhomepagepanel.cpp:389
 #: src/mmhomepagepanel.cpp:663
@@ -265,35 +250,30 @@ msgid "Current Month"
 msgstr "Τρέχων μήνας"
 
 #: src/mmhomepagepanel.cpp:436
-#, fuzzy
 msgid "Current Month to Date"
-msgstr "Τρέχων μήνας"
+msgstr "Τρέχων μήνας μέχρι σήμερα"
 
 #: src/mmhomepagepanel.cpp:438
-#, fuzzy
 msgid "Income vs Expenses: "
-msgstr "Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς Έξοδα: "
 
 #: src/mmhomepagepanel.cpp:452
 #: src/reporttransactions.cpp:75
 #: src/reportbudgetingperf.cpp:119
-#, fuzzy
 msgid "Type"
-msgstr "Τύπος:"
+msgstr "Τύπος"
 
 #: src/mmhomepagepanel.cpp:457
-#, fuzzy
 msgid "Income:"
-msgstr "Εσοδα"
+msgstr "Έσοδα:"
 
 #: src/mmhomepagepanel.cpp:462
-#, fuzzy
 msgid "Expenses:"
-msgstr "Εξοδα"
+msgstr "Έξοδα:"
 
 #: src/mmhomepagepanel.cpp:468
 msgid "Difference:"
-msgstr ""
+msgstr "Διαφορά:"
 
 #: src/mmhomepagepanel.cpp:516
 msgid " days remaining"
@@ -302,21 +282,19 @@ msgstr " ημέρες που απομένουν"
 #: src/mmhomepagepanel.cpp:521
 #: src/mmhomepagepanel.cpp:528
 msgid "Inactive"
-msgstr ""
+msgstr "Μη ενεργό"
 
 #: src/mmhomepagepanel.cpp:526
 msgid " days overdue!"
 msgstr " ημέρες καθυστέρησης!"
 
 #: src/mmhomepagepanel.cpp:576
-#, fuzzy
 msgid "Upcoming Transactions"
-msgstr "Διαγραφή κίνησης"
+msgstr "Επερχόμενες συναλλαγές"
 
 #: src/mmhomepagepanel.cpp:656
-#, fuzzy
 msgid "Top Withdrawals: "
-msgstr "Ανάληψη"
+msgstr "Μεγαλύτερες αναλήψεις: "
 
 #: src/mmhomepagepanel.cpp:656
 msgid "Last 30 Days"
@@ -324,50 +302,44 @@ msgstr "Τελευταίες 30 ημέρες"
 
 #: src/mmhomepagepanel.cpp:662
 msgid "Quantity"
-msgstr ""
+msgstr "Ποσότητα"
 
 #: src/mmhomepagepanel.cpp:701
-#, fuzzy
 msgid "Transaction Statistics"
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Στατιστικά συναλλαγών"
 
 #: src/mmhomepagepanel.cpp:706
-#, fuzzy
 msgid "Follow Up On Transactions: "
-msgstr "Διαγραφή κίνησης"
+msgstr "Επανέλεγχος στις συναλλαγές: "
 
 #: src/mmhomepagepanel.cpp:712
-#, fuzzy
 msgid "Total Transactions: "
-msgstr "Επεξεργασία κίνησης"
+msgstr "Σύνολο συναλλαγών: "
 
 #: src/mmhomepagepanel.cpp:727
 msgid "Grand Total:"
-msgstr ""
+msgstr "Γενικό σύνολο:"
 
 #: src/mmhomepagepanel.cpp:747
 msgid "Today's Date: "
-msgstr "Σημερινή ημερομηνία:"
+msgstr "Σημερινή ημερομηνία: "
 
 #: src/mmhomepagepanel.cpp:809
-#, fuzzy
 msgid "Repeating Transactions"
-msgstr "Διαγραφή κίνησης"
+msgstr "Επαναλαμβανόμενες συναλλαγές"
 
 #: src/categdialog.cpp:79
-#, fuzzy
 msgid "Categories"
-msgstr "Κατηγορία"
+msgstr "Κατηγορίες"
 
 #: src/categdialog.cpp:151
 msgid "Enter the name of the category to add or edit here"
-msgstr "Εδώ εισάγετε το όνομα της κατηγορίας προς εισαγωγή ή επεξεργασία"
+msgstr "Εδώ εισάγετε το όνομα της κατηγορίας προς εισαγωγή ή επεξεργασία "
 
 #: src/categdialog.cpp:157
 #: src/payeedialog.cpp:112
-#, fuzzy
 msgid "Add"
-msgstr "Εισαγωγή"
+msgstr "Προσθήκη"
 
 #: src/categdialog.cpp:159
 msgid "Add a new category"
@@ -375,51 +347,47 @@ msgstr "Εισάγετε μια νέα κατηγορία"
 
 #: src/categdialog.cpp:162
 #: src/payeedialog.cpp:117
-#, fuzzy
 msgid "&Edit"
-msgstr "Επεξεργασία"
+msgstr "&Επεξεργασία"
 
 #: src/categdialog.cpp:164
 msgid "Edit the name of an existing category"
-msgstr "Επεηεργασθείτε το όνομα μιας υπάρχουσας κατηγορίας"
+msgstr "Επεξεργασθείτε το όνομα μιας υπάρχουσας κατηγορίας"
 
 #: src/categdialog.cpp:167
 #: src/payeedialog.cpp:122
 msgid "Remove"
-msgstr ""
+msgstr "Αφαίρεση"
 
 #: src/categdialog.cpp:169
 msgid "Delete an existing category. The category cannot be used by existing transactions."
-msgstr "Διαγραφής μιας υπαρκτής κατηγορίας. Η κατηγορία δεν μπορεί να χρησιμοποιηθεί από υπάρχουσα κίνηση"
+msgstr "Διαγραφής μιας υπάρχουσας κατηγορίας. Η κατηγορία δεν μπορεί να χρησιμοποιηθεί από υπάρχουσες συναλλαγές."
 
 #: src/categdialog.cpp:175
 #: src/payeedialog.cpp:130
-#, fuzzy
 msgid "&Select"
-msgstr "Επιλογή "
+msgstr "&Επιλογή"
 
 #: src/categdialog.cpp:177
 msgid "Select the currently selected category as the selected category for the transaction"
-msgstr "Επιλέξτε την τρέχουσα κατηγορία σαν επιλογή κατηγορίας για την κίνηση"
+msgstr "Επιλέξτε την τρέχουσα επιλεγμένη κατηγορία ως κατηγορία επιλεγμένη για τη συναλλαγή"
 
 #: src/categdialog.cpp:180
 #: src/filtertransdialog.cpp:285
 #: src/payeedialog.cpp:136
-#, fuzzy
 msgid "&Cancel"
-msgstr "Ακύρωση"
+msgstr "&Ακύρωση"
 
 #: src/categdialog.cpp:194
 msgid "Category cannot be empty"
-msgstr ""
+msgstr "Η κατηγορία δεν μπορεί να είναι κενή"
 
 #: src/categdialog.cpp:196
 #: src/categdialog.cpp:207
 #: src/categdialog.cpp:228
 #: src/categdialog.cpp:241
-#, fuzzy
 msgid "Organise Categories: Adding Error"
-msgstr "Οργάνωση Κατηγοριών"
+msgstr "Οργάνωση Κατηγοριών: Σφάλμα προσθήκης"
 
 #: src/categdialog.cpp:205
 msgid "Category with same name exists"
@@ -430,22 +398,22 @@ msgid ""
 "Tip: If category added now, check bottom of list.\n"
 "Category will be in sorted order next time dialog appears"
 msgstr ""
+"Συμβουλή: Αν η κατηγορία προστέθηκε τώρα, ελέγξτε το κάτω μέρος της λίστας.\n"
+"Η κατηγορία θα μπεί στη σειρά της την επόμενη φορά που θα εμφανιστεί το παράθυρο"
 
 #: src/categdialog.cpp:227
 msgid "Sub Category with same name exists"
-msgstr "Υπαρχει ήδη Υποκατηγορία με ίδιο όνομα"
+msgstr "Υπαρχει ήδη υποκατηγορία με ίδιο όνομα"
 
 #: src/categdialog.cpp:240
 msgid "Invalid Parent Category. Choose Root or Main Category node."
-msgstr "Μη έγκυρη μητρική κατηγορία. Επιλέξτε μητρική κατηγορία"
+msgstr "Μη έγκυρη μητρική κατηγορία. Επιλέξτε τον κόμβο ριζικής ή κύριας κατηγορίας."
 
 #: src/categdialog.cpp:248
-#, fuzzy
 msgid "Tip: Change all transactions using this "
-msgstr "Εμφάνιση όλων των κινήσεων"
+msgstr "Συμβουλή: Αλλάξτε όλες τις συναλλαγές με χρήση αυτού "
 
 #: src/categdialog.cpp:250
-#, fuzzy
 msgid "Sub-Category"
 msgstr "Υποκατηγορία"
 
@@ -454,72 +422,64 @@ msgid ""
 " to\n"
 "another "
 msgstr ""
+"σε\n"
+"μια άλλη "
 
 #: src/categdialog.cpp:264
 msgid " using the relocate command:"
-msgstr ""
+msgstr " με χρήση της εντολής μετατόπισης:"
 
 #: src/categdialog.cpp:264
 msgid "Tools -> Relocation of -> Categories"
-msgstr ""
+msgstr "Εργαλεία -> Μετατόπιση των -> Κατηγοριών"
 
 #: src/categdialog.cpp:266
-#, fuzzy
 msgid "Organise Categories: Delete Error"
-msgstr "Οργάνωση Κατηγοριών"
+msgstr "Οργάνωση Κατηγοριών: Σφάλμα διαγραφής"
 
 #: src/categdialog.cpp:288
-#, fuzzy
 msgid "Category in use."
-msgstr "Η κατηγορία είναι σε χρήση"
+msgstr "Κατηγορία σε χρήση."
 
 #: src/categdialog.cpp:296
-#, fuzzy
 msgid "Sub-Category in use."
-msgstr "Η Υποκατηγορία είναι σε χρήση"
+msgstr "Υποκατηγορία σε χρήση."
 
 #: src/categdialog.cpp:405
-#, fuzzy
 msgid "Update Failed"
-msgstr "Διόρθωση"
+msgstr "Η ενημέρωση απέτυχε"
 
 #: src/categdialog.cpp:407
-#, fuzzy
 msgid "Organise Categories"
 msgstr "Οργάνωση Κατηγοριών"
 
 #: src/filtertransdialog.cpp:129
-#, fuzzy
 msgid " Specify "
-msgstr "Επιλέξτε πληρωμή"
+msgstr " Καθορίστε "
 
 #: src/filtertransdialog.cpp:145
 #: src/reporttransactions.cpp:189
-#, fuzzy
 msgid "Account: "
-msgstr "&Λογαριασμοί"
+msgstr "Λογαριασμός: "
 
 #: src/filtertransdialog.cpp:156
 #: src/reporttransactions.cpp:192
-#, fuzzy
 msgid "Date Range: "
-msgstr "Δηλώστε τον λογαριασμό μεταφοράς"
+msgstr "Εύρος ημερομηνιών: "
 
 #: src/filtertransdialog.cpp:172
 #: src/reporttransactions.cpp:196
-#, fuzzy
 msgid "Payee: "
-msgstr "Πληρωμή"
+msgstr "Δικαιούχος: "
 
 #: src/filtertransdialog.cpp:177
 msgid "Select Payee"
-msgstr "Επιλέξτε πληρωμή"
+msgstr "Επιλέξτε δικαιούχο"
 
 #: src/filtertransdialog.cpp:182
 #: src/reporttransactions.cpp:200
-#, fuzzy
 msgid "Category: "
-msgstr "Κατηγορία"
+msgstr "Κατηγορία: "
 
 #: src/filtertransdialog.cpp:187
 #: src/filtertransdialog.cpp:530
@@ -528,35 +488,32 @@ msgstr "Επιλέξτε Κατηγορία"
 
 #: src/filtertransdialog.cpp:192
 #: src/reporttransactions.cpp:204
-#, fuzzy
 msgid "Status: "
-msgstr "Κατάσταση"
+msgstr "Κατάσταση: "
 
 #: src/filtertransdialog.cpp:198
 msgid "None"
-msgstr "Καθόλου"
+msgstr "Τίποτα"
 
 #: src/filtertransdialog.cpp:200
 msgid "Void"
-msgstr "Ακυρο"
+msgstr "Άκυρη"
 
 #: src/filtertransdialog.cpp:201
 msgid "Follow up"
-msgstr "Παρακολούθηση"
+msgstr "Για επανέλεγχο"
 
 #: src/filtertransdialog.cpp:202
-#, fuzzy
 msgid "Duplicate"
-msgstr "Ημερομηνία"
+msgstr "Διπλότυπο"
 
 #: src/filtertransdialog.cpp:207
 msgid "Specify the status for the transaction"
-msgstr "Δηλώστε την κατάσταση της κίνησης"
+msgstr "Δηλώστε την κατάσταση της συναλλαγής"
 
 #: src/filtertransdialog.cpp:210
-#, fuzzy
 msgid "Type: "
-msgstr "Τύπος:"
+msgstr "Τύπος: "
 
 #: src/filtertransdialog.cpp:215
 #: src/filtertransdialog.cpp:225
@@ -577,34 +534,29 @@ msgid "Transfer"
 msgstr "Μεταφορά"
 
 #: src/filtertransdialog.cpp:222
-#, fuzzy
 msgid "Specify the type of transaction."
-msgstr "Δηλώστε την ημερομηνία της κίνησης"
+msgstr "Καθορίστε τον τύπο της συναλλαγής"
 
 #: src/filtertransdialog.cpp:241
-#, fuzzy
 msgid "Amount Range: "
-msgstr "Ποσό:"
+msgstr "Εύρος ποσού: "
 
 #: src/filtertransdialog.cpp:255
-#, fuzzy
 msgid "Number: "
-msgstr "Αριθμός"
+msgstr "Αριθμός: "
 
 #: src/filtertransdialog.cpp:264
-#, fuzzy
 msgid "Notes: "
-msgstr "Σημειώσεις: \n"
+msgstr "Σημειώσεις: "
 
 #: src/filtertransdialog.cpp:282
-#, fuzzy
 msgid "&OK"
-msgstr "OK"
+msgstr "&OK"
 
 #: src/filtertransdialog.cpp:464
 #: src/filtertransdialog.cpp:477
 msgid "Invalid Amount Entered "
-msgstr "Εισαγωγή Μη έγκυρου ποσού"
+msgstr "Εισήχθη μη έγκυρο ποσό"
 
 #: src/filtertransdialog.cpp:464
 #: src/filtertransdialog.cpp:477
@@ -614,112 +566,103 @@ msgid "Error"
 msgstr "Λάθος"
 
 #: src/filtertransdialog.cpp:607
-#, fuzzy
 msgid "From "
-msgstr "Από :"
+msgstr "Από "
 
 #: src/filtertransdialog.cpp:607
 msgid " to "
-msgstr ""
+msgstr " έως "
 
 #: src/filtertransdialog.cpp:664
-#, fuzzy
 msgid "Min: "
-msgstr "Κέρδη/Ζημιές"
+msgstr "Ελάχιστο: "
 
 #: src/filtertransdialog.cpp:664
 msgid " Max: "
-msgstr ""
+msgstr "Μέγιστο: "
 
 #: src/payeedialog.cpp:66
 msgid "Organize Payees"
-msgstr "Οργανώστε τις πληρωμές"
+msgstr "Οργάνωση δικαιούχων"
 
 #: src/payeedialog.cpp:90
-#, fuzzy
 msgid "Find Payee: "
-msgstr "Πληρωμή"
+msgstr "Εύρεση δικαιούχου: "
 
 #: src/payeedialog.cpp:101
-#, fuzzy
 msgid "Filter Payees: "
-msgstr "Πληρωμή"
+msgstr "Φιλτράρισμα δικαιούχων: "
 
 #: src/payeedialog.cpp:106
 #, c-format
 msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
-msgstr ""
+msgstr "Εισάγετε μια φράση προς αναζήτηση. Μπορείτε να χρησιμοποιήσετε το % ως χαρακτήρα μπαλαντέρ για να ταιριάξετε 0 ή περισσότερους χαρακτήρες και το _ για να ταιριάξετε ένα μεμονωμένο χαρακτήρα."
 
 #: src/payeedialog.cpp:114
 msgid "Add a new payee name"
-msgstr "Εισάγετε μια νέα περιγραφή πληρωμής"
+msgstr "Προσθέστε το όνομα ενός νέου δικαιούχου"
 
 #: src/payeedialog.cpp:119
 msgid "Change the name of an existing payee"
-msgstr "Αλλάξτε την περιγραφή μιας υπάρχουσας πληρωμής"
+msgstr "Αλλάξτε το όνομα ενός υπάρχοντος δικαιούχου"
 
 #: src/payeedialog.cpp:124
 msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
-msgstr "Διαγράψτε την επιλεγμένη πληρωμή. Δεν μπορεί να χρησιμοποιηθεί από μία υπάρχουσα κίνηση."
+msgstr "Διαγράψτε τον επιλεγμένο δικαιούχο. Ο δικαιούχος δεν μπορεί να χρησιμοποιηθεί από μία υπάρχουσα κίνηση."
 
 #: src/payeedialog.cpp:132
 msgid "Select the currently selected payee as the selected payee for the transaction"
-msgstr "Επιλέξτε την παρούσα πληρωμή σαν επιλεγμένη πληρωμή για την κίνηση."
+msgstr "Επιλέξτε τον τρέχοντα επιλεγμένο δικαιούχο ως τον δικαιούχο που επιλέγεται για την συναλλαγή"
 
 #: src/payeedialog.cpp:216
-#, fuzzy
 msgid "Enter the name for the new payee:"
-msgstr "Εδώ εισάγετε το όνομα της κατηγορίας προς εισαγωγή ή επεξεργασία"
+msgstr "Εισάγετε το όνομα του νέου δικαιούχου:"
 
 #: src/payeedialog.cpp:216
 #: src/payeedialog.cpp:223
-#, fuzzy
 msgid "Organize Payees: Add Payee"
-msgstr "Οργανώστε τις πληρωμές"
+msgstr "Οργάνωση δικαιούχων: Προσθήκη δικαιούχου"
 
 #: src/payeedialog.cpp:223
 msgid "Payee with same name exists"
-msgstr "Υπάρχει ήδη πληρωμή με το ίδιο όνομα"
+msgstr "Υπάρχει δικαιούχος με το ίδιο όνομα"
 
 #: src/payeedialog.cpp:243
-#, fuzzy
 msgid "Payee in use."
-msgstr "Η Πληρωμή είναι σε χρήση"
+msgstr "Δικαιούχος σε χρήση"
 
 #: src/payeedialog.cpp:246
 msgid ""
 "Tip: Change all transactions using this Payee to another Payee\n"
 "using the relocate command:"
 msgstr ""
+"Συμβουλή: Αλλάξτε όλες τις συναλλαγές που χρησιμοποιούν αυτόν τον \n"
+"δικαιούχο σε άλλο δικαιούχο χρησιμοποιώντας την εντολή Μετατόπιση:"
 
 #: src/payeedialog.cpp:247
 msgid "Tools -> Relocation of -> Payees"
-msgstr ""
+msgstr "Εργαλεία -> Μετατόπιση των -> Δικαιούχων"
 
 #: src/payeedialog.cpp:248
-#, fuzzy
 msgid "Organize Payees: Delete Error"
-msgstr "Οργανώστε τις πληρωμές"
+msgstr "Οργάνωση δικαιούχων: Σφάλμα διαγραφής"
 
 #: src/payeedialog.cpp:273
-#, fuzzy, c-format
+#, c-format
 msgid "Enter a new name for %s"
-msgstr "Εδώ εισάγετε το όνομα της κατηγορίας προς εισαγωγή ή επεξεργασία"
+msgstr "Εισάγετε ένα νέο όνομα για %s"
 
 #: src/payeedialog.cpp:274
-#, fuzzy
 msgid "Edit Payee Name"
-msgstr "Εισάγετε μια νέα περιγραφή πληρωμής"
+msgstr "Εισαγωγή ονόματος δικαιούχου"
 
 #: src/reporttransactions.cpp:49
-#, fuzzy
 msgid "Transaction List "
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Λίστα συναλλαγών"
 
 #: src/reporttransactions.cpp:51
-#, fuzzy
 msgid "for Account: "
-msgstr "Προς Λογαριασμό"
+msgstr "για το λογαριασμό: "
 
 #: src/reporttransactions.cpp:70
 msgid "Date"
@@ -731,7 +674,7 @@ msgstr "Λογαριασμός"
 
 #: src/reporttransactions.cpp:72
 msgid "Payee"
-msgstr "Πληρωμή"
+msgstr "Δικαιούχος"
 
 #: src/reporttransactions.cpp:73
 msgid "Status"
@@ -746,43 +689,40 @@ msgid "Notes"
 msgstr "Σημειώσεις"
 
 #: src/reporttransactions.cpp:174
-#, fuzzy
 msgid "Total Amount: "
-msgstr "Σύνολο λογαριασμών"
+msgstr "Συνολικό ποσό: "
 
 #: src/reporttransactions.cpp:182
 msgid "<b>Note:</b> Transactions contain <b>'transfers'</b> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."
-msgstr ""
+msgstr "<b>Σημείωση:</b> Συναλλαγές που περιέχουν <b>'μεταφορές'</b> μπορούν είτε να προστίθενται είτε να αφαιρούνται από το <b>'Γενικό Σύνολο'</b> ανάλογα με τον τελευταία επιλεγμένο λογαριασμό."
 
 #: src/reporttransactions.cpp:222
-#, fuzzy
 msgid "Filtering Details: "
-msgstr "Πληρωμή"
+msgstr "Λεπτομέρειες φιλτραρίσματος: "
 
 #: src/currencydialog.cpp:138
 msgid "Converted to:"
-msgstr ""
+msgstr "Μετατράπηκε σε:"
 
 #: src/currencydialog.cpp:150
 msgid "Shown As: "
-msgstr ""
+msgstr "Προβαλλόμενο ως: "
 
 #: src/currencydialog.cpp:173
 msgid "Currency Name"
-msgstr "Ονομασία νομίσματος"
+msgstr "Όνομα του νομίσματος"
 
 #: src/currencydialog.cpp:183
-#, fuzzy
 msgid "Currency Symbol"
-msgstr "Ονομασία νομίσματος"
+msgstr "Σύμβολο νομίσματος"
 
 #: src/currencydialog.cpp:229
 msgid "Unit Name"
-msgstr "Χρησιμοποιούμενο νόμισμα"
+msgstr "Όνομα της μονάδας"
 
 #: src/currencydialog.cpp:237
 msgid "Cents Name"
-msgstr "Ονομασία λεπτών"
+msgstr "Όνομα των υποδιαιρέσεων"
 
 #: src/currencydialog.cpp:245
 msgid "Prefix Symbol"
@@ -798,7 +738,7 @@ msgstr "Χαρακτήρας δεκαδικών"
 
 #: src/currencydialog.cpp:269
 msgid "Grouping Char"
-msgstr "Χαρακτήρας μονάδων-εκατονταδων-χιλιαδων"
+msgstr "Χαρακτήρας ομαδοποίησης"
 
 #: src/currencydialog.cpp:277
 msgid "Scale"
@@ -806,464 +746,433 @@ msgstr "Κλίμακα"
 
 #: src/currencydialog.cpp:285
 msgid "Conversion to Base Rate"
-msgstr "Τιμή βάσης μετατροπής"
+msgstr "Ισοτιμία μετατροπής στο βασικό νόμισμα"
 
 #: src/currencydialog.cpp:292
 msgid "Other currency conversion rate. Set Base Currency to 1."
-msgstr ""
+msgstr "Ισοτιμία μετατροπής του άλλου νομίσματος. Ορισμός του βασικού νομίσματος ως 1."
 
 #: src/currencydialog.cpp:294
 msgid "Base Rate Conversion Sample:"
-msgstr ""
+msgstr "Δείγμα βασικής ισοτιμίας μετατροπής:"
 
 #: src/currencydialog.cpp:303
 msgid "Value Display Sample:"
-msgstr ""
+msgstr "Δείγμα εμφάνισης τιμής:"
 
 #: src/currencydialog.cpp:315
-#, fuzzy
 msgid "&Update"
-msgstr "Διόρθωση"
+msgstr "&Ενημέρωση"
 
 #: src/currencydialog.cpp:318
 msgid "Save any changes made"
-msgstr ""
+msgstr "Αποθηκεύστε τυχόν αλλαγές που έγιναν"
 
 #: src/currencydialog.cpp:322
 msgid "Any changes will be lost without update"
-msgstr ""
+msgstr "Τυχόν αλλαγές θα χαθούν χωρίς ενημέρωση"
 
 #: src/currencydialog.cpp:343
-#, fuzzy
 msgid "Scale should be greater than zero"
-msgstr "Η αρχική τιμή μετατροπής πρέπει να έναι μεταξύ 0.0 και 1.0"
+msgstr "Η αύξηση πρέπει να είναι μεγαλύτερη του μηδενός"
 
 #: src/currencydialog.cpp:352
-#, fuzzy
 msgid "Base Conversion Rate should be positive"
-msgstr "Η αρχική τιμή μετατροπής πρέπει να έναι μεταξύ 0.0 και 1.0"
+msgstr "Η βασική ισοτιμία μετατροπής πρέπει να είναι θετική"
 
 #: src/util.cpp:422
 msgid "January"
-msgstr ""
+msgstr "Ιανουάριος"
 
 #: src/util.cpp:422
 msgid "February"
-msgstr ""
+msgstr "Φεβρουάριος"
 
 #: src/util.cpp:422
 msgid "March"
-msgstr ""
+msgstr "Μάρτιος"
 
 #: src/util.cpp:422
 msgid "April"
-msgstr ""
+msgstr "Απρίλιος"
 
 #: src/util.cpp:422
-#, fuzzy
 msgid "May "
-msgstr "Πληρωμή"
+msgstr "Μάιος"
 
 #: src/util.cpp:422
 msgid "June"
-msgstr ""
+msgstr "Ιούνιος"
 
 #: src/util.cpp:423
 msgid "July"
-msgstr ""
+msgstr "Ιούλιος"
 
 #: src/util.cpp:423
 msgid "August"
-msgstr ""
+msgstr "Αύγουστος"
 
 #: src/util.cpp:423
-#, fuzzy
 msgid "September"
-msgstr "Επιλέξτε πληρωμή"
+msgstr "Σεπτέμβριος"
 
 #: src/util.cpp:423
 msgid "October"
-msgstr ""
+msgstr "Οκτώβριος"
 
 #: src/util.cpp:423
-#, fuzzy
 msgid "November"
-msgstr "Αριθμός"
+msgstr "Νοέμβριος"
 
 #: src/util.cpp:423
 msgid "December"
-msgstr ""
+msgstr "Δεκέμβριος"
 
 #: src/util.cpp:434
 msgid "Jan"
-msgstr ""
+msgstr "Ιαν"
 
 #: src/util.cpp:434
 msgid "Feb"
-msgstr ""
+msgstr "Φεβ"
 
 #: src/util.cpp:434
 msgid "Mar"
-msgstr ""
+msgstr "Μαρ"
 
 #: src/util.cpp:434
 msgid "Apr"
-msgstr ""
+msgstr "Απρ"
 
 #: src/util.cpp:434
 msgid "May"
-msgstr ""
+msgstr "Μαι"
 
 #: src/util.cpp:434
 msgid "Jun"
-msgstr ""
+msgstr "Ιουν"
 
 #: src/util.cpp:435
 msgid "Jul"
-msgstr ""
+msgstr "Ιουλ"
 
 #: src/util.cpp:435
 msgid "Aug"
-msgstr ""
+msgstr "Αυγ"
 
 #: src/util.cpp:435
 msgid "Sep"
-msgstr ""
+msgstr "Σεπ"
 
 #: src/util.cpp:435
 msgid "Oct"
-msgstr ""
+msgstr "Οκτ"
 
 #: src/util.cpp:435
 msgid "Nov"
-msgstr ""
+msgstr "Νοε"
 
 #: src/util.cpp:435
 msgid "Dec"
-msgstr ""
+msgstr "Δεκ"
 
 #: src/util.cpp:446
-#, fuzzy
 msgid "Sunday"
-msgstr "Περίληψη"
+msgstr "Κυριακή"
 
 #: src/util.cpp:446
-#, fuzzy
 msgid "Monday"
-msgstr "Μηνιαίως"
+msgstr "Δευτέρα"
 
 #: src/util.cpp:446
 msgid "Tuesday"
-msgstr ""
+msgstr "Τρίτη"
 
 #: src/util.cpp:446
 msgid "Wednesday"
-msgstr ""
+msgstr "Τετάρτη"
 
 #: src/util.cpp:447
 msgid "Thursday"
-msgstr ""
+msgstr "Πέμπτη"
 
 #: src/util.cpp:447
 msgid "Friday"
-msgstr ""
+msgstr "Παρασκευή"
 
 #: src/util.cpp:447
 msgid "Saturday"
-msgstr ""
+msgstr "Σάββατο"
 
 #: src/util.cpp:484
 msgid "Entry "
-msgstr "Η εισαγωγή"
+msgstr "Η εισαγωγή "
 
 #: src/util.cpp:484
 msgid " is invalid."
-msgstr "είναι μη έγκυρη"
+msgstr " είναι μη έγκυρη."
 
 #: src/util.cpp:485
 msgid "Invalid Entry"
 msgstr "Μη έγκυρη εισαγωγή"
 
 #: src/util.cpp:499
-#, fuzzy
 msgid "No Account available for export"
-msgstr "Δεν υπάρχει διαθέσιμος Λογαριασμός. Δεν μπορεί να γίνει Εξαγωγή"
+msgstr "Κανείς λογαριασμός διαθέσιμος για εξαγωγή"
 
 #: src/util.cpp:499
 #: src/util.cpp:508
-#, fuzzy
 msgid "QIF Export"
-msgstr "Εισαγωγή"
+msgstr "Εξαγωγή QIF"
 
 #: src/util.cpp:508
 msgid "Choose Account to Export from:"
-msgstr "Επιλέξτε ένα Λογαριασμό από τον οποίο θα γίνει εξαγωγή"
+msgstr "Επιλέξτε λογαριασμό από τον οποίο θα γίνει εξαγωγή:"
 
 #: src/util.cpp:516
-#, fuzzy
 msgid "QIF Files"
-msgstr "&CSV αρχεία"
+msgstr "Αρχεία QIF"
 
 #: src/util.cpp:517
-#, fuzzy
 msgid "Choose QIF data file to Export"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε ένα αρχείο δεδομένων QIF προς εξαγωγή"
 
 #: src/util.cpp:659
-#, fuzzy
 msgid "Export to QIF"
-msgstr "Εξαγωγή σε CSV αρχείο"
+msgstr "Εξαγωγή σε QIF"
 
 #: src/util.cpp:899
 msgid "MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth."
-msgstr ""
+msgstr "Το MMEX σας επιτρέπει να παρακολουθείτε σταθερά περιουσιακά στοιχεία όπως αυτοκίνητα, σπίτια, γη και άλλα. Κάθε περιουσιακό στοιχείο έχει την αξία του ανατιμώμενη ανά συγκεκριμένο ποσοστό κάθε χρόνο, υποτιμώμενη ανά συγκεκριμένο ποσοστό κάθε χρόνο, ή χωρίς αλλαγή αξίας. Το σύνολο των περιουσιακών στοιχείων προστίθεται στο σύνολο της οικονομικής κατάστασής σας."
 
 #: src/util.cpp:903
 msgid "Using MMEX it is possible to track stocks/mutual funds investments."
-msgstr ""
+msgstr "Με τη χρήση του MMEX είναι δυνατή η παρακολούθηση επενδύσεων σε μετοχές/αμοιβαία κεφάλαια."
 
 #: src/util.cpp:908
 msgid "MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "
-msgstr ""
+msgstr "Το MMEX επιτρέπει τακτικές πληρωμές να τεθούν ως συναλλαγές. Αυτές οι συναλλαγές μπορούν επίσης να είναι τακτικές καταθέσεις ή μεταφορές που θα συμβούν σε κάποια μελλοντική στιγμή. Αυτές οι συναλλαγές δρουν ως υπενθύμιση ότι κάτι πρόκειται να συμβεί και εμφανίζονται στην Αρχική Σελίδα 14 ημέρες πριν λήξει η συναλλαγή."
 
 #: src/util.cpp:909
 msgid "Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."
-msgstr ""
+msgstr "Συμβουλή: Αυτές οι συναλλαγές μπορούν να ρυθμιστούν ώστε να ενεργοποιηθούν - επιτρέποντας στο χρήστη να ρυθμίζει κάποιες τιμές κατά την ημερομηνία λήξης."
 
 #: src/util.cpp:916
 msgid "Recommendation: Always backup your .mmb database file regularly."
-msgstr ""
+msgstr "Πρόταση: Πάντα να κάνετε ανά τακτά διαστήματα αντίγραφα ασφαλείας της βάσης δεδομένων .mmb σας."
 
 #: src/util.cpp:917
 msgid "Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."
-msgstr ""
+msgstr "Πρόταση: Αν αναβαθμίζεστε σε μια νέα έκδοση του MMEX, βεβαιωθείτε ότι έχετε πάρει αντίγραφο ασφαλείας της βάσης δεδομένων .mmb πριν να προχωρήσετε."
 
 #: src/util.cpp:918
 msgid "Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."
-msgstr ""
+msgstr "Πρόταση: Χρησιμοποιήστε την αντιγραφή (Ctrl+С) και την επικόλληση (Ctrl+V) για συχνά χρησιμοποιούμενες συναλλαγές."
 
 #: src/util.cpp:919
 msgid "Tip: Remember to make backups of your .mmb."
-msgstr ""
+msgstr "Συμβουλή: Να θυμάστε να κάνετε αντίγραφα ασφαλείας του .mmb αρχείου σας."
 
 #: src/util.cpp:920
 msgid "Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."
-msgstr ""
+msgstr "Συμβουλή: Το αρχείο .mmb δεν είναι κρυπτογραφημένο. Αυτό σημαίνει ότι οποιοσδήποτε άλλος που έχει τις κατάλληλες γνώσεις μπορεί να ανοίξει το αρχείο και να διαβάσει τα περιεχόμενά του. Γι αυτό, αν αποθηκεύετε τυχόν ευαίσθητες οικονομικές πληροφορίες, βεβαιωθείτε ότι είναι επαρκώς προστατευμένο."
 
 #: src/util.cpp:921
 msgid "Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."
-msgstr ""
+msgstr "Συμβουλή: Για να μαρκάρετε μια συναλλαγή ως τακτοποιημένη, απλά επιλέξτε τη συναλλαγή και πατήστε το κουμπί 'r' ή 'R'. Για να μαρκάρετε μια συναλλαγή ως μη τακτοποιημένη, απλά επιλέξτε τη συναλλαγή και πατήστε το κουμπί 'u' ή 'U'."
 
 #: src/util.cpp:922
 msgid "Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."
-msgstr ""
+msgstr "Συμβουλή: Για να μαρκάρετε μια συναλλαγή ως χρειαζούμενη επανέλεγχο, απλά επιλέξτε τη συναλλαγή και πατήστε το κουμπί  'f' or 'F'."
 
 #: src/util.cpp:923
 msgid "Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."
-msgstr ""
+msgstr "Συβουλή: Το MMEX υποστηρίζει την εκτύπωση όλων των εκθέσεων που μπορούν να ιδωθούν. Οι επιλογές εκτύπωσης είναι διαθέσιμες στο μενού Αρχείο->Εκτύπωση."
 
 #: src/util.cpp:924
 msgid "Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "
-msgstr ""
+msgstr "Συμβουλή: Μπορείτε να τροποποιήσετε κάποιες συμπεριφορές εκτέλεσης του MMEX αλλάζοντας τις επιλογές στο παράθυρο των επιλογών."
 
 #: src/util.cpp:925
 msgid "Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."
-msgstr ""
+msgstr "Συμβουλή: Για να εκτυπώσετε μια δήλωση με τις συναλλαγές από οποιοδήποτε αυθαίρετο σύνολο κριτηρίων, χρησιμοποιήστε το φίλτρο συναλλαγών για να επιλέξετε τις συναλλαγές που θέλετε και στη συνέχεια να κάνετε μια εκτύπωση από το μενού."
 
 #: src/util.cpp:926
 msgid "Tip: Set exchange rate for currencies in case if you have accounts with different currencies."
-msgstr ""
+msgstr "Συμβουλή: Ορίστε την ισοτιμία ανταλλαγής νομισμάτων στην περίπτωση που έχετε λογαριασμούς σε διαφορετικά νομίσματα."
 
 #: src/util.cpp:928
 msgid "Organize Categories Dialog Tip: Pressing the h key will cycle through all categories starting with the letter h"
-msgstr ""
+msgstr "Συμβουλή παραθύρου οργάνωσης κατηγοριών: Πατώντας το κουμπί χ θα μετακινείστε κυκλικά σε όλες τις κατηγορίες που αρχίζουν με το γράμμα χ."
 
 #: src/util.cpp:929
 msgid "Organize Categories Dialog Tip: Pressing 2 key combination will cycle through all categories starting with that key combination. Example: Pressing ho will select Homeneeds, Home, House Tax, etc..."
-msgstr ""
+msgstr "Συμβουλή Παραθύρου οργάνωσης κατηγοριών. Πατώντας συνδυασμό 2 πλήκτρων θα εναλλάσσονται κυκλικά όλες οι κατηγορίες που ξεκινούν με αυτόν τον συνδυασμό πλήκτρων. Παράδειγμα: Πατώντας οι θα επιλέγονται οι οικιακές ανάγκες, οικία, οικιακός φόρος κλπ..."
 
 #: src/util.cpp:930
 msgid "Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."
-msgstr ""
+msgstr "Συμβουλή παραθύρου οργάνωσης δικαιούχων: Χρησιμοποιήστε το πλήκτρο % ως χαρακτήρα μπαλαντέρ κατά τη χρήση του φίλτρου. Παράδειγμα: Το %ι εμφανίζει το Γιατρός και το Χημικός, το %ι%κ εμφανίζει μόνο το Χημικός."
 
 #: src/util.cpp:932
 #, c-format
 msgid "Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."
-msgstr ""
+msgstr "Συμβουλή για να ξεφύγετε από το χρέος: Πληρώστε πρώτα τον εαυτό σας κατά 10%. Τοποθετήστε τα αυτά σε ένα λογαριασμό που είναι δύσκολο να αγγίξετε. Βεβαιωθείτε ότι είναι φασαρία να πάρετε τα χρήματα αυτά (πχ πρέπει να οδηγήσετε μέχρι την τράπεζα), έτσι θα το κάνετε μόνο μετά από σκέψη και για σοβαρά έξοδα."
 
 #: src/util.cpp:933
 msgid "Tip to get out of debt: Establish an emergency fund."
-msgstr ""
+msgstr "Συμβουλή για να ξεφύγετε από το χρέος: Δημιουργήστε ένα ταμείο επείγουσας ανάγκης."
 
 #: src/util.cpp:934
 msgid "Tip to get out of debt: Stop acquiring new debt."
-msgstr ""
+msgstr "Συμβουλή για να ξεφύγετε από το χρέος: Σταματήστε την απόκτηση νέου χρέους."
 
 #: src/util.cpp:935
 msgid "Tip to get out of debt: Create a realistic budget for your expenses."
-msgstr ""
+msgstr "Συμβουλή για να ξεφύγετε από το χρέος: Δημιουργήστε ρεαλιστικό προϋπολογισμό των εξόδων σας."
 
 #: src/util.cpp:936
 msgid "Tip to get out of debt: Spend less than you earn."
-msgstr ""
+msgstr "Συμβουλή για να ξεφύγετε από το χρέος: Να ξοδεύετε λιγότερα από αυτά που κερδίζετε."
 
 #: src/util.cpp:937
 msgid "Tip to get out of debt: Pay more than the minimum."
-msgstr ""
+msgstr "Συμβουλή για να ξεφύγετε από το χρέος: Να πληρώνετε περισσότερα από την ελάχιστη δόση."
 
 #: src/util.cpp:938
 msgid "Before going to a shop and buy something: take the time making a list of what you really need. In the shop buy what is in your list."
-msgstr ""
+msgstr "Πριν πάτε σε ένα κατάστημα για να αγοράσετε κάτι: αφιερώστε χρόνο να κάνετε μια λίστα του τι πραγματικά χρειάζεστε. Στο κατάστημα να αγοράζετε αυτά που είναι στη λίστα σας."
 
 #: src/util.cpp:949
 msgid "View All Transactions"
-msgstr "Δείτε όλες τις κινήσεις"
+msgstr "Εμφάνιση όλων των συναλλαγών"
 
 #: src/util.cpp:950
 msgid "View Today"
-msgstr ""
+msgstr "Εμφάνιση σημερινής ημερομηνίας"
 
 #: src/util.cpp:951
-#, fuzzy
 msgid "View Current Month"
-msgstr "Τρέχων μήνας"
+msgstr "Εμφάνιση τρέχοντος μηνός"
 
 #: src/util.cpp:952
-#, fuzzy
 msgid "View Last 30 days"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Εμφάνιση προηγούμενων 30 ημερών"
 
 #: src/util.cpp:953
-#, fuzzy
 msgid "View Last 90 days"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Εμφάνιση προηγούμενων 90 ημερών"
 
 #: src/util.cpp:954
 msgid "View Last Month"
-msgstr ""
+msgstr "Εμφάνιση προηγούμενου μήνα"
 
 #: src/util.cpp:955
-#, fuzzy
 msgid "View Last 3 Months"
-msgstr "Τρέχων μήνας"
+msgstr "Εμφάνιση προηγούμενων 3 μηνών"
 
 #: src/util.cpp:956
-#, fuzzy
 msgid "View Reconciled"
-msgstr "Εναρμονισμένο"
+msgstr "Εμφάνιση τακτοποιημένων"
 
 #: src/util.cpp:957
-#, fuzzy
 msgid "View Not-Reconciled"
-msgstr "Εναρμονισμένο"
+msgstr "Εμφάνιση μη τακτοποιημένων"
 
 #: src/util.cpp:958
-#, fuzzy
 msgid "View UnReconciled"
-msgstr "ως Μη Εναρμονισμένο"
+msgstr "Εμφάνιση μη τακτοποιημένων"
 
 #: src/recentfiles.cpp:94
 msgid "Empty"
-msgstr ""
+msgstr "Κενό"
 
 #: src/mmhelppanel.cpp:80
 msgid "&Back"
-msgstr ""
+msgstr "&Πίσω"
 
 #: src/mmhelppanel.cpp:81
 msgid "&Forward"
-msgstr ""
+msgstr "&Μπροστά"
 
 #: src/mmhelppanel.cpp:83
-#, fuzzy
 msgid " Help"
-msgstr "Βοήθεια"
+msgstr " Βοήθεια"
 
 #: src/appstartdialog.cpp:56
-#, fuzzy
 msgid " Start Page"
-msgstr "Εναρξη εφαρμογής"
+msgstr " Σελίδα εκκίνησης"
 
 #: src/appstartdialog.cpp:110
 msgid "Open Last Opened Database"
-msgstr "Ανοιγμα τελευταίας ανοιγμένης βάσης δεδομένων"
+msgstr "Άνοιγμα της τελευταία ανοιγμένης βάσης δεδομένων"
 
 #: src/appstartdialog.cpp:114
-#, fuzzy
 msgid "Create a New Database"
-msgstr "Δημιουργείσθε ένα νέο αρχείο Money Manage"
+msgstr "Δημιουργία νέας βάσης δεδομένων"
 
 #: src/appstartdialog.cpp:115
 msgid "Create a new database file to get started"
-msgstr "Δημιουργείσθε ένα νέο αρχείο δεδομένων για να ξεκινήσετε"
+msgstr "Δημιουργήστε μια νέα βάση δεδομένων για να ξεκινήσετε"
 
 #: src/appstartdialog.cpp:119
-#, fuzzy
 msgid "Open Existing Database"
-msgstr "Ανοιγμα τελευταίας ανοιγμένης βάσης δεδομένων"
+msgstr "Άνοιγμα υπάρχουσας βάσης δεδομένων"
 
 #: src/appstartdialog.cpp:120
-#, fuzzy
 msgid "Open an already created database file with extension (*.mmb)"
-msgstr "Ανοίχτε ένα ήδη δημιουργημένο αρχείο δεδομένων του Manager Ex με  επέκταση (*.mmb)"
+msgstr "Άνοιγμα μιας ήδη δημιουργημένης βάσης δεδομένων με  επέκταση (*.mmb)"
 
 #: src/appstartdialog.cpp:124
 msgid "Read Documentation"
-msgstr "Διαβάστε το εγχειρίδιο"
+msgstr "Διαβάστε την τεκμηρίωση"
 
 #: src/appstartdialog.cpp:125
 msgid "Read the user manual"
-msgstr "Διάβασε το εγχειρίδιο χρήστη"
+msgstr "Διαβάστε το εγχειρίδιο χρήστη"
 
 #: src/appstartdialog.cpp:131
 msgid "Visit Website for more information"
-msgstr "Επισκευθείτε την ισοσελίδα για περισσότερες πληροφορίες"
+msgstr "Επισκεφθείτε την ιστοσελίδα για περισσότερες πληροφορίες"
 
 #: src/appstartdialog.cpp:133
-#, fuzzy
 msgid "Open the "
-msgstr "&Ανοιγμα Βάσης\tCtrl-O"
+msgstr "Άνοιγμα της"
 
 #: src/appstartdialog.cpp:135
-#, fuzzy
 msgid " website for latest news, updates etc"
-msgstr "Ανοίξτε  την ιστοσελίδα του Money Manager Ex, για τα τελευταία νέα, διορθώσεις κ.λ.π."
+msgstr " ιστοσελίδας για τα τελευταία νέα, ενημερώσεις κλπ."
 
 #: src/appstartdialog.cpp:144
-#, fuzzy
 msgid "Show this window next time "
-msgstr "Δέστε αυτό το παράθυρο την επόμενη φορά  που θα ξεκινήσει το Money Manager Ex"
+msgstr "Να εμφανιστεί το παράθυρο αυτό την επόμενη φορά που το "
 
 #: src/appstartdialog.cpp:146
-#, fuzzy
 msgid " starts"
-msgstr "Κατάσταση"
+msgstr " θα ξεκινήσει"
 
 #: src/appstartdialog.cpp:162
-#, fuzzy
 msgid "Close"
-msgstr "Κλειστός"
+msgstr "Κλείσιμο"
 
 #: src/appstartdialog.cpp:176
 msgid "Open the previously opened database : "
-msgstr "Ανοιγμα της προηγούμενης ανοιγμένης βάσης δεδομένων"
+msgstr "Άνοιγμα της προηγούμενα ανοιγμένης βάσης δεδομένων : "
 
 #: src/appstartdialog.cpp:187
 msgid "Exit"
-msgstr ""
+msgstr "Έξοδος"
 
 #: src/reportbudgetingperf.cpp:106
-#, fuzzy
 msgid "Budget Performance for "
-msgstr "Εκτέλεση Προϋπολογισμού"
+msgstr "Εκτέλεση Προϋπολογισμού του "
 
 #: src/reportbudgetingperf.cpp:131
 msgid "Overall"
-msgstr ""
+msgstr "Συνολικά"
 
 #: src/reportbudgetingperf.cpp:132
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/billsdepositspanel.cpp:175
 msgid "Next Due Date"
@@ -1276,198 +1185,179 @@ msgstr "Ημέρες που απομένουν"
 #: src/billsdepositspanel.cpp:216
 #: src/assetspanel.cpp:205
 #: src/mmcheckingpanel.cpp:735
-#, fuzzy
 msgid "&New"
-msgstr "Νέος"
+msgstr "&Νέο"
 
 #: src/billsdepositspanel.cpp:217
-#, fuzzy
 msgid "New Bills & Deposit Series"
-msgstr "Νέοι Λογαρισμοί && Σειρές καταθέσεων "
+msgstr "Νέες σειράς πληρωμών & καταθέσεων "
 
 #: src/billsdepositspanel.cpp:221
-#, fuzzy
 msgid "Edit Bills & Deposit Series"
-msgstr "Επεξεργασία Λογαριασμών Bills && Σειρών Καταθέσεων"
+msgstr "Επεξεργασία σειράς πληρωμών & καταθέσεων"
 
 #: src/billsdepositspanel.cpp:225
 #: src/assetspanel.cpp:214
 #: src/mmcheckingpanel.cpp:744
 #: src/mmcheckingpanel.cpp:1510
-#, fuzzy
 msgid "&Delete"
-msgstr "Διαγραφή"
+msgstr "&Διαγραφή"
 
 #: src/billsdepositspanel.cpp:226
-#, fuzzy
 msgid "Delete Bills & Deposit Series"
-msgstr "Διαγραφή Λογαριασμών && σειρών καταθέσεων"
+msgstr "Διαγραφή σειρών πληρωμών & καταθέσεων"
 
 #: src/billsdepositspanel.cpp:230
 msgid "En&ter"
-msgstr ""
+msgstr "&Αποδοχή"
 
 #: src/billsdepositspanel.cpp:232
-#, fuzzy
 msgid "Enter Next Bills & Deposit Occurrence"
-msgstr "Εισάγετε την επόμενη δόση λογαριασμού && κατάθεσης"
+msgstr "Εισάγετε την επόμενη εμφάνιση πληρωμής & κατάθεσης"
 
 #: src/billsdepositspanel.cpp:236
 msgid "&Skip"
-msgstr ""
+msgstr "&Παράβλεψη"
 
 #: src/billsdepositspanel.cpp:237
-#, fuzzy
 msgid "Skip Next Bills & Deposit Occurrence"
-msgstr "Εισάγετε την επόμενη δόση λογαριασμού && κατάθεσης"
+msgstr "Παρακάμψτε την επόμενη εμφάνιση πληρωμής & κατάθεσης"
 
 #: src/billsdepositspanel.cpp:332
 #: src/billsdepositsdialog.cpp:351
 msgid "Weekly"
-msgstr "Εβδομαδιαίο"
+msgstr "Ανά εβδομάδα"
 
 #: src/billsdepositspanel.cpp:336
 #: src/billsdepositsdialog.cpp:352
 msgid "Bi-Weekly"
-msgstr "15νθήμερο"
+msgstr "Ανά δεκαπενθήμερο"
 
 #: src/billsdepositspanel.cpp:340
 #: src/billsdepositsdialog.cpp:353
 msgid "Monthly"
-msgstr "Μηνιαίως"
+msgstr "Ανά μήνα"
 
 #: src/billsdepositspanel.cpp:344
 #: src/billsdepositsdialog.cpp:354
 msgid "Bi-Monthly"
-msgstr "2Μηνιαίο"
+msgstr "Ανά δίμηνο"
 
 #: src/billsdepositspanel.cpp:348
 #: src/billsdepositsdialog.cpp:355
 msgid "Quarterly"
-msgstr "Τριμηνιαίος"
+msgstr "Ανά τρίμηνο"
 
 #: src/billsdepositspanel.cpp:352
 #: src/billsdepositsdialog.cpp:356
 msgid "Half-Yearly"
-msgstr "6Μηνο"
+msgstr "Ανά εξάμηνο"
 
 #: src/billsdepositspanel.cpp:356
 #: src/billsdepositsdialog.cpp:357
 msgid "Yearly"
-msgstr "Ετησίως"
+msgstr "Ανά έτος"
 
 #: src/billsdepositspanel.cpp:360
 #: src/billsdepositsdialog.cpp:358
-#, fuzzy
 msgid "Four Months"
-msgstr "Τρέχων μήνας"
+msgstr "Τέσσερις μήνες"
 
 #: src/billsdepositspanel.cpp:364
 #: src/billsdepositsdialog.cpp:359
 msgid "Four Weeks"
-msgstr ""
+msgstr "Τέσσερις εβδομάδες"
 
 #: src/billsdepositspanel.cpp:368
 #: src/billsdepositsdialog.cpp:360
 msgid "Daily"
-msgstr ""
+msgstr "Ανά ημέρα"
 
 #: src/billsdepositspanel.cpp:372
 #: src/billsdepositspanel.cpp:376
 msgid "In "
-msgstr ""
+msgstr "Σε "
 
 #: src/billsdepositspanel.cpp:372
 #: src/billsdepositspanel.cpp:380
 msgid " Days"
-msgstr ""
+msgstr " ημέρες"
 
 #: src/billsdepositspanel.cpp:376
 #: src/billsdepositspanel.cpp:384
-#, fuzzy
 msgid " Months"
-msgstr "Μηνιαίως"
+msgstr " Μήνες"
 
 #: src/billsdepositspanel.cpp:380
 #: src/billsdepositspanel.cpp:384
 msgid "Every "
-msgstr ""
+msgstr "Κάθε"
 
 #: src/billsdepositspanel.cpp:466
-#, fuzzy
 msgid "Enter next Occurrence..."
-msgstr "Εισάγετε επόμενη εμφάνιση"
+msgstr "Εισάγετε επόμενη εμφάνιση..."
 
 #: src/billsdepositspanel.cpp:468
-#, fuzzy
 msgid "Skip next Occurrence"
-msgstr "Επόμενη εμφάνιση"
+msgstr "Παράκαμψη επόμενης εμφάνισης"
 
 #: src/billsdepositspanel.cpp:470
-#, fuzzy
 msgid "&New Bills && Deposit Series..."
-msgstr "&Νέοι Λογαριασμοί && Καταθέσεις"
+msgstr "&Νέα σειρά πληρωμών & καταθέσεων"
 
 #: src/billsdepositspanel.cpp:471
-#, fuzzy
 msgid "&Edit Bills && Deposit Series..."
-msgstr "&Διαγραφή λογαριασμών && καταθέσεων"
+msgstr "&Επεξεργασία σειράς πληρωμών && καταθέσεων..."
 
 #: src/billsdepositspanel.cpp:472
-#, fuzzy
 msgid "&Delete Bills && Deposit Series..."
-msgstr "&Διαγραφή Λογαριασμών && Καταθέσεων"
+msgstr "&Διαγραφή σειράς πληρωμών && καταθέσεων..."
 
 #: src/billsdepositspanel.cpp:578
 msgid "Do you really want to delete the series?"
-msgstr "Θέλετε πραγματικά να διαγράψετε τις σειρές"
+msgstr "Θέλετε πραγματικά να διαγράψετε τη σειρά;"
 
 #: src/billsdepositspanel.cpp:579
 msgid "Confirm Series Deletion"
-msgstr "Επιβεβαίωση διαγραφής σειρών"
+msgstr "Επιβεβαίωση διαγραφής σειράς"
 
 #: src/billsdepositsdialog.cpp:60
-#, fuzzy
 msgid "Repeat Transaction - Auto Execution Checking"
-msgstr "Διαγραφή κίνησης"
+msgstr "Επαναλαμβανόμενη συναλλαγή - Επιταγή αυτόματης εκτέλεσης"
 
 #: src/billsdepositsdialog.cpp:204
 #: src/billsdepositsdialog.cpp:1199
-#, fuzzy
 msgid "Split Category"
-msgstr "Επιλέξτε Κατηγορία"
+msgstr "Διαίρεση κατηγορίας"
 
 #: src/billsdepositsdialog.cpp:268
 msgid "Transaction Details"
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Λεπτομέρειες συναλλαγής"
 
 #: src/billsdepositsdialog.cpp:274
 msgid "Calendar"
-msgstr ""
+msgstr "Ημερολόγιο"
 
 #: src/billsdepositsdialog.cpp:296
-#, fuzzy
 msgid "Repeating Transaction Details"
-msgstr "Διαγραφή κίνησης"
+msgstr "Λεπτομέρειες επαναλαμβανόμενης συναλλαγής"
 
 #: src/billsdepositsdialog.cpp:303
 msgid "Account Name"
-msgstr "Περιγραφή Λογαρισμού"
+msgstr "Όνομα λογαρισμού"
 
 #: src/billsdepositsdialog.cpp:305
 #: src/billsdepositsdialog.cpp:596
 #: src/billsdepositsdialog.cpp:614
 #: src/billsdepositsdialog.cpp:695
 msgid "Select Account"
-msgstr "Επειλέξτε λογαριασμό"
+msgstr "Επιλέξτε λογαριασμό"
 
 #: src/billsdepositsdialog.cpp:315
-#, fuzzy
 msgid "Specify the Account that will own the repeating transaction"
-msgstr "Δηλώστε το ποσό της κίνησης"
+msgstr "Καθορίστε τον λογαριασμό που θα κατέχει την επαναλαμβανόμενη συναλλαγή"
 
 #: src/billsdepositsdialog.cpp:328
-#, fuzzy
 msgid "Next Occurrence"
 msgstr "Επόμενη εμφάνιση"
 
@@ -1477,130 +1367,122 @@ msgstr "Δηλώστε την ημερομηνία της επόμενης πλ�
 
 #: src/billsdepositsdialog.cpp:335
 msgid "Retard or advance the date of the 'next occurrence"
-msgstr ""
+msgstr "Καθυστερήστε ή προχωρήστε την ημερομηνία της επόμενης εμφάνισης"
 
 #: src/billsdepositsdialog.cpp:346
 #: src/billsdepositsdialog.cpp:1344
 msgid "Repeats"
-msgstr "Επαναλύψεις"
+msgstr "Επαναλήψεις"
 
 #: src/billsdepositsdialog.cpp:361
 msgid "In (x) Days"
-msgstr ""
+msgstr "Σε (x) ημέρες"
 
 #: src/billsdepositsdialog.cpp:362
 msgid "In (x) Months"
-msgstr ""
+msgstr "Σε (x) μήνες"
 
 #: src/billsdepositsdialog.cpp:363
 msgid "Every (x) Days"
-msgstr ""
+msgstr "Κάθε (x) ημέρες"
 
 #: src/billsdepositsdialog.cpp:364
 msgid "Every (x) Months"
-msgstr ""
+msgstr "Κάθε (x) μήνες"
 
 #: src/billsdepositsdialog.cpp:370
 msgid "Next"
-msgstr ""
+msgstr "Επόμενο"
 
 #: src/billsdepositsdialog.cpp:372
 msgid "Advance the Next Occurance Date with the specified values"
-msgstr ""
+msgstr "Μετακινηθείτε στην ημερομηνία επόμενης εμφάνισης με τις καθορισμένες τιμές"
 
 #: src/billsdepositsdialog.cpp:380
 #: src/billsdepositsdialog.cpp:1384
 msgid "Times Repeated"
-msgstr "Επαναλαμβανόμενες φορές"
+msgstr "Φορές επανάληψης"
 
 #: src/billsdepositsdialog.cpp:391
 msgid "Set to 'Auto Execute' on the 'Next Occurrence' date."
-msgstr ""
+msgstr "Βάλτε 'Αυτόματη εκτέλεση' στην ημερομηνία Έπόμενης εμφάνισης'."
 
 #: src/billsdepositsdialog.cpp:392
 msgid "Automatic Execution will require user acknowledgement."
-msgstr ""
+msgstr "Η αυτόματη εκτέλεση θα ζητήσει ενημέρωση του χρήστη."
 
 #: src/billsdepositsdialog.cpp:395
 msgid "Set 'Auto Execute' without user acknowlegement."
-msgstr ""
+msgstr "Βάλτε 'Αυτόματη Εκτέλεση' χωρίς ενημέρωση του χρήστη."
 
 #: src/billsdepositsdialog.cpp:397
 msgid "Automatic Execution will occur without user interaction"
-msgstr ""
+msgstr "Η αυτόματη εκτέλεση θα συμβεί χωρίς επέμβαση του χρήστη"
 
 #: src/billsdepositsdialog.cpp:415
 msgid "Specify the date of the transaction"
-msgstr "Δηλώστε την ημερομηνία της κίνησης"
+msgstr "Δηλώστε την ημερομηνία της συναλλαγής"
 
 #: src/billsdepositsdialog.cpp:418
-#, fuzzy
 msgid "Retard or advance the date of the transaction"
-msgstr "Δηλώστε την ημερομηνία της κίνησης"
+msgstr "Καθυστερήστε ή προχωρήστε την ημερομηνία της συναλλαγής"
 
 #: src/billsdepositsdialog.cpp:455
 msgid "Specify the type of transactions to be created."
-msgstr "Δηλώστε τον τύπο της κίνησης που θα δημιουργηθεί"
+msgstr "Καθορίστε τον τύπο της συναλλαγής που θα δημιουργηθεί."
 
 #: src/billsdepositsdialog.cpp:456
 msgid "Advanced"
-msgstr "Προωθημένο"
+msgstr "Για προχωρημένους"
 
 #: src/billsdepositsdialog.cpp:459
-#, fuzzy
 msgid "Allows the setting of different amounts in the FROM and TO accounts."
-msgstr "Δηλώστε τον λογαριασμό μεταφοράς"
+msgstr "Επιτρέπει την ρύθμιση διαφορετικών ποσών στους ΑΠΟ και ΠΡΟΣ λογαριασμούς."
 
 #: src/billsdepositsdialog.cpp:469
 #: src/billsdepositsdialog.cpp:775
 msgid "Specify the amount for this transaction"
-msgstr "Δηλώστε το ποσό της κίνησης"
+msgstr "Δηλώστε το ποσό της συναλλαγής"
 
 #: src/billsdepositsdialog.cpp:470
-#, fuzzy
 msgid "Specify the amount to be transfered"
-msgstr "Δηλώστε το ποσό της κίνησης"
+msgstr "Δηλώστε το ποσό που θα μεταφερθεί"
 
 #: src/billsdepositsdialog.cpp:480
-#, fuzzy
 msgid "Specify the transfer amount in the To Account"
-msgstr "Δηλώστε τον λογαριασμό μεταφοράς"
+msgstr "Καθορίστε το ποσό της μεταφοράς στον λογαριασμό προορισμού"
 
 #: src/billsdepositsdialog.cpp:494
-#, fuzzy
 msgid "Specify where the transaction is going to"
-msgstr "Δηλώστε την Αποστολή ή Προέλευση της κίνησης"
+msgstr "Καθορίστε πού πηγαίνει η συναλλαγή"
 
 #: src/billsdepositsdialog.cpp:495
-#, fuzzy
 msgid "Specify where the transaction is coming from"
-msgstr "Δηλώστε την Αποστολή ή Προέλευση της κίνησης"
+msgstr "Καθορίστε από πού έρχεται η συναλλαγή"
 
 #: src/billsdepositsdialog.cpp:504
 msgid "Select To Acct"
-msgstr "Επιλογή Λογαριασμού Προς"
+msgstr "Επιλέξτε λογαριασμό προορισμού"
 
 #: src/billsdepositsdialog.cpp:506
-#, fuzzy
 msgid "Specify which account the transfer is going to"
-msgstr "Δηλώστε Λογαριασμό από τον οποίο θα γίνει η μεταφορά"
+msgstr "Καθορίστε σε ποιο λογαριασμό θα πάει η μεταφορά"
 
 #: src/billsdepositsdialog.cpp:512
 msgid "Split"
-msgstr ""
+msgstr "Διαίρεση"
 
 #: src/billsdepositsdialog.cpp:515
-#, fuzzy
 msgid "Use split Categories"
-msgstr "Επιλέξτε Κατηγορία"
+msgstr "Χρησιμοποιήστε την διαίρεση κατηγοριών"
 
 #: src/billsdepositsdialog.cpp:533
 msgid "Specify any associated check number or transaction number"
-msgstr "Δηλώστε ένα συνδεόμενο αριθμό ελέγχου ή ένα αριθμό κίνησης"
+msgstr "Δηλώστε ένα συνδεόμενο αριθμό επιταγής ή ένα αριθμό συναλλαγής"
 
 #: src/billsdepositsdialog.cpp:542
 msgid "Specify any text notes you want to add to this transaction."
-msgstr "Δηλώστε οτιδήποτε σχόλια θέλετε να προσθέσετε γιαυτήν την κίνηση"
+msgstr "Δηλώστε τυχόν σημειώσεις που θέλετε να προσθέσετε σε αυτήν τη συναλλαγή."
 
 #: src/billsdepositsdialog.cpp:555
 msgid "OK"
@@ -1611,28 +1493,25 @@ msgid "Cancel"
 msgstr "Ακύρωση"
 
 #: src/billsdepositsdialog.cpp:596
-#, fuzzy
 msgid "Choose Bank Account or Term Account"
-msgstr "Επέλεξε Λογαριασμό για εισαγωγή σε :"
+msgstr "Επιλέξτε τραπεζικό λογαριασμό ή προθεσμιακό λογαριασμό"
 
 #: src/billsdepositsdialog.cpp:614
 #: src/billsdepositsdialog.cpp:695
-#, fuzzy
 msgid "Account name"
-msgstr "Περιγραφή Λογαρισμού"
+msgstr "Όνομα λογαρισμού"
 
 #: src/billsdepositsdialog.cpp:774
 msgid "Specify where the transaction is going to or coming from "
-msgstr "Δηλώστε την Αποστολή ή Προέλευση της κίνησης"
+msgstr "Καθορίστε για πού προορίζεται η συναλλαγή ή από πού προέρχεται"
 
 #: src/billsdepositsdialog.cpp:778
-#, fuzzy
 msgid "Specify which account the transfer is comming from"
-msgstr "Δηλώστε Λογαριασμό από τον οποίο θα γίνει η μεταφορά"
+msgstr "Δηλώστε από ποιο λογαριασμό προέρχεται η μεταφορά"
 
 #: src/billsdepositsdialog.cpp:781
 msgid "Specify to whom the transaction is going to or coming from "
-msgstr "Δηλώστε προέλευση κίνσης (ΑΠΟ ή ΠΡΟΣ)"
+msgstr "Καθορίστε σε ποιον προορίζεται η συναλλαγή ή από ποιον προέρχεται"
 
 #: src/billsdepositsdialog.cpp:810
 #: src/billsdepositsdialog.cpp:833
@@ -1642,7 +1521,7 @@ msgstr "Από"
 
 #: src/billsdepositsdialog.cpp:821
 msgid "Select From Account"
-msgstr "Διάλεξε από τους Λογαριασμούς"
+msgstr "Επιλέξτε λογαριασμό προέλευσης"
 
 #: src/billsdepositsdialog.cpp:834
 msgid "To"
@@ -1650,247 +1529,222 @@ msgstr "Προς"
 
 #: src/billsdepositsdialog.cpp:835
 msgid "Select To Account"
-msgstr "Επιλέξτε Λογαριασμό Προορισμού"
+msgstr "Επιλέξτε λογαριασμό προορισμού"
 
 #: src/billsdepositsdialog.cpp:875
 msgid "Payee "
-msgstr "Πληρωμή"
+msgstr "Δικαιούχος"
 
 #: src/billsdepositsdialog.cpp:877
 msgid "From Account "
-msgstr "Από Λογαριασμό"
+msgstr "Από λογαριασμό "
 
 #: src/billsdepositsdialog.cpp:885
 #: src/billsdepositsdialog.cpp:893
 msgid "Category "
-msgstr "Κατηγορία"
+msgstr "Κατηγορία "
 
 #: src/billsdepositsdialog.cpp:928
-#, fuzzy
 msgid "Advanced Amount"
-msgstr "Προωθημένο"
+msgstr "Σύνθετο ποσό"
 
 #: src/billsdepositsdialog.cpp:946
 msgid "To Account "
-msgstr "Προς Λογαριασμό"
+msgstr "Προς λογαριασμό "
 
 #: src/billsdepositsdialog.cpp:952
 msgid "From and To Account cannot be the same."
-msgstr "Οι λογαριασμοί Από - Προς δεν μπορούν να είναι ίδιοι"
+msgstr "Οι λογαριασμοί προέλευσης και προορισμού δεν μπορούν να είναι ίδιοι."
 
 #: src/billsdepositsdialog.cpp:1298
-#, fuzzy
 msgid "Specify the transfer amount in the From Account"
-msgstr "Δηλώστε τον λογαριασμό μεταφοράς"
+msgstr "Καθορίστε το ποσό της μεταφοράς στον λογαριασμό προέλευσης"
 
 #: src/billsdepositsdialog.cpp:1345
-#, fuzzy
 msgid "Activates"
-msgstr "Επαναλύψεις"
+msgstr "Ενεργοποιήσεις"
 
 #: src/billsdepositsdialog.cpp:1347
 msgid "Period: Days"
-msgstr ""
+msgstr "Περίοδος: Ημέρες"
 
 #: src/billsdepositsdialog.cpp:1348
-#, fuzzy
 msgid "Period: Months"
-msgstr "Τρέχων μήνας"
+msgstr "Περίοδος: Μήνες"
 
 #: src/billsdepositsdialog.cpp:1357
 #: src/billsdepositsdialog.cpp:1371
 msgid "Specify period in Days to activate."
-msgstr ""
+msgstr "Καθορίστε περίοδο σε ημέρες για ενεργοποίηση."
 
 #: src/billsdepositsdialog.cpp:1357
 #: src/billsdepositsdialog.cpp:1364
 msgid "Becomes blank when not active."
-msgstr ""
+msgstr "Γίνεται κενό όταν δεν είναι ενεργό."
 
 #: src/billsdepositsdialog.cpp:1364
 #: src/billsdepositsdialog.cpp:1378
-#, fuzzy
 msgid "Specify period in Months to activate."
-msgstr "Δηλώστε τον τύπο του Λογαριασμού που θα δημιουργηθεί"
+msgstr "Καθορίστε την περίοδο σε μήνες για ενεργοποίηση."
 
 #: src/billsdepositsdialog.cpp:1371
 #: src/billsdepositsdialog.cpp:1378
 msgid "Leave blank when not active."
-msgstr ""
+msgstr "Αφήστε το κενό όταν δεν είναι ενεργό."
 
 #: src/billsdepositsdialog.cpp:1385
-#, fuzzy
 msgid "Specify the number of times this series repeats."
-msgstr "Δηλώστε των αριθμό των επαναλήψεων αυτής της σειράς. Εάν το πεδίο μείνει κενό αυτή η σειρά θα επαναλαμβάνεται για πάντα."
+msgstr "Καθορίστε τον αριθμό των επαναλήψεων αυτής της σειράς."
 
 #: src/billsdepositsdialog.cpp:1385
-#, fuzzy
 msgid "Leave blank if this series continues forever."
-msgstr "Δηλώστε των αριθμό των επαναλήψεων αυτής της σειράς. Εάν το πεδίο μείνει κενό αυτή η σειρά θα επαναλαμβάνεται για πάντα."
+msgstr "Αφήστε το κενό αν η σειρά αυτή θα συνεχίζεται για πάντα."
 
 #: src/assetspanel.cpp:137
 #: src/reportincexpesestime.cpp:112
 msgid "Total:"
-msgstr ""
+msgstr "Σύνολο:"
 
 #: src/assetspanel.cpp:157
 #: src/assetdialog.cpp:188
-#, fuzzy
 msgid "Name"
-msgstr "Χρησιμοποιούμενο νόμισμα"
+msgstr "Όνομα"
 
 #: src/assetspanel.cpp:165
 #: src/assetdialog.cpp:227
 #: src/assetdialog.cpp:314
 msgid "Value"
-msgstr "Τιμή"
+msgstr "Αξία"
 
 #: src/assetspanel.cpp:206
 msgid "New Asset"
-msgstr ""
+msgstr "Νέο περιουσιακό στοιχείο"
 
 #: src/assetspanel.cpp:210
-#, fuzzy
 msgid "Edit Asset"
-msgstr "&Επεξεργασία Λογαριασμού"
+msgstr "Επεξεργασία περιουσιακού στοιχείου"
 
 #: src/assetspanel.cpp:215
-#, fuzzy
 msgid "Delete Asset"
-msgstr "Διαγραφή"
+msgstr "Διαγραφή περιουσιακού στοιχείου"
 
 #: src/assetspanel.cpp:244
 #, c-format
 msgid "Total: %s"
-msgstr ""
+msgstr "Σύνολο: %s"
 
 #: src/assetspanel.cpp:322
 msgid "&New Asset"
-msgstr ""
+msgstr "&Νέο περιουσιακό στοιχείο"
 
 #: src/assetspanel.cpp:324
-#, fuzzy
 msgid "&Edit Asset"
-msgstr "&Επεξεργασία Λογαριασμού"
+msgstr "&Επεξεργασία περιουσιακού στοιχείου"
 
 #: src/assetspanel.cpp:325
-#, fuzzy
 msgid "&Delete Asset"
-msgstr "&Διαγραφή Λογαριασμού"
+msgstr "&Διαγραφή περιουσιακού στοιχείου"
 
 #: src/assetspanel.cpp:368
 #: src/assetdialog.cpp:236
 msgid "Change in Value"
-msgstr ""
+msgstr "Αλλαγή αξίας"
 
 #: src/assetspanel.cpp:436
-#, fuzzy
 msgid "Do you really want to delete the Asset?"
-msgstr "Θέλετε πραγματικά να διαγράψετε τις σειρές"
+msgstr "Θέλετε πραγματικά να διαγράψετε το περιουσιακό στοιχείο;"
 
 #: src/assetspanel.cpp:436
-#, fuzzy
 msgid "Confirm Asset Deletion"
-msgstr "Επιβεβαιώστε την Διαγραφή του Λογαριασμού"
+msgstr "Επιβεβαιώστε τη διαγραφή του περιουσιακού στοιχείου"
 
 #: src/assetspanel.cpp:444
 msgid "Thank you! "
-msgstr ""
+msgstr "Σας ευχαριστούμε!"
 
 #: src/assetspanel.cpp:444
 msgid "App"
-msgstr ""
+msgstr "Εφαρμογή"
 
 #: src/reportincexpenses.cpp:48
 #: src/mmex.cpp:1258
 msgid "Income vs Expenses"
-msgstr "Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς έξοδα"
 
 #: src/budgetingpanel.cpp:122
 #: src/budgetingpanel.cpp:163
 msgid "View All Budget Categories"
-msgstr "Επιθεωρείστε όλες τις προϋπολογισμένες κατηγορίες"
+msgstr "Εμφανίζονται όλες τις κατηγορίες του προϋπολογισμού"
 
 #: src/budgetingpanel.cpp:127
 #: src/budgetingpanel.cpp:164
 msgid "View Non-Zero Budget Categories"
-msgstr "Επιθεωρείσθε τις μη Μηδενικές προϋπολογισμένες κατηγορίες"
+msgstr "Εμφανίζονται οι μη μηδενικές κατηγορίες του προϋπολογισμού"
 
 #: src/budgetingpanel.cpp:132
 #: src/budgetingpanel.cpp:165
-#, fuzzy
 msgid "View Income Budget Categories"
-msgstr "Επιθεωρείστε όλες τις προϋπολογισμένες κατηγορίες"
+msgstr "Εμφάνιση των κατηγοριών εσόδων του προϋπολογισμού"
 
 #: src/budgetingpanel.cpp:137
 #: src/budgetingpanel.cpp:166
-#, fuzzy
 msgid "View Expense Budget Categories"
-msgstr "Επιθεωρείστε όλες τις προϋπολογισμένες κατηγορίες"
+msgstr "Εμφάνιση των κατηγοριών εξόδων του προϋπολογισμού"
 
 #: src/budgetingpanel.cpp:142
 #: src/budgetingpanel.cpp:168
 #: src/budgetingpanel.cpp:339
-#, fuzzy
 msgid "View Budget Category Summary"
-msgstr "Επιθεωρείστε όλες τις προϋπολογισμένες κατηγορίες"
+msgstr "Εμφάνιση της περίληψης των κατηγοριών του προϋπολογισμού"
 
 #: src/budgetingpanel.cpp:196
-#, fuzzy
 msgid "Financial Year: "
-msgstr "Τελευταίο έτος"
+msgstr "Οικονομικό έτος:"
 
 #: src/budgetingpanel.cpp:200
-#, fuzzy
 msgid "Year: "
-msgstr "Ετησίως"
+msgstr "Έτος:"
 
 #: src/budgetingpanel.cpp:205
-#, fuzzy
 msgid "Month: "
-msgstr "Μηνιαίως"
+msgstr "Μήνας:"
 
 #: src/budgetingpanel.cpp:208
-#, fuzzy
 msgid "Budget Setup for "
-msgstr "Αρχικό στήσιμο προϋπολογισμού"
+msgstr "Διαμόρφωση προϋπολογισμού για "
 
 #: src/budgetingpanel.cpp:224
 msgid "Viewing All Budget Categories"
-msgstr "Επιθεωρείσθε όλες τις προϋπολογισμένες κατηγορίες"
+msgstr "Εμφανίζονται όλες οι κατηγορίες του προϋπολογισμού"
 
 #: src/budgetingpanel.cpp:229
-#, fuzzy
 msgid "Income......."
-msgstr "Εσοδα"
+msgstr "Έσοδα......."
 
 #: src/budgetingpanel.cpp:234
 #: src/budgetingpanel.cpp:257
 #: src/budgetingpanel.cpp:541
 #: src/budgetingpanel.cpp:551
-#, fuzzy
 msgid "Estimated: "
-msgstr "Εκτιμημένα"
+msgstr "Εκτιμώμενα: "
 
 #: src/budgetingpanel.cpp:238
 #: src/budgetingpanel.cpp:261
 #: src/budgetingpanel.cpp:544
 #: src/budgetingpanel.cpp:554
-#, fuzzy
 msgid "Actual: "
-msgstr "Πραγματικό"
+msgstr "Πραγματικά: "
 
 #: src/budgetingpanel.cpp:242
 #: src/budgetingpanel.cpp:265
 #: src/budgetingpanel.cpp:548
 #: src/budgetingpanel.cpp:558
 msgid "Difference: "
-msgstr ""
+msgstr "Διαφορά:"
 
 #: src/budgetingpanel.cpp:252
-#, fuzzy
 msgid "Expenses..."
-msgstr "Εξοδα"
+msgstr "Έξοδα..."
 
 #: src/budgetingpanel.cpp:288
 msgid "Category  "
@@ -1901,11 +1755,12 @@ msgid ""
 "Fatal error occured.\n"
 "Application will be terminated."
 msgstr ""
+"Εμφανίστηκε μοιραίο σφάλμα.\n"
+"Η εφαρμογή θα τερματιστεί."
 
 #: src/mmex.cpp:434
-#, fuzzy
 msgid "Add Account Wizard"
-msgstr "Προς Λογαριασμό"
+msgstr "Οδηγός προσθήκης λογαριασμού"
 
 #: src/mmex.cpp:442
 msgid ""
@@ -1916,20 +1771,24 @@ msgid ""
 "To help you get started, begin by making a list of all\n"
 "financial institutions where you hold an account."
 msgstr ""
+" θεωρεί ότι όλες οι συναλλαγές ανήκουν σε λογαριασμούς.\n"
+"\n"
+"Οι επόμενες σελίδες θα σας βοηθήσουν να δημιουργήσετε ένα νέο λογαριασμό.\n"
+"\n"
+"Για να σας βοηθήσουμε να ξεκινήσετε, αρχίστε φτιάχνοντας μια λίστα όλων\n"
+"των οικονομικών οργανισμών όπου διατηρείτε κάποιο λογαριασμό."
 
 #: src/mmex.cpp:476
-#, fuzzy
 msgid "New Database Wizard"
-msgstr "&Νέα Βάση\tCtrl-N"
+msgstr "Οδηγός νέας βάσης δεδομένων"
 
 #: src/mmex.cpp:497
 msgid "The next pages will help you create a new database."
-msgstr ""
+msgstr "Οι επόμενες σελίδες θα σας βοηθήσουν να δημιουργήσετε μια νέα βάση δεδομένων."
 
 #: src/mmex.cpp:498
-#, fuzzy
 msgid "Your database file is stored with an extension of .mmb."
-msgstr "Ανοίχτε ένα ήδη δημιουργημένο αρχείο δεδομένων του Manager Ex με  επέκταση (*.mmb)"
+msgstr "Η βάση δεδομένων σας αποθηκεύτηκε με επέκταση .mmb"
 
 #: src/mmex.cpp:499
 msgid ""
@@ -1938,6 +1797,10 @@ msgid ""
 "setting: 'Backup before opening', and store your backups\n"
 "in a separate location."
 msgstr ""
+"Καθώς το αρχείο αυτό περιέχει σημαντικές οικονομικές πληροφορίες,\n"
+"συνιστούμε να δημιουργείτε καθημερινά αντίγραφα ασφαλείας από τις Επιλογές\n"
+"θέτοντας: 'Αντίγραφα ασφαλείας πριν το άνοιγμα' και αποθηκεύοντας τα αντίγραφα\n"
+"σε ένα άλλο μέρος."
 
 #: src/mmex.cpp:500
 msgid ""
@@ -1945,30 +1808,31 @@ msgid ""
 "using the option: 'Save database as' and changing the\n"
 "file type before saving."
 msgstr ""
+"Η βάση δεδομένων μπορεί αργότερα να κρυπτογραφηθεί αν χρειάζεται, με\n"
+"χρήστη της επιλογής: 'Αποθήκευση βάσης δεδομένων ως' και αλλάζοντας \n"
+"τον τύπο του αρχείου πριν την αποθήκευση."
 
 #: src/mmex.cpp:732
 #: src/mmex.cpp:1051
 #: src/optionsdialog.cpp:493
 #: src/optionsdialog.cpp:513
 msgid "Bank Accounts"
-msgstr "Λογαριασμοί "
+msgstr "Τραπεζικοί λογαριασμοί"
 
 #: src/mmex.cpp:733
 #: src/mmex.cpp:1059
 #: src/optionsdialog.cpp:500
 #: src/optionsdialog.cpp:520
-#, fuzzy
 msgid "Term Accounts"
-msgstr "Από Λογαριασμό"
+msgstr "Προθεσμιακοί λογαριασμοί"
 
 #: src/mmex.cpp:840
-#, fuzzy
 msgid " Auto Repeat Transactions"
-msgstr "Διαγραφή κίνησης"
+msgstr "Αυτόματα επαναλαμβανόμενες συναλλαγές"
 
 #: src/mmex.cpp:1023
 msgid "Navigation"
-msgstr ""
+msgstr "Πλοήγηση"
 
 #: src/mmex.cpp:1045
 msgid "Home Page"
@@ -1978,24 +1842,24 @@ msgstr "Αρχική σελίδα"
 #: src/mmex.cpp:1582
 #: src/mmex.cpp:2777
 msgid "Budget Setup"
-msgstr "Αρχικό στήσιμο προϋπολογισμού"
+msgstr "Διαμόρφωση προϋπολογισμού"
 
 #: src/mmex.cpp:1091
 msgid "Reports"
-msgstr "Εκτυπωτικά"
+msgstr "Εκθέσεις"
 
 #: src/mmex.cpp:1098
 msgid "Custom SQL Reports"
-msgstr ""
+msgstr "Προσαρμοσμένες εκθέσεις SQL"
 
 #: src/mmex.cpp:1131
 msgid "Summary of Accounts"
-msgstr "Περίληψη Λογαριασμών"
+msgstr "Περίληψη των λογαριασμών"
 
 #: src/mmex.cpp:1143
 #: src/mmex.cpp:1895
 msgid "Where the Money Goes"
-msgstr "Ανάλυση εξόδων"
+msgstr "Πού πηγαίνουν τα χρήματα"
 
 #: src/mmex.cpp:1146
 #: src/mmex.cpp:1177
@@ -2003,7 +1867,7 @@ msgstr "Ανάλυση εξόδων"
 #: src/mmex.cpp:1233
 #: src/mmex.cpp:1261
 msgid "Last Calendar Month"
-msgstr "Τελευταίος ημερολογιακός μήνας"
+msgstr "Προηγούμενος ημερολογιακός μήνας"
 
 #: src/mmex.cpp:1158
 #: src/mmex.cpp:1186
@@ -2011,7 +1875,7 @@ msgstr "Τελευταίος ημερολογιακός μήνας"
 #: src/mmex.cpp:1242
 #: src/mmex.cpp:1270
 msgid "Last Year"
-msgstr "Τελευταίο έτος"
+msgstr "Προηγούμενο έτος"
 
 #: src/mmex.cpp:1161
 #: src/mmex.cpp:1189
@@ -2026,71 +1890,61 @@ msgstr "Τρέχον έτος"
 #: src/mmex.cpp:1222
 #: src/mmex.cpp:1250
 #: src/mmex.cpp:1278
-#, fuzzy
 msgid "Last Financial Year"
-msgstr "Τελευταίο έτος"
+msgstr "Τελευταίο οικονομικό έτος"
 
 #: src/mmex.cpp:1169
 #: src/mmex.cpp:1197
 #: src/mmex.cpp:1225
 #: src/mmex.cpp:1253
 #: src/mmex.cpp:1281
-#, fuzzy
 msgid "Current Financial Year"
-msgstr "Τρέχον έτος"
+msgstr "Τρέχον οικονομικό έτος"
 
 #: src/mmex.cpp:1174
 #: src/mmex.cpp:1792
-#, fuzzy
 msgid "Where the Money Comes From"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από πού έρχονται τα χρήματα"
 
 #: src/mmex.cpp:1230
-#, fuzzy
 msgid "Payees"
-msgstr "Πληρωμή"
+msgstr "Δικαιούχοι"
 
 #: src/mmex.cpp:1285
 #: src/mmex.cpp:2093
-#, fuzzy
 msgid "Income vs Expenses - All Time"
-msgstr "Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς έξοδα - Διαχρονικά"
 
 #: src/mmex.cpp:1289
-#, fuzzy
 msgid "Transaction Report"
-msgstr "Τύπος κίνησης"
+msgstr "Έκθεση των συναλλαγών"
 
 #: src/mmex.cpp:1309
 #: src/mmex.cpp:1564
 msgid "Budget Performance"
-msgstr "Εκτέλεση Προϋπολογισμού"
+msgstr "Εκτέλεση προϋπολογισμού"
 
 #: src/mmex.cpp:1312
 #: src/mmex.cpp:1573
-#, fuzzy
 msgid "Budget Category Summary"
-msgstr "Εισαγωγή Ετήσιου προϋπολογισμού"
+msgstr "Περίληψη κατηγορίας προϋπολογισμού"
 
 #: src/mmex.cpp:1340
 #: src/mmex.cpp:3464
 msgid "Cash Flow"
-msgstr ""
+msgstr "Χρηματική ροή"
 
 #: src/mmex.cpp:1343
-#, fuzzy
 msgid "Cash Flow - With Bank Accounts"
-msgstr "Επειλέξτε λογαριασμό"
+msgstr "Χρηματική ροή - Με τραπεζικούς λογαριασμούς"
 
 #: src/mmex.cpp:1348
-#, fuzzy
 msgid "Cash Flow - With Term Accounts"
-msgstr "Επειλέξτε λογαριασμό"
+msgstr "Χρηματική ροή - Με τους προθεσμιακούς λογαριασμούς"
 
 #: src/mmex.cpp:1352
-#, fuzzy
 msgid "Cash Flow - Specific Accounts"
-msgstr "Επειλέξτε λογαριασμό"
+msgstr "Χρηματική ροή - Συγκεκριμένοι λογαριασμοί"
 
 #: src/mmex.cpp:1361
 msgid "Help"
@@ -2098,264 +1952,223 @@ msgstr "Βοήθεια"
 
 #: src/mmex.cpp:1558
 msgid "Budget report being generated... Please wait."
-msgstr ""
+msgstr "Η έκθεση του προϋπολογισμού δημιουργείται...Παρακαλούμε περιμένετε."
 
 #: src/mmex.cpp:1687
-#, fuzzy
 msgid "Category Report"
-msgstr "Κατηγορία"
+msgstr "Έκθεση κατηγορίας"
 
 #: src/mmex.cpp:1687
 msgid "Category Report being generated... Please wait."
-msgstr ""
+msgstr "Η έκθεση της κατηγορίας δημιουργείται... Παρακαλούμε περιμένετε."
 
 #: src/mmex.cpp:1707
-#, fuzzy
 msgid "Categories - Last Calendar Month"
-msgstr "Τελευταίος ημερολογιακός μήνας"
+msgstr "κατηγορίες - Προηγούμενος ημερολογιακός μήνας"
 
 #: src/mmex.cpp:1718
-#, fuzzy
 msgid "Categories - Last 30 Days"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Κατηγορίες - Προηγούμενες 30 ημέρες"
 
 #: src/mmex.cpp:1729
-#, fuzzy
 msgid "Categories - Current Month"
-msgstr "Τρέχων μήνας"
+msgstr "Κατηγορίες - Τρέχων μήνας"
 
 #: src/mmex.cpp:1732
-#, fuzzy
 msgid "Categories - Current Month to Date"
-msgstr "Τρέχων μήνας"
+msgstr "Κατηγορίες - Τρέχων μήνας μέχρι σήμερα"
 
 #: src/mmex.cpp:1749
-#, fuzzy
 msgid "Categories - Last Year"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Κατηγορίες - Προηγούμενο έτος"
 
 #: src/mmex.cpp:1764
-#, fuzzy
 msgid "Categories - Current Year"
-msgstr "Τρέχον έτος"
+msgstr "κατηγορίες - Τρέχον έτος"
 
 #: src/mmex.cpp:1774
-#, fuzzy
 msgid "Categories - Last Financial Year"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Κατηγορίες - Προηγούμενο οικονομικό έτος"
 
 #: src/mmex.cpp:1783
 msgid "Categories - Current Financial Year"
-msgstr ""
+msgstr "Κατηγορίες - Τρέχον οικονομικό έτος"
 
 #: src/mmex.cpp:1809
-#, fuzzy
 msgid "Where the Money Comes From - Last Calendar Month"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από που έρχονται τα χρήματα - Προηγούμενος ημερολογιακός μήνας"
 
 #: src/mmex.cpp:1820
-#, fuzzy
 msgid "Where the Money Comes From - Last 30 days"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από που έρχονται τα χρήματα - Προηγούμενες 30 ημέρες"
 
 #: src/mmex.cpp:1831
-#, fuzzy
 msgid "Where the Money Comes From - Current Month"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από που έρχονται τα χρήματα - Τρέχων μήνας"
 
 #: src/mmex.cpp:1834
-#, fuzzy
 msgid "Where the Money Comes From - Current Month to Date"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από που έρχονται τα χρήματα - Τρέχων μήνας μέχρι σήμερα"
 
 #: src/mmex.cpp:1851
-#, fuzzy
 msgid "Where the Money Comes From - Last year"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από που έρχονται τα χρήματα - Προηγούμενο έτος"
 
 #: src/mmex.cpp:1866
-#, fuzzy
 msgid "Where the Money Comes From - Current Year"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από που έρχονται τα χρήματα - Τρέχον έτος"
 
 #: src/mmex.cpp:1876
-#, fuzzy
 msgid "Where the Money Comes From - Last Financial Year"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από που έρχονται τα χρήματα - Προηγούμενο οικονομικό έτος"
 
 #: src/mmex.cpp:1886
-#, fuzzy
 msgid "Where the Money Comes From - Current Financial Year"
-msgstr "Ανάλυση εξόδων"
+msgstr "Από που έρχονται τα χρήματα - Τρέχον οικονομικό έτος"
 
 #: src/mmex.cpp:1912
-#, fuzzy
 msgid "Where the Money Goes - Last Calendar Month"
-msgstr "Τελευταίος ημερολογιακός μήνας"
+msgstr "Πού πηγαίνουν τα χρήματα - Προηγούμενος ημερολογιακός μήνας"
 
 #: src/mmex.cpp:1923
-#, fuzzy
 msgid "Where the Money Goes - Last 30 Days"
-msgstr "Ανάλυση εξόδων"
+msgstr "Πού πηγαίνουν τα χρήματα - Προηγούμενες 30 ημέρες "
 
 #: src/mmex.cpp:1934
-#, fuzzy
 msgid "Where the Money Goes - Current Month"
-msgstr "Ανάλυση εξόδων"
+msgstr "Πού πηγαίνουν τα χρήματα - Τρέχων μήνας"
 
 #: src/mmex.cpp:1937
-#, fuzzy
 msgid "Where the Money Goes - Current Month to Date"
-msgstr "Ανάλυση εξόδων"
+msgstr "Πού πηγαίνουν τα χρήματα - Τρέχων μήνας μέχρι σήμερα"
 
 #: src/mmex.cpp:1954
-#, fuzzy
 msgid "Where the Money Goes - Last Year"
-msgstr "Ανάλυση εξόδων"
+msgstr "Πού πηγαίνουν τα χρήματα - Προηγούμενο έτος"
 
 #: src/mmex.cpp:1969
-#, fuzzy
 msgid "Where the Money Goes - Current Year"
-msgstr "Ανάλυση εξόδων"
+msgstr "Πού πηγαίνουν τα χρήματα - Τρέχον έτος"
 
 #: src/mmex.cpp:1979
-#, fuzzy
 msgid "Where the Money Goes - Last Financial Year"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Πού πηγαίνουν τα χρήματα - Προηγούμενο οικονομικό έτος "
 
 #: src/mmex.cpp:1988
-#, fuzzy
 msgid "Where the Money Goes - Current Financial Year"
-msgstr "Τρέχον έτος"
+msgstr "Πού πηγαίνουν τα χρήματα - Τρέχον οικονομικό έτος"
 
 #: src/mmex.cpp:2021
-#, fuzzy
 msgid "Income vs Expenses - Last Calendar Month"
-msgstr "Τρέχων Μήνας : Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς έξοδα - Προηγούμενος ημερολογιακός μήνας"
 
 #: src/mmex.cpp:2032
-#, fuzzy
 msgid "Income vs Expenses - Last 30 Days"
-msgstr "Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς έξοδα - Προηγούμενες 30 ημέρες"
 
 #: src/mmex.cpp:2043
-#, fuzzy
 msgid "Income vs Expenses - Current Month"
-msgstr "Τρέχων Μήνας : Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς έξοδα - Τρέχων μήνας"
 
 #: src/mmex.cpp:2046
-#, fuzzy
 msgid "Income vs Expenses - Current Month to Date"
-msgstr "Τρέχων Μήνας : Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς έξοδα - Τρέχων μήνας μέχρι σήμερα"
 
 #: src/mmex.cpp:2100
-#, fuzzy
 msgid "Payee Report"
-msgstr "Πληρωμή"
+msgstr "Έκθεση δικαιούχου"
 
 #: src/mmex.cpp:2120
-#, fuzzy
 msgid "Payees - Last Calendar Month"
-msgstr "Τελευταίος ημερολογιακός μήνας"
+msgstr "Δικαιούχοι - Προηγούμενος ημερολογιακός μήνας"
 
 #: src/mmex.cpp:2132
-#, fuzzy
 msgid "Payees - Last 30 Days"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Δικαιούχοι - Προηγούμενες 30 ημέρες"
 
 #: src/mmex.cpp:2145
-#, fuzzy
 msgid "Payees - Current Month"
-msgstr "Τρέχων μήνας"
+msgstr "Δικαιούχοι - Τρέχων μήνας"
 
 #: src/mmex.cpp:2148
-#, fuzzy
 msgid "Payees - Current Month to Date"
-msgstr "Τρέχων μήνας"
+msgstr "Δικαιούχοι - Τρέχων μήνας μέχρι σήμερα"
 
 #: src/mmex.cpp:2167
-#, fuzzy
 msgid "Payees - Last Year"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Δικαιούχοι - Προηγούμενο έτος"
 
 #: src/mmex.cpp:2184
-#, fuzzy
 msgid "Payees - Current Year"
-msgstr "Τρέχον έτος"
+msgstr "Δικαιούχοι - Τρέχον έτος"
 
 #: src/mmex.cpp:2197
-#, fuzzy
 msgid "Payees - Last Financial Year"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Δικαιούχοι - Προηγούμενο οικονομικό έτος"
 
 #: src/mmex.cpp:2207
-#, fuzzy
 msgid "Payees - Current Financial Year"
-msgstr "Τρέχον έτος"
+msgstr "Δικαιούχοι - Τρέχον οικονομικό έτος"
 
 #: src/mmex.cpp:2338
 msgid "Do you really want to delete the account?"
-msgstr "Θέλετε να διαγράψετε τον Λογαριασμό;"
+msgstr "Θέλετε πραγματικά να διαγράψετε το λογαριασμό;"
 
 #: src/mmex.cpp:2339
 #: src/mmex.cpp:4177
 msgid "Confirm Account Deletion"
-msgstr "Επιβεβαιώστε την Διαγραφή του Λογαριασμού"
+msgstr "Επιβεβαιώστε τη διαγραφή του λογαριασμού"
 
 #: src/mmex.cpp:2363
 msgid "MMEX has been opened without an active database."
-msgstr ""
+msgstr "Το ΜΜΕΧ έχει ανοιχτεί χωρίς ενεργή βάση δεδομένων."
 
 #: src/mmex.cpp:2363
 msgid "MMEX: Menu Popup Error"
-msgstr ""
+msgstr "MMEX: Σφάλμα ανάδυσης μενού"
 
 #: src/mmex.cpp:2385
 #: src/mmex.cpp:2430
 #: src/mmex.cpp:2729
 msgid "&Edit Account"
-msgstr "&Επεξεργασία Λογαριασμού"
+msgstr "&Επεξεργασία λογαριασμού"
 
 #: src/mmex.cpp:2386
 #: src/mmex.cpp:2429
 #: src/mmex.cpp:2735
 msgid "&Delete Account"
-msgstr "&Διαγραφή Λογαριασμού"
+msgstr "&Διαγραφή λογαριασμού"
 
 #: src/mmex.cpp:2391
-#, fuzzy
 msgid "Import &QIF File"
-msgstr "Εισαγωγή"
+msgstr "Εισαγωγή αρχείου &QIF"
 
 #: src/mmex.cpp:2394
 msgid "&Launch Account Website"
-msgstr "&Προσεγγίστε τον Λογαριασμό στο Internet"
+msgstr "&Εκκίνηση ιστοσελίδας του λογαριασμού"
 
 #: src/mmex.cpp:2428
 #: src/mmex.cpp:2719
 msgid "New &Account"
-msgstr "Νέος &Λογαριασμός"
+msgstr "Νέος &λογαριασμός"
 
 #: src/mmex.cpp:2431
-#, fuzzy
 msgid "Account &List (Home)"
-msgstr "&Λίστα Λογαριασμών "
+msgstr "&Λίστα Λογαριασμών (Αρχική σελίδα)"
 
 #: src/mmex.cpp:2440
 #: src/mmex.cpp:2444
 #: src/mmex.cpp:2630
 #: src/mmex.cpp:2636
-#, fuzzy
 msgid "&CSV Files..."
-msgstr "&CSV αρχεία"
+msgstr "&CSV αρχεία..."
 
 #: src/mmex.cpp:2441
 #: src/mmex.cpp:2445
 #: src/mmex.cpp:2631
 #: src/mmex.cpp:2637
-#, fuzzy
 msgid "&QIF Files..."
-msgstr "&CSV αρχεία"
+msgstr "&QIF αρχεία..."
 
 #: src/mmex.cpp:2442
 #: src/mmex.cpp:2633
@@ -2364,453 +2177,412 @@ msgstr "&Εξαγωγή"
 
 #: src/mmex.cpp:2446
 #: src/mmex.cpp:2638
-#, fuzzy
 msgid "&Import"
-msgstr "Εισαγωγή"
+msgstr "&Εισαγωγή"
 
 #: src/mmex.cpp:2451
 #: src/optionsdialog.cpp:201
 msgid "All"
-msgstr "Ολλες"
+msgstr "Όλοι"
 
 #: src/mmex.cpp:2452
 #: src/mmex.cpp:2928
 #: src/optionsdialog.cpp:202
 msgid "Open"
-msgstr "Ανοικτός"
+msgstr "Ανοικτοί"
 
 #: src/mmex.cpp:2453
 #: src/optionsdialog.cpp:203
 msgid "Favorites"
-msgstr "Αγαπημένα"
+msgstr "Αγαπημένοι"
 
 #: src/mmex.cpp:2454
 #: src/optionsdialog.cpp:406
 msgid "Accounts Visible"
-msgstr "Αναγνωρίσημοι Λογαριασμοί"
+msgstr "Λογαριασμοί ορατοί"
 
 #: src/mmex.cpp:2465
 msgid "Edit Custom Report"
-msgstr ""
+msgstr "Επεξεργασία προσαρμοσμένης έκθεσης"
 
 #: src/mmex.cpp:2466
-#, fuzzy
 msgid "Delete Custom Report"
-msgstr "Διαγραφή"
+msgstr "Διαγραφή προσαρμοσμένης έκθεσης"
 
 #: src/mmex.cpp:2610
 msgid "&New Database\tCtrl-N"
-msgstr "&Νέα Βάση\tCtrl-N"
+msgstr "&Νέα βάση δεδομένων\tCtrl-N"
 
 #: src/mmex.cpp:2610
 #: src/mmex.cpp:2927
 #: src/mmex.cpp:4469
-#, fuzzy
 msgid "New Database"
-msgstr "&Νέα Βάση\tCtrl-N"
+msgstr "Νέα βάση δεδομένων"
 
 #: src/mmex.cpp:2612
 msgid "&Open Database\tCtrl-O"
-msgstr "&Ανοιγμα Βάσης\tCtrl-O"
+msgstr "&Άνοιγμα βάσης δεδομένων\tCtrl-O"
 
 #: src/mmex.cpp:2612
 #: src/mmex.cpp:2928
-#, fuzzy
 msgid "Open Database"
-msgstr "&Ανοιγμα Βάσης\tCtrl-O"
+msgstr "Άνοιγμα  βάσης δεδομένων"
 
 #: src/mmex.cpp:2614
-#, fuzzy
 msgid "Save Database &As"
-msgstr "&Σώσιμο Βάσης\tCtrl-S"
+msgstr "Αποθήκευση βάσης δεδομένων &ως"
 
 #: src/mmex.cpp:2614
-#, fuzzy
 msgid "Save Database As"
-msgstr "&Σώσιμο Βάσης\tCtrl-S"
+msgstr "Αποθήκευση βάσης δεδομένων ως"
 
 #: src/mmex.cpp:2622
 msgid "&Recent Files..."
-msgstr ""
+msgstr "&Πρόσφατα αρχεία..."
 
 #: src/mmex.cpp:2624
 msgid "&Clear Recent Files"
-msgstr ""
+msgstr "&Καθαρισμός πρόσφατων αρχείων"
 
 #: src/mmex.cpp:2630
 msgid "Export to CSV"
-msgstr "Εξαγωγή σε CSV αρχείο"
+msgstr "Εξαγωγή σε CSV"
 
 #: src/mmex.cpp:2632
 msgid "&Report to HTML"
-msgstr "&Εκτύπωση σε HTML"
+msgstr "&Έκθεση σε HTML"
 
 #: src/mmex.cpp:2632
 msgid "Export to HTML"
-msgstr "Εξαγωγή σε HTML αρχείο"
+msgstr "Εξαγωγή σε HTML"
 
 #: src/mmex.cpp:2636
-#, fuzzy
 msgid "Import from any CSV file"
-msgstr "Εισαγωγή από αρχείο CSV"
+msgstr "Εισαγωγή από οποιοδήποτε αρχείο CSV"
 
 #: src/mmex.cpp:2637
-#, fuzzy
 msgid "Import from QIF"
-msgstr "Εισαγωγή από αρχείο CSV"
+msgstr "Εισαγωγή από QIF"
 
 #: src/mmex.cpp:2643
-#, fuzzy
 msgid "Page Set&up..."
-msgstr "Στήσιμο σελίδας...."
+msgstr "Διαμόρφωση &σελίδας..."
 
 #: src/mmex.cpp:2643
 msgid "Setup page printing options"
-msgstr "Σελίδα επιλογών εκτύπωσης"
+msgstr "Επιλογές εκτύπωσης διαμόρφωσης σελίδας"
 
 #: src/mmex.cpp:2649
 #: src/mmex.cpp:2655
-#, fuzzy
 msgid "Current &View"
-msgstr "Τρέχουσα εικόνα"
+msgstr "Τρέχουσα &προβολή"
 
 #: src/mmex.cpp:2649
 msgid "Preview current report"
-msgstr "Προεπισκόπιση παρόντος εκτυπωτικού"
+msgstr "Προεπισκόπηση τρέχουσας έκθεσης"
 
 #: src/mmex.cpp:2651
-#, fuzzy
 msgid "Print Pre&view..."
-msgstr "Προεπισκόπιση εκτύπωσης..."
+msgstr "Προεπισκόπιση &εκτύπωσης..."
 
 #: src/mmex.cpp:2655
 msgid "Print current report"
-msgstr "Εκτύπωση παρόντος εκτυπωτικού"
+msgstr "Εκτύπωση τρέχουσας έκθεσης"
 
 #: src/mmex.cpp:2658
-#, fuzzy
 msgid "&Print..."
-msgstr "Εκτύπωση..."
+msgstr "&Εκτύπωση..."
 
 #: src/mmex.cpp:2663
 msgid "E&xit\tAlt-X"
-msgstr "Ε&ξοδος\tAlt-X"
+msgstr "&Έξοδος\tAlt-X"
 
 #: src/mmex.cpp:2663
 msgid "Quit this program"
-msgstr "Διακόψτε αυτό το πρόγραμμα"
+msgstr "Έξοδος από το πρόγραμμα"
 
 #: src/mmex.cpp:2670
-#, fuzzy
 msgid "&Toolbar"
-msgstr "&Εργαλεία"
+msgstr "&Γραμμή εργαλείων"
 
 #: src/mmex.cpp:2670
 msgid "Show/Hide the toolbar"
-msgstr ""
+msgstr "Εμφάνιση/Απόκρυψη γραμμής εργαλείων"
 
 #: src/mmex.cpp:2672
 msgid "&Navigation"
-msgstr ""
+msgstr "&Πλοήγηση"
 
 #: src/mmex.cpp:2672
 msgid "Show/Hide the Navigation tree control"
-msgstr ""
+msgstr "Εμφάνιση/Απόκρυψη του δέντρου πλοήγησης"
 
 #: src/mmex.cpp:2674
-#, fuzzy
 msgid "&Bank Accounts"
-msgstr "Λογαριασμοί "
+msgstr "&Τραπεζικοί λογαριασμοί"
 
 #: src/mmex.cpp:2674
 msgid "Show/Hide Bank Accounts on Summary page"
-msgstr ""
+msgstr "Εμφάνιση/Απόκρυψη των τραπεζικών λογαριασμών στη σελίδα Περίληψης"
 
 #: src/mmex.cpp:2676
-#, fuzzy
 msgid "Term &Accounts"
-msgstr "&Λογαριασμοί"
+msgstr "Προθεσμιακοί &Λογαριασμοί"
 
 #: src/mmex.cpp:2676
 msgid "Show/Hide Term Accounts on Summary page"
-msgstr ""
+msgstr "Εμφάνιση/Απόκρυψη των προθεσμιακών λογαριασμών στη σελίδα Περίληψης"
 
 #: src/mmex.cpp:2678
-#, fuzzy
 msgid "&Stock Accounts"
-msgstr "Λογαριασμοί "
+msgstr "&Λογαριασμοί μετοχών"
 
 #: src/mmex.cpp:2678
 msgid "Show/Hide Stock Accounts on Summary page"
-msgstr ""
+msgstr "Εμφάνιση/Απόκρυψη των μετοχικών λογαριασμών στη σελίδα Περίληψης"
 
 #: src/mmex.cpp:2680
-#, fuzzy
 msgid "Budgets: As &Financial Years"
-msgstr "Τρέχον έτος"
+msgstr "Προϋπολογισμοί: Κατά &οικονομικά έτη"
 
 #: src/mmex.cpp:2680
 msgid "Display Budgets in Financial Year Format"
-msgstr ""
+msgstr "Εμφάνιση των προϋπολογισμών σε μορφή οικονομικού έτους"
 
 #: src/mmex.cpp:2682
 msgid "Budgets: &Include Transfers in Totals"
-msgstr ""
+msgstr "Προϋπολογισμοί: &Να συμπεριλαμβάνονται οι μεταφορές στα σύνολα"
 
 #: src/mmex.cpp:2682
 msgid "Include the transfer transactions in the Budget Totals"
-msgstr ""
+msgstr "Συμπεριλάβετε τις συναλλαγές μεταφοράς στα σύνολα των προϋπολογισμών"
 
 #: src/mmex.cpp:2684
-#, fuzzy
 msgid "Budget Setup: &Without Summaries"
-msgstr "Αρχικό στήσιμο προϋπολογισμού"
+msgstr "Διαμόρφωση προϋπολογισμού: &Χωρίς περιλήψεις"
 
 #: src/mmex.cpp:2684
 msgid "Display the Budget Setup without category summaries"
-msgstr ""
+msgstr "Εμφάνιση της διαμόρφωσης του προϋπολογισμού χωρίς τις περιλήψεις κατηγοριών"
 
 #: src/mmex.cpp:2686
 msgid "Budget Summary: Include &Categories"
-msgstr ""
+msgstr "Περίληψη προϋπολογισμών: Να περιλαμβάνονται οι &κατηγορίες"
 
 #: src/mmex.cpp:2686
 msgid "Include the categories in the Budget Category Summary"
-msgstr ""
+msgstr "Περιλάβετε τις κατηγορίες στην Περίληψη Κατηγοριών του Προϋπολογισμού"
 
 #: src/mmex.cpp:2688
-#, fuzzy
 msgid "Ignore F&uture Transactions"
-msgstr "Εισάγετε την κίνηση"
+msgstr "Αγνόηση &μελλοντικών συναλλαγών"
 
 #: src/mmex.cpp:2688
-#, fuzzy
 msgid "Ignore Future transactions"
-msgstr "Εισάγετε την κίνηση"
+msgstr "Να αγνοηθούν μελλοντικές συναλλαγές"
 
 #: src/mmex.cpp:2719
 #: src/mmex.cpp:2931
 #: src/mmex.cpp:4503
 #: src/mmex.cpp:4562
 msgid "New Account"
-msgstr "Νέος Λογαριασμός"
+msgstr "Νέος λογαριασμός"
 
 #: src/mmex.cpp:2725
 msgid "Account &List"
-msgstr "&Λίστα Λογαριασμών "
+msgstr "Λίστα &Λογαριασμών "
 
 #: src/mmex.cpp:2725
 #: src/mmex.cpp:2932
 msgid "Show Account List"
-msgstr "Εμφάνισε την λίστα Λογαριασμών"
+msgstr "Εμφάνιση της λίστας λογαριασμών"
 
 #: src/mmex.cpp:2729
-#, fuzzy
 msgid "Edit Account"
-msgstr "&Επεξεργασία Λογαριασμού"
+msgstr "Επεξεργασία λογαριασμού"
 
 #: src/mmex.cpp:2735
-#, fuzzy
 msgid "Delete Account from database"
-msgstr "&Διαγραφή Λογαριασμού"
+msgstr "Διαγραφή λογαριασμού από τη βάση δεδομένων"
 
 #: src/mmex.cpp:2747
-#, fuzzy
 msgid "Organize &Categories..."
-msgstr "Οργάνωση &Κατηγοριών"
+msgstr "Οργάνωση &Κατηγοριών..."
 
 #: src/mmex.cpp:2747
 #: src/mmex.cpp:2934
 msgid "Organize Categories"
-msgstr "Οργάνωση Κατηγοριών"
+msgstr "Οργάνωση των κατηγοριών"
 
 #: src/mmex.cpp:2752
-#, fuzzy
 msgid "Organize &Payees..."
-msgstr "Οργάνωση &Πληρωμών"
+msgstr "Οργάνωση &δικαιούχων"
 
 #: src/mmex.cpp:2757
-#, fuzzy
 msgid "Organize Currency..."
-msgstr "Οργνώστε τα νομίσματα"
+msgstr "Οργάνωση νομισμάτων..."
 
 #: src/mmex.cpp:2757
 #: src/mmex.cpp:2936
 msgid "Organize Currency"
-msgstr "Οργνώστε τα νομίσματα"
+msgstr "Οργάνωση των νομισμάτων"
 
 #: src/mmex.cpp:2763
-#, fuzzy
 msgid "&Categories..."
-msgstr "Κατηγορία"
+msgstr "&Κατηγορίες..."
 
 #: src/mmex.cpp:2763
 msgid "Reassign all categories to another category"
-msgstr ""
+msgstr "Εκχώρηση όλων των κατηγοριών σε μια άλλη κατηγορία"
 
 #: src/mmex.cpp:2766
-#, fuzzy
 msgid "&Payees..."
-msgstr "Πληρωμή"
+msgstr "&Δικαιούχοι..."
 
 #: src/mmex.cpp:2766
 msgid "Reassign all payees to another payee"
-msgstr ""
+msgstr "Εκχώρηση όλων των δικαιούχων σε έναν άλλο δικαιούχο"
 
 #: src/mmex.cpp:2770
 msgid "Relocation of..."
-msgstr ""
+msgstr "Μετατόπιση των..."
 
 #: src/mmex.cpp:2770
-#, fuzzy
 msgid "Relocate Categories && Payees"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Μετατόπιση κατηγοριών && δικαιούχων"
 
 #: src/mmex.cpp:2777
-#, fuzzy
 msgid "&Budget Setup"
-msgstr "Αρχικό στήσιμο προϋπολογισμού"
+msgstr "&Διαμόρφωση προϋπολογισμού"
 
 #: src/mmex.cpp:2785
-#, fuzzy
 msgid "&Repeating Transactions"
-msgstr "Διαγραφή κίνησης"
+msgstr "&Επαναλαμβανόμενες συναλλαγές"
 
 #: src/mmex.cpp:2785
 msgid "Bills && Deposits"
-msgstr "Λογαριασμοί && Καταθέσεις"
+msgstr "Πληρωμές && καταθέσεις"
 
 #: src/mmex.cpp:2792
-#, fuzzy
 msgid "&Assets"
-msgstr "&Επεξεργασία Λογαριασμού"
+msgstr "&Περιουσιακά στοιχεία"
 
 #: src/mmex.cpp:2800
-#, fuzzy
 msgid "&Transaction Report Filter..."
-msgstr "Τύπος κίνησης"
+msgstr "&Φίλτρο εκθέσεων συναλλαγών..."
 
 #: src/mmex.cpp:2800
 #: src/mmex.cpp:2938
-#, fuzzy
 msgid "Transaction Report Filter"
-msgstr "Τύπος κίνησης"
+msgstr "Φίλτρο εκθέσεων συναλλαγών"
 
 #: src/mmex.cpp:2810
 msgid "New..."
-msgstr ""
+msgstr "Νέα..."
 
 #: src/mmex.cpp:2810
 msgid "Create a new SQL report"
-msgstr ""
+msgstr "Δημιουργία νέας έκθεσης SQL"
 
 #: src/mmex.cpp:2812
-#, fuzzy
 msgid "Edit..."
-msgstr "Επεξεργασία"
+msgstr "Επεξεργασία..."
 
 #: src/mmex.cpp:2812
-#, fuzzy
 msgid "Edit an existing SQL report"
-msgstr "Επεηεργασθείτε το όνομα μιας υπάρχουσας κατηγορίας"
+msgstr "Επεξεργασία υπάρχουσας έκθεσης SQL"
 
 #: src/mmex.cpp:2814
-#, fuzzy
 msgid "Delete..."
-msgstr "Διαγραφή"
+msgstr "Διαγραφή..."
 
 #: src/mmex.cpp:2814
 msgid "Remove a file from the Custom SQL Reports menu"
-msgstr ""
+msgstr "Αφαίρεση ενός αρχείου από το μενού Προσαρμοσμένες Εκθέσεις SQL"
 
 #: src/mmex.cpp:2820
 msgid "Custom SQL Reports..."
-msgstr ""
+msgstr "Προσαρμοσμένες εκθέσεις SQL..."
 
 #: src/mmex.cpp:2820
 msgid "Create or modify SQL reports for the Reports section"
-msgstr ""
+msgstr "Δημιουργία ή τροποποίηση εκθέσεων SQL για το τμήμα εκθέσεων"
 
 #: src/mmex.cpp:2825
-#, fuzzy
 msgid "&Options..."
-msgstr "&Επιλογές"
+msgstr "&Επιλογές..."
 
 #: src/mmex.cpp:2825
-#, fuzzy
 msgid "Show the Options Dialog"
-msgstr "Επιλογές"
+msgstr "Εμφάνιση παραθύρου επιλογών"
 
 #: src/mmex.cpp:2832
 msgid "Convert Encrypted &DB"
-msgstr ""
+msgstr "Μετατροπή κρυπτογραφημένης &ΒΔ"
 
 #: src/mmex.cpp:2833
 msgid "Convert Encrypted DB to Non-Encrypted DB"
-msgstr ""
+msgstr "Μετατροπή κρυπτογραφημένης ΒΔ σε μη κρυπτογραφημένη ΒΔ"
 
 #: src/mmex.cpp:2839
-#, fuzzy
 msgid "Online &Update Currency Rate"
-msgstr "Αρχικό νόμισμα"
+msgstr "Διαδικτυακή &ενημέρωση ισοτιμίας νομισμάτων"
 
 #: src/mmex.cpp:2840
 msgid "Online update currency rate"
-msgstr ""
+msgstr "Διαδικτυακή ενημέρωση ισοτιμίας νομισμάτων"
 
 #: src/mmex.cpp:2847
 msgid "&Help\tCtrl-F1"
-msgstr "&Help\tCtrl-F1"
+msgstr "&Βοήθεια\tCtrl-F1"
 
 #: src/mmex.cpp:2847
 msgid "Show the Help file"
-msgstr ""
+msgstr "Εμφάνιση του αρχείου βοήθειας"
 
 #: src/mmex.cpp:2852
-#, fuzzy
 msgid "&Show App Start Dialog"
-msgstr "Εναρξη εφαρμογής"
+msgstr "&Εμφάνιση παραθύρου έναρξης εφαρμογής"
 
 #: src/mmex.cpp:2852
 msgid "App Start Dialog"
-msgstr "Εναρξη εφαρμογής"
+msgstr "Παράθυρο έναρξης της εφαρμογής"
 
 #: src/mmex.cpp:2861
 msgid "Check for &Updates"
-msgstr "Να γίνει έλεγχος για &Διορθώσεις"
+msgstr "Έλεγχος για &ενημερώσεις"
 
 #: src/mmex.cpp:2861
 msgid "Check For Updates"
-msgstr "Νά γίνει έλεγχος για διορθώσεις"
+msgstr "Ελέγξτε για ενημερώσεις"
 
 #: src/mmex.cpp:2869
 msgid "Visit MMEX Forum or &Report New Issues."
-msgstr ""
+msgstr "Επιστεφθείτε το φόρουμ του MMEX ή &αναφέρατε νέα προβλήματα"
 
 #: src/mmex.cpp:2869
-#, fuzzy
 msgid "Visit the MMEX forum. See existing user comments, or report new issues with the software."
-msgstr "Στείλτε email διαμέσου της λίστας mailing για να αναφορά θεμάτων σχετικά με το πρόγραμμα"
+msgstr "Επισκεφθείτε το φόρουμ του MMEX. Δείτε υπάρχοντα σχόλια χρηστών ή αναφέρετε προβλήματα σχετικά με το λογισμικό."
 
 #: src/mmex.cpp:2877
 msgid "Register/View Release &Notifications."
-msgstr ""
+msgstr "Εγγραφή/Εμφάνιση &ειδοποιήσεων έκδοσης."
 
 #: src/mmex.cpp:2877
 msgid "Sign up to Notification Mailing List or View existing announcements."
-msgstr ""
+msgstr "Εγγραφείτε στην λίστα ειδοποιήσεων μέσω ταχυδρομείου ή δείτε τις υπάρχουσες ανακοινώσεις."
 
 #: src/mmex.cpp:2883
 msgid "Visit us on Facebook"
-msgstr ""
+msgstr "Επισκεφθείτε μας στο Facebook"
 
 #: src/mmex.cpp:2888
 msgid "&About..."
-msgstr "&Περί..."
+msgstr "&Σχετικά..."
 
 #: src/mmex.cpp:2888
 msgid "Show about dialog"
-msgstr "Προβολή Περί... "
+msgstr "Εμφάνιση παραθύρου πληροφοριών"
 
 #: src/mmex.cpp:2893
 msgid "&File"
@@ -2826,7 +2598,7 @@ msgstr "&Εργαλεία"
 
 #: src/mmex.cpp:2896
 msgid "&View"
-msgstr ""
+msgstr "&Προβολή"
 
 #: src/mmex.cpp:2897
 msgid "&Help"
@@ -2838,140 +2610,122 @@ msgstr "Νέος"
 
 #: src/mmex.cpp:2932
 msgid "Account List"
-msgstr "Λίστα Λογαριασμών"
+msgstr "Λίστα λογαριασμών"
 
 #: src/mmex.cpp:2934
-#, fuzzy
 msgid "Show Organize Categories Dialog"
-msgstr "Οργάνωση Κατηγοριών"
+msgstr "Εμφάνιση του παραθύρου οργάνωσης των κατηγοριών"
 
 #: src/mmex.cpp:2935
-#, fuzzy
 msgid "Show Organize Payees Dialog"
-msgstr "Οργανώστε τις πληρωμές"
+msgstr "Εμφάνιση του παραθύρου οργάνωσης των δικαιούχων"
 
 #: src/mmex.cpp:2936
-#, fuzzy
 msgid "Show Organize Currency Dialog"
-msgstr "Οργνώστε τα νομίσματα"
+msgstr "Εμφάνιση του παραθύρου οργάνωσης των νομισμάτων"
 
 #: src/mmex.cpp:2940
 msgid "Custom SQL Manager"
-msgstr ""
+msgstr "Διαχείριση προσαρμοσμένης SQL"
 
 #: src/mmex.cpp:2940
 msgid "Create new Custom SQL Reports"
-msgstr ""
+msgstr "Δημιουργία νέων προσαρμοσμένων εκθέσεων SQL"
 
 #: src/mmex.cpp:2970
 msgid "Enter database's password"
-msgstr ""
+msgstr "Εισάγετε τον κωδικό πρόσβασης της βάσης δεδομένων"
 
 #: src/mmex.cpp:2975
-#, fuzzy
 msgid "Opening MMEX Database - Error"
-msgstr "Ανοιγμα τελευταίας ανοιγμένης βάσης δεδομένων"
+msgstr "Άνοιγμα βάσης δεδομένων MMEX - Σφάλμα"
 
 #: src/mmex.cpp:2996
 #: src/mmex.cpp:3044
-#, fuzzy
 msgid " - No File opened "
-msgstr "Δεν υπάρχει ανοικτό αρχείο του Money Manager EX  "
+msgstr " - Κανένα αρχείο ανοιχτό"
 
 #: src/mmex.cpp:2998
 msgid "Sorry. The Database version is too old or Database password is incorrect"
-msgstr ""
+msgstr "Συγγνώμη. Η έκδοση της βάσης δεδομένων είναι πολύ παλιά ή ο κωδικός πρόσβασης της βάσης δεδομένων είναι λάθος"
 
 #: src/mmex.cpp:3047
-#, fuzzy
 msgid "Cannot locate previously opened database.\n"
-msgstr "Ανοιγμα της προηγούμενης ανοιγμένης βάσης δεδομένων"
+msgstr "Αδυναμία εντοπισμού προηγούμενα ανοιγμένης βάσης δεδομένων.\n"
 
 #: src/mmex.cpp:3049
 msgid "Password not entered for encrypted Database.\n"
-msgstr ""
+msgstr "Δεν εισήχθη κωδικός πρόσβασης για κρυπτογραφημένη βάση δεδομένων.\n"
 
 #: src/mmex.cpp:3051
-#, fuzzy
 msgid "Do you want to browse to locate another file?"
-msgstr ""
-"Δεν μπορεί να βρεθεί προηγούμενη ανοικτή .mmb βάση.\n"
-"Μήπως θέλετε να ψάξετε για πυθανή τοποθεσία της βάσης;"
+msgstr "Θέλετε να περιηγηθείτε για να εντοπίσετε ένα άλλο αρχείο;"
 
 #: src/mmex.cpp:3069
 #: src/mmcheckingpanel.cpp:527
 msgid "Please Wait"
-msgstr "Παρακαλώ περιμένετε"
+msgstr "Παρακαλούμε περιμένετε"
 
 #: src/mmex.cpp:3070
 msgid "Opening Database File && Verifying Integrity"
-msgstr "Opening Database File && Verifying Integrity"
+msgstr "Άνοιγμα βάσης δεδομένων && επιβεβαίωση ακεραιότητας"
 
 #: src/mmex.cpp:3080
 msgid "portable mode"
-msgstr ""
+msgstr "λειτουργία φορητότητας"
 
 #: src/mmex.cpp:3134
-#, fuzzy
 msgid "Choose database file to create"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε αρχείο βάσης δεδομένων για δημιουργία"
 
 #: src/mmex.cpp:3156
-#, fuzzy
 msgid "Choose database file to open"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε βάση δεδομένων για άνοιγμα"
 
 #: src/mmex.cpp:3172
-#, fuzzy
 msgid "Choose Encrypted database file to open"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε κρυπτογραφημένη βάση δεδομένων για άνοιγμα"
 
 #: src/mmex.cpp:3182
-#, fuzzy
 msgid "Enter password for database"
-msgstr "Λάθος κατά το άνοιγμα της βάσης δεδομένων"
+msgstr "Εισάγετε κωδικό πρόσβασης στη βάση δεδομένων"
 
 #: src/mmex.cpp:3187
-#, fuzzy
 msgid "Choose database file to Save As"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε βάση δεδομένων για αποθήκευση ως"
 
 #: src/mmex.cpp:3209
 msgid "Converted DB!"
-msgstr ""
+msgstr "Η ΒΔ μετατράπηκε!"
 
 #: src/mmex.cpp:3209
 msgid "MMEX message"
-msgstr ""
+msgstr "Μήνυμα MMEX"
 
 #: src/mmex.cpp:3224
 #: src/mmex.cpp:3244
-#, fuzzy
 msgid "Save database file as"
-msgstr "&Σώσιμο Βάσης\tCtrl-S"
+msgstr "Αποθήκευση βάσης δεδομένων ως"
 
 #: src/mmex.cpp:3244
 msgid "Can't copy file to itself"
-msgstr ""
+msgstr "Αδυναμια αντιγραφής αρχείου στον εαυτό του"
 
 #: src/mmex.cpp:3257
-#, fuzzy
 msgid "Enter password for new database"
-msgstr "Λάθος κατά το άνοιγμα της βάσης δεδομένων"
+msgstr "Εισάγετε τον κωδικό πρόσβασης για τη νέα βάση δεδομένων"
 
 #: src/mmex.cpp:3318
-#, fuzzy
 msgid "No account available to import"
-msgstr "Δεν υπάρχει διαθέσιμος Λογαριασμός. Δεν μπορεί να γίνει Εξαγωγή"
+msgstr "Κανείς λογαριασμός διαθέσιμος προς εισαγωγή"
 
 #: src/mmex.cpp:3318
-#, fuzzy
 msgid "Universal CSV Import"
-msgstr "&CSV αρχεία"
+msgstr "Εισαγωγή γενικής μορφής CSV"
 
 #: src/mmex.cpp:3360
 msgid "Term Account views have been temporarly turned on."
-msgstr ""
+msgstr "Η εμφάνιση των προθεσμιακών λογαριασμών έχει προσωρινά ενεργοποιηθεί."
 
 #: src/mmex.cpp:3361
 msgid ""
@@ -2980,69 +2734,68 @@ msgid ""
 "Tools -> Options\n"
 "View Options"
 msgstr ""
+"Για να διατηρήσετε αυτή την εμφάνιση, αλλάξτε τις προεπιλογές χρησιμοποιώντας:\n"
+"\n"
+"Εργαλεία->Επιλογές\n"
+"Επιλογές εμφάνισης"
 
 #: src/mmex.cpp:3363
 msgid "This message will not be displayed in future."
-msgstr ""
+msgstr "Το μήνυμα αυτό δεν θα εμφανιστεί στο μέλλον."
 
 #: src/mmex.cpp:3364
-#, fuzzy
 msgid "Initial Term Account Activation"
-msgstr "Επιβεβαιώστε την Διαγραφή του Λογαριασμού"
+msgstr "Αρχική ενεργοποίηση προθεσμιακού λογαριασμού"
 
 #: src/mmex.cpp:3464
-#, fuzzy
 msgid "Choose Accounts"
-msgstr "Επέλεξε Λογαριασμό για εισαγωγή σε :"
+msgstr "Επιλέξτε λογαριασμούς"
 
 #: src/mmex.cpp:3509
 msgid "MMEX Options have been updated."
-msgstr ""
+msgstr "Οι επιλογές του MMEX έχουν ενημερωθεί."
 
 #: src/mmex.cpp:3513
 msgid "Recommendation: Shut down and restart MMEX."
-msgstr ""
+msgstr "Σύσταση: Κλείστε και ξεκινήστε ξανά στο MMEX."
 
 #: src/mmex.cpp:3514
 msgid "This will allow all MMEX option updates to take effect."
-msgstr ""
+msgstr "Αυτό θα επιτρέψει όλες τις αλλαγές των επιλογών του MMEX να λάβουν χώρα."
 
 #: src/mmex.cpp:3516
-#, fuzzy
 msgid "New MMEX Options"
-msgstr "Επιλογές επισκόπησης"
+msgstr "Επιλογές νέου MMEX"
 
 #: src/mmex.cpp:3589
 msgid "System: "
-msgstr ""
+msgstr "Σύστημα: "
 
 #: src/mmex.cpp:3605
 #: src/mmex.cpp:3680
 msgid "Unable to connect!"
-msgstr ""
+msgstr "Αδυναμία σύνδεσης!"
 
 #: src/mmex.cpp:3606
 #: src/mmex.cpp:3655
 msgid "MMEX System Information Check"
-msgstr ""
+msgstr "Έλεγχος πληροφοριών συστήματος MMEX"
 
 #: src/mmex.cpp:3644
-#, fuzzy
 msgid "New update available!"
-msgstr "Δεν υπάρχει διαθέσιμος Λογαριασμός. Δεν μπορεί να γίνει Εξαγωγή"
+msgstr "Νέα ενημέρωση διαθέσιμη!"
 
 #: src/mmex.cpp:3649
 msgid "You have the latest version installed!"
-msgstr ""
+msgstr "Έχετε εγκατεστημένη την τελευταία έκδοση!"
 
 #: src/mmex.cpp:3654
 msgid "Proceed to website: "
-msgstr ""
+msgstr "Προχωρήστε στην ιστοσελίδα: "
 
 #: src/mmex.cpp:3670
-#, fuzzy
 msgid "No database!"
-msgstr "&Νέα Βάση\tCtrl-N"
+msgstr "Καμία βάση δεδομένων!"
 
 #: src/mmex.cpp:3670
 #: src/mmex.cpp:3680
@@ -3055,144 +2808,131 @@ msgstr "&Νέα Βάση\tCtrl-N"
 #: src/mmex.cpp:3739
 #: src/mmex.cpp:3745
 #: src/mmex.cpp:3791
-#, fuzzy
 msgid "Update Currency Rate"
-msgstr "Αρχικό νόμισμα"
+msgstr "Ενημέρωση ισοτιμίας νομισμάτων"
 
 #: src/mmex.cpp:3688
 msgid "Cannot get data from WWW!"
-msgstr ""
+msgstr "Αδυναμία λήψης δεδομένων από WWW!"
 
 #: src/mmex.cpp:3695
 msgid "Incorrect XML data (#1)!"
-msgstr ""
+msgstr "Εσφαλμένα δεδομένα XML (#1)!"
 
 #: src/mmex.cpp:3707
 msgid "Incorrect XML data (#2)!"
-msgstr ""
+msgstr "Εσφαλμένα δεδομένα XML (#2)!"
 
 #: src/mmex.cpp:3717
 msgid "Incorrect XML data (#3)!"
-msgstr ""
+msgstr "Εσφαλμένα δεδομένα XML (#3)!"
 
 #: src/mmex.cpp:3723
 msgid "Incorrect XML data (#4)!"
-msgstr ""
+msgstr "Εσφαλμένα δεδομένα XML (#4)!"
 
 #: src/mmex.cpp:3729
 msgid "Incorrect XML data (#5)!"
-msgstr ""
+msgstr "Εσφαλμένα δεδομένα XML (#5)!"
 
 #: src/mmex.cpp:3739
 msgid "Incorrect XML data (#6)!"
-msgstr ""
+msgstr "Εσφαλμένα δεδομένα XML (#6)!"
 
 #: src/mmex.cpp:3745
 msgid "Incorrect XML data (#7)!"
-msgstr ""
+msgstr "Εσφαλμένα δεδομένα XML (#7)!"
 
 #: src/mmex.cpp:3791
 msgid "Could not find base currency symbol!"
-msgstr ""
+msgstr "Αδυναμία εύρεσης του συμβόλου του βασικού νομίσματος!"
 
 #: src/mmex.cpp:3805
 #: src/mmex.cpp:3827
-#, fuzzy
 msgid "Currency rate updated"
-msgstr "Διαχειριστής νομίσματος"
+msgstr "Η ισοτιμία νομισμάτων ενημερώθηκε"
 
 #: src/mmex.cpp:4111
-#, fuzzy
 msgid "No account available to edit!"
-msgstr "Δεν υπάρχει διαθέσιμος Λογαριασμός. Δεν μπορεί να γίνει Εξαγωγή"
+msgstr "Κανείς λογαριασμός διαθέσιμος για επεξεργασία!"
 
 #: src/mmex.cpp:4111
 #: src/mmex.cpp:4128
 #: src/mmex.cpp:4152
 #: src/mmex.cpp:4169
-#, fuzzy
 msgid "Accounts"
-msgstr "&Λογαριασμοί"
+msgstr "Λογαριασμοί"
 
 #: src/mmex.cpp:4128
-#, fuzzy
 msgid "Choose Account to Edit"
-msgstr "Επέλεξε Λογαριασμό για εισαγωγή σε :"
+msgstr "Επιλέξτε λογαριασμό για επεξεργασία"
 
 #: src/mmex.cpp:4152
-#, fuzzy
 msgid "No account available to delete!"
-msgstr "Δεν υπάρχει διαθέσιμος Λογαριασμός. Δεν μπορεί να γίνει Εξαγωγή"
+msgstr "Κανείς λογαριασμός διαθέσιμος προς διαγραφή!"
 
 #: src/mmex.cpp:4169
-#, fuzzy
 msgid "Choose Account to Delete"
-msgstr "Επέλεξε Λογαριασμό για εισαγωγή σε :"
+msgstr "Επέλεξε λογαριασμό για διαγραφή"
 
 #: src/mmex.cpp:4175
-#, fuzzy
 msgid "Are you sure you want to delete\n"
-msgstr "Θέλετε πραγματικά να διαγράψετε τις σειρές"
+msgstr "Θέλετε πραγματικά να διαγράψετε\n"
 
 #: src/mmex.cpp:4176
-#, fuzzy
 msgid " account: "
-msgstr "Ποσό"
+msgstr " λογαριασμό: "
 
 #: src/mmex.cpp:4285
-#, fuzzy
 msgid "Category Relocation Completed."
-msgstr "Η κατηγορία είναι σε χρήση"
+msgstr "Η μετατόπιση κατηγορίεας ολοκληρώθηκε."
 
 #: src/mmex.cpp:4286
 #: src/mmex.cpp:4301
 msgid " records have been updated in the database."
-msgstr ""
+msgstr " εγγραφές έχουν ενημερωθεί στη βάση δεδομένων."
 
 #: src/mmex.cpp:4287
 #: src/mmex.cpp:4302
 msgid "MMEX must be shutdown and restarted for all the changes to be seen."
-msgstr ""
+msgstr "Το MMEX πρέπει να κλείσει και να επανεκκινηθεί για να εμφανιστούν όλες οι αλλαγές."
 
 #: src/mmex.cpp:4288
 msgid "Category Relocation Result"
-msgstr ""
+msgstr "Αποτέλεσμα μετατόπισης κατηγορίας"
 
 #: src/mmex.cpp:4300
 msgid "Payee Relocation Completed."
-msgstr ""
+msgstr "Η μετατόπιση δικαιούχου ολοκληρώθηκε."
 
 #: src/mmex.cpp:4303
 msgid "Payee Relocation Result"
-msgstr ""
+msgstr "Αποτέλεσμα μετατόπισης δικαιούχου"
 
 #: src/mmex.cpp:4343
 msgid " to Edit:"
-msgstr ""
+msgstr " προς επεξεργασία:"
 
 #: src/mmex.cpp:4364
-#, fuzzy
 msgid " to Delete:"
-msgstr "Διαγραφή"
+msgstr " προς διαγραφή:"
 
 #: src/mmex.cpp:4379
 msgid "Delete the Custom Report Title:"
-msgstr ""
+msgstr "Διαγραφή του τίτλου της προσαρμοσμένης έκθεσης:"
 
 #: src/mmex.cpp:4388
-#, fuzzy
 msgid "Do you want to delete the SQL file as well?"
-msgstr "Θέλετε πραγματικά να διαγράψετε τις σειρές"
+msgstr "Θέλετε να διαγράψετε και το αρχείο SQL;"
 
 #: src/mmex.cpp:4423
 #: src/optionsdialog.cpp:299
 msgid "Set Currency"
-msgstr "Δηλώστε νόμισμα"
+msgstr "Ορίστε νόμισμα"
 
 #: src/mmex.cpp:4431
-#, fuzzy
 msgid "Base Currency for account"
-msgstr "Αρχικό νόμισμα"
+msgstr "Βασικό νόμισμα του λογαριασμού"
 
 #: src/mmex.cpp:4441
 msgid ""
@@ -3201,52 +2941,52 @@ msgid ""
 "the options dialog. New accounts, will use this currency by\n"
 "default, and can be changed when editing account details."
 msgstr ""
+"Καθορίστε το βασικό (προεπιλεγμένο) νόμισμα που θα χρησιμοποιείται \n"
+"στη βάση δεδομένων. Το βασικό νόμισμα μπορεί αργότερα να αλλάξει\n"
+"από το παράθυρο επιλογών. Οι νέοι λογαριασμοί θα χρησιμοποιούν το \n"
+"νόμισμα αυτό από προεπιλογή και μπορεί να αλλαχτεί κατά την επεξεργασία\n"
+"των λεπτομερειών του λογαριασμού."
 
 #: src/mmex.cpp:4449
 #: src/optionsdialog.cpp:266
-#, fuzzy
 msgid "User Name"
-msgstr "Χρησιμοποιούμενο νόμισμα"
+msgstr "Όνομα χρήστη"
 
 #: src/mmex.cpp:4456
 msgid "(Optional) Specify a title or your name."
-msgstr ""
+msgstr "(Προαιρετικό) Ορίστε ένα τίτλο ή το όνομά σας."
 
 #: src/mmex.cpp:4457
 msgid "Used as a database title for displayed and printed reports."
-msgstr ""
+msgstr "Χρησιμοποιήθηκε ως τίτλος της βάσης δεδομένων για εμφανισθείσες και τυπωθείσες εκθέσεις."
 
 #: src/mmex.cpp:4469
-#, fuzzy
 msgid "Base Currency Not Set"
-msgstr "Αρχικό νόμισμα"
+msgstr "Δεν ορίστηκε το βασικό νόμισμα"
 
 #: src/mmex.cpp:4486
-#, fuzzy
 msgid "Name of the Account"
-msgstr "Αγαπημένος Λογαριασμός"
+msgstr "Όνομα του λογαριασμού"
 
 #: src/mmex.cpp:4490
-#, fuzzy
 msgid "Specify a descriptive name for the account."
-msgstr "Δηλώστε την κατάσταση της κίνησης"
+msgstr "Καθορίστε ένα περιγραφικό όνομα για το λογαριασμό."
 
 #: src/mmex.cpp:4491
-#, fuzzy
 msgid ""
 "This is generally the name of a financial institution\n"
 "where the account is held. For example: 'ABC Bank'."
-msgstr "Εισάγετε την ονομασία του οικονομικού οργανισμού που έχει καταχωρηθεί αυτός ο λογαριασμός"
+msgstr ""
+"Αυτό είναι γενικά το όνομα του οικονομικού οργανισμού όπου\n"
+"διατηρείται αυτός ο λογαριασμός. Για παράδειγμα: 'Τράπεζα ABC'."
 
 #: src/mmex.cpp:4503
-#, fuzzy
 msgid "Account Name Invalid"
-msgstr "Περιγραφή Λογαριασμού"
+msgstr "Μη έγκυρο όνομα λογαριασμού"
 
 #: src/mmex.cpp:4516
-#, fuzzy
 msgid "Checking/Savings"
-msgstr "Επιταγή"
+msgstr "Τρεχούμενος/Αποταμίευσης"
 
 #: src/mmex.cpp:4517
 msgid "Investment"
@@ -3254,33 +2994,35 @@ msgstr "Επένδυση"
 
 #: src/mmex.cpp:4518
 msgid "Term"
-msgstr ""
+msgstr "Προθεσμιακοί"
 
 #: src/mmex.cpp:4521
 msgid "Specify the type of account to be created."
-msgstr "Δηλώστε τον τύπο του Λογαριασμού που θα δημιουργηθεί"
+msgstr "Καθορίστε τον τύπο του λογαριασμού που θα δημιουργηθεί."
 
 #: src/mmex.cpp:4525
-#, fuzzy
 msgid "Type of Account"
-msgstr "Προς Λογαριασμό"
+msgstr "Τύπος λογαριασμού"
 
 #: src/mmex.cpp:4530
-#, fuzzy
 msgid "Select the type of account you want to create:"
-msgstr "Δηλώστε τον τύπο του Λογαριασμού που θα δημιουργηθεί"
+msgstr "Καθορίστε τον τύπο του λογαριασμού που θέλετε να δημιουργήσετε:"
 
 #: src/mmex.cpp:4531
 msgid ""
 "General bank accounts cover a wide variety of account\n"
 "types like Checking, Savings and Credit card type accounts."
 msgstr ""
+"Οι γενικοί τραπεζικοί λογαριασμοί καλύπτουν μια ευρεία ποικιλία λογαριασμών\n"
+"όπως λογαριασμοί Τρεχούμενοι, Αποταμίευσης και Πιστωτικών Καρτών."
 
 #: src/mmex.cpp:4535
 msgid ""
 "Investment accounts are specialized accounts that only\n"
 "have stock/mutual fund investments associated with them."
 msgstr ""
+"Οι επενδυτικοί λογαριασμοί είναι ειδικοί λογαριασμοί που έχουν μόνο\n"
+"επενδύσεις σε μετοχές/αμοιβαία κεφάλαια συνδεδεμένες με αυτούς."
 
 #: src/mmex.cpp:4539
 msgid ""
@@ -3289,447 +3031,411 @@ msgid ""
 "can have regular money coming in and out, being outside the\n"
 "general income stream."
 msgstr ""
+"Οι προθεσμιακοί λογαριασμοί είναι ειδικοί τραπεζικοί λογαριασμοί. Προορίζονται\n"
+"για λογαριασμούς περιουσίας όπως Καταθέσεων υπό προθεσμία και Ομολόγων.\n"
+"Οι λογαριασμοί αυτοί μπορούν να έχουν τακτική είσοδο και έξοδο χρημάτων, \n"
+"ευρισκόμενοι γενικά εκτός της ροής εισοδήματος."
 
 #: src/mmex.cpp:4560
-#, fuzzy
 msgid "Base Account Currency Not set."
-msgstr "Αρχικό νόμισμα"
+msgstr "Το βασικό νόμισμα του λογαριασμού δεν ορίστηκε."
 
 #: src/mmex.cpp:4561
 msgid "Set that first using Tools->Options menu and then add a new account."
-msgstr ""
+msgstr "Ορίστε το πρώτα χρησιμοποιώντας το μενού Εργαλεία->Επιλογές και μετά προσθέστε ένα νέό λογαριασμό."
 
 #: src/mmex.cpp:4665
-#, fuzzy
 msgid "Setting new Database file"
-msgstr "&Σώσιμο Βάσης\tCtrl-S"
+msgstr "Ρύθμιση νέας βάσης δεδομένων"
 
 #: src/mmex.cpp:4665
 msgid "Please wait while the new database is being loaded."
-msgstr ""
+msgstr "Παρακαλούμε περιμένετε όσο φορτώνεται η νέα βάση δεδομένων."
 
 #: src/mmgraphincexpensesmonth.cpp:19
 #: src/reportincexpesestime.cpp:41
 msgid "Income"
-msgstr "Εσοδα"
+msgstr "Έσοδα"
 
 #: src/mmgraphincexpensesmonth.cpp:20
 #: src/reportincexpesestime.cpp:42
-#, fuzzy
 msgid "Expenses"
-msgstr "Εξοδα"
+msgstr "Έξοδα"
 
 #: src/optionsdialog.cpp:254
 msgid "Display Heading"
-msgstr ""
+msgstr "Τίτλος της εμφάνισης"
 
 #: src/optionsdialog.cpp:272
 msgid "The User Name is used as a title for the database."
-msgstr ""
+msgstr "Το όνομα χρήστη χρησιμοποιήθηκε ως τίτλος της βάσης δεδομένων."
 
 #: src/optionsdialog.cpp:276
-#, fuzzy
 msgid "Language"
-msgstr "Χρησιμοποιούμενη γλώσσα :"
+msgstr "Γλώσσα"
 
 #: src/optionsdialog.cpp:285
-#, fuzzy
 msgid "Specify the language to use"
-msgstr "Δηλώστε τον λογαριασμό μεταφοράς"
+msgstr "Καθορίστε τη χρησιμοποιούμενη γλώσσα"
 
 #: src/optionsdialog.cpp:296
 msgid "Base Currency"
-msgstr "Αρχικό νόμισμα"
+msgstr "Βασικό νόμισμα"
 
 #: src/optionsdialog.cpp:304
-#, fuzzy
 msgid "Sets the default currency for the database."
-msgstr "Δηλώστε το χρησιμοποιούμενο νόμισμα από αυτό τον λογαριασμό."
+msgstr "Ορίζει το προεπιλεγμένο νόμισμα για τη βάση δεδομένων."
 
 #: src/optionsdialog.cpp:308
 msgid "Date Format"
-msgstr "Εμφάνιση ημερομηνίας"
+msgstr "Μορφή ημερομηνίας"
 
 #: src/optionsdialog.cpp:320
 msgid "Specify the date format for display"
-msgstr "Δηλώστε τον τρόπο εμφάνισης της ημερομηνίας"
+msgstr "Καθορίστε τη μορφή εμφάνισης της ημερομηνίας"
 
 #: src/optionsdialog.cpp:324
-#, fuzzy
 msgid "Set"
-msgstr "Επιλογή "
+msgstr "Επιλογή"
 
 #: src/optionsdialog.cpp:328
 msgid "New date format sample:"
-msgstr ""
+msgstr "Νέο δείγμα μορφής ημερομηνίας:"
 
 #: src/optionsdialog.cpp:336
-#, fuzzy
 msgid "Financial Year"
-msgstr "Τελευταίο έτος"
+msgstr "Οικονομικό έτος"
 
 #: src/optionsdialog.cpp:343
-#, fuzzy
 msgid "Start Day"
-msgstr "Εναρξη εφαρμογής"
+msgstr "Ημέρα εκκίνησης"
 
 #: src/optionsdialog.cpp:352
 msgid "Specify Day for start of financial year"
-msgstr ""
+msgstr "Καθορίστε την ημέρα έναρξης του οικονομικού έτους"
 
 #: src/optionsdialog.cpp:356
-#, fuzzy
 msgid "Start Month"
-msgstr "Τρέχων μήνας"
+msgstr "Μήνας εκκίνησης"
 
 #: src/optionsdialog.cpp:372
-#, fuzzy
 msgid "Specify month for start of financial year"
-msgstr "Δηλώστε το ποσό της κίνησης"
+msgstr "Καθορίστε τον μήνα έναρξης του οικονομικού έτους"
 
 #: src/optionsdialog.cpp:375
-#, fuzzy
 msgid "Database Backup"
-msgstr "&Νέα Βάση\tCtrl-N"
+msgstr "Αντίγραφο ασφαλείας της βάσης δεδομένων"
 
 #: src/optionsdialog.cpp:381
-#, fuzzy
 msgid "Create a new backup when MMEX Start"
-msgstr "Δημιουργείσθε ένα νέο αρχείο δεδομένων για να ξεκινήσετε"
+msgstr "Δημιουργία νέου αντιγράφου ασφαλείας όταν ξεκινά το MMEX"
 
 #: src/optionsdialog.cpp:383
 msgid ""
 "When MMEX Starts,\n"
 "creates the backup database: dbFile_start_YYYY-MM-DD.ext."
 msgstr ""
+"Όταν ξεκινάει το MMEX,\n"
+"δημιουργεί ένα αντίγραφο ασφαλείας της βάσης δεδομένων: αρχείοΒΔ_start_ΕΕΕΕ-MM-ΗΗ.ext."
 
 #: src/optionsdialog.cpp:387
 msgid "Update database changes to database backup on exit."
-msgstr ""
+msgstr "Ενημέρωση των αλλαγών της βάσης δεδομένων στο αντίγραφο ασφαλείας της βάσης δεδομένων κατά την έξοδο."
 
 #: src/optionsdialog.cpp:389
 msgid ""
 "When MMEX shuts down and changes made to database,\n"
 "creates or updates the backup database: dbFile_update_YYYY-MM-DD.ext."
 msgstr ""
+"Όταν το MMEX κλείνει και έχουν γίνει αλλαγές στη βάση δεδομένων,\n"
+"δημιουργεί ή ενημερώνει το αντίγραφο ασφαλείας της βάσης δεδομένων: ΑρχείοΒΔ_update_YYYY-MM-DD.ext."
 
 #: src/optionsdialog.cpp:400
 msgid "Account View Options"
-msgstr "Επιλογές εμφάνισης Λογαριασμού"
+msgstr "Επιλογές εμφάνισης λογαριασμού"
 
 #: src/optionsdialog.cpp:421
 msgid "Specify which accounts are visible"
-msgstr "Δηλώστε ποιοί λογαριασμοί είναι εμφανείς"
+msgstr "Καθορίστε ποιοι λογαριασμοί θα εμφανίζονται"
 
 #: src/optionsdialog.cpp:424
-#, fuzzy
 msgid "Transaction View Options"
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Επιλογές εμφάνισης συναλλαγών"
 
 #: src/optionsdialog.cpp:434
-#, fuzzy
 msgid "Transactions Visible"
-msgstr "Τύπος κίνησης"
+msgstr "Συναλλαγές ορατές"
 
 #: src/optionsdialog.cpp:454
-#, fuzzy
 msgid "Specify which transactions are visible by default"
-msgstr "Δηλώστε ποιοί λογαριασμοί είναι εμφανείς"
+msgstr "Καθορίστε ποιες συναλλαγές θα είναι ορατές από προεπιλογή"
 
 #: src/optionsdialog.cpp:456
-#, fuzzy
 msgid "Font Size Options"
-msgstr "Επιλογές εμφάνισης Λογαριασμού"
+msgstr "Επιλογές μεγέθους γραμματοσειράς"
 
 #: src/optionsdialog.cpp:462
 msgid "Report Font Size"
-msgstr ""
+msgstr "Αναφορά μεγέθους γραμματοσειράς"
 
 #: src/optionsdialog.cpp:482
 msgid "Specify which font size is used on the report tables"
-msgstr ""
+msgstr "Καθορίστε ποιο μέγεθος γραμματοσειράς θα χρησιμοποιείται στους πίνακες των εκθέσεων"
 
 #: src/optionsdialog.cpp:486
 msgid "Navigation Tree Expansion Options"
-msgstr ""
+msgstr "Επιλογές έκπτυξης δέντρου πλοήγησης"
 
 #: src/optionsdialog.cpp:495
 msgid "Expand Bank Accounts in Trew View when tree is refreshed"
-msgstr ""
+msgstr "Έκπτυξη των τραπεζικών λογαριασμών στην προβολή δέντρου όταν το δέντρο ανανεώνεται"
 
 #: src/optionsdialog.cpp:502
 msgid "Expand Term Accounts in Trew View when tree is refreshed"
-msgstr ""
+msgstr "Έκπτυξη των προθεσμιακών λογαριασμών στην προβολή δέντρου όταν το δέντρο ανανεώνεται"
 
 #: src/optionsdialog.cpp:506
-#, fuzzy
 msgid "Home Page Expansion Options"
-msgstr "Αρχική σελίδα"
+msgstr "Επιλογές έκπτυξης αρχικής σελίδας"
 
 #: src/optionsdialog.cpp:515
 msgid "Expand Bank Accounts on home page when page is refreshed"
-msgstr ""
+msgstr "Έκπτυξη των τραπεζικών λογαριασμών στην αρχική σελίδα όταν η σελίδα ανανεώνεται"
 
 #: src/optionsdialog.cpp:522
 msgid "Expand Term Accounts on home page when page is refreshed"
-msgstr ""
+msgstr "Έκπτυξη των προθεσμιακών λογαριασμών στην αρχική σελίδα όταν η σελίδα ανανεώνεται"
 
 #: src/optionsdialog.cpp:527
-#, fuzzy
 msgid "Stock Accounts"
-msgstr "Λογαριασμοί "
+msgstr "Λογαριασμοί μετοχών"
 
 #: src/optionsdialog.cpp:529
 msgid "Expand Stock Accounts on home page when page is refreshed"
-msgstr ""
+msgstr "Έκπτυξη των μετοχικών λογαριασμών στην αρχική σελίδα όταν η σελίδα ανανεώνεται"
 
 #: src/optionsdialog.cpp:533
-#, fuzzy
 msgid "View Budgets as Financial Years"
-msgstr "Τελευταίες 30 ημέρες"
+msgstr "Εμφάνιση προϋπολογισμών κατά οικονομικά έτη"
 
 #: src/optionsdialog.cpp:537
-#, fuzzy
 msgid "View Budgets with 'transfer' transactions"
-msgstr "Εμφάνιση μαρκαρισμένων κινήσεων"
+msgstr "Εμφάνιση προϋπολογισμών χωρίς συναλλαγές 'μεταφοράς'"
 
 #: src/optionsdialog.cpp:541
 msgid "View Budgets Setup Without Budget Summaries"
-msgstr ""
+msgstr "Εμφάνιση διαμόρφωσης προϋπολογισμών χωρίς τις περιλήψεις προϋπολογισμών"
 
 #: src/optionsdialog.cpp:545
-#, fuzzy
 msgid "View Budget Summary Report without Categories"
-msgstr "Επιθεωρείστε όλες τις προϋπολογισμένες κατηγορίες"
+msgstr "Εμφάνιση περιληπτικής έκθεσης του προϋπολογισμού χωρίς τις κατηγορίες"
 
 #: src/optionsdialog.cpp:549
-#, fuzzy
 msgid "View Reports without Future Transactions"
-msgstr "Δείτε όλες τις διευθετημένες κινήσεις"
+msgstr "Εμφάνιση εκθέσεων χωρίς μελλοντικές συναλλαγές"
 
 #: src/optionsdialog.cpp:560
-#, fuzzy
 msgid "Colour Settings"
-msgstr "Προεπιλογές επισκόπησης"
+msgstr "Ρυθμίσεις χρωμάτων"
 
 #: src/optionsdialog.cpp:568
 #: src/optionsdialog.cpp:570
 msgid "Nav Tree"
-msgstr ""
+msgstr "Δέντρο πλοήγησης"
 
 #: src/optionsdialog.cpp:571
-#, fuzzy
 msgid "Specify the color for the nav tree"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε το χρώμα του δέντρου πλοήγησης"
 
 #: src/optionsdialog.cpp:576
 #: src/optionsdialog.cpp:578
 msgid "List Background"
-msgstr ""
+msgstr "Φόντο της λίστας"
 
 #: src/optionsdialog.cpp:579
-#, fuzzy
 msgid "Specify the color for the list background"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε το χρώμα του φόντου της λίστας"
 
 #: src/optionsdialog.cpp:584
 #: src/optionsdialog.cpp:586
 msgid "List Row 0"
-msgstr ""
+msgstr "Γραμμή 1 της λίστας "
 
 #: src/optionsdialog.cpp:587
-#, fuzzy
 msgid "Specify the color for the list row 0"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε το χρώμα της γραμμής 0 της λίστας"
 
 #: src/optionsdialog.cpp:592
 #: src/optionsdialog.cpp:594
 msgid "List Row 1"
-msgstr ""
+msgstr "Γραμμή 2 της λίστας"
 
 #: src/optionsdialog.cpp:595
-#, fuzzy
 msgid "Specify the color for the list row 1"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε το χρώμα της γραμμής 1 της λίστας"
 
 #: src/optionsdialog.cpp:600
 #: src/optionsdialog.cpp:602
 msgid "List Border"
-msgstr ""
+msgstr "Περίγραμμα της λίστας"
 
 #: src/optionsdialog.cpp:603
-#, fuzzy
 msgid "Specify the color for the list Border"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε το χρώμα του περιγράμματος της λίστας"
 
 #: src/optionsdialog.cpp:608
 #: src/optionsdialog.cpp:610
-#, fuzzy
 msgid "List Details"
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Λεπτομέρειες λίστας"
 
 #: src/optionsdialog.cpp:611
-#, fuzzy
 msgid "Specify the color for the list details"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε το χρώμα για τις λεπτομέρειες της λίστας"
 
 #: src/optionsdialog.cpp:616
 #: src/optionsdialog.cpp:618
-#, fuzzy
 msgid "Future Transactions"
-msgstr "Εισάγετε την κίνηση"
+msgstr "Μελλοντικές συναλλαγές"
 
 #: src/optionsdialog.cpp:619
-#, fuzzy
 msgid "Specify the color for future transactions"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε το χρώμα για τις μελλοντικές συναλλαγές"
 
 #: src/optionsdialog.cpp:625
 msgid "Restore Defaults"
-msgstr ""
+msgstr "Επαναφορά προεπιλογών"
 
 #: src/optionsdialog.cpp:626
 msgid "Restore Default Colors"
-msgstr ""
+msgstr "Επαναφορά προεπιλεγμένων χρωμάτων"
 
 #: src/optionsdialog.cpp:637
-#, fuzzy
 msgid "New Transaction Dialog Settings"
-msgstr "Επεξεργασία κίνησης"
+msgstr "Ρυθμίσεις παραθύρου νέας συναλλαγής"
 
 #: src/optionsdialog.cpp:645
-#, fuzzy
 msgid "Default Date:"
-msgstr "Επιλέξτε πληρωμή"
+msgstr "Προεπιλεγμένη ημερομηνία:"
 
 #: src/optionsdialog.cpp:649
-#, fuzzy
 msgid "Last Used"
-msgstr "Τελευταίο έτος"
+msgstr "Χρησιμοποιήθηκε τελευταία"
 
 #: src/optionsdialog.cpp:657
-#, fuzzy
 msgid "Default Payee:"
-msgstr "Επιλέξτε πληρωμή"
+msgstr "Προεπιλεγμένος δικαιούχος:"
 
 #: src/optionsdialog.cpp:665
-#, fuzzy
 msgid "Default Category:"
-msgstr "Επιλέξτε Κατηγορία"
+msgstr "Προεπιλεγμένη κατηγορία:"
 
 #: src/optionsdialog.cpp:668
 msgid "Last used for payee"
-msgstr ""
+msgstr "Τελευταία χρησιμοποιημένος ως δικαιούχος"
 
 #: src/optionsdialog.cpp:676
-#, fuzzy
 msgid "Default Status:"
-msgstr "Κατάσταση Λογαριασμού:"
+msgstr "Προεπιλεγμένη κατάσταση:"
 
 #: src/optionsdialog.cpp:707
 msgid "Stock Quote Web Page"
-msgstr ""
+msgstr "Ιστοσελίδα τιμών μετοχής"
 
 #: src/optionsdialog.cpp:714
 msgid "Clear the field to Reset the value to system default."
-msgstr ""
+msgstr "Σβήστε το πεδίο για επαναφορά της τιμής στην προεπιλεγμένη από το σύστημα."
 
 #: src/optionsdialog.cpp:719
-#, fuzzy
 msgid "Use Original Date when Pasting Transactions"
-msgstr "Διαγραφή κίνησης"
+msgstr "Να χρησιμοποιείται η αρχική ημερομηνία όταν επικολλώνται συναλλαγές"
 
 #: src/optionsdialog.cpp:721
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr ""
+msgstr "Επιλέξτε αν θα χρησιμοποιείτε την αρχική ημερομηνία της συναλλαγής ή την τρέχουσα ημερομηνία όταν αντιγράφετε/επικολλάτε συναλλαγές"
 
 #: src/optionsdialog.cpp:724
-#, fuzzy
 msgid "Use Transaction Sound"
-msgstr "Νέα κίνηση"
+msgstr "Χρήση ήχων συναλλαγής"
 
 #: src/optionsdialog.cpp:726
-#, fuzzy
 msgid "Select whether to use sounds when entering transactions"
-msgstr "Δηλώστε την κατάσταση της κίνησης"
+msgstr "Επιλέξτε αν θα χρησιμοποιούνται ήχοι κατά την εισαγωγή συναλλαγών"
 
 #: src/optionsdialog.cpp:729
 msgid ""
 "Enable online currency update \n"
 "(Get data from European Central Bank)"
 msgstr ""
+"Ενεργοποίηση της διαδικτυακής ενημέρωσης νομισμάτων \n"
+"(Λήψη δεδομένων από την Ευρωπαϊκή Κεντρική Τράπεζα)"
 
 #: src/optionsdialog.cpp:731
 msgid "Enable or disable get data from European Central Bank to update currency rate"
-msgstr ""
+msgstr "Ενεργοποιεί ή απενεργοποιεί τη λήψη δεδομένων από την Ευρωπαϊκή Κεντρική Τράπεζα για ενημέρωση της ισοτιμίας νομισμάτων"
 
 #: src/optionsdialog.cpp:742
 msgid "Import/Export Settings"
-msgstr "Παράμετροι Εισαγωγής/Εξαγωγής"
+msgstr "Ρυθμίσεις εισαγωγής/εξαγωγής"
 
 #: src/optionsdialog.cpp:748
 msgid "CSV Delimiter"
-msgstr "Διαχωριστικός χαρακτήρας για CSV αρχεία"
+msgstr "Διαχωριστικό CSV"
 
 #: src/optionsdialog.cpp:759
 msgid "User Defined"
-msgstr ""
+msgstr "Καθορισμένο από το χρήστη"
 
 #: src/optionsdialog.cpp:760
 msgid "Comma"
-msgstr ""
+msgstr "Κόμμα"
 
 #: src/optionsdialog.cpp:763
 msgid "Semicolon"
-msgstr ""
+msgstr "Άνω τελεία"
 
 #: src/optionsdialog.cpp:766
 msgid "TAB"
-msgstr ""
+msgstr "TAB"
 
 #: src/optionsdialog.cpp:770
 msgid "Specify the delimiter to use when importing/exporting CSV files"
-msgstr "Δηλώστε τον χαρακτήρα αρχής - τέλους κατά την εισαγωγή/εξαγωγή αρχείων CSV"
+msgstr "Καθορίστε το διαχωριστικό προς χρήση κατά την εισαγωγή/εξαγωγή αρχείων CSV"
 
 #: src/optionsdialog.cpp:787
 msgid "General"
-msgstr "Γενικός"
+msgstr "Γενικές"
 
 #: src/optionsdialog.cpp:788
 msgid "View Options"
-msgstr "Επιλογές επισκόπησης"
+msgstr "Επιλογές προβολής"
 
 #: src/optionsdialog.cpp:789
 msgid "Colors"
 msgstr "Χρώματα"
 
 #: src/optionsdialog.cpp:790
-#, fuzzy
 msgid "Import/Export"
-msgstr "Παράμετροι Εισαγωγής/Εξαγωγής"
+msgstr "Εισαγωγή/Εξαγωγή"
 
 #: src/optionsdialog.cpp:791
 msgid "Others"
-msgstr ""
+msgstr "Άλλα"
 
 #: src/optionsdialog.cpp:838
-#, fuzzy
 msgid "Remember to update currency rate"
-msgstr "Αρχικό νόμισμα"
+msgstr "Θυμηθείτε να ενημερώνετε την ισοτιμία νομισμάτων"
 
 #: src/optionsdialog.cpp:838
-#, fuzzy
 msgid "Important note"
-msgstr "Εισαγωγή"
+msgstr "Σημαντική σημείωση"
 
 #: src/optionsdialog.cpp:864
 msgid " : Requires MMEX Restart"
-msgstr ""
+msgstr " : Χρειάζεται επανεκκίνηση του MMEX"
 
 #: src/qifimport.cpp:370
-#, fuzzy
 msgid "No account available for import"
-msgstr "Δεν υπάρχει διαθέσιμος Λογαριασμός. Δεν μπορεί να γίνει Εξαγωγή"
+msgstr "Δεν υπάρχει διαθέσιμος λογαριασμός προς εισαγωγή"
 
 #: src/qifimport.cpp:370
 #: src/qifimport.cpp:377
@@ -3737,188 +3443,163 @@ msgstr "Δεν υπάρχει διαθέσιμος Λογαριασμός. Δε�
 #: src/qifimport.cpp:442
 #: src/qifimport.cpp:569
 #: src/qifimport.cpp:767
-#, fuzzy
 msgid "QIF Import"
-msgstr "Εισαγωγή"
+msgstr "Εισαγωγή QIF"
 
 #: src/qifimport.cpp:375
 msgid "To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX."
-msgstr ""
+msgstr "Για να εισάγετε αρχεία QIF σωστά, η μορφή της ημερομηνίας στο αρχείο QIF πρέπει να ταιριάζει με την επιλογή ημερομηνίας που τέθηκε στο MMEX."
 
 #: src/qifimport.cpp:376
-#, fuzzy
 msgid "Are you are sure you want to proceed with the import?"
-msgstr "Θέλετε πραγματικά να διαγράψετε τις σειρές"
+msgstr "Είστε σίγουροι ότι θέλετε να προχωρήσετε στην εισαγωγή;"
 
 #: src/qifimport.cpp:389
 msgid "Choose Account to import to:"
-msgstr "Επέλεξε Λογαριασμό για εισαγωγή σε :"
+msgstr "Επιλέξτε λογαριασμό όπου θα γίνει εισαγωγή:"
 
 #: src/qifimport.cpp:404
-#, fuzzy
 msgid "QIF Files "
-msgstr "&CSV αρχεία"
+msgstr "Αρχεία QIF"
 
 #: src/qifimport.cpp:405
-#, fuzzy
 msgid "All Files "
-msgstr "&CSV αρχεία"
+msgstr "Όλα τα αρχεία"
 
 #: src/qifimport.cpp:406
-#, fuzzy
 msgid "Choose QIF data file to import"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε αρχείο QIF προς εισαγωγή"
 
 #: src/qifimport.cpp:442
 #: src/qifimport.cpp:762
-#, fuzzy
 msgid "Transactions imported from QIF: "
-msgstr "Τύπος κίνησης"
+msgstr "Συναλλαγές που εισήχθησαν από QIF: "
 
 #: src/qifimport.cpp:447
-#, fuzzy
 msgid "Transactions imported from QIF"
-msgstr "Τύπος κίνησης"
+msgstr "Συναλλαγές που εισήχθησαν από QIF"
 
 #: src/qifimport.cpp:448
-#, fuzzy
 msgid "to account "
-msgstr "Ποσό"
+msgstr "στο λογαριασμό "
 
 #: src/qifimport.cpp:464
 #: src/qifimport.cpp:498
 #: src/qifimport.cpp:565
 #: src/qifimport.cpp:601
-#, fuzzy
 msgid "Line: "
-msgstr "Γραμμή :"
+msgstr "Γραμμή: "
 
 #: src/qifimport.cpp:464
 msgid " Unknown QIF line: "
-msgstr ""
+msgstr "Άγνωστη γραμμή QIF: "
 
 #: src/qifimport.cpp:475
-#, fuzzy
 msgid "Importing account type: "
-msgstr "Εισαγωγή"
+msgstr "Εισάγεται τύπος λογαριασμού: "
 
 #: src/qifimport.cpp:498
-#, fuzzy
 msgid " : "
-msgstr "Σε :"
+msgstr " : "
 
 #: src/qifimport.cpp:499
-#, fuzzy
 msgid " account name "
-msgstr "Περιγραφή Λογαριασμού"
+msgstr " όνομα λογαριασμού "
 
 #: src/qifimport.cpp:564
 msgid "Cannot process these QIF Account Types yet."
-msgstr ""
+msgstr "Δεν είναι δυνατή ακόμα η επεξεργασία αυτών των τύπων λογαριασμού QIF"
 
 #: src/qifimport.cpp:586
 #: src/qifimport.cpp:700
-#, fuzzy
 msgid "Payee Added: "
-msgstr "Πληρωμή"
+msgstr "Δικαιούχος που προστέθηκε: "
 
 #: src/qifimport.cpp:601
 msgid " invalid amount, skipping."
-msgstr "Μη έγκυρο ποσό, παραλείπεται"
+msgstr " μη έγκυρο ποσό, παραλείπεται."
 
 #: src/qifimport.cpp:679
 msgid "Date is empty, "
-msgstr ""
+msgstr "Η ημερομηνία είναι κενή, "
 
 #: src/qifimport.cpp:683
-#, fuzzy
 msgid "Transaction Type is empty"
-msgstr "Τύπος κίνησης"
+msgstr "Ο τύπος συναλλαγής είναι κενός"
 
 #: src/qifimport.cpp:687
-#, fuzzy
 msgid "Amount is empty"
-msgstr "Λίστα Λογαριασμών"
+msgstr "Το ποσό είναι κενό"
 
 #: src/qifimport.cpp:715
 msgid "Category is empty, marking transaction as Unknown category"
-msgstr ""
+msgstr "Η κατηγορία είναι κενή, η συναλλαγή μαρκάρεται ως άγνωστης κατηγορίας"
 
 #: src/qifimport.cpp:727
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
-msgstr ""
+msgstr "Παραλείπεται η συναλλαγή QIF διότι το πεδίο ημερομηνία, τύπος, ποσό είναι κενό/μη έγκυρο"
 
 #: src/qifimport.cpp:728
-#, fuzzy
 msgid " payee "
-msgstr "Πληρωμή"
+msgstr " δικαιούχος "
 
 #: src/qifimport.cpp:728
-#, fuzzy
 msgid " type "
-msgstr "Τύπος:"
+msgstr " τύπος "
 
 #: src/qifimport.cpp:729
-#, fuzzy
 msgid " amount "
-msgstr "Ποσό"
+msgstr " ποσό "
 
 #: src/qifimport.cpp:729
-#, fuzzy
 msgid " date "
-msgstr "Διόρθωση"
+msgstr " ημερομηνία "
 
 #: src/qifimport.cpp:764
-#, fuzzy
 msgid "Total Imported : "
-msgstr "Σύνολο λογαριασμών"
+msgstr "Σύνολο εισηγμένων : "
 
 #: src/qifimport.cpp:765
 msgid "Log file written to : "
-msgstr ""
+msgstr "Το αρχείο καταγραφής εγγράφηκε στο : "
 
 #: src/qifimport.cpp:766
-#, fuzzy
 msgid "Please confirm saving..."
-msgstr "Παρακαλώ περιμένετε"
+msgstr "Παρακαλούμε επιβεβαιώστε την αποθήκευση..."
 
 #: src/qifimport.cpp:775
 msgid "Transactions saved to database in account: "
-msgstr ""
+msgstr "Οι συναλλαγές αποθηκεύτηκαν στη βάση δεδομένων στο λογαριασμό: "
 
 #: src/qifimport.cpp:788
 msgid "Imported transactions discarded by user!"
-msgstr ""
+msgstr "Οι εισηγμένες συναλλαγές απορρίφθηκαν από το χρήστη!"
 
 #: src/chart.cpp:218
 #: src/chart.cpp:415
 msgid "Legend:"
-msgstr ""
+msgstr "Υπόμνημα:"
 
 #: src/reporttransstats.cpp:23
-#, fuzzy
 msgid "Transaction Statistics for "
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Στατιστικά συναλλαγών για "
 
 #: src/reporttransstats.cpp:39
 #: src/reportincexpesestime.cpp:40
-#, fuzzy
 msgid "Month"
-msgstr "Μηνιαίως"
+msgstr "Μήνας"
 
 #: src/reportincexpesestime.cpp:24
-#, fuzzy
 msgid "Income vs Expenses for Year: "
-msgstr "Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς έξοδα για το έτος: "
 
 #: src/reportincexpesestime.cpp:39
-#, fuzzy
 msgid "Year"
-msgstr "Ετησίως"
+msgstr "Έτος"
 
 #: src/reportincexpesestime.cpp:43
 msgid "Difference"
-msgstr ""
+msgstr "Διαφορά"
 
 #: src/mmcheckingpanel.cpp:101
 msgid "Date  "
@@ -3926,474 +3607,426 @@ msgstr "Ημερομηνία"
 
 #: src/mmcheckingpanel.cpp:527
 msgid "Accessing Database"
-msgstr ""
+msgstr "Γίνεται προσπέλαση της βάσης δεδομένων"
 
 #: src/mmcheckingpanel.cpp:578
 msgid "View Reconciled Transactions"
-msgstr "Δείτε όλες τις διευθετημένες κινήσεις"
+msgstr "Δείτε όλες τις τακτοποιημένες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:579
 msgid "View Un-Reconciled Transactions"
-msgstr "Δείτε τις μη διευθετημένες κινήσεις"
+msgstr "Δείτε τις μη τακτοποιημένες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:580
-#, fuzzy
 msgid "View All Except Reconciled Transactions"
-msgstr "Δείτε όλες τις διευθετημένες κινήσεις"
+msgstr "Εμφάνιση όλων των συναλλαγών εκτός των τακτοποιημένων"
 
 #: src/mmcheckingpanel.cpp:581
 msgid "View Void Transactions"
-msgstr "Δείτε τις άκυρες κινήσεις"
+msgstr "Δείτε τις άκυρες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:582
-#, fuzzy
 msgid "View \"Follow Up\" Transactions"
-msgstr "Δείτε όλες τις κινήσεις"
+msgstr "Εμφάνιση των συναλλαγών προς \"Επανέλεγχο\""
 
 #: src/mmcheckingpanel.cpp:583
-#, fuzzy
 msgid "View Duplicate Transactions"
-msgstr "Δείτε τις μαρκαρισμένες κινήσεις"
+msgstr "Εμφάνιση των διπλότυπων συναλλαγών"
 
 #: src/mmcheckingpanel.cpp:585
-#, fuzzy
 msgid "View Transactions for today"
-msgstr "Δείτε τις κινήσεις που έχουν γίνει τις 30 τελευταίες ημέρες"
+msgstr "Εμφάνιση σημερινών συναλλαγών"
 
 #: src/mmcheckingpanel.cpp:586
-#, fuzzy
 msgid "View Transactions for current month"
-msgstr "Δείτε τις κινήσεις των τελευταίων 3 μηνών"
+msgstr "Εμφάνιση συναλλαγών του τρέχοντος μηνός"
 
 #: src/mmcheckingpanel.cpp:587
-#, fuzzy
 msgid "View Transactions for last 30 days"
-msgstr "Δείτε τις κινήσεις που έχουν γίνει τις 30 τελευταίες ημέρες"
+msgstr "Εμφάνιση συναλλαγών των τελευταίων 30 ημερών"
 
 #: src/mmcheckingpanel.cpp:588
-#, fuzzy
 msgid "View Transactions for last 90 days"
-msgstr "Δείτε τις κινήσεις που έχουν γίνει τις 30 τελευταίες ημέρες"
+msgstr "Εμφάνιση συναλλαγών των τελευταίων 90 ημερών"
 
 #: src/mmcheckingpanel.cpp:589
-#, fuzzy
 msgid "View Transactions for last month"
-msgstr "Δείτε τις κινήσεις των τελευταίων 3 μηνών"
+msgstr "Εμφάνιση συναλλαγών του τελευταίου μήνα"
 
 #: src/mmcheckingpanel.cpp:590
-#, fuzzy
 msgid "View Transactions for last 3 months"
-msgstr "Δείτε τις κινήσεις των τελευταίων 3 μηνών"
+msgstr "Εμφάνιση συναλλαγών των τελευταίων 3 μηνών"
 
 #: src/mmcheckingpanel.cpp:592
 #: src/mmcheckingpanel.cpp:1508
 msgid "Delete all transactions in current view"
-msgstr "Διαγράψτε όλες τις κινήσεις που εμφανίζονται τώρα"
+msgstr "Διαγράψτε όλες τις συναλλαγές στην τρέχουσα προβολή"
 
 #: src/mmcheckingpanel.cpp:593
 #: src/mmcheckingpanel.cpp:1509
-#, fuzzy
 msgid "Delete Viewed \"Follow Up\" Trans."
-msgstr "Δείτε όλες τις κινήσεις"
+msgstr "Διαγραφή των εμφανιζόμενων συναλλαγών προς \"Επανέλεγχο\"."
 
 #: src/mmcheckingpanel.cpp:659
 #: src/mmcheckingpanel.cpp:1273
 #: src/mmcheckingpanel.cpp:1274
 #: src/mmcheckingpanel.cpp:1275
-#, fuzzy
 msgid "Transaction Filter"
-msgstr "Τύπος κίνησης"
+msgstr "Φίλτρο συναλλαγών"
 
 #: src/mmcheckingpanel.cpp:736
 msgid "New Transaction"
-msgstr "Νέα κίνηση"
+msgstr "Νέα συναλλαγή"
 
 #: src/mmcheckingpanel.cpp:740
-#, fuzzy
 msgid "Edit selected transaction"
-msgstr "Διαγραφή κίνησης"
+msgstr "Επεξεργασία της επιλεγμένης συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:745
-#, fuzzy
 msgid "Delete selected transaction"
-msgstr "Διαγράψτε όλες τις μαρκαρισμένες κινήσεις"
+msgstr "Διαγραφή της επιλεγμένης συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:749
 msgid "&Move"
-msgstr ""
+msgstr "&Μετακίνηση"
 
 #: src/mmcheckingpanel.cpp:750
 msgid "Move selected transaction to another account"
-msgstr ""
+msgstr "Μετακίνηση της επιλεγμένης συναλλαγής σε άλλο λογαριασμό"
 
 #: src/mmcheckingpanel.cpp:755
 msgid "Search"
-msgstr ""
+msgstr "Αναζήτηση"
 
 #: src/mmcheckingpanel.cpp:757
 msgid "Enter any string to find it in the nearest transaction notes"
-msgstr ""
+msgstr "Εισάγετε κάποια φράση για να τη βρείτε στις σημειώσεις της πλησιέστερης συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:895
-#, fuzzy
 msgid "to "
-msgstr "Σε :"
+msgstr "έως "
 
 #: src/mmcheckingpanel.cpp:970
-#, fuzzy
 msgid "Account Bal: "
-msgstr "&Λογαριασμοί"
+msgstr "Υπόλοιπο λογαριασμού: "
 
 #: src/mmcheckingpanel.cpp:971
-#, fuzzy
 msgid "Reconciled Bal: "
-msgstr "Εναρμονισμένο"
+msgstr "Τακτοποιημένο υπόλοιπο: "
 
 #: src/mmcheckingpanel.cpp:972
 msgid "Diff: "
-msgstr ""
+msgstr "Διαφορά: "
 
 #: src/mmcheckingpanel.cpp:973
 msgid "Displayed Bal: "
-msgstr ""
+msgstr "Εμφανιζόμενο υπόλοιπο: "
 
 #: src/mmcheckingpanel.cpp:1057
 msgid "Account View : "
-msgstr "Εμφάνιση Λογαριασμού :"
+msgstr "Εμφάνιση λογαριασμού : "
 
 #: src/mmcheckingpanel.cpp:1243
 #: src/mmcheckingpanel.cpp:1283
 #: src/mmcheckingpanel.cpp:1452
 msgid "Viewing all transactions"
-msgstr "Εμφάνιση όλων των κινήσεων"
+msgstr "Εμφανίζονται όλες οι συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:1247
 #: src/mmcheckingpanel.cpp:1290
 msgid "Viewing Reconciled transactions"
-msgstr "Εμφάνιση διευθετημένων κινήσεων"
+msgstr "Εμφανίζονται οι τακτοποιημένες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:1248
-#, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
-msgstr "Εμφάνιση διευθετημένων κινήσεων"
+msgstr "Εμφανίζονται όλες εκτός από τις τακτοποιημένες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:1249
 #: src/mmcheckingpanel.cpp:1300
 msgid "Viewing Un-Reconciled transactions"
-msgstr "Εμφάνιση Μη διευθετημένων κινήσεων"
+msgstr "Εμφανίζονται οι μη τακτοποιημένες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:1250
 #: src/mmcheckingpanel.cpp:1320
-#, fuzzy
 msgid "Viewing transactions for today"
-msgstr "Εμφάνιση κινήσεων πραγματοποιημένων μέσα στις 30 τελευταίες ημέρες"
+msgstr "Εμφανίζονται οι σημερινές συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:1251
 #: src/mmcheckingpanel.cpp:1325
-#, fuzzy
 msgid "Viewing transactions for current month"
-msgstr "Εμφάνιση πραγματοπιημένων κινήσεων μέσα στους τελευταίους 3 μήνες"
+msgstr "Εμφανίζονται οι συναλλαγές του τρέχοντος μηνός"
 
 #: src/mmcheckingpanel.cpp:1252
 #: src/mmcheckingpanel.cpp:1330
-#, fuzzy
 msgid "Viewing transactions for last 30 days"
-msgstr "Εμφάνιση κινήσεων πραγματοποιημένων μέσα στις 30 τελευταίες ημέρες"
+msgstr "Εμφανίζονται οι συναλλαγές των 30 τελευταίων ημερών"
 
 #: src/mmcheckingpanel.cpp:1253
 #: src/mmcheckingpanel.cpp:1335
-#, fuzzy
 msgid "Viewing transactions for last 90 days"
-msgstr "Εμφάνιση κινήσεων πραγματοποιημένων μέσα στις 30 τελευταίες ημέρες"
+msgstr "Εμφανίζονται οι συναλλαγές των 90 τελευταίων ημερών"
 
 #: src/mmcheckingpanel.cpp:1254
 #: src/mmcheckingpanel.cpp:1345
-#, fuzzy
 msgid "Viewing transactions for last month"
-msgstr "Εμφάνιση πραγματοπιημένων κινήσεων μέσα στους τελευταίους 3 μήνες"
+msgstr "Εμφανίζονται οι συναλλαγές του τελευταίου μήνα"
 
 #: src/mmcheckingpanel.cpp:1255
 #: src/mmcheckingpanel.cpp:1340
-#, fuzzy
 msgid "Viewing transactions for last 3 months"
-msgstr "Εμφάνιση πραγματοπιημένων κινήσεων μέσα στους τελευταίους 3 μήνες"
+msgstr "Εμφανίζονται οι συναλλαγές των τελευταίων 3 μηνών"
 
 #: src/mmcheckingpanel.cpp:1273
 msgid "  will interfere with this filtering."
-msgstr ""
+msgstr " θα παρεμβάλλεται σε αυτό το φιλτράρισμα."
 
 #: src/mmcheckingpanel.cpp:1274
-#, fuzzy
 msgid "Please deactivate: "
-msgstr "Παρακαλώ περιμένετε"
+msgstr "Παρακαλούμε απενεργοποιήστε: "
 
 #: src/mmcheckingpanel.cpp:1295
-#, fuzzy
 msgid "Viewing All except Reconciled Transactions"
-msgstr "Εμφάνιση διευθετημένων κινήσεων"
+msgstr "Εμφανίζονται όλες εκτός από τις τακτοποιημένες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:1305
-#, fuzzy
 msgid "Viewing Follow-Up transactions"
-msgstr "Εμφάνιση όλων των κινήσεων"
+msgstr "Εμφανίζονται οι συναλλαγές προς επανέλεγχο"
 
 #: src/mmcheckingpanel.cpp:1310
-#, fuzzy
 msgid "Viewing duplicate transactions"
-msgstr "Εμφάνιση μαρκαρισμένων κινήσεων"
+msgstr "Εμφανίζονται οι διπλότυπες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:1315
 msgid "Viewing Void transactions"
-msgstr "Εμφάνιση ακύρων κινήσεων"
+msgstr "Εμφανίζονται οι άκυρες συναλλαγές"
 
 #: src/mmcheckingpanel.cpp:1373
 msgid "Do you really want to delete all the transactions shown?"
-msgstr "Θέτε πραγματικά να διαγράψετε όλες τις κινήσεις που έχουν εμφανισθεί;"
+msgstr "Θέλετε πραγματικά να διαγράψετε όλες τις εμφανιζόμενες συναλλαγές;"
 
 #: src/mmcheckingpanel.cpp:1374
 #: src/mmcheckingpanel.cpp:1389
 #: src/mmcheckingpanel.cpp:1901
 msgid "Confirm Transaction Deletion"
-msgstr "Επικυρώστε την διαγραφή της κίνησης"
+msgstr "Επιβεβαιώστε τη διαγραφή της συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:1388
-#, fuzzy
 msgid "Do you really want to delete all the \"Follow Up\" transactions shown?"
-msgstr "Θέλετε πραγραματικά να διαγράψετε όλες τις μαρκαρισμένες κινήσεις;"
+msgstr "Θέλετε πραγματικά να διαγράψετε όλες τις εμφανιζόμενες συναλλαγές προς \"Επανέλεγχο\";"
 
 #: src/mmcheckingpanel.cpp:1483
 msgid "&New Transaction"
-msgstr "&Νέα κίνηση"
+msgstr "&Νέα συναλλαγή"
 
 #: src/mmcheckingpanel.cpp:1485
 msgid "&Edit Transaction"
-msgstr "&Επεξεργασία κίνησης"
+msgstr "&Επεξεργασία συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:1487
-#, fuzzy
 msgid "&Copy Transaction"
-msgstr "&Νέα κίνηση"
+msgstr "&Αντιγραφή συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:1489
-#, fuzzy
 msgid "&Duplicate Transaction"
-msgstr "Δείτε τις μαρκαρισμένες κινήσεις"
+msgstr "&Διπλασιασμός συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:1491
-#, fuzzy
 msgid "&Move Transaction"
-msgstr "&Νέα κίνηση"
+msgstr "&Μετακίνηση συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:1493
-#, fuzzy
 msgid "&Paste Transaction"
-msgstr "&Νέα κίνηση"
+msgstr "&Επικόλληση συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:1498
-#, fuzzy
 msgid "&View Split Categories"
-msgstr "Επιθεωρείστε όλες τις προϋπολογισμένες κατηγορίες"
+msgstr "&Εμφάνιση διαιρεμένων κατηγοριών"
 
 #: src/mmcheckingpanel.cpp:1505
 msgid "&Delete Transaction"
-msgstr "&Διαγραφή κίνησης"
+msgstr "&Διαγραφή συναλλαγής"
 
 #: src/mmcheckingpanel.cpp:1514
 msgid "Mark As &Reconciled"
-msgstr "Μαρκαρισμένο ως &Εναρμονιζμένο"
+msgstr "Μαρκάρισμα ως &τακτοποιημένη"
 
 #: src/mmcheckingpanel.cpp:1516
 msgid "Mark As &Unreconciled"
-msgstr "Μαρκαρισμένο ως  &Μη Εναρμονισμένο"
+msgstr "Μαρκάρισμα ως &μη τακτοποιημένη"
 
 #: src/mmcheckingpanel.cpp:1518
 msgid "Mark As &Void"
-msgstr "Μαρκαρισμένο ως &Ακυρο"
+msgstr "Μαρκάρισμα ως &άκυρη"
 
 #: src/mmcheckingpanel.cpp:1520
 msgid "Mark For &Followup"
-msgstr "Μαρκάρισμα για &Παρακολούθηση"
+msgstr "Μαρκάρισμα για &επανέλεγχο"
 
 #: src/mmcheckingpanel.cpp:1522
-#, fuzzy
 msgid "Mark As &Duplicate"
-msgstr "Μαρκαρισμένο ως &Ακυρο"
+msgstr "Μαρκάρισμα ως &διπλή"
 
 #: src/mmcheckingpanel.cpp:1527
 msgid "as Reconciled"
-msgstr "ως Εναρμονισμένο"
+msgstr "ως επιβεβαιωμένη"
 
 #: src/mmcheckingpanel.cpp:1528
 msgid "as Unreconciled"
-msgstr "ως Μη Εναρμονισμένο"
+msgstr "ως μη επιβεβαιωμένη"
 
 #: src/mmcheckingpanel.cpp:1529
 msgid "as Void"
-msgstr "ως Ακυρο"
+msgstr "ως άκυρη"
 
 #: src/mmcheckingpanel.cpp:1530
 msgid "as needing Followup"
-msgstr "ως να χρειάζεται παρακολούθηση"
+msgstr "ως χρειαζούμενη επανέλεγχο"
 
 #: src/mmcheckingpanel.cpp:1531
 msgid "as Duplicate"
-msgstr ""
+msgstr "ως διπλότυπη"
 
 #: src/mmcheckingpanel.cpp:1532
-#, fuzzy
 msgid "Mark all being viewed"
-msgstr "Ολικό μαρκάρισμα"
+msgstr "Μαρκάρισμά όλων των εμφανιζομένων"
 
 #: src/mmcheckingpanel.cpp:1900
-#, fuzzy
 msgid "Do you really want to delete the selected transaction?"
-msgstr "Θέλετε πραγραματικά να διαγράψετε την κίνηση;"
+msgstr "Θέλετε πραγματικά να διαγράψετε την επιλεγμένη συναλλαγή;"
 
 #: src/mmcheckingpanel.cpp:2021
-#, fuzzy
 msgid "Moving Transaction from "
-msgstr "Δείτε τις κινήσεις που έχουν γίνει τις 30 τελευταίες ημέρες"
+msgstr "Μετακινείται η συναλλαγή από "
 
 #: src/mmcheckingpanel.cpp:2021
 msgid " to..."
-msgstr ""
+msgstr " έως..."
 
 #: src/mmcheckingpanel.cpp:2022
-#, fuzzy
 msgid "Select the destination Account "
-msgstr "Επιλέξτε Λογαριασμό Προορισμού"
+msgstr "Επιλέξτε λογαριασμό προορισμού "
 
 #: src/assetdialog.cpp:58
-#, fuzzy
 msgid "New/Edit Asset"
-msgstr "Δημιουργία/Επεξεργασία κίνησης "
+msgstr "Δημιουργία/Επεξεργασία περιουσιακού στοιχείου"
 
 #: src/assetdialog.cpp:175
-#, fuzzy
 msgid "Asset Details"
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Λεπτομέρειες περιουσιακού στοιχείου"
 
 #: src/assetdialog.cpp:193
-#, fuzzy
 msgid "Enter the name of the asset"
-msgstr "Εδώ εισάγετε το όνομα της κατηγορίας προς εισαγωγή ή επεξεργασία"
+msgstr "Εισάγετε το όνομα του περιουσιακού στοιχείου"
 
 #: src/assetdialog.cpp:204
-#, fuzzy
 msgid "Specify the date of purchase of asset"
-msgstr "Δηλώστε την ημερομηνία της κίνησης"
+msgstr "Δηλώστε την ημερομηνία αγοράς του περιουσιακού στοιχείου"
 
 #: src/assetdialog.cpp:207
-#, fuzzy
 msgid "Asset Type"
-msgstr "Τύπος Λογαρισμού:"
+msgstr "Τύπος περιουσιακού στοιχείου"
 
 #: src/assetdialog.cpp:212
 msgid "Property"
-msgstr ""
+msgstr "Περιουσία"
 
 #: src/assetdialog.cpp:213
 msgid "Automobile"
-msgstr ""
+msgstr "Αυτοκίνητο"
 
 #: src/assetdialog.cpp:214
 msgid "Household Object"
-msgstr ""
+msgstr "Οικιακό αντικείμενο"
 
 #: src/assetdialog.cpp:215
 msgid "Art"
-msgstr ""
+msgstr "Τέχνη"
 
 #: src/assetdialog.cpp:216
 msgid "Jewellery"
-msgstr ""
+msgstr "Κοσμήματα"
 
 #: src/assetdialog.cpp:217
 msgid "Cash"
-msgstr ""
+msgstr "Μετρητά"
 
 #: src/assetdialog.cpp:218
 msgid "Other"
-msgstr ""
+msgstr "Άλλο"
 
 #: src/assetdialog.cpp:221
-#, fuzzy
 msgid "Select type of asset"
-msgstr "Επιλέξτε πληρωμή"
+msgstr "Επιλέξτε τύπο περιουσιακού στοιχείου"
 
 #: src/assetdialog.cpp:232
 msgid "Enter the current value of the asset"
-msgstr ""
+msgstr "Εισάγετε την τρέχουσα αξία του περιουσιακού στοιχείου"
 
 #: src/assetdialog.cpp:242
 msgid "Appreciates"
-msgstr ""
+msgstr "Ανατιμήσεις"
 
 #: src/assetdialog.cpp:243
-#, fuzzy
 msgid "Depreciates"
-msgstr "Επαναλύψεις"
+msgstr "Υποτιμήσεις"
 
 #: src/assetdialog.cpp:246
-#, fuzzy
 msgid "Specify if the value of the asset changes over time"
-msgstr "Δηλώστε την ημερομηνία της κίνησης"
+msgstr "Καθορίστε αν η αξία του περιουσιακού στοιχείου μεταβάλλεται με το χρόνο"
 
 #: src/assetdialog.cpp:250
-#, fuzzy
 msgid "% Rate"
-msgstr "Διόρθωση"
+msgstr "% ποσοστό"
 
 #: src/assetdialog.cpp:254
 #, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
-msgstr ""
+msgstr "Εισάγετε το ποστοστό % κατά το οποίο αλλάζει η αξία του περιουσιακού στοιχείου ανά χρόνο"
 
 #: src/assetdialog.cpp:262
-#, fuzzy
 msgid "Enter notes associated with this asset"
-msgstr "Εισάγετε σημειώσεις που συνδέονται με αυτήν την επένδυση"
+msgstr "Εισάγετε σημειώσεις που συνδέονται με αυτό το περιουσιακό στοιχείο"
 
 #: src/assetdialog.cpp:320
 #: src/assetdialog.cpp:348
 msgid "Invalid Value "
-msgstr ""
+msgstr "Μη έγκυρη αξία"
 
 #: src/assetdialog.cpp:338
 msgid "Rate of Change in Value"
-msgstr ""
+msgstr "Ποσοστό αλλαγής της αξίας"
 
 #: src/newacctdialog.cpp:145
 msgid "Account Name:"
-msgstr "Ονομασία Λογαριασμού:"
+msgstr "Όνομα λογαριασμού:"
 
 #: src/newacctdialog.cpp:152
 msgid "Enter the Name of the Account. This name can be renamed at any time."
-msgstr "Εισάγετε την ονομασία του Λογαριασμού. Η ονομασία μπορεί να αλλάξει οποιαδήποτε στιγμή"
+msgstr "Εισάγετε το όνομα του λογαριασμού. Το όνομα αυτό μπορεί να αλλάξει οποιαδήποτε στιγμή."
 
 #: src/newacctdialog.cpp:155
 msgid "Account Type:"
-msgstr "Τύπος Λογαρισμού:"
+msgstr "Τύπος λογαρισμού:"
 
 #: src/newacctdialog.cpp:160
 msgid "Checking"
-msgstr "Επιταγή"
+msgstr "Τρεχούμενος"
 
 #: src/newacctdialog.cpp:170
 msgid "Account Number:"
-msgstr "Αριθμός Λογαριασμού:"
+msgstr "Αριθμός λογαριασμού:"
 
 #: src/newacctdialog.cpp:179
 msgid "Enter the Account Number associated with this account."
-msgstr "Εισάγετε τον αριθμό Λογαριασμού όπως αυτός είχε δηλωθεί"
+msgstr "Εισάγετε τον αριθμό λογαριασμού που συνδέεται με αυτόν τον λογαριασμό."
 
 #: src/newacctdialog.cpp:182
 msgid "Held At:"
-msgstr "Καταχωρημένος Σε:"
+msgstr "Διατηρείται σε:"
 
 #: src/newacctdialog.cpp:190
 msgid "Enter the name of the financial institution in which the account is held."
-msgstr "Εισάγετε την ονομασία του οικονομικού οργανισμού που έχει καταχωρηθεί αυτός ο λογαριασμός"
+msgstr "Εισάγετε το όνομα του οικονομικού οργανισμού όπου διατηρείται αυτός ο λογαριασμός."
 
 #: src/newacctdialog.cpp:192
 msgid "Website:"
@@ -4401,15 +4034,15 @@ msgstr "Ιστοσελίδα:"
 
 #: src/newacctdialog.cpp:200
 msgid "Enter the URL of the website for the financial institution."
-msgstr "Εισάγετε την διεύθυνση της ιστοσελίδας του Οικονομικού οργανισμου"
+msgstr "Εισάγετε την URL της ιστοσελίδας του οικονομικού οργανισμού."
 
 #: src/newacctdialog.cpp:203
 msgid "Contact:"
-msgstr "Επαφή:"
+msgstr "Επικοινωνία:"
 
 #: src/newacctdialog.cpp:210
 msgid "Enter any contact information for the financial institution."
-msgstr "Εισάγετε οποιαδήποτε επαφή για τον οικονομικό οργανισμό"
+msgstr "Εισάγετε τυχόν στοιχεία επικοινωνίας με τον οικονομικό οργανισμό."
 
 #: src/newacctdialog.cpp:213
 msgid "Access Info:"
@@ -4417,11 +4050,11 @@ msgstr "Πληροφορίες πρόσβασης:"
 
 #: src/newacctdialog.cpp:220
 msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
-msgstr "Εισάγετε οποιαδήποτε login/acces πληροφορία για τον Οικονομικό οργανισμό. Αυτό δεν είναι ασφαλές διότι οποιοσδήποτε έχει πρόσβαση στην βάση (mmb) μπορεί να την προσπελάσει."
+msgstr "Εισάγετε τυχόν πληροφορίες σύνδεσης/πρόσβασης στον οικονομικό οργανισμό. Αυτές δεν θα είναι ασφαλείς διότι οποιοσδήποτε έχει πρόσβαση στο αρχείο mmb μπορεί να τις προσπελάσει."
 
 #: src/newacctdialog.cpp:222
 msgid "Account Status:"
-msgstr "Κατάσταση Λογαριασμού:"
+msgstr "Κατάσταση λογαριασμού:"
 
 #: src/newacctdialog.cpp:228
 msgid "Closed"
@@ -4429,15 +4062,15 @@ msgstr "Κλειστός"
 
 #: src/newacctdialog.cpp:235
 msgid "Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."
-msgstr "Δηλώστε εάν αυτός ο λογαριασμός έχει κλείσει. Οι Κλειστοί λογαριασμοί είναι ανενεργοί στους περισσότερους υπολογισμούς, εκτυπωτικά κ.λ.π"
+msgstr "Δηλώστε εάν αυτός ο λογαριασμός έχει κλείσει. Οι κλειστοί λογαριασμοί είναι ανενεργοί στους περισσότερους υπολογισμούς, εκθέσεις κλπ."
 
 #: src/newacctdialog.cpp:238
 msgid "Initial Balance:"
-msgstr "Αρχικό υπόλοιπο"
+msgstr "Αρχικό υπόλοιπο:"
 
 #: src/newacctdialog.cpp:246
 msgid "Enter the initial balance in this account."
-msgstr "Εισάγετε το αρχικό υπόλοιπο του Λογαριασμού."
+msgstr "Εισάγετε το αρχικό υπόλοιπο του λογαριασμού αυτού."
 
 #: src/newacctdialog.cpp:249
 msgid "Currency:"
@@ -4449,7 +4082,7 @@ msgstr "Επιλέξτε νόμισμα"
 
 #: src/newacctdialog.cpp:264
 msgid "Specify the currency to be used by this account."
-msgstr "Δηλώστε το χρησιμοποιούμενο νόμισμα από αυτό τον λογαριασμό."
+msgstr "Καθορίστε το νόμισμα που θα χρησιμοποιείται από αυτό τον λογαριασμό."
 
 #: src/newacctdialog.cpp:267
 msgid "Notes:"
@@ -4457,23 +4090,23 @@ msgstr "Σημειώσεις:"
 
 #: src/newacctdialog.cpp:274
 msgid "Enter user notes and details about this account."
-msgstr "Εισάγετε σημειώσεις ή λεπτομέρειες γιαυτόν τον Λογαριασμό"
+msgstr "Εισάγετε σημειώσεις ή λεπτομέρειες γι αυτόν τον λογαριασμό."
 
 #: src/newacctdialog.cpp:279
 msgid "Favorite Account"
-msgstr "Αγαπημένος Λογαριασμός"
+msgstr "Αγαπημένος λογαριασμός"
 
 #: src/newacctdialog.cpp:283
 msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
-msgstr "Δηλώστε εάν αυτός ο Λογαριασμός χρησιμοποιείται συχνά. Αυτό είναι χρήσιμο όταν γίνεται το φιλτράρισμα κατά την εμφανισή τους."
+msgstr "Δηλώστε εάν αυτός ο λογαριασμός χρησιμοποιείται συχνά. Αυτό χρησιμοποιείται για το φιλτράρισμα εμφάνισης των λογαριασμών."
 
 #: src/newacctdialog.cpp:326
 msgid "Account Name "
-msgstr "Περιγραφή Λογαριασμού"
+msgstr "Όνομα λογαριασμού"
 
 #: src/newacctdialog.cpp:333
 msgid "Account Name already exists"
-msgstr "Ηδη υπάρχει η περιγραφή του Λογαριασμού"
+msgstr "Το όνομα του λογαριασμού υπάρχει ήδη"
 
 #: src/newacctdialog.cpp:392
 msgid "Init Balance "
@@ -4481,76 +4114,67 @@ msgstr "Αρχικό υπόλοιπο"
 
 #: src/mmreportspanel.cpp:74
 msgid "REPORTS"
-msgstr "ΕΚΤΥΠΩΤΙΚΑ"
+msgstr "ΕΚΘΕΣΕΙΣ"
 
 #: src/reportincexpensesfinancialperiod.cpp:61
-#, fuzzy
 msgid "Income vs Expenses for Financial Year: "
-msgstr "Λόγος Εσόδων - Εξόδων"
+msgstr "Έσοδα προς έξοδα για το οικονομικό έτος: "
 
 #: src/budgetyeardialog.cpp:107
-#, fuzzy
 msgid "&Add Year"
-msgstr "Εισάγετε έτος προϋπολογισμού"
+msgstr "&Προσθήκη έτους"
 
 #: src/budgetyeardialog.cpp:109
 msgid "Add a new budget year"
 msgstr "Εισάγετε ένα νέος έτος προϋπολογισμού"
 
 #: src/budgetyeardialog.cpp:112
-#, fuzzy
 msgid "&Add Month"
-msgstr "Μηνιαίως"
+msgstr "&Προσθήκη μηνός"
 
 #: src/budgetyeardialog.cpp:114
-#, fuzzy
 msgid "Add a new budget month"
-msgstr "Εισάγετε ένα νέος έτος προϋπολογισμού"
+msgstr "Προσθήκη ενός νέου μήνα προϋπολογισμού"
 
 #: src/budgetyeardialog.cpp:119
-#, fuzzy
 msgid "Delete existing budget"
-msgstr "Διαγράψτε το υπάρχουν προϋπολογισμένο έτος"
+msgstr "Διαγραφή υπάρχοντος προϋπολογισμού"
 
 #: src/relocatepayeedialog.cpp:77
 msgid "Relocate all source payees to the destination payee"
-msgstr ""
+msgstr "Μετατόπιση όλων των δικαιούχων προέλευσης στο δικαιούχο προορισμού"
 
 #: src/relocatepayeedialog.cpp:80
 msgid "Relocate:"
-msgstr ""
+msgstr "Μετατόπιση:"
 
 #: src/relocatepayeedialog.cpp:82
-#, fuzzy
 msgid "Source Payee"
-msgstr "Επιλέξτε πληρωμή"
+msgstr "Δικαιούχος προέλευσης"
 
 #: src/relocatepayeedialog.cpp:84
-#, fuzzy
 msgid "to:"
-msgstr "Σε :"
+msgstr "προς:"
 
 #: src/relocatepayeedialog.cpp:86
 msgid "Destination Payee"
-msgstr ""
+msgstr "Δικαιούχος προορισμού"
 
 #: src/relocatepayeedialog.cpp:160
-#, fuzzy
 msgid "Please Confirm:"
-msgstr "Παρακαλώ περιμένετε"
+msgstr "Παρακαλούμε επιβεβαιώστε:"
 
 #: src/relocatepayeedialog.cpp:161
 msgid "Changing all payees of: "
-msgstr ""
+msgstr "Αλλάζουν όλοι οι δικαιούχοι του: "
 
 #: src/relocatepayeedialog.cpp:161
-#, fuzzy
 msgid "to payee: "
-msgstr "Πληρωμή"
+msgstr "στο δικαιούχο: "
 
 #: src/relocatepayeedialog.cpp:163
 msgid "Payee Relocation Confirmation"
-msgstr ""
+msgstr "Επιβεβαίωση μετατόπισης δικαιούχου"
 
 #: src/relocatepayeedialog.cpp:176
 #: src/dbwrapper.cpp:101
@@ -4594,43 +4218,37 @@ msgstr ""
 #: src/dbwrapper.cpp:1990
 #: src/dbwrapper.cpp:2072
 #: src/dbwrapper.cpp:2255
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s"
-msgstr "Λάθος"
+msgstr "Σφάλμα: %s"
 
 #: src/reportpayee.cpp:103
-#, fuzzy
 msgid "Payees Total: "
-msgstr "Κατηγορία"
+msgstr "Σύνολο δικαιούχων: "
 
 #: src/splitdetailsdialog.cpp:91
-#, fuzzy
 msgid "Split Transaction Details"
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Λεπτομέρειες διαίρεσης συναλλαγής"
 
 #: src/splitdetailsdialog.cpp:165
-#, fuzzy
 msgid "Invalid Category Entered "
-msgstr "Εισαγωγή Μη έγκυρου ποσού"
+msgstr "Εισήχθη μη έγκυρη κατηγορία"
 
 #: src/aboutdialog.cpp:73
-#, fuzzy
 msgid "About "
-msgstr "Ποσό"
+msgstr "Σχετικά"
 
 #: src/aboutdialog.cpp:132
-#, fuzzy
 msgid "Version: "
-msgstr "Ιστορικό έκδοσης"
+msgstr "Έκδοση:"
 
 #: src/aboutdialog.cpp:147
-#, fuzzy
 msgid "  and contributors from around the world"
-msgstr "και οι συνεισφέροντες παγκοσμίως"
+msgstr " και συνεισφέροντες από όλον τον κόσμο"
 
 #: src/aboutdialog.cpp:152
 msgid "Released under the GNU GPL License"
-msgstr "Εκδοση κάτω από άδεια GNU GPL "
+msgstr "Εκδόθηκε κάτω από άδεια GNU GPL "
 
 #: src/aboutdialog.cpp:168
 msgid "Version History"
@@ -4638,372 +4256,356 @@ msgstr "Ιστορικό έκδοσης"
 
 #: src/aboutdialog.cpp:173
 msgid "Contributors"
-msgstr ""
+msgstr "Συνεισφέροντες"
 
 #: src/aboutdialog.cpp:181
 msgid "Using Language : "
-msgstr "Χρησιμοποιούμενη γλώσσα :"
+msgstr "Χρησιμοποιούμενη γλώσσα : "
 
 #: src/reportcategexp.cpp:162
-#, fuzzy
 msgid "Category Total: "
-msgstr "Κατηγορία"
+msgstr "Σύνολο κατηγορίας: "
 
 #: src/reportcategexp.cpp:182
 msgid "Grand Total: "
-msgstr ""
+msgstr "Γενικό σύνολο: "
 
 #: src/yahoosettingsdialog.cpp:60
 msgid "Yahoo Server"
-msgstr ""
+msgstr "Διακομιστής Yahoo"
 
 #: src/yahoosettingsdialog.cpp:64
 msgid "finance.au.yahoo.com"
-msgstr ""
+msgstr "finance.au.yahoo.com"
 
 #: src/yahoosettingsdialog.cpp:65
 msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
-msgstr ""
+msgstr "Μη γράφετε τίποτα εκτός από το όνομα του διακομιστή (ή την διεύθυνση IP, αν αισθάνεστε τυχερός)"
 
 #: src/yahoosettingsdialog.cpp:71
 msgid "Yahoo Suffix"
-msgstr ""
+msgstr "Κατάληξη Yahoo"
 
 #: src/yahoosettingsdialog.cpp:76
 msgid ""
 "Enter the suffix used by Yahoo for the market of your stocks. \n"
 "If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
 msgstr ""
+"Εισάγετε την κατάληξη που χρησιμοποιείται από το Yahoo για το χρηματιστήριο των μετοχών σας.\n"
+"Αν οι μετοχές σας βρίσκονται σε πολλά χρηματιστήρια, αφήστε το κενό και προσθέστε την κατάληξη σε κάθε σύμβολο στο χαρτοφυλάκιό σας."
 
 #: src/yahoosettingsdialog.cpp:81
 msgid "Market open from"
-msgstr ""
+msgstr "Χρηματιστήριο ανοιχτό από"
 
 #: src/yahoosettingsdialog.cpp:90
 #: src/yahoosettingsdialog.cpp:101
 #: src/yahoosettingsdialog.cpp:118
 #: src/yahoosettingsdialog.cpp:129
 msgid "Allow for any delay in quotes"
-msgstr ""
+msgstr "Επιτρέπονται τυχόν καθυστερήσεις στις τιμές"
 
 #: src/yahoosettingsdialog.cpp:97
 #: src/yahoosettingsdialog.cpp:125
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: src/yahoosettingsdialog.cpp:109
 msgid "to"
-msgstr ""
+msgstr "έως"
 
 #: src/yahoosettingsdialog.cpp:138
 msgid "&Refresh prices every"
-msgstr ""
+msgstr "&Ανανέωση των τιμών κάθε"
 
 #: src/yahoosettingsdialog.cpp:161
 msgid "minutes while market is open"
-msgstr ""
+msgstr "λεπτά κατά τα οποία το χρηματιστήριο είναι ανοιχτό"
 
 #: src/reportcategovertimeperf.cpp:239
 #, c-format
 msgid "Category Income/Expenses Over Last %d Months "
-msgstr ""
+msgstr "Έσοδα/έξοδα κατηγορίας κατά τους τελευταίους %d μήνες"
 
 #: src/htmlbuilder.cpp:36
-#, fuzzy
 msgid "Report"
-msgstr "Εκτυπωτικά"
+msgstr "Έκθεση"
 
 #: src/dbwrapper.cpp:162
 msgid "Telephone"
-msgstr ""
+msgstr "Τηλέφωνο"
 
 #: src/dbwrapper.cpp:162
 msgid "Electricity"
-msgstr ""
+msgstr "Ηλεκτρισμός"
 
 #: src/dbwrapper.cpp:162
 #: src/dbwrapper.cpp:171
 msgid "Gas"
-msgstr ""
+msgstr "Καύσιμα"
 
 #: src/dbwrapper.cpp:162
-#, fuzzy
 msgid "Internet"
-msgstr "Επένδυση"
+msgstr "Διαδίκτυο"
 
 #: src/dbwrapper.cpp:162
-#, fuzzy
 msgid "Rent"
-msgstr "Εκτυπωτικά"
+msgstr "Ενοικίαση"
 
 #: src/dbwrapper.cpp:162
 msgid "Cable TV"
-msgstr ""
+msgstr "Καλωδιακή TV"
 
 #: src/dbwrapper.cpp:162
-#, fuzzy
 msgid "Water"
-msgstr "Ημερομηνία"
+msgstr "Νερό"
 
 #: src/dbwrapper.cpp:163
 msgid "Bills"
-msgstr ""
+msgstr "Πληρωμές"
 
 #: src/dbwrapper.cpp:165
 msgid "Groceries"
-msgstr ""
+msgstr "Μπακαλική"
 
 #: src/dbwrapper.cpp:165
 msgid "Dining out"
-msgstr ""
+msgstr "Φαγητό έξω"
 
 #: src/dbwrapper.cpp:166
 msgid "Food"
-msgstr ""
+msgstr "Τρόφιμα"
 
 #: src/dbwrapper.cpp:168
 msgid "Movies"
-msgstr ""
+msgstr "Ταινίες"
 
 #: src/dbwrapper.cpp:168
 msgid "Video Rental"
-msgstr ""
+msgstr "Ενοικίαση βίντεο"
 
 #: src/dbwrapper.cpp:168
 msgid "Magazines"
-msgstr ""
+msgstr "Περιοδικά"
 
 #: src/dbwrapper.cpp:169
 msgid "Leisure"
-msgstr ""
+msgstr "Ελεύθερος χρόνος"
 
 #: src/dbwrapper.cpp:171
 msgid "Maintenance"
-msgstr ""
+msgstr "Συντήρηση"
 
 #: src/dbwrapper.cpp:171
 msgid "Parking"
-msgstr ""
+msgstr "Στάθμευση"
 
 #: src/dbwrapper.cpp:171
 msgid "Registration"
-msgstr ""
+msgstr "Εγγραφή"
 
 #: src/dbwrapper.cpp:174
 msgid "Books"
-msgstr ""
+msgstr "Βιβλία"
 
 #: src/dbwrapper.cpp:174
 msgid "Tuition"
-msgstr ""
+msgstr "Δίδακτρα"
 
 #: src/dbwrapper.cpp:175
 msgid "Education"
-msgstr ""
+msgstr "Μόρφωση"
 
 #: src/dbwrapper.cpp:177
-#, fuzzy
 msgid "Clothing"
-msgstr "Επιταγή"
+msgstr "Ρουχισμός"
 
 #: src/dbwrapper.cpp:177
 msgid "Furnishing"
-msgstr ""
+msgstr "Επίπλωση"
 
 #: src/dbwrapper.cpp:178
 msgid "Homeneeds"
-msgstr ""
+msgstr "Ανάγκες σπιτιού"
 
 #: src/dbwrapper.cpp:180
 #: src/dbwrapper.cpp:183
-#, fuzzy
 msgid "Health"
-msgstr "Καταχωρημένος σε"
+msgstr "Υγεία"
 
 #: src/dbwrapper.cpp:180
-#, fuzzy
 msgid "Dental"
-msgstr "Γενικός"
+msgstr "Οδοντιατρικά"
 
 #: src/dbwrapper.cpp:180
 msgid "Eyecare"
-msgstr ""
+msgstr "Φροντίδα ματιών"
 
 #: src/dbwrapper.cpp:180
 msgid "Physician"
-msgstr ""
+msgstr "Ιατροί"
 
 #: src/dbwrapper.cpp:180
-#, fuzzy
 msgid "Prescriptions"
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Συνταγές φαρμάκων"
 
 #: src/dbwrapper.cpp:181
 msgid "Healthcare"
-msgstr ""
+msgstr "Φροντίδα υγείας"
 
 #: src/dbwrapper.cpp:183
-#, fuzzy
 msgid "Auto"
-msgstr "Ποσό"
+msgstr "Αυτοκίνητο"
 
 #: src/dbwrapper.cpp:183
 msgid "Life"
-msgstr ""
+msgstr "Ζωή"
 
 #: src/dbwrapper.cpp:183
-#, fuzzy
 msgid "Home"
-msgstr "Αρχική σελίδα"
+msgstr "Κατοικία"
 
 #: src/dbwrapper.cpp:184
 msgid "Insurance"
-msgstr ""
+msgstr "Ασφάλεια"
 
 #: src/dbwrapper.cpp:186
 msgid "Travel"
-msgstr ""
+msgstr "Ταξίδια"
 
 #: src/dbwrapper.cpp:186
-#, fuzzy
 msgid "Lodging"
-msgstr "Προϋπολογισμός"
+msgstr "Διαμονή"
 
 #: src/dbwrapper.cpp:186
 msgid "Sightseeing"
-msgstr ""
+msgstr "Περιήγηση σε αξιοθέατα"
 
 #: src/dbwrapper.cpp:187
-#, fuzzy
 msgid "Vacation"
-msgstr "Λεπτομέρειες κίνησης"
+msgstr "Διακοπές"
 
 #: src/dbwrapper.cpp:189
-#, fuzzy
 msgid "Income Tax"
-msgstr "Εσοδα"
+msgstr "Φόρος εισοδήματος"
 
 #: src/dbwrapper.cpp:189
 msgid "House Tax"
-msgstr ""
+msgstr "Φόρος οικίας"
 
 #: src/dbwrapper.cpp:189
 msgid "Water Tax"
-msgstr ""
+msgstr "Φόρος νερού"
 
 #: src/dbwrapper.cpp:190
 msgid "Taxes"
-msgstr ""
+msgstr "Φόροι"
 
 #: src/dbwrapper.cpp:192
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Διάφορα"
 
 #: src/dbwrapper.cpp:193
 msgid "Gifts"
-msgstr ""
+msgstr "Δώρα"
 
 #: src/dbwrapper.cpp:195
-#, fuzzy
 msgid "Salary"
-msgstr "Περίληψη"
+msgstr "Μισθός"
 
 #: src/dbwrapper.cpp:195
 msgid "Reimbursement/Refunds"
-msgstr ""
+msgstr "Αποζημίωση/Επιστροφές"
 
 #: src/dbwrapper.cpp:195
-#, fuzzy
 msgid "Investment Income"
-msgstr "Επένδυση"
+msgstr "Εισόδημα από επενδύσεις"
 
 #: src/dbwrapper.cpp:198
-#, fuzzy
 msgid "Other Income"
-msgstr "Εσοδα"
+msgstr "Άλλα έσοδα"
 
 #: src/dbwrapper.cpp:199
-#, fuzzy
 msgid "Other Expenses"
-msgstr "Εξοδα"
+msgstr "Άλλα έξοδα"
 
 #: src/dbwrapper.cpp:1514
 #, c-format
 msgid "Set Info Setting Value %s = %s. Error: %s"
-msgstr ""
+msgstr "Ορισμός πληροφοριών διαμόρφωσης τιμής %s. Σφάλμα: %s"
 
 #: src/dbwrapper.cpp:2333
 #, c-format
 msgid "Write error: %s"
-msgstr ""
+msgstr "Σφάλμα εγγραφής: %s"
 
 #: src/dbwrapper.cpp:2341
-#, fuzzy
 msgid "When database file opening:"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Όταν ανοίγει η βάση δεδομένων:"
 
 #: src/dbwrapper.cpp:2345
 msgid "Can't open file"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος αρχείου"
 
 #: src/dbwrapper.cpp:2345
 msgid "You must specify path to another database file"
-msgstr ""
+msgstr "Πρέπει να καθορίσετε τη διαδρομή για μια άλλη βάση δεδομένων"
 
 #: src/dbwrapper.cpp:2349
 msgid "An incorrect password given for an encrypted file"
-msgstr ""
+msgstr "Δόθηκε λανθασμένος κωδικός πρόσβασης για κρυπτογραφημένο αρχείο"
 
 #: src/dbwrapper.cpp:2350
 msgid "or"
-msgstr ""
+msgstr "ή"
 
 #: src/dbwrapper.cpp:2351
 msgid "Attempt to open a File that is not a database file"
-msgstr ""
+msgstr "Προσπάθεια ανοίγματος αρχείου που δεν είναι βάση δεδομένων"
 
 #: src/dbwrapper.cpp:2358
-#, fuzzy
 msgid "Database::open: Exception"
-msgstr "&Νέα Βάση\tCtrl-N"
+msgstr "Βάση δεδομένων::ανοικτή: Εξαίρεση"
 
 #: src/dbwrapper.cpp:2360
 msgid "Continue ?"
-msgstr ""
+msgstr "Να συνεχίσω;"
 
 #: src/budgetyearentrydialog.cpp:44
-#, fuzzy
 msgid "Budget Month Entry"
-msgstr "Εισαγωγή Ετήσιου προϋπολογισμού"
+msgstr "Εισαγωγή μηνός προϋπολογισμού"
 
 #: src/budgetyearentrydialog.cpp:72
 msgid "Budget Year:"
-msgstr "Ετος προϋπολογισμού:"
+msgstr "Έτος προϋπολογισμού:"
 
 #: src/budgetyearentrydialog.cpp:79
 msgid ""
 "Specify the required year.\n"
 "Use Spin buttons to increase or decrease the year."
 msgstr ""
+"Καθορίστε το απαιτούμενο έτος.\n"
+"Χρησιμοποιήστε τα περιστρεφόμενα κουμπιά για αύξηση ή μείωση του έτους."
 
 #: src/budgetyearentrydialog.cpp:85
-#, fuzzy
 msgid "Budget Month:"
-msgstr "Τρέχων μήνας"
+msgstr "Μήνας προϋπολογισμού:"
 
 #: src/budgetyearentrydialog.cpp:92
 msgid ""
 "Specify the required month.\n"
 "Use Spin buttons to increase or decrease the month."
 msgstr ""
+"Καθορίστε τον απαιτούμενο μήνα.\n"
+"Χρησιμοποιήστε τα περιστρεφόμενα κουμπιά για αύξηση ή μείωση του μήνα."
 
 #: src/budgetyearentrydialog.cpp:97
 msgid "Base Budget On:"
-msgstr "Βασισμένο πάνο στο προϋπολογισμό του:"
+msgstr "Προϋπολογισμός βασισμένος σε:"
 
 #: src/budgetyearentrydialog.cpp:108
 msgid "Specify year to base budget on."
-msgstr "Δηλώστε το έτος που θα βασισθεί ο προϋπολογισμός"
+msgstr "Δηλώστε το έτος που θα βασισθεί ο προϋπολογισμός."
 
 #: src/budgetyearentrydialog.cpp:154
 msgid "Budget Year already exists"
@@ -5011,42 +4613,36 @@ msgstr "Το έτος προϋπολογισμού ήδη υπάρχει"
 
 #: src/reportsummary.cpp:147
 msgid "Stock Investments"
-msgstr "Επένδυση από μετοχές"
+msgstr "Επενδύσεις σε μετοχές"
 
 #: src/reportsummary.cpp:167
-#, fuzzy
 msgid "Total Balance on all Accounts"
-msgstr "Συνολικό υπόλοιπο λογαριασμών :"
+msgstr "Συνολικό υπόλοιπο σε όλους τους λογαριασμούς"
 
 #: src/reportcashflow.cpp:35
 #, c-format
 msgid "Cash Flow Forecast for %d Years Ahead"
-msgstr ""
+msgstr "Πρόβλεψη χρηματικής ροής για %d χρόνια μπροστά"
 
 #: src/reportcashflow.cpp:37
-#, fuzzy
 msgid "Accounts: "
-msgstr "&Λογαριασμοί"
+msgstr "Λογαριασμοί: "
 
 #: src/reportcashflow.cpp:41
-#, fuzzy
 msgid "All Accounts"
-msgstr "&Λογαριασμοί"
+msgstr "Όλοι οι λογαριασμοί"
 
 #: src/reportcashflow.cpp:43
-#, fuzzy
 msgid "All Bank Accounts"
-msgstr "Λογαριασμοί "
+msgstr "Όλοι οι τραπεζικοί λογαριασμοί"
 
 #: src/reportcashflow.cpp:45
-#, fuzzy
 msgid "All Term Accounts"
-msgstr "Από Λογαριασμό"
+msgstr "Όλοι οι προθεσμιακοί λογαριασμοί"
 
 #: src/maincurrencydialog.cpp:101
-#, fuzzy
 msgid "Currency List"
-msgstr "Νόμισμα"
+msgstr "Λίστα νομισμάτων"
 
 #: src/maincurrencydialog.cpp:167
 msgid "Name of Currency to Add"
@@ -5054,33 +4650,32 @@ msgstr "Ονομασία νομίσματος προς εισαγωγή"
 
 #: src/maincurrencydialog.cpp:167
 msgid "Add Currency"
-msgstr "Εισάγετε νόμισμα"
+msgstr "Προσθήκη νομίσματος"
 
 #: src/maincurrencydialog.cpp:185
-#, fuzzy
 msgid "Attempt to Add a currency which already exists!"
-msgstr "Το νόμισμα ήδη υπάρχει"
+msgstr "Προσπάθεια προσθήκης νομισματος που ήδη υπάρχει!"
 
 #: src/maincurrencydialog.cpp:245
 msgid ""
 "Attempt to delete a currency being used by an account\n"
 " or as the base currency."
 msgstr ""
+"Προσπάθεια διαγραφής ενός νομίσματος που χρησιμοποιείται\n"
+"από ένα λογαριασμό ή του βασικού νομίσματος."
 
 #: src/maincurrencydialog.cpp:249
 msgid "Please confirm deletion of a selected Currency"
-msgstr ""
+msgstr "Παρακαλούμε επιβεβαιώστε τη διαγραφή του επιλεγμένου νομίσματος"
 
 #: src/maincurrencydialog.cpp:250
 #: src/maincurrencydialog.cpp:261
-#, fuzzy
 msgid "Currency Dialog"
-msgstr "Ονομασία νομίσματος"
+msgstr "Παράθυρο νομισμάτων"
 
 #: src/reportsummarystocks.cpp:32
-#, fuzzy
 msgid "Summary of Stocks"
-msgstr "Περίληψη Λογαριασμών"
+msgstr "Περίληψη μετοχών"
 
 #: src/reportsummarystocks.cpp:169
 #: src/stockdialog.cpp:174
@@ -5088,14 +4683,13 @@ msgid "Symbol"
 msgstr "Σύμβολο"
 
 #: src/reportsummarystocks.cpp:170
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Τιμή Αγοράς"
+msgstr "Ημερομηνία αγοράς"
 
 #: src/reportsummarystocks.cpp:172
 #: src/stockdialog.cpp:190
 msgid "Purchase Price"
-msgstr "Τιμή Αγοράς"
+msgstr "Τιμή αγοράς"
 
 #: src/reportsummarystocks.cpp:173
 #: src/stockdialog.cpp:198
@@ -5109,41 +4703,40 @@ msgstr "Προμήθεια"
 
 #: src/stockdialog.cpp:140
 msgid "Stock Investment Details"
-msgstr "Επένδυση από μετοχές Αναλυτικά"
+msgstr "Λεπτομέρειες της επένδυσης σε μετοχές"
 
 #: src/stockdialog.cpp:150
 msgid "Stock Name"
-msgstr "Ονομα μετοχής"
+msgstr "Όνομα μετοχής"
 
 #: src/stockdialog.cpp:155
 msgid "Enter the stock company name"
-msgstr "Εισάγετε το όνομα της Χρηματιστηριακής εταιρείας"
+msgstr "Εισάγετε το όνομα της εταιρίας της μετοχής"
 
 #: src/stockdialog.cpp:157
 #: src/stockdialog.cpp:310
 msgid "Held At"
-msgstr "Καταχωρημένος σε"
+msgstr "Διατηρείται σε"
 
 #: src/stockdialog.cpp:162
 msgid "Enter the name of the financial institution where the investment is held"
-msgstr "Εισάγετε την ονομασία του οικονομικού οργανισμού που έχει καταχωρηθεί αυτός ο λογαριασμός"
+msgstr "Εισάγετε την ονομασία του οικονομικού οργανισμού που διατηρείται αυτός ο λογαριασμός"
 
 #: src/stockdialog.cpp:170
 msgid "Specify the purchase date of the stock investment"
-msgstr "Καθορίσθε ημερομηνία αγοράς μετοχών "
+msgstr "Καθορίστε την ημερομηνία αγοράς της επένδυσης σε μετοχές"
 
 #: src/stockdialog.cpp:179
-#, fuzzy
 msgid "Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"
-msgstr "Εισάγετε πυθανό σύμβολο μετοχής (προαιρετικό)"
+msgstr "Εισάγετε σύμβολο μετοχής. (Προαιρετικά) Περιλάβετε συνάλλαγμα. πχ. IBM.BE"
 
 #: src/stockdialog.cpp:182
 msgid "Number of Shares"
-msgstr "Πλήθος μετοχών"
+msgstr "Αριθμός μετοχών"
 
 #: src/stockdialog.cpp:188
 msgid "Enter number of shares held"
-msgstr "Εισάγετε τον αριθμό των καταχωρημένων μετοχών"
+msgstr "Εισάγετε τον αριθμό των διατηρούμενων μετοχών"
 
 #: src/stockdialog.cpp:196
 msgid "Enter purchase price for each stock"
@@ -5155,7 +4748,7 @@ msgstr "Εισάγετε την παρούσα τιμή της μετοχής"
 
 #: src/stockdialog.cpp:212
 msgid "Enter any commission paid"
-msgstr "Εισάγετε οποιαδήποτε πληρωμένη προμήθεια"
+msgstr "Εισάγετε τυχόν πληρωμένη προμήθεια"
 
 #: src/stockdialog.cpp:225
 msgid "Enter notes associated with this investment"
@@ -5163,303 +4756,273 @@ msgstr "Εισάγετε σημειώσεις που συνδέονται με �
 
 #: src/stockdialog.cpp:233
 msgid "Display Stock Web Page"
-msgstr ""
+msgstr "Εμφάνιση ιστοσελίδας της μετοχής"
 
 #: src/stockdialog.cpp:235
 msgid "Will display the web page for the specified Stock symbol"
-msgstr ""
+msgstr "Θα προβάλλει την ιστοσελίδα για το συγκεκριμένο σύμβολο μετοχής"
 
 #: src/stockdialog.cpp:262
 msgid "Choose Investment Account"
-msgstr "Επιλέξτε λογαριασμό επένδυσης"
+msgstr "Επιλέξτε επενδυτικό λογαριασμό"
 
 #: src/stockdialog.cpp:322
 msgid "Num Shares"
 msgstr "Αριθμός μετοχών"
 
 #: src/stockdialog.cpp:329
-#, fuzzy
 msgid "Invalid number of shares entered "
-msgstr "Μη έγκυρη τιμή αγοράς"
+msgstr "Εισήχθη μη έγκυρος αριθμός μετοχών"
 
 #: src/stockdialog.cpp:343
 msgid "Invalid purchase price entered "
-msgstr "Μη έγκυρη τιμή αγοράς"
+msgstr "Εισήχθη μη έγκυρη τιμή αγοράς"
 
 #: src/stockdialog.cpp:361
 msgid "Invalid commission entered "
-msgstr "Μη έγκυρη προμήθεια"
+msgstr "Εισήχθη μη έγκυρη προμήθεια"
 
 #: src/univcsvdialog.cpp:90
-#, fuzzy
 msgid "Amount(+/-)"
-msgstr "Ποσό"
+msgstr "Ποσό(+/-)"
 
 #: src/univcsvdialog.cpp:92
-#, fuzzy
 msgid "SubCategory"
 msgstr "Υποκατηγορία"
 
 #: src/univcsvdialog.cpp:93
-#, fuzzy
 msgid "Transaction Number"
-msgstr "Τύπος κίνησης"
+msgstr "Αριθμός συναλλαγής"
 
 #: src/univcsvdialog.cpp:95
 msgid "Don't Care"
-msgstr ""
+msgstr "Αδιάφορο"
 
 #: src/univcsvdialog.cpp:128
-#, fuzzy
 msgid "Specify the order of fields in the CSV file"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε την σειρά των πεδίων στο αρχείο CSV"
 
 #: src/univcsvdialog.cpp:173
-#, fuzzy
 msgid "&Up"
-msgstr "Διόρθωση"
+msgstr "&Επάνω"
 
 #: src/univcsvdialog.cpp:176
 msgid "Move Up"
-msgstr ""
+msgstr "Μετακίνηση επάνω"
 
 #: src/univcsvdialog.cpp:179
 msgid "&Down"
-msgstr ""
+msgstr "&Κάτω"
 
 #: src/univcsvdialog.cpp:182
 msgid "Move &Down"
-msgstr ""
+msgstr "Μετακίνηση &κάτω"
 
 #: src/univcsvdialog.cpp:185
 msgid "&MMEX format"
-msgstr ""
+msgstr "Μορφή &MMEX"
 
 #: src/univcsvdialog.cpp:188
 msgid "MMEX standard format"
-msgstr ""
+msgstr "Κανονική μορφή MMEX"
 
 #: src/univcsvdialog.cpp:194
 msgid "Load Template"
-msgstr ""
+msgstr "Φόρτωση προτύπου"
 
 #: src/univcsvdialog.cpp:197
-#, fuzzy
 msgid "Save As..."
-msgstr "Πληρωμή"
+msgstr "Αποθήκευση ως..."
 
 #: src/univcsvdialog.cpp:200
 msgid "Save Template"
-msgstr ""
+msgstr "Αποθήκευση προτύπου"
 
 #: src/univcsvdialog.cpp:214
-#, fuzzy
 msgid "File Name:"
-msgstr "Χρησιμοποιούμενο νόμισμα"
+msgstr "Όνομα αρχείου:"
 
 #: src/univcsvdialog.cpp:220
 msgid "&Search"
-msgstr ""
+msgstr "&Αναζήτηση"
 
 #: src/univcsvdialog.cpp:231
-#, fuzzy
 msgid "Account  :"
-msgstr "Λογαριασμός"
+msgstr "Λογαριασμός  :"
 
 #: src/univcsvdialog.cpp:269
-#, fuzzy
 msgid "Import File"
-msgstr "Εισαγωγή"
+msgstr "Εισαγωγή αρχείου"
 
 #: src/univcsvdialog.cpp:276
-#, fuzzy
 msgid "Export File"
-msgstr "Εισαγωγή"
+msgstr "Εξαγωγή αρχείου"
 
 #: src/univcsvdialog.cpp:373
 msgid "Unknown"
-msgstr ""
+msgstr "Άγνωστο"
 
 #: src/univcsvdialog.cpp:378
-#, fuzzy
 msgid "Choose Universal CSV format file to load"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε αρχείο γενικής μορφής CSV για φόρτωση"
 
 #: src/univcsvdialog.cpp:421
-#, fuzzy
 msgid "Choose Universal CSV format file to save"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε αρχείο γενικής μορφής CSV για αποθήκευση"
 
 #: src/univcsvdialog.cpp:458
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
-msgstr ""
+msgstr "Καθορίστηκαν λανθασμένα πεδία για εισαγωγή από CSV. Χρειάζονται τουλάχιστον τα Ημερομηνία, Ποσό και Δικαιούχος."
 
 #: src/univcsvdialog.cpp:500
-#, fuzzy
 msgid "Transactions imported from CSV: "
-msgstr "Τύπος κίνησης"
+msgstr "Συναλλαγές που εισήχθησαν από CSV: "
 
 #: src/univcsvdialog.cpp:507
-#, fuzzy
 msgid ""
 "Transactions imported from CSV\n"
 "to account "
-msgstr "Τύπος κίνησης"
+msgstr ""
+"Συναλλαγές που εισήχθησαν από CSV\n"
+"στο λογαριασμό "
 
 #: src/univcsvdialog.cpp:562
 #: src/univcsvdialog.cpp:585
 #: src/univcsvdialog.cpp:642
 msgid "Line : "
-msgstr "Γραμμή :"
+msgstr "Γραμμή : "
 
 #: src/univcsvdialog.cpp:563
 msgid " file contains insufficient number of tokens"
-msgstr ""
+msgstr " το αρχείο περιέχει μη επαρκή αριθμό συμβόλων"
 
 #: src/univcsvdialog.cpp:586
-#, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
-msgstr "Ενα από τα επόμενα πεδία είναι κενά : Ημερομηνία, πληρωνόμενος,τύπος κίνησης, ποσό, κατηγορία, παραλείπεται"
+msgstr "Ένα από τα επόμενα πεδία: Ημερομηνία, δικαιούχος, ποσό, τύπος, λείπει, παραλείπεται"
 
 #: src/univcsvdialog.cpp:642
 msgid " imported OK."
-msgstr "Η εισαγωγή είναι OK"
+msgstr " εισήχθησαν OK"
 
 #: src/univcsvdialog.cpp:647
-#, fuzzy, c-format
+#, c-format
 msgid "Total Lines : %d"
-msgstr "Σύνολο λογαριασμών"
+msgstr "Σύνολο γραμμών : %d"
 
 #: src/univcsvdialog.cpp:649
-#, fuzzy, c-format
+#, c-format
 msgid "Total Imported : %d"
-msgstr "Σύνολο λογαριασμών"
+msgstr "Σύνολο εισηγμένων : %d"
 
 #: src/univcsvdialog.cpp:651
 #, c-format
 msgid "Log file written to : %s"
-msgstr ""
+msgstr "Το αρχείο καταγραφής εγγράφηκε στο: %s"
 
 #: src/univcsvdialog.cpp:655
-#, fuzzy
 msgid "Importing CSV"
-msgstr "Εισαγωγή από αρχείο CSV"
+msgstr "Εισάγεται CSV"
 
 #: src/univcsvdialog.cpp:659
-#, fuzzy
 msgid "Imported transactions have been flagged so you can review them."
-msgstr ""
-"Σύνολο γραμμών : %d \n"
-"Σύνολο εισαγωγών : %d\n"
-"\n"
-"Το αρχείο Log έχει αποθηκευθεί στο : %s.\n"
-"\n"
-"Οι κινήσεις έχουν μαρκαρισθεί και μπορούν να ξαναεπεξεργασθούν. "
+msgstr "Οι κινήσεις που εισήχθησαν έχουν μαρκαριστεί ώστε να μπορέσετε να τις ελέγξετε."
 
 #: src/univcsvdialog.cpp:702
-#, fuzzy
 msgid "CSV Files"
-msgstr "&CSV αρχεία"
+msgstr "CSV αρχεία"
 
 #: src/univcsvdialog.cpp:703
 msgid "Choose CSV data file to Export"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε ένα αρχείο CSV για εξαγωγή"
 
 #: src/univcsvdialog.cpp:781
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: src/univcsvdialog.cpp:970
-#, fuzzy
 msgid "Choose CSV data file to import"
-msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
+msgstr "Επιλέξτε ένα αρχείο δεδομένων CSV για εισαγωγή"
 
 #: src/mmpayee.cpp:63
-#, fuzzy, c-format
+#, c-format
 msgid "Add Payee. Error: %s"
-msgstr "Εισάγετε μια νέα περιγραφή πληρωμής"
+msgstr "Προσθήκη δικαιούχου. Σφάλμα: %s"
 
 #: src/transdialog.cpp:440
 msgid "Specify the category for this transaction"
-msgstr "Καθορίστε κατηγορία γιαυτήν την κίνηση "
+msgstr "Καθορίστε κατηγορία γι αυτήν την συναλλαγή"
 
 #: src/transdialog.cpp:453
-#, fuzzy
 msgid "Populate Transaction #"
-msgstr "&Νέα κίνηση"
+msgstr "Συμπληρώστε την συναλλαγή #"
 
 #: src/transdialog.cpp:469
 msgid "Select one of the frequently used notes"
-msgstr ""
+msgstr "Επιλέξτε μια από τις συχνότερα χρησιμοποιούμενες σημειώσεις"
 
 #: src/transdialog.cpp:1596
-#, fuzzy
 msgid "Duplicate Transaction"
-msgstr "Δείτε τις μαρκαρισμένες κινήσεις"
+msgstr "Διπλότυπη συναλλαγή"
 
 #: src/mmtransaction.cpp:196
 msgid "Payee not found in database for Account: "
-msgstr ""
+msgstr "Ο δικαιούχος δεν βρέθηκε στη βάση δεδομένων για το λογαριασμό: "
 
 #: src/mmtransaction.cpp:199
 msgid "Subsequent errors not displayed."
-msgstr ""
+msgstr "Τα μεταγενέστερα σφάλματα δεν εμφανίζονται."
 
 #: src/mmtransaction.cpp:200
 msgid "MMEX DATABASE ERROR"
-msgstr ""
+msgstr "ΣΦΑΛΜΑ ΒΑΣΗΣ ΔΕΔΟΜΕΝΩΝ MMEX"
 
 #: src/customreportindex.cpp:47
 msgid "Report Name[|Report Filename.sql[|SUB]]"
-msgstr ""
+msgstr "Όνομα έκθεσης[|Όνομα έκθεσης.sql[|SUB]]"
 
 #: src/customreportindex.cpp:168
 msgid "Select the Custom SQL Report"
-msgstr ""
+msgstr "Επιλέξτε την προσαρμοσμένη έκθεση SQL"
 
 #: src/customreportindex.cpp:279
 msgid "Cannot locate file: "
-msgstr ""
+msgstr "Αδυναμία εντοπισμού του αρχείου: "
 
 #: src/relocatecategorydialog.cpp:85
 msgid "Relocate all source categories to the destination category"
-msgstr ""
+msgstr "Μετατόπιση όλων των κατηγοριών προέλευσης στην κατηγορία προορισμού"
 
 #: src/relocatecategorydialog.cpp:90
-#, fuzzy
 msgid "Source Category"
-msgstr "Υποκατηγορία"
+msgstr "Κατηγορία προέλευσης"
 
 #: src/relocatecategorydialog.cpp:94
-#, fuzzy
 msgid "Destination Category"
-msgstr "Επιλέξτε Κατηγορία"
+msgstr "Κατηγορία προορισμού"
 
 #: src/relocatecategorydialog.cpp:174
 msgid "Changing all categories of: "
-msgstr ""
+msgstr "Αλλάζουν όλες οι κατηγορίες του: "
 
 #: src/relocatecategorydialog.cpp:174
-#, fuzzy
 msgid "to category: "
-msgstr "Κατηγορία: \n"
+msgstr "προς κατηγορία: "
 
 #: src/relocatecategorydialog.cpp:176
 msgid "Category Relocation Confirmation"
-msgstr ""
+msgstr "Επιβεβαίωση μετατόπισης κατηγορίας"
 
 #: src/stockspanel.cpp:193
 msgid "Idle"
-msgstr ""
+msgstr "Σε αναμονή"
 
 #: src/stockspanel.cpp:222
 msgid "Share Name"
-msgstr "Μετοχή"
+msgstr "Όνομα μετοχής"
 
 #: src/stockspanel.cpp:240
-#, fuzzy
 msgid "Current"
-msgstr "Νόμισμα"
+msgstr "Τρέχουσα"
 
 #: src/stockspanel.cpp:281
 msgid "New Stock Investment"
@@ -5475,53 +5038,48 @@ msgstr "Διαγράψτε την επένδυση σε μετοχές"
 
 #: src/stockspanel.cpp:294
 msgid "&Refresh"
-msgstr ""
+msgstr "&Ανανέωση"
 
 #: src/stockspanel.cpp:296
 msgid "Refresh Stock Prices from Yahoo"
-msgstr ""
+msgstr "Ανανέωση τιμών μετοχών από το Yahoo"
 
 #: src/stockspanel.cpp:299
-#, fuzzy
 msgid "&Settings"
-msgstr "Προεπιλογές επισκόπησης"
+msgstr "&Ρυθμίσεις"
 
 #: src/stockspanel.cpp:301
 msgid "Change settings for automatic refresh"
-msgstr ""
+msgstr "Αλλαγή ρυθμίσεων αυτόματης ανανέωσης"
 
 #: src/stockspanel.cpp:324
-#, fuzzy
 msgid "Stock Investments: "
-msgstr "Επένδυση από μετοχές :"
+msgstr "Επένδυση σε μετοχές: "
 
 #: src/stockspanel.cpp:353
-#, fuzzy
 msgid "Total: "
-msgstr "Σύνολο λογαριασμών"
+msgstr "Σύνολο: "
 
 #: src/stockspanel.cpp:353
-#, fuzzy
 msgid "Invested: "
-msgstr "Επένδυση"
+msgstr "Επενδυμένα: "
 
 #: src/stockspanel.cpp:355
-#, fuzzy
 msgid "Gain: "
-msgstr "Κέρδη/Ζημιές"
+msgstr "Κέρδος: "
 
 #: src/stockspanel.cpp:357
 msgid "Loss: "
-msgstr ""
+msgstr "Απώλεια: "
 
 #: src/stockspanel.cpp:499
 #, c-format
 msgid "%s on %s"
-msgstr ""
+msgstr "%s σε %s"
 
 #: src/stockspanel.cpp:502
 msgid "never!"
-msgstr ""
+msgstr "ποτέ!"
 
 #: src/stockspanel.cpp:507
 #, c-format
@@ -5529,6 +5087,8 @@ msgid ""
 "Automatic stock quote refresh is disabled. \n"
 "Last update: %s"
 msgstr ""
+"Η αυτόματη ανανέωση των τιμών της μετοχής είναι απενεργοποιημένη. \n"
+"Τελευταία ενημέρωση: %s"
 
 #: src/stockspanel.cpp:513
 #, c-format
@@ -5536,10 +5096,12 @@ msgid ""
 "Automatic stock quote refresh idle - Out of Hours. \n"
 "Last update: %s"
 msgstr ""
+"Η αυτόματη ανανέωση των τιμών της μετοχής είναι σε αναμονή - Εκτός λειτουργίας για ώρες. \n"
+"Τελευταία ενημέρωση: %s"
 
 #: src/stockspanel.cpp:519
 msgid "Automatic stock quote refresh in progress..."
-msgstr ""
+msgstr "Η αυτόματη ανανέωση των τιμών της μετοχής είναι σε εξέλιξη..."
 
 #: src/stockspanel.cpp:525
 #, c-format
@@ -5547,6 +5109,8 @@ msgid ""
 "Automatic stock quote refresh successful. \n"
 "Last update: %s"
 msgstr ""
+"Η αυτόματη ανανέωση των τιμών της μετοχής ήταν επιτυχής.\n"
+"Τελευταία ενημέρωση: %s"
 
 #: src/stockspanel.cpp:531
 #, c-format
@@ -5554,6 +5118,8 @@ msgid ""
 "Automatic stock quote refresh Failed. \n"
 "Last successful update: %s"
 msgstr ""
+"Η αυτόματη ανανέωση των τιμών της μετοχής απέτυχε. \n"
+"Τελευταία επιτυχημένη ενημέρωση: %s"
 
 #: src/stockspanel.cpp:538
 #, c-format
@@ -5561,11 +5127,13 @@ msgid ""
 "Automatic stock quote refresh not started. \n"
 "Last update: %s"
 msgstr ""
+"Η αυτόματη ανανέωση των τιμών της μετοχής δεν ξεκίνησε. \n"
+"Τελευταία ενημέρωση: %s"
 
 #: src/stockspanel.cpp:688
 #: src/stockspanel.cpp:696
 msgid "Stock Download"
-msgstr ""
+msgstr "Λήψη μετοχής"
 
 #: src/stockspanel.cpp:840
 msgid "&New Stock Investment"
@@ -5573,16 +5141,15 @@ msgstr "&Νέα επένδυση σε μετοχές"
 
 #: src/stockspanel.cpp:842
 msgid "&Edit Stock Investment"
-msgstr "&Επεξεργασθείτε την επένδυση σε μετοχές"
+msgstr "&Επεξεργασία επένδυσης σε μετοχές"
 
 #: src/stockspanel.cpp:843
 msgid "&Delete Stock Investment"
-msgstr "&Διαγράψτε την επένδυση σε μετοχές"
+msgstr "&Διαγραφή επένδυσης σε μετοχές"
 
 #: src/stockspanel.cpp:931
-#, fuzzy
 msgid "Symbol: "
-msgstr "Σύμβολο"
+msgstr "Σύμβολο: "
 
 #: src/stockspanel.cpp:1013
 msgid "Do you really want to delete the stock investment?"
@@ -5593,53 +5160,44 @@ msgid "Confirm Stock Investment Deletion"
 msgstr "Επιβεβαιώστε την διαγραφή της επένδυσης σε μετοχές"
 
 #: src/reportsummaryassets.cpp:32
-#, fuzzy
 msgid "Summary of Assets"
-msgstr "Περίληψη Λογαριασμών"
+msgstr "Περίληψη περιουσιακών στοιχείων"
 
 #: src/reportsummaryassets.cpp:91
-#, fuzzy
 msgid "Total Assets: "
-msgstr "Σύνολο λογαριασμών"
+msgstr "Σύνολο περιουσιακών στοιχείων: "
 
 #: src/reportbudget.cpp:102
 msgid "From: "
-msgstr "Από :"
+msgstr "Από:"
 
 #: src/reportbudget.cpp:103
-#, fuzzy
 msgid "to: "
-msgstr "Σε :"
+msgstr "έως: "
 
 #: src/splittransactionsdialog.cpp:105
-#, fuzzy
 msgid " Split Category Details"
-msgstr "Επιλέξτε Κατηγορία"
+msgstr " Λεπτομέρειες διαίρεσης κατηγορίας"
 
 #: src/splittransactionsdialog.cpp:130
-#, fuzzy
 msgid " Total:"
-msgstr "Σύνολο λογαριασμών"
+msgstr " Σύνολο:"
 
 #: src/splittransactionsdialog.cpp:174
-#, fuzzy
 msgid "&Select Category"
-msgstr "Επιλέξτε Κατηγορία"
+msgstr "&Επιλέξτε κατηγορία"
 
 #: src/budgetentrydialog.cpp:143
-#, fuzzy
 msgid "Estimated:"
-msgstr "Εκτιμημένα"
+msgstr "Εκτιμώμενο:"
 
 #: src/budgetentrydialog.cpp:145
-#, fuzzy
 msgid "Actual:"
-msgstr "Πραγματικό"
+msgstr "Πραγματικό:"
 
 #: src/budgetentrydialog.cpp:153
-#, fuzzy
 msgid "Sub Category: "
-msgstr "Υποκατηγορία: \n"
+msgstr "Υποκατηγορία: "
 
 #: src/budgetentrydialog.cpp:166
 msgid "Type:"
@@ -5647,11 +5205,11 @@ msgstr "Τύπος:"
 
 #: src/budgetentrydialog.cpp:170
 msgid "Expense"
-msgstr "Εξοδα"
+msgstr "Έξοδα"
 
 #: src/budgetentrydialog.cpp:177
 msgid "Specify whether this category is an income or an expense category"
-msgstr "Επιλέξτε αν η αυτή η κατηγορία είναι Εσοδο ή Εξοδο"
+msgstr "Επιλέξτε αν η αυτή η κατηγορία είναι κατηγορία εσόδων ή εξόδων"
 
 #: src/budgetentrydialog.cpp:180
 msgid "Frequency:"
@@ -5659,7 +5217,7 @@ msgstr "Συχνότητα:"
 
 #: src/budgetentrydialog.cpp:198
 msgid "Specify the frequency of the expense or deposit"
-msgstr "Δηλώστε την συχνότητα ενός εξόδου ή κατάθεσης"
+msgstr "Καθορίστε την συχνότητα ενός εξόδου ή κατάθεσης"
 
 #: src/budgetentrydialog.cpp:202
 msgid "Amount:"
@@ -5667,111 +5225,99 @@ msgstr "Ποσό:"
 
 #: src/budgetentrydialog.cpp:210
 msgid "Enter the amount budgeted for this category."
-msgstr "Εισάγετε το προϋπολογισμένο ποσό για αυτήν την κατηγορία"
+msgstr "Εισάγετε το προϋπολογισμένο ποσό για αυτήν την κατηγορία."
 
 #: src/customreportdisplay.cpp:43
 msgid "Custom SQL Report: "
-msgstr ""
+msgstr "Προσαρμοσμένη έκθεση SQL: "
 
 #: src/transactionfilterdialog.cpp:94
-#, fuzzy
 msgid " Filter Settings "
-msgstr "Προεπιλογές επισκόπησης"
+msgstr " Ρυθμίσεις φίλτρου"
 
 #: src/transactionfilterdialog.cpp:108
-#, fuzzy
 msgid "Date Range"
-msgstr "Δηλώστε τον λογαριασμό μεταφοράς"
+msgstr "Εύρος ημερομηνιών"
 
 #: src/transactionfilterdialog.cpp:138
 msgid "Filter Split categories. Include the category for further filtering."
-msgstr ""
+msgstr "Φιλτράρισμα διαιρεμένων κατηγοριών. Περιλάβετε την κατηγορία για περισσότερο φιλτράρισμα."
 
 #: src/transactionfilterdialog.cpp:202
 msgid "Will search for the given text in the Notes field"
-msgstr ""
+msgstr "Θα αναζητήσει το δοσμένο κείμενο στο πεδίο Σημειώσεις"
 
 #: src/transactionfilterdialog.cpp:217
 msgid "Activates the filter: Will add selected items to display"
-msgstr ""
+msgstr "Ενεργοποιεί το φίλτρο: Θα προσθέσει επιλεγμένα αντικείμενα στην εμφάνιση"
 
 #: src/transactionfilterdialog.cpp:221
 msgid "Deactivates the filter"
-msgstr ""
+msgstr "Απενεργοποιεί το φίλτρο"
 
 #: src/relocatepayeedialog.h:24
-#, fuzzy
 msgid "Relocate Payee Dialog"
-msgstr "Οργανώστε τις πληρωμές"
+msgstr "Παράθυρο μετατόπισης δικαιούχου"
 
 #: src/stockdialog.h:23
 msgid "New/Edit Stock Investment"
-msgstr "Δημιουργία/Επεξεργασία χαρτοφυλακείου"
+msgstr "Δημιουργία/Επεξεργασία επένδυσης σε μετοχές"
 
 #: src/univcsvdialog.h:28
-#, fuzzy
 msgid "Universal CSV Dialog"
-msgstr "&CSV αρχεία"
+msgstr "Παράθυρο γενικής μορφής CSV"
 
 #: src/customreportdialog.h:26
 msgid "Custom SQL Reports Manager"
-msgstr ""
+msgstr "Διαχείριση προσαρμοσμένων εκθέσεων SQL"
 
 #: src/transdialog.h:24
 msgid "New/Edit Transaction"
-msgstr "Δημιουργία/Επεξεργασία κίνησης "
+msgstr "Δημιουργία/Επεξεργασία συναλλαγής"
 
 #: src/currencydialog.h:23
 msgid "Currency Manager"
 msgstr "Διαχειριστής νομίσματος"
 
 #: src/transactionfilterdialog.h:26
-#, fuzzy
 msgid "MMEX Account View: Transaction Filter"
-msgstr "Τύπος κίνησης"
+msgstr "Προβολή λογαριασμού MMEX: Φίλτρο συναλλαγών"
 
 #: src/fileviewerdialog.h:26
 msgid "View File Contents"
-msgstr "Εικόνα περιεχομένων αρχείων"
+msgstr "Εμφάνιση περιεχομένων αρχείου"
 
 #: src/relocatecategorydialog.h:24
-#, fuzzy
 msgid "Relocate Category Dialog"
-msgstr "Επιλέξτε Κατηγορία"
+msgstr "Παράθυρο μετατόπισης κατηγορίας"
 
 #: src/billsdepositsdialog.h:24
-#, fuzzy
 msgid "New/Edit Repeating Transaction"
-msgstr "Διαγραφή κίνησης"
+msgstr "Δημιουργία/επεξεργασία επαναλαμβανόμενης συναλλαγής"
 
 #: src/budgetyearentrydialog.h:23
 msgid "Budget Year Entry"
-msgstr "Εισαγωγή Ετήσιου προϋπολογισμού"
+msgstr "Εισαγωγή έτους προϋπολογισμού"
 
 #: src/budgetyeardialog.h:23
-#, fuzzy
 msgid "Budget Editor"
-msgstr "Συντάκτης Ετήσιου προϋπολογισμού"
+msgstr "Επεξεργαστής προϋπολογισμού"
 
 #: src/splitdetailsdialog.h:34
-#, fuzzy
 msgid "Split Detail Dialog"
-msgstr "Εναρξη εφαρμογής"
+msgstr "Διαίρεση παραθύρου λεπτομερειών"
 
 #: src/yahoosettingsdialog.h:108
-#, fuzzy
 msgid "Options"
-msgstr "&Επιλογές"
+msgstr "Επιλογές"
 
 #: src/budgetentrydialog.h:23
-#, fuzzy
 msgid "Budget Entry Details"
-msgstr "Διάλογος Ετήσιου προϋπολογισμού"
+msgstr "Λεπτομέρειες εισαγωγής προϋπολογισμού"
 
 #: src/splittransactionsdialog.h:44
-#, fuzzy
 msgid "Split Transaction Dialog"
-msgstr "Επεξεργασία κίνησης"
+msgstr "Διαίρεση παραθύρου συναλλαγής"
 
 #, fuzzy
 #~ msgid "Delete all \"Follow Up\" transactions"
