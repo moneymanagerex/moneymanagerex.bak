@@ -82,21 +82,13 @@ bool Category_Table::UpdateName(const wxString& name, int id)
 
 bool Category_Table::DeleteCategory(int id)
 {
-    // leave a marker for code to be completed
-    int To_Do = id;
-    //TODO: complete this
-
-    return false;
+    return CATEGORY_V1.remove(id, db_);
 }
 
 bool Category_Table::DeleteCategory(const wxString& name)
 {
-    // leave a marker for code to be completed
-    wxString dummy = name;
-    int To_Do = 0;
-    //TODO: complete this
-
-    return false;
+    int id = GetID(name);
+    return CATEGORY_V1.remove(id, db_);
 }
 
 /*****************************************************************************
@@ -350,7 +342,7 @@ wxString mmCategoryList::GetCategoryString(int categID) const
 
 wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID) const
 {
-//  Not sure why this will not compile 
+//  This will not compile because of the const references
 //    wxString subcatName = subCategory_table_.GetName(categID, subCategID);
 
     wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), categID, subCategID);
