@@ -2180,9 +2180,6 @@
 				RelativePath="..\..\..\src\qifimport.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\src\recentfiles.cpp">
-			</File>
-			<File
 				RelativePath="..\..\..\src\relocatecategorydialog.cpp">
 			</File>
 			<File
@@ -2411,9 +2408,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\platfdep.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\recentfiles.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\relocatecategorydialog.h">

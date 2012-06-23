@@ -113,7 +113,6 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_paths.o \
 	mmex_tests_payeedialog.o \
 	mmex_tests_qifimport.o \
-	mmex_tests_recentfiles.o \
 	mmex_tests_relocatecategorydialog.o \
 	mmex_tests_relocatepayeedialog.o \
 	mmex_tests_reportbudget.o \
@@ -392,9 +391,6 @@ mmex_tests_payeedialog.o: $(srcdir)/../../src/payeedialog.cpp
 
 mmex_tests_qifimport.o: $(srcdir)/../../src/qifimport.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/qifimport.cpp
-
-mmex_tests_recentfiles.o: $(srcdir)/../../src/recentfiles.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/recentfiles.cpp
 
 mmex_tests_relocatecategorydialog.o: $(srcdir)/../../src/relocatecategorydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/relocatecategorydialog.cpp

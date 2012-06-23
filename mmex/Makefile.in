@@ -98,7 +98,6 @@ MMEX_OBJECTS =  \
 	mmex_paths.o \
 	mmex_payeedialog.o \
 	mmex_qifimport.o \
-	mmex_recentfiles.o \
 	mmex_relocatecategorydialog.o \
 	mmex_relocatepayeedialog.o \
 	mmex_reportbudget.o \
@@ -369,9 +368,6 @@ mmex_payeedialog.o: $(srcdir)/src/payeedialog.cpp
 
 mmex_qifimport.o: $(srcdir)/src/qifimport.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/qifimport.cpp
-
-mmex_recentfiles.o: $(srcdir)/src/recentfiles.cpp
-	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/recentfiles.cpp
 
 mmex_relocatecategorydialog.o: $(srcdir)/src/relocatecategorydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/relocatecategorydialog.cpp
