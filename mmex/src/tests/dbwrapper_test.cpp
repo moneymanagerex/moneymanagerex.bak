@@ -15,6 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
+/*************************************************************************
+    $Revision$:     Revision of last commit
+    $Author$:       Author of last commit
+    $Date$:         Date of last commit
+**************************************************************************/
 
 //----------------------------------------------------------------------------
 #include <UnitTest++.h>
@@ -81,8 +86,7 @@ TEST(wxSQLite3Exception)
     wxSQLite3Database* db = getDb().get();
     CHECK_THROW(db->ExecuteUpdate("update bad_table set bad_col = unknown_value"), wxSQLite3Exception);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("wxSQLite3Exception",time_start, time_end);
+    DumpDates("wxSQLite3Exception",time_start, wxDateTime::Now());
 }
 //----------------------------------------------------------------------------
 
@@ -92,8 +96,7 @@ TEST(HasBackupSupport)
     bool ok = getDb().get()->HasBackupSupport();
     CHECK(ok);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("HasBackupSupport",time_start, time_end);
+    DumpDates("HasBackupSupport",time_start, wxDateTime::Now());
 }
 //----------------------------------------------------------------------------
 
@@ -103,8 +106,7 @@ TEST(HasEncryptionSupport)
     bool ok = getDb().get()->HasEncryptionSupport();
     CHECK(ok);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("HasEncryptionSupport",time_start, time_end);
+    DumpDates("HasEncryptionSupport",time_start, wxDateTime::Now());
 }
 //----------------------------------------------------------------------------
 
@@ -114,8 +116,7 @@ TEST(HasMetaDataSupport)
     bool ok = getDb().get()->HasMetaDataSupport();
     CHECK(ok);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("HasMetaDataSupport",time_start, time_end);
+    DumpDates("HasMetaDataSupport",time_start, wxDateTime::Now());
 }
 //----------------------------------------------------------------------------
 
@@ -134,18 +135,18 @@ TEST(ViewExists)
     bool ok = mmDBWrapper::ViewExists(db, "I'm_not_exists");
     CHECK(!ok);
 
-    db->ExecuteUpdate("create view master_view as "
-                     "select * "
-                     "from sqlite_master"
-                    );
+    db->ExecuteUpdate(
+        "create view master_view as "
+        "select * "
+        "from sqlite_master"
+    );
 
     ok = mmDBWrapper::ViewExists(db, "master_view");
     CHECK(ok);
 
     db->ExecuteUpdate("drop view master_view");
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("ViewExists",time_start, time_end);
+    DumpDates("ViewExists",time_start, wxDateTime::Now());
 }
 //----------------------------------------------------------------------------
 
@@ -171,8 +172,7 @@ TEST(initDB)
     CHECK(ok);
     CHECK(!SUBCATEGORY_V1.all(db).empty());
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("initDB",time_start, time_end);
+    DumpDates("initDB",time_start, wxDateTime::Now());
 }
 //----------------------------------------------------------------------------
 
@@ -186,7 +186,7 @@ TEST(getCurrencySymbol)
     DB_View_CURRENCYFORMATS_V1::Data* currency = CURRENCYFORMATS_V1.get(1, db);
     if (currency)
         s = currency->CURRENCY_SYMBOL;
-    CHECK(s == L"USD");
+    CHECK(s == L"EUR");
 
     s = wxEmptyString;
     currency = CURRENCYFORMATS_V1.get(0, db);
@@ -194,8 +194,7 @@ TEST(getCurrencySymbol)
         s = currency->CURRENCY_SYMBOL;
     CHECK(s.empty());
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("getCurrencySymbol",time_start, time_end);
+    DumpDates("getCurrencySymbol",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -209,8 +208,7 @@ TEST(checkDBVersion)
     bool ok = mmDBWrapper::checkDBVersion(db);
     CHECK(ok);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("checkDBVersion",time_start, time_end);
+    DumpDates("checkDBVersion",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -229,8 +227,7 @@ TEST(addBudgetYear)
     year_id = budget_table.AddYear(g_BudgetYear);
     CHECK(year_id > 0);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("addBudgetYear",time_start, time_end);
+    DumpDates("addBudgetYear",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -243,14 +240,13 @@ TEST(getBudgetYearID)
 
     BudgetYear_Table budget_year_table(db);
 
-    int year_id = budget_year_table.GetYearID(("unknown_year"));
+    int year_id = budget_year_table.GetYearID("unknown_year");
     CHECK(year_id == -1);
 
     year_id = budget_year_table.GetYearID(g_BudgetYear);
     CHECK(year_id > 0);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("getBudgetYearID",time_start, time_end);
+    DumpDates("getBudgetYearID",time_start, wxDateTime::Now());
 }
 
 #endif
@@ -270,8 +266,7 @@ TEST(getBudgetYearForID)
     wxString year = budget_year_table.GetYear(year_id);
     CHECK(year == g_BudgetYear);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("getBudgetYearForID",time_start, time_end);
+    DumpDates("getBudgetYearForID",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -299,8 +294,7 @@ TEST(getBudgetYearForID_2)
     year = budget_table.GetYear(year_id);
     CHECK(year == g_BudgetYear);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("getBudgetYearForID_2",time_start, time_end);
+    DumpDates("getBudgetYearForID_2",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -339,8 +333,7 @@ TEST(copyBudgetYear)
     ok = budget_table.CopyYear(base_year_id, new_year_id);
     CHECK(ok);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("copyBudgetYear",time_start, time_end);
+    DumpDates("copyBudgetYear",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -359,8 +352,7 @@ TEST(deleteBudgetYear)
     deleted = budget_table.DeleteYear(g_BudgetYear);
     CHECK(deleted);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("deleteBudgetYear",time_start, time_end);
+    DumpDates("deleteBudgetYear",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -376,8 +368,7 @@ TEST(addCategory)
     int cat_id = category_table.AddName(g_CategName);
     CHECK(cat_id > 0);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("addCategory",time_start, time_end);
+    DumpDates("addCategory",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -398,8 +389,7 @@ TEST(addSubCategory)
     int subcat_id = sub_category_table.AddName(g_SubCategName, cat_id);
     CHECK(subcat_id > 0);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("addSubCategory",time_start, time_end);
+    DumpDates("addSubCategory",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -419,8 +409,7 @@ TEST(getCategoryID)
     cat_id = category_table.GetID(("unknown category"));
     CHECK(cat_id == -1);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("getCategoryID",time_start, time_end);
+    DumpDates("getCategoryID",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -444,8 +433,7 @@ TEST(getSubCategoryID)
     subcat_id = subcategory_table.GetID(("unknown subcategory"), cat_id);
     CHECK(subcat_id == -1);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("getSubCategoryID",time_start, time_end);
+    DumpDates("getSubCategoryID",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -468,8 +456,7 @@ TEST(getCategoryName)
     name = category_table.GetName(0);
     CHECK(name.empty());
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("getCategoryName",time_start, time_end);
+    DumpDates("getCategoryName",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -495,8 +482,7 @@ TEST(getSubCategoryName)
     sct_name = subcategory_table.GetName(cat_id, 0);
     CHECK(sct_name.empty());
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("getSubCategoryName",time_start, time_end);
+    DumpDates("getSubCategoryName",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -539,11 +525,34 @@ TEST(updateCategory)
     ok = subcategory_table.UpdateName(g_SubCategName, cat_id, sc_id); // restore
     CHECK(ok);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("updateCategory",time_start, time_end);
+    DumpDates("updateCategory",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
+
+#if 1
+TEST(DeleteCategoryTest)
+{
+    wxDateTime time_start(wxDateTime::Now());
+
+    wxSQLite3Database* db = getDb().get();
+    Category_Table category_table(db);
+
+    int cat_id = category_table.GetID("my_new_category");
+    CHECK(cat_id == -1);
+
+    cat_id = category_table.AddName("my_new_category");
+    CHECK(cat_id > 0);
+
+    CHECK(category_table.DeleteCategory("my_new_category"));
+
+    cat_id = category_table.GetID("my_new_category");
+    CHECK(cat_id == -1);
+
+    DumpDates("DeleteCategoryTest",time_start, wxDateTime::Now());
+}
+#endif
+
 
 #if 1
 TEST(deleteSubCategoryWithConstraints)
@@ -565,8 +574,7 @@ TEST(deleteSubCategoryWithConstraints)
     int ok = category_list.deleteSubCategoryWithConstraints(cat_id, subcat_id);
     CHECK(ok == wxID_OK);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("deleteSubCategoryWithConstraints",time_start, time_end);
+    DumpDates("deleteSubCategoryWithConstraints",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -585,8 +593,7 @@ TEST(deleteCategoryWithConstraints)
     int ok = category_list.deleteCategoryWithConstraints(cat_id);
     CHECK(ok == wxID_OK);
 
-    wxDateTime time_end(wxDateTime::Now());
-    DumpDates("deleteCategoryWithConstraints",time_start, time_end);
+    DumpDates("deleteCategoryWithConstraints",time_start, wxDateTime::Now());
 }
 #endif
 //----------------------------------------------------------------------------
@@ -656,7 +663,7 @@ TEST(getBaseCurrencySettings)
 //----------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------
-#if 1
+#if 0
 TEST(loadBaseCurrencySettings)
 {
     wxSQLite3Database* db = getDb().get();
