@@ -395,7 +395,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
 
     wxSortedArrayString currencies;
     currencies.Add(wxT("US Dollar  ;$;;.;,;dollar;cents;100;1;USD"));
-    currencies.Add(wxT("EURO;€;;.;,;euro;cent;100;1;EUR"));
+    currencies.Add(wxT("EURO;â‚¬;;.;,;euro;cent;100;1;EUR"));
     //    currencies.Add(wxT("EURO;\u20ac;;.;,;euro;cent;100;1;EUR"));
     wxString fileName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
     wxASSERT(wxFileName::FileExists(fileName));
