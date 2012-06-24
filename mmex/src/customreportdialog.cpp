@@ -223,8 +223,8 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
 
     wxString reportfileName;
     reportfileName = reportTitleTxtCtrl_->GetValue();   // Get name from report title.
-    reportfileName.Replace((" "),("_"));          // Replace spaces with underscore character
-    reportfileName += (".sql");                      // Add the file extenstion
+    reportfileName.Replace(" ","_");          // Replace spaces with underscore character
+    reportfileName += ".sql";                      // Add the file extenstion
 
     if (reportfileName == loadedFileName_)
     {
@@ -359,5 +359,5 @@ void mmCustomSQLDialog::OnTextChangeSubReport(wxCommandEvent& /*event*/)
 
 //mmCustomSQLDialog::~mmCustomSQLDialog()
 //{
-//    wxMessageBox(("Testing that the dialog is being destroyed.\nGoodby.."),("Custom SQL Dialog destructor..."));
+//    wxMessageBox("Testing that the dialog is being destroyed.\nGoodby..","Custom SQL Dialog destructor...");
 //}

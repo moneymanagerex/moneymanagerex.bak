@@ -23,27 +23,27 @@
 
 mmAccount::mmAccount(wxSQLite3ResultSet& q1)
 {
-    id_ = q1.GetInt(("ACCOUNTID"));
-    name_ = q1.GetString(("ACCOUNTNAME"));
-    accountNum_  = q1.GetString(("ACCOUNTNUM"));
-    heldAt_ = q1.GetString(("HELDAT"));
-    website_ = q1.GetString(("WEBSITE"));
-    contactInfo_ = q1.GetString(("CONTACTINFO"));
-    accessInfo_ = q1.GetString(("ACCESSINFO"));
-    notes_ = q1.GetString(("NOTES"));  
-    acctType_ = q1.GetString(("ACCOUNTTYPE"));
+    id_ = q1.GetInt("ACCOUNTID");
+    name_ = q1.GetString("ACCOUNTNAME");
+    accountNum_  = q1.GetString("ACCOUNTNUM");
+    heldAt_ = q1.GetString("HELDAT");
+    website_ = q1.GetString("WEBSITE");
+    contactInfo_ = q1.GetString("CONTACTINFO");
+    accessInfo_ = q1.GetString("ACCESSINFO");
+    notes_ = q1.GetString("NOTES");  
+    acctType_ = q1.GetString("ACCOUNTTYPE");
 
     status_ =  mmAccount::MMEX_Open;
-    if (q1.GetString(("STATUS")) == ("Closed"))
+    if (q1.GetString("STATUS") == ("Closed"))
         status_ = mmAccount::MMEX_Closed;
 
-    wxString retVal = q1.GetString(("FAVORITEACCT"));
-    if (retVal == ("TRUE"))
+    wxString retVal = q1.GetString("FAVORITEACCT");
+    if (retVal == "TRUE")
         favoriteAcct_ = true;
     else
         favoriteAcct_ = false;
 
-    initialBalance_ = q1.GetDouble(("INITIALBAL"));
+    initialBalance_ = q1.GetDouble("INITIALBAL");
 }
 
 mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)

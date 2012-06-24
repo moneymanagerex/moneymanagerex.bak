@@ -28,7 +28,7 @@ mmCustomSQLReport::mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle
 void mmCustomSQLReport::displayReportHeader(mmHTMLBuilder& hb, wxString reportTitle)
 {
     hb.addHeader(2, reportTitle);
-    hb.addHeaderItalic(0, ("Today's Date: ") + mmGetNiceDateString(wxDateTime::Now()));
+    hb.addHeaderItalic(0, "Today's Date: " + mmGetNiceDateString(wxDateTime::Now()));
 }
 
 wxString mmCustomSQLReport::getHTMLText()
@@ -37,7 +37,7 @@ wxString mmCustomSQLReport::getHTMLText()
     hb.init();
     displayReportHeader(hb, _("Custom SQL Report: ") + reportTitle_ );
     hb.startCenter();
-    hb.startTable(("90%"));
+    hb.startTable("90%");
 
     wxSQLite3ResultSet sqlQueryResult;
 
@@ -46,7 +46,7 @@ wxString mmCustomSQLReport::getHTMLText()
 
     try
     {
-        lines_number = core_->db_->ExecuteScalar(("select count (*) from (\n") + sqlQuery_ + ("\n)"));
+        lines_number = core_->db_->ExecuteScalar("select count (*) from (\n" + sqlQuery_ + "\n)");
     }
     catch(const wxSQLite3Exception& e)
     {
@@ -54,9 +54,9 @@ wxString mmCustomSQLReport::getHTMLText()
     }
 
     wxString lower = error_string.Lower();
-    if (lower.Contains(("update")) ||
-        lower.Contains(("delete")) ||
-        lower.Contains(("insert")))
+    if (lower.Contains("update") ||
+        lower.Contains("delete") ||
+        lower.Contains("insert"))
     {
         wxMessageDialog msgDlg(0, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO|wxICON_WARNING);
         if (msgDlg.ShowModal() != wxID_YES) {
@@ -129,11 +129,11 @@ wxString mmCustomSQLReport::getHTMLText()
     hb.endTable();
     hb.endCenter();
 
-    if (lower.Contains(("update")))
+    if (lower.Contains("update"))
          hb.addHeader(2, _("Dababase updated succesfully"));
-    if (lower.Contains(("delete")))
+    if (lower.Contains("delete"))
          hb.addHeader(2, _("Deletion completed"));
-    if (lower.Contains(("insert")))
+    if (lower.Contains("insert"))
          hb.addHeader(2, _("Data Insertion completed"));
 
     hb.end();

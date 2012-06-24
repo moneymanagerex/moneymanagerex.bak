@@ -252,24 +252,24 @@ void mmBillsDepositsPanel::initVirtualListControl()
     {
         mmBDTransactionHolder th;
 
-        th.id_           = q1.GetInt(("BDID"));
-        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(("NEXTOCCURRENCEDATE")));
+        th.id_           = q1.GetInt("BDID");
+        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString("NEXTOCCURRENCEDATE"));
         th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
-        int repeats        = q1.GetInt(("REPEATS"));
-        th.payeeID_        = q1.GetInt(("PAYEEID"));
-        th.transType_      = q1.GetString(("TRANSCODE"));
-        th.accountID_      = q1.GetInt(("ACCOUNTID"));
-        th.toAccountID_    = q1.GetInt(("TOACCOUNTID"));
+        int repeats        = q1.GetInt("REPEATS");
+        th.payeeID_        = q1.GetInt("PAYEEID");
+        th.transType_      = q1.GetString("TRANSCODE");
+        th.accountID_      = q1.GetInt("ACCOUNTID");
+        th.toAccountID_    = q1.GetInt("TOACCOUNTID");
         th.accountName_    = core_->getAccountName(th.accountID_);
-        th.amt_            = q1.GetDouble(("TRANSAMOUNT"));
-        th.toAmt_          = q1.GetDouble(("TOTRANSAMOUNT"));
-        th.notes_           = q1.GetString(("NOTES"));
-        th.categID_           = q1.GetInt(("CATEGID"));
-        th.categoryStr_       = q1.GetString(("CATEGNAME"));
-        th.subcategID_       = q1.GetInt(("SUBCATEGID"));
-        th.subcategoryStr_ = q1.GetString(("SUBCATEGNAME"));
+        th.amt_            = q1.GetDouble("TRANSAMOUNT");
+        th.toAmt_          = q1.GetDouble("TOTRANSAMOUNT");
+        th.notes_           = q1.GetString("NOTES");
+        th.categID_           = q1.GetInt("CATEGID");
+        th.categoryStr_       = q1.GetString("CATEGNAME");
+        th.subcategID_       = q1.GetInt("SUBCATEGID");
+        th.subcategoryStr_ = q1.GetString("SUBCATEGNAME");
 
-        int numRepeats     = q1.GetInt(("NUMOCCURRENCES"));
+        int numRepeats     = q1.GetInt("NUMOCCURRENCES");
 
         th.bd_repeat_user_ = false;
         th.bd_repeat_auto_ = false;
@@ -326,7 +326,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
         if (minutesRemaining > 0)
             th.daysRemaining_ += 1;
 
-        th.daysRemainingStr_ = wxString::Format(("%d"), th.daysRemaining_) + _(" days remaining");
+        th.daysRemainingStr_ = wxString::Format("%d", th.daysRemaining_) + _(" days remaining");
 
         if (th.daysRemaining_ == 0)
         {
@@ -336,7 +336,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
 
         if (th.daysRemaining_ < 0)
         {
-            th.daysRemainingStr_ = wxString::Format(("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
+            th.daysRemainingStr_ = wxString::Format("%d", abs(th.daysRemaining_)) + _(" days overdue!");
             if ((repeats > 10) && (numRepeats < 0) )
                 th.daysRemainingStr_ = _("Inactive");
         }
@@ -612,7 +612,7 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
     else
     {
         st-> SetLabel(Tips(TIPS_BILLS));
-        stm-> SetLabel((""));
+        stm-> SetLabel("");
     }
 }
 

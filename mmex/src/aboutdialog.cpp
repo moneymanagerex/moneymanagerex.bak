@@ -111,7 +111,7 @@ void mmAboutDialog::CreateControls()
     while (!input.Eof())
     {
         wxString line = text.ReadLine() << ("\n");
-        if (!line.Contains(("-------------\n")))
+        if (!line.Contains("-------------\n"))
             data[part] << line;
         else {
             ++part;
