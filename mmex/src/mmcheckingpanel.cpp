@@ -1636,7 +1636,7 @@ void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
             OnMarkTransaction(evt);
     }
-    else if (wxGetKeyState(wxKeyCode('U')) && status != "") {
+    else if ((wxGetKeyState(wxKeyCode('U'))||wxGetKeyState(wxKeyCode('N'))) && status != "") {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
             OnMarkTransaction(evt);
     }
@@ -1777,10 +1777,10 @@ void TransactionListCtrl::refreshVisualList()
 //  Called only when moving a deposit/withdraw transaction to a new account.
 int TransactionListCtrl::destinationAccountID(wxString accName)
 {
-    wxArrayString as = m_cp->core_->getAccountsName(m_cp->accountID());
+    const wxArrayString as = m_cp->core_->getAccountsName(m_cp->accountID());
 
-    wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
-    wxSingleChoiceDialog scd(0, _("Select the destination Account "), headerMsg , as);
+    wxSingleChoiceDialog scd(0, _("Select the destination Account "),
+        wxString::Format(_("Moving Transaction from %s to..."), accName) , as);
 
     int accountID = -1;
     if (scd.ShowModal() == wxID_OK)
@@ -1794,30 +1794,26 @@ int TransactionListCtrl::destinationAccountID(wxString accName)
 
 void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 {
-    if (m_selectedIndex != -1)
+    if (m_selectedIndex == -1) return;
+    if ( m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR )
     {
-        if ( m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR )
+        mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(),
+                          m_cp->m_trans[m_selectedIndex]->transactionID(), true, this);
+        if ( dlg.ShowModal() == wxID_OK )
+            refreshVisualList();
+    }
+    else
+    {
+        int toAccountID = destinationAccountID(m_cp->m_trans[m_selectedIndex]->fromAccountStr_);
+        if ( toAccountID != -1 )
         {
-            mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(),
-                              m_cp->m_trans[m_selectedIndex]->transactionID(), true, this);
-            if ( dlg.ShowModal() == wxID_OK )
-            {
-                refreshVisualList();
-            }
-        }
-        else
-        {
-            int toAccountID = destinationAccountID(m_cp->m_trans[m_selectedIndex]->fromAccountStr_);
-            if ( toAccountID != -1 )
-            {
-                boost::shared_ptr<mmBankTransaction> pTransaction;
-                pTransaction = m_cp->core_->bTransactionList_.getBankTransactionPtr(m_cp->accountID(),
-                                      m_cp->m_trans[m_selectedIndex]->transactionID() );
+            boost::shared_ptr<mmBankTransaction> pTransaction;
+            pTransaction = m_cp->core_->bTransactionList_.getBankTransactionPtr(m_cp->accountID(),
+                                  m_cp->m_trans[m_selectedIndex]->transactionID() );
 
-                pTransaction->accountID_ = toAccountID;
-                m_cp->core_->bTransactionList_.updateTransaction(pTransaction);
-                refreshVisualList();
-            }
+            pTransaction->accountID_ = toAccountID;
+            m_cp->core_->bTransactionList_.updateTransaction(pTransaction);
+            refreshVisualList();
         }
     }
 }
@@ -1825,32 +1821,29 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 //----------------------------------------------------------------------------
 void TransactionListCtrl::OnViewSplitTransaction(wxCommandEvent& /*event*/)
 {
-    if (m_selectedIndex != -1)
-    {
-        if (m_cp->m_trans[m_selectedIndex]->categID_ < 0)
-            m_cp->DisplaySplitCategories(m_cp->m_trans[m_selectedIndex]->transactionID());
-    }
+    if (m_selectedIndex == -1) return;
+    if (m_cp->m_trans[m_selectedIndex]->categID_ < 0)
+        m_cp->DisplaySplitCategories(m_cp->m_trans[m_selectedIndex]->transactionID());
 }
 
 //----------------------------------------------------------------------------
 void TransactionListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
-    if (m_selectedIndex != -1)
+    if (m_selectedIndex == -1) return;
+
+    mmTransDialog dlg(m_cp->getDb(), m_cp->core_,  m_cp->accountID(),
+        m_cp->m_trans[m_selectedIndex]->transactionID(), true, this);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        mmTransDialog dlg(m_cp->getDb(), m_cp->core_,  m_cp->accountID(),
-            m_cp->m_trans[m_selectedIndex]->transactionID(), true, this);
-        if ( dlg.ShowModal() == wxID_OK )
+        m_cp->initVirtualListControl();
+        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
+        if (m_selectedIndex != -1)
         {
-            m_cp->initVirtualListControl();
-            RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
-            if (m_selectedIndex != -1)
-            {
-                SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-                EnsureVisible(m_selectedIndex);
-                //Notes and other info should be updated
-                m_cp->updateExtraTransactionData(m_selectedIndex);
-            }
+            SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+            SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+            EnsureVisible(m_selectedIndex);
+            //Notes and other info should be updated
+            m_cp->updateExtraTransactionData(m_selectedIndex);
         }
     }
 }
