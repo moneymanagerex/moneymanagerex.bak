@@ -552,25 +552,24 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     }
 
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, ("DELIMITER"), mmex::DEFDELIMTER);
-    wxString q =  ("\"");
+    const wxString delimit = mmDBWrapper::getInfoSettingValue(db_, ("DELIMITER"), mmex::DEFDELIMTER);
+    const wxString q =  ("\"");
 
-    wxArrayString as = core->getAccountsName();
+    const wxArrayString as = core->getAccountsName();
     wxSingleChoiceDialog scd(0, _("Choose Account to Export from:"),_("QIF Export"), as);
 
     wxString acctName;
 
-    if (scd.ShowModal() == wxID_OK)  acctName = scd.GetStringSelection();
-    if (acctName.IsEmpty())  return;
+    if (scd.ShowModal() != wxID_OK) return;
+    acctName = scd.GetStringSelection();
 
-    wxString chooseExt;
-    chooseExt << _("QIF Files") << (" (*.qif)|*.qif;*.QIF");
+    const wxString chooseExt = _("QIF Files") + (" (*.qif)|*.qif;*.QIF");
     wxString fileName = wxFileSelector(_("Choose QIF data file to Export"),
                         wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if (fileName.IsEmpty()) return;
 
-    correctEmptyFileExt(("qif"), fileName);
+    correctEmptyFileExt("qif", fileName);
 
     wxFileOutputStream output(fileName);
     wxTextOutputStream text(output);
@@ -592,7 +591,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     st.Bind(2, fromAccountID);
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    int numRecords = 0;
+    long numRecords = 0;
 
     text << ("!Account") << endl
          << ("N") << acctName <<  endl
@@ -602,14 +601,14 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
 
     while (q1.NextRow())
     {
-        wxString transid = q1.GetString("TRANSID");
-        wxString dateDBString = q1.GetString("DATE");
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateDBString);
-        wxString dateString = mmGetDateForDisplay(db_, dtdt);
+        const wxString transid = q1.GetString("TRANSID");
+        const wxString dateDBString = q1.GetString("DATE");
+        const wxDateTime dtdt = mmGetStorageStringAsDate(dateDBString);
+        const wxString dateString = mmGetDateForDisplay(db_, dtdt);
 
         int sid, cid;
         wxString payee = mmDBWrapper::getPayee(db_, q1.GetInt("PAYEEID"), sid, cid);
-        wxString type = q1.GetString("TRANSACTIONTYPE");
+        const wxString type = q1.GetString("TRANSACTIONTYPE");
 
         wxString amount = adjustedExportAmount(amtSeparator, q1.GetString("AMOUNT"));
         //Amount should be formated
@@ -623,36 +622,35 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
         mmex::formatCurrencyToDouble(toamount, value);
         mmex::formatDoubleToCurrencyEdit(value, toamount);
 
-
-        wxString transNum = q1.GetString("TRANSACTIONNUMBER");
-        wxString categ = core->getCategoryName(q1.GetInt("CATEGID"));
-        wxString subcateg = mmDBWrapper::getSubCategoryName(db_,
+        const wxString transNum = q1.GetString("TRANSACTIONNUMBER");
+        const wxString categ = core->getCategoryName(q1.GetInt("CATEGID"));
+        const wxString subcateg = mmDBWrapper::getSubCategoryName(db_,
                             q1.GetInt("CATEGID"), q1.GetInt("SUBCATEGID"));
         wxString notes = q1.GetString("NOTES");
         notes.Replace("''", "'");
         notes.Replace("\n", " ");
         wxString subcategStr = "" ;
 
-        if (type == ("Transfer"))
+        if (type == "Transfer")
         {
             subcategStr = type;
             int tAccountID = q1.GetInt("TOACCOUNTID");
             int fAccountID = q1.GetInt("ACCOUNTID");
 
-            wxString fromAccount = core->getAccountName(fAccountID);
-            wxString toAccount = core->getAccountName(tAccountID);
+            const wxString fromAccount = core->getAccountName(fAccountID);
+            const wxString toAccount = core->getAccountName(tAccountID);
 
             if (tAccountID == fromAccountID) {
                 payee = fromAccount;
                 amount = toamount;
             } else if (fAccountID == fromAccountID) {
                 payee = toAccount;
-                amount ='-' + amount;
+                amount.Prepend("-");
             }
         }
         else
         {
-            subcategStr << categ << (subcateg != ("") ? (":") : ("")) << subcateg;
+            subcategStr << categ << (subcateg != "" ? ":" : "") << subcateg;
         }
 
         text << ('D') << dateString << endl
@@ -693,7 +691,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
                 text << ('S') << splitcateg << (splitsubcateg != "" ? ":" : "") << splitsubcateg << endl
                 << ('$') << (type == "Withdrawal" ? "-" : "") << splitamount << endl
                 // E Split memo — any text to go with this split item. I saggest Category:Subcategory = Amount for earch line
-                << ('E') << splitcateg << (splitsubcateg != ("") ? ":" : "") << splitsubcateg << (type == "Withdrawal" ? " -" : " ") << splitamount << endl;
+                << ('E') << splitcateg << (splitsubcateg != "" ? ":" : "") << splitsubcateg << (type == "Withdrawal" ? " -" : " ") << splitamount << endl;
             }
 
             q2.Finalize();
@@ -705,7 +703,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
 
     q1.Finalize();
 
-    wxString msg = wxString::Format(("%d transactions exported"), numRecords);
+    wxString msg = wxString::Format(_("%ld transactions exported"), numRecords);
     mmShowErrorMessage(0, msg, _("Export to QIF"));
 }
 
