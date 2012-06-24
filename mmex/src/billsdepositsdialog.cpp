@@ -800,7 +800,7 @@ void mmBDDialog::updateControlsForTransType()
         displayControlsForType(DEF_WITHDRAWAL);
         SetTransferControls();
         stp->SetLabel(_("Payee"));
-        st->SetLabel((""));
+        st->SetLabel("");
         bPayee_->SetToolTip(wxGetTranslation(payeeWithdrawalTip_));
         if (payeeUnknown_)
             resetPayeeString();
@@ -810,7 +810,7 @@ void mmBDDialog::updateControlsForTransType()
         displayControlsForType(DEF_DEPOSIT);
         SetTransferControls();
         stp->SetLabel(_("From"));
-        st->SetLabel((""));
+        st->SetLabel("");
         bPayee_->SetToolTip(wxGetTranslation(payeeDepositTip_));
         if (payeeUnknown_)
             resetPayeeString();

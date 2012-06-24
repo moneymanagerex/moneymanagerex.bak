@@ -436,7 +436,7 @@ mmCheckingPanel::mmCheckingPanel
 */
 mmCheckingPanel::~mmCheckingPanel()
 {
-    this->save_config(m_listCtrlAccount, ("CHECK"));
+    this->save_config(m_listCtrlAccount, "CHECK");
     save_panel_settings();
 }
 //----------------------------------------------------------------------------
@@ -549,9 +549,9 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizer9->Add(itemBoxSizerVHeader, flags);
 
     wxStaticText* header_text = new wxStaticText(this,
-        ID_PANEL_CHECKING_STATIC_HEADER, (""));
+        ID_PANEL_CHECKING_STATIC_HEADER, "");
     int font_size = this->GetFont().GetPointSize() + 2;
-    header_text->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, ("")));
+    header_text->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, ""));
     itemBoxSizerVHeader->Add(header_text, flags);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
@@ -566,7 +566,7 @@ void mmCheckingPanel::CreateControls()
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, flags);
 
     itemStaticTextMainFilter_ = new wxStaticText(this,
-        ID_PANEL_CHECKING_STATIC_PANELVIEW, (""));
+        ID_PANEL_CHECKING_STATIC_PANELVIEW, "");
 
     itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, flags);
     //need more horizontal space to include all menu items
@@ -589,7 +589,7 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, flags);
 
     wxStaticText* itemStaticText10 = new wxStaticText(this,
-            ID_PANEL_CHECKING_STATIC_BALHEADER, (""));
+            ID_PANEL_CHECKING_STATIC_BALHEADER, "");
     itemBoxSizerHHeader->Add(itemStaticText10, 0, wxEXPAND);
 
     /* ---------------------- */
@@ -655,20 +655,19 @@ void mmCheckingPanel::CreateControls()
     itemButton9->Enable(false);
 
     wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12,
-        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1),
+        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100, -1),
         wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB, wxDefaultValidator, _("Search"));
     itemBoxSizer5->Add(searchCtrl, flags);
     searchCtrl->SetToolTip(_("Enter any string to find it in the nearest transaction notes"));
 
     //Infobar-mini
     wxStaticText* itemStaticText44 = new wxStaticText(itemPanel12,
-        ID_PANEL_CHECKING_STATIC_MINI, (""),
-        wxDefaultPosition, wxDefaultSize, 0);
+        ID_PANEL_CHECKING_STATIC_MINI, "", wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText44, flags);
 
     //Infobar
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12,
-        ID_PANEL_CHECKING_STATIC_DETAILS, (""), wxDefaultPosition,
+        ID_PANEL_CHECKING_STATIC_DETAILS, "", wxDefaultPosition,
         wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
     //Show tips when no transaction selected
@@ -712,9 +711,9 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
         wxString miniStr = getMiniInfoStr(selIndex);
 
         //Show only first line but full string set as tooltip
-        if (miniStr.Find(("\n")) > 1 && !miniStr.IsEmpty())
+        if (miniStr.Find("\n") > 1 && !miniStr.IsEmpty())
         {
-            stm->SetLabel(miniStr.substr(0,miniStr.Find(("\n"))) + (" ..."));
+            stm->SetLabel(miniStr.substr(0,miniStr.Find("\n")) + " ...");
             stm->SetToolTip(miniStr);
         }
         else
@@ -725,7 +724,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
     }
     else
     {
-        stm->SetLabel((""));
+        stm->SetLabel("");
         enableEditDeleteButtons(false);
         showTips() ;
     }
@@ -773,11 +772,11 @@ void mmCheckingPanel::setAccountSummary()
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     bool show_displayed_balance_ = (transFilterActive_ || (m_currentView != VIEW_TRANS_ALL_STR));
 
-    wxString lbl  = wxString() << _("Account Bal: ") << balance << ("      ")
-                               << _("Reconciled Bal: ") << recbalance << ("      ")
-                               << _("Diff: ") << diffbal << ("      ")
-                               << (show_displayed_balance_ ? _("Displayed Bal: ") : (""))
-                               << (show_displayed_balance_ ? filteredBalanceStr : (""));
+    wxString lbl  = wxString() << _("Account Bal: ") << balance << "      "
+                               << _("Reconciled Bal: ") << recbalance << "      "
+                               << _("Diff: ") << diffbal << "      "
+                               << (show_displayed_balance_ ? _("Displayed Bal: ") : "")
+                               << (show_displayed_balance_ ? filteredBalanceStr : "");
 
     header->SetLabel(lbl);
 }
@@ -827,12 +826,12 @@ const TransactionMatchMap& initTransactionMatchMap()
 {
     static TransactionMatchMap map;
 
-    map[VIEW_TRANS_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(("R"))), false);
-    map[VIEW_TRANS_UNRECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>((""))), false);
-    map[VIEW_TRANS_NOT_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status< std::not_equal_to<wxString> >(("R"))), false);
-    map[VIEW_TRANS_VOID] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(("V"))), false);
-    map[VIEW_TRANS_FLAGGED] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(("F"))), false);
-    map[VIEW_TRANS_DUPLICATES] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(("D"))), false);
+    map[VIEW_TRANS_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>("R")), false);
+    map[VIEW_TRANS_UNRECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>("")), false);
+    map[VIEW_TRANS_NOT_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status< std::not_equal_to<wxString> >("R")), false);
+    map[VIEW_TRANS_VOID] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>("V")), false);
+    map[VIEW_TRANS_FLAGGED] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>("F")), false);
+    map[VIEW_TRANS_DUPLICATES] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>("D")), false);
 
     map[VIEW_TRANS_TODAY_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
     map[VIEW_TRANS_LAST_30_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
@@ -986,7 +985,7 @@ void mmCheckingPanel::initVirtualListControl()
 
 double mmCheckingPanel::getBalance(mmBankTransaction* transPtr, double currentBalance) const
 {
-    if (transPtr->status_ != ("V"))
+    if (transPtr->status_ != "V")
         currentBalance += transPtr->value(m_AccountID);
 
     return currentBalance;
@@ -1064,7 +1063,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         && evt != MENU_TREEPOPUP_DELETE_FLAGGED) && transFilterActive_)
     {
         wxString messageStr;
-        messageStr << _("Transaction Filter")<< _("  will interfere with this filtering.") << ("\n\n");
+        messageStr << _("Transaction Filter")  << _("  will interfere with this filtering.") << "\n\n";
         messageStr << _("Please deactivate: ") << _("Transaction Filter");
         wxMessageBox(messageStr,_("Transaction Filter"),wxOK|wxICON_WARNING);
         return;
@@ -1351,11 +1350,11 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
 {
     int evt = event.GetId();
     wxString status = ("");
-    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED)         status = ("R");
-    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED)   status = ("");
-    else if (evt == MENU_TREEPOPUP_MARKVOID)           status = ("V");
-    else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP) status = ("F");
-    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE)         status = ("D");
+    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED)             status = "R";
+    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED)       status = "";
+    else if (evt == MENU_TREEPOPUP_MARKVOID)               status = "V";
+    else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP) status = "F";
+    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE)          status = "D";
     else wxASSERT(false);
 
     OnMarkTransactionDB(status);
@@ -1367,12 +1366,12 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
 void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 {
     int evt =  event.GetId();
-    wxString status = ("");
-    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED_ALL)             status = ("R");
-    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED_ALL)       status = ("");
-    else if (evt == MENU_TREEPOPUP_MARKVOID_ALL)               status = ("V");
-    else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL) status = ("F");
-    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL)          status = ("D");
+    wxString status = "";
+    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED_ALL)             status = "R";
+    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED_ALL)       status = "";
+    else if (evt == MENU_TREEPOPUP_MARKVOID_ALL)               status = "V";
+    else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL) status = "F";
+    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL)          status = "D";
     else  wxASSERT(false);
 
     m_cp->core_->db_.get()->Begin();
@@ -1510,13 +1509,13 @@ int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
     {
         res = ICON_UNRECONCILED;
         wxString status = m_cp->getItem(item, COL_STATUS);
-        if ( status == ("F"))
+        if ( status == "F")
             res = ICON_FOLLOWUP;
-        else if (status == ("R"))
+        else if (status == "R")
             res = ICON_RECONCILED;
-        else if (status == ("V"))
+        else if (status == "V")
             res = ICON_VOID;
-        else if (status == ("D"))
+        else if (status == "D")
             res = ICON_DUPLICATE;
     }
 
@@ -1633,27 +1632,27 @@ void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
     //Read status of the selected transaction
     wxString status = m_cp->m_trans[m_selectedIndex]->status_;
 
-    if (wxGetKeyState(wxKeyCode('R')) && status != ("R")) {
+    if (wxGetKeyState(wxKeyCode('R')) && status != "R") {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
             OnMarkTransaction(evt);
     }
-    else if (wxGetKeyState(wxKeyCode('U')) && status != ("")) {
+    else if (wxGetKeyState(wxKeyCode('U')) && status != "") {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
             OnMarkTransaction(evt);
     }
-    else if (wxGetKeyState(wxKeyCode('F')) && status != ("F")) {
+    else if (wxGetKeyState(wxKeyCode('F')) && status != "F") {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
             OnMarkTransaction(evt);
     }
-    else if (wxGetKeyState(wxKeyCode('D')) && status != ("D")) {
+    else if (wxGetKeyState(wxKeyCode('D')) && status != "D") {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
             OnMarkTransaction(evt);
     }
-    else if (wxGetKeyState(wxKeyCode('V')) && status != ("V")) {
+    else if (wxGetKeyState(wxKeyCode('V')) && status != "V") {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
         OnMarkTransaction(evt);
     }
-    else if ((wxGetKeyState(WXK_DELETE) || wxGetKeyState(WXK_NUMPAD_DELETE)) && status != ("V"))
+    else if ((wxGetKeyState(WXK_DELETE) || wxGetKeyState(WXK_NUMPAD_DELETE)) && status != "V")
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
         OnMarkTransaction(evt);
