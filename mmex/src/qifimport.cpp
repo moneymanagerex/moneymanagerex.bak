@@ -1,229 +1,10 @@
-/*
-Quicken Interchange Format (QIF) files
-
-Ref: http://en.wikipedia.org/wiki/Quicken_Interchange_Format
-     http://www.respmech.com/mym2qifw/qif_new.htm
-
-The Quicken interchange format (QIF) is a specially formatted text (ASCII) file that
-enables Quicken transactions to be moved from one Quicken account register into
-another Quicken account register, or to or from other programs that support the QIF format.
-
-Note: For Quicken to translate data from a text file into the Quicken register as transactions,
-the text file must be in the QIF format.
-
-Required File Formatting
-
-Each transaction must end with a symbol, indicating the end of entry. Each item in the
-transaction must display on a separate line. When Quicken exports an account register or list,
-it adds a line to the top of the file that identifies the type of account or list. Listed below
-are the header lines Quicken adds to the exported files:
-
-Header              Type of data
-!Type:Bank          Bank account transactions
-!Type:Cash          Cash account transactions
-!Type:CCard         Credit card account transactions
-!Type:Invst         Investment account transactions
-!Type:Oth A         Asset account transactions
-!Type:Oth L         Liability account transactions
-
-!Account            Account list or which account follows
-!Type:Cat           Category list
-!Type:Class         Class list
-!Type:Memorized     Memorized transaction list
-
-Quicken can be configured to import all transfers, regardless of whether Ignore Transfers
-is selected when the file is imported. To do this, add a line to the file being imported
-into the Quicken account. Use a text editor or word processor to put the following line
-immediately after the header line at the top of the file:
-
-    !Option:AllXfr
-
-Items for Non-Investment Accounts
-
-Each item in a bank, cash, credit card, other liability, or other asset account must
-begin with a letter that indicates the field in the Quicken
-register. The non-split items can be in any sequence:
-Field  Indicator Explanations
-D      Date
-T      Amount
-C      Cleared status
-N      Num (check or reference number)
-P      Payee
-M      Memo
-A      Address (up to five lines; the sixth line is an optional message)
-L      Category (Category/Subcategory/Transfer/Class)
-S      Category in split (Category/Transfer/Class)
-E      Memo in split
-$      Dollar amount of split
-^      End of entry
-
-Note: Repeat the S, E, and $ lines as many times as needed for additional items in a split.
-If an item is omitted from the transaction in the QIF file, Quicken treats it as a blank item.
-
-Items for Investment Accounts
-Field  Indicator Explanation
-D      Date
-N      Action
-Y      Security name
-I      Price
-Q      Quantity (number of shares or split ratio)
-T      Transaction amount
-C      Cleared status
-P      Text in the first line for transfers and reminders
-M      Memo
-O      Commission
-L      Account for the transfer
-$      Amount transferred
-^      End of entry
-
-Items for Account Information
-
-The account header !Account is used in two places, at the start of an account list and the
-start of a list of transactions to specify to which account they belong.
-Field  Indicator Explanation
-N   Name
-T   Type of account
-D   Description
-L   Credit limit (only for credit card account)
-/   Statement balance date
-$   Statement balance
-^   End of entry
-
-Items for a Category List
-Field   Indicator Explanation
-N   Category name:subcategory name
-D   Description
-T   Tax related if included, not tax related if omitted
-I   Income category
-E   Expense category (if category is unspecified, Quicken assumes expense type)
-B   Budget amount (only in a Budget Amounts QIF file)
-R   Tax schedule information
-^   End of entry
-
-Items for a Class List
-Field   Indicator Explanation
-N   Class name
-D   Description
-^   End of entry
-
-
-Items for a Memorized Transaction List
-
-Immediately preceding the ^ character, each entry must end with one of the following file
-indicators to specify the transaction type.
-
-    KC
-
-    KD
-
-    KP
-
-    KI
-
-    KE
-
-With that exception, memorized transaction entries have the same format as regular
-transaction entries (non-investment accounts). However, the Date or Num field is included.
-All items are optional, but if an amortization record is included, all seven amortization
-lines must also be included.
-
-Field   Indicator Explanation
-KC  Check transaction
-KD  Deposit transaction
-KP  Payment transaction
-KI  Investment transaction
-KE  Electronic payee transaction
-T   Amount
-C   Cleared status
-P   Payee
-M   Memo
-A   Address
-L   Category or Transfer/Class
-S   Category/class in split
-E   Memo in split
-$   Dollar amount of split
-1   Amortization: First payment date
-2   Amortization: Total years for loan
-3   Amortization: Number of payments already made
-4   Amortization: Number of periods per year
-5   Amortization: Interest rate
-6   Amortization: Current loan balance
-7   Amortization: Original loan amount
-^   End of entry
-
-Examples of QIF files
-
-Normal Transactions Example
-Transaction Item    Comment (not in file)
-!Type:Bank  Header
-D6/ 1/94    Date
-T-1,000.00  Amount
-N1005   Check number
-PBank Of Mortgage   Payee
-L[linda]    Category
-S[linda]    First category in split
-$-253.64    First amount in split
-SMort Int   Second category in split
-$=746.36    Second amount in split
-^   End of transaction
-D6/ 2/94    Date
-T75.00  Amount
-PDeposit    Payee
-^   End of transaction
-D6/ 3/94    Date
-T-10.00     Amount
-PAnthony Hopkins    Payee
-MFilm   Memo
-LEntertain  Category
-AP.O. Box 27027     Address (line 1)
-ATucson, AZ     Address (line 2)
-A85726  Address (line 3)
-A   Address (line 4)
-A   Address (line 5)
-A   Address (line 6)
-^   End of transaction
-
-Investment Example
-Transaction Item    Comment (not in file)
-!Type:Invst     Header line
-D8/25/93    Date
-NShrsIn     Action (optional)
-Yibm4   Security
-I11.260     Price
-Q88.81  Quantity
-CX  Cleared status
-T1,000.00   Amount
-MOpening    Balance Memo
-^   End of transaction
-D8/25/93    Date
-NBuyX   Action
-Yibm4   Security
-I11.030     Price
-Q9.066  Quantity
-T100.00     Amount
-MEst. price as of 8/25/93   Memo
-L[CHECKING]     Account for transfer
-$100.00     Amount transferred
-^   End of transaction
-
-Memorized List Example
-Transaction Item    Comment (not in file)
-!Type:Memorized     Header line
-T-50.00     Amount
-POakwood Gardens    Payee
-MRent   Memo
-KC  Check transaction
-^   End of transaction
-
-*/
-
-#include "util.h"
 #include "dbwrapper.h"
-#include "guiid.h"
 #include "fileviewerdialog.h"
-#include "mmex.h"
+#include "guiid.h"
 #include "mmcoredb.h"
+#include "mmex.h"
 #include "platfdep.h"
+#include "util.h"
 
 enum qifAccountInfoType
 {
@@ -239,20 +20,20 @@ enum qifAccountInfoType
 
 enum qifLineType
 {
-    AcctType    = 1, // !
-    Date        = 2, // D
-    Amount      = 3, // T
-    Address     = 4, // A
-    Payee       = 5, // P
-    EOTLT       = 6, // ^
-    TransNumber = 7, // N
-    Status      = 8, // C
-    UnknownType = 9,
-    Memo        = 10, // M
-    Category    = 11,  // L
-    CategorySplit  = 12,  // S
-    MemoSplit      = 13,  // E
-    AmountSplit    = 14   // '$'
+    AcctType      = 1, // !
+    Date          = 2, // D
+    Amount        = 3, // T
+    Address       = 4, // A
+    Payee         = 5, // P
+    EOTLT         = 6, // ^
+    TransNumber   = 7, // N
+    Status        = 8, // C
+    UnknownType   = 9,
+    Memo          = 10, // M
+    Category      = 11, // L
+    CategorySplit = 12, // S
+    MemoSplit     = 13, // E
+    AmountSplit   = 14  // '$'
 };
 
 qifAccountInfoType accountInfoType(const wxString& line)
@@ -466,15 +247,15 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
             if (lineType(readLine) == AcctType)
             {
                 wxString accountType = getLineData(readLine);
-                if ((!accountType.CmpNoCase(("Type:Bank"))) ||
-                    (!accountType.CmpNoCase(("Type:Cash"))) ||
-                    (!accountType.CmpNoCase(("Type:CCard"))))
+                if ((!accountType.CmpNoCase("Type:Bank")) ||
+                    (!accountType.CmpNoCase("Type:Cash")) ||
+                    (!accountType.CmpNoCase("Type:CCard")))
                 {
                     log << _("Importing account type: ") << accountType << endl;
                     continue;
                 }
 
-                if (accountType == ("Account"))
+                if (accountType == "Account")
                 {
                     // account information
                     // Need to read till we get to end of account information
@@ -760,3 +541,390 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 
     return fromAccountID;
 }
+
+
+void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
+{
+    if (core->getNumAccounts() == 0)
+    {
+        wxMessageBox(_("No Account available for export"), _("QIF Export"), wxOK|wxICON_WARNING);
+        return;
+    }
+
+
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, ("DELIMITER"), mmex::DEFDELIMTER);
+    wxString q =  ("\"");
+
+    wxArrayString as = core->getAccountsName();
+    wxSingleChoiceDialog scd(0, _("Choose Account to Export from:"),_("QIF Export"), as);
+
+    wxString acctName;
+
+    if (scd.ShowModal() == wxID_OK)  acctName = scd.GetStringSelection();
+    if (acctName.IsEmpty())  return;
+
+    wxString chooseExt;
+    chooseExt << _("QIF Files") << (" (*.qif)|*.qif;*.QIF");
+    wxString fileName = wxFileSelector(_("Choose QIF data file to Export"),
+                        wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+    if (fileName.IsEmpty()) return;
+
+    correctEmptyFileExt(("qif"), fileName);
+
+    wxFileOutputStream output(fileName);
+    wxTextOutputStream text(output);
+    int fromAccountID = core->getAccountID(acctName);
+    wxString amtSeparator =  core->accountList_.getAccountCurrencyDecimalChar(fromAccountID);
+
+    static const char sql[] =
+            "SELECT transid, transdate as DATE, "
+            "transcode as TRANSACTIONTYPE, transamount as AMOUNT, totransamount as TOAMOUNT, "
+            " SUBCATEGID, "
+            "CATEGID, PAYEEID, "
+            "TRANSACTIONNUMBER, NOTES, TOACCOUNTID, ACCOUNTID "
+            "FROM checkingaccount_v1 "
+            "WHERE ACCOUNTID = ? OR TOACCOUNTID = ?"
+            "ORDER BY transdate";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, fromAccountID);
+    st.Bind(2, fromAccountID);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    int numRecords = 0;
+
+    text << ("!Account") << endl
+         << ("N") << acctName <<  endl
+         << ("TChecking") << endl
+         << ("^") <<  endl
+         << ("!Type:Cash") << endl;
+
+    while (q1.NextRow())
+    {
+        wxString transid = q1.GetString("TRANSID");
+        wxString dateDBString = q1.GetString("DATE");
+        wxDateTime dtdt = mmGetStorageStringAsDate(dateDBString);
+        wxString dateString = mmGetDateForDisplay(db_, dtdt);
+
+        int sid, cid;
+        wxString payee = mmDBWrapper::getPayee(db_, q1.GetInt("PAYEEID"), sid, cid);
+        wxString type = q1.GetString("TRANSACTIONTYPE");
+
+        wxString amount = adjustedExportAmount(amtSeparator, q1.GetString("AMOUNT"));
+        //Amount should be formated
+        double value = 0.0;
+        mmex::formatCurrencyToDouble(amount, value);
+        mmex::formatDoubleToCurrencyEdit(value, amount);
+
+        wxString toamount = q1.GetString("TOAMOUNT");
+        //Amount should be formated
+        value = 0.0;
+        mmex::formatCurrencyToDouble(toamount, value);
+        mmex::formatDoubleToCurrencyEdit(value, toamount);
+
+
+        wxString transNum = q1.GetString("TRANSACTIONNUMBER");
+        wxString categ = core->getCategoryName(q1.GetInt("CATEGID"));
+        wxString subcateg = mmDBWrapper::getSubCategoryName(db_,
+                            q1.GetInt("CATEGID"), q1.GetInt("SUBCATEGID"));
+        wxString notes = q1.GetString("NOTES");
+        notes.Replace("''", "'");
+        notes.Replace("\n", " ");
+        wxString subcategStr = "" ;
+
+        if (type == ("Transfer"))
+        {
+            subcategStr = type;
+            int tAccountID = q1.GetInt("TOACCOUNTID");
+            int fAccountID = q1.GetInt("ACCOUNTID");
+
+            wxString fromAccount = core->getAccountName(fAccountID);
+            wxString toAccount = core->getAccountName(tAccountID);
+
+            if (tAccountID == fromAccountID) {
+                payee = fromAccount;
+                amount = toamount;
+            } else if (fAccountID == fromAccountID) {
+                payee = toAccount;
+                amount ='-' + amount;
+            }
+        }
+        else
+        {
+            subcategStr << categ << (subcateg != ("") ? (":") : ("")) << subcateg;
+        }
+
+        text << ('D') << dateString << endl
+             << ('T') << (type == ("Withdrawal") ? ("-") : ("")) << amount << endl //FIXME: is T needed when Transfer?
+             << ('P') << payee << endl
+             << ('N') << transNum << endl
+             //Category or Transfer
+             << ('L') << subcategStr << endl
+             << ('M') << notes << endl;
+        if (type == ("Transfer"))
+        {
+            text << ('$') << amount << endl;
+        }
+
+        //if categ id is empty the transaction has been splited
+        if (categ.IsEmpty() && subcateg.IsEmpty())
+        {
+            static const char sql4splitedtrx[] =
+                    "SELECT SUBCATEGID, CATEGID, SPLITTRANSAMOUNT "
+                    "FROM splittransactions_v1 "
+                    "WHERE TRANSID = ?";
+
+            wxSQLite3Statement st2 = db_->PrepareStatement(sql4splitedtrx);
+            st2.Bind(1, transid);
+
+            wxSQLite3ResultSet q2 = st2.ExecuteQuery();
+
+            while (q2.NextRow())
+            {
+                wxString splitamount = adjustedExportAmount(amtSeparator,q2.GetString("SPLITTRANSAMOUNT"));
+                //Amount should be formated
+                value = 0.0;
+                mmex::formatCurrencyToDouble(splitamount, value);
+                mmex::formatDoubleToCurrencyEdit(value, splitamount);
+                wxString splitcateg = core->getCategoryName(q2.GetInt("CATEGID"));
+                wxString splitsubcateg = mmDBWrapper::getSubCategoryName(db_,
+                                            q2.GetInt("CATEGID"), q2.GetInt("SUBCATEGID"));
+                text << ('S') << splitcateg << (splitsubcateg != "" ? ":" : "") << splitsubcateg << endl
+                << ('$') << (type == "Withdrawal" ? "-" : "") << splitamount << endl
+                // E Split memo — any text to go with this split item. I saggest Category:Subcategory = Amount for earch line
+                << ('E') << splitcateg << (splitsubcateg != ("") ? ":" : "") << splitsubcateg << (type == "Withdrawal" ? " -" : " ") << splitamount << endl;
+            }
+
+            q2.Finalize();
+        }
+
+        text << ('^') << endl;
+        numRecords++;
+    }
+
+    q1.Finalize();
+
+    wxString msg = wxString::Format(("%d transactions exported"), numRecords);
+    mmShowErrorMessage(0, msg, _("Export to QIF"));
+}
+
+
+/*
+Quicken Interchange Format (QIF) files
+
+Ref: http://en.wikipedia.org/wiki/Quicken_Interchange_Format
+     http://www.respmech.com/mym2qifw/qif_new.htm
+
+The Quicken interchange format (QIF) is a specially formatted text (ASCII) file that
+enables Quicken transactions to be moved from one Quicken account register into
+another Quicken account register, or to or from other programs that support the QIF format.
+
+Note: For Quicken to translate data from a text file into the Quicken register as transactions,
+the text file must be in the QIF format.
+
+Required File Formatting
+
+Each transaction must end with a symbol, indicating the end of entry. Each item in the
+transaction must display on a separate line. When Quicken exports an account register or list,
+it adds a line to the top of the file that identifies the type of account or list. Listed below
+are the header lines Quicken adds to the exported files:
+
+Header              Type of data
+!Type:Bank          Bank account transactions
+!Type:Cash          Cash account transactions
+!Type:CCard         Credit card account transactions
+!Type:Invst         Investment account transactions
+!Type:Oth A         Asset account transactions
+!Type:Oth L         Liability account transactions
+
+!Account            Account list or which account follows
+!Type:Cat           Category list
+!Type:Class         Class list
+!Type:Memorized     Memorized transaction list
+
+Quicken can be configured to import all transfers, regardless of whether Ignore Transfers
+is selected when the file is imported. To do this, add a line to the file being imported
+into the Quicken account. Use a text editor or word processor to put the following line
+immediately after the header line at the top of the file:
+
+    !Option:AllXfr
+
+Items for Non-Investment Accounts
+
+Each item in a bank, cash, credit card, other liability, or other asset account must
+begin with a letter that indicates the field in the Quicken
+register. The non-split items can be in any sequence:
+Field  Indicator Explanations
+D      Date
+T      Amount
+C      Cleared status
+N      Num (check or reference number)
+P      Payee
+M      Memo
+A      Address (up to five lines; the sixth line is an optional message)
+L      Category (Category/Subcategory/Transfer/Class)
+S      Category in split (Category/Transfer/Class)
+E      Memo in split
+$      Dollar amount of split
+^      End of entry
+
+Note: Repeat the S, E, and $ lines as many times as needed for additional items in a split.
+If an item is omitted from the transaction in the QIF file, Quicken treats it as a blank item.
+
+Items for Investment Accounts
+Field  Indicator Explanation
+D      Date
+N      Action
+Y      Security name
+I      Price
+Q      Quantity (number of shares or split ratio)
+T      Transaction amount
+C      Cleared status
+P      Text in the first line for transfers and reminders
+M      Memo
+O      Commission
+L      Account for the transfer
+$      Amount transferred
+^      End of entry
+
+Items for Account Information
+
+The account header !Account is used in two places, at the start of an account list and the
+start of a list of transactions to specify to which account they belong.
+Field  Indicator Explanation
+N   Name
+T   Type of account
+D   Description
+L   Credit limit (only for credit card account)
+/   Statement balance date
+$   Statement balance
+^   End of entry
+
+Items for a Category List
+Field   Indicator Explanation
+N   Category name:subcategory name
+D   Description
+T   Tax related if included, not tax related if omitted
+I   Income category
+E   Expense category (if category is unspecified, Quicken assumes expense type)
+B   Budget amount (only in a Budget Amounts QIF file)
+R   Tax schedule information
+^   End of entry
+
+Items for a Class List
+Field   Indicator Explanation
+N   Class name
+D   Description
+^   End of entry
+
+
+Items for a Memorized Transaction List
+
+Immediately preceding the ^ character, each entry must end with one of the following file
+indicators to specify the transaction type.
+
+    KC
+
+    KD
+
+    KP
+
+    KI
+
+    KE
+
+With that exception, memorized transaction entries have the same format as regular
+transaction entries (non-investment accounts). However, the Date or Num field is included.
+All items are optional, but if an amortization record is included, all seven amortization
+lines must also be included.
+
+Field   Indicator Explanation
+KC  Check transaction
+KD  Deposit transaction
+KP  Payment transaction
+KI  Investment transaction
+KE  Electronic payee transaction
+T   Amount
+C   Cleared status
+P   Payee
+M   Memo
+A   Address
+L   Category or Transfer/Class
+S   Category/class in split
+E   Memo in split
+$   Dollar amount of split
+1   Amortization: First payment date
+2   Amortization: Total years for loan
+3   Amortization: Number of payments already made
+4   Amortization: Number of periods per year
+5   Amortization: Interest rate
+6   Amortization: Current loan balance
+7   Amortization: Original loan amount
+^   End of entry
+
+Examples of QIF files
+
+Normal Transactions Example
+Transaction Item    Comment (not in file)
+!Type:Bank  Header
+D6/ 1/94    Date
+T-1,000.00  Amount
+N1005   Check number
+PBank Of Mortgage   Payee
+L[linda]    Category
+S[linda]    First category in split
+$-253.64    First amount in split
+SMort Int   Second category in split
+$=746.36    Second amount in split
+^   End of transaction
+D6/ 2/94    Date
+T75.00  Amount
+PDeposit    Payee
+^   End of transaction
+D6/ 3/94    Date
+T-10.00     Amount
+PAnthony Hopkins    Payee
+MFilm   Memo
+LEntertain  Category
+AP.O. Box 27027     Address (line 1)
+ATucson, AZ     Address (line 2)
+A85726  Address (line 3)
+A   Address (line 4)
+A   Address (line 5)
+A   Address (line 6)
+^   End of transaction
+
+Investment Example
+Transaction Item    Comment (not in file)
+!Type:Invst     Header line
+D8/25/93    Date
+NShrsIn     Action (optional)
+Yibm4   Security
+I11.260     Price
+Q88.81  Quantity
+CX  Cleared status
+T1,000.00   Amount
+MOpening    Balance Memo
+^   End of transaction
+D8/25/93    Date
+NBuyX   Action
+Yibm4   Security
+I11.030     Price
+Q9.066  Quantity
+T100.00     Amount
+MEst. price as of 8/25/93   Memo
+L[CHECKING]     Account for transfer
+$100.00     Amount transferred
+^   End of transaction
+
+Memorized List Example
+Transaction Item    Comment (not in file)
+!Type:Memorized     Header line
+T-50.00     Amount
+POakwood Gardens    Payee
+MRent   Memo
+KC  Check transaction
+^   End of transaction
+
+*/
