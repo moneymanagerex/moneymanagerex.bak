@@ -35,11 +35,12 @@ wxString mmex::getProgramVersion()
     wxString revision(_MM_EX_REVISION_ID); 
     revision.Replace('$',wxEmptyString);
 
-    /**************************************************
-     comment out this line for a release
-     revision.Replace("Rev: ","DEV:SVN-");
-     **************************************************/
+/**************************************************
+ Refer to comments in the file: constants.h
+ **************************************************/
+#ifndef _MM_EX_BUILD_TYPE_RELEASE
     revision.Replace("Rev: ","DEV:SVN-");
+#endif
 
     revision.Trim();
     return wxString::Format("0.10.0.0  %s", revision);
