@@ -16,6 +16,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+/*************************************************************************
+ Revision of last commit: $Revision$
+ Author of last commit:   $Author$
+
+ To set a release build, remove the comments for the definition:
+ #define _MM_EX_BUILD_TYPE_RELEASE
+
+ then commit the changes to the SVN repository.
+ *************************************************************************/
+//#define _MM_EX_BUILD_TYPE_RELEASE
 #define _MM_EX_REVISION_ID    "$Rev$"
 
 #ifndef _MM_EX_CONSTANTS_H_
