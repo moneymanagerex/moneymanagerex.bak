@@ -552,8 +552,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     }
 
 
-    const wxString delimit = mmDBWrapper::getInfoSettingValue(db_, ("DELIMITER"), mmex::DEFDELIMTER);
-    const wxString q =  ("\"");
+    const wxString delimit = mmDBWrapper::getInfoSettingValue(db_, "DELIMITER", mmex::DEFDELIMTER);
 
     const wxArrayString as = core->getAccountsName();
     wxSingleChoiceDialog scd(0, _("Choose Account to Export from:"),_("QIF Export"), as);
@@ -641,10 +640,10 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
             const wxString toAccount = core->getAccountName(tAccountID);
 
             if (tAccountID == fromAccountID) {
-                payee = fromAccount;
+                payee = wxString() << "[" << fromAccount << "]";
                 amount = toamount;
             } else if (fAccountID == fromAccountID) {
-                payee = toAccount;
+                payee = wxString() << "[" << toAccount << "]";
                 amount.Prepend("-");
             }
         }
