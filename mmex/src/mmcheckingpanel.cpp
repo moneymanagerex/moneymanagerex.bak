@@ -1620,7 +1620,7 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
 {
     if (wxGetKeyState(WXK_COMMAND) || wxGetKeyState(WXK_ALT) || wxGetKeyState(WXK_CONTROL)
-        || m_selectedIndex == -1) {
+        || m_selectedIndex == -1 || m_cp->m_trans.size() < 1) {
         event.Skip();
         return;
     }
@@ -1686,9 +1686,7 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     long topItemIndex = GetTopItem();
 
     if ((m_selectedForCopy > -1) && (m_selectedForCopy == m_cp->m_trans[m_selectedIndex]->transactionID()))
-    {
         m_selectedForCopy = -1;
-    }
 
     //remove the transaction
     //TODO: if deletingfromdb was false do not delete trx in that case from list
@@ -1699,22 +1697,10 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 
         if (!m_cp->m_trans.empty())
         {
-            //refresh the items showing from the point of the transaction delete down
-            //the transactions above the deleted transaction won't change so they
-            // don't need to be refreshed
-            RefreshItems(0, m_cp->all_trans_.empty() ? 0: m_cp->all_trans_.size() - 1);
-            if (m_selectedIndex +1 != (long)(m_cp->m_trans.size()) && m_selectedIndex > 0)
-            {
+            if (m_selectedIndex +1 > (long)(m_cp->m_trans.size()) && m_selectedIndex > 0)
                 m_selectedIndex--;
-                //RefreshItems(m_selectedIndex, static_cast<long>(m_cp->m_trans.size()) - 1);
 
-                //set the deleted transaction index to the new selection and focus on it
-                SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-            }
-            //make sure the topmost item before transaction deletion is visible, otherwise
-            // the control will go back to the very top or bottom when refreshed
-            //EnsureVisible(topItemIndex);
+            refreshVisualList();
         }
         else
         {
@@ -1774,14 +1760,17 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 void TransactionListCtrl::refreshVisualList()
 {
     m_cp->initVirtualListControl();
-    if(m_cp->all_trans_.size() > 0)
-        RefreshItems(0, m_cp->all_trans_.size() - 1);
-    if ((m_selectedIndex + 1) != (long)m_cp->m_trans.size() && (m_selectedIndex > 0))
-    {
+    if ((m_selectedIndex + 1) > (long)m_cp->m_trans.size() && (m_selectedIndex > 0))
         m_selectedIndex--;
+
+    if(m_cp->m_trans.size() > 0)
+    {
+        RefreshItems(0, m_cp->m_trans.size() - 1);
         SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
         SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
     }
+    else
+        m_selectedIndex = -1;
     m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 
