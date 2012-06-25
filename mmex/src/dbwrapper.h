@@ -30,9 +30,9 @@ const wxString LANGUAGE_PARAMETER = ("LANGUAGE");
 
 const int BD_REPEATS_MULTIPLEX_BASE  = 100;
 
-const wxString ACCOUNT_TYPE_BANK  = ("Checking");
-const wxString ACCOUNT_TYPE_TERM  = ("Term");
-const wxString ACCOUNT_TYPE_STOCK = ("Investment");
+const wxString ACCOUNT_TYPE_BANK  = wxTRANSLATE("Checking");
+const wxString ACCOUNT_TYPE_TERM  = wxTRANSLATE("Term");
+const wxString ACCOUNT_TYPE_STOCK = wxTRANSLATE("Investment");
 
 const wxString TRANS_TYPE_WITHDRAWAL_STR = ("Withdrawal");
 const wxString TRANS_TYPE_DEPOSIT_STR    = ("Deposit");
