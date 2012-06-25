@@ -68,6 +68,7 @@ private:
     int accountID_;
     int currencyID_;
     bool termAccount_;
+    wxChoice* account_type_;
 };
 
 #endif

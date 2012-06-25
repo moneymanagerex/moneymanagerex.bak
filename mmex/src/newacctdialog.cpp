@@ -101,14 +101,8 @@ void mmNewAcctDialog::fillControlsWithData()
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
     textCtrl->SetValue(pAccount->notes_);
 
-    wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
-    if (pAccount->acctType_ == ACCOUNT_TYPE_BANK)
-       itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
-    else if (pAccount->acctType_ == ACCOUNT_TYPE_TERM)
-       itemAcctType->SetSelection(ACCT_TYPE_TERM);
-    else
-       itemAcctType->SetSelection(ACCT_TYPE_INVESTMENT);
-    itemAcctType->Enable(false);
+    account_type_->SetStringSelection(wxGetTranslation(pAccount->acctType_));
+    account_type_->Enable(newAcct_);
 
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS);
     choice->SetSelection(ACCT_STATUS_OPEN);
@@ -157,16 +151,13 @@ void mmNewAcctDialog::CreateControls()
     wxStaticText* itemStaticText51 = new wxStaticText( this, wxID_STATIC, _("Account Type:"));
     itemGridSizer2->Add(itemStaticText51, flags_main);
 
-    wxArrayString itemAcctTypeStrings;
-       itemAcctTypeStrings.Add(_("Checking"));   // ACCOUNT_TYPE_BANK
-       itemAcctTypeStrings.Add(_("Investment")); // ACCOUNT_TYPE_STOCK
-       itemAcctTypeStrings.Add(_("Term"));       // ACCOUNT_TYPE_TERM
-
-    wxChoice* itemChoice61 = new wxChoice( this, ID_DIALOG_NEWACCT_COMBO_ACCTTYPE,
-        wxDefaultPosition, wxDefaultSize, itemAcctTypeStrings);
-    itemGridSizer2->Add(itemChoice61, flags_expand);
-    itemChoice61->SetSelection(ACCT_TYPE_CHECKING);
-    itemChoice61->SetToolTip(_("Specify the type of account to be created."));
+    account_type_ = new wxChoice( this, ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
+    account_type_->Append(wxGetTranslation(ACCOUNT_TYPE_BANK), new wxStringClientData(ACCOUNT_TYPE_BANK));
+    account_type_->Append(wxGetTranslation(ACCOUNT_TYPE_STOCK), new wxStringClientData(ACCOUNT_TYPE_STOCK));
+    account_type_->Append(wxGetTranslation(ACCOUNT_TYPE_TERM), new wxStringClientData(ACCOUNT_TYPE_TERM));
+    itemGridSizer2->Add(account_type_, flags_expand);
+    account_type_->SetToolTip(_("Specify the type of account to be created."));
+    account_type_->SetSelection(0);
 
     wxStaticText* itemStaticText5 = new wxStaticText( this, wxID_STATIC, _("Account Number:"));
     itemGridSizer2->Add(itemStaticText5, flags_main);
@@ -205,7 +196,7 @@ void mmNewAcctDialog::CreateControls()
     itemGridSizer2->Add(itemTextCtrl14, flags_expand);
     itemTextCtrl14->SetToolTip(_("Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."));
 
-    wxStaticText* itemStaticText15 = new wxStaticText( this, wxID_STATIC, _("Account Status:"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText15 = new wxStaticText( this, wxID_STATIC, _("Account Status:"));
     itemGridSizer2->Add(itemStaticText15, flags_main);
 
     wxArrayString itemChoice6Strings;
@@ -230,7 +221,7 @@ void mmNewAcctDialog::CreateControls()
     itemTextCtrl19->SetToolTip(_("Enter the initial balance in this account."));
 
     wxStaticText* currency_label = new wxStaticText( this,
-        wxID_STATIC, _("Currency:"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_STATIC, _("Currency:"));
     itemGridSizer2->Add(currency_label, flags_main);
 
     currencyID_ = mmDBWrapper::getBaseCurrencySettings(core_->db_.get());
@@ -319,9 +310,6 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
 
-    wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
-    int acctType = itemAcctType->GetSelection();
-
     boost::shared_ptr<mmAccount> pAccount;
     if (newAcct_)
     {
@@ -333,14 +321,12 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
        pAccount = core_->getAccountSharedPtr(accountID_);
     }
 
-    pAccount->acctType_ = ACCOUNT_TYPE_BANK;
-    if (acctType == ACCT_TYPE_INVESTMENT)
-        pAccount->acctType_ = ACCOUNT_TYPE_STOCK;
-    if (acctType == ACCT_TYPE_TERM)
-    {
-        pAccount->acctType_ = ACCOUNT_TYPE_TERM;
-        termAccount_ = true;
-    }
+    wxString type = ACCOUNT_TYPE_BANK;
+    wxStringClientData* acc_type_obj = (wxStringClientData *)account_type_->GetClientObject(account_type_->GetSelection());
+    if (acc_type_obj) type = acc_type_obj->GetData();
+
+    pAccount->acctType_ = type;
+    termAccount_ = (type == ACCOUNT_TYPE_TERM);
 
     wxTextCtrl* textCtrlAcctNumber = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER);
     wxTextCtrl* textCtrlHeldAt = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT);
