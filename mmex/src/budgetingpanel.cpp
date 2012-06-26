@@ -219,19 +219,12 @@ void mmBudgetingPanel::CreateControls()
 
     wxConfigBase *config = wxConfigBase::Get();
 
-    long col0 = config->ReadLong("BUDGET_COL0_WIDTH", 80);
-    long col1 = config->ReadLong("BUDGET_COL1_WIDTH", 80);
-    long col2 = config->ReadLong("BUDGET_COL2_WIDTH", 80);
-    long col3 = config->ReadLong("BUDGET_COL3_WIDTH", 80);
-    long col4 = config->ReadLong("BUDGET_COL4_WIDTH", 80);
-    long col5 = config->ReadLong("BUDGET_COL5_WIDTH", 80);
-
-    listCtrlBudget_->SetColumnWidth(0, col0);
-    listCtrlBudget_->SetColumnWidth(1, col1);
-    listCtrlBudget_->SetColumnWidth(2, col2);
-    listCtrlBudget_->SetColumnWidth(3, col3);
-    listCtrlBudget_->SetColumnWidth(4, col4);
-    listCtrlBudget_->SetColumnWidth(5, col5);
+    listCtrlBudget_->SetColumnWidth(0, config->ReadLong("BUDGET_COL0_WIDTH", 80));
+    listCtrlBudget_->SetColumnWidth(1, config->ReadLong("BUDGET_COL1_WIDTH", 80));
+    listCtrlBudget_->SetColumnWidth(2, config->ReadLong("BUDGET_COL2_WIDTH", 80));
+    listCtrlBudget_->SetColumnWidth(3, config->ReadLong("BUDGET_COL3_WIDTH", 80));
+    listCtrlBudget_->SetColumnWidth(4, config->ReadLong("BUDGET_COL4_WIDTH", 80));
+    listCtrlBudget_->SetColumnWidth(5, config->ReadLong("BUDGET_COL5_WIDTH", 80));
 
     itemBoxSizer2->Add(listCtrlBudget_, 1, wxGROW | wxALL, 1);
 }
@@ -249,8 +242,6 @@ bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
         if ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0)) result = true;
     else if (currentView_ == ("View Budget Category Summary")) 
         if (budgetEntry.id_ < 0) result = true;
-    else if (currentView_ == ("View All Budget Categories"))
-        result = true;
     else
         wxASSERT(false);
 
@@ -324,7 +315,8 @@ void mmBudgetingPanel::initVirtualListControl()
         th.categID_ = q1.GetInt("CATEGID");
         th.catStr_ = q1.GetString("CATEGNAME");
 
-        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_, th.id_);
+        int id= -1;
+        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_, id/*th.id_*/);
         budgetDetails.setBudgetEstimate(th, monthlyBudget);
         if (th.estimated_ < 0)
             estExpenses += th.estimated_;
@@ -519,7 +511,6 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
     /*************************************************************************** 
      A TOTALS entry does not contain a budget entry, therefore ignore the event.
      ***************************************************************************/
-    wxSafeShowMessage(wxString()<<selectedIndex_, "+");
     if (cp_->trans_[selectedIndex_].id_ >= 0)
     {
         mmBudgetEntryDialog dlg(
@@ -531,9 +522,11 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
             cp_->trans_[selectedIndex_].estimatedStr_,
             cp_->trans_[selectedIndex_].actualStr_, this);
 
-        dlg.ShowModal();
-        cp_->initVirtualListControl();
-        RefreshItem(selectedIndex_);
+        if ( dlg.ShowModal() == wxID_OK )
+        {
+            cp_->initVirtualListControl();
+            RefreshItem(selectedIndex_);
+        }
     }
 }
 

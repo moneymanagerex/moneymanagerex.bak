@@ -235,7 +235,6 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
     DB_View_BUDGETTABLE_V1::Data* budget = BUDGETTABLE_V1.get(budget_entry_id_, db_);
     if (!budget) budget = BUDGETTABLE_V1.create();
     budget->BUDGETYEARID = budgetYearID_;
-    budget->BUDGETENTRYID = budget_entry_id_;
     budget->CATEGID = categID_;
     budget->SUBCATEGID = subcategID_;
     budget->PERIOD = period;
