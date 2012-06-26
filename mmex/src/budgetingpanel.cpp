@@ -26,12 +26,7 @@
 
 BEGIN_EVENT_TABLE(mmBudgetingPanel, wxPanel)
     EVT_LEFT_DOWN( mmBudgetingPanel::OnMouseLeftDown ) 
-
-    EVT_MENU(MENU_VIEW_ALLBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_NONZEROBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_INCOMEBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_EXPENSEBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_SUMMARYBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
+    EVT_MENU(wxID_ANY, mmBudgetingPanel::OnViewPopupSelected)
 END_EVENT_TABLE()
 /*******************************************************/
 BEGIN_EVENT_TABLE(budgetingListCtrl, wxListCtrl)
@@ -40,7 +35,8 @@ BEGIN_EVENT_TABLE(budgetingListCtrl, wxListCtrl)
 
 END_EVENT_TABLE()
 /*******************************************************/
-mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
+mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db,
+            mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name 
            ) : 
@@ -50,7 +46,6 @@ mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, mmCoreDB* core, mmGUIF
     mainFrame_(mainFrame)
 {
     Create(parent, winid, pos, size, style, name);
-    currentView_ = ("View All Budget Categories");
 }
 
 bool mmBudgetingPanel::Create( wxWindow *parent,
@@ -59,6 +54,7 @@ bool mmBudgetingPanel::Create( wxWindow *parent,
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);
+    currentView_ = ("View All Budget Categories");
 
 #ifdef __WXMSW__
     Freeze();
@@ -87,60 +83,25 @@ void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
     int evt =  event.GetId();
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
     if (evt ==  MENU_VIEW_ALLBUDGETENTRIES) 
-    {
-        header->SetLabel(_("View All Budget Categories"));
-        currentView_ = ("View All Budget Categories");
-    } 
+        currentView_ = wxTRANSLATE("View All Budget Categories");
     else if (evt == MENU_VIEW_NONZEROBUDGETENTRIES) 
-    {
-        header->SetLabel(_("View Non-Zero Budget Categories"));
-        currentView_ = ("View Non-Zero Budget Categories");
-    } 
+        currentView_ = wxTRANSLATE("View Non-Zero Budget Categories");
     else if (evt == MENU_VIEW_INCOMEBUDGETENTRIES) 
-    {
-        header->SetLabel(_("View Income Budget Categories"));
-        currentView_ = ("View Income Budget Categories");
-    } 
+        currentView_ = wxTRANSLATE("View Income Budget Categories");
     else if (evt == MENU_VIEW_EXPENSEBUDGETENTRIES) 
-    {
-        header->SetLabel(_("View Expense Budget Categories"));
-        currentView_ = ("View Expense Budget Categories");
-    } 
+        currentView_ = wxTRANSLATE("View Expense Budget Categories");
     else if (evt == MENU_VIEW_SUMMARYBUDGETENTRIES) 
-    {
-        header->SetLabel(_("View Budget Category Summary"));
-        currentView_ = ("View Budget Category Summary");
-    } 
+        currentView_ = wxTRANSLATE("View Budget Category Summary");
     else 
-    {
         wxASSERT(false);
-    }
+
+    header->SetLabel(wxGetTranslation(currentView_));
 
     listCtrlBudget_->DeleteAllItems();
     initVirtualListControl();
-    listCtrlBudget_->RefreshItems(0, ((int)trans_.size()) - 1);
+    if (trans_.size() > 0)
+        listCtrlBudget_->RefreshItems(0, ((int)trans_.size()) - 1);
 }
-
-void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
-{
-    // depending on the clicked control's window id.
-    switch( event.GetId() )
-    {
-        case ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW : 
-        {
-            wxMenu menu;
-            menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("View All Budget Categories"));
-            menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
-            menu.Append(MENU_VIEW_INCOMEBUDGETENTRIES, _("View Income Budget Categories"));
-            menu.Append(MENU_VIEW_EXPENSEBUDGETENTRIES, _("View Expense Budget Categories"));
-            menu.AppendSeparator();
-            menu.Append(MENU_VIEW_SUMMARYBUDGETENTRIES, _("View Budget Category Summary"));
-            PopupMenu(&menu, event.GetPosition());
-            break;
-        }
-    }
-    event.Skip();
-} 
 
 void mmBudgetingPanel::CreateControls()
 {    
@@ -190,9 +151,9 @@ void mmBudgetingPanel::CreateControls()
         ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW, 
         itemStaticBitmap3Bitmap);
     itemBoxSizerHHeader2->Add(itemStaticBitmap3, flags);
-    //itemStaticBitmap3->SetEventHandler( this ); 
+
     itemStaticBitmap3->Connect(ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN,
-        wxMouseEventHandler(mmBudgetingPanel::OnFilterChanged), NULL, this);
+        wxMouseEventHandler(mmBudgetingPanel::OnMouseLeftDown), NULL, this);
 
     wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_PANELVIEW, 
@@ -249,7 +210,7 @@ void mmBudgetingPanel::CreateControls()
     listCtrlBudget_ = new budgetingListCtrl( this, this, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    listCtrlBudget_->InsertColumn(0, _("Category  "));
+    listCtrlBudget_->InsertColumn(0, _("Category"));
     listCtrlBudget_->InsertColumn(1, _("Sub Category"));
     listCtrlBudget_->InsertColumn(2, _("Frequency"));
     listCtrlBudget_->InsertColumn(3, _("Amount"), wxLIST_FORMAT_RIGHT);
@@ -279,26 +240,19 @@ bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
 {
     bool result = false;
 
-    if (currentView_ == ("View Non-Zero Budget Categories")) 
-    {
+    if (currentView_ == ("View All Budget Categories")) result = true;
+    else if (currentView_ == ("View Non-Zero Budget Categories")) 
         if ((budgetEntry.estimated_ != 0.0) || (budgetEntry.actual_ != 0.0)) result = true;
-    } 
     else if (currentView_ == ("View Income Budget Categories")) 
-    {
         if ((budgetEntry.estimated_ > 0.0) || (budgetEntry.actual_ > 0.0)) result = true;
-    } 
     else if (currentView_ == ("View Expense Budget Categories")) 
-    {
         if ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0)) result = true;
-    } 
-    else if (currentView_ == _("View Budget Category Summary")) 
-    {
-        if ((budgetEntry.id_ < 0)) result = true;
-    } 
-    else 
-    {
+    else if (currentView_ == ("View Budget Category Summary")) 
+        if (budgetEntry.id_ < 0) result = true;
+    else if (currentView_ == ("View All Budget Categories"))
         result = true;
-    }
+    else
+        wxASSERT(false);
 
     return result;
 }
@@ -565,6 +519,7 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
     /*************************************************************************** 
      A TOTALS entry does not contain a budget entry, therefore ignore the event.
      ***************************************************************************/
+    wxSafeShowMessage(wxString()<<selectedIndex_, "+");
     if (cp_->trans_[selectedIndex_].id_ >= 0)
     {
         mmBudgetEntryDialog dlg(
@@ -582,17 +537,23 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
     }
 }
 
-void mmBudgetingPanel::OnFilterChanged(wxMouseEvent& event)
+void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
 {
-    wxMenu menu;
-    menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("Viewing All Budget Categories"));
-    menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
-    menu.Append(MENU_VIEW_INCOMEBUDGETENTRIES, _("View Income Budget Categories"));
-    menu.Append(MENU_VIEW_EXPENSEBUDGETENTRIES, _("View Budget Category Summary"));
-    menu.Append(MENU_VIEW_SUMMARYBUDGETENTRIES, _("View Budget Category Summary"));
-
-    PopupMenu(&menu, event.GetPosition());
-
+    // depending on the clicked control's window id.
+    switch( event.GetId() )
+    {
+        case ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW : 
+        {
+            wxMenu menu;
+            menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("View All Budget Categories"));
+            menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
+            menu.Append(MENU_VIEW_INCOMEBUDGETENTRIES, _("View Income Budget Categories"));
+            menu.Append(MENU_VIEW_EXPENSEBUDGETENTRIES, _("View Expense Budget Categories"));
+            menu.AppendSeparator();
+            menu.Append(MENU_VIEW_SUMMARYBUDGETENTRIES, _("View Budget Category Summary"));
+            PopupMenu(&menu, event.GetPosition());
+            break;
+        }
+    }
     event.Skip();
-}
-
+} 
