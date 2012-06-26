@@ -235,13 +235,13 @@ bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
 
     if (currentView_ == ("View All Budget Categories")) result = true;
     else if (currentView_ == ("View Non-Zero Budget Categories")) 
-        if ((budgetEntry.estimated_ != 0.0) || (budgetEntry.actual_ != 0.0)) result = true;
+        result = ((budgetEntry.estimated_ != 0.0) || (budgetEntry.actual_ != 0.0));
     else if (currentView_ == ("View Income Budget Categories")) 
-        if ((budgetEntry.estimated_ > 0.0) || (budgetEntry.actual_ > 0.0)) result = true;
+        result = ((budgetEntry.estimated_ > 0.0) || (budgetEntry.actual_ > 0.0));
     else if (currentView_ == ("View Expense Budget Categories")) 
-        if ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0)) result = true;
+        result = ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0));
     else if (currentView_ == ("View Budget Category Summary")) 
-        if (budgetEntry.id_ < 0) result = true;
+        result = (budgetEntry.id_ < 0);
     else
         wxASSERT(false);
 
@@ -282,16 +282,7 @@ void mmBudgetingPanel::initVirtualListControl()
     }
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
-//TODO: make it easier
-/*
-    static const char categ_list_sql[] =
-    "select c.categname as CATEGNAME, s.subcategname as SUBCATEGNAME, "
-    "c.categid as CATEGID, s.subcategid as SUBCATEGID "
-    "from subcategory_v1 s "
-    "left join  category_v1 c on c.categid=s.categid "
-    "union select categname, '', categid, -1  from category_v1 "
-    "order by CATEGNAME, SUBCATEGNAME ";
-*/
+
     static const char sql[] =
     "select CATEGID, CATEGNAME "
     "from CATEGORY_V1 "
@@ -533,20 +524,14 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
 void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
 {
     // depending on the clicked control's window id.
-    switch( event.GetId() )
-    {
-        case ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW : 
-        {
-            wxMenu menu;
-            menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("View All Budget Categories"));
-            menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
-            menu.Append(MENU_VIEW_INCOMEBUDGETENTRIES, _("View Income Budget Categories"));
-            menu.Append(MENU_VIEW_EXPENSEBUDGETENTRIES, _("View Expense Budget Categories"));
-            menu.AppendSeparator();
-            menu.Append(MENU_VIEW_SUMMARYBUDGETENTRIES, _("View Budget Category Summary"));
-            PopupMenu(&menu, event.GetPosition());
-            break;
-        }
-    }
+	wxMenu menu;
+	menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("View All Budget Categories"));
+	menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
+	menu.Append(MENU_VIEW_INCOMEBUDGETENTRIES, _("View Income Budget Categories"));
+	menu.Append(MENU_VIEW_EXPENSEBUDGETENTRIES, _("View Expense Budget Categories"));
+	menu.AppendSeparator();
+	menu.Append(MENU_VIEW_SUMMARYBUDGETENTRIES, _("View Budget Category Summary"));
+	PopupMenu(&menu, event.GetPosition());
+
     event.Skip();
 } 
