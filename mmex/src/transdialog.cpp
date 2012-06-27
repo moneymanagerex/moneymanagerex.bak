@@ -243,24 +243,27 @@ void mmTransDialog::dataToControls()
 
 void mmTransDialog::CreateControls()
 {    
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    this->SetSizer(itemBoxSizer2);
-    
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Expand();
+
+    wxBoxSizer* box_sizer1 = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(box_sizer1);
+    wxBoxSizer* box_sizer2 = new wxBoxSizer(wxVERTICAL);
+    box_sizer1->Add(box_sizer2, flags);
+
     wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, _("Transaction Details"));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
-    itemBoxSizer2->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxTOP|wxRIGHT, 10);
+    box_sizer2->Add(itemStaticBoxSizer4, flags);
 
     /************************************************************************************************************
-    ItemPanel7 controlled by ItemFlexGridSizer8 - contained in the TransDetailsStaticSizer. (itemStaticBoxSizer4)
+    ItemPanel7 controlled by flex_sizer - contained in the TransDetailsStaticSizer. (itemStaticBoxSizer4)
     *************************************************************************************************************/
-    wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemStaticBoxSizer4->Add(itemPanel7, 0, wxGROW|wxALL, 10);
+    wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemStaticBoxSizer4->Add(itemPanel7, flags);
 
-    wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(0, 2, 10, 10);
-    itemPanel7->SetSizer(itemFlexGridSizer8);
-
-    wxSizerFlags flags(1);
-    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 0);
+    wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 2, 0, 0);
+    itemPanel7->SetSizer(flex_sizer);
 
     // Date --------------------------------------------
     wxStaticText* date_text = new wxStaticText(itemPanel7, wxID_STATIC, _("Date"));
@@ -292,12 +295,12 @@ void mmTransDialog::CreateControls()
     spinCtrl_ -> SetRange (-32768, 32768); 
     spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
 
-    itemFlexGridSizer8->Add(date_text, flags);
+    flex_sizer->Add(date_text, flags);
     wxBoxSizer* itemBoxSizer118 = new wxBoxSizer(wxHORIZONTAL);
-    itemFlexGridSizer8->Add(itemBoxSizer118);
-    itemBoxSizer118->Add(dpc_);
-    itemBoxSizer118->Add(spinCtrl_, 0, wxLEFT, interval);   
-    itemBoxSizer118->Add(itemStaticTextWeek_, 0, wxLEFT, 10);   
+    flex_sizer->Add(itemBoxSizer118);
+    itemBoxSizer118->Add(dpc_, flags);
+    itemBoxSizer118->Add(spinCtrl_, flags);   
+    itemBoxSizer118->Add(itemStaticTextWeek_, flags);   
 
     // Status --------------------------------------------
     wxStaticText* status_text = new wxStaticText(itemPanel7, wxID_STATIC, _("Status"));
@@ -317,8 +320,8 @@ void mmTransDialog::CreateControls()
 
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
     
-    itemFlexGridSizer8->Add(status_text, flags);
-    itemFlexGridSizer8->Add(choiceStatus_);
+    flex_sizer->Add(status_text, flags);
+    flex_sizer->Add(choiceStatus_), flags;
 
     // Type --------------------------------------------
     wxStaticText* type_text = new wxStaticText(itemPanel7,
@@ -349,11 +352,11 @@ void mmTransDialog::CreateControls()
     cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
 
     wxBoxSizer* typeSizer = new wxBoxSizer(wxHORIZONTAL);
-    typeSizer->Add(choiceTrans_);
-    typeSizer->Add(cAdvanced_, 0, wxALL, 5);
+    typeSizer->Add(choiceTrans_, flags);
+    typeSizer->Add(cAdvanced_, flags);
     
-    itemFlexGridSizer8->Add(type_text, flags);
-    itemFlexGridSizer8->Add(typeSizer);
+    flex_sizer->Add(type_text, flags);
+    flex_sizer->Add(typeSizer);
 
     // Amount Fields --------------------------------------------
     amountNormalTip_   = _("Specify the amount for this transaction");
@@ -372,11 +375,11 @@ void mmTransDialog::CreateControls()
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
-    amountSizer->Add(textAmount_);
-    amountSizer->Add(toTextAmount_, 0, wxLEFT, 5);
+    amountSizer->Add(textAmount_, flags);
+    amountSizer->Add(toTextAmount_, flags);
 
-    itemFlexGridSizer8->Add(amountStaticText, flags);
-    itemFlexGridSizer8->Add(amountSizer);
+    flex_sizer->Add(amountStaticText, flags);
+    flex_sizer->Add(amountSizer);
 
     // Payee ---------------------------------------------
     wxStaticText* itemStaticText9 = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, _("Payee"));
@@ -409,8 +412,8 @@ void mmTransDialog::CreateControls()
     bPayee_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonPayeeChar), NULL, this);
     bPayee_->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(mmTransDialog::OnButtonPayeeMouse), NULL, this);
 
-    itemFlexGridSizer8->Add(itemStaticText9, flags);
-    itemFlexGridSizer8->Add(bPayee_);
+    flex_sizer->Add(itemStaticText9, flags);
+    flex_sizer->Add(bPayee_, flags);
 
     // Payee Alternate ------------------------------------------------
     wxStaticText* itemStaticText13 = new wxStaticText(itemPanel7,
@@ -421,8 +424,8 @@ void mmTransDialog::CreateControls()
     bTo_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonToAccountChar), NULL, this);
     bTo_->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(mmTransDialog::OnButtonToAccountMouse), NULL, this);
     
-    itemFlexGridSizer8->Add(itemStaticText13);
-    itemFlexGridSizer8->Add(bTo_);
+    flex_sizer->Add(itemStaticText13, flags);
+    flex_sizer->Add(bTo_, flags);
 
     // Split Category -------------------------------------------
     cSplit_ = new wxCheckBox(itemPanel7, ID_DIALOG_TRANS_SPLITCHECKBOX,
@@ -430,8 +433,8 @@ void mmTransDialog::CreateControls()
     cSplit_->SetValue(FALSE);
     cSplit_->SetToolTip(_("Use split Categories"));
 
-    itemFlexGridSizer8->AddSpacer(20);  // Fill empty space.
-    itemFlexGridSizer8->Add(cSplit_);
+    flex_sizer->AddSpacer(20);  // Fill empty space.
+    flex_sizer->Add(cSplit_, flags);
 
     // Category -------------------------------------------------
     wxStaticText* itemStaticText17 = new wxStaticText(itemPanel7, wxID_STATIC, _("Category"));
@@ -439,8 +442,8 @@ void mmTransDialog::CreateControls()
         categString, wxDefaultPosition, wxSize(225, -1));
     bCategory_->SetToolTip(_("Specify the category for this transaction"));  
     
-    itemFlexGridSizer8->Add(itemStaticText17, flags);
-    itemFlexGridSizer8->Add(bCategory_);
+    flex_sizer->Add(itemStaticText17, flags);
+    flex_sizer->Add(bCategory_, flags);
     
     // Number  ---------------------------------------------
     wxStaticText* itemStaticText11 = new wxStaticText(itemPanel7, wxID_STATIC, _("Number"));
@@ -454,11 +457,11 @@ void mmTransDialog::CreateControls()
     bAuto_ -> Connect(ID_DIALOG_TRANS_BUTTONTRANSNUM,
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmTransDialog::OnAutoTransNum), NULL, this);
 
-    itemFlexGridSizer8->Add(itemStaticText11, flags);
+    flex_sizer->Add(itemStaticText11, flags);
     wxBoxSizer* itemBoxSizer550 = new wxBoxSizer(wxHORIZONTAL);
-    itemFlexGridSizer8->Add(itemBoxSizer550, 0, wxGROW);
+    flex_sizer->Add(itemBoxSizer550, flagsExpand);
     itemBoxSizer550->Add(textNumber_, flags);
-    itemBoxSizer550->Add(bAuto_);
+    itemBoxSizer550->Add(bAuto_, flags);
 
     // Notes  ---------------------------------------------
     wxStaticText* notesStaticText = new wxStaticText(itemPanel7,
@@ -476,26 +479,26 @@ void mmTransDialog::CreateControls()
 
     wxBoxSizer* itemBoxSizer56 = new wxBoxSizer(wxVERTICAL);
 
-    itemFlexGridSizer8->Add(itemBoxSizer56, 0, wxGROW);
-    itemBoxSizer56->Add(notesStaticText, 0, wxALIGN_TOP);
-    itemBoxSizer56->Add(bFrequentUsedNotes_, 0, wxALIGN_RIGHT|wxALIGN_TOP|wxALL|wxADJUST_MINSIZE, 10);
-    itemFlexGridSizer8->Add(textNotes_);
+    flex_sizer->Add(itemBoxSizer56, flagsExpand);
+    itemBoxSizer56->Add(notesStaticText, flags);
+    itemBoxSizer56->Add(bFrequentUsedNotes_, flags);
+    flex_sizer->Add(textNotes_, flagsExpand.Border(wxLEFT|wxRIGHT|wxBOTTOM, 10));
 
     SetTransferControls();  // hide appropriate fields
     /**********************************************************************************************
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
     wxPanel* itemPanel25 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer2->Add(itemPanel25, 0, wxALIGN_RIGHT|wxALL, 10);
+    box_sizer1->Add(itemPanel25, flags.Right().Border(0));
 
     wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
     itemPanel25->SetSizer(itemStdDialogButtonSizer1);
 
     wxButton* itemButtonOK = new wxButton( itemPanel25, wxID_OK);
-    itemStdDialogButtonSizer1->Add(itemButtonOK, 0, wxRIGHT, 10);
+    itemStdDialogButtonSizer1->Add(itemButtonOK, flags.Border(wxRIGHT|wxBOTTOM, 10));
 
     wxButton* itemButtonCancel = new wxButton( itemPanel25, wxID_CANCEL);
-    itemStdDialogButtonSizer1->Add(itemButtonCancel);
+    itemStdDialogButtonSizer1->Add(itemButtonCancel, flags);
 
     if (edit_)
         itemButtonCancel->SetFocus();
