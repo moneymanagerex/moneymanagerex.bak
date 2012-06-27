@@ -345,25 +345,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_BUTTON(wxID_DELETE,      mmCheckingPanel::OnDeleteTransaction)
     EVT_BUTTON(wxID_MOVE_FRAME,        mmCheckingPanel::OnMoveTransaction)
 
-    EVT_MENU(MENU_VIEW_ALLTRANSACTIONS, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_RECONCILED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_UNRECONCILED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_NOTRECONCILED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_VOID, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_TODAY, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_LAST30, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_LAST90, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_LAST3MONTHS, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_DUPLICATE, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_DELETE_TRANS, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_DELETE_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
-
-    EVT_MENU(MENU_TREEPOPUP_DELETE_VIEWED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_TREEPOPUP_DELETE_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
-
-    EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(wxID_ANY, mmCheckingPanel::OnViewPopupSelected)
 
     EVT_SEARCHCTRL_SEARCH_BTN(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
     EVT_TEXT_ENTER(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
@@ -754,7 +736,9 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
 void mmCheckingPanel::showTips()
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
+    wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_MINI);
     st->SetLabel(Tips(TIPS_BANKS));
+    stm->SetLabel("");
 }
 //----------------------------------------------------------------------------
 void mmCheckingPanel::setAccountSummary()
@@ -1065,7 +1049,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         wxString messageStr;
         messageStr << _("Transaction Filter")  << _("  will interfere with this filtering.") << "\n\n";
         messageStr << _("Please deactivate: ") << _("Transaction Filter");
-        wxMessageBox(messageStr,_("Transaction Filter"),wxOK|wxICON_WARNING);
+        wxMessageBox(messageStr,_("Transaction Filter"), wxOK|wxICON_WARNING);
         return;
     }
 
@@ -1367,11 +1351,11 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 {
     int evt =  event.GetId();
     wxString status = "";
-    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED_ALL)             status = "R";
-    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED_ALL)       status = "";
-    else if (evt == MENU_TREEPOPUP_MARKVOID_ALL)               status = "V";
+    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED_ALL) status = "R";
+    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED_ALL) status = "";
+    else if (evt == MENU_TREEPOPUP_MARKVOID_ALL) status = "V";
     else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL) status = "F";
-    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL)          status = "D";
+    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL) status = "D";
     else  wxASSERT(false);
 
     m_cp->core_->db_.get()->Begin();
@@ -1385,15 +1369,9 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
     m_cp->core_->db_.get()->Commit();
 
     m_cp->initVirtualListControl();
-    if (m_cp->m_trans.size() > 1)
-    {
-        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
-        if (m_selectedIndex > -1) {
-            SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-            SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        }
-    }
-    else
+    refreshVisualList();
+    
+    if(m_cp->m_trans.size() < 1 || m_selectedIndex < 0)
     {
         m_cp->enableEditDeleteButtons(false);
         m_cp->showTips();
@@ -1446,47 +1424,17 @@ wxString mmCheckingPanel::getItem(long item, long column) const
     {
         const mmBankTransaction &t = *m_trans[item];
 
-        switch (column)
-        {
-        case COL_DATE_OR_TRANSACTION_ID:
-            s = t.dateStr_;
-            break;
-
-        case COL_TRANSACTION_NUMBER:
-            s = t.transNum_;
-            break;
-
-        case COL_PAYEE_STR:
-            s = t.payeeStr_;
-            break;
-
-        case COL_STATUS:
-            s = t.status_;
-            break;
-
-        case COL_CATEGORY:
-            s = t.fullCatStr_;
-            break;
-
-        case COL_WITHDRAWAL:
-            s = t.withdrawalStr_;
-            break;
-
-        case COL_DEPOSIT:
-            s = t.depositStr_;
-            break;
-
-        case COL_BALANCE:
-            s = t.balanceStr_;
-            break;
-
-        case COL_NOTES:
-            s = t.notes_;
-            break;
-
-        default:
+        if (column == COL_DATE_OR_TRANSACTION_ID) s = t.dateStr_;
+        else if (column == COL_TRANSACTION_NUMBER) s = t.transNum_;
+        else if (column == COL_PAYEE_STR) s = t.payeeStr_;
+        else if (column == COL_STATUS) s = t.status_;
+        else if (column == COL_CATEGORY) s = t.fullCatStr_;
+        else if (column == COL_WITHDRAWAL) s = t.withdrawalStr_;
+        else if (column == COL_DEPOSIT) s = t.depositStr_;
+        else if (column == COL_BALANCE) s = t.balanceStr_;
+        else if (column == COL_NOTES) s = t.notes_;
+        else
             wxASSERT(false);
-        }
     }
 
     return s;
