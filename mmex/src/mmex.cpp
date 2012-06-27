@@ -244,7 +244,7 @@ bool OnInitImpl(mmGUIApp &app)
     app.SetAppName(mmex::GetAppName());
 
     wxFileConfig *config = new wxFileConfig("", "",
-        mmex::GetSharedDir().GetPathWithSep()+ mmex::GetAppName() + ".conf",
+        mmex::GetSharedDir().GetPathWithSep() + mmex::GetAppName() + ".conf",
         "", wxCONFIG_USE_LOCAL_FILE|wxCONFIG_USE_SUBDIR );   
     wxConfigBase::Set(config);
 
@@ -309,7 +309,8 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_EXPORT_QIF, mmGUIFrame::OnExportToQIF)
     EVT_MENU(MENU_IMPORT_QIF, mmGUIFrame::OnImportQIF)
     EVT_MENU(MENU_IMPORT_UNIVCSV, mmGUIFrame::OnImportUniversalCSV)
-    EVT_MENU(wxID_EXIT,  mmGUIFrame::OnQuit)
+    EVT_MENU(wxID_EXIT,  mmGUIFrame::OnExit)
+    EVT_CLOSE(mmGUIFrame::OnClose)
     EVT_MENU(MENU_NEWACCT,  mmGUIFrame::OnNewAccount)
     EVT_MENU(MENU_ACCTLIST,  mmGUIFrame::OnAccountList)
     EVT_MENU(MENU_ACCTEDIT,  mmGUIFrame::OnEditAccount)
@@ -537,7 +538,17 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     wxString mmex_revision = _MM_EX_REVISION_ID;
     mmex_revision.Replace("$", "");
     mmex_revision.Replace("Rev:", _("Revision:"));
-    if (sb) sb->SetStatusText(mmex_revision);
+    if (sb)
+    {
+        const int bar_widths[3] = {-1, -4, -1};
+        sb->SetFieldsCount(3);
+        sb->SetStatusWidths(3, bar_widths);
+        //TODO replace me with db file name
+        sb->SetStatusText(mmex_revision, 0);
+        sb->SetStatusText(mmex::GetSharedDir().GetPathWithSep() + mmex::GetAppName() + ".conf", 1);
+        if (mmex::isPortableMode())
+            sb->SetStatusText(" [" + _("portable mode") + "]", 2);
+    }
 
     SetIcon(mmex::getProgramIcon());
     SetMinSize(wxSize(800,200));
@@ -558,7 +569,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     createControls();
 
     // add the toolbars to the manager
-    m_mgr.AddPane(toolBar_, wxAuiPaneInfo().Name(("toolbar")).Caption(("Toolbar")).ToolbarPane().Top().LeftDockable(false).RightDockable(false));
+    m_mgr.AddPane(toolBar_, wxAuiPaneInfo().Name("toolbar").Caption("Toolbar").ToolbarPane().Top().LeftDockable(false).RightDockable(false));
 
     // change look and feel of wxAuiManager
     m_mgr.GetArtProvider()->SetMetric(16, 0);
@@ -612,8 +623,6 @@ void mmGUIFrame::cleanup()
 {
     wxConfigBase *config = wxConfigBase::Get();
     printer_.reset();
-
-    //if (!fileName_.IsEmpty())   saveConfigFile();
 
     m_mgr.UnInit();
 
@@ -1268,8 +1277,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 navTreeCtrl_->SetItemData(budgetSetupPerformance, new mmTreeItemData("Budget Setup Performance"));
             }
 
-            int id = q1.GetInt(("BUDGETYEARID"));
-            const wxString name = q1.GetString(("BUDGETYEARNAME"));
+            int id = q1.GetInt("BUDGETYEARID");
+            const wxString name = q1.GetString("BUDGETYEARNAME");
 
             wxTreeItemId bYear = navTreeCtrl_->AppendItem(budgeting, name, 3, 3);
             navTreeCtrl_->SetItemData(bYear, new mmTreeItemData(id, true));
@@ -1296,20 +1305,20 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(cashFlow, new mmTreeItemData("Cash Flow"));
 
     wxTreeItemId cashflowWithBankAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - With Bank Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(cashflowWithBankAccounts, new mmTreeItemData(("Cash Flow - With Bank Accounts")));
+    navTreeCtrl_->SetItemData(cashflowWithBankAccounts, new mmTreeItemData("Cash Flow - With Bank Accounts"));
 
     if ( hasActiveTermAccounts() )
     {
         wxTreeItemId cashflowWithTermAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - With Term Accounts"), 4, 4);
-        navTreeCtrl_->SetItemData(cashflowWithTermAccounts, new mmTreeItemData(("Cash Flow - With Term Accounts")));
+        navTreeCtrl_->SetItemData(cashflowWithTermAccounts, new mmTreeItemData("Cash Flow - With Term Accounts"));
     }
 
     wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - Specific Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(cashflowSpecificAccounts, new mmTreeItemData(("Cash Flow - Specific Accounts")));
+    navTreeCtrl_->SetItemData(cashflowSpecificAccounts, new mmTreeItemData("Cash Flow - Specific Accounts"));
 
     ///////////////////////////////////////////////////////
     wxTreeItemId transactionStats = navTreeCtrl_->AppendItem(reports, _("Transaction Statistics"), 4, 4);
-    navTreeCtrl_->SetItemData(transactionStats, new mmTreeItemData(("Transaction Statistics")));
+    navTreeCtrl_->SetItemData(transactionStats, new mmTreeItemData("Transaction Statistics"));
 
      ///////////////////////////////////////////////////////////////////
 
@@ -1338,9 +1347,9 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         if (account->acctType_ == ACCOUNT_TYPE_BANK)
         {
             const mmAccount* pCA = account;
-            if ((vAccts == ("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == ("Favorites") && pCA->favoriteAcct_) ||
-                (vAccts == ("ALL")))
+            if ((vAccts == "Open" && pCA->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == "Favorites" && pCA->favoriteAcct_) ||
+                (vAccts == "ALL"))
             {
                 int selectedImage = 1;
                 if (pCA->status_ == mmAccount::MMEX_Closed)
@@ -1356,9 +1365,9 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         else if (account->acctType_ == ACCOUNT_TYPE_TERM)
         {
            const mmAccount* pTA = account;
-            if ((vAccts == ("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == ("Favorites") && pTA->favoriteAcct_) ||
-                (vAccts == ("ALL")))
+            if ((vAccts == "Open" && pTA->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == "Favorites" && pTA->favoriteAcct_) ||
+                (vAccts == "ALL"))
             {
                 int selectedImage = 9;
                 if (pTA->status_ == mmAccount::MMEX_Closed)
@@ -1374,9 +1383,9 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         else //if (account->acctType_ == ACCOUNT_TYPE_STOCK)
         {
             const mmAccount* pIA = account;
-            if ((vAccts == ("Open") && pIA->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == ("Favorites") && pIA->favoriteAcct_) ||
-                (vAccts == ("ALL")))
+            if ((vAccts == "Open" && pIA->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == "Favorites" && pIA->favoriteAcct_) ||
+                (vAccts == "ALL"))
             {
                 wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->name_, 6, 6);
                 navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->id_, false));
@@ -1438,7 +1447,7 @@ void mmGUIFrame::CreateCustomReport(int index)
         , wxEmptyString, 100, NULL, wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
 
     wxString rfn = custRepIndex_->reportFileName(index);
-    if (rfn != (""))
+    if (rfn != "")
     {
         wxString sqlStr;
         if (custRepIndex_->getSqlFileData(sqlStr) )
@@ -1453,7 +1462,7 @@ void mmGUIFrame::CreateCustomReport(int index)
 
 bool mmGUIFrame::CustomSQLReportSelected( int& customSqlReportID, mmTreeItemData* iData )
 {
-    wxStringTokenizer tk(iData->getString(), ("_"));
+    wxStringTokenizer tk(iData->getString(), "_");
     wxString tk1 = tk.GetNextToken();
     wxString tk2 = tk.GetNextToken();
     wxString indexStr = tk.GetNextToken();
@@ -1477,7 +1486,7 @@ void mmGUIFrame::OnTreeItemExpanded(wxTreeEvent& event)
         expandedReportNavTree_ = true;
     else if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
         expandedCustomSqlReportNavTree_ = true;
-    else if (iData->getString() == ("Budgeting"))
+    else if (iData->getString() == "Budgeting")
         expandedBudgetingNavTree_ = true;
 }
 
@@ -1530,7 +1539,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 createReportsPage(rs);
                 proDlg.Update(95);
             }
-            else if (iParentData->getString() == ("Budget Setup Performance"))
+            else if (iParentData->getString() == "Budget Setup Performance")
             {
                 wxProgressDialog proDlg(_("Budget Category Summary"), reportWaitingMsg, 100, this);
                 mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, data);
@@ -3009,11 +3018,7 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
 {
     mmDBWrapper::initDB(m_db.get(), 0);
 
-    wxString title = mmex::getProgramName() + (" : ") + fileName;
-
-    if (mmex::isPortableMode())
-        title << (" [") << _("portable mode") << (']');
-
+    wxString title = mmex::getProgramName() +" "+ mmex::getProgramVersion();
     SetTitle(title);
 
     m_topCategories.Clear();
@@ -3079,7 +3084,7 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 
     wxString fileName = dlg.GetPath();
 
-    if (!fileName.EndsWith((".mmb")))
+    if (!fileName.EndsWith(".mmb"))
         fileName += (".mmb");
 
     SetDatabaseFile(fileName, true);
@@ -3262,14 +3267,6 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
         setAccountNavTreeSection(m_core.get()->getAccountName(univCSVDialog.ImportedAccountID()));
         createCheckingAccountPage(univCSVDialog.ImportedAccountID());
     }
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
-{
-    autoRepeatTransactionsTimer_.Stop();
-    delete wxConfigBase::Set((wxConfigBase *) NULL);
-    Close(TRUE);
 }
 //----------------------------------------------------------------------------
 
@@ -3793,12 +3790,12 @@ void mmGUIFrame::restorePrinterValues()
 
     wxString paperID_String     = wxString() << wxPAPER_A4;
     wxString pageOrientationStr = wxString() << wxPORTRAIT;
-    long leftMargin = config->ReadLong(("PRINTER_LEFT_MARGIN"), 20);
-    long rightMargin = config->ReadLong(("PRINTER_RIGHT_MARGIN"), 20);
-    long topMargin = config->ReadLong(("PRINTER_TOP_MARGIN"), 20);
-    long bottomMargin = config->ReadLong(("PRINTER_BOTTOM_MARGIN"), 20);
-    long paperID = config->ReadLong(("PRINTER_PAGE_ID"), wxPAPER_A4);
-    long pageOrientation = config->ReadLong(("PRINTER_PAGE_ORIENTATION"), wxPORTRAIT);
+    long leftMargin = config->ReadLong("PRINTER_LEFT_MARGIN", 20);
+    long rightMargin = config->ReadLong("PRINTER_RIGHT_MARGIN", 20);
+    long topMargin = config->ReadLong("PRINTER_TOP_MARGIN", 20);
+    long bottomMargin = config->ReadLong("PRINTER_BOTTOM_MARGIN", 20);
+    long paperID = config->ReadLong("PRINTER_PAGE_ID", wxPAPER_A4);
+    long pageOrientation = config->ReadLong("PRINTER_PAGE_ORIENTATION", wxPORTRAIT);
     wxPoint topLeft(leftMargin, topMargin);
     wxPoint bottomRight(rightMargin, bottomMargin);
 
@@ -4666,4 +4663,32 @@ void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& /*event*/)
         history_->RemoveFileFromHistory(i);
     }; 
     history_->Save(*config);
+}
+
+void mmGUIFrame::OnSize(wxSizeEvent& event)
+{
+    wxSize size = event.GetSize();
+    saveConfigFile();
+    event.Skip();
+}
+
+void mmGUIFrame::OnExit(wxCommandEvent& WXUNUSED(event))
+{
+    autoRepeatTransactionsTimer_.Stop();
+    saveConfigFile();
+    delete wxConfigBase::Set((wxConfigBase *) NULL);
+    Close(TRUE);
+}
+
+void mmGUIFrame::OnClose(wxCloseEvent& event)
+{
+    if (event.CanVeto())
+    {
+        event.Veto();
+        autoRepeatTransactionsTimer_.Stop();
+        saveConfigFile();
+        delete wxConfigBase::Set((wxConfigBase *) NULL);
+    }
+
+    Destroy();
 }

@@ -200,7 +200,9 @@ private:
     void OnPrintPageSetup(wxCommandEvent& WXUNUSED(event));
     void OnPrintPageReport(wxCommandEvent& WXUNUSED(event));
     void OnPrintPagePreview(wxCommandEvent& WXUNUSED(event));
-    void OnQuit(wxCommandEvent& event);
+    void OnExit(wxCommandEvent& event);
+    void OnClose(wxCloseEvent& event);
+    void OnSize(wxSizeEvent& event);
     void OnBillsDeposits(wxCommandEvent& event);
     void OnAssets(wxCommandEvent& event);
     void OnGotoAccount(wxCommandEvent& WXUNUSED(event));
