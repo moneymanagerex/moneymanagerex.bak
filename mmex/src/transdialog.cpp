@@ -256,15 +256,11 @@ void mmTransDialog::CreateControls()
     wxStaticBoxSizer* box_sizer = new wxStaticBoxSizer(static_box, wxVERTICAL);
     box_sizer2->Add(box_sizer, flags);
 
-
-//    wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-//    box_sizer->Add(itemPanel7, flags);
-
     wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 2, 0, 0);
     box_sizer->Add(flex_sizer, flags);
 
     // Date --------------------------------------------
-    wxStaticText* date_text = new wxStaticText(this, wxID_STATIC, _("Date"));
+    wxStaticText* text_date = new wxStaticText(this, wxID_STATIC, _("Date"));
     //Text field for day of the week
     itemStaticTextWeek_ = new wxStaticText(this, ID_DIALOG_TRANS_WEEK, "");
     
@@ -291,7 +287,7 @@ void mmTransDialog::CreateControls()
     spinCtrl_ -> SetRange (-32768, 32768); 
     spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
 
-    flex_sizer->Add(date_text, flags);
+    flex_sizer->Add(text_date, flags);
     wxBoxSizer* itemBoxSizer118 = new wxBoxSizer(wxHORIZONTAL);
     flex_sizer->Add(itemBoxSizer118);
     itemBoxSizer118->Add(dpc_, flags);
@@ -299,7 +295,7 @@ void mmTransDialog::CreateControls()
     itemBoxSizer118->Add(itemStaticTextWeek_, flags);   
 
     // Status --------------------------------------------
-    wxStaticText* status_text = new wxStaticText(this, wxID_STATIC, _("Status"));
+    wxStaticText* text_status = new wxStaticText(this, wxID_STATIC, _("Status"));
     choiceStatus_ = new wxChoice(this, ID_DIALOG_TRANS_STATUS);
     wxString transaction_status[] = 
     {
@@ -316,15 +312,14 @@ void mmTransDialog::CreateControls()
 
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
     
-    flex_sizer->Add(status_text, flags);
+    flex_sizer->Add(text_status, flags);
     flex_sizer->Add(choiceStatus_, flags);
 
     // Type --------------------------------------------
-    wxStaticText* type_text = new wxStaticText(this,
+    wxStaticText* text_type = new wxStaticText(this,
         wxID_STATIC, _("Type"));
     
-    choiceTrans_ = new wxChoice(this,
-        ID_DIALOG_TRANS_TYPE, wxDefaultPosition, wxSize(110, -1));
+    choiceTrans_ = new wxChoice(this, ID_DIALOG_TRANS_TYPE);
     wxString transaction_type[] =
     {
         wxTRANSLATE("Withdrawal"),
@@ -342,7 +337,7 @@ void mmTransDialog::CreateControls()
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
 
     cAdvanced_ = new wxCheckBox(this,
-        ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"),
+        ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Adv."),
         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cAdvanced_->SetValue(FALSE);
     cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
@@ -351,14 +346,14 @@ void mmTransDialog::CreateControls()
     typeSizer->Add(choiceTrans_, flags);
     typeSizer->Add(cAdvanced_, flags);
     
-    flex_sizer->Add(type_text, flags);
+    flex_sizer->Add(text_type, flags);
     flex_sizer->Add(typeSizer);
 
     // Amount Fields --------------------------------------------
     amountNormalTip_   = _("Specify the amount for this transaction");
     amountTransferTip_ = _("Specify the amount to be transfered"); 
 
-    wxStaticText* amountStaticText = new wxStaticText( this, wxID_STATIC, _("Amount"));
+    wxStaticText* text_amount = new wxStaticText( this, wxID_STATIC, _("Amount"));
 
     textAmount_ = new wxTextCtrl( this,
         ID_DIALOG_TRANS_TEXTAMOUNT, "", wxDefaultPosition, wxSize(110, -1), 
@@ -374,7 +369,7 @@ void mmTransDialog::CreateControls()
     amountSizer->Add(textAmount_, flags);
     amountSizer->Add(toTextAmount_, flags);
 
-    flex_sizer->Add(amountStaticText, flags);
+    flex_sizer->Add(text_amount, flags);
     flex_sizer->Add(amountSizer);
 
     // Payee ---------------------------------------------
@@ -401,7 +396,8 @@ void mmTransDialog::CreateControls()
             categString = resetCategoryString();
     }
 
-    bPayee_ = new wxButton( this, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName);
+    bPayee_ = new wxButton( this, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName,
+        wxDefaultPosition, wxSize(230, -1));
     payeeWithdrawalTip_ = _("Specify where the transaction is going to");
     payeeDepositTip_    = _("Specify where the transaction is coming from");
     bPayee_->SetToolTip(payeeWithdrawalTip_);
@@ -409,18 +405,20 @@ void mmTransDialog::CreateControls()
     bPayee_->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(mmTransDialog::OnButtonPayeeMouse), NULL, this);
 
     flex_sizer->Add(text_payee, flags);
-    flex_sizer->Add(bPayee_, flagsExpand);
+    flex_sizer->Add(bPayee_, flags);
 
     // Payee Alternate ------------------------------------------------
-    wxStaticText* itemStaticText13 = new wxStaticText(this,
-        ID_DIALOG_TRANS_STATIC_FROM, " ", wxDefaultPosition, wxSize(bPayee_->GetSize()));
-    bTo_ = new wxButton( this, ID_DIALOG_TRANS_BUTTONTO, _("Select To Acct"));
+    wxStaticText* text_to = new wxStaticText(this,
+        ID_DIALOG_TRANS_STATIC_FROM, " ", wxDefaultPosition,
+        wxSize(-1, wxSize(bPayee_->GetSize()).GetHeight()));
+    bTo_ = new wxButton( this, ID_DIALOG_TRANS_BUTTONTO, _("Select To Acct"),
+        wxDefaultPosition, wxSize(bPayee_->GetSize()));
     bTo_->SetToolTip(_("Specify which account the transfer is going to"));
     bTo_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonToAccountChar), NULL, this);
     bTo_->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(mmTransDialog::OnButtonToAccountMouse), NULL, this);
     
-    flex_sizer->Add(itemStaticText13, flags);
-    flex_sizer->Add(bTo_, flagsExpand);
+    flex_sizer->Add(text_to, flags);
+    flex_sizer->Add(bTo_, flags);
 
     // Split Category -------------------------------------------
     cSplit_ = new wxCheckBox(this, ID_DIALOG_TRANS_SPLITCHECKBOX,
@@ -432,17 +430,19 @@ void mmTransDialog::CreateControls()
     flex_sizer->Add(cSplit_, flags);
 
     // Category -------------------------------------------------
-    wxStaticText* itemStaticText17 = new wxStaticText(this, wxID_STATIC, _("Category"));
-    bCategory_ = new wxButton(this, ID_DIALOG_TRANS_BUTTONCATEGS, categString);
+    wxStaticText* text_category = new wxStaticText(this, wxID_STATIC, _("Category"));
+    bCategory_ = new wxButton(this, ID_DIALOG_TRANS_BUTTONCATEGS, categString,
+        wxDefaultPosition, wxSize(bPayee_->GetSize()));
     bCategory_->SetToolTip(_("Specify the category for this transaction"));  
     
-    flex_sizer->Add(itemStaticText17, flags);
-    flex_sizer->Add(bCategory_, flagsExpand);
+    flex_sizer->Add(text_category, flags);
+    flex_sizer->Add(bCategory_, flags);
     
     // Number  ---------------------------------------------
     wxStaticText* text_number = new wxStaticText(this, wxID_STATIC, _("Number"));
     textNumber_ = new wxTextCtrl(this,
-        ID_DIALOG_TRANS_TEXTNUMBER, "", wxDefaultPosition, wxSize(180, -1), wxTE_PROCESS_ENTER);
+        ID_DIALOG_TRANS_TEXTNUMBER, "", wxDefaultPosition,
+        wxSize(180, -1), wxTE_PROCESS_ENTER);
     textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
 
     bAuto_ = new wxButton(this,
@@ -458,12 +458,8 @@ void mmTransDialog::CreateControls()
     itemBoxSizer550->Add(bAuto_, flags);
 
     // Notes  ---------------------------------------------
-    wxStaticText* notesStaticText = new wxStaticText(this,
+    wxStaticText* text_notes = new wxStaticText(this,
         wxID_STATIC, _("Notes"));
-
-    textNotes_ = new wxTextCtrl(this,
-        ID_DIALOG_TRANS_TEXTNOTES, "", wxDefaultPosition, wxSize(-1,80), wxTE_MULTILINE);
-    textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
 
     bFrequentUsedNotes_ = new wxButton(this,
         ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, "...", wxDefaultPosition, wxSize(40, -1));
@@ -471,17 +467,19 @@ void mmTransDialog::CreateControls()
     bFrequentUsedNotes_ -> Connect(ID_DIALOG_TRANS_BUTTON_FREQENTNOTES,
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmTransDialog::OnFrequentUsedNotes), NULL, this);
 
-    flex_sizer->Add(notesStaticText, flags);
-    flex_sizer->Add(bFrequentUsedNotes_, flags.Right());
+    textNotes_ = new wxTextCtrl(this,
+        ID_DIALOG_TRANS_TEXTNOTES, "", wxDefaultPosition, wxSize(-1,80), wxTE_MULTILINE);
+    textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
 
-    flex_sizer->AddSpacer(1);
+    flex_sizer->Add(text_notes, flags);
+    flex_sizer->Add(bFrequentUsedNotes_, flags.Right());
     box_sizer->Add(textNotes_, flagsExpand.Border(wxLEFT|wxRIGHT|wxBOTTOM, 10));
 
     SetTransferControls();  // hide appropriate fields
     /**********************************************************************************************
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
-    wxPanel* itemPanel25 = new wxPanel(this, wxID_ANY/*, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL*/);
+    wxPanel* itemPanel25 = new wxPanel(this, wxID_ANY);
     box_sizer1->Add(itemPanel25, flags.Right().Border(0));
 
     wxStdDialogButtonSizer*  buttons_sizer = new wxStdDialogButtonSizer;
@@ -712,7 +710,7 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 void mmTransDialog::updateControlsForTransType()
 {
     wxStaticText* stp = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_PAYEE);
-    wxStaticText* itemStaticText13 = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_FROM);
+    wxStaticText* text_to = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_FROM);
 
     if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL) 
     {
@@ -720,7 +718,7 @@ void mmTransDialog::updateControlsForTransType()
         SetTransferControls();
         stp->SetLabel(_("Payee"));
         bPayee_->SetToolTip(payeeWithdrawalTip_);
-        itemStaticText13->SetLabel("");
+        text_to->SetLabel("");
         if (payeeUnknown_) 
             bPayee_->SetLabel(resetPayeeString());
         bPayee_->Enable(true);
@@ -732,7 +730,7 @@ void mmTransDialog::updateControlsForTransType()
         SetTransferControls();
         stp->SetLabel(_("From"));
         bPayee_->SetToolTip(payeeDepositTip_);
-        itemStaticText13->SetLabel("");
+        text_to->SetLabel("");
         if (payeeUnknown_) 
             bPayee_->SetLabel(resetPayeeString());
         bPayee_->Enable(true);
@@ -747,7 +745,7 @@ void mmTransDialog::updateControlsForTransType()
 
         stp->SetLabel(_("From"));
         bTo_->SetLabel(_("Select To Account"));
-        itemStaticText13->SetLabel(_("To"));
+        text_to->SetLabel(_("To"));
         toID_    = -1;
         payeeUnknown_ = true;
 
