@@ -1,0 +1,564 @@
+/*******************************************************
+ Copyright (C) 2006 Madhan Kanagavel
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ ********************************************************/
+
+#include "billsdepositspanel.h"
+#include "util.h"
+#include "dbwrapper.h"
+#include "billsdepositsdialog.h"
+#include "constants.h"
+
+/*******************************************************/
+BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)
+    EVT_BUTTON(wxID_NEW,         mmBillsDepositsPanel::OnNewBDSeries)
+    EVT_BUTTON(wxID_EDIT,        mmBillsDepositsPanel::OnEditBDSeries)
+    EVT_BUTTON(wxID_DELETE,      mmBillsDepositsPanel::OnDeleteBDSeries)
+    EVT_BUTTON(wxID_PASTE, mmBillsDepositsPanel::OnEnterBDTransaction)
+    EVT_BUTTON(wxID_IGNORE,  mmBillsDepositsPanel::OnSkipBDTransaction)
+END_EVENT_TABLE()
+/*******************************************************/
+BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
+    EVT_LIST_ITEM_ACTIVATED(ID_PANEL_BD_LISTCTRL,   billsDepositsListCtrl::OnListItemActivated)
+    EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_BD_LISTCTRL, billsDepositsListCtrl::OnItemRightClick)
+    EVT_LIST_ITEM_SELECTED(ID_PANEL_BD_LISTCTRL,    billsDepositsListCtrl::OnListItemSelected)
+    EVT_LIST_ITEM_DESELECTED(ID_PANEL_BD_LISTCTRL,    billsDepositsListCtrl::OnListItemDeselected)
+    EVT_LIST_COL_END_DRAG(ID_PANEL_BD_LISTCTRL, billsDepositsListCtrl::OnItemResize)
+
+
+    EVT_MENU(MENU_TREEPOPUP_NEW,              billsDepositsListCtrl::OnNewBDSeries)
+    EVT_MENU(MENU_TREEPOPUP_EDIT,             billsDepositsListCtrl::OnEditBDSeries)
+    EVT_MENU(MENU_TREEPOPUP_DELETE,           billsDepositsListCtrl::OnDeleteBDSeries)
+    EVT_MENU(MENU_POPUP_BD_ENTER_OCCUR,       billsDepositsListCtrl::OnEnterBDTransaction)
+    EVT_MENU(MENU_POPUP_BD_SKIP_OCCUR,        billsDepositsListCtrl::OnSkipBDTransaction)
+
+    EVT_LIST_KEY_DOWN(ID_PANEL_BD_LISTCTRL,   billsDepositsListCtrl::OnListKeyDown)
+END_EVENT_TABLE()
+/*******************************************************/
+
+namespace
+{
+
+inline bool sortTransactionsByRemainingDays(const mmBDTransactionHolder &p1, const mmBDTransactionHolder &p2)
+{
+    return p1.daysRemaining_ < p2.daysRemaining_;
+};
+
+} // namespace
+
+mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, mmCoreDB* core,
+    wxWindow *parent, wxWindowID winid,
+    const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+: mmPanelBase(db, core)
+, m_imageList()
+, listCtrlAccount_()
+{
+    Create(parent, winid, pos, size, style, name);
+}
+
+bool mmBillsDepositsPanel::Create( wxWindow *parent,
+            wxWindowID winid, const wxPoint& pos,
+            const wxSize& size,long style, const wxString& name  )
+{
+    SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
+    wxPanel::Create(parent, winid, pos, size, style, name);
+
+    windowsFreezeThaw(this);
+
+    CreateControls();
+    GetSizer()->Fit(this);
+    GetSizer()->SetSizeHints(this);
+
+    initVirtualListControl();
+    if (trans_.size() > 1)
+        listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
+
+    windowsFreezeThaw(this);
+
+    return TRUE;
+}
+
+mmBillsDepositsPanel::~mmBillsDepositsPanel()
+{
+   if (m_imageList)
+        delete m_imageList;
+}
+
+void mmBillsDepositsPanel::CreateControls()
+{
+
+    wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(itemBoxSizer9);
+
+    /* ---------------------- */
+    wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition,
+        wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
+    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
+    headerPanel->SetSizer(itemBoxSizerVHeader);
+
+    int font_size = this->GetFont().GetPointSize() + 2;
+    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER,
+        _("Repeating Transactions"));
+    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
+
+    /* ---------------------- */
+    wxSplitterWindow* itemSplitterWindowBillsDeposit = new wxSplitterWindow( this,
+        ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(200, 200),
+        wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+
+    wxSize imageSize(16, 16);
+    m_imageList = new wxImageList( imageSize.GetWidth(), imageSize.GetHeight() );
+    m_imageList->Add(wxBitmap(wxImage(error_xpm).Scale(16, 16)));
+    m_imageList->Add(wxBitmap(wxImage(rt_exec_auto_xpm).Scale(16, 16)));
+    m_imageList->Add(wxBitmap(wxImage(rt_exec_user_xpm).Scale(16, 16)));
+    m_imageList->Add(wxBitmap(wxImage(uparrow_xpm).Scale(16, 16)));
+    m_imageList->Add(wxBitmap(wxImage(downarrow_xpm).Scale(16, 16)));
+
+    listCtrlAccount_ = new billsDepositsListCtrl( this, itemSplitterWindowBillsDeposit,
+        ID_PANEL_BD_LISTCTRL, wxDefaultPosition, wxDefaultSize,
+        wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
+
+    listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
+    wxListItem itemCol;
+    itemCol.SetImage(4);
+    itemCol.SetText(_("Next Due Date"));
+    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+    listCtrlAccount_->InsertColumn(0, _("Payee"));
+    listCtrlAccount_->InsertColumn(1, _("Account"));
+    listCtrlAccount_->InsertColumn(2, _("Type"));
+    listCtrlAccount_->InsertColumn(3, _("Amount"));
+    listCtrlAccount_->InsertColumn(4, itemCol);
+    listCtrlAccount_->InsertColumn(5, _("Frequency"));
+    listCtrlAccount_->InsertColumn(6, _("Remaining Days"));
+    listCtrlAccount_->InsertColumn(7, _("Notes"));
+
+    /* See if we can get data from inidb */
+    int col0 = core_->iniSettings_->GetIntSetting(wxT("BD_COL0_WIDTH"), 150);
+    int col1 = core_->iniSettings_->GetIntSetting(wxT("BD_COL1_WIDTH"), -2);
+    int col2 = core_->iniSettings_->GetIntSetting(wxT("BD_COL2_WIDTH"), -2);
+    int col3 = core_->iniSettings_->GetIntSetting(wxT("BD_COL3_WIDTH"), -2);
+    int col4 = core_->iniSettings_->GetIntSetting(wxT("BD_COL4_WIDTH"), -2);
+    int col5 = core_->iniSettings_->GetIntSetting(wxT("BD_COL5_WIDTH"), -2);
+    int col6 = core_->iniSettings_->GetIntSetting(wxT("BD_COL6_WIDTH"), -2);
+    int col7 = core_->iniSettings_->GetIntSetting(wxT("BD_COL7_WIDTH"), -2);
+
+    listCtrlAccount_->SetColumnWidth(0, col0);
+    listCtrlAccount_->SetColumnWidth(1, col1);
+    listCtrlAccount_->SetColumnWidth(2, col2);
+    listCtrlAccount_->SetColumnWidth(3, col3);
+    listCtrlAccount_->SetColumnWidth(4, col4);
+    listCtrlAccount_->SetColumnWidth(5, col5);
+    listCtrlAccount_->SetColumnWidth(6, col6);
+    listCtrlAccount_->SetColumnWidth(7, col7);
+
+    wxPanel* itemPanel12 = new wxPanel( itemSplitterWindowBillsDeposit, ID_PANEL1,
+        wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
+
+    itemSplitterWindowBillsDeposit->SplitHorizontally(listCtrlAccount_, itemPanel12);
+    itemSplitterWindowBillsDeposit->SetMinimumPaneSize(100);
+    itemSplitterWindowBillsDeposit->SetSashGravity(1.0);
+    itemBoxSizer9->Add(itemSplitterWindowBillsDeposit, 1, wxGROW|wxALL, 1);
+
+    wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
+    itemPanel12->SetSizer(itemBoxSizer4);
+
+    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxButton* itemButton6 = new wxButton( itemPanel12, wxID_NEW);
+    itemButton6->SetToolTip(_("New Bills & Deposit Series"));
+    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+
+    wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT);
+    itemButton81->SetToolTip(_("Edit Bills & Deposit Series"));
+    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemButton81->Enable(false);
+
+    wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE);
+    itemButton7->SetToolTip(_("Delete Bills & Deposit Series"));
+    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemButton7->Enable(false);
+
+    wxButton* itemButton8 = new wxButton( itemPanel12, wxID_PASTE, _("En&ter"),
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemButton8->SetToolTip(_("Enter Next Bills & Deposit Occurrence"));
+    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemButton8->Enable(false);
+
+    wxButton* buttonSkipTrans = new wxButton( itemPanel12, wxID_IGNORE, _("&Skip"));
+    buttonSkipTrans->SetToolTip(_("Skip Next Bills & Deposit Occurrence"));
+    itemBoxSizer5->Add(buttonSkipTrans, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    buttonSkipTrans->Enable(false);
+
+    //Infobar-mini
+    wxStaticText* itemStaticText444 = new wxStaticText(itemPanel12, ID_PANEL_BD_STATIC_MINI, wxT(""),
+                                                       wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer5->Add(itemStaticText444, 1, wxGROW|wxTOP, 12);
+
+    //Infobar
+    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, wxT(""),
+    wxPoint(-1,-1), wxSize(200, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+    itemBoxSizer4->Add(text, 1, wxGROW|wxLEFT|wxRIGHT, 14);
+
+    mmBillsDepositsPanel::updateBottomPanelData(-1);
+}
+
+int mmBillsDepositsPanel::initVirtualListControl(int id)
+{
+    trans_.clear();
+    listCtrlAccount_->DeleteAllItems();
+
+    core_->currencyList_.LoadBaseCurrencySettings();
+
+    const  wxString sql = wxString::FromUTF8(SELECT_ALL_FROM_BILLSDEPOSITS_V1)
+        + wxT(" order by ") + (wxT(" NEXTOCCURRENCEDATE"));
+
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql);
+
+    int cnt = 0, selected_item = -1;
+    for (; q1.NextRow(); ++cnt)
+    {
+        mmBDTransactionHolder th;
+
+        th.id_           = q1.GetInt(wxT("BDID"));
+        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
+        th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
+        int repeats        = q1.GetInt(wxT("REPEATS"));
+        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
+        th.transType_      = q1.GetString(wxT("TRANSCODE"));
+        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
+        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+        th.accountName_    = core_->accountList_.GetAccountName(th.accountID_);
+        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
+        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+        th.notes_          = q1.GetString(wxT("NOTES"));
+        th.categID_        = q1.GetInt(wxT("CATEGID"));
+        th.categoryStr_    = core_->categoryList_.GetCategoryName(th.categID_);
+        th.subcategID_     = q1.GetInt(wxT("SUBCATEGID"));
+        th.subcategoryStr_ = core_->categoryList_.GetSubCategoryName(th.categID_, th.subcategID_);
+
+        int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
+
+        th.bd_repeat_user_ = false;
+        th.bd_repeat_auto_ = false;
+
+        // DeMultiplex the Auto Executable fields.
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
+        {
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+            th.bd_repeat_user_ = true;
+        }
+
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
+        {
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+            th.bd_repeat_auto_ = true;
+        }
+
+        th.repeatsStr_ = BILLSDEPOSITS_REPEATS[repeats];
+        if ( repeats >10 && repeats<15)
+            th.repeatsStr_ = wxString::Format(th.repeatsStr_, (wxString()<<numRepeats).c_str());
+
+        wxDateTime today = wxDateTime::Now();
+        wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
+        th.daysRemaining_ = ts.GetDays();
+        int minutesRemaining = ts.GetMinutes();
+
+        if (minutesRemaining > 0)
+            th.daysRemaining_ += 1;
+
+        th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + _(" days remaining");
+
+        if (th.daysRemaining_ == 0)
+        {
+            if ((repeats > 10) && (numRepeats < 0) )
+                th.daysRemainingStr_ = _("Inactive");
+        }
+
+        if (th.daysRemaining_ < 0)
+        {
+            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
+            if ((repeats > 10) && (numRepeats < 0) )
+                th.daysRemainingStr_ = _("Inactive");
+        }
+
+        mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+        mmex::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+
+        th.payeeStr_ = core_->payeeList_.GetPayeeName(th.payeeID_);
+
+        if (th.transType_ == TRANS_TYPE_TRANSFER_STR)
+        {
+            wxString fromAccount = core_->accountList_.GetAccountName(th.accountID_);
+            wxString toAccount = core_->accountList_.GetAccountName(th.toAccountID_ );
+
+            th.payeeStr_ = toAccount;
+        }
+
+        trans_.push_back(th);
+        if (th.id_ == id) selected_item = cnt;
+    }
+
+    q1.Finalize();
+
+    //std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
+    listCtrlAccount_->SetItemCount(static_cast<long>(trans_.size()));
+    return selected_item;
+}
+
+void mmBillsDepositsPanel::OnNewBDSeries(wxCommandEvent& event)
+{
+  listCtrlAccount_->OnNewBDSeries(event);
+}
+
+void mmBillsDepositsPanel::OnEditBDSeries(wxCommandEvent& event)
+{
+    listCtrlAccount_->OnEditBDSeries(event);
+}
+
+void mmBillsDepositsPanel::OnDeleteBDSeries(wxCommandEvent& event)
+{
+    listCtrlAccount_->OnDeleteBDSeries(event);
+}
+
+void mmBillsDepositsPanel::OnEnterBDTransaction(wxCommandEvent& event)
+{
+    listCtrlAccount_->OnEnterBDTransaction(event);
+}
+
+void mmBillsDepositsPanel::OnSkipBDTransaction(wxCommandEvent& event)
+{
+    listCtrlAccount_->OnSkipBDTransaction(event);
+    listCtrlAccount_->SetFocus();
+}
+
+/*******************************************************/
+void billsDepositsListCtrl::OnItemResize(wxListEvent& event)
+{
+    int i = event.GetColumn();
+    wxString parameter_name = wxString::Format(wxT("BD_COL%d_WIDTH"), i);
+    int current_width = cp_->listCtrlAccount_->GetColumnWidth(i);
+    cp_->core_->iniSettings_->SetIntSetting(parameter_name, current_width);
+}
+
+void billsDepositsListCtrl::OnItemRightClick(wxListEvent& event)
+{
+    selectedIndex_ = event.GetIndex();
+
+    wxMenu menu;
+    menu.Append(MENU_POPUP_BD_ENTER_OCCUR, _("Enter next Occurrence..."));
+    menu.AppendSeparator();
+    menu.Append(MENU_POPUP_BD_SKIP_OCCUR, _("Skip next Occurrence"));
+    menu.AppendSeparator();
+    menu.Append(MENU_TREEPOPUP_NEW, _("&New Bills && Deposit Series..."));
+    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Bills && Deposit Series..."));
+    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Bills && Deposit Series..."));
+    PopupMenu(&menu, event.GetPoint());
+}
+
+wxString mmBillsDepositsPanel::getItem(long item, long column)
+{
+    if (column == 0) return trans_[item].payeeStr_;
+    if (column == 1) return trans_[item].accountName_;
+
+    if (column == 2)
+    {
+        if (trans_[item].transType_ == TRANS_TYPE_WITHDRAWAL_STR) return _("Withdrawal");
+        else if (trans_[item].transType_ == TRANS_TYPE_DEPOSIT_STR) return _("Deposit");
+        else if (trans_[item].transType_ == TRANS_TYPE_TRANSFER_STR) return _("Transfer");
+    }
+
+    if (column == 3) return trans_[item].transAmtString_;
+    if (column == 4) return trans_[item].nextOccurStr_;
+    if (column == 5) return trans_[item].repeatsStr_;
+    if (column == 6) return trans_[item].daysRemainingStr_;
+    if (column == 7) return trans_[item].notes_;
+
+    return wxT("");
+}
+
+wxString billsDepositsListCtrl::OnGetItemText(long item, long column) const
+{
+    return cp_->getItem(item, column);
+}
+
+void billsDepositsListCtrl::OnListItemSelected(wxListEvent& event)
+{
+    selectedIndex_ = event.GetIndex();
+    cp_->updateBottomPanelData(selectedIndex_);
+}
+
+void billsDepositsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
+{
+    selectedIndex_ = -1;
+    cp_->updateBottomPanelData(selectedIndex_);
+}
+
+int billsDepositsListCtrl::OnGetItemImage(long item) const
+{
+    /* Returns the icon to be shown for each entry */
+    if (cp_->trans_[item].daysRemainingStr_ == _("Inactive")) return -1;
+    if (cp_->trans_[item].daysRemaining_ < 0) return 0;
+    if (cp_->trans_[item].bd_repeat_auto_) return 1;
+    if (cp_->trans_[item].bd_repeat_user_) return 2;
+
+    return -1;
+}
+
+wxListItemAttr* billsDepositsListCtrl::OnGetItemAttr(long item) const
+{
+    /* Returns the alternating background pattern */
+    return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
+}
+
+void billsDepositsListCtrl::OnListKeyDown(wxListEvent& event)
+{
+  switch ( event.GetKeyCode() )
+    {
+        case WXK_DELETE:
+            {
+                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,
+                    MENU_TREEPOPUP_DELETE);
+                OnDeleteBDSeries(evt);
+            }
+            break;
+
+        default:
+            event.Skip();
+    }
+}
+
+void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
+{
+    mmBDDialog dlg(cp_->db_, cp_->core_, 0, false, false, this );
+    if ( dlg.ShowModal() == wxID_OK )
+        refreshVisualList(cp_->initVirtualListControl(dlg.transID_));
+}
+
+void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ == -1) return;
+    if (!cp_->db_) return;
+
+    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
+    if ( dlg.ShowModal() == wxID_OK )
+        refreshVisualList(cp_->initVirtualListControl(dlg.transID_));
+}
+
+void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ < 0) return;
+    if (!cp_->core_->db_.get()) return;
+    if (cp_->trans_.size() == 0) return;
+
+    wxMessageDialog msgDlg(this, _("Do you really want to delete the series?"),
+                                        _("Confirm Series Deletion"),
+                                        wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+    if (msgDlg.ShowModal() == wxID_YES)
+    {
+        mmDBWrapper::deleteBDSeries(cp_->db_, cp_->trans_[selectedIndex_].id_);
+        cp_->initVirtualListControl();
+        refreshVisualList(selectedIndex_);
+    }
+}
+
+void billsDepositsListCtrl::OnEnterBDTransaction(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ == -1) return;
+    if (!cp_->db_) return;
+
+    int id = cp_->trans_[selectedIndex_].id_;
+    mmBDDialog dlg(cp_->db_, cp_->core_, id, false, true, this );
+    if ( dlg.ShowModal() == wxID_OK )
+        refreshVisualList(cp_->initVirtualListControl(id));
+}
+
+void billsDepositsListCtrl::OnSkipBDTransaction(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ == -1 || !cp_->core_->db_.get()) return;
+
+    int id = cp_->trans_[selectedIndex_].id_;
+    mmDBWrapper::completeBDInSeries(cp_->core_->db_.get(), id);
+    refreshVisualList(cp_->initVirtualListControl(id));
+}
+
+void billsDepositsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
+{
+    if (selectedIndex_ == -1) return;
+    if (!cp_->db_) return;
+
+    mmBDDialog dlg(cp_->core_->db_.get(), cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this);
+    if ( dlg.ShowModal() == wxID_OK )
+        refreshVisualList(cp_->initVirtualListControl(dlg.transID_));
+}
+
+void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
+{
+    enableEditDeleteButtons(selIndex >= 0);
+    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_DETAILS);
+    wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_MINI);
+
+    if (selIndex !=-1)
+    {
+        wxString addInfo;
+        addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == wxT("") ? wxT("") : wxT(":") + trans_[selIndex].subcategoryStr_);
+        stm->SetLabel(addInfo);
+        st ->SetLabel (trans_[selIndex].notes_ );
+    }
+    else
+    {
+        st-> SetLabel(Tips(TIPS_BILLS));
+        stm-> SetLabel(wxT(""));
+    }
+}
+
+void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
+{
+    wxButton* bE = (wxButton*)FindWindow(wxID_EDIT);
+    wxButton* bD = (wxButton*)FindWindow(wxID_DELETE);
+    wxButton* bN = (wxButton*)FindWindow(wxID_PASTE);
+    wxButton* bS = (wxButton*)FindWindow(wxID_IGNORE);
+    bE->Enable(en);
+    bD->Enable(en);
+    bN->Enable(en);
+    bS->Enable(en);
+}
+
+void billsDepositsListCtrl::refreshVisualList(int selected_index)
+{
+
+    //TODO
+    if (selected_index >= (long)cp_->trans_.size() || selected_index < 0)
+        selected_index = /*g_asc*/ true ? (long)cp_->trans_.size() - 1 : 0;
+    if (cp_->trans_.size() > 0) {
+        RefreshItems(0, cp_->trans_.size() - 1);
+    }
+    else
+        selected_index = -1;
+
+    if (selected_index >= 0 && cp_->trans_.size() > 0)
+    {
+        SetItemState(selected_index, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        SetItemState(selected_index, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        EnsureVisible(selected_index);
+    }
+    selectedIndex_ = selected_index;
+    cp_->updateBottomPanelData(selected_index);
+}
+
