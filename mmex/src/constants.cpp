@@ -43,7 +43,7 @@ wxString mmex::getProgramVersion()
 #endif
 
     revision.Trim();
-    return wxString::Format(wxT("0.9.9.1  %s"), revision.c_str());
+    return wxString::Format(wxT("0.9.9.2  %s"), revision.c_str());
 }
 //----------------------------------------------------------------------------
 wxString mmex::getProgramCopyright()
@@ -63,10 +63,8 @@ wxString mmex::getProgramFacebookSite()
 
 wxString mmex::getProgramDescription()
 {
-    wxString description = _("Released under the GNU GPL License");
-    description << wxT("\n\n")
-                << wxVERSION_STRING
-                << wxT(",  Boost C++ ") << (BOOST_VERSION/100000) << wxT('.')
+    wxString description =  wxVERSION_STRING;
+    description << wxT(",  Boost C++ ") << (BOOST_VERSION/100000) << wxT('.')
                 << (BOOST_VERSION / 100 % 1000) << wxT('.')
                 << (BOOST_VERSION % 100) << wxT("\n")
                 << wxT("SQLite3 ") << wxSQLite3Database::GetVersion()
