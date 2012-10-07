@@ -630,7 +630,7 @@ void mmTransDialog::updateControlsForTransType()
 			toID_ = core_->accountList_.GetAccountId(accNameStr);
 	    }
 	    else
-	        bPayee_->SetLabel(_("Select To Accounty"));
+	        bPayee_->SetLabel(_("Select To Account"));
 
         if (!edit_)
         {
