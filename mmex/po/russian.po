@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-07 12:27+0300\n"
-"PO-Revision-Date: 2012-10-07 12:27+0300\n"
+"POT-Creation-Date: 2012-10-07 12:49+0300\n"
+"PO-Revision-Date: 2012-10-07 13:01+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -37,9 +37,8 @@ msgid "Warning"
 msgstr "Внимание"
 
 #: src/customreportdisplay.cpp:61
-#, fuzzy
 msgid "SQL query discarded by user"
-msgstr "Импорт прерван пользователем!"
+msgstr "SQL запрос прерван пользователем"
 
 #: src/customreportdisplay.cpp:75
 #: src/dbwrapper.cpp:163
@@ -84,19 +83,16 @@ msgid "Error: %s"
 msgstr "Ошибка: %s"
 
 #: src/customreportdisplay.cpp:115
-#, fuzzy
 msgid "Dababase updated succesfully"
-msgstr "Курсы валют обновлены"
+msgstr "База данных успешно обновлена"
 
 #: src/customreportdisplay.cpp:117
-#, fuzzy
 msgid "Deletion completed"
-msgstr "Замена категорий выполнена."
+msgstr "Удаление выполнено"
 
 #: src/customreportdisplay.cpp:119
-#, fuzzy
 msgid "Data Insertion completed"
-msgstr "Замена категорий выполнена."
+msgstr "Данные внесены"
 
 #: src/reportincexpesestime.cpp:24
 msgid "Income vs Expenses for Year: "
@@ -1107,7 +1103,7 @@ msgstr "Потери"
 
 #: src/stockspanel.cpp:412
 msgid "Connecting..."
-msgstr ""
+msgstr "Соединяюсь..."
 
 #: src/stockspanel.cpp:421
 msgid "Cannot get data from WWW!"
@@ -1129,9 +1125,9 @@ msgstr "Обновление котировок с Yahoo"
 
 #: src/stockspanel.cpp:536
 #: src/stockspanel.cpp:589
-#, fuzzy, c-format
+#, c-format
 msgid "Last updated %s"
-msgstr "Последний использованный"
+msgstr "Последнее обновление %s"
 
 #: src/stockspanel.cpp:545
 msgid "&New Stock Investment"
@@ -1158,9 +1154,9 @@ msgid "Confirm Stock Investment Deletion"
 msgstr "Подтвердите удаление инвестиции"
 
 #: src/stockspanel.cpp:740
-#, fuzzy, c-format
+#, c-format
 msgid "Moving Transaction from %s to..."
-msgstr "Выберите счёт для экспорта:"
+msgstr "Перенос транзакций из %s в ..."
 
 #: src/stockspanel.cpp:742
 msgid "Select the destination Account "
@@ -1342,10 +1338,6 @@ msgid "To"
 msgstr "В"
 
 #: src/transdialog.cpp:633
-#, fuzzy
-msgid "Select To Account-"
-msgstr "На счёт"
-
 #: src/transdialog.cpp:667
 msgid "Select To Account"
 msgstr "На счёт"
@@ -1360,7 +1352,6 @@ msgstr "Выберите к кому или от кого исходит про�
 
 #: src/transdialog.cpp:708
 #: src/transdialog.cpp:778
-#, fuzzy
 msgid "To Account"
 msgstr "На счёт"
 
@@ -1513,9 +1504,8 @@ msgid "<b>Note:</b> Transactions contain <b>'transfers'</b> may either be added 
 msgstr "<b>Заметка:</b> Проводки типа <b>'перевод'</b> могут быть добавлены или вычтены из итогового значения. Зависит от последнего выбранного счёта."
 
 #: src/reporttransactions.cpp:210
-#, fuzzy
 msgid "Amount Range"
-msgstr "Диапазон цен: "
+msgstr "Диапазон цен"
 
 #: src/reporttransactions.cpp:222
 msgid "Filtering Details: "
@@ -1555,9 +1545,8 @@ msgid "Viewing All Budget Categories"
 msgstr "Показать все категории бюджета"
 
 #: src/budgetingpanel.cpp:217
-#, fuzzy
 msgid "Income: "
-msgstr "Доход"
+msgstr "Доход: "
 
 #: src/budgetingpanel.cpp:218
 #: src/budgetingpanel.cpp:226
@@ -1575,9 +1564,8 @@ msgid "Difference: "
 msgstr "Разница: "
 
 #: src/budgetingpanel.cpp:225
-#, fuzzy
 msgid "Expenses: "
-msgstr "Расход"
+msgstr "Расход: "
 
 #: src/budgetingpanel.cpp:247
 msgid "Sub Category"
@@ -1609,9 +1597,8 @@ msgid "Don't Care"
 msgstr "Игнорировать"
 
 #: src/univcsvdialog.cpp:100
-#, fuzzy
 msgid "To/From(+/-)"
-msgstr "Со счёта"
+msgstr "Из/В(+/-)"
 
 #: src/univcsvdialog.cpp:143
 msgid "Specify the order of fields in the CSV file"
@@ -1670,9 +1657,8 @@ msgid "Account: "
 msgstr "Счет: "
 
 #: src/univcsvdialog.cpp:255
-#, fuzzy
 msgid "Date Format: "
-msgstr "Формат даты"
+msgstr "Формат даты:"
 
 #: src/univcsvdialog.cpp:272
 msgid "Comma"
@@ -1819,9 +1805,9 @@ msgid "Choose CSV data file to Export"
 msgstr "Выберите файл данный CSV для экспорта"
 
 #: src/univcsvdialog.cpp:882
-#, fuzzy, c-format
+#, c-format
 msgid "Transactions exported: %ld"
-msgstr "Автоматические проводки"
+msgstr "Транзакций выгружено: %ld"
 
 #: src/univcsvdialog.cpp:883
 msgid "Export to CSV"
@@ -2068,7 +2054,6 @@ msgid "Select From Account"
 msgstr "Со счёта"
 
 #: src/billsdepositsdialog.cpp:814
-#, fuzzy
 msgid "From Account"
 msgstr "Со счёта"
 
@@ -2184,24 +2169,20 @@ msgid "Accounts"
 msgstr "Счета"
 
 #: src/qif_export.cpp:106
-#, fuzzy
 msgid "Select accounts"
-msgstr "Счета"
+msgstr "Выберите счета"
 
 #: src/qif_export.cpp:114
-#, fuzzy
 msgid "From Date"
-msgstr "Формат даты"
+msgstr "С даты"
 
 #: src/qif_export.cpp:123
-#, fuzzy
 msgid "To Date"
-msgstr "Текущий месяц по сегодня"
+msgstr "По дату"
 
 #: src/qif_export.cpp:134
-#, fuzzy
 msgid "Write to File"
-msgstr "Невозможно сохранить файл."
+msgstr "Запись в файл"
 
 #: src/qif_export.cpp:200
 msgid "Choose Account to Export from:"
@@ -2225,23 +2206,21 @@ msgid "No Account available for export"
 msgstr "Не выбран счёт. Нечего выгружать"
 
 #: src/qif_export.cpp:242
-#, fuzzy
 msgid "File name is empty"
-msgstr "Тип проводки не выбран"
+msgstr "Файл не указан"
 
 #: src/qif_export.cpp:246
 msgid "To Date less than From Date"
-msgstr ""
+msgstr "Несоответствие дат"
 
 #: src/qif_export.cpp:250
-#, fuzzy
 msgid "No Accounts selected for export"
-msgstr "Не выбран счёт. Нечего выгружать"
+msgstr "Не выбран счёт, нечего выгружать"
 
 #: src/qif_export.cpp:357
-#, fuzzy, c-format
+#, c-format
 msgid "Categories exported: %ld"
-msgstr "Категории - Текущий месяц"
+msgstr "Категорий выгружено: %ld"
 
 #: src/relocatepayeedialog.cpp:77
 msgid "Relocate all source payees to the destination payee"
@@ -2461,14 +2440,12 @@ msgid "Log file written to : "
 msgstr "Файл журнала записан в : "
 
 #: src/mmcheckingpanel.cpp:490
-#, fuzzy
 msgid "View Un-Reconciled"
 msgstr "Показать не выверенные проводки"
 
 #: src/mmcheckingpanel.cpp:491
-#, fuzzy
 msgid "View All Except Reconciled"
-msgstr "Показать все проводки, кроме выверенных"
+msgstr "Показать все транзакции, кроме выверенных"
 
 #: src/mmcheckingpanel.cpp:566
 #: src/mmcheckingpanel.cpp:1185
@@ -2523,9 +2500,8 @@ msgid "Account View : "
 msgstr "Просмотр счёта: "
 
 #: src/mmcheckingpanel.cpp:1169
-#, fuzzy
 msgid "View All transactions"
-msgstr "Показать все проводки"
+msgstr "Показать все транзакции"
 
 #: src/mmcheckingpanel.cpp:1185
 msgid "  will interfere with this filtering."
@@ -3922,20 +3898,19 @@ msgstr "Версия: "
 
 #: src/aboutdialog.cpp:126
 msgid "Developers"
-msgstr ""
+msgstr "Разработчики"
 
 #: src/aboutdialog.cpp:131
-#, fuzzy
 msgid "Translators"
-msgstr "Проводки"
+msgstr "Переводчики"
 
 #: src/aboutdialog.cpp:136
 msgid "Artwork"
-msgstr ""
+msgstr "Изображения"
 
 #: src/aboutdialog.cpp:141
 msgid "Sponsors"
-msgstr ""
+msgstr "Спонсоры"
 
 #: src/reportsummary.cpp:161
 msgid "Total Balance on all Accounts"
@@ -4220,19 +4195,19 @@ msgid "Visit Website for more information"
 msgstr "Посетить Web-сайт"
 
 #: src/appstartdialog.cpp:119
-#, fuzzy, c-format
+#, c-format
 msgid "Open the %s website for latest news, updates etc"
-msgstr " web-сайт с  новостями, новыми версиями и т.п."
+msgstr " Открыть %s web-сайт с  новостями, новыми версиями и т.п."
 
 #: src/appstartdialog.cpp:129
-#, fuzzy, c-format
+#, c-format
 msgid "Show this window next time %s starts"
-msgstr "Показывать это окно при следующем запуске "
+msgstr "Показывать это окно при следующем запуске %s"
 
 #: src/appstartdialog.cpp:160
-#, fuzzy, c-format
+#, c-format
 msgid "Open the previously opened database : %s"
-msgstr "Открыть предыдущую базу данных: "
+msgstr "Открыть предыдущую базу данных: %s"
 
 #: src/reportcategovertimeperf.cpp:223
 #, c-format
@@ -4353,7 +4328,7 @@ msgstr "Начальный баланс"
 
 #: src/newacctdialog.cpp:452
 msgid "Image #"
-msgstr ""
+msgstr "Иконка №"
 
 #: src/budgetyearentrydialog.cpp:44
 msgid "Budget Month Entry"
@@ -4589,7 +4564,7 @@ msgstr ""
 
 #: src/optionsdialog.cpp:295
 msgid "Backup database on exit."
-msgstr ""
+msgstr "Архивировать БД при выходе."
 
 #: src/optionsdialog.cpp:297
 msgid ""
@@ -4832,14 +4807,12 @@ msgid "Select whether to use sounds when entering transactions"
 msgstr "Отметьте, использовать ли звуки при вводе проводок"
 
 #: src/optionsdialog.cpp:610
-#, fuzzy
 msgid "Enable online currency update"
-msgstr "&Обновить курсы валют онлайн"
+msgstr "Разрешить обновление валют онлайн"
 
 #: src/optionsdialog.cpp:612
-#, fuzzy
 msgid "Enable or disable get data from Yahoo.com to update currency rate"
-msgstr "Включить или выключить обновление данных из Центрального Банка Европы по курсам валют"
+msgstr "Обновление курсов валют с Yahoo.com"
 
 #: src/optionsdialog.cpp:625
 msgid "Import/Export Settings"
@@ -4906,19 +4879,16 @@ msgid "View UnReconciled"
 msgstr "Показать не выверенные"
 
 #: src/constants.h:57
-#, fuzzy
 msgid "View Void"
-msgstr "Показать неучтённые проводки"
+msgstr "Просмотр отменённых"
 
 #: src/constants.h:58
-#, fuzzy
 msgid "View Flagged"
-msgstr "Просмотр счёта: "
+msgstr "Просмотр отмеченных"
 
 #: src/constants.h:59
-#, fuzzy
 msgid "View Duplicates"
-msgstr "Просмотр счёта: "
+msgstr "Просмотр задвоенных"
 
 #: src/constants.h:60
 msgid "View Today"
@@ -4973,24 +4943,24 @@ msgid "Four Weeks"
 msgstr "Четыре недели"
 
 #: src/constants.h:113
-#, fuzzy, c-format
+#, c-format
 msgid "In %s Days"
-msgstr "В (x) день"
+msgstr "В %s день"
 
 #: src/constants.h:114
-#, fuzzy, c-format
+#, c-format
 msgid "In %s Months"
-msgstr "В (x) месяц"
+msgstr "В %sмесяц"
 
 #: src/constants.h:115
-#, fuzzy, c-format
+#, c-format
 msgid "Every %s Days"
-msgstr "Каждые (x) дней"
+msgstr "Каждые %s дней"
 
 #: src/constants.h:116
-#, fuzzy, c-format
+#, c-format
 msgid "Every %s Months"
-msgstr "Каждые (x) месяцев"
+msgstr "Каждые %s месяцев"
 
 #: src/relocatepayeedialog.h:24
 msgid "Relocate Payee Dialog"
@@ -5027,6 +4997,10 @@ msgstr "Бюджет"
 #: src/fileviewerdialog.h:26
 msgid "View File Contents"
 msgstr "Просмотр файла"
+
+#, fuzzy
+#~ msgid "Select To Account-"
+#~ msgstr "На счёт"
 
 #~ msgid "&Save"
 #~ msgstr "&Сохранить"
