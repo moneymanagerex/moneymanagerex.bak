@@ -87,7 +87,7 @@
 
         <command>
             -$(MKDIR) $(nativePaths(RES_DIR))
-            $(COPY) $(nativePaths(SRCDIR + '/resources/currency_seed.db3')) $(nativePaths(RES_DIR))
+            $(COPY) $(nativePaths(SRCDIR + '/resources/currency_seed.csv')) $(nativePaths(RES_DIR))
         </command>
 
         <command cond="FORMAT!='autoconf'">
@@ -98,7 +98,7 @@
             ./mmex_tests
 	</command>
 
-        <clean-files>$(RES_DIR)/currency_seed.db3</clean-files>
+        <clean-files>$(RES_DIR)/currency_seed.csv</clean-files>
 
     </action>
 
