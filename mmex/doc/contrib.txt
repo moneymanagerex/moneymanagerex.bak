@@ -1,9 +1,9 @@
 Active Developers
 ==========================================
-Stefano .......... [stef145g]
-Nikolay .......... [Nikolay]
-Lisheng .......... [guanlisheng]
-Pat .............. [omalleypat]
+Stefano 	 [stef145g]
+Nikolay 	 [Nikolay]
+Lisheng 	 [guanlisheng]
+Pat 		 [omalleypat]
 
 Code Builds/Fixes/Patches
 ==========================================
@@ -15,19 +15,15 @@ hykwok
 Igor
 jblough
 Jeancf
-Lisheng .......... [guanlisheng]
-Mike ............. [u4ear]
-Nikolay .......... [Nikolay]
-Pat .............. [omalleypat]
+Mike 		 [u4ear]
 Paulo Lopes
 Pieter
 Priyank Bolia
 Rohit Kumar
-Stefano .......... [stef145g]
 Stuart
 Vadim
 Vat
-Wesley Ellis ..... [elliswr]
+Wesley Ellis 	 [elliswr]
 
 ------------------------------------------
 Translations
@@ -43,16 +39,17 @@ Czech
 Dutch
 -- Theo Kamphuis
 Dutch (Belgian)
--- Rol
+-- Rol, wimvhs
 Englsh (UK)
-- mcrossley
+-- mcrossley
 French
 -- Berry As, Jean-Christophe, bipop,
 -- drambeau, Ben, Ghislain Baudichaud
--- Phira
+-- phira
 German
 -- Schrempfi, goe, STiGMaTa_ch,
 -- Kai Kajus Noack
+-- Renato
 Greek
 -- Panagiotis Pentzeridis
 -- Polvar
@@ -96,18 +93,28 @@ Turkish
 Ukrainian
 -- Leonid Shturma
 Vietnamese
--- Nicky, Luu Cong Thanh
+-- Nicky, Luu Cong Thanh, Toan [nktvnvn]
 
 User Manual
 ==========================================
 English
--- Stefano ... [stef145g]
+-- Stefano 	 [stef145g]
 -- Tina P, Terry Wick
-Italian ... Maurizio [Mau13]
-French .... catacotox
-Russian ... Nikolay
-Polish .... Damian_pl
-Spanish ... jorgeb
+Italian
+-- Maurizio 	 [Mau13]
+French
+-- catacotox
+-- phira 	 [phira]
+Gernam
+-- Renato 	 [Renato]
+Hungarian
+-- Toroka 	 [Toroka]
+Russian 
+-- Nikolay 	 [Nikolay]
+Polish
+-- Damian_pl
+Spanish
+-- jorgeb
 
 ------------------------------------------
 Silk Icons
