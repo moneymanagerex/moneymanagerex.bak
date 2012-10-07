@@ -84,48 +84,52 @@ void mmPayeeDialog::do_create(wxWindow* parent)
 
 void mmPayeeDialog::CreateControls()
 {
+    const int border = 5;
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();
+
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticTextName = new wxStaticText( this, wxID_STATIC, _("Find Payee: "), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticTextName, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticTextName = new wxStaticText( this, wxID_STATIC, _("Find Payee: "));
+    itemBoxSizer2->Add(itemStaticTextName, flags);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer3, flagsExpand);
 
     wxArrayString filtd = core_->payeeList_.FilterPayees(wxT(""));
     int vertical_size_ = (filtd.GetCount()>10 ? 320 : 240);
     listBox_ = new wxListBox( this, IDD_LISTBOX_PAYEES, wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
-    wxStaticText* itemStaticTextName2 = new wxStaticText( this, wxID_STATIC, _("Filter Payees: "), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticTextName2, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer2->Add(new wxStaticText( this, wxID_STATIC, _("Filter Payees: ")), flags);
 
-    textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(textCtrl, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString());
+    itemBoxSizer2->Add(textCtrl, flagsExpand);
     textCtrl->SetToolTip(_("Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."));
     textCtrl->SetFocus();
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer5, flagsExpand);
 
-    addButton = new wxButton( this, wxID_ADD, _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(addButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    addButton = new wxButton( this, wxID_ADD);
+    itemBoxSizer5->Add(addButton, flags.Border(1));
     addButton->SetToolTip(_("Add a new payee name"));
 	addButton->Disable();
 
-    editButton = new wxButton( this, wxID_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(editButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    editButton = new wxButton( this, wxID_EDIT);
+    itemBoxSizer5->Add(editButton, flags);
     editButton->SetToolTip(_("Change the name of an existing payee"));
     editButton->Disable();
 	
-    deleteButton = new wxButton( this, wxID_REMOVE, _("Remove"));
-    itemBoxSizer5->Add(deleteButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    deleteButton = new wxButton( this, wxID_REMOVE);
+    itemBoxSizer5->Add(deleteButton, flags);
     deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
 	deleteButton->Disable();
 	
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer9, flagsExpand);
 
     selectButton = new wxButton( this, wxID_OK, _("&Select"));
     itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
@@ -133,8 +137,8 @@ void mmPayeeDialog::CreateControls()
     selectButton->Disable();
     
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
-    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Cancel"));
-    itemBoxSizer9->Add(itemCancelButton,  0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
+    itemBoxSizer9->Add(itemCancelButton,  flags);
 }
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
@@ -213,14 +217,15 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::OnAdd(wxCommandEvent& event)
 {
-    wxString text = wxGetTextFromUser(_("Enter the name for the new payee:"), _("Organize Payees: Add Payee"), textCtrl->GetValue());
+    wxString text = wxGetTextFromUser(_("Enter the name for the new payee:")
+        , _("Organize Payees: Add Payee"), textCtrl->GetValue());
     if (text.IsEmpty()) {
         return;
     }
 
     if (core_->payeeList_.PayeeExists(text))
     {
-        wxMessageBox(_("Payee with same name exists"), _("Organize Payees: Add Payee"),wxOK|wxICON_ERROR);
+        wxMessageBox(_("Payee with same name exists"), _("Organize Payees: Add Payee"), wxOK|wxICON_ERROR);
     }
     else
     {
