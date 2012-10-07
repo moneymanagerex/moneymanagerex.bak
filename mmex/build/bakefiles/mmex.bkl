@@ -47,7 +47,7 @@
         <data-files>
             <install-to>$(DATADIR)/mmex/res</install-to>
 	    <srcdir>$(SRCDIR)/resources</srcdir>
-	    <files>kaching.wav mmex.ico currency_seed.db3</files>
+	    <files>kaching.wav mmex.ico currency_seed.csv</files>
 	</data-files>
 
         <data-files>
@@ -132,7 +132,7 @@
 	<data-files>
 	    <install-to>$(PREFIX)/mmex/res</install-to>
             <srcdir>$(SRCDIR)/resources</srcdir>
-	    <files>currency_seed.db3</files>
+	    <files>currency_seed.csv</files>
 	</data-files>
 
         <data-files>
