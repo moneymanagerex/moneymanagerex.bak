@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  then commit the changes to the SVN repository.
  *************************************************************************/
 //#define _MM_EX_BUILD_TYPE_RELEASE
-#define _MM_EX_REVISION_ID    wxT("$Rev$") 
+#define _MM_EX_REVISION_ID    wxT("$Rev$")
 
 //----------------------------------------------------------------------------
 class wxString;
