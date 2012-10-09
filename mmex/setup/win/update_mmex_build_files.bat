@@ -67,6 +67,9 @@ copy "..\..\doc\help\french\*.*"  "%mmex_build_dir%\help\french"
 if not exist %mmex_build_dir%\help\german mkdir %mmex_build_dir%\help\german
 copy "..\..\doc\help\german\*.*"  "%mmex_build_dir%\help\german"
 @echo.
+if not exist %mmex_build_dir%\help\hungarian mkdir %mmex_build_dir%\help\hungarian
+copy "..\..\doc\help\hungarian\*.*"  "%mmex_build_dir%\help\hungarian"
+@echo.
 if not exist %mmex_build_dir%\help\italian mkdir %mmex_build_dir%\help\italian
 copy "..\..\doc\help\italian\*.*" "%mmex_build_dir%\help\italian"
 @echo.

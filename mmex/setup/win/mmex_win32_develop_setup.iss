@@ -13,20 +13,20 @@
 
 #define MyAppName "MoneyManagerEX"
 #define MyAppExeName "mmex.exe"
-#define MyAppVersion "0.9.9.0 DEV:SVN-2177"
+#define MyAppVersion "0.9.9.2 DEV:SVN-3040"
 #define MyAppPublisher "CodeLathe, LLC"
 #define MyAppURL "http://www.codelathe.com/mmex"
 
 ; Set this value to a nul string for release version
-#define MyAppDevelopVersion "_SVN-2177"
+#define MyAppDevelopVersion "_SVN-3040"
 
 
 ;===============================================================================
 ; Local definitions specifically designed for my setup 
-#define my_svn_path "Z:\trunk\mmex"
-#define my_output_root "X:" 
-#define my_output_path "\mmex_0.9.9.0_win32_portable\MoneyManagerEx"
-#define my_output_filename "mmex_0.9.9.0_svn2177_win32_setup"
+#define my_svn_path "..\.."
+#define my_output_root "..\..\..\mmex_release"
+#define my_output_path "\mmex_0.9.9.2_win32_portable\MoneyManagerEx"
+#define my_output_filename "mmex_0.9.9.2_svn3040_win32_setup"
 
 ;===============================================================================
 
@@ -205,6 +205,7 @@ Source: {#my_svn_path}\doc\help\*.png; DestDir: {app}\help; Flags: ignoreversion
 ; MMEX Help - Help Directories - Language dependant
 Source: {#my_svn_path}\doc\help\french\*; DestDir: {app}\help\french; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\french; 
 Source: {#my_svn_path}\doc\help\german\*; DestDir: {app}\help\german; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\german; 
+Source: {#my_svn_path}\doc\help\hungarian\*; DestDir: {app}\help\hungarian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\hungarian; 
 Source: {#my_svn_path}\doc\help\italian\*; DestDir: {app}\help\italian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\italian; 
 Source: {#my_svn_path}\doc\help\polish\*; DestDir: {app}\help\polish; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\polish; 
 Source: {#my_svn_path}\doc\help\russian\*; DestDir: {app}\help\russian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\russian; 
