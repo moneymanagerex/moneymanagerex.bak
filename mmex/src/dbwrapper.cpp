@@ -959,13 +959,47 @@ int mmDBWrapper::relocatePayee(wxSQLite3Database* db,
     const int destPayeeID, const int sourcePayeeID)
 {
     int changedPayees_, err = SQLITE_OK;
-    static const char SET_PAYEEID_CHECKINGACCOUNT_V1[] = "UPDATE CHECKINGACCOUNT_V1 SET PAYEEID = ? WHERE PAYEEID = ? ";
+    //static const char SET_PAYEEID_CHECKINGACCOUNT_V1[] = "UPDATE CHECKINGACCOUNT_V1 SET PAYEEID = ? WHERE PAYEEID = ? ";
     wxSQLite3Statement st = db->PrepareStatement(SET_PAYEEID_CHECKINGACCOUNT_V1);
     st.Bind(1, destPayeeID);
     st.Bind(2, sourcePayeeID);
     try {
         changedPayees_ = st.ExecuteUpdate();
         st.Finalize();
+        //db_.get()->Commit();
+    } catch(const wxSQLite3Exception& e)
+    {
+        err = e.GetExtendedErrorCode();
+        wxLogDebug(wxT("update checkingaccount_v1 : Exception"), e.GetMessage().c_str());
+        wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+    }
+    return err;
+}
+
+int mmDBWrapper::relocateCategory(wxSQLite3Database* db,
+    const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID)
+{
+    int err = SQLITE_OK;
+	static const char sqlCat[] = "update checkingaccount_v1 set categid= ?, subcategid= ? "
+								 "where categid= ? and subcategid= ?";
+	wxSQLite3Statement stCat = db->PrepareStatement(sqlCat);
+	stCat.Bind(1, destCatID);
+	stCat.Bind(2, destSubCatID);
+	stCat.Bind(3, sourceCatID);
+	stCat.Bind(4, sourceSubCatID);
+
+	static const char sqlSubCat[] = "update splittransactions_v1 set categid= ?, subcategid= ? "
+									"where categid= ? and subcategid= ?";
+	wxSQLite3Statement stSubCat = db->PrepareStatement(sqlSubCat);
+	stSubCat.Bind(1, destCatID);
+	stSubCat.Bind(2, destSubCatID);
+	stSubCat.Bind(3, sourceCatID);
+	stSubCat.Bind(4, sourceSubCatID);
+    try {
+		stCat.ExecuteUpdate();
+		stSubCat.ExecuteUpdate();
+		stCat.Finalize();
+		stSubCat.Finalize();
         //db_.get()->Commit();
     } catch(const wxSQLite3Exception& e)
     {

@@ -27,13 +27,12 @@ IMPLEMENT_DYNAMIC_CLASS( relocateCategoryDialog, wxDialog )
 BEGIN_EVENT_TABLE( relocateCategoryDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_CATEG_SELECT_BUTTON_SOURCE, relocateCategoryDialog::OnSelectSource)
     EVT_BUTTON(ID_DIALOG_CATEG_SELECT_BUTTON_DEST, relocateCategoryDialog::OnSelectDest)
-    EVT_BUTTON(ID_DIALOG_CATEG_RELOCATE_BUTTON_OK, relocateCategoryDialog::OnOk)
+    EVT_BUTTON(wxID_OK, relocateCategoryDialog::OnOk)
 END_EVENT_TABLE()
 
 relocateCategoryDialog::relocateCategoryDialog( )
 {
     core_           =  0;
-    db_             =  0;
 
     sourceCatID_    = -1;
     sourceSubCatID_ = -1;
@@ -45,12 +44,11 @@ relocateCategoryDialog::relocateCategoryDialog( )
 
 }
 
-relocateCategoryDialog::relocateCategoryDialog( mmCoreDB* core, wxSQLite3Database* db,
+relocateCategoryDialog::relocateCategoryDialog( mmCoreDB* core,
     wxWindow* parent, wxWindowID id, const wxString& caption,
     const wxPoint& pos, const wxSize& size, long style )
 {
     core_           = core;
-    db_             = db;
 
     sourceCatID_    = -1;
     sourceSubCatID_ = -1;
@@ -82,17 +80,12 @@ void relocateCategoryDialog::CreateControls()
 {
     wxSize btnSize = wxSize(180,-1);
     wxStaticText* headerText = new wxStaticText( this, wxID_STATIC,
-        _("Relocate all source categories to the destination category"), 
-        wxDefaultPosition, wxDefaultSize, 0);
+        _("Relocate all source categories to the destination category"));
     wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC,wxDefaultPosition, wxDefaultSize,wxLI_HORIZONTAL); 
-    wxStaticText* staticText_1 = new wxStaticText( this, wxID_STATIC,_("Relocate:"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    sourceBtn_ = new wxButton( this, ID_DIALOG_CATEG_SELECT_BUTTON_SOURCE,_("Source Category"),
-        wxDefaultPosition, btnSize, 0 );
-    wxStaticText* staticText_2 = new wxStaticText( this, wxID_STATIC,_("to:"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    destBtn_ = new wxButton( this, ID_DIALOG_CATEG_SELECT_BUTTON_DEST,_("Destination Category"),
-        wxDefaultPosition, btnSize, 0 );
+    wxStaticText* staticText_1 = new wxStaticText( this, wxID_STATIC,_("Relocate:"));
+    sourceBtn_ = new wxButton( this, ID_DIALOG_CATEG_SELECT_BUTTON_SOURCE,_("Source Category"));
+    wxStaticText* staticText_2 = new wxStaticText( this, wxID_STATIC,_("to:"));
+    destBtn_ = new wxButton( this, ID_DIALOG_CATEG_SELECT_BUTTON_DEST,_("Destination Category"));
     wxStaticLine* lineBottom = new wxStaticLine(this,wxID_STATIC,wxDefaultPosition, wxDefaultSize,wxLI_HORIZONTAL); 
     
     wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL);
@@ -113,8 +106,8 @@ void relocateCategoryDialog::CreateControls()
     boxSizer->Add(5,5,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
     boxSizer->Add(lineBottom,0,wxGROW|wxALL,5);
 
-    wxButton* okButton = new wxButton(this,ID_DIALOG_CATEG_RELOCATE_BUTTON_OK,_("OK"),wxDefaultPosition,wxDefaultSize);
-    wxButton* cancelButton = new wxButton(this,wxID_CANCEL,_("Cancel"),wxDefaultPosition,wxDefaultSize);
+    wxButton* okButton = new wxButton(this, wxID_OK);
+    wxButton* cancelButton = new wxButton(this,wxID_CANCEL);
     cancelButton-> SetFocus () ;
     wxBoxSizer* buttonBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonBoxSizer->Add(okButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
@@ -128,10 +121,10 @@ void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
     if (sourceCat->ShowModal() == wxID_OK)
     {
         sourceCatID_    = sourceCat->categID_;
-        sourceSubCatID_ = sourceCat->subcategID_;
-        
-        sourceBtn_->SetLabel(core_->categoryList_.GetFullCategoryString(destCatID_, destSubCatID_));
+        sourceSubCatID_ = sourceCat->subcategID_;      
+        sourceBtn_->SetLabel(core_->categoryList_.GetFullCategoryString(sourceCatID_, sourceSubCatID_));
     }
+    sourceCat->Destroy();
 }
 
 void relocateCategoryDialog::OnSelectDest(wxCommandEvent& /*event*/)
@@ -144,6 +137,7 @@ void relocateCategoryDialog::OnSelectDest(wxCommandEvent& /*event*/)
 
         destBtn_->SetLabel(core_->categoryList_.GetFullCategoryString(destCatID_, destSubCatID_));
     }
+    destCat->Destroy();
 }
 
 wxString relocateCategoryDialog::updatedCategoriesCount()
@@ -156,34 +150,18 @@ wxString relocateCategoryDialog::updatedCategoriesCount()
 
 void relocateCategoryDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    if ((sourceCatID_ > 0) &&  (destCatID_ > 0) ) 
+    if ((sourceCatID_ > 0) && (destCatID_ > 0) ) 
     {
         wxString msgStr = _("Please Confirm:");
-        msgStr << wxT("\n\n") << _("Changing all categories of: ") << sourceBtn_->GetLabelText() << wxT("\n\n") << _("to category: ") << destBtn_->GetLabelText();
+        msgStr << wxT("\n\n") << _("Changing all categories of: ")
+            << sourceBtn_->GetLabelText() << wxT("\n\n") << _("to category: ") << destBtn_->GetLabelText();
 
-        int ans = wxMessageBox(msgStr,_("Category Relocation Confirmation"),wxOK|wxCANCEL|wxICON_QUESTION);
+        int ans = wxMessageBox(msgStr,_("Category Relocation Confirmation"), wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)
         {
-            static const char sqlCat[] = "update checkingaccount_v1 set categid= ?, subcategid= ? "
-                                         "where categid= ? and subcategid= ?";
-            wxSQLite3Statement stCat = db_->PrepareStatement(sqlCat);
-            stCat.Bind(1, destCatID_);
-            stCat.Bind(2, destSubCatID_);
-            stCat.Bind(3, sourceCatID_);
-            stCat.Bind(4, sourceSubCatID_);
-            changedCats_ = stCat.ExecuteUpdate();
-            stCat.Finalize();
-
-            static const char sqlSubCat[] = "update splittransactions_v1 set categid= ?, subcategid= ? "
-                                            "where categid= ? and subcategid= ?";
-            wxSQLite3Statement stSubCat = db_->PrepareStatement(sqlSubCat);
-            stSubCat.Bind(1, destCatID_);
-            stSubCat.Bind(2, destSubCatID_);
-            stSubCat.Bind(3, sourceCatID_);
-            stSubCat.Bind(4, sourceSubCatID_);
-            changedSubCats_ = stSubCat.ExecuteUpdate();
-            stSubCat.Finalize();
-            EndModal(wxID_OK);
+            if (core_->bTransactionList_.RelocateCategory(core_,
+                destCatID_, destSubCatID_, sourceCatID_, sourceSubCatID_, changedCats_, changedSubCats_) == 0)
+	            EndModal(wxID_OK);
         }
     }
 }

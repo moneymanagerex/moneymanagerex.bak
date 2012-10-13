@@ -38,7 +38,7 @@ class relocateCategoryDialog : public wxDialog
 
 public:
     relocateCategoryDialog();
-    relocateCategoryDialog( mmCoreDB* core, wxSQLite3Database* db,
+    relocateCategoryDialog( mmCoreDB* core,
         wxWindow* parent, wxWindowID id = SYMBOL_RELOCATECATEGORYDIALOG_IDNAME,
         const wxString& caption = SYMBOL_RELOCATECATEGORYDIALOG_TITLE,
         const wxPoint& pos = SYMBOL_RELOCATECATEGORYDIALOG_POSITION,
@@ -62,7 +62,6 @@ public:
 
 private:
     mmCoreDB* core_;
-    wxSQLite3Database* db_;
 
     int sourceCatID_;
     int sourceSubCatID_;

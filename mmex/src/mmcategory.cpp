@@ -239,12 +239,12 @@ wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID) const
 
 wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID) const
 {
+
     if (categID > -1)
     {
         wxString category    = GetCategoryString(categID);
-        wxString subCategory = GetSubCategoryString(categID, subCategID);
-        if (!subCategory.IsEmpty())
-            category<< wxT(":") << subCategory;
+        if (subCategID > -1)
+            category << wxT(":") << GetSubCategoryString(categID, subCategID);
         return category;
     }
     else

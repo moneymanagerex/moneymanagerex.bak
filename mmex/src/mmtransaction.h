@@ -156,6 +156,9 @@ public:
     bool deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
 	int RelocatePayee(mmCoreDB* core, const int destPayeeID, const int sourcePayeeID, int& changedPayees_);
+	int RelocateCategory(mmCoreDB* core,
+	    const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID,
+	    int& changedCats, int& changedSubCats);
 
     /* Query Functions */
     void getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses, double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;

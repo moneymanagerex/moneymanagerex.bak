@@ -1198,3 +1198,48 @@ int mmBankTransactionList::RelocatePayee(mmCoreDB* core, const int destPayeeID, 
 	}
 	return 0;
 }
+
+int mmBankTransactionList::RelocateCategory(mmCoreDB* core,
+    const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID, 
+    int& changedCats, int& changedSubCats)
+{
+    int err = mmDBWrapper::relocateCategory(db_.get(),
+        destCatID, destSubCatID, sourceCatID, sourceSubCatID);
+    if ( err == 0 )
+    {
+
+	    changedCats=0;
+	    changedSubCats=0;
+	    for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
+	    {
+	        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+	        if (pBankTransaction && (pBankTransaction->categID_ == sourceCatID)
+	            && pBankTransaction->subcategID_== sourceSubCatID)
+	        {
+	            pBankTransaction->category_ = core->categoryList_.GetCategorySharedPtr(destCatID, destSubCatID);
+                pBankTransaction->catStr_ = core->categoryList_.GetCategoryName(destCatID);
+                pBankTransaction->subCatStr_ = core->categoryList_.GetSubCategoryName(destCatID, destSubCatID);
+                pBankTransaction->categID_ = destCatID;
+                pBankTransaction->subcategID_ = destSubCatID;
+                changedCats++;
+	        }
+	        else if (pBankTransaction && (pBankTransaction->categID_ == -1))
+	        {
+				mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
+				pBankTransaction->getSplitTransactions(core, splits);
+
+				for (int i = 0; i < (int)splits->entries_.size(); ++i)
+				{
+					if (splits->entries_[i]->categID_==sourceCatID && splits->entries_[i]->subCategID_==sourceSubCatID)
+					{
+						splits->entries_[i]->categID_ = destCatID;
+						splits->entries_[i]->subCategID_ = destSubCatID;
+						changedSubCats++;
+					}
+				}
+
+			}
+	    }
+	}
+	return err;
+}
