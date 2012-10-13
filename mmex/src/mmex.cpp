@@ -4034,7 +4034,7 @@ void mmGUIFrame::OnIgnoreFutureTransactions(wxCommandEvent &event)
 
 void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
 {
-    relocateCategoryDialog* dlg = new relocateCategoryDialog(m_core.get(), m_db.get(), this);
+    relocateCategoryDialog* dlg = new relocateCategoryDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
         wxString msgStr;
