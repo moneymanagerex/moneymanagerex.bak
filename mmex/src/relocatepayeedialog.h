@@ -38,7 +38,7 @@ class relocatePayeeDialog : public wxDialog
 
 public:
     relocatePayeeDialog();
-    relocatePayeeDialog( mmCoreDB* core, wxSQLite3Database* db,
+    relocatePayeeDialog( mmCoreDB* core,
         wxWindow* parent, wxWindowID id = SYMBOL_RELOCATEPAYEEDIALOG_IDNAME,
         const wxString& caption = SYMBOL_RELOCATEPAYEEDIALOG_TITLE,
         const wxPoint& pos = SYMBOL_RELOCATEPAYEEDIALOG_POSITION,
@@ -62,7 +62,6 @@ public:
 
 private:
     mmCoreDB* core_;
-    wxSQLite3Database* db_;
 
     int sourcePayeeID_;
     int destPayeeID_;

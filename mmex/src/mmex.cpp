@@ -3652,7 +3652,7 @@ void mmGUIFrame::restorePrinterValues()
     int bottomMargin    = m_inisettings->GetIntSetting(wxT("PRINTER_BOTTOM_MARGIN"), 20);
     int pageOrientation = m_inisettings->GetIntSetting(wxT("PRINTER_PAGE_ORIENTATION"), wxPORTRAIT);
     int paperID         = m_inisettings->GetIntSetting(wxT("PRINTER_PAGE_ID"), wxPAPER_A4);
-    
+
     wxPoint topLeft(leftMargin, topMargin);
     wxPoint bottomRight(rightMargin, bottomMargin);
 
@@ -4039,26 +4039,31 @@ void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
     {
         wxString msgStr;
         msgStr << _("Category Relocation Completed.") << wxT("\n\n")
-               << dlg->updatedCategoriesCount() << _(" records have been updated in the database.") << wxT("\n\n")
+               << wxString::Format( _("Records have been updated in the database: %s"),
+                    dlg->updatedCategoriesCount().c_str())
+               << wxT("\n\n")
                << _("MMEX must be shutdown and restarted for all the changes to be seen.");
         wxMessageBox(msgStr,_("Category Relocation Result"));
         mmOptions::instance().databaseUpdated_ = true;
     }
+    homePanel_->Layout();
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 {
-    relocatePayeeDialog* dlg = new relocatePayeeDialog(m_core.get(), m_db.get(), this);
+    relocatePayeeDialog* dlg = new relocatePayeeDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
         wxString msgStr;
         msgStr << _("Payee Relocation Completed.") << wxT("\n\n")
-               << dlg->updatedPayeesCount() << _(" records have been updated in the database.") << wxT("\n\n")
-               << _("MMEX must be shutdown and restarted for all the changes to be seen.");
-        wxMessageBox(msgStr,_("Payee Relocation Result"));
+            << wxString::Format(_("Records have been updated in the database: %s"),
+                dlg->updatedPayeesCount().c_str())
+            << wxT("\n\n");
+        wxMessageBox(msgStr, _("Payee Relocation Result"));
         mmOptions::instance().databaseUpdated_ = true;
     }
+    homePanel_->Layout();
 }
 
 void mmGUIFrame::RunCustomSqlDialog(bool forEdit)

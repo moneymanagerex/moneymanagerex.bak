@@ -52,7 +52,7 @@ static const char SELECT_ROW_FROM_ASSETS_V1[] =
     "FROM ASSETS_V1 "
     "where ASSETID = ?";
 
-static const char UPDATE_ASSETS_V1[] = 
+static const char UPDATE_ASSETS_V1[] =
     "UPDATE ASSETS_V1 "
     "SET STARTDATE = ?, ASSETNAME = ?, "
         "VALUE = ?, VALUECHANGE = ?,"
@@ -60,7 +60,7 @@ static const char UPDATE_ASSETS_V1[] =
         "ASSETTYPE = ? "
     "where ASSETID = ?";
 
-static const char INSERT_INTO_ASSETS_V1[] = 
+static const char INSERT_INTO_ASSETS_V1[] =
     "INSERT INTO ASSETS_V1 ("
       "STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE "
     ") values (?, ?, ?, ?, ?, ?, ?)";
@@ -101,9 +101,9 @@ static const char SELECT_ROW_FROM_BUDGETTABLE_V1[] =
           "SUBCATEGID = ?";
 
 static const char SELECT_ALL_FROM_BUDGETYEAR_V1[] =
-	"SELECT BUDGETYEARID, BUDGETYEARNAME "
-	"FROM BUDGETYEAR_V1 "
-	"ORDER BY BUDGETYEARNAME";
+    "SELECT BUDGETYEARID, BUDGETYEARNAME "
+    "FROM BUDGETYEAR_V1 "
+    "ORDER BY BUDGETYEARNAME";
 
 static const char SELECT_ALL_FROM_CATEGORY_V1[] =
     "SELECT CATEGID, CATEGNAME "
@@ -132,11 +132,11 @@ static const char SELECT_ALL_FROM_CURRENCYFORMATS_V1[] =
     "FROM CURRENCYFORMATS_V1 "
     "ORDER BY CURRENCYNAME";
 
-static const char DELETE_CURRENCYID_FROM_CURRENCYFORMATS_V1[] = 
+static const char DELETE_CURRENCYID_FROM_CURRENCYFORMATS_V1[] =
     "DELETE FROM CURRENCYFORMATS_V1 "
     "WHERE CURRENCYID = ?";
 
-static const char INSERT_INTO_CURRENCYFORMATS_V1[] = 
+static const char INSERT_INTO_CURRENCYFORMATS_V1[] =
     "INSERT INTO CURRENCYFORMATS_V1 ( "
     "CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, "
     "GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
@@ -264,8 +264,11 @@ static const char UPDATE_CATEGORY_V1[] =
     "SET CATEGNAME = ? "
     "WHERE CATEGID = ?";
 
-static const char UPDATE_CHECKINGACCOUNT_V1[] =
-"update CHECKINGACCOUNT_V1 set STATUS=? where TRANSID=?";
+static const char SET_STATUS_CHECKINGACCOUNT_V1[] =
+    "update CHECKINGACCOUNT_V1 set STATUS=? where TRANSID=?";
+static const char SET_PAYEEID_CHECKINGACCOUNT_V1[] =
+    "UPDATE CHECKINGACCOUNT_V1 SET PAYEEID = ? WHERE PAYEEID = ? ";
+
 
 static const char UPDATE_INFOTABLE_V1[] =
     "UPDATE INFOTABLE_V1 SET INFOVALUE=? WHERE INFONAME=?";
@@ -474,6 +477,7 @@ bool addSubCategory(wxSQLite3Database* db, int categID, const wxString &newName)
 /* Transactions API */
 bool updateTransactionWithStatus(wxSQLite3Database &db, int transID, const wxString& status);
 bool deleteTransaction(wxSQLite3Database* db, int transID);
+int relocatePayee(wxSQLite3Database* db, const int destPayeeID, const int sourcePayeeID);
 wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID);
 
 /* Bills & Deposits API */

@@ -22,34 +22,34 @@
 #include "payeedialog.h"
 #include "wx/statline.h"
 
+#define SQLITE_OK           0   /* Successful result */
+
 IMPLEMENT_DYNAMIC_CLASS( relocatePayeeDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( relocatePayeeDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_PAYEE_SELECT_BUTTON_SOURCE, relocatePayeeDialog::OnSelectSource)
-    EVT_BUTTON(ID_DIALOG_PAYEE_SELECT_BUTTON_DEST, relocatePayeeDialog::OnSelectDest)
-    EVT_BUTTON(ID_DIALOG_PAYEE_RELOCATE_BUTTON_OK, relocatePayeeDialog::OnOk)
+    EVT_BUTTON(wxID_CLEAR, relocatePayeeDialog::OnSelectSource)
+    EVT_BUTTON(wxID_NEW, relocatePayeeDialog::OnSelectDest)
+    EVT_BUTTON(wxID_OK, relocatePayeeDialog::OnOk)
 END_EVENT_TABLE()
 
 relocatePayeeDialog::relocatePayeeDialog( )
 {
     core_           =  0;
-    db_             =  0;
 
     sourcePayeeID_  = -1;
     destPayeeID_    = -1;
     changedPayees_  = 0;
 }
 
-relocatePayeeDialog::relocatePayeeDialog( mmCoreDB* core, wxSQLite3Database* db,
+relocatePayeeDialog::relocatePayeeDialog( mmCoreDB* core,
     wxWindow* parent, wxWindowID id, const wxString& caption,
     const wxPoint& pos, const wxSize& size, long style )
 {
     core_           = core;
-    db_             = db;
 
     sourcePayeeID_  = -1;
     destPayeeID_    = -1;
-    
+
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -72,46 +72,45 @@ bool relocatePayeeDialog::Create( wxWindow* parent, wxWindowID id,
 
 void relocatePayeeDialog::CreateControls()
 {
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Center();
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Expand().Center();
     wxSize btnSize = wxSize(180,-1);
+
     wxStaticText* headerText = new wxStaticText( this, wxID_STATIC,
-        _("Relocate all source payees to the destination payee"), 
-        wxDefaultPosition, wxDefaultSize, 0);
-    wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC,wxDefaultPosition, wxDefaultSize,wxLI_HORIZONTAL); 
-    wxStaticText* staticText_1 = new wxStaticText( this, wxID_STATIC,_("Relocate:"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    sourceBtn_ = new wxButton( this, ID_DIALOG_PAYEE_SELECT_BUTTON_SOURCE,_("Source Payee"),
-        wxDefaultPosition, btnSize, 0 );
-    wxStaticText* staticText_2 = new wxStaticText( this, wxID_STATIC,_("to:"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    destBtn_ = new wxButton( this, ID_DIALOG_PAYEE_SELECT_BUTTON_DEST,_("Destination Payee"),
-        wxDefaultPosition, btnSize, 0 );
-    wxStaticLine* lineBottom = new wxStaticLine(this,wxID_STATIC,wxDefaultPosition, wxDefaultSize,wxLI_HORIZONTAL); 
-    
+        _("Relocate all source payees to the destination payee"));
+    wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC,
+        wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+    sourceBtn_ = new wxButton( this, wxID_CLEAR,_("Source Payee"),
+        wxDefaultPosition, btnSize);
+    destBtn_ = new wxButton( this, wxID_NEW, _("Destination Payee"),
+        wxDefaultPosition, btnSize);
+    wxStaticLine* lineBottom = new wxStaticLine(this,wxID_STATIC,
+        wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+
     wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(topSizer);
     wxBoxSizer* boxSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(boxSizer,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
+    topSizer->Add(boxSizer, flags);
+    wxFlexGridSizer* request_sizer = new wxFlexGridSizer(0, 2, 0, 0);
 
-    boxSizer->Add(headerText,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
-    boxSizer->Add(lineTop,0,wxGROW|wxALL,5);
+    boxSizer->Add(headerText, flags);
+    boxSizer->Add(lineTop, flagsExpand);
 
-    wxBoxSizer* requestBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-    requestBoxSizer->Add(staticText_1,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    requestBoxSizer->Add(sourceBtn_,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL);
-    requestBoxSizer->Add(5,10,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
-    requestBoxSizer->Add(staticText_2,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL);
-    requestBoxSizer->Add(destBtn_,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    boxSizer->Add(requestBoxSizer);
-    boxSizer->Add(5,5,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
-    boxSizer->Add(lineBottom,0,wxGROW|wxALL,5);
+    request_sizer->Add(new wxStaticText( this, wxID_STATIC,_("Relocate:")), flags);
+    request_sizer->Add(sourceBtn_, flags);
+    request_sizer->Add(new wxStaticText( this, wxID_STATIC,_("to:")), flags);
+    request_sizer->Add(destBtn_, flags);
+    boxSizer->Add(request_sizer, flagsExpand);
+    boxSizer->Add(lineBottom, flagsExpand);
 
-    wxButton* okButton = new wxButton(this,ID_DIALOG_PAYEE_RELOCATE_BUTTON_OK,_("OK"),wxDefaultPosition,wxDefaultSize);
-    wxButton* cancelButton = new wxButton(this,wxID_CANCEL,_("Cancel"),wxDefaultPosition,wxDefaultSize);
+    wxButton* okButton = new wxButton(this,wxID_OK);
+    wxButton* cancelButton = new wxButton(this,wxID_CANCEL);
     cancelButton-> SetFocus () ;
     wxBoxSizer* buttonBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonBoxSizer->Add(okButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    buttonBoxSizer->Add(cancelButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    boxSizer->Add(buttonBoxSizer, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    buttonBoxSizer->Add(okButton, flags);
+    buttonBoxSizer->Add(cancelButton, flags);
+    boxSizer->Add(buttonBoxSizer, flags);
 }
 
 void relocatePayeeDialog::OnSelectSource(wxCommandEvent& /*event*/)
@@ -121,7 +120,7 @@ void relocatePayeeDialog::OnSelectSource(wxCommandEvent& /*event*/)
     {
         sourcePayeeID_    = sourcePayee->getPayeeId();
 
-        wxString payee_name; 
+        wxString payee_name;
         if (sourcePayeeID_ != -1 )
             payee_name = core_->payeeList_.GetPayeeName(sourcePayeeID_);
 
@@ -137,7 +136,7 @@ void relocatePayeeDialog::OnSelectDest(wxCommandEvent& /*event*/)
     {
         destPayeeID_    = destPayee->getPayeeId();
 
-        wxString payee_name; 
+        wxString payee_name;
         if (destPayeeID_ != -1 )
             payee_name = core_->payeeList_.GetPayeeName(destPayeeID_);
         if (payee_name != wxT(""))
@@ -155,28 +154,22 @@ wxString relocatePayeeDialog::updatedPayeesCount()
 
 void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    if ((sourcePayeeID_ > 0) &&  (destPayeeID_ > 0) ) 
+    if ((sourcePayeeID_ > 0) &&  (destPayeeID_ > 0) )
     {
         wxString msgStr = _("Please Confirm:") ;
-        msgStr << wxT("\n\n") << _ ("Changing all payees of: ") << sourceBtn_->GetLabelText() << wxT("\n\n") << _("to payee: ") << destBtn_->GetLabelText();
+        msgStr << wxT("\n\n");
+        msgStr << wxString::Format( _("Changing all payees of: %s \n\n  to payee: %s"),
+             sourceBtn_->GetLabelText().c_str(), destBtn_->GetLabelText().c_str());
 
-        int ans = wxMessageBox(msgStr,_("Payee Relocation Confirmation"),wxOK|wxCANCEL|wxICON_QUESTION);
+        int ans = wxMessageBox(msgStr,_("Payee Relocation Confirmation"), wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)
         {
-            static const char sql[] = "update checkingaccount_v1 set payeeid = ? where payeeid = ? ";
-            wxSQLite3Statement st = db_->PrepareStatement(sql);
-            st.Bind(1, destPayeeID_);
-            st.Bind(2, sourcePayeeID_);
-            try {
-                changedPayees_ = st.ExecuteUpdate();
-                st.Finalize();
-			} catch(const wxSQLite3Exception& e) 
-			{
-				wxLogDebug(wxT("update checkingaccount_v1 : Exception"), e.GetMessage().c_str());
-				wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-			}
+            if (core_->bTransactionList_.RelocatePayee(core_, destPayeeID_, sourcePayeeID_, changedPayees_) == 0)
+            {
 
-            EndModal(wxID_OK);
+
+                EndModal(wxID_OK);
+            }
         }
     }
 }
