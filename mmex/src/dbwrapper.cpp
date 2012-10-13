@@ -128,7 +128,7 @@ void createDefaultCategories(wxSQLite3Database* db)
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Healthcare"), HealthcareCategories);
 
         const char* InsuranceCategories[] = {
-            (char *)wxTRANSLATE("Auto"), (char *)wxTRANSLATE("Life"), 
+            (char *)wxTRANSLATE("Auto"), (char *)wxTRANSLATE("Life"),
             (char *)wxTRANSLATE("Home"), (char *)wxTRANSLATE("Health"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Insurance"), InsuranceCategories);
 
@@ -138,7 +138,7 @@ void createDefaultCategories(wxSQLite3Database* db)
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Vacation"), VacationCategories);
 
         const char* TaxesCategories[] = {
-            (char *)wxTRANSLATE("Income Tax"), (char *)wxTRANSLATE("House Tax"), 
+            (char *)wxTRANSLATE("Income Tax"), (char *)wxTRANSLATE("House Tax"),
             (char *)wxTRANSLATE("Water Tax"), (char *)wxTRANSLATE("Others"), 0};
         insertCategoryTree(db, st_cat, st_subcat, wxTRANSLATE("Taxes"), TaxesCategories);
 
@@ -237,7 +237,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
         //    currencies.Add(wxT("EURO;\u20ac;;.;,;euro;cent;100;1;EUR"));
         wxString fileName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
         wxASSERT(wxFileName::FileExists(fileName));
-    
+
         if (!fileName.empty())
         {
             wxTextFile tFile(fileName);
@@ -249,7 +249,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
                     currencies.Add(str);
                 }
             }
-            else 
+            else
                 wxMessageBox(_("Unable to open file."), _("Currency Manager"), wxOK|wxICON_WARNING);
         }
 
@@ -257,7 +257,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
 
         for (size_t i = 0; i < currencies.Count(); ++i)
         {
-            wxStringTokenizer tk(currencies[i], wxT(";"));   
+            wxStringTokenizer tk(currencies[i], wxT(";"));
 
             std::vector<wxString> data;
             data.push_back(tk.GetNextToken().Trim());
@@ -413,7 +413,7 @@ void mmDBWrapper::createCheckingAccountV1Table(wxSQLite3Database* db)
             exists = db->TableExists(wxT("CHECKINGACCOUNT_V1"));
             wxASSERT(exists);
         }
-	} catch(const wxSQLite3Exception& e)
+    } catch(const wxSQLite3Exception& e)
     {
         wxLogDebug(wxT("Database::createCheckingAccountV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table CHECKINGACCOUNT_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -955,6 +955,27 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
     }
 }
 
+int mmDBWrapper::relocatePayee(wxSQLite3Database* db,
+    const int destPayeeID, const int sourcePayeeID)
+{
+    int changedPayees_, err = SQLITE_OK;
+    static const char SET_PAYEEID_CHECKINGACCOUNT_V1[] = "UPDATE CHECKINGACCOUNT_V1 SET PAYEEID = ? WHERE PAYEEID = ? ";
+    wxSQLite3Statement st = db->PrepareStatement(SET_PAYEEID_CHECKINGACCOUNT_V1);
+    st.Bind(1, destPayeeID);
+    st.Bind(2, sourcePayeeID);
+    try {
+        changedPayees_ = st.ExecuteUpdate();
+        st.Finalize();
+        //db_.get()->Commit();
+    } catch(const wxSQLite3Exception& e)
+    {
+        err = e.GetExtendedErrorCode();
+        wxLogDebug(wxT("update checkingaccount_v1 : Exception"), e.GetMessage().c_str());
+        wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+    }
+    return err;
+}
+
 bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
 {
     try {
@@ -1026,7 +1047,7 @@ bool mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database &db, int transID
                                               const wxString& status)
 {
     try {
-    wxSQLite3Statement st = db.PrepareStatement(UPDATE_CHECKINGACCOUNT_V1);
+    wxSQLite3Statement st = db.PrepareStatement(SET_STATUS_CHECKINGACCOUNT_V1);
     st.Bind(1, status);
     st.Bind(2, transID);
 
@@ -1107,17 +1128,17 @@ void mmDBWrapper::addBudgetYear(wxSQLite3Database* db, const wxString &year)
 
 int mmDBWrapper::getBudgetYearID(wxSQLite3Database* db, const wxString &year_name)
 {
-	int budgetYearID = -1;
+    int budgetYearID = -1;
 
     wxSQLite3Statement st = db->PrepareStatement(SELECT_ALL_FROM_BUDGETYEAR_V1);
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     while (q1.NextRow())
     {
-		if (q1.GetString(wxT("BUDGETYEARNAME")) == year_name)
-		{
-	        budgetYearID = q1.GetInt(wxT("BUDGETYEARID"));
-	        break;
-		}
+        if (q1.GetString(wxT("BUDGETYEARNAME")) == year_name)
+        {
+            budgetYearID = q1.GetInt(wxT("BUDGETYEARID"));
+            break;
+        }
     }
     st.Finalize();
 
@@ -1134,9 +1155,9 @@ wxString mmDBWrapper::getBudgetYearForID(wxSQLite3Database* db, const int &year_
      {
          if (q1.GetInt(wxT("BUDGETYEARID")) == year_id)
          {
-	         year_name = q1.GetString(wxT("BUDGETYEARNAME"));
-	         break;
-		 }
+             year_name = q1.GetString(wxT("BUDGETYEARNAME"));
+             break;
+         }
      }
      st.Finalize();
 
@@ -1753,7 +1774,7 @@ bool mmDBWrapper::deleteCurrency(wxSQLite3Database* db, int currencyID)
         st.Bind(1, currencyID);
         st.ExecuteUpdate();
         st.Finalize();
-    
+
         mmOptions::instance().databaseUpdated_ = true;
     } catch(const wxSQLite3Exception& e)
     {

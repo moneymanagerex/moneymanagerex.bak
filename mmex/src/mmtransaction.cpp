@@ -1175,3 +1175,26 @@ wxArrayString mmBankTransactionList::getTransactionNumber(const int accountID, c
 
     return number_strings;
 }
+
+int mmBankTransactionList::RelocatePayee(mmCoreDB* core, const int destPayeeID, const int sourcePayeeID, int& changedPayees_)
+{
+
+    if (mmDBWrapper::relocatePayee(db_.get(), destPayeeID, sourcePayeeID) == 0)
+    {
+
+	    changedPayees_=0;
+	    for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
+	    {
+	        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+	        if (pBankTransaction && (pBankTransaction->payeeID_ == sourcePayeeID))
+	        {
+	            pBankTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(destPayeeID);
+                pBankTransaction->payeeStr_ = core->payeeList_.GetPayeeName(destPayeeID);
+                pBankTransaction->payeeID_ = destPayeeID;
+                changedPayees_++;
+	        }
+	    }
+
+	}
+	return 0;
+}
