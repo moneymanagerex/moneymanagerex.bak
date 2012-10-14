@@ -85,6 +85,8 @@ private:
     wxCheckBox* cbBudgetSetupWithoutSummary_;
     wxCheckBox* cbBudgetSummaryWithoutCateg_;
     wxCheckBox* cbIgnoreFutureTransactions_;
+    
+    wxStaticText* sampleDateText_;
 
     bool restartRequired_;
     bool changesApplied_;

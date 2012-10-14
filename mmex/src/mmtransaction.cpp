@@ -1243,3 +1243,15 @@ int mmBankTransactionList::RelocateCategory(mmCoreDB* core,
 	}
 	return err;
 }
+
+void mmBankTransactionList::ChangeDateFormat()
+{
+    for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+            pBankTransaction->dateStr_ = (pBankTransaction->date_).Format(mmOptions::instance().dateFormat);
+        }
+    }
+}
