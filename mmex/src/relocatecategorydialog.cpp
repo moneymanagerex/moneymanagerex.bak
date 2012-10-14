@@ -25,8 +25,8 @@
 IMPLEMENT_DYNAMIC_CLASS( relocateCategoryDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( relocateCategoryDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_CATEG_SELECT_BUTTON_SOURCE, relocateCategoryDialog::OnSelectSource)
-    EVT_BUTTON(ID_DIALOG_CATEG_SELECT_BUTTON_DEST, relocateCategoryDialog::OnSelectDest)
+    EVT_BUTTON(wxID_CLEAR, relocateCategoryDialog::OnSelectSource)
+    EVT_BUTTON(wxID_NEW, relocateCategoryDialog::OnSelectDest)
     EVT_BUTTON(wxID_OK, relocateCategoryDialog::OnOk)
 END_EVENT_TABLE()
 
@@ -78,41 +78,45 @@ bool relocateCategoryDialog::Create( wxWindow* parent, wxWindowID id,
 
 void relocateCategoryDialog::CreateControls()
 {
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Center();
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Expand().Center();
     wxSize btnSize = wxSize(180,-1);
+
     wxStaticText* headerText = new wxStaticText( this, wxID_STATIC,
         _("Relocate all source categories to the destination category"));
-    wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC,wxDefaultPosition, wxDefaultSize,wxLI_HORIZONTAL); 
-    wxStaticText* staticText_1 = new wxStaticText( this, wxID_STATIC,_("Relocate:"));
-    sourceBtn_ = new wxButton( this, ID_DIALOG_CATEG_SELECT_BUTTON_SOURCE,_("Source Category"));
-    wxStaticText* staticText_2 = new wxStaticText( this, wxID_STATIC,_("to:"));
-    destBtn_ = new wxButton( this, ID_DIALOG_CATEG_SELECT_BUTTON_DEST,_("Destination Category"));
-    wxStaticLine* lineBottom = new wxStaticLine(this,wxID_STATIC,wxDefaultPosition, wxDefaultSize,wxLI_HORIZONTAL); 
+    wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC); 
+
+    sourceBtn_ = new wxButton( this, wxID_CLEAR,_("Source Category"));
+    destBtn_ = new wxButton( this, wxID_NEW,_("Destination Category"));
+    wxStaticLine* lineBottom = new wxStaticLine(this, wxID_STATIC); 
     
     wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(topSizer);
     wxBoxSizer* boxSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(boxSizer,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
+	wxFlexGridSizer* request_sizer = new wxFlexGridSizer(0, 2, 0, 0);
 
-    boxSizer->Add(headerText,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
-    boxSizer->Add(lineTop,0,wxGROW|wxALL,5);
+    topSizer->Add(boxSizer, flags);
 
-    wxBoxSizer* requestBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-    requestBoxSizer->Add(staticText_1,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    requestBoxSizer->Add(sourceBtn_,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL);
-    requestBoxSizer->Add(5,10,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
-    requestBoxSizer->Add(staticText_2,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL);
-    requestBoxSizer->Add(destBtn_,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    boxSizer->Add(requestBoxSizer);
-    boxSizer->Add(5,5,0,wxALIGN_CENTER_HORIZONTAL|wxALL,5);
-    boxSizer->Add(lineBottom,0,wxGROW|wxALL,5);
+    boxSizer->Add(headerText, flags);
+    boxSizer->Add(lineTop, flagsExpand);
+
+    request_sizer->Add(new wxStaticText( this, wxID_STATIC,_("Relocate:")), flags);
+    request_sizer->Add(sourceBtn_, flags);
+
+    request_sizer->Add(new wxStaticText( this, wxID_STATIC,_("to:")), flags);
+    request_sizer->Add(destBtn_, flags);
+    boxSizer->Add(request_sizer);
+
+    boxSizer->Add(lineBottom, flagsExpand);
 
     wxButton* okButton = new wxButton(this, wxID_OK);
-    wxButton* cancelButton = new wxButton(this,wxID_CANCEL);
-    cancelButton-> SetFocus () ;
+    wxButton* cancelButton = new wxButton(this, wxID_CANCEL);
+    cancelButton-> SetFocus();
     wxBoxSizer* buttonBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonBoxSizer->Add(okButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    buttonBoxSizer->Add(cancelButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
-    boxSizer->Add(buttonBoxSizer, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    buttonBoxSizer->Add(okButton, flags);
+    buttonBoxSizer->Add(cancelButton, flags);
+    boxSizer->Add(buttonBoxSizer, flags);
 }
 
 void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
