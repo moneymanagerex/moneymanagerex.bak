@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-07 12:49+0300\n"
-"PO-Revision-Date: 2012-10-07 13:01+0300\n"
+"PO-Revision-Date: 2012-10-14 18:26+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -4552,7 +4552,7 @@ msgstr "Параметры резервного копирования"
 
 #: src/optionsdialog.cpp:289
 msgid "Create a new backup when MMEX Start"
-msgstr "Создание резервного файла базы данных при старте"
+msgstr "Архивировать БД при старте"
 
 #: src/optionsdialog.cpp:291
 msgid ""
@@ -4792,7 +4792,7 @@ msgstr "Статус по умолчанию:"
 
 #: src/optionsdialog.cpp:600
 msgid "Use Original Date when Pasting Transactions"
-msgstr "Использовать ту же дату проводки при копировании"
+msgstr "При копировании дату не менять"
 
 #: src/optionsdialog.cpp:602
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
