@@ -1221,6 +1221,7 @@ int mmBankTransactionList::RelocateCategory(mmCoreDB* core,
                 pBankTransaction->subCatStr_ = core->categoryList_.GetSubCategoryName(destCatID, destSubCatID);
                 pBankTransaction->categID_ = destCatID;
                 pBankTransaction->subcategID_ = destSubCatID;
+                pBankTransaction->fullCatStr_ = core->categoryList_.GetFullCategoryString(destCatID, destSubCatID);
                 changedCats++;
 	        }
 	        else if (pBankTransaction && (pBankTransaction->categID_ == -1))
