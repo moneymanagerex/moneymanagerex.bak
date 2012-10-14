@@ -159,6 +159,7 @@ public:
 	int RelocateCategory(mmCoreDB* core,
 	    const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID,
 	    int& changedCats, int& changedSubCats);
+	void ChangeDateFormat();
 
     /* Query Functions */
     void getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses, double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;

@@ -44,7 +44,7 @@ IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(wxID_OK, mmOptionsDialog::OnOk)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT, mmOptionsDialog::OnDateFormatChanged)
+    EVT_BUTTON(wxID_APPLY, mmOptionsDialog::OnDateFormatChanged)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
     
     /// Colour Changing events
@@ -224,27 +224,26 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* dateFormatStaticBox = new wxStaticBox(generalPanel, wxID_STATIC, _("Date Format"));
     dateFormatStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* dateFormatStaticBoxSizer = new wxStaticBoxSizer(dateFormatStaticBox, wxVERTICAL);
-    wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid = new wxFlexGridSizer(0,2,0,5);
+    wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0,2,0,5);
     generalPanelSizer->Add(dateFormatStaticBoxSizer, flagsExpand);
-    dateFormatStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid);
+    dateFormatStaticBoxSizer->Add(flex_sizer);
     
     choiceDateFormat_ = new wxComboBox(generalPanel, wxID_STATIC, wxT(""),
         wxDefaultPosition, wxDefaultSize, date_format());
-    dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, flags);
+    flex_sizer->Add(choiceDateFormat_, flags);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
     choiceDateFormat_->SetValue(FormatDate2DisplayDate(dateFormat_));
+    //choiceDateFormat_->AutoComplete(date_format());
 
-    wxButton* setFormatButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT,
-        _("Set"));
-    dateFormatSettingStaticBoxSizerGrid->Add(setFormatButton, flags);
+    wxButton* setFormatButton = new wxButton(generalPanel, wxID_APPLY, _("Set"));
+    flex_sizer->Add(setFormatButton, flags);
 
-    wxStaticText* sampleDateExampleText = new wxStaticText( generalPanel, wxID_STATIC,
-        _("New date format sample:"));
-    wxStaticText* sampleDateText = new wxStaticText(generalPanel, ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE,
+    sampleDateText_ = new wxStaticText(generalPanel, wxID_STATIC,
         wxT("redefined elsewhere"));
-    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, flags);
-    dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, flags);
-    sampleDateText->SetLabel(wxDateTime::Now().Format(dateFormat_));
+    flex_sizer->Add(new wxStaticText(generalPanel, wxID_STATIC,
+        _("New date format sample:")), flags);
+    flex_sizer->Add(sampleDateText_, flags);
+    sampleDateText_->SetLabel(wxDateTime::Now().Format(dateFormat_));
 
     // Financial Year Settings
     wxStaticBox* financialYearStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Financial Year"));
@@ -534,7 +533,8 @@ void mmOptionsDialog::CreateControls()
     othersPanelSizer->AddSpacer(15);
 
     // New transaction dialog settings
-    wxStaticBox* transSettingsStaticBox = new wxStaticBox(othersPanel, wxID_STATIC, _("New Transaction Dialog Settings"));
+    wxStaticBox* transSettingsStaticBox = new wxStaticBox(othersPanel, wxID_STATIC,
+        _("New Transaction Dialog Settings"));
     transSettingsStaticBox->SetFont(staticBoxFontSetting);
 
     wxStaticBoxSizer* transSettingsStaticBoxSizer = new wxStaticBoxSizer(transSettingsStaticBox, wxVERTICAL);
@@ -754,9 +754,9 @@ void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 
     dateFormat_ = DisplayDate2FormatDate(newFormat);
     mmOptions::instance().dateFormat=dateFormat_;
-    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
-    st->SetLabel(wxDateTime::Now().Format(dateFormat_) + _(" : Requires MMEX Restart"));
-    restartRequired_ = true;
+
+    sampleDateText_->SetLabel(wxDateTime::Now().Format(dateFormat_));
+    core_->bTransactionList_.ChangeDateFormat();
 }
 
 void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& /*event*/)
