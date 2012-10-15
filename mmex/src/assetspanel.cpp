@@ -115,7 +115,7 @@ void mmAssetsPanel::CreateControls()
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition,
         wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
-    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxGROW, 5);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
@@ -136,7 +136,7 @@ void mmAssetsPanel::CreateControls()
     itemStaticBitmap3->Connect(wxID_STATIC, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmAssetsPanel::OnMouseLeftDown), NULL, this);
 
     itemStaticTextMainFilter_ = new wxStaticText( headerPanel, wxID_STATIC, _("All"));
-    itemBoxSizerHHeader2->Add(itemStaticTextMainFilter_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizerHHeader2->Add(itemStaticTextMainFilter_, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxGROW, 5);
 
     header_text_ = new wxStaticText( headerPanel, wxID_STATIC, _("Total:"));
     itemBoxSizerVHeader->Add(header_text_, 0, wxALL, 1);
@@ -448,7 +448,7 @@ void assetsListCtrl::doRefreshItems(int trx_id)
 
     if (cnt>0)
         RefreshItems(0, cnt > 0 ? --cnt : 0);
-    else 
+    else
         selectedIndex = -1;
 
     if (selectedIndex >= 0 && cnt>0)
@@ -483,7 +483,7 @@ void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
     if (selectedIndex_ < 0)     return;
 
     wxListEvent evt(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, IDC_PANEL_STOCKS_LISTCTRL);
-    AddPendingEvent(evt);           
+    AddPendingEvent(evt);
 }
 
 void assetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
@@ -520,7 +520,7 @@ void assetsListCtrl::OnColClick(wxListEvent& event)
 }
 
 void mmAssetsPanel::OnMouseLeftDown ( wxMouseEvent& event )
-{  
+{
     wxMenu* menu = new wxMenu;
     menu->Append(new wxMenuItem(menu, 0, wxGetTranslation(wxTRANSLATE("All"))));
 
@@ -552,16 +552,15 @@ void mmAssetsPanel::OnViewPopupSelected(wxCommandEvent& event)
         }
     }
     filter_.RemoveLast(1);
-    
+
     if (evt == 0)
         itemStaticTextMainFilter_->SetLabel(_("All"));
     else
         itemStaticTextMainFilter_->SetLabel(wxGetTranslation(label));
 
     int trx_id = -1;
-    //if (selectedIndex_>=0) trx_id = cp_->getTrans()[selectedIndex_]->id_;
-
     m_listCtrlAssets->doRefreshItems(trx_id);
+    updateExtraAssetData(trx_id);
 
 /*    core_->db_.get()->Begin();
     mmDBWrapper::setInfoSettingValue(core_->db_.get(),
