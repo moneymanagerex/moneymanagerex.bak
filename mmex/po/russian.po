@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-07 12:49+0300\n"
-"PO-Revision-Date: 2012-10-14 18:26+0300\n"
+"PO-Revision-Date: 2012-10-15 23:56+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -1083,7 +1083,7 @@ msgstr "Переместить выделенную проводку в друг
 
 #: src/stockspanel.cpp:248
 msgid "Stock Investments: "
-msgstr "Рынок: "
+msgstr "Инвестиции: "
 
 #: src/stockspanel.cpp:274
 msgid "Total: "
@@ -1116,7 +1116,7 @@ msgstr "Нет связи!"
 #: src/stockspanel.cpp:531
 #, c-format
 msgid "%s on %s"
-msgstr "%s на %s"
+msgstr "%s - %s"
 
 #: src/stockspanel.cpp:535
 #, fuzzy
@@ -1182,7 +1182,7 @@ msgstr "Финансовый год: "
 #: src/reportbudget.cpp:182
 #: src/budgetingpanel.cpp:144
 msgid "Year: "
-msgstr "Год:"
+msgstr "Год: "
 
 #: src/reportbudget.cpp:184
 #: src/budgetingpanel.cpp:149
@@ -1827,7 +1827,7 @@ msgstr "&Добавить год"
 
 #: src/budgetyeardialog.cpp:109
 msgid "Add a new budget year"
-msgstr "Добавление нового бюджетного года"
+msgstr "Добавить новый бюджетный год"
 
 #: src/budgetyeardialog.cpp:112
 msgid "&Add Month"
@@ -1835,7 +1835,7 @@ msgstr "Добавить месяц"
 
 #: src/budgetyeardialog.cpp:114
 msgid "Add a new budget month"
-msgstr "Добавление нового бюджета на месяц"
+msgstr "Добавить новый бюджет на месяц"
 
 #: src/budgetyeardialog.cpp:117
 msgid "&Delete"
@@ -2817,7 +2817,7 @@ msgstr "Представление бюджета "
 
 #: src/mmex.cpp:1174
 msgid "Budget Category Summary"
-msgstr "Сумма по бюджетной категории"
+msgstr "Бюджет по категории"
 
 #: src/mmex.cpp:1202
 #: src/mmex.cpp:3330
