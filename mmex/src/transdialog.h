@@ -132,6 +132,7 @@ private:
     wxString amountNormalTip_;
     wxString amountTransferTip_;
     wxString notesTip_;
+    wxColour notesColour_;
 
     wxArrayString freqnotes_;
     int oject_in_focus_;
