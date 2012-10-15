@@ -67,8 +67,7 @@ public:
     void OnPayee(wxCommandEvent& event);
     void OnAutoTransNum(wxCommandEvent& event);
     void OnTransTypeChanged(wxCommandEvent& event);
-    void OnSpinUp(wxSpinEvent&);
-    void OnSpinDown(wxSpinEvent&);
+    void OnSpin(wxSpinEvent&);
     void OnDateChanged(wxDateEvent& event);
     void dataToControls();
     void updateControlsForTransType();
@@ -132,6 +131,7 @@ private:
 
     wxString amountNormalTip_;
     wxString amountTransferTip_;
+    wxString notesTip_;
 
     wxArrayString freqnotes_;
     int oject_in_focus_;
