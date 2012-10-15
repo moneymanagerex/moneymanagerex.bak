@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-07 12:49+0300\n"
-"PO-Revision-Date: 2012-10-15 23:56+0300\n"
+"PO-Revision-Date: 2012-10-16 00:18+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -2441,11 +2441,11 @@ msgstr "Файл журнала записан в : "
 
 #: src/mmcheckingpanel.cpp:490
 msgid "View Un-Reconciled"
-msgstr "Показать не выверенные проводки"
+msgstr "Показать не выверенные"
 
 #: src/mmcheckingpanel.cpp:491
 msgid "View All Except Reconciled"
-msgstr "Показать все транзакции, кроме выверенных"
+msgstr "Показать все, кроме выверенных"
 
 #: src/mmcheckingpanel.cpp:566
 #: src/mmcheckingpanel.cpp:1185
@@ -4864,7 +4864,7 @@ msgstr "Замена категории"
 
 #: src/constants.h:53
 msgid "View All Transactions"
-msgstr "Показать все проводки"
+msgstr "Показать все"
 
 #: src/constants.h:54
 msgid "View Reconciled"
@@ -4872,7 +4872,7 @@ msgstr "Показать выверенные"
 
 #: src/constants.h:55
 msgid "View Not-Reconciled"
-msgstr "Показать не выверенные"
+msgstr "Показать кроме не выверенных"
 
 #: src/constants.h:56
 msgid "View UnReconciled"
@@ -4880,15 +4880,15 @@ msgstr "Показать не выверенные"
 
 #: src/constants.h:57
 msgid "View Void"
-msgstr "Просмотр отменённых"
+msgstr "Показать отменённые"
 
 #: src/constants.h:58
 msgid "View Flagged"
-msgstr "Просмотр отмеченных"
+msgstr "Показать отмеченные"
 
 #: src/constants.h:59
 msgid "View Duplicates"
-msgstr "Просмотр задвоенных"
+msgstr "Показать задвоенные"
 
 #: src/constants.h:60
 msgid "View Today"
@@ -4900,11 +4900,11 @@ msgstr "Показать текущий месяц"
 
 #: src/constants.h:62
 msgid "View Last 30 days"
-msgstr "Показать проводки за последние 30 дней"
+msgstr "Показать последние 30 дней"
 
 #: src/constants.h:63
 msgid "View Last 90 days"
-msgstr "Показать проводки за последние 90 дней"
+msgstr "Показать последние 90 дней"
 
 #: src/constants.h:64
 msgid "View Last Month"
@@ -4912,7 +4912,7 @@ msgstr "Показать прошлый месяц"
 
 #: src/constants.h:65
 msgid "View Last 3 Months"
-msgstr "Показать проводки за последние 3 месяца"
+msgstr "Показать последние 3 месяца"
 
 #: src/constants.h:93
 msgid "Property"
