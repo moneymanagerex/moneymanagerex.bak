@@ -34,13 +34,6 @@
 
 // Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
-enum
-{
-    ID_DIALOG_TRANS_SPINNER = wxID_HIGHEST + 1,
-    ID_DIALOG_TRANS_WEEK,
-    NOTES_MENU_NUMBER = 20
-};
-
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
@@ -53,8 +46,7 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_TRANS_ADVANCED_CHECKBOX, mmTransDialog::OnAdvanceChecked)
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
     EVT_CHILD_FOCUS(mmTransDialog::changeFocus)
-    EVT_SPIN_UP(wxID_ANY,mmTransDialog::OnSpinUp)
-    EVT_SPIN_DOWN(wxID_ANY,mmTransDialog::OnSpinDown)
+    EVT_SPIN(wxID_ANY,mmTransDialog::OnSpin)
     EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmTransDialog::OnDateChanged)
 END_EVENT_TABLE()
 
@@ -199,7 +191,6 @@ void mmTransDialog::CreateControls()
     flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();
 
     wxBoxSizer* box_sizer1 = new wxBoxSizer(wxVERTICAL);
-    this->SetSizer(box_sizer1);
     wxBoxSizer* box_sizer2 = new wxBoxSizer(wxVERTICAL);
     box_sizer1->Add(box_sizer2, flags);
 
@@ -212,11 +203,6 @@ void mmTransDialog::CreateControls()
 
     // Date --------------------------------------------
     long date_style = wxDP_DROPDOWN|wxDP_SHOWCENTURY;
-#ifdef __WXGTK__
-    date_style = wxDP_DROPDOWN;
-#endif
-    //Text field for day of the week
-    itemStaticTextWeek_ = new wxStaticText(this, wxID_STATIC, wxT(""));
 
     wxDateTime trx_date = wxDateTime::Now();    // Default to Today's Date.
     if (mmIniOptions::instance().transDateDefault_ != 0)
@@ -227,21 +213,22 @@ void mmTransDialog::CreateControls()
 
     dpc_ = new wxDatePickerCtrl( this, ID_DIALOG_TRANS_BUTTONDATE, trx_date,
                                  wxDefaultPosition, wxSize(110, -1), date_style);
-    dpc_->SetToolTip(_("Specify the date of the transaction"));
 
 #ifdef __WXGTK__
     dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KEY_UP,
         wxKeyEventHandler(mmTransDialog::OnButtonDateChar), NULL, this);
 #endif
 
+    //Text field for day of the week
+    itemStaticTextWeek_ = new wxStaticText(this, wxID_STATIC, wxT(""));
     // Display the day of the week
-    itemStaticTextWeek_->SetLabel(mmGetNiceDateString(trx_date).substr(0,3));
+    wxString dateStr = mmGetNiceDateString(trx_date);
+    itemStaticTextWeek_->SetLabel(dateStr.substr(0,dateStr.Find(wxT(",")))); //FIXME:
 
     spinCtrl_ = new wxSpinButton(this, wxID_STATIC,
         wxDefaultPosition, wxSize(18, wxSize(dpc_->GetSize()).GetHeight()),
         wxSP_VERTICAL|wxSP_ARROW_KEYS|wxSP_WRAP);
     spinCtrl_->SetRange (-32768, 32768);
-    spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
 
     flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Date")), flags);
     wxBoxSizer* date_sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -266,7 +253,6 @@ void mmTransDialog::CreateControls()
         new wxStringClientData(transaction_status[i]));
     choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
 
-    choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
     flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Status")), flags);
     flex_sizer->Add(choiceStatus_, flags);
 
@@ -287,13 +273,11 @@ void mmTransDialog::CreateControls()
         new wxStringClientData(transaction_type[i]));
 
     transaction_type_->SetSelection(0);
-    transaction_type_->SetToolTip(_("Specify the type of transactions to be created."));
 
     cAdvanced_ = new wxCheckBox(this,
         ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"),
         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cAdvanced_->SetValue(FALSE);
-    cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
 
     wxBoxSizer* typeSizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -303,20 +287,16 @@ void mmTransDialog::CreateControls()
     typeSizer->Add(cAdvanced_, flags);
 
     // Amount Fields --------------------------------------------
-    amountNormalTip_   = _("Specify the amount for this transaction");
-    amountTransferTip_ = _("Specify the amount to be transfered");
 
     textAmount_ = new wxTextCtrl( this, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""),
         wxDefaultPosition, wxSize(110, -1),
         wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
-    textAmount_->SetToolTip(amountNormalTip_);
     textAmount_->Connect(ID_DIALOG_TRANS_TEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER,
         wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     toTextAmount_ = new wxTextCtrl( this, ID_DIALOG_TRANS_TOTEXTAMOUNT, wxT(""),
         wxDefaultPosition, wxSize(110, -1),
         wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
-    toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
     toTextAmount_->Connect(ID_DIALOG_TRANS_TOTEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER,
         wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
@@ -367,7 +347,6 @@ void mmTransDialog::CreateControls()
     bPayee_ = new wxButton( this, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName,
         wxDefaultPosition, wxSize((choiceStatus_->GetSize().GetWidth()+border)*2, -1));
 
-    bPayee_->SetToolTip(_("Specify where the transaction is going to"));
     bPayee_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonPayeeChar), NULL, this);
     bPayee_->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(mmTransDialog::OnButtonPayeeMouse), NULL, this);
 
@@ -378,7 +357,6 @@ void mmTransDialog::CreateControls()
     cSplit_ = new wxCheckBox(this, ID_DIALOG_TRANS_SPLITCHECKBOX,
         _("Split"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cSplit_->SetValue(FALSE);
-    cSplit_->SetToolTip(_("Use split Categories"));
 
     flex_sizer->AddSpacer(20);  // Fill empty space.
     flex_sizer->Add(cSplit_, flags);
@@ -386,7 +364,6 @@ void mmTransDialog::CreateControls()
     // Category -------------------------------------------------
     bCategory_ = new wxButton(this, ID_DIALOG_TRANS_BUTTONCATEGS, categString,
         wxDefaultPosition, bPayee_->GetSize());
-    bCategory_->SetToolTip(_("Specify the category for this transaction"));
 
     flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Category")), flags);
     flex_sizer->Add(bCategory_, flags);
@@ -394,14 +371,12 @@ void mmTransDialog::CreateControls()
     // Number  ---------------------------------------------
     textNumber_ = new wxTextCtrl(this,
         ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), wxDefaultPosition,
-        wxSize(180, -1), wxTE_PROCESS_ENTER /*wxEVT_COMMAND_TEXT_ENTER*/);
-    textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
+        wxSize(180, -1), wxTE_PROCESS_ENTER);
     textNumber_->Connect(ID_DIALOG_TRANS_TEXTNUMBER, wxEVT_COMMAND_TEXT_ENTER,
         wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     bAuto_ = new wxButton(this,
         ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT("..."), wxDefaultPosition, wxSize(40, -1));
-    bAuto_->SetToolTip(_("Populate Transaction #"));
     bAuto_ -> Connect(ID_DIALOG_TRANS_BUTTONTRANSNUM,
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmTransDialog::OnAutoTransNum), NULL, this);
 
@@ -412,20 +387,41 @@ void mmTransDialog::CreateControls()
     number_sizer->Add(bAuto_, flags);
 
     // Notes  ---------------------------------------------
+    notesTip_ = _("Specify any text notes you want to add to this transaction.");
     textNotes_ = new wxTextCtrl(this, ID_DIALOG_TRANS_TEXTNOTES, wxT(""),
         wxDefaultPosition, wxSize(-1,80), wxTE_MULTILINE);
-    textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
+    textNotes_->SetValue(notesTip_);
+    int font_size = textNotes_->GetFont().GetPointSize() -1;
+    textNotes_->SetFont(wxFont(font_size, wxMODERN, wxFONTFAMILY_DECORATIVE, wxFONTWEIGHT_LIGHT, FALSE, wxT("")));
+    //textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
 
-    flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Notes")), flags);
-    flex_sizer->AddSpacer(1);
     box_sizer->Add(textNotes_, flagsExpand.Border(wxLEFT|wxRIGHT|wxBOTTOM, 10));
 
     SetTransferControls();  // hide appropriate fields
+
+    amountNormalTip_   = _("Specify the amount for this transaction");
+    amountTransferTip_ = _("Specify the amount to be transfered");
+    if (true) //TODO: Add parameter
+    {
+        dpc_->SetToolTip(_("Specify the date of the transaction"));
+        spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
+        choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
+        transaction_type_->SetToolTip(_("Specify the type of transactions to be created."));
+        cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
+        textAmount_->SetToolTip(amountNormalTip_);
+        toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
+        bPayee_->SetToolTip(_("Specify where the transaction is going to"));
+        cSplit_->SetToolTip(_("Use split Categories"));
+        bCategory_->SetToolTip(_("Specify the category for this transaction"));
+        textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
+        bAuto_->SetToolTip(_("Populate Transaction #"));
+    }
+
     /**********************************************************************************************
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
     wxPanel* buttons_panel = new wxPanel(this, wxID_ANY);
-    box_sizer1->Add(buttons_panel, flags.Right().Border(0));
+    box_sizer1->Add(buttons_panel, flags.Center().Border(0));
 
     wxStdDialogButtonSizer*  buttons_sizer = new wxStdDialogButtonSizer;
     buttons_panel->SetSizer(buttons_sizer);
@@ -440,7 +436,8 @@ void mmTransDialog::CreateControls()
         itemButtonCancel_->SetFocus();
 
     buttons_sizer->Realize();
-
+    Center();
+    this->SetSizer(box_sizer1);
 }
 
 void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
@@ -511,28 +508,18 @@ void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
     textNumber_->SetValue( number_strings[i] );
 }
 
-void mmTransDialog::OnSpinUp(wxSpinEvent& event)
+void mmTransDialog::OnSpin(wxSpinEvent& event)
 {
     wxString dateStr = dpc_->GetValue().FormatISODate();
     wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
-    date = date.Add(wxDateSpan::Days(1));
+    int value = event.GetPosition();
+
+    date = date.Add(wxDateSpan::Days(value));
     dpc_->SetValue (date);
+    spinCtrl_->SetValue(0);
 
     //process date change event for set weekday name
-    wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
-    GetEventHandler()->ProcessEvent(dateEvent);
-
-    event.Skip();
-}
-
-void mmTransDialog::OnSpinDown(wxSpinEvent& event)
-{
-    wxString dateStr = dpc_->GetValue().FormatISODate();
-    wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
-    date = date.Add(wxDateSpan::Days(-1));
-    dpc_->SetValue (date);
-
-    wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
+    wxDateEvent dateEvent(dpc_, date, wxEVT_DATE_CHANGED);
     GetEventHandler()->ProcessEvent(dateEvent);
 
     event.Skip();
@@ -542,11 +529,11 @@ void mmTransDialog::OnDateChanged(wxDateEvent& event)
 {
     //get weekday name
     wxDateTime date = dpc_->GetValue();
-    wxString dateStr =wxT("");
+    wxString dateStr = wxT("");
     if (event.GetDate().IsValid())
         dateStr = mmGetNiceDateString( date /*event.GetDate()*/); //fix for wx2.9.x
-    //FIXME:
-    dateStr = dateStr.substr(0, 3/*dateStr.Find(wxT(","))*/);
+
+    dateStr = dateStr.substr(0, dateStr.Find(wxT(",")));
     itemStaticTextWeek_->SetLabel(dateStr);
     event.Skip();
 }
@@ -952,6 +939,12 @@ void mmTransDialog::changeFocus(wxChildFocusEvent& event)
     wxWindow *w = event.GetWindow();
     if ( w )
         oject_in_focus_ = w->GetId();
+    
+    if (textNotes_->GetValue() == notesTip_)
+    {
+        textNotes_->SetValue(wxT(""));
+    }
+    event.Skip();
 }
 
 void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
