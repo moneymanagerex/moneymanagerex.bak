@@ -390,10 +390,14 @@ void mmTransDialog::CreateControls()
     notesTip_ = _("Specify any text notes you want to add to this transaction.");
     textNotes_ = new wxTextCtrl(this, ID_DIALOG_TRANS_TEXTNOTES, wxT(""),
         wxDefaultPosition, wxSize(-1,80), wxTE_MULTILINE);
-    textNotes_->SetValue(notesTip_);
-    int font_size = textNotes_->GetFont().GetPointSize() -1;
-    textNotes_->SetFont(wxFont(font_size, wxMODERN, wxFONTFAMILY_DECORATIVE, wxFONTWEIGHT_LIGHT, FALSE, wxT("")));
-    //textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
+    if (!edit_)
+    {
+        notesColour_ = textNotes_->GetForegroundColour();
+        textNotes_->SetForegroundColour(wxColour(wxT("GREY")));
+        textNotes_->SetValue(notesTip_);
+        int font_size = textNotes_->GetFont().GetPointSize();
+        textNotes_->SetFont(wxFont(font_size, wxMODERN, wxFONTFAMILY_DECORATIVE, wxFONTWEIGHT_LIGHT, FALSE, wxT("")));
+    }
 
     box_sizer->Add(textNotes_, flagsExpand.Border(wxLEFT|wxRIGHT|wxBOTTOM, 10));
 
@@ -940,9 +944,10 @@ void mmTransDialog::changeFocus(wxChildFocusEvent& event)
     if ( w )
         oject_in_focus_ = w->GetId();
     
-    if (textNotes_->GetValue() == notesTip_)
+    if (!edit_ && textNotes_->GetValue() == notesTip_)
     {
         textNotes_->SetValue(wxT(""));
+        textNotes_->SetForegroundColour(notesColour_);
     }
     event.Skip();
 }
