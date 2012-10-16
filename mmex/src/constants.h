@@ -115,6 +115,18 @@ const wxString BILLSDEPOSITS_REPEATS[] = {
     wxTRANSLATE("Every %s Days"),
     wxTRANSLATE("Every %s Months")
     };
+
+static const wxString gDaysInWeek[7] =
+    {
+        wxTRANSLATE("Sunday"),
+        wxTRANSLATE("Monday"),
+        wxTRANSLATE("Tuesday"),
+        wxTRANSLATE("Wednesday"),
+        wxTRANSLATE("Thursday"),
+        wxTRANSLATE("Friday"),
+        wxTRANSLATE("Saturday")
+    };
+
 //----------------------------------------------------------------------------
 #endif // _MM_EX_CONSTANTS_H_
 //----------------------------------------------------------------------------
