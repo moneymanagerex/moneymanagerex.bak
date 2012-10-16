@@ -222,8 +222,7 @@ void mmTransDialog::CreateControls()
     //Text field for day of the week
     itemStaticTextWeek_ = new wxStaticText(this, wxID_STATIC, wxT(""));
     // Display the day of the week
-    wxString dateStr = mmGetNiceDateString(trx_date);
-    itemStaticTextWeek_->SetLabel(dateStr.substr(0,dateStr.Find(wxT(",")))); //FIXME:
+    itemStaticTextWeek_->SetLabel(mmGetNiceWeekDayName(trx_date.GetWeekDay()));
 
     spinCtrl_ = new wxSpinButton(this, wxID_STATIC,
         wxDefaultPosition, wxSize(18, wxSize(dpc_->GetSize()).GetHeight()),
@@ -535,9 +534,8 @@ void mmTransDialog::OnDateChanged(wxDateEvent& event)
     wxDateTime date = dpc_->GetValue();
     wxString dateStr = wxT("");
     if (event.GetDate().IsValid())
-        dateStr = mmGetNiceDateString( date /*event.GetDate()*/); //fix for wx2.9.x
+        dateStr = mmGetNiceWeekDayName( date.GetWeekDay() /*event.GetDate()*/); //fix for wx2.9.x
 
-    dateStr = dateStr.substr(0, dateStr.Find(wxT(",")));
     itemStaticTextWeek_->SetLabel(dateStr);
     event.Skip();
 }
