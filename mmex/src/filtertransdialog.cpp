@@ -245,16 +245,20 @@ void mmFilterTransactionsDialog::CreateControls()
     typeCheckBox_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Type"),
                                    wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
 
-    wxBoxSizer* typeSizer = new wxBoxSizer(wxVERTICAL);
-    cbTypeWithdrawal_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Withdrawal"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    cbTypeDeposit_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Deposit"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    cbTypeTransfer_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Transfer"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    wxFlexGridSizer* typeSizer = new wxFlexGridSizer(0, 2, 0, 0);
+    cbTypeWithdrawal_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Withdrawal"),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTypeDeposit_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Deposit"),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTypeTransfer_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Transfer"),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
 
     itemPanelSizer->Add(typeCheckBox_, flags);
     itemPanelSizer->Add(typeSizer, flags);
     typeSizer ->Add(cbTypeWithdrawal_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
     typeSizer ->Add(cbTypeDeposit_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
     typeSizer ->Add(cbTypeTransfer_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
+    typeSizer ->AddSpacer(2);
 
     //--End of Row --------------------------------------------------------
 
