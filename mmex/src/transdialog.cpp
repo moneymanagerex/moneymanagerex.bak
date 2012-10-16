@@ -17,6 +17,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+#include "constants.h"
 #include "transdialog.h"
 #include "wx/datectrl.h"
 #include "wx/dateevt.h"
@@ -247,17 +248,10 @@ void mmTransDialog::CreateControls()
     // Status --------------------------------------------
     choiceStatus_ = new wxChoice(this, ID_DIALOG_TRANS_STATUS,
         wxDefaultPosition, wxSize(110, -1));
-    wxString transaction_status[] =
-    {
-        wxTRANSLATE("None"),
-        wxTRANSLATE("Reconciled"),
-        wxTRANSLATE("Void"),
-        wxTRANSLATE("Follow up"),
-        wxTRANSLATE("Duplicate")
-    };
-    for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
-        choiceStatus_->Append(wxGetTranslation(transaction_status[i]),
-        new wxStringClientData(transaction_status[i]));
+
+    for(size_t i = 0; i < sizeof(TRANSACTION_STATUS)/sizeof(wxString); ++i)
+        choiceStatus_->Append(wxGetTranslation(TRANSACTION_STATUS[i]),
+        new wxStringClientData(TRANSACTION_STATUS[i]));
     choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
 
     flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Status")), flags);
@@ -266,18 +260,13 @@ void mmTransDialog::CreateControls()
     // Type --------------------------------------------
     transaction_type_ = new wxChoice(this, ID_DIALOG_TRANS_TYPE,
         wxDefaultPosition, wxSize(110, -1));
-    wxString transaction_type[] =
-    {
-        wxTRANSLATE("Withdrawal"),
-        wxTRANSLATE("Deposit"),
-        wxTRANSLATE("Transfer")
-    };
+
     // Restrict choise if accounts number less than 2
-    size_t size = sizeof(transaction_type)/sizeof(wxString);
+    size_t size = sizeof(TRANSACTION_TYPE)/sizeof(wxString);
     if (core_->accountList_.getNumBankAccounts() < 2) size--;
     for(size_t i = 0; i < size; ++i)
-    transaction_type_->Append(wxGetTranslation(transaction_type[i]),
-        new wxStringClientData(transaction_type[i]));
+    transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
+        new wxStringClientData(TRANSACTION_TYPE[i]));
 
     transaction_type_->SetSelection(0);
 

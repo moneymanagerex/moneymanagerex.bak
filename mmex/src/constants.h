@@ -57,7 +57,7 @@ const wxString VIEW_TRANS_UNRECONCILED_STR   = wxTRANSLATE("View UnReconciled");
 const wxString VIEW_TRANS_VOID               = wxTRANSLATE("View Void");
 const wxString VIEW_TRANS_FLAGGED            = wxTRANSLATE("View Flagged");
 const wxString VIEW_TRANS_DUPLICATES         = wxTRANSLATE("View Duplicates");
-const wxString VIEW_TRANS_TODAY_STR          = wxTRANSLATE("View Today"); 
+const wxString VIEW_TRANS_TODAY_STR          = wxTRANSLATE("View Today");
 const wxString VIEW_TRANS_CURRENT_MONTH_STR  = wxTRANSLATE("View Current Month");
 const wxString VIEW_TRANS_LAST_30_DAYS_STR   = wxTRANSLATE("View Last 30 days");
 const wxString VIEW_TRANS_LAST_90_DAYS_STR   = wxTRANSLATE("View Last 90 days");
@@ -96,7 +96,8 @@ const wxString ASSET_TYPE[] = {
     wxTRANSLATE("Art"),
     wxTRANSLATE("Jewellery"),
     wxTRANSLATE("Cash"),
-    wxTRANSLATE("Other")};
+    wxTRANSLATE("Other")
+};
 
 const wxString BILLSDEPOSITS_REPEATS[] = {
     wxTRANSLATE("None"),
@@ -114,18 +115,34 @@ const wxString BILLSDEPOSITS_REPEATS[] = {
     wxTRANSLATE("In %s Months"),
     wxTRANSLATE("Every %s Days"),
     wxTRANSLATE("Every %s Months")
-    };
+};
+
+static const wxString TRANSACTION_STATUS[] =
+{
+    wxTRANSLATE("None"),
+    wxTRANSLATE("Reconciled"),
+    wxTRANSLATE("Void"),
+    wxTRANSLATE("Follow up"),
+    wxTRANSLATE("Duplicate")
+};
+
+static const wxString TRANSACTION_TYPE[] =
+{
+    wxTRANSLATE("Withdrawal"),
+    wxTRANSLATE("Deposit"),
+    wxTRANSLATE("Transfer")
+};
 
 static const wxString gDaysInWeek[7] =
-    {
-        wxTRANSLATE("Sunday"),
-        wxTRANSLATE("Monday"),
-        wxTRANSLATE("Tuesday"),
-        wxTRANSLATE("Wednesday"),
-        wxTRANSLATE("Thursday"),
-        wxTRANSLATE("Friday"),
-        wxTRANSLATE("Saturday")
-    };
+{
+    wxTRANSLATE("Sunday"),
+    wxTRANSLATE("Monday"),
+    wxTRANSLATE("Tuesday"),
+    wxTRANSLATE("Wednesday"),
+    wxTRANSLATE("Thursday"),
+    wxTRANSLATE("Friday"),
+    wxTRANSLATE("Saturday")
+};
 
 //----------------------------------------------------------------------------
 #endif // _MM_EX_CONSTANTS_H_

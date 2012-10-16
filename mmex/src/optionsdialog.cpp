@@ -561,17 +561,10 @@ void mmOptionsDialog::CreateControls()
     wxChoice* default_status = new wxChoice(othersPanel,
         ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
         wxDefaultPosition, defaultDateChoice->GetSize());
-    wxString transaction_status[] = 
-    {
-        wxTRANSLATE("None"),
-        wxTRANSLATE("Reconciled"),
-        wxTRANSLATE("Void"),
-        wxTRANSLATE("Follow up"),
-        wxTRANSLATE("Duplicate")
-    };
-    for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
-        default_status->Append(wxGetTranslation(transaction_status[i]),
-        new wxStringClientData(transaction_status[i]));
+
+    for(size_t i = 0; i < sizeof(TRANSACTION_STATUS)/sizeof(wxString); ++i)
+        default_status->Append(wxGetTranslation(TRANSACTION_STATUS[i]),
+        new wxStringClientData(TRANSACTION_STATUS[i]));
 
     default_status->SetSelection(mmIniOptions::instance().transStatusReconciled_);
 
