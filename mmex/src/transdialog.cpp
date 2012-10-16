@@ -170,7 +170,15 @@ void mmTransDialog::dataToControls()
 
     if (transTypeString == TRANS_TYPE_TRANSFER_STR)
     {
-        bPayee_->SetLabel(core_->accountList_.GetAccountName(toID_));
+        if (accountID_ == referenceAccountID_)
+        {
+            bPayee_->SetLabel(core_->accountList_.GetAccountName(toID_));
+        }
+        else
+        {
+            bPayee_->SetLabel(core_->accountList_.GetAccountName(accountID_));
+            payee_label_->SetLabel(_("From"));
+        }
         // When editing an advanced transaction record, we do not reset the toTransAmount_
         if (edit_ && (toTransAmount_ != transAmount))
         {
