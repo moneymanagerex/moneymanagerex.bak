@@ -34,6 +34,7 @@ BEGIN_EVENT_TABLE( mmNewAcctDialog, wxDialog )
     EVT_BUTTON(wxID_CANCEL, mmNewAcctDialog::OnCancel)
     EVT_BUTTON(ID_DIALOG_NEWACCT_BUTTON_CURRENCY, mmNewAcctDialog::OnCurrency)
     EVT_MENU_RANGE(0, 99, mmNewAcctDialog::OnCustonImage)
+    EVT_CHILD_FOCUS(mmNewAcctDialog::changeFocus)
 END_EVENT_TABLE()
 
 mmNewAcctDialog::mmNewAcctDialog( )
@@ -60,6 +61,7 @@ bool mmNewAcctDialog::Create( wxWindow* parent, wxWindowID id,
     wxDialog::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
+    access_changed_ = false;
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
@@ -94,9 +96,6 @@ void mmNewAcctDialog::fillControlsWithData()
 
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT);
     textCtrl->SetValue(pAccount->contactInfo_);
-
-    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO);
-    textCtrl->SetValue(pAccount->accessInfo_);
 
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
     textCtrl->SetValue(pAccount->notes_);
@@ -135,6 +134,8 @@ void mmNewAcctDialog::fillControlsWithData()
 
     int selectedImage = mmIniOptions::instance().account_image_id(core_, accountID_);
     bitmaps_button_->SetBitmapLabel(navtree_images_list_()->GetBitmap(selectedImage));
+    
+    accessInfo_ = pAccount->accessInfo_;
 }
 
 void mmNewAcctDialog::CreateControls()
@@ -228,7 +229,7 @@ void mmNewAcctDialog::CreateControls()
     grid_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Access Info:")),
          flags);
     wxTextCtrl* itemTextCtrl14 = new wxTextCtrl(this,
-        ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO, wxT(""));
+        ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO, wxT("*********"));
     grid_sizer->Add(itemTextCtrl14, flagsExpand);
 
     wxCheckBox* itemCheckBox10 = new wxCheckBox( this,
@@ -385,8 +386,9 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     pAccount->heldAt_ = textCtrlHeldAt->GetValue();
     pAccount->website_ = textCtrlWebsite->GetValue();
     pAccount->contactInfo_ = textCtrlContact->GetValue();
-    pAccount->accessInfo_ = textCtrlAccess->GetValue();
     pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(currencyID_);
+    if (access_changed_)
+        pAccount->accessInfo_ = textCtrlAccess->GetValue();
 
     if (newAcct_)
     {
@@ -429,4 +431,18 @@ void mmNewAcctDialog::OnCustonImage(wxCommandEvent& event)
 
     bitmaps_button_->SetBitmapLabel(navtree_images_list_()->GetBitmap(selectedImage));
 
+}
+
+void mmNewAcctDialog::changeFocus(wxChildFocusEvent& event)
+{
+    wxWindow *w = event.GetWindow();
+    int oject_in_focus;
+    if ( w )
+        oject_in_focus = w->GetId();
+    if (oject_in_focus == ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO)
+    {
+        wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO);
+        textCtrl->SetValue(accessInfo_);
+        access_changed_=true;
+    }
 }

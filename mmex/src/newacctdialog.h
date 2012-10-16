@@ -64,12 +64,15 @@ public:
     void OnImageButton(wxCommandEvent& event);
 
 private:
+    void changeFocus(wxChildFocusEvent& event);
     mmCoreDB* core_;
     wxTextCtrl *textAccountName_;
     bool newAcct_;
     int accountID_;
     int currencyID_;
     bool termAccount_;
+    wxString accessInfo_;
+    bool access_changed_;
 };
 
 #endif
