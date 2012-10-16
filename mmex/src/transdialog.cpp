@@ -394,7 +394,7 @@ void mmTransDialog::CreateControls()
     number_sizer->Add(bAuto_, flags);
 
     // Notes  ---------------------------------------------
-    notesTip_ = _("Specify any text notes you want to add to this transaction.");
+    notesTip_ = _("Notes");
     textNotes_ = new wxTextCtrl(this, ID_DIALOG_TRANS_TEXTNOTES, wxT(""),
         wxDefaultPosition, wxSize(-1,80), wxTE_MULTILINE);
     if (!edit_)
@@ -403,7 +403,7 @@ void mmTransDialog::CreateControls()
         textNotes_->SetForegroundColour(wxColour(wxT("GREY")));
         textNotes_->SetValue(notesTip_);
         int font_size = textNotes_->GetFont().GetPointSize();
-        textNotes_->SetFont(wxFont(font_size, wxMODERN, wxFONTFAMILY_DECORATIVE, wxFONTWEIGHT_LIGHT, FALSE, wxT("")));
+        textNotes_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
     }
 
     box_sizer->Add(textNotes_, flagsExpand.Border(wxLEFT|wxRIGHT|wxBOTTOM, 10));
@@ -426,6 +426,7 @@ void mmTransDialog::CreateControls()
         bCategory_->SetToolTip(_("Specify the category for this transaction"));
         textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
         bAuto_->SetToolTip(_("Populate Transaction #"));
+        textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
     }
 
     /**********************************************************************************************
