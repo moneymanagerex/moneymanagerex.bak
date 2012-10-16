@@ -416,17 +416,10 @@ void mmBDDialog::CreateControls()
     // Status --------------------------------------------
     choiceStatus_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_STATUS,
                                   wxDefaultPosition, wxSize(110, -1));
-    wxString transaction_status[] =
-    {
-        wxTRANSLATE("None"),
-        wxTRANSLATE("Reconciled"),
-        wxTRANSLATE("Void"),
-        wxTRANSLATE("Follow up"),
-        wxTRANSLATE("Duplicate")
-    };
-    for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
-        choiceStatus_->Append(wxGetTranslation(transaction_status[i]),
-        new wxStringClientData(transaction_status[i]));
+
+    for(size_t i = 0; i < sizeof(TRANSACTION_STATUS)/sizeof(wxString); ++i)
+        choiceStatus_->Append(wxGetTranslation(TRANSACTION_STATUS[i]),
+        new wxStringClientData(TRANSACTION_STATUS[i]));
     choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
@@ -436,18 +429,13 @@ void mmBDDialog::CreateControls()
     // Type --------------------------------------------
     transaction_type_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_TYPE, 
                                  wxDefaultPosition, wxSize(110, -1));
-    wxString transaction_type[] =
-    {
-        wxTRANSLATE("Withdrawal"),
-        wxTRANSLATE("Deposit"),
-        wxTRANSLATE("Transfer")
-    };
+
     // Restrict choise if accounts number less than 2
-    size = sizeof(transaction_type)/sizeof(wxString);
+    size = sizeof(TRANSACTION_TYPE)/sizeof(wxString);
     if (core_->accountList_.getNumBankAccounts() < 2) size--;
     for(size_t i = 0; i < size; ++i)
-    transaction_type_->Append(wxGetTranslation(transaction_type[i]),
-        new wxStringClientData(transaction_type[i]));
+    transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
+        new wxStringClientData(TRANSACTION_TYPE[i]));
 
     transaction_type_->SetSelection(0);
     transaction_type_->SetToolTip(_("Specify the type of transactions to be created."));

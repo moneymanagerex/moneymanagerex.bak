@@ -15,7 +15,7 @@
 #endif
 
 #include "filtertransdialog.h"
-
+#include "constants.h"
 #include "defs.h"
 #include "util.h"
 #include "dbwrapper.h"
@@ -233,17 +233,10 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanelSizer->Add(statusCheckBox_, flags);
 
     choiceStatus_ = new wxChoice(itemPanel, wxID_STATIC);
-    wxString transaction_status[] =
-    {
-        wxTRANSLATE("None"),
-        wxTRANSLATE("Reconciled"),
-        wxTRANSLATE("Void"),
-        wxTRANSLATE("Follow up"),
-        wxTRANSLATE("Duplicate")
-    };
-    for(size_t i = 0; i < sizeof(transaction_status)/sizeof(wxString); ++i)
-        choiceStatus_->Append(wxGetTranslation(transaction_status[i]),
-        new wxStringClientData(transaction_status[i]));
+
+    for(size_t i = 0; i < sizeof(TRANSACTION_STATUS)/sizeof(wxString); ++i)
+        choiceStatus_->Append(wxGetTranslation(TRANSACTION_STATUS[i]),
+        new wxStringClientData(TRANSACTION_STATUS[i]));
 
     itemPanelSizer->Add(choiceStatus_, flags);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
