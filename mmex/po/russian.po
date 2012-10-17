@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-07 12:49+0300\n"
-"PO-Revision-Date: 2012-10-16 00:18+0300\n"
+"PO-Revision-Date: 2012-10-17 10:38+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -133,7 +133,7 @@ msgstr "Найти получателя: "
 
 #: src/payeedialog.cpp:101
 msgid "Filter Payees: "
-msgstr "Фильтр плательщиков:"
+msgstr "Фильтр получателей:"
 
 #: src/payeedialog.cpp:106
 #, fuzzy, c-format
@@ -147,7 +147,7 @@ msgstr "Добавить"
 
 #: src/payeedialog.cpp:114
 msgid "Add a new payee name"
-msgstr "Добавление нового плательщика"
+msgstr "Добавление нового получателя"
 
 #: src/payeedialog.cpp:117
 #: src/maincurrencydialog.cpp:122
@@ -156,7 +156,7 @@ msgstr "&Редактировать"
 
 #: src/payeedialog.cpp:119
 msgid "Change the name of an existing payee"
-msgstr "Изменение названия существующего плательщика"
+msgstr "Изменение названия существующего получателя"
 
 #: src/payeedialog.cpp:122
 #: src/maincurrencydialog.cpp:127
@@ -165,7 +165,7 @@ msgstr "Удалить"
 
 #: src/payeedialog.cpp:124
 msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
-msgstr "Удаление выбранного плательщика. Плательщику не должны принадлежать проводки."
+msgstr "Удаление выбранного получателя. Получателю не должны принадлежать транзакции."
 
 #: src/payeedialog.cpp:130
 #: src/maincurrencydialog.cpp:135
@@ -174,7 +174,7 @@ msgstr "&Выбрать"
 
 #: src/payeedialog.cpp:132
 msgid "Select the currently selected payee as the selected payee for the transaction"
-msgstr "Выберите из списка плательщика платежа для этой проводки"
+msgstr "Выберите из списка получателя для этой транзакции"
 
 #: src/payeedialog.cpp:136
 #: src/maincurrencydialog.cpp:144
@@ -183,36 +183,36 @@ msgstr "&Отмена"
 
 #: src/payeedialog.cpp:216
 msgid "Enter the name for the new payee:"
-msgstr "Введите имя нового плательщика:"
+msgstr "Введите имя нового получателя:"
 
 #: src/payeedialog.cpp:216
 #: src/payeedialog.cpp:223
 msgid "Organize Payees: Add Payee"
-msgstr "Редактор плательщиков: Добавить плательщика"
+msgstr "Редактор получателей: Добавить получателя"
 
 #: src/payeedialog.cpp:223
 msgid "Payee with same name exists"
-msgstr "Плательщик с таким именем уже существует"
+msgstr "Получатель с таким именем уже существует"
 
 #: src/payeedialog.cpp:243
 msgid "Payee in use."
-msgstr "Плательщик используется"
+msgstr "Получатель используется"
 
 #: src/payeedialog.cpp:246
 msgid ""
 "Tip: Change all transactions using this Payee to another Payee\n"
 "using the relocate command:"
 msgstr ""
-"Совет: Меняйте плательщика всех проводок на другого,\n"
+"Совет: Меняйте получателя транзакций на другого,\n"
 "используя команду замены:"
 
 #: src/payeedialog.cpp:247
 msgid "Tools -> Relocation of -> Payees"
-msgstr "Инструменты -> Замена -> Плательщики"
+msgstr "Инструменты -> Замена -> Получатели"
 
 #: src/payeedialog.cpp:248
 msgid "Organize Payees: Delete Error"
-msgstr "Редактор плательщиков: Ошибка удаления"
+msgstr "Редактор получателей: Ошибка удаления"
 
 #: src/payeedialog.cpp:273
 #, c-format
@@ -221,7 +221,7 @@ msgstr "Введите название актива для %s"
 
 #: src/payeedialog.cpp:274
 msgid "Edit Payee Name"
-msgstr "Изменение плательщика "
+msgstr "Изменение получателя"
 
 #: src/chart.cpp:218
 #: src/chart.cpp:415
@@ -262,7 +262,7 @@ msgstr "&Выполнить"
 
 #: src/customreportdialog.cpp:134
 msgid "Test script. Save before running. SQL errors will result in loss of script."
-msgstr "Проверка запроса. Сохраните его перед запуском. В случае ошибки запрос будет потерян."
+msgstr "Проверка запроса. Сохраните его перед запуском. В случае ошибки запрос может быть потерян."
 
 #: src/customreportdialog.cpp:138
 msgid "Clear the SQL Source script area"
@@ -690,7 +690,7 @@ msgstr " дней просрочено!"
 
 #: src/mmhomepagepanel.cpp:577
 msgid "Upcoming Transactions"
-msgstr "Предстоящие проводки"
+msgstr "Предстоящие транзакции"
 
 #: src/mmhomepagepanel.cpp:657
 msgid "Top Withdrawals: "
@@ -710,15 +710,15 @@ msgstr "Количество"
 
 #: src/mmhomepagepanel.cpp:702
 msgid "Transaction Statistics"
-msgstr "Статистика проводок"
+msgstr "Статистика транзакций"
 
 #: src/mmhomepagepanel.cpp:707
 msgid "Follow Up On Transactions: "
-msgstr "Отследить проводок:"
+msgstr "Отследить транзакций:"
 
 #: src/mmhomepagepanel.cpp:713
 msgid "Total Transactions: "
-msgstr "Проводок всего:"
+msgstr "Транзакций всего: "
 
 #: src/mmhomepagepanel.cpp:728
 msgid "Grand Total:"
@@ -760,9 +760,8 @@ msgstr ""
 " или базовую валюту."
 
 #: src/maincurrencydialog.cpp:251
-#, fuzzy
 msgid "Do you really want to delete the selected Currency?"
-msgstr "Вы действительно хотите удалить выбранную проводку?"
+msgstr "Вы действительно хотите удалить выбранную транзакцию?"
 
 #: src/mmcategory.cpp:251
 msgid "Select Category"
@@ -803,15 +802,15 @@ msgstr "Примечания"
 
 #: src/billsdepositspanel.cpp:185
 msgid "New Bills & Deposit Series"
-msgstr "Новая запланированная проводка"
+msgstr "Новая запланированная транзакция"
 
 #: src/billsdepositspanel.cpp:189
 msgid "Edit Bills & Deposit Series"
-msgstr "Редактировать запланированные проводки"
+msgstr "Редактировать запланированные транзакции"
 
 #: src/billsdepositspanel.cpp:194
 msgid "Delete Bills & Deposit Series"
-msgstr "Удалить запланированную проводку"
+msgstr "Удалить запланированную транзакцию"
 
 #: src/billsdepositspanel.cpp:198
 msgid "En&ter"
@@ -819,7 +818,7 @@ msgstr "&Зачислить"
 
 #: src/billsdepositspanel.cpp:200
 msgid "Enter Next Bills & Deposit Occurrence"
-msgstr "Зачислить запланированную проводку"
+msgstr "Зачислить запланированную транзакцию"
 
 #: src/billsdepositspanel.cpp:204
 msgid "&Skip"
@@ -827,7 +826,7 @@ msgstr "Пропус&тить"
 
 #: src/billsdepositspanel.cpp:205
 msgid "Skip Next Bills & Deposit Occurrence"
-msgstr "Пропустить запланированную проводку"
+msgstr "Пропустить запланированную транзакцию"
 
 #: src/billsdepositspanel.cpp:365
 msgid "Enter next Occurrence..."
@@ -839,15 +838,15 @@ msgstr "Пропустить следующее начисление"
 
 #: src/billsdepositspanel.cpp:369
 msgid "&New Bills && Deposit Series..."
-msgstr "Новая запланированная проводка..."
+msgstr "Новая запланированная транзакция..."
 
 #: src/billsdepositspanel.cpp:370
 msgid "&Edit Bills && Deposit Series..."
-msgstr "Редактировать запланированную проводку..."
+msgstr "Редактировать запланированную транзакцию..."
 
 #: src/billsdepositspanel.cpp:371
 msgid "&Delete Bills && Deposit Series..."
-msgstr "Удалить запланированную проводку..."
+msgstr "Удалить запланированную транзакцию..."
 
 #: src/billsdepositspanel.cpp:382
 msgid "Withdrawal"
@@ -1079,7 +1078,7 @@ msgstr "Пере&местить"
 
 #: src/stockspanel.cpp:221
 msgid "Move selected transaction to another account"
-msgstr "Переместить выделенную проводку в другой счёт"
+msgstr "Переместить выделенную транзакцию в другой счёт"
 
 #: src/stockspanel.cpp:248
 msgid "Stock Investments: "
@@ -1119,9 +1118,8 @@ msgid "%s on %s"
 msgstr "%s - %s"
 
 #: src/stockspanel.cpp:535
-#, fuzzy
 msgid "Stock prices successfully updated"
-msgstr "Обновление котировок с Yahoo"
+msgstr "Котировки успешно обновлены"
 
 #: src/stockspanel.cpp:536
 #: src/stockspanel.cpp:589
@@ -1205,7 +1203,7 @@ msgstr "Разделить категорию"
 
 #: src/transdialog.cpp:206
 msgid "Transaction Details"
-msgstr "Детали проводки"
+msgstr "Детали транзакции"
 
 #: src/transdialog.cpp:230
 msgid "Specify the date of the transaction"
@@ -1348,7 +1346,7 @@ msgstr "Укажите счёт куда будет произведено пе�
 
 #: src/transdialog.cpp:689
 msgid "Specify to whom the transaction is going to or coming from "
-msgstr "Выберите к кому или от кого исходит проводка"
+msgstr "Выберите к кому или от кого исходит транзакция"
 
 #: src/transdialog.cpp:708
 #: src/transdialog.cpp:778
@@ -1365,7 +1363,7 @@ msgstr "Определите сумму которая будет перевед
 
 #: src/transdialog.cpp:1255
 msgid "Duplicate Transaction"
-msgstr "Дублировать проводку"
+msgstr "Дублировать транзакцию"
 
 #: src/splitdetailsdialog.cpp:91
 msgid "Split Transaction Details"
@@ -1871,7 +1869,7 @@ msgstr "Редактирование названия существующей �
 
 #: src/categdialog.cpp:164
 msgid "Delete an existing category. The category cannot be used by existing transactions."
-msgstr "Удаление существующей категории. Категория не должна использоваться существующими проводками."
+msgstr "Удаление существующей категории. Категория не должна использоваться существующими транзакциями."
 
 #: src/categdialog.cpp:172
 msgid "Select the currently selected category as the selected category for the transaction"
@@ -1909,16 +1907,14 @@ msgid "Invalid Parent Category. Choose Root or Main Category node."
 msgstr "Неверная родительская категория. Выберите корневой или основной узел."
 
 #: src/categdialog.cpp:239
-#, fuzzy
 msgid ""
 "Tip: Change all transactions using this Category to\n"
 "another Category using the relocate command:"
 msgstr ""
-"Совет: Меняйте плательщика всех проводок на другого,\n"
+"Совет: Меняйте плательщика всех транзакций на другого,\n"
 "используя команду замены:"
 
 #: src/categdialog.cpp:241
-#, fuzzy
 msgid ""
 "Tip: Change all transactions using this Sub-Category to\n"
 "another Sub-Category using the relocate command:"
@@ -2224,7 +2220,7 @@ msgstr "Категорий выгружено: %ld"
 
 #: src/relocatepayeedialog.cpp:77
 msgid "Relocate all source payees to the destination payee"
-msgstr "Заменить выбранного получателя во всех проводках"
+msgstr "Заменить выбранного получателя во всех транзакциях"
 
 #: src/relocatepayeedialog.cpp:80
 msgid "Relocate:"
@@ -2409,11 +2405,11 @@ msgstr "Количество не указанно"
 
 #: src/qif_import.cpp:448
 msgid "Category is empty, marking transaction as Unknown category"
-msgstr "Категория не выбрана, проводка будет отнесена к категории Неопознанные"
+msgstr "Категория не выбрана, транзакция будет отнесена к категории Неопознанные"
 
 #: src/qif_import.cpp:460
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
-msgstr "Пропуск QIF проводки, поскольку дата, тип, сумма отсутствует или некорректны, проводка была пропущена"
+msgstr "Пропуск QIF проводки, поскольку дата, тип, сумма отсутствует или некорректны, транзакция была пропущена"
 
 #: src/qif_import.cpp:461
 msgid " payee "
@@ -2457,7 +2453,7 @@ msgstr "Фильтр проводок"
 #: src/mmcheckingpanel.cpp:579
 #: src/mmcheckingpanel.cpp:890
 msgid "Displayed Bal: "
-msgstr "Баланс фильтра:"
+msgstr "Баланс фильтра: "
 
 #: src/mmcheckingpanel.cpp:585
 msgid "Account Bal: "
@@ -2477,11 +2473,11 @@ msgstr "Внесение новой проводки"
 
 #: src/mmcheckingpanel.cpp:656
 msgid "Edit selected transaction"
-msgstr "Редактировать выбранную проводку"
+msgstr "Редактировать выбранную транзакцию"
 
 #: src/mmcheckingpanel.cpp:661
 msgid "Delete selected transaction"
-msgstr "Удалить отмеченную проводку"
+msgstr "Удалить отмеченную транзакцию"
 
 #: src/mmcheckingpanel.cpp:671
 msgid "Search"
@@ -2513,7 +2509,7 @@ msgstr "Дезактивируйте: "
 
 #: src/mmcheckingpanel.cpp:1340
 msgid "&New Transaction"
-msgstr "Новая проводка"
+msgstr "Новая транзакция"
 
 #: src/mmcheckingpanel.cpp:1342
 msgid "&Edit Transaction"
@@ -2525,7 +2521,7 @@ msgstr "&Копировать"
 
 #: src/mmcheckingpanel.cpp:1346
 msgid "&Duplicate Transaction"
-msgstr "&Дублировать проводку"
+msgstr "&Дублировать транзакцию"
 
 #: src/mmcheckingpanel.cpp:1348
 msgid "&Move Transaction"
@@ -2611,7 +2607,7 @@ msgstr "Вы действительно хотите удалить все пр�
 
 #: src/mmcheckingpanel.cpp:1735
 msgid "Do you really want to delete the selected transaction?"
-msgstr "Вы действительно хотите удалить выбранную проводку?"
+msgstr "Вы действительно хотите удалить выбранную транзакцию?"
 
 #: src/mmcheckingpanel.cpp:1826
 msgid "Moving Transaction from "
@@ -2628,7 +2624,7 @@ msgstr "Прогноз денежного потока на %d лет"
 
 #: src/reportcashflow.cpp:37
 msgid "Accounts: "
-msgstr "Счета:"
+msgstr "Счета: "
 
 #: src/reportcashflow.cpp:41
 msgid "All Accounts"
@@ -4062,7 +4058,7 @@ msgstr "Используя MMEX можно отслеживать инвести
 
 #: src/util.cpp:755
 msgid "MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "
-msgstr "MMEX позволяет планировать регулярные платежи. В день начисления можно преобразовать запись из планировщика в обычную проводку. Напоминания за 14 дней до наступления платежа можно увидеть на главной странице."
+msgstr "MMEX позволяет планировать регулярные платежи. В день начисления можно преобразовать запись из планировщика в обычную транзакцию. Напоминания за 14 дней до наступления платежа можно увидеть на главной странице."
 
 #: src/util.cpp:756
 msgid "Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."
@@ -4090,11 +4086,11 @@ msgstr "Заметка: Файл базы данных .mmb не зашифро�
 
 #: src/util.cpp:768
 msgid "Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."
-msgstr "Подсказка: Чтобы отметить проводку как проверенную, просто выделить её и нажать клавишу 'R'. Снять пометку можно нажатием клавиши 'U'."
+msgstr "Подсказка: Чтобы отметить транзакцию как проверенную, просто выделить её и нажать клавишу 'R'. Снять пометку можно нажатием клавиши 'U'."
 
 #: src/util.cpp:769
 msgid "Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."
-msgstr "Подсказка: Чтобы отметить проводку требующую проработки, просто выделить её и нажать клавишу 'F'."
+msgstr "Подсказка: Чтобы отметить транзакцию требующую проработки, просто выделить её и нажать клавишу 'F'."
 
 #: src/util.cpp:770
 msgid "Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."
@@ -4106,7 +4102,7 @@ msgstr "Подсказка: Вы можете изменить поведени�
 
 #: src/util.cpp:772
 msgid "Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."
-msgstr "Подсказка: Чтобы распечатать сводку по проводкам исходя из определённых критериев, используйте фильтр проводок,а затем выполните печать из основного меню."
+msgstr "Подсказка: Чтобы распечатать сводку по транзакциям исходя из определённых критериев, используйте фильтр проводок,а затем выполните печать из основного меню."
 
 #: src/util.cpp:773
 msgid "Tip: Set exchange rate for currencies in case if you have accounts with different currencies."
@@ -4589,7 +4585,7 @@ msgstr "Отображение проводок"
 
 #: src/optionsdialog.cpp:354
 msgid "Specify which transactions are visible by default"
-msgstr "Укажите какие проводки должны показываться по умолчанию"
+msgstr "Укажите какие транзакции должны показываться по умолчанию"
 
 #: src/optionsdialog.cpp:356
 msgid "Report Font Size"
@@ -4740,7 +4736,7 @@ msgstr "Выберите цвет деталей списка"
 #: src/optionsdialog.cpp:508
 #: src/optionsdialog.cpp:512
 msgid "Future Transactions"
-msgstr "Предстоящие проводки"
+msgstr "Предстоящие транзакции"
 
 #: src/optionsdialog.cpp:509
 msgid "Specify the color for future transactions"
@@ -4796,11 +4792,11 @@ msgstr "При копировании дату не менять"
 
 #: src/optionsdialog.cpp:602
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr "Отметьте, использовать ли первоначальную или текущую дату проводки при копировании или вставке"
+msgstr "Отметьте, использовать ли первоначальную или текущую дату транзакции при копировании или вставке"
 
 #: src/optionsdialog.cpp:605
 msgid "Use Transaction Sound"
-msgstr "Озвучивать проводки"
+msgstr "Озвучивать транзакции"
 
 #: src/optionsdialog.cpp:607
 msgid "Select whether to use sounds when entering transactions"
@@ -4852,11 +4848,11 @@ msgstr "Редактор бюджета"
 
 #: src/transdialog.h:24
 msgid "New/Edit Transaction"
-msgstr "Редактор проводки"
+msgstr "Редактор транзакции"
 
 #: src/billsdepositsdialog.h:24
 msgid "New/Edit Repeating Transaction"
-msgstr "Редактор запланированной проводки"
+msgstr "Редактор запланированной транзакции"
 
 #: src/relocatecategorydialog.h:24
 msgid "Relocate Category Dialog"
@@ -4872,7 +4868,7 @@ msgstr "Показать выверенные"
 
 #: src/constants.h:55
 msgid "View Not-Reconciled"
-msgstr "Показать кроме не выверенных"
+msgstr "Показать кроме выверенных"
 
 #: src/constants.h:56
 msgid "View UnReconciled"
@@ -4980,7 +4976,7 @@ msgstr "Детали чека"
 
 #: src/splittransactionsdialog.h:44
 msgid "Split Transaction Dialog"
-msgstr "Составные проводки"
+msgstr "Составные транзакции"
 
 #: src/customreportdialog.h:26
 msgid "Custom SQL Reports Manager"
@@ -5009,7 +5005,7 @@ msgstr "Просмотр файла"
 #~ msgstr "О&чистить"
 
 #~ msgid "Tip: Change all transactions using this "
-#~ msgstr "Совет: Измените все проводки используя "
+#~ msgstr "Совет: Измените все транзакции используя "
 
 #~ msgid "Sub-Category"
 #~ msgstr "Подкатегория"
@@ -5149,40 +5145,40 @@ msgstr "Просмотр файла"
 #~ msgstr "Обращение к Базе данных"
 
 #~ msgid "View Reconciled Transactions"
-#~ msgstr "Показать выверенные проводки"
+#~ msgstr "Показать выверенные транзакции"
 
 #~ msgid "View Un-Reconciled Transactions"
-#~ msgstr "Показать не выверенные проводки"
+#~ msgstr "Показать не выверенные транзакции"
 
 #~ msgid "View All Except Reconciled Transactions"
-#~ msgstr "Показать все проводки, кроме выверенных"
+#~ msgstr "Показать все транзакции, кроме выверенных"
 
 #~ msgid "View Void Transactions"
-#~ msgstr "Показать неучтённые проводки"
+#~ msgstr "Показать неучтённые транзакции"
 
 #~ msgid "View \"Follow Up\" Transactions"
-#~ msgstr "Показать все проводки с лампочкой"
+#~ msgstr "Показать все транзакции с лампочкой"
 
 #~ msgid "View Duplicate Transactions"
-#~ msgstr "Показать повторяющиеся проводки"
+#~ msgstr "Показать повторяющиеся транзакции"
 
 #~ msgid "View Transactions for today"
-#~ msgstr "Показать проводки за сегодня"
+#~ msgstr "Показать транзакции за сегодня"
 
 #~ msgid "View Transactions for current month"
-#~ msgstr "Показать проводки за текущий месяц"
+#~ msgstr "Показать транзакции за текущий месяц"
 
 #~ msgid "View Transactions for last 30 days"
-#~ msgstr "Показать проводки за последние 30 дней"
+#~ msgstr "Показать транзакции за последние 30 дней"
 
 #~ msgid "View Transactions for last 90 days"
-#~ msgstr "Показать проводки за последние 90 дней"
+#~ msgstr "Показать транзакции за последние 90 дней"
 
 #~ msgid "View Transactions for last month"
-#~ msgstr "Показать проводки за предыдущий месяц"
+#~ msgstr "Показать транзакции за предыдущий месяц"
 
 #~ msgid "View Transactions for last 3 months"
-#~ msgstr "Показать проводки за последние 3 месяца"
+#~ msgstr "Показать транзакции за последние 3 месяца"
 
 #~ msgid "Viewing all transactions"
 #~ msgstr "Просмотр всех проводок"
@@ -5299,7 +5295,7 @@ msgstr "Просмотр файла"
 #~ msgstr "Выберите инвестиционный счёт"
 
 #~ msgid "Transaction Number"
-#~ msgstr "Проводка №"
+#~ msgstr "Tранзакция №"
 
 #~ msgid "Account  :"
 #~ msgstr "Счёт :"
@@ -5370,10 +5366,10 @@ msgstr "Просмотр файла"
 #~ msgstr "Настройки"
 
 #~ msgid "Delete all \"Follow Up\" transactions"
-#~ msgstr "Удалить все проводки с лампочкой"
+#~ msgstr "Удалить все транзакции с лампочкой"
 
 #~ msgid "Viewing All Transactions"
-#~ msgstr "Просмотр всех проводок"
+#~ msgstr "Просмотр всех транзакций"
 
 #, fuzzy
 #~ msgid ""
@@ -5479,7 +5475,7 @@ msgstr "Просмотр файла"
 
 #, fuzzy
 #~ msgid "Update Transaction With Status. Error: %s"
-#~ msgstr "Статистика проводок за "
+#~ msgstr "Статистика транзакций за "
 
 #, fuzzy
 #~ msgid "Add Budget Year. Error: %s"
@@ -5540,7 +5536,7 @@ msgstr "Просмотр файла"
 #~ msgstr "&Удалить бюджетный год"
 
 #~ msgid "Viewing Flagged transactions"
-#~ msgstr "Просмотр отмеченных проводок"
+#~ msgstr "Просмотр отмеченных транзакций"
 
 #~ msgid "To Whom the Money Goes"
 #~ msgstr "Плательщики"
@@ -5582,7 +5578,7 @@ msgstr "Просмотр файла"
 #~ msgstr "Выберите счёт для импорта:"
 
 #~ msgid "Transactions imported from CSV"
-#~ msgstr "Проводок импортировано из CSV"
+#~ msgstr "транзакций импортировано из CSV"
 
 #~ msgid " missing date, skipping."
 #~ msgstr " отсутствует дата, пропущено."
@@ -5591,7 +5587,7 @@ msgstr "Просмотр файла"
 #~ msgstr " отсутствует получатель, пропущено."
 
 #~ msgid " missing transaction type, skipping."
-#~ msgstr " отсутствует тип проводки, пропущено."
+#~ msgstr " отсутствует тип транзакции, пропущено."
 
 #~ msgid " missing amount, skipping."
 #~ msgstr " отсутствует сумма, пропущено."
@@ -5606,11 +5602,11 @@ msgstr "Просмотр файла"
 #~ "one of the following fields: date, payee, transaction type, amount "
 #~ "strings is empty, skipping"
 #~ msgstr ""
-#~ "одно из следующих полей: дата, получатель, тип проводки, количество строк "
+#~ "одно из следующих полей: дата, получатель, тип транзакции, количество строк "
 #~ "не заполнено, пропущено"
 
 #~ msgid " unrecognized transaction type, skipping."
-#~ msgstr " неопознанный тип проводки, пропущено."
+#~ msgstr " неопознанный тип транзакции, пропущено."
 
 #~ msgid ""
 #~ "Please verify that the CSV file from MMEX.NET contains only one account!"
@@ -5684,7 +5680,7 @@ msgstr "Просмотр файла"
 #~ msgstr "&Добавить"
 
 #~ msgid "Transaction Type"
-#~ msgstr "Тип проводки"
+#~ msgstr "Тип транзакции"
 
 #~ msgid "Amount to be recorded in To Account"
 #~ msgstr "Сумма, которая попадет на счёт-получатель"
@@ -5737,7 +5733,7 @@ msgstr "Просмотр файла"
 #~ msgstr "Укажите заметки"
 
 #~ msgid "Top Transactions Last 30 Days"
-#~ msgstr "Самые значимые проводки за 30 дней"
+#~ msgstr "Самые значимые транзакции за 30 дней"
 
 #~ msgid " cannot process Account Types yet "
 #~ msgstr " обработка типов счетов пока не поддерживается"
@@ -5746,7 +5742,7 @@ msgstr "Просмотр файла"
 #~ msgstr "Процентов в год: "
 
 #~ msgid "Filter Transactions"
-#~ msgstr "Фильтр проводок"
+#~ msgstr "Фильтр транзакций"
 
 #~ msgid "Please use the stock link on the Navigation Tree"
 #~ msgstr "Пожалуйста, используйте ссылку на биржу в панели навигации"
@@ -5852,7 +5848,7 @@ msgstr "Просмотр файла"
 #~ "Всего импортировано : %d\n"
 #~ "Лог-файл : %s.\n"
 #~ "\n"
-#~ "Импортированные проводки отмечены как требующие уточнения."
+#~ "Импортированные транзакции отмечены как требующие уточнения."
 
 #~ msgid ""
 #~ "Total Lines : %d \n"
@@ -5866,7 +5862,7 @@ msgstr "Просмотр файла"
 #~ "Всего импортировано : %d\n"
 #~ "Лог-файл : %s.\n"
 #~ "\n"
-#~ "Импортированные проводки отмечены как требующие уточнения."
+#~ "Импортированные транзакции отмечены как требующие уточнения."
 
 #, fuzzy
 #~ msgid "New Custom SQL report: Stage 1:"
@@ -5933,10 +5929,10 @@ msgstr "Просмотр файла"
 #~ msgstr "Процент изменения стоимости"
 
 #~ msgid "Specify advanced settings for transaction"
-#~ msgstr "Укажите дополнительные параметры проводки"
+#~ msgstr "Укажите дополнительные параметры транзакции"
 
 #~ msgid "Edit Transaction"
-#~ msgstr "Редактирование проводки"
+#~ msgstr "Редактирование транзакции"
 
 #~ msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle), Boost C++"
 #~ msgstr ""
