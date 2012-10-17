@@ -1758,7 +1758,7 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
     {
-        mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(),
+        mmTransDialog dlg(m_cp->core_, m_cp->accountID(),
            m_cp->m_trans[m_selectedIndex], true, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
@@ -1771,7 +1771,7 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 
 void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), NULL, false, this);
+    mmTransDialog dlg(m_cp->core_, m_cp->accountID(), NULL, false, this);
 
     if ( dlg.ShowModal() == wxID_OK )
     {
@@ -1786,7 +1786,7 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
     if (m_selectedIndex < 0) return;
 
     wxDateTime transTime = m_cp->m_trans[m_selectedIndex]->date_;
-    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(),
+    mmTransDialog dlg(m_cp->core_, m_cp->accountID(),
         m_cp->m_trans[m_selectedIndex], true, this);
 
     dlg.SetDialogToDuplicateTransaction();
@@ -1877,7 +1877,7 @@ void TransactionListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     if (m_selectedIndex == -1) return;
 
     int transID = m_cp->m_trans[m_selectedIndex]->transactionID();
-    mmTransDialog dlg(m_cp->getDb(), m_cp->core_,  m_cp->accountID(),
+    mmTransDialog dlg(m_cp->core_,  m_cp->accountID(),
         m_cp->m_trans[m_selectedIndex], true, this);
     if ( dlg.ShowModal() == wxID_OK )
     {

@@ -41,8 +41,7 @@ class mmTransDialog : public wxDialog
 public:
     mmTransDialog() {}
 
-    mmTransDialog(boost::shared_ptr<wxSQLite3Database> db,
-        mmCoreDB* core,
+    mmTransDialog( mmCoreDB* core,
         int accountID, mmBankTransaction* pBankTransaction,
         bool edit,
         wxWindow* parent,
@@ -58,8 +57,21 @@ public:
         const wxSize& size = SYMBOL_TRANSDIALOG_SIZE,
         long style = SYMBOL_TRANSDIALOG_STYLE );
 
-    void CreateControls();
+    void SetDialogToDuplicateTransaction();
+    int transID_;
 
+private:
+
+    mmCoreDB* core_;
+    mmBankTransaction* pBankTransaction_;
+    wxWindow* parent_;
+    int accountID_;
+    int referenceAccountID_;    // used for transfer transactions
+
+    void CreateControls();
+    bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
+    void addPayee(wxString payee, int categID, int subcategID );
+    void OnSplitChecked(wxCommandEvent& event);
     void OnOk(wxCommandEvent& event);
     void OnCancel(wxCommandEvent& event);
     void OnQuit(wxCloseEvent& event);
@@ -72,9 +84,6 @@ public:
     void dataToControls();
     void updateControlsForTransType();
     void displayControlsToolTips(int transType/*, bool enableAdvanced = false*/);
-    bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
-    void addPayee(wxString payee, int categID, int subcategID );
-    void OnSplitChecked(wxCommandEvent& event);
     void changeFocus(wxChildFocusEvent& event);
     void onTextEntered(wxCommandEvent& event);
     void onChoiceTransChar(wxKeyEvent& event);
@@ -82,17 +91,12 @@ public:
     void OnButtonPayeeChar(wxKeyEvent& event);
     void OnButtonPayeeMouse(wxMouseEvent& event);
     void OnButtonDateChar(wxKeyEvent& event);
+    void OnAdvanceChecked(wxCommandEvent& event);
+    void SetTransferControls(bool transfers = false);
+    void SetAdvancedTransferControls(bool advanced = false);
+    void activateSplitTransactionsDlg();
+    void SetSplitState();
 
-    void SetDialogToDuplicateTransaction();
-    int transID_;
-
-private:
-    boost::shared_ptr<wxSQLite3Database> db_;
-    mmCoreDB* core_;
-    mmBankTransaction* pBankTransaction_;
-    wxWindow* parent_;
-    int accountID_;
-    int referenceAccountID_;    // used for transfer transactions
     wxTextCtrl *textNumber_;
     wxTextCtrl *textAmount_;
     wxTextCtrl *toTextAmount_;
@@ -139,12 +143,6 @@ private:
 
     wxString resetPayeeString(/*bool normal = true*/);
     wxString resetCategoryString();
-    void OnAdvanceChecked(wxCommandEvent& event);
-    void SetTransferControls(bool transfers = false);
-    void SetAdvancedTransferControls(bool advanced = false);
-
-    void activateSplitTransactionsDlg();
-    void SetSplitState();
 };
 
 #endif

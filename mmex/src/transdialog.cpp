@@ -52,14 +52,12 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog(
-    boost::shared_ptr<wxSQLite3Database> db,
     mmCoreDB* core,
     int accountID, mmBankTransaction* pBankTransaction, bool edit,
     wxWindow* parent, wxWindowID id,
     const wxString& caption, const wxPoint& pos,
     const wxSize& size, long style
 ) :
-    db_(db),
     core_(core),
     parent_(parent),
     pBankTransaction_(pBankTransaction),
@@ -106,7 +104,7 @@ void mmTransDialog::dataToControls()
 {
     wxString dateString = pBankTransaction_->dateStr_;
     wxDateTime trx_date = pBankTransaction_->date_;
-    wxString dt = mmGetDateForDisplay(db_.get(), trx_date);
+    wxString dt = mmGetDateForDisplay(core_->db_.get(), trx_date);
     dpc_->SetValue(trx_date);
     //process date change event for set weekday name
     wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), trx_date, wxEVT_DATE_CHANGED);
@@ -775,7 +773,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         boost::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
         pPayee->categoryId_ = categID_;
         pPayee->subcategoryId_ = subcategID_;
-        pPayee->UpdateDb(db_.get());
+        pPayee->UpdateDb(core_->db_.get());
 
         if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
         {
