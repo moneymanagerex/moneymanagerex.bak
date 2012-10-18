@@ -41,10 +41,6 @@ private:
     void OnVersionHistory(wxCommandEvent& event);
     void OnContributerList(wxCommandEvent& event);
 
-    wxNotebookPage *developers_tab_;
-    wxNotebookPage *translators_tab_;
-    wxNotebookPage *artwork_tab_;
-    wxNotebookPage *sponsors_tab_;
 };
 
 #endif // _MM_EX_ABOUTDIALOG_H_

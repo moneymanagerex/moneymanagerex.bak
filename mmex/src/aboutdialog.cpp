@@ -122,49 +122,49 @@ void mmAboutDialog::CreateControls()
     //Create tabs
     wxNotebook* about_notebook = new wxNotebook(this,
         wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
-    developers_tab_ = new wxNotebookPage(about_notebook, wxID_ANY);
-    about_notebook->AddPage(developers_tab_, _("Developers"));
+    wxPanel* developers_tab = new wxPanel(about_notebook, wxID_ANY);
+    about_notebook->AddPage(developers_tab, _("Developers"));
     wxBoxSizer *developers_sizer = new wxBoxSizer(wxVERTICAL);
-    developers_tab_->SetSizer(developers_sizer);
+    developers_tab->SetSizer(developers_sizer);
 
-    translators_tab_ = new wxNotebookPage(about_notebook, wxID_ANY);
-    about_notebook->AddPage(translators_tab_, _("Translators"));
+    wxPanel* translators_tab = new wxPanel(about_notebook, wxID_ANY);
+    about_notebook->AddPage(translators_tab, _("Translators"));
     wxBoxSizer *translators_sizer = new wxBoxSizer(wxVERTICAL);
-    translators_tab_->SetSizer(translators_sizer);
+    translators_tab->SetSizer(translators_sizer);
 
-    artwork_tab_ = new wxNotebookPage(about_notebook, wxID_ANY);
-    about_notebook->AddPage(artwork_tab_, _("Artwork"));
+    wxPanel* artwork_tab = new wxPanel(about_notebook, wxID_ANY);
+    about_notebook->AddPage(artwork_tab, _("Artwork"));
     wxBoxSizer *artwork_sizer = new wxBoxSizer(wxVERTICAL);
-    artwork_tab_->SetSizer(artwork_sizer);
+    artwork_tab->SetSizer(artwork_sizer);
 
-    sponsors_tab_ = new wxNotebookPage(about_notebook, wxID_ANY);
-    about_notebook->AddPage(sponsors_tab_, _("Sponsors"));
+    wxPanel* sponsors_tab = new wxPanel(about_notebook, wxID_ANY);
+    about_notebook->AddPage(sponsors_tab, _("Sponsors"));
     wxBoxSizer *sponsors_sizer = new wxBoxSizer(wxVERTICAL);
-    sponsors_tab_->SetSizer(sponsors_sizer);
+    sponsors_tab->SetSizer(sponsors_sizer);
 
-    wxSize internal_size = wxSize(450, 200); //developers_tab_->GetBestVirtualSize();
+    wxSize internal_size = wxSize(400, 200); //developers_tab_->GetBestVirtualSize();
 
-    wxTextCtrl* developers_text = new wxTextCtrl( developers_tab_,
+    wxTextCtrl* developers_text = new wxTextCtrl( developers_tab,
         wxID_STATIC, data[0], wxDefaultPosition, internal_size, wxTE_MULTILINE );
     developers_text->SetEditable(false);
     developers_sizer->Add(developers_text, 1, wxEXPAND);
 
     if (data.GetCount() > 1) {
-        wxTextCtrl* translators_text = new wxTextCtrl( translators_tab_,
+        wxTextCtrl* translators_text = new wxTextCtrl( translators_tab,
             wxID_STATIC, data[1], wxDefaultPosition, internal_size, wxTE_MULTILINE );
         translators_text->SetEditable(false);
         translators_sizer->Add(translators_text, 1, wxEXPAND);
     }
 
     if (data.GetCount() > 2) {
-        wxTextCtrl* artwork_text = new wxTextCtrl( artwork_tab_,
+        wxTextCtrl* artwork_text = new wxTextCtrl( artwork_tab,
             wxID_STATIC, data[2], wxDefaultPosition, internal_size, wxTE_MULTILINE );
         artwork_text->SetEditable(false);
         artwork_sizer->Add(artwork_text, 1, wxEXPAND);
     }
 
     if (data.GetCount() > 3) {
-        wxTextCtrl* sponsors_text = new wxTextCtrl( sponsors_tab_,
+        wxTextCtrl* sponsors_text = new wxTextCtrl( sponsors_tab,
             wxID_STATIC, data[3], wxDefaultPosition, internal_size, wxTE_MULTILINE );
         sponsors_text->SetEditable(false);
         sponsors_sizer->Add(sponsors_text, 1, wxEXPAND);
