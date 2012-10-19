@@ -236,7 +236,10 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
         // currencies.Add(wxT("EURO;€;;.;,;euro;cent;100;1;EUR"));
 	    // Euro symbol € incorrectly displayed in windows. Correct when using \u20ac equivalent.
         // MS-VC++ 2010: Ignore warning C4428: universal-character-name encountered in source
+#pragma warning( push )
+#pragma warning( disable : 4428 )
         currencies.Add(wxT("EURO;\u20ac;;.;,;euro;cent;100;1;EUR"));
+#pragma warning( pop )
         wxString fileName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
         wxASSERT(wxFileName::FileExists(fileName));
 

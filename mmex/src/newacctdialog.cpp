@@ -436,7 +436,7 @@ void mmNewAcctDialog::OnCustonImage(wxCommandEvent& event)
 void mmNewAcctDialog::changeFocus(wxChildFocusEvent& event)
 {
     wxWindow *w = event.GetWindow();
-    int oject_in_focus;
+    int oject_in_focus = 0;
     if ( w )
         oject_in_focus = w->GetId();
     if (oject_in_focus == ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO)
