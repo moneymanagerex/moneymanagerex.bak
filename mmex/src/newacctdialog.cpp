@@ -412,9 +412,12 @@ void mmNewAcctDialog::OnImageButton(wxCommandEvent& /*event*/)
     wxMenu* mainMenu = new wxMenu;
     mainMenu->Append(new wxMenuItem(mainMenu, 0, wxT("-=======-")));
 
-    for (int i = k; i < navtree_images_list_()->GetImageCount(); ++i) {
+    wxImageList* imageList = navtree_images_list_();
+
+    for (int i = k; i < imageList->GetImageCount(); ++i)
+    {
         wxMenuItem* menuItem = new wxMenuItem(mainMenu, i, wxString(_("Image #")) << i - k +1);
-        menuItem->SetBitmap(navtree_images_list_()->GetBitmap(i));
+        menuItem->SetBitmap(imageList->GetBitmap(i));
         mainMenu->Append(menuItem);        
     }
     //TODO: Provide wxMenu with pictures or spin buttons
