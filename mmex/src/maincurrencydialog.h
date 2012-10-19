@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -47,7 +47,7 @@
 #endif
 
 class mmMainCurrencyDialog: public wxDialog
-{    
+{
     DECLARE_DYNAMIC_CLASS( mmMainCurrencyDialog )
     DECLARE_EVENT_TABLE()
 
@@ -55,20 +55,20 @@ public:
     /// Constructors
     mmMainCurrencyDialog( ) {}
 
-    mmMainCurrencyDialog( mmCoreDB* core, wxWindow* parent, 
-        bool bEnableSelect = true, 
-        wxWindowID id = SYMBOL_MAINCURRENCYDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_MAINCURRENCYDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_MAINCURRENCYDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_MAINCURRENCYDIALOG_SIZE, 
+    mmMainCurrencyDialog( mmCoreDB* core, wxWindow* parent,
+        bool bEnableSelect = true,
+        wxWindowID id = SYMBOL_MAINCURRENCYDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_MAINCURRENCYDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_MAINCURRENCYDIALOG_POSITION,
+        const wxSize& size = SYMBOL_MAINCURRENCYDIALOG_SIZE,
         long style = SYMBOL_MAINCURRENCYDIALOG_STYLE );
 
     /// Creation
-    bool Create( wxWindow* parent, 
-        wxWindowID id = SYMBOL_MAINCURRENCYDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_MAINCURRENCYDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_MAINCURRENCYDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_MAINCURRENCYDIALOG_SIZE, 
+    bool Create( wxWindow* parent,
+        wxWindowID id = SYMBOL_MAINCURRENCYDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_MAINCURRENCYDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_MAINCURRENCYDIALOG_POSITION,
+        const wxSize& size = SYMBOL_MAINCURRENCYDIALOG_SIZE,
         long style = SYMBOL_MAINCURRENCYDIALOG_STYLE );
 
     /// Creates the controls and sizers
@@ -77,10 +77,12 @@ public:
     void OnBtnEdit(wxCommandEvent& event);
     void OnBtnSelect(wxCommandEvent& event);
     void OnBtnDelete(wxCommandEvent& event);
-    void OnlistBoxSelection(wxCommandEvent& event);
-    void OnlistBoxDoubleClicked(wxCommandEvent& event);
+    void OnListItemActivated(wxListEvent& event);
+    void OnListItemDeselected(wxListEvent& event);
+    void OnListItemSelected(wxListEvent& event);
     void fillControls();
-    
+    double selectedIndex_;
+
     wxBitmap GetBitmapResource( const wxString& name );
 
     wxIcon GetIconResource( const wxString& name );
@@ -88,11 +90,11 @@ public:
 
     int currencyID_;
     static bool Execute(mmCoreDB* core, wxWindow* parent, int& currencyID);
-    
+
 private:
     wxSQLite3Database* db_;
     mmCoreDB* core_;
-    wxListBox* currencyListBox_;
+    wxListCtrl* currencyListBox_;
     bool bEnableSelect_;
 
     wxButton* itemButtonEdit_;
