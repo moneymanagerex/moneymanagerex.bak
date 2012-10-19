@@ -1,12 +1,16 @@
 Version History of Money Manager Ex
 
-0.9.9.1 (July, 2012) Bug Fix Release Only
+0.9.9.2 (TBA) Bug Fix Release Only
 - Crash using Transaction Report using Vista / USB
 - Crash using Cash Flow Report when a Repeating Transaction
-  becomes inactive using frequency of: in/every x days/months    
+  becomes inactive using frequency of: in/every x days/months
 - Fix quartly budget estimate calculation.
 - Fix help info by including a status bar.
+- Improved Navigation panel Account switching to fix:
+  - Transaction Filter memory between accounts
+  - Copy/Paste accross accounts.
 - Remove progress bar from Checking panel as too fast to be useful.
+- Updated icons
 
 0.9.9.0 (May 1, 2012)
 - Externals updated to wxSQLite3 V: 3.0.0 (sqlite3 V: 3.7.10.0)
