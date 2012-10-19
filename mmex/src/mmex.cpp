@@ -3537,8 +3537,8 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     for (int idx = 0; idx < (int)m_core->currencyList_.currencies_.size(); idx++)
     {
         const wxString symbol = m_core->currencyList_.currencies_[idx]->currencySymbol_.Upper();
-        if (symbol != base_symbol)
-            site << symbol << base_symbol << wxT("=X+");
+
+		site << symbol << base_symbol << wxT("=X+");
     }
     if (site.Right(1).Contains(wxT("+"))) site.RemoveLast(1);
     site = wxString::Format(wxT("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv"), site.c_str());
@@ -3587,7 +3587,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     for (int idx = 0; idx < (int)m_core->currencyList_.currencies_.size(); idx++)
     {
         const wxString currency_symbol = m_core->currencyList_.currencies_[idx]->currencySymbol_.Upper();
-        if (!currency_symbol.IsEmpty() && base_symbol != currency_symbol)
+        if (!currency_symbol.IsEmpty())
         {
             wxString currency_symbols_pair = currency_symbol + base_symbol + wxT("=X");
             std::pair<double, wxString> data = currency_data[currency_symbols_pair];
