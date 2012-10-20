@@ -107,7 +107,6 @@ void mmPayeeDialog::CreateControls()
 
     textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString());
     itemBoxSizer2->Add(textCtrl, flagsExpand);
-    textCtrl->SetToolTip(_("Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."));
     textCtrl->SetFocus();
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
@@ -115,17 +114,14 @@ void mmPayeeDialog::CreateControls()
 
     addButton = new wxButton( this, wxID_ADD);
     itemBoxSizer5->Add(addButton, flags.Border(1));
-    addButton->SetToolTip(_("Add a new payee name"));
 	addButton->Disable();
 
     editButton = new wxButton( this, wxID_EDIT);
     itemBoxSizer5->Add(editButton, flags);
-    editButton->SetToolTip(_("Change the name of an existing payee"));
     editButton->Disable();
 	
     deleteButton = new wxButton( this, wxID_REMOVE);
     itemBoxSizer5->Add(deleteButton, flags);
-    deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
 	deleteButton->Disable();
 	
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
@@ -133,12 +129,17 @@ void mmPayeeDialog::CreateControls()
 
     selectButton = new wxButton( this, wxID_OK, _("&Select"));
     itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    selectButton->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
     selectButton->Disable();
     
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
     itemBoxSizer9->Add(itemCancelButton,  flags);
+
+    textCtrl->SetToolTip(_("Enter a search string.  You can use * as a wildcard to match zero or more characters or ? to match a single character."));
+    addButton->SetToolTip(_("Add a new payee name"));
+    editButton->SetToolTip(_("Change the name of an existing payee"));
+    deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
+    selectButton->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
 }
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
