@@ -217,7 +217,7 @@ msgstr "Редактор получателей: Ошибка удаления"
 #: src/payeedialog.cpp:273
 #, c-format
 msgid "Enter a new name for %s"
-msgstr "Введите название актива для %s"
+msgstr "Введите новое имя для %s"
 
 #: src/payeedialog.cpp:274
 msgid "Edit Payee Name"
@@ -4118,7 +4118,7 @@ msgstr "Совет: В менеджере категорий нажимая по
 
 #: src/util.cpp:777
 msgid "Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."
-msgstr "Совет: В менеджере получателей используйте % для поиска. Этот знак заменяет любые символы. Например, %Я это и Я и семьЯ."
+msgstr "Совет: В менеджере получателей используйте * для поиска. Этот знак заменяет любые символы. Например, *Я это и Я и семьЯ."
 
 #: src/util.cpp:779
 #, fuzzy, c-format
