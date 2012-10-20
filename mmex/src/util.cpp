@@ -1000,6 +1000,7 @@ wxImageList* navtree_images_list_()
     imageList_->Add(wxBitmap(wxImage(work_xpm).Scale(16, 16)));
     imageList_->Add(wxBitmap(wxImage(yandex_money_xpm).Scale(16, 16)));
     imageList_->Add(wxBitmap(wxImage(web_money_xpm).Scale(16, 16)));
+    imageList_->Add(wxBitmap(wxImage(rubik_cube_xpm).Scale(16, 16)));
 
     return imageList_;
 }
