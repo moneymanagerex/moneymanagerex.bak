@@ -2164,7 +2164,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
            wxString acctType = pAccount->acctType_;
            if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_STOCK || acctType == ACCOUNT_TYPE_TERM)
            {
-              mmNewAcctDialog dlg(m_core.get(), false, data, this);
+              mmNewAcctDialog dlg(m_core.get(), true, data, this);
               if ( dlg.ShowModal() == wxID_OK )
               {
                  createHomePage();
@@ -3886,7 +3886,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
     {
         int choice = scd.GetSelection();
         int acctID = arrAcctID[choice];
-        mmNewAcctDialog dlg(m_core.get(), false, acctID, this);
+        mmNewAcctDialog dlg(m_core.get(), true, acctID, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
             updateNavTreeControl();
