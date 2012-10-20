@@ -2190,8 +2190,8 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
               wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
            if (msgDlg.ShowModal() == wxID_YES)
            {
-              m_core->accountList_.RemoveAccount(pAccount->id_);
               m_core->bTransactionList_.deleteTransactions(pAccount->id_);
+              m_core->accountList_.RemoveAccount(pAccount->id_);
               updateNavTreeControl();
               if (!refreshRequested_)
               {
@@ -3205,7 +3205,7 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& /*event*/)
     if (wizard->acctID_ != -1)
     {
         bool firstTermAccount = !hasActiveTermAccounts();
-        mmNewAcctDialog dlg(m_core.get(), false, wizard->acctID_, this);
+        mmNewAcctDialog dlg(m_core.get(), true, wizard->acctID_, this);
         dlg.ShowModal();
         if (dlg.termAccountActivated() )
         {
