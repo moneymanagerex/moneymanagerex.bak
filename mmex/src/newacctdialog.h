@@ -37,7 +37,7 @@ class mmNewAcctDialog : public wxDialog
 public:
     mmNewAcctDialog();
     mmNewAcctDialog(mmCoreDB* core,
-        bool newAcct,
+        bool edit,
         int acctId,
         wxWindow* parent, wxWindowID id = SYMBOL_NEWCHKGACCTDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_NEWCHKGACCTDIALOG_TITLE, 
@@ -50,7 +50,9 @@ public:
         const wxPoint& pos = SYMBOL_NEWCHKGACCTDIALOG_POSITION, 
         const wxSize& size = SYMBOL_NEWCHKGACCTDIALOG_SIZE, 
         long style = SYMBOL_NEWCHKGACCTDIALOG_STYLE );
+	bool termAccountActivated();
 
+private:
     void CreateControls();
     
     // utility functions
@@ -59,20 +61,22 @@ public:
     void OnCurrency(wxCommandEvent& event);
     void fillControlsWithData(void);
     void OnCustonImage(wxCommandEvent& event);
-    bool termAccountActivated();
+
     wxBitmapButton* bitmaps_button_;
     void OnImageButton(wxCommandEvent& event);
 
-private:
     void changeFocus(wxChildFocusEvent& event);
     mmCoreDB* core_;
     wxTextCtrl *textAccountName_;
-    bool newAcct_;
+    wxTextCtrl *notesCtrl_;
+    bool edit_;
     int accountID_;
     int currencyID_;
     bool termAccount_;
     wxString accessInfo_;
     bool access_changed_;
+    wxString notesLabel_;
+    wxColour notesColour_;
 };
 
 #endif

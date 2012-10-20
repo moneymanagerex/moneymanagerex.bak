@@ -41,12 +41,12 @@ mmNewAcctDialog::mmNewAcctDialog( )
 {
 }
 
-mmNewAcctDialog::mmNewAcctDialog( mmCoreDB* core, bool newAcct, int accountID,
+mmNewAcctDialog::mmNewAcctDialog( mmCoreDB* core, bool edit, int accountID,
                                  wxWindow* parent, wxWindowID id, const wxString& caption,
                                  const wxPoint& pos, const wxSize& size, long style )
 {
     core_ = core;
-    newAcct_ = newAcct;
+    edit_ = edit;
     accountID_ = accountID;
     currencyID_ = -1;
     Create(parent, id, caption, pos, size, style);
@@ -69,7 +69,7 @@ bool mmNewAcctDialog::Create( wxWindow* parent, wxWindowID id,
 
     Centre();
 
-    if (!newAcct_)
+    if (edit_)
     {
         fillControlsWithData();
     }
@@ -79,6 +79,7 @@ bool mmNewAcctDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmNewAcctDialog::fillControlsWithData()
 {
+    this->SetTitle(_("Edit Account"));
     boost::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(accountID_);
     wxASSERT(pAccount);
 
@@ -235,12 +236,23 @@ void mmNewAcctDialog::CreateControls()
     wxCheckBox* itemCheckBox10 = new wxCheckBox( this,
         ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT, _("Favorite Account"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBox10->SetValue(TRUE);
-    grid_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Notes")), flags);
+    grid_sizer->AddSpacer(1);
     grid_sizer->Add(itemCheckBox10, flags);
-    wxTextCtrl* notes_textctrl = new wxTextCtrl(this,
+    
+    //Notes
+    notesLabel_ = _("Notes");
+    notesCtrl_ = new wxTextCtrl(this,
         ID_DIALOG_NEWACCT_TEXTCTRL_NOTES,
         wxT(""), wxDefaultPosition, wxSize(250, 90), wxTE_MULTILINE );
-    itemBoxSizer3->Add(notes_textctrl, flagsExpand);
+    itemBoxSizer3->Add(notesCtrl_, flagsExpand);
+	if (!edit_)
+    {
+        notesColour_ = notesCtrl_->GetForegroundColour();
+        notesCtrl_->SetForegroundColour(wxColour(wxT("GREY")));
+        notesCtrl_->SetValue(notesLabel_);
+        int font_size = notesCtrl_->GetFont().GetPointSize();
+        notesCtrl_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+    }
 
     //Buttons
     wxPanel* itemPanel27 = new wxPanel( this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
@@ -262,7 +274,6 @@ void mmNewAcctDialog::CreateControls()
 
     wxButton* itemButton30 = new wxButton( itemPanel27, wxID_CANCEL);
     itemBoxSizer28->Add(itemButton30, flags);
-    itemButton30->SetFocus();
 
     if (true == true)
     {
@@ -272,7 +283,7 @@ void mmNewAcctDialog::CreateControls()
 	    itemTextCtrl19->SetToolTip(_("Enter the initial balance in this account."));
 	    itemButton71->SetToolTip(_("Specify the currency to be used by this account."));
 	    itemCheckBox10->SetToolTip(_("Select whether this is an account that is used often. This is used to filter accounts display view."));
-	    notes_textctrl->SetToolTip(_("Enter user notes and details about this account."));
+	    notesCtrl_->SetToolTip(_("Enter user notes and details about this account."));
 	    itemTextCtrl6->SetToolTip(_("Enter the Account Number associated with this account."));
 	    itemTextCtrl8->SetToolTip(_("Enter the name of the financial institution in which the account is held."));
 	    itemTextCtrl10->SetToolTip(_("Enter the URL of the website for the financial institution."));
@@ -330,7 +341,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     int acctType = itemAcctType->GetSelection();
 
     boost::shared_ptr<mmAccount> pAccount;
-    if (newAcct_)
+    if (!edit_)
     {
        boost::shared_ptr<mmAccount> tAccount(new mmAccount());
        pAccount = tAccount;
@@ -354,7 +365,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     wxTextCtrl* textCtrlWebsite = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE);
     wxTextCtrl* textCtrlContact = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT);
     wxTextCtrl* textCtrlAccess = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO);
-    wxTextCtrl* textCtrlNotes = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
+
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS);
     int acctStatus = choice->GetSelection();
     pAccount->status_ = mmAccount::MMEX_Open;
@@ -382,7 +393,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
 
     pAccount->name_ = acctName;
     pAccount->accountNum_ = textCtrlAcctNumber->GetValue();
-    pAccount->notes_ = textCtrlNotes->GetValue();
+    pAccount->notes_ = notesCtrl_->GetValue();
     pAccount->heldAt_ = textCtrlHeldAt->GetValue();
     pAccount->website_ = textCtrlWebsite->GetValue();
     pAccount->contactInfo_ = textCtrlContact->GetValue();
@@ -390,14 +401,10 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     if (access_changed_)
         pAccount->accessInfo_ = textCtrlAccess->GetValue();
 
-    if (newAcct_)
-    {
-        core_->accountList_.AddAccount(pAccount);
-    }
-    else
-    {
+    if (edit_)
         core_->accountList_.UpdateAccount(pAccount);
-    }
+    else
+        core_->accountList_.AddAccount(pAccount);
 
     EndModal(wxID_OK);
 }
@@ -447,5 +454,10 @@ void mmNewAcctDialog::changeFocus(wxChildFocusEvent& event)
         wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO);
         textCtrl->SetValue(accessInfo_);
         access_changed_=true;
+    }
+    if (!edit_ && notesCtrl_->GetValue() == notesLabel_)
+    {
+        notesCtrl_->SetValue(wxT(""));
+        notesCtrl_->SetForegroundColour(notesColour_);
     }
 }
