@@ -82,6 +82,7 @@
 #include "../resources/rightarrow.xpm"
 #include "../resources/rt_exec_auto.xpm"
 #include "../resources/rt_exec_user.xpm"
+#include "../resources/rubik_cube.xpm"
 #include "../resources/save.xpm"
 #include "../resources/saveas.xpm"
 #include "../resources/savings_acc_closed.xpm"
@@ -109,7 +110,7 @@
 #include "../resources/work.xpm"
 #include "../resources/yandex_money.xpm"
 
-namespace mmex 
+namespace mmex
 {
 
 extern const int MIN_DATAVERSION;
@@ -249,7 +250,6 @@ enum
     ID_SPLITTERWINDOW,
     ID_LISTCTRL,
     ID_PANEL1,
-    ID_PANEL20,
 
     ID_DIALOG_ABOUT,
     ID_DIALOG_APPSTART,
@@ -292,8 +292,6 @@ enum
     /* Budget Entry */
     ID_DIALOG_BUDGETENTRY_COMBO_FREQTYPE,
     ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT,
-    ID_DIALOG_BUDGETENTRY_BUTTON_OK,
-    ID_DIALOG_BUDGETENTRY_BUTTON_CANCEL,
     ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_EST,
     ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_ACT,
     ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF,
@@ -339,24 +337,14 @@ enum
     ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT,
     ID_DIALOG_BD_CALENDAR,
     ID_DIALOG_BD_REPEAT_DATE_SPINNER,
-    
+
     ID_PANEL_REPORTS_HTMLWINDOW,
     ID_PANEL_REPORTS_HEADER_PANEL,
     ID_PANEL_REPORTS_STATIC_HEADER,
 
     /* Category */
     ID_DIALOG_CATEGORY,
-    ID_DIALOG_CATEG_TEXTCTRL_CATNAME,
     ID_DIALOG_CATEG_TREECTRL_CATS,
-
-    /* Category and Payee Relocation */
-    ID_DIALOG_CATEG_SELECT_BUTTON_SOURCE,
-    ID_DIALOG_CATEG_SELECT_BUTTON_DEST,
-    ID_DIALOG_CATEG_RELOCATE_BUTTON_OK,
-
-    ID_DIALOG_PAYEE_SELECT_BUTTON_SOURCE,
-    ID_DIALOG_PAYEE_SELECT_BUTTON_DEST,
-    ID_DIALOG_PAYEE_RELOCATE_BUTTON_OK,
 
     /* Budget Entry */
     ID_DIALOG_BUDGETENTRY,
