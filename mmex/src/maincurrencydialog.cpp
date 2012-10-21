@@ -18,6 +18,7 @@
 
 #include "maincurrencydialog.h"
 #include "currencydialog.h"
+#include "constants.h"
 #include "util.h"
 #include "defs.h"
 #include "paths.h"
@@ -211,29 +212,38 @@ wxIcon mmMainCurrencyDialog::GetIconResource( const wxString& /*name*/ )
 
 void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
 {
-   wxTextEntryDialog dlg(this, _("Name of Currency to Add"), _("Add Currency"));
-   if ( dlg.ShowModal() == wxID_OK )
-   {
-      wxString currText = dlg.GetValue().Trim();
-      if (!currText.IsEmpty())
-      {
-         int currID = core_->currencyList_.getCurrencyID(currText);
-         if (currID == -1)
-         {
-            boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
-            pCurrency->currencyName_ = currText;
-            core_->currencyList_.AddCurrency(pCurrency);
-            fillControls();
-            currencyID_ = core_->currencyList_.getCurrencyID(currText);
-            mmCurrencyDialog(core_, currencyID_, this).ShowModal();
-         }
-         else
-         {
-            wxMessageBox(_("Attempt to Add a currency which already exists!")
-                ,_("Currency Dialog"), wxOK|wxICON_ERROR);
-         }
-      }
-   }
+	wxArrayString currency_names;
+	wxArrayString currency_symbols;
+	for(size_t i = 0; i < sizeof(CURRENCIES)/sizeof(wxString); ++i)
+	{
+	   currency_symbols.Add(CURRENCIES[i]);
+	   currency_names.Add(CURRENCIES[++i]);
+	}
+	wxString currText = wxGetSingleChoice (_("Name of Currency to Add"), _("Add Currency"), currency_names);
+	if (!currText.IsEmpty())
+	{
+		wxString currency_symbol = currency_symbols[currency_names.Index(currText)];
+		int currID = core_->currencyList_.getCurrencyID(currText);
+		if (currID == -1)
+		{
+			boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
+			pCurrency->currencyName_ = currText;
+			pCurrency->currencySymbol_ = currency_symbol;
+			core_->currencyList_.AddCurrency(pCurrency);
+			currencyID_ = core_->currencyList_.getCurrencyID(currText);
+
+			mmCurrencyDialog* dlg = new mmCurrencyDialog(core_, currencyID_, this);
+			dlg->ShowModal();
+
+		}
+		else
+		{
+			wxMessageBox(_("Attempt to Add a currency which already exists!")
+				,_("Currency Dialog"), wxOK|wxICON_ERROR);
+		}
+	}
+	fillControls();
+
 }
 
 void mmMainCurrencyDialog::OnBtnEdit(wxCommandEvent& /*event*/)
