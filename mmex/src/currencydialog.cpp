@@ -243,7 +243,7 @@ void mmCurrencyDialog::CreateControls()
  
     //--------------------------
     wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer22, flags);
+    itemBoxSizer2->Add(itemBoxSizer22, flags.Centre());
 
     wxButton* itemButton24 = new wxButton( this, ID_DIALOG_CURRENCY_BUTTON_UPDATE, _("&Update"));
     itemBoxSizer22->Add(itemButton24, flags);
