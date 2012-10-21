@@ -397,6 +397,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     pAccount->heldAt_ = textCtrlHeldAt->GetValue();
     pAccount->website_ = textCtrlWebsite->GetValue();
     pAccount->contactInfo_ = textCtrlContact->GetValue();
+    pAccount->currencyID_ = currencyID_;
     pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(currencyID_);
     if (access_changed_)
         pAccount->accessInfo_ = textCtrlAccess->GetValue();
