@@ -77,23 +77,24 @@ public:
         const wxSize& size = SYMBOL_CURRENCYDIALOG_SIZE, 
         long style = SYMBOL_CURRENCYDIALOG_STYLE );
 
+private:
     void CreateControls();
     
     // utility functions
     void OnUpdate(wxCommandEvent& event);
-    void OnCurrencyTypeChanged(wxCommandEvent& event);
-
     void updateControls();
     void fillControls();
 
-private:
     mmCoreDB* core_;
-    wxChoice* currencyChoice_;
+    wxComboBox* currencyNameCombo_;
     wxStaticText* baseRateSample_;
     wxStaticText* sampleText_;
+    wxComboBox* currencySymbolCombo_;
+    
+	int currencyID_;
   
 public:
-    int currencyID_;
+
 };
 
 #endif
