@@ -95,10 +95,12 @@ void mmMainCurrencyDialog::fillControls()
         item.SetData( currencyID );
 
         currencyListBox_->InsertItem( item );
-
+        wxString mnemo_sign = wxT("");
+        if (baseCurrencyID == currencyID) mnemo_sign = wxT("X");
+        else if (core_->accountList_.currencyInUse(currencyID)) mnemo_sign = wxT("..");
         currencyListBox_->SetItem(idx, 0, (*it)->currencySymbol_);
         currencyListBox_->SetItem(idx, 1, (*it)->currencyName_);
-        currencyListBox_->SetItem(idx, 2, baseCurrencyID == currencyID ? wxT("X") : wxT(""));
+        currencyListBox_->SetItem(idx, 2, mnemo_sign);
         currencyListBox_->SetItem(idx, 3, wxString()<<(*it)->baseConv_);
 
     }
@@ -109,12 +111,16 @@ void mmMainCurrencyDialog::fillControls()
 
 void mmMainCurrencyDialog::CreateControls()
 {
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Expand();
+    
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
     wxStaticText* itemStaticText3 = new wxStaticText( this, wxID_STATIC,
        _("Currency List"));
-    itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer2->Add(itemStaticText3, flagsExpand);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
@@ -159,22 +165,19 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel5->SetSizer(itemBoxSizer6);
 
-    wxButton* itemButton7 = new wxButton( itemPanel5, wxID_ADD, _("Add"),
-        wxDefaultPosition, wxDefaultSize, 4 );
-    itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    wxButton* itemButton7 = new wxButton( itemPanel5, wxID_ADD);
+    itemBoxSizer6->Add(itemButton7, flags);
 
-    itemButtonEdit_ = new wxButton( itemPanel5, wxID_EDIT, _("&Edit"),
-        wxDefaultPosition, wxDefaultSize, 4 );
-    itemBoxSizer6->Add(itemButtonEdit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemButtonEdit_ = new wxButton( itemPanel5, wxID_EDIT );
+    itemBoxSizer6->Add(itemButtonEdit_, flags);
     itemButtonEdit_->Disable();
 
-    itemButtonDelete_ = new wxButton( itemPanel5, wxID_REMOVE, _("Remove"),
-        wxDefaultPosition, wxDefaultSize, 4 );
-    itemBoxSizer6->Add(itemButtonDelete_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemButtonDelete_ = new wxButton( itemPanel5, wxID_REMOVE );
+    itemBoxSizer6->Add(itemButtonDelete_, flags);
     itemButtonDelete_->Disable();
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 4);
+    itemBoxSizer2->Add(itemBoxSizer9, flagsExpand);
 
     wxButton* itemButtonSelect = new wxButton( this, wxID_SELECTALL, _("&Select"));
     itemBoxSizer9->Add(itemButtonSelect,  4, wxALIGN_CENTER_VERTICAL|wxALL, 4);
@@ -186,7 +189,7 @@ void mmMainCurrencyDialog::CreateControls()
 
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
-    itemBoxSizer9->Add(itemCancelButton,  0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizer9->Add(itemCancelButton,  flags);
     itemCancelButton->SetFocus();
 }
 
@@ -288,17 +291,17 @@ void mmMainCurrencyDialog::OnListItemDeselected(wxListEvent& /*event*/)
     selectedIndex_ = -1;
     currencyID_ = -1;
     itemButtonEdit_->Enable(false);
-    if (!bEnableSelect_)
-        itemButtonDelete_->Enable(false);
+	itemButtonDelete_->Enable(false);
 }
 
 void mmMainCurrencyDialog::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
     currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
+
     itemButtonEdit_->Enable();
     if (!bEnableSelect_)    // prevent user deleting currencies when editing accounts.
-        itemButtonDelete_->Enable();
+        itemButtonDelete_->Enable(!core_->accountList_.currencyInUse(currencyID_));
 }
 
 void mmMainCurrencyDialog::OnListItemActivated(wxListEvent& event)
