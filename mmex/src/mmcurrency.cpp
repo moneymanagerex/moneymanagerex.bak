@@ -138,7 +138,8 @@ void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     "update CURRENCYFORMATS_V1 "
     "set PFX_SYMBOL=?, SFX_SYMBOL=?, DECIMAL_POINT=?,"
         "GROUP_SEPARATOR=?, UNIT_NAME=?, CENT_NAME=?, "
-        "SCALE=?, BASECONVRATE=?, CURRENCY_SYMBOL=? "
+        "SCALE=?, BASECONVRATE=?, CURRENCY_SYMBOL=?, "
+        "CURRENCYNAME=? "
     "where CURRENCYID = ?";
 
     wxASSERT(pCurrency->currencyID_ > 0);
@@ -156,6 +157,7 @@ void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     st.Bind(++i, r.scaleDl_);
     st.Bind(++i, r.baseConv_);
     st.Bind(++i, r.currencySymbol_);
+    st.Bind(++i, r.currencyName_);
     st.Bind(++i, r.currencyID_);
 
     wxASSERT(st.GetParamCount() == i);
