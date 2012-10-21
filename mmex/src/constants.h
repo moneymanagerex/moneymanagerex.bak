@@ -332,7 +332,7 @@ static const wxString CURRENCIES[] = {
     wxT("VND"),  wxT("Viet Nam Dong"),
     wxT("YER"),  wxT("Yemen Rial"),
     wxT("ZMK"),  wxT("Zambia Kwacha"),
-    wxT("ZWD"),  wxT("Zimbabwe Dollar"),
+    wxT("ZWD"),  wxT("Zimbabwe Dollar")
 
 };
 //----------------------------------------------------------------------------

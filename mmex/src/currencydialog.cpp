@@ -86,6 +86,18 @@ void mmCurrencyDialog::fillControls()
 {
     if (!core_)
        return;
+    
+    if (currencyID_ != -1)
+    {
+        wxString name = core_->currencyList_.getCurrencyName(currencyID_);
+        currencyNameCombo_->Append(name, (void*)(INT_PTR)currencyID_);
+        currencyNameCombo_->SetStringSelection(name);
+    }
+    else
+    {
+       wxASSERT(false);
+       currencyNameCombo_->SetSelection(0);
+    }
 
     updateControls();
 }
