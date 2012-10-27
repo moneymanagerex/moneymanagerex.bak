@@ -11,6 +11,11 @@ Version History of Money Manager Ex
   - Copy/Paste accross accounts.
 - Remove progress bar from Checking panel as too fast to be useful.
 - Updated icons
+- Fixed Search field for Checking accounts
+- Added sort order for Stocks and Assets panels
+- Updated Currency manager
+- Added set of user defined parameters for Transaction Report
+- Added user defined icons for accounts
 
 0.9.9.0 (May 1, 2012)
 - Externals updated to wxSQLite3 V: 3.0.0 (sqlite3 V: 3.7.10.0)
