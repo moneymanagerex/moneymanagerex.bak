@@ -112,7 +112,7 @@ void mmStocksPanel::save_column_width(const int width)
 {
     int i = width;
     int col_x = listCtrlAccount_->GetColumnWidth(i);
-    core_->iniSettings_->GetIntSetting(wxString::Format(wxT("STOCKS_COL%d_WIDTH"), i),col_x);
+    core_->iniSettings_->SetIntSetting(wxString::Format(wxT("STOCKS_COL%d_WIDTH"), i),col_x);
 }
 
 void stocksListCtrl::OnItemResize(wxListEvent& event)
