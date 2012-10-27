@@ -607,15 +607,15 @@ void mmTransDialog::updateControlsForTransType()
             SetAdvancedTransferControls(true);
 
         payee_label_->SetLabel(_("To"));
-	    if (core_->accountList_.getNumBankAccounts() == 2)
-	    {
-	        wxArrayString accName = core_->accountList_.getAccountsName(accountID_);
-	        wxString accNameStr = accName[0];
-	        bPayee_->SetLabel(accNameStr);
-			toID_ = core_->accountList_.GetAccountId(accNameStr);
-	    }
-	    else
-	        bPayee_->SetLabel(_("Select To Account"));
+        if (core_->accountList_.getNumBankAccounts() == 2)
+        {
+            wxArrayString accName = core_->accountList_.getAccountsName(accountID_);
+            wxString accNameStr = accName[0];
+            bPayee_->SetLabel(accNameStr);
+            toID_ = core_->accountList_.GetAccountId(accNameStr);
+        }
+        else
+            bPayee_->SetLabel(_("Select To Account"));
 
         if (!edit_)
         {
@@ -937,8 +937,8 @@ void mmTransDialog::changeFocus(wxChildFocusEvent& event)
     wxWindow *w = event.GetWindow();
     if ( w )
         oject_in_focus_ = w->GetId();
-    
-    if (!edit_ && textNotes_->GetValue() == notesTip_)
+
+    if (!edit_ && textNotes_->GetValue() == notesTip_ && oject_in_focus_ == ID_DIALOG_TRANS_TEXTNOTES)
     {
         textNotes_->SetValue(wxT(""));
         textNotes_->SetForegroundColour(notesColour_);
@@ -988,7 +988,7 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
             return;
         }
     }
-    
+
 
     EndModal(wxID_CANCEL);
 }
@@ -1119,7 +1119,7 @@ void mmTransDialog::OnButtonDateChar(wxKeyEvent& event)
                 date = date.Add(wxDateSpan::Days(i));
             else
                 date = date.Add(wxDateSpan::Months(i));
-    
+
             dpc_->SetValue (date);
             //process date change event for set weekday name
             wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
