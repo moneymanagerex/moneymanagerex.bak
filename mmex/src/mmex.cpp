@@ -493,6 +493,12 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
     custRepIndex_ = new customSQLReportIndex();
 
+    // decide if we need to show app start dialog
+    bool from_scratch = m_inisettings->GetBoolSetting(wxT("SHOWBEGINAPP"), true);
+
+    wxFileName dbpath = mmDBWrapper::getLastDbPath(m_inisettings);
+    if (from_scratch && !dbpath.IsOk()) mmSelectLanguage(this, m_inisettings, true);
+
     /* Create the Controls for the frame */
     createMenu();
     createToolBar();
@@ -528,11 +534,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
             menuItemOnlineUpdateCurRate_->Enable(false);
     }
 
-    // decide if we need to show app start dialog
-    bool from_scratch = m_inisettings->GetBoolSetting(wxT("SHOWBEGINAPP"), true);
-
-    wxFileName dbpath = from_scratch ? wxGetEmptyString() : mmDBWrapper::getLastDbPath(m_inisettings);
-
+    if (from_scratch) dbpath  = wxGetEmptyString();
     if (from_scratch || !dbpath.IsOk()) {
         menuEnableItems(false);
         createHomePage();
