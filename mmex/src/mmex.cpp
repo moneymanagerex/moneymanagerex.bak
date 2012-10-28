@@ -3538,7 +3538,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     {
         const wxString symbol = m_core->currencyList_.currencies_[idx]->currencySymbol_.Upper();
 
-		site << symbol << base_symbol << wxT("=X+");
+        site << symbol << base_symbol << wxT("=X+");
     }
     if (site.Right(1).Contains(wxT("+"))) site.RemoveLast(1);
     site = wxString::Format(wxT("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv"), site.c_str());
@@ -3742,7 +3742,7 @@ void mmGUIFrame::showBeginAppDialog(bool fromScratch)
     }
     else if (end_mod == wxID_NEW)
     {
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_OPEN);
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_NEW);
         AddPendingEvent(evt);
     }
 }
