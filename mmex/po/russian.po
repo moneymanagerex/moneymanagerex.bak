@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-07 12:49+0300\n"
-"PO-Revision-Date: 2012-10-17 10:38+0300\n"
+"PO-Revision-Date: 2012-10-28 15:30+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -761,7 +761,7 @@ msgstr ""
 
 #: src/maincurrencydialog.cpp:251
 msgid "Do you really want to delete the selected Currency?"
-msgstr "Вы действительно хотите удалить выбранную транзакцию?"
+msgstr "Вы действительно хотите удалить выбранную валюту?"
 
 #: src/mmcategory.cpp:251
 msgid "Select Category"
@@ -2151,14 +2151,12 @@ msgid "Export to QIF"
 msgstr "Экспорт в QIF"
 
 #: src/qif_export.cpp:87
-#, fuzzy
 msgid "QIF"
-msgstr "QIF &ку-ай-эф файлы"
+msgstr "QIF"
 
 #: src/qif_export.cpp:87
-#, fuzzy
 msgid "CSV"
-msgstr "CSV &файлы"
+msgstr "CSV"
 
 #: src/qif_export.cpp:104
 msgid "Accounts"
@@ -4198,7 +4196,7 @@ msgstr " Открыть %s web-сайт с  новостями, новыми в�
 #: src/appstartdialog.cpp:129
 #, c-format
 msgid "Show this window next time %s starts"
-msgstr "Показывать это окно при следующем запуске %s"
+msgstr "Показывать это окно при запуске %s"
 
 #: src/appstartdialog.cpp:160
 #, c-format
