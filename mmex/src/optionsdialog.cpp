@@ -1005,7 +1005,7 @@ void mmOptionsDialog::SaveGeneralPanelSettings()
 
     wxButton *languageButton = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     core_->iniSettings_->SetStringSetting(LANGUAGE_PARAMETER, languageButton->GetLabel().Lower());
-    mmSelectLanguage(0, core_->iniSettings_, false);
+    mmSelectLanguage(this, core_->iniSettings_, false);
 
     core_->currencyList_.setBaseCurrencySettings(currencyId_);
     mmDBWrapper::setInfoSettingValue(db_, wxT("DATEFORMAT"), dateFormat_);
