@@ -880,7 +880,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
         }
 
         wxString msg = wxString::Format(wxTRANSLATE("Transactions exported: %ld"), numRecords);
-        mmShowErrorMessage(0, wxGetTranslation(msg), _("Export to CSV"));
+        mmShowErrorMessage(this, wxGetTranslation(msg), _("Export to CSV"));
     }
 }
 
