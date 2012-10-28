@@ -2,7 +2,6 @@ Active Developers
 ==========================================
 Stefano 	 [stef145g]
 Nikolay 	 [Nikolay]
-Lisheng 	 [guanlisheng]
 Pat 		 [omalleypat]
 
 Code Builds/Fixes/Patches
@@ -15,6 +14,7 @@ hykwok
 Igor
 jblough
 Jeancf
+Lisheng 	 [guanlisheng]
 Mike 		 [u4ear]
 Paulo Lopes
 Pieter
@@ -35,7 +35,7 @@ Bulgarian
 Croatian
 -- Goran Bobanovic
 Czech
--- Josef Remes
+-- Josef Remes, PepaR
 Dutch
 -- Theo Kamphuis
 Dutch (Belgian)
