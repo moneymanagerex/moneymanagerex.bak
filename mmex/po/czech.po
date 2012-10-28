@@ -3790,7 +3790,7 @@ msgid ""
 "have stock/mutual fund investments associated with them."
 msgstr ""
 "Investiční účty jsou zvláštní typy účtů, kde můžete obchodovat \n"
-"pouze s akciemi a otevřenými podílovými fondy, které jsou účtu přiřazeny.\n"
+"pouze s akciemi a otevřenými podílovými fondy, které jsou účtu přiřazeny."
 
 #: src/mmex.cpp:4302
 msgid ""
