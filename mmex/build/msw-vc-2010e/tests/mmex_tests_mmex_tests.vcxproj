@@ -402,7 +402,6 @@
     <ClCompile Include="..\..\..\src\univcsvdialog.cpp" />
     <ClCompile Include="..\..\..\src\util.cpp" />
     <ClCompile Include="..\..\..\src\tests\util_test.cpp" />
-    <ClCompile Include="..\..\..\src\tests\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\aboutdialog.h" />
@@ -483,7 +482,6 @@
     <ClInclude Include="..\..\..\src\transdialog.h" />
     <ClInclude Include="..\..\..\src\univcsvdialog.h" />
     <ClInclude Include="..\..\..\src\util.h" />
-    <ClInclude Include="..\..\..\src\tests\utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\..\src\tests\mmex_tests.rc" />
