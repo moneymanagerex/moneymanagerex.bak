@@ -365,23 +365,20 @@ void mmDBWrapper::createBillsDepositsV1Table(wxSQLite3Database* db)
 
 bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
 {
-    bool ok = false;
-
-    bool valid = db->TableExists(wxT("INFOTABLE_V1"));
-    if (!valid)
-        return false;
-
-    wxSQLite3Statement st = db->PrepareStatement(SELECT_INFOVALUE_FROM_INFOTABLE_V1);
-    st.Bind(1, wxT("DATAVERSION"));
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
+    bool result = false;
+    if (db->TableExists(wxT("INFOTABLE_V1")))
     {
-        int dataVersion = q1.GetInt(wxT("INFOVALUE"));
-        ok = dataVersion >= mmex::MIN_DATAVERSION;
+        wxSQLite3Statement st = db->PrepareStatement(SELECT_INFOVALUE_FROM_INFOTABLE_V1);
+        st.Bind(1, wxT("DATAVERSION"));
+        wxSQLite3ResultSet q1 = st.ExecuteQuery();
+        if (q1.NextRow())
+        {
+            int dataVersion = q1.GetInt(wxT("INFOVALUE"));
+            result = dataVersion >= mmex::MIN_DATAVERSION;
+        }
+        st.Finalize();
     }
-    st.Finalize();
-
-    return ok;
+    return result;
 }
 
 void mmDBWrapper::createAccountListV1Table(wxSQLite3Database* db)
