@@ -58,10 +58,11 @@ public:
         long style = SYMBOL_TRANSDIALOG_STYLE );
 
     void SetDialogToDuplicateTransaction();
-    int transID_;
+    int getTransID() {return transID_;}
 
 private:
 
+    int transID_;
     mmCoreDB* core_;
     mmBankTransaction* pBankTransaction_;
     wxWindow* parent_;
