@@ -666,7 +666,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
     bool requireExecution;
 
     m_core->currencyList_.LoadBaseCurrencySettings();
-    wxSQLite3ResultSet q1 = m_db.get()->ExecuteQuery(wxT("select * from BILLSDEPOSITS_V1"));
+    wxSQLite3ResultSet q1 = m_db.get()->ExecuteQuery(SELECT_ALL_FROM_BILLSDEPOSITS_V1);
     while (q1.NextRow())
     {
         mmBDTransactionHolder th;
