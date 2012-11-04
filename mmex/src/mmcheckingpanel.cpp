@@ -1312,7 +1312,7 @@ void TransactionListCtrl::OnListItemSelected(wxListEvent& event)
 
     if (m_cp->m_listCtrlAccount->GetSelectedItemCount()>1)
         m_cp->bEdit_->Enable(false);
-        
+
 }
 //----------------------------------------------------------------------------
 
@@ -1662,7 +1662,7 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
     if (m_selectedForCopy != -1)
     {
         bool useOriginalDate = m_cp->core_->iniSettings_->GetBoolSetting(INIDB_USE_ORG_DATE_COPYPASTE, false);
-        
+
         boost::shared_ptr<mmBankTransaction> pCopiedTrans =
             m_cp->core_->bTransactionList_.copyTransaction(m_cp->core_, m_selectedForCopy, m_cp->accountID(), useOriginalDate);
 
@@ -1729,7 +1729,7 @@ void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
 void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 {
     //check if a transaction is selected
-    if (GetSelectedItemCount() < 1) return; 
+    if (GetSelectedItemCount() < 1) return;
 
     //ask if they really want to delete
     wxMessageDialog msgDlg(this,_("Do you really want to delete the selected transaction?"),
@@ -1740,7 +1740,7 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 
     if ((m_selectedForCopy > -1) && (m_selectedForCopy == m_cp->m_trans[m_selectedIndex]->transactionID()))
         m_selectedForCopy = -1;
-    
+
     m_cp->core_->db_.get()->Begin();
     for (size_t i=0; i<m_cp->m_trans.size(); ++i )
     {
@@ -1762,7 +1762,7 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
            m_cp->m_trans[m_selectedIndex], true, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
-            int transID = dlg.transID_;
+            int transID = dlg.getTransID();
             refreshVisualList(transID);
         }
     }
@@ -1775,7 +1775,7 @@ void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 
     if ( dlg.ShowModal() == wxID_OK )
     {
-        int transID = dlg.transID_;
+        int transID = dlg.getTransID();
         refreshVisualList(transID);
     }
 }
@@ -1792,7 +1792,7 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
     dlg.SetDialogToDuplicateTransaction();
     if ( dlg.ShowModal() == wxID_OK )
     {
-        int transID = dlg.transID_;
+        int transID = dlg.getTransID();
         refreshVisualList(transID);
     }
 }
@@ -1850,11 +1850,11 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
         pTransaction->accountID_ = toAccountID;
         if (pTransaction->toAccountID_ == toAccountID)
         {
-			pTransaction->toAccountID_ = orig_accountID;
-			double amount = pTransaction->amt_;
-			pTransaction->amt_ = pTransaction->toAmt_;
-			pTransaction->toAmt_ = amount;
-		}
+            pTransaction->toAccountID_ = orig_accountID;
+            double amount = pTransaction->amt_;
+            pTransaction->amt_ = pTransaction->toAmt_;
+            pTransaction->toAmt_ = amount;
+        }
         m_cp->core_->bTransactionList_.updateTransaction(pTransaction);
 
     }
@@ -2003,7 +2003,7 @@ void mmCheckingPanel::DisplayAccountDetails(int accountID)
     m_listCtrlAccount->m_selectedIndex = -1;
     m_listCtrlAccount->refreshVisualList();
     showTips();
-    
+
     windowsFreezeThaw(this);     // Enable screen refresh with new data.
 }
 
