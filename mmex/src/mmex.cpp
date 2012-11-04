@@ -3292,7 +3292,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
     mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(trans, m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
-        mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->refAccountID_, dlg->refAccountStr_, dlg);
+        mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getRefAccountID(), dlg->getRefAccountStr(), dlg);
         menuPrintingEnable(true);
         createReportsPage(rs);
     }
