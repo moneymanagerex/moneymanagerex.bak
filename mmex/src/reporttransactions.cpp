@@ -185,8 +185,8 @@ wxString mmReportTransactions::getHTMLText()
     // Extract the parameters from the transaction dialog and add them to the report.
     wxString filterDetails;
 
-    if ( !transDialog_->refAccountStr_.IsEmpty())
-        filterDetails << wxT("<b>") << _("Account") << wxT(": </b>") << transDialog_->refAccountStr_ << wxT("<br>");
+    if ( !transDialog_->getRefAccountStr().IsEmpty())
+        filterDetails << wxT("<b>") << _("Account") << wxT(": </b>") << transDialog_->getRefAccountStr() << wxT("<br>");
     //Date range
     if ( !transDialog_->userDateRangeStr().IsEmpty())
 		filterDetails << wxT("<b>") << _("Date Range") << wxT(": </b>") << transDialog_->userDateRangeStr() << wxT("<br>");

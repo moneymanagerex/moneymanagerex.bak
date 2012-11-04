@@ -32,7 +32,8 @@ class mmFilterTransactionsDialog: public wxDialog
 public:
     /// Constructors
     mmFilterTransactionsDialog( );
-    mmFilterTransactionsDialog(
+    mmFilterTransactionsDialog
+    (
         std::vector< boost::shared_ptr<mmBankTransaction> >* trans,
         mmCoreDB* core,
         wxWindow* parent,
@@ -40,8 +41,32 @@ public:
         const wxString& caption = SYMBOL_MMFILTERTRANSACTIONSDIALOG_TITLE,
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxSize(400, 300),
-        long style = SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE );
+        long style = SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE
+    );
 
+    int getRefAccountID() {return refAccountID_;}
+    wxString getRefAccountStr() {return refAccountStr_;}
+    /// Returns the payee string, when Payee is selected.
+    wxString userPayeeStr() const;
+    /// Returns the Category/subcategory string, when Category is selected.
+    wxString userCategoryStr() const;
+    /// Returns the date range string, when Date Range is selected.
+    wxString userDateRangeStr() const;
+    /// Returns the Status string, when Status is selected.
+    wxString userStatusStr() const;
+    /// Returns the Type string, when Type is selected.
+    wxString userTypeStr() const;
+    /// Returns the amount range string, when Amount Range is selected.
+    wxString userAmountRangeStr() const;
+    /// Returns the transaction Number string, when Number is selected.
+    wxString userTransNumberStr() const;
+    /// Returns the user Note string, when Notes is selected.
+    wxString userNotesStr() const;
+
+    /// Returns true with valid dates, when the dialog date range is selected.
+    bool getDateRange(wxDateTime& startDate, wxDateTime& endDate) const;
+
+private:
     /// Creation
     bool Create( wxWindow* parent,
        wxWindowID id = SYMBOL_MMFILTERTRANSACTIONSDIALOG_IDNAME,
@@ -105,25 +130,6 @@ public:
     int refAccountID_;
     wxString refAccountStr_;
 
-    /// Returns the payee string, when Payee is selected.
-    wxString userPayeeStr() const;
-    /// Returns the Category/subcategory string, when Category is selected.
-    wxString userCategoryStr() const;
-    /// Returns the date range string, when Date Range is selected.
-    wxString userDateRangeStr() const;
-    /// Returns the Status string, when Status is selected.
-    wxString userStatusStr() const;
-    /// Returns the Type string, when Type is selected.
-    wxString userTypeStr() const;
-    /// Returns the amount range string, when Amount Range is selected.
-    wxString userAmountRangeStr() const;
-    /// Returns the transaction Number string, when Number is selected.
-    wxString userTransNumberStr() const;
-    /// Returns the user Note string, when Notes is selected.
-    wxString userNotesStr() const;
-
-    /// Returns true with valid dates, when the dialog date range is selected.
-    bool getDateRange(wxDateTime& startDate, wxDateTime& endDate) const;
 };
 
 #endif
