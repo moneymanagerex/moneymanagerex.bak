@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
 #include "dbwrapper.h"
-#include "utils.h"
 #include "mmcoredb.h"
 #include "mmex_settings.h"
 #include <iostream>
