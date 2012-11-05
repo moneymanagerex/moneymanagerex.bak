@@ -978,7 +978,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
      2. All entries for the account to be displayed.               [ m_trans    ]
     **********************************************************************************/
     int numTransactions = 0;
-    std::vector<mmBankTransaction*> v_transPtr;
+    std::vector<mmBankTransaction*> account_transPtr;
     for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
     {
         boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
@@ -988,7 +988,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
         pBankTransaction->updateAllData(core_, m_AccountID, pCurrency);
 
         // Store all account transactions to determine the balances.
-        v_transPtr.push_back(pBankTransaction.get());
+        account_transPtr.push_back(pBankTransaction.get());
 
         bool toAdd = true;
 //      bool getBal = false;
@@ -1042,21 +1042,31 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
      Stage 2
      Sort all account transactions by date to, determine balances.
     **********************************************************************************/
-    std::sort(v_transPtr.begin(), v_transPtr.end(), sortTransByDateAsc);
+    std::sort(account_transPtr.begin(), account_transPtr.end(), sortTransByDateAsc);
 
     /**********************************************************************************
      Stage 3
      Add the account balances to all the transactions in this account.
     **********************************************************************************/
     double initBalance = pAccount->initialBalance_;
-    for (size_t i = 0; i < v_transPtr.size(); ++i)
+    std::vector<mmBankTransaction*> visible_transPtr = account_transPtr;
+
+    // Depending on the view - will determine the treatment of balances.
+    if ( m_currentView == VIEW_TRANS_RECONCILED_STR     ||
+         m_currentView == VIEW_TRANS_NOT_RECONCILED_STR ||
+         m_currentView == VIEW_TRANS_UNRECONCILED_STR   )
     {
-        bool ok = v_transPtr[i] != 0;
+        visible_transPtr = m_trans;
+    }
+
+    for (size_t i = 0; i < visible_transPtr.size(); ++i)
+    {
+        bool ok = visible_transPtr[i] != 0;
         wxASSERT(ok);
 
         if (!ok) continue;
 
-        mmBankTransaction* transPtr = v_transPtr[i];
+        mmBankTransaction* transPtr = visible_transPtr[i];
         initBalance = getBalance( transPtr, initBalance);
         setBalance( transPtr, initBalance);
     }
