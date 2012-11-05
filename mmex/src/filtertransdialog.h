@@ -34,7 +34,6 @@ public:
     mmFilterTransactionsDialog( );
     mmFilterTransactionsDialog
     (
-        std::vector< boost::shared_ptr<mmBankTransaction> >* trans,
         mmCoreDB* core,
         wxWindow* parent,
         wxWindowID id = SYMBOL_MMFILTERTRANSACTIONSDIALOG_IDNAME,

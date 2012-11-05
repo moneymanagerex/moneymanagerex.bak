@@ -48,11 +48,10 @@ mmFilterTransactionsDialog::mmFilterTransactionsDialog( )
 }
 
 mmFilterTransactionsDialog::mmFilterTransactionsDialog(
-    std::vector< boost::shared_ptr<mmBankTransaction> >* trans, mmCoreDB* core,
+    mmCoreDB* core,
     wxWindow* parent, wxWindowID id, const wxString& caption,
     const wxPoint& pos, const wxSize& size,long style)
-: trans_(trans)
-, core_(core)
+: core_(core)
 , db_(core->db_.get())
 , categID_(-1)
 , subcategID_(-1)
