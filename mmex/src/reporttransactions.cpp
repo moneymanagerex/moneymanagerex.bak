@@ -185,18 +185,18 @@ wxString mmReportTransactions::getHTMLText()
     // Extract the parameters from the transaction dialog and add them to the report.
     wxString filterDetails;
 
-    if ( !transDialog_->getRefAccountStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Account:") << wxT(" </b>") << transDialog_->getRefAccountStr() << wxT("<br>");
+    if ( transDialog_->getAccountCheckBox())
+        filterDetails << wxT("<b>") << _("Account:") << wxT(" </b>") << transDialog_->getAccountName() << wxT("<br>");
     //Date range
-    if ( !transDialog_->userDateRangeStr().IsEmpty())
+    if ( transDialog_->getDateRangeCheckBox())
         filterDetails << wxT("<b>") << _("Date Range:") << wxT(" </b>") << transDialog_->userDateRangeStr() << wxT("<br>");
 
     //Payees
-    if ( !transDialog_->userPayeeStr().IsEmpty())
+    if ( transDialog_->getPayeeCheckBox())
         filterDetails << wxT("<b>") << _("Payee:") << wxT(" </b>") <<transDialog_->userPayeeStr() << wxT("<br>");
 
     //Category
-    if ( !transDialog_->userCategoryStr().IsEmpty())
+    if ( transDialog_->getCategoryCheckBox())
         filterDetails << wxT("<b>") << _("Category:") << wxT(" </b>") <<transDialog_->userCategoryStr() << wxT("<br>");
 
     //Status
@@ -206,14 +206,14 @@ wxString mmReportTransactions::getHTMLText()
     if ( transDialog_->getTypeCheckBox() )
         filterDetails << wxT("<b>") << _("Type:") << wxT(" </b>") <<transDialog_->userTypeStr() << wxT("<br>");
     //Amount Range
-    if ( !transDialog_->userAmountRangeStr().IsEmpty())
+    if ( transDialog_->getAmountRangeCheckBox())
         filterDetails << wxT("<b>") << _("Amount Range:") << wxT(" </b>") <<transDialog_->userAmountRangeStr() << wxT("<br>");
     //Number
-    if ( !transDialog_->userTransNumberStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Number:") << wxT(" </b>") <<transDialog_->userTransNumberStr() << wxT("<br>");
+    if ( transDialog_->getNumberCheckBox())
+        filterDetails << wxT("<b>") << _("Number:") << wxT(" </b>") <<transDialog_->getNumber() << wxT("<br>");
     //Notes
-    if ( !transDialog_->userNotesStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Notes:") << wxT(" </b>") <<transDialog_->userNotesStr() << wxT("<br>");
+    if ( transDialog_->getNotesCheckBox())
+        filterDetails << wxT("<b>") << _("Notes:") << wxT(" </b>") <<transDialog_->getNotes() << wxT("<br>");
 
     if ( !filterDetails.IsEmpty())
     {

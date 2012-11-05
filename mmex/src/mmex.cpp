@@ -3397,10 +3397,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
     //std::sort((*trans).begin(), (*trans).end(), sortTransactionsByDate1);
 
-
-
-
-        mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getRefAccountID(), dlg->getRefAccountStr(), dlg);
+        mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getAccountID(), dlg->getAccountName(), dlg);
         menuPrintingEnable(true);
         createReportsPage(rs);
     }
