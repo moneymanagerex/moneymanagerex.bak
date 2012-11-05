@@ -3289,9 +3289,117 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
     std::vector< boost::shared_ptr<mmBankTransaction> >* trans
         = new std::vector< boost::shared_ptr<mmBankTransaction> >;
 
-    mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(trans, m_core.get(), this);
+
+    mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(NULL, m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
+
+        std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
+        for (i = m_core.get()->bTransactionList_.transactions_.begin(); i != m_core.get()->bTransactionList_.transactions_.end(); i++ )
+        {
+            boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+            if (pBankTransaction)
+            {
+
+                if (dlg->getAmountRangeCheckBox())
+                {
+                    double minamt = dlg->getAmountMin();
+                    double maxamt = dlg->getAmountMax();
+
+                    if (pBankTransaction->amt_ < minamt)
+                        continue; // skip
+                    if (pBankTransaction->amt_ > maxamt)
+                        continue; // skip
+                }
+
+                if (dlg->getAccountCheckBox())
+                {
+                    int fromAccountID = dlg->getAccountID();
+
+                    if ((pBankTransaction->accountID_ != fromAccountID) && (pBankTransaction->toAccountID_ != fromAccountID))
+                        continue; // skip
+                }
+
+                if (dlg->getDateRangeCheckBox())
+                {
+                    wxDateTime dtBegin = dlg->getFromDateCtrl();
+                    wxDateTime dtEnd = dlg->getToDateControl();
+
+                    if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                        continue; // skip
+                }
+
+                if (dlg->getPayeeCheckBox())
+                {
+                    if (pBankTransaction->payeeID_ != dlg->getPayeeID())
+                        continue; // skip
+                }
+
+                if (dlg->getStatusCheckBox())
+                {
+                    if (dlg->getStatus() != pBankTransaction->status_) continue; //skip
+                }
+
+                if (dlg->getTypeCheckBox())
+                {
+                    if (!dlg->getType().Contains(pBankTransaction->transType_)) continue;
+                }
+
+                if (dlg->getNumberCheckBox())
+                {
+                    const wxString transNumber = dlg->getNumber().Trim().Lower();
+                    const wxString orig = pBankTransaction->transNum_.Lower();
+                    if (!orig.Matches(wxT("*") + transNumber + wxT("*")))
+                        continue;
+                }
+
+                if (dlg->getNotesCheckBox())
+                {
+                    wxString filter_notes = dlg->getNotes().Trim().Lower();
+                    wxString trx_notes = pBankTransaction->notes_.Lower();
+
+                    if (!trx_notes.Matches(filter_notes))
+                        continue;
+                }
+
+                if (dlg->getCategoryCheckBox())
+                {
+                    bool ignoreSubCateg = false;
+                    int subcategID = dlg->getSubCategoryID();
+                    int categID = dlg->getCategoryID();
+                    if (subcategID == -1)
+                        ignoreSubCateg = true;
+                    if (!pBankTransaction->containsCategory(categID, subcategID, ignoreSubCateg))
+                    {
+                        pBankTransaction->reportCategAmountStr_ = wxT("");
+                        continue;
+                    }
+
+                    if (pBankTransaction->splitEntries_->numEntries() > 0)
+                    {
+                        pBankTransaction->reportCategAmount_ = fabs(pBankTransaction->getAmountForSplit(categID, subcategID));
+
+                        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
+                        wxASSERT(pCurrencyPtr);
+                        mmex::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
+                    }
+                    else
+                    {
+                        pBankTransaction->reportCategAmount_ = -1;
+                        pBankTransaction->reportCategAmountStr_.clear();
+                    }
+                }
+
+            (*trans).push_back(pBankTransaction);
+        }
+    }
+    //}
+
+    //std::sort((*trans).begin(), (*trans).end(), sortTransactionsByDate1);
+
+
+
+
         mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getRefAccountID(), dlg->getRefAccountStr(), dlg);
         menuPrintingEnable(true);
         createReportsPage(rs);

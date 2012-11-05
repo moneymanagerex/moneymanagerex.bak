@@ -46,6 +46,37 @@ public:
 
     int getRefAccountID() {return refAccountID_;}
     wxString getRefAccountStr() {return refAccountStr_;}
+
+    bool getAccountCheckBox() {return accountCheckBox_->GetValue();}
+    int getAccountID();
+
+    bool getDateRangeCheckBox() {return dateRangeCheckBox_->GetValue();}
+    wxDateTime getFromDateCtrl() {return fromDateCtrl_->GetValue();}
+    wxDateTime getToDateControl() {return toDateControl_->GetValue();}
+
+    bool getAmountRangeCheckBox() {return amountRangeCheckBox_->GetValue();}
+    double getAmountMax();
+    double getAmountMin();
+
+    bool getPayeeCheckBox() {return payeeCheckBox_->GetValue();}
+    int getPayeeID() const;
+
+    bool getStatusCheckBox() {return statusCheckBox_->GetValue();}
+    wxString getStatus() const;
+
+    bool getTypeCheckBox() {return typeCheckBox_->GetValue();}
+    wxString getType() const;
+
+    bool getNumberCheckBox() {return transNumberCheckBox_->GetValue();}
+    wxString getNumber() {return transNumberEdit_->GetValue();}
+
+    bool getNotesCheckBox() {return notesCheckBox_->GetValue();}
+    wxString getNotes() {return notesEdit_->GetValue();}
+
+    bool getCategoryCheckBox() {return categoryCheckBox_->GetValue();}
+    int getCategoryID() {return categID_;}
+    int getSubCategoryID() {return subcategID_;}
+
     /// Returns the payee string, when Payee is selected.
     wxString userPayeeStr() const;
     /// Returns the Category/subcategory string, when Category is selected.
