@@ -6,12 +6,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -27,7 +27,7 @@
 #include "mmtransaction.h"
 #include "reportbudget.h"
 
-mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
+mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans,
     mmCoreDB* core, int refAccountID, wxString refAccountStr, mmFilterTransactionsDialog* transDialog)
 :mmPrintableBase(core), trans_(trans), refAccountID_(refAccountID), refAccountStr_(refAccountStr), transDialog_(transDialog)
 {
@@ -37,7 +37,7 @@ mmReportTransactions::~mmReportTransactions()
 {
     delete trans_;
     // incase the user wants to print a report, we maintain the transaction dialog
-	// until we are finished with the report.
+    // until we are finished with the report.
     transDialog_->Destroy();
 }
 
@@ -51,7 +51,7 @@ wxString mmReportTransactions::getHTMLText()
         transHeading += wxString() << _("for Account: ") << refAccountStr_;
     hb.addHeader(2, transHeading);
 
-    bool includeDateRange = false; 
+    bool includeDateRange = false;
     wxDateTime startDate = wxDateTime(wxDateTime::Now());
     wxDateTime endDate = wxDateTime(wxDateTime::Now());
     if (transDialog_->getDateRange(startDate, endDate))
@@ -60,7 +60,7 @@ wxString mmReportTransactions::getHTMLText()
     }
     mmCommonReportDetails dateDisplay(NULL);
     dateDisplay.DisplayDateHeading(hb, startDate, endDate, includeDateRange);
-    
+
     hb.startCenter();
     hb.startTable();
     hb.startTable(wxT("95%"));
@@ -72,7 +72,7 @@ wxString mmReportTransactions::getHTMLText()
     hb.addTableHeaderCell(_("Payee"));
     hb.addTableHeaderCell(_("Status"));
     hb.addTableHeaderCell(_("Category"));
-	hb.addTableHeaderCell(_("Type"));
+    hb.addTableHeaderCell(_("Type"));
     hb.addTableHeaderCell(_("Amount"), true);
     hb.addTableHeaderCell(_("Number"));
     hb.addTableHeaderCell(_("Notes"));
@@ -88,7 +88,7 @@ wxString mmReportTransactions::getHTMLText()
         std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
 
         // For transfer transactions, we need to fix the data reference point first.
-        if ( refAccountID_ > -1 && refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR && 
+        if ( refAccountID_ > -1 && refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR &&
              (refAccountID_ == refTrans[index]->accountID_ || refAccountID_ == refTrans[index]->toAccountID_) )
         {
             boost::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(refAccountID_);
@@ -170,11 +170,11 @@ wxString mmReportTransactions::getHTMLText()
     mmex::formatDoubleToCurrency(total, balanceStr);
 
     // display the total balance.
-	hb.addRowSeparator(9);
-	hb.addTotalRow(_("Total Amount: "), 7, balanceStr);
+    hb.addRowSeparator(9);
+    hb.addTotalRow(_("Total Amount: "), 7, balanceStr);
 
     hb.endTable();
-	hb.endCenter();
+    hb.endCenter();
 
     if (unknownnReferenceAccount && transferTransactionFound)
     {
@@ -186,44 +186,43 @@ wxString mmReportTransactions::getHTMLText()
     wxString filterDetails;
 
     if ( !transDialog_->getRefAccountStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Account") << wxT(": </b>") << transDialog_->getRefAccountStr() << wxT("<br>");
+        filterDetails << wxT("<b>") << _("Account:") << wxT(" </b>") << transDialog_->getRefAccountStr() << wxT("<br>");
     //Date range
     if ( !transDialog_->userDateRangeStr().IsEmpty())
-		filterDetails << wxT("<b>") << _("Date Range") << wxT(": </b>") << transDialog_->userDateRangeStr() << wxT("<br>");
+        filterDetails << wxT("<b>") << _("Date Range:") << wxT(" </b>") << transDialog_->userDateRangeStr() << wxT("<br>");
 
     //Payees
     if ( !transDialog_->userPayeeStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Payee") << wxT(": </b>") <<transDialog_->userPayeeStr() << wxT("<br>");
+        filterDetails << wxT("<b>") << _("Payee:") << wxT(" </b>") <<transDialog_->userPayeeStr() << wxT("<br>");
 
     //Category
     if ( !transDialog_->userCategoryStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Category") << wxT(": </b>") <<transDialog_->userCategoryStr() << wxT("<br>");
-	
-	//Status
-    if ( !transDialog_->userStatusStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Status") << wxT(": </b>") <<transDialog_->userStatusStr() << wxT("<br>");
-	//Type
-    if ( !transDialog_->userTypeStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Type") << wxT(": </b>") <<transDialog_->userTypeStr() << wxT("<br>");
-	//Amount Range
+        filterDetails << wxT("<b>") << _("Category:") << wxT(" </b>") <<transDialog_->userCategoryStr() << wxT("<br>");
+
+    //Status
+    if ( transDialog_->getStatusCheckBox())
+        filterDetails << wxT("<b>") << _("Status:") << wxT(" </b>") <<transDialog_->userStatusStr() << wxT("<br>");
+    //Type
+    if ( transDialog_->getTypeCheckBox() )
+        filterDetails << wxT("<b>") << _("Type:") << wxT(" </b>") <<transDialog_->userTypeStr() << wxT("<br>");
+    //Amount Range
     if ( !transDialog_->userAmountRangeStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Amount Range") << wxT(": </b>") <<transDialog_->userAmountRangeStr() << wxT("<br>");
-	//Number
+        filterDetails << wxT("<b>") << _("Amount Range:") << wxT(" </b>") <<transDialog_->userAmountRangeStr() << wxT("<br>");
+    //Number
     if ( !transDialog_->userTransNumberStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Number") << wxT(": </b>") <<transDialog_->userTransNumberStr() << wxT("<br>");
-	//Notes
+        filterDetails << wxT("<b>") << _("Number:") << wxT(" </b>") <<transDialog_->userTransNumberStr() << wxT("<br>");
+    //Notes
     if ( !transDialog_->userNotesStr().IsEmpty())
-        filterDetails << wxT("<b>") << _("Notes") << wxT(": </b>") <<transDialog_->userNotesStr() << wxT("<br>");
-	
+        filterDetails << wxT("<b>") << _("Notes:") << wxT(" </b>") <<transDialog_->userNotesStr() << wxT("<br>");
+
     if ( !filterDetails.IsEmpty())
     {
-        wxString filterDetailsStr;
         hb.addHorizontalLine();
-        filterDetailsStr << wxT("<b>") << _("Filtering Details: ") << wxT ("</b><br>") << filterDetails;
-        hb.addHeader(1, filterDetailsStr );
+        filterDetails.Prepend( wxString()<< wxT("<b>") << _("Filtering Details: ") << wxT ("</b><br>"));
+        hb.addParaText(filterDetails );
     }
 
     hb.end();
-    
+
     return hb.getHTMLText();
 }

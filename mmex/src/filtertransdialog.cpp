@@ -363,99 +363,6 @@ void mmFilterTransactionsDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
 
 void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 {
-    std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
-    for (i = core_->bTransactionList_.transactions_.begin(); i != core_->bTransactionList_.transactions_.end(); i++ )
-    {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
-        if (pBankTransaction)
-        {
-            /* START FILTERING TRANSACTIONS */
-            if (accountCheckBox_->GetValue())
-            {
-                wxString acctName = accountDropDown_->GetStringSelection();
-                int fromAccountID = core_->accountList_.GetAccountId(acctName);
-                refAccountID_ = fromAccountID;
-                refAccountStr_ = acctName;
-
-                if ((pBankTransaction->accountID_ != fromAccountID) && (pBankTransaction->toAccountID_ != fromAccountID))
-                    continue; // skip
-            }
-
-            if (dateRangeCheckBox_->GetValue())
-            {
-                wxDateTime dtBegin = fromDateCtrl_->GetValue();
-                wxDateTime dtEnd = toDateControl_->GetValue();
-
-                if ((dtBegin == dtEnd) && (dtBegin.IsSameDate(pBankTransaction->date_)))
-                {
-
-                }
-                else
-                {
-                    if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                        continue; // skip
-                }
-            }
-
-            if (payeeCheckBox_->GetValue() && (payeeID_ != -1))
-            {
-                if (pBankTransaction->payeeID_ != payeeID_)
-                    continue; // skip
-            }
-
-            if (categoryCheckBox_->GetValue() && (categID_ != -1))
-            {
-                bool ignoreSubCateg = false;
-                if (subcategID_ == -1)
-                    ignoreSubCateg = true;
-                if (!pBankTransaction->containsCategory(categID_, subcategID_, ignoreSubCateg))
-                {
-                    pBankTransaction->reportCategAmountStr_ = wxT("");
-                    continue;
-                }
-
-                if (pBankTransaction->splitEntries_->numEntries() > 0)
-                {
-                    pBankTransaction->reportCategAmount_ = fabs(pBankTransaction->getAmountForSplit(categID_, subcategID_));
-
-                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
-                    wxASSERT(pCurrencyPtr);
-                    mmex::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
-                }
-                else
-                {
-                    pBankTransaction->reportCategAmount_ = -1;
-                    pBankTransaction->reportCategAmountStr_.clear();
-                }
-            }
-
-            if (statusCheckBox_->GetValue())
-            {
-                wxString status;
-                wxStringClientData* status_obj =
-                    (wxStringClientData *)choiceStatus_->GetClientObject(choiceStatus_->GetSelection());
-                if (status_obj) status = status_obj->GetData().Left(1);
-                status.Replace(wxT("N"), wxT(""));
-
-                if (status != pBankTransaction->status_) continue; //skip
-            }
-
-            if (typeCheckBox_->GetValue())
-            {
-                wxString transCode = pBankTransaction->transType_;
-                wxString withdraval=wxT("-");
-                wxString deposit=wxT("-");
-                wxString transfer=wxT("-");
-                if (cbTypeWithdrawal_->GetValue())
-                    withdraval = TRANS_TYPE_WITHDRAWAL_STR;
-                if (cbTypeDeposit_->GetValue())
-                    deposit = TRANS_TYPE_DEPOSIT_STR;
-                if (cbTypeTransfer_->GetValue())
-                    transfer = TRANS_TYPE_TRANSFER_STR;
-
-                if (withdraval != transCode && deposit != transCode && transfer != transCode)
-                    continue; // skip
-            }
 
             if (amountRangeCheckBox_->GetValue())
             {
@@ -469,9 +376,6 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
                         mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
                         return;
                     }
-
-                    if (pBankTransaction->amt_ < amount)
-                        continue; // skip
                 }
 
                 if (!maxamt.IsEmpty())
@@ -482,33 +386,9 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
                         mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
                         return;
                     }
-
-                    if (pBankTransaction->amt_ > amount)
-                        continue; // skip
                 }
             }
 
-            if (notesCheckBox_->GetValue())
-            {
-                wxString notes = notesEdit_->GetValue().Trim().Lower();
-                wxString orig = pBankTransaction->notes_.Lower();
-                if (!orig.Contains(notes))
-                    continue;
-            }
-
-            if (transNumberCheckBox_->GetValue())
-            {
-                const wxString transNumber = transNumberEdit_->GetValue().Trim().Lower();
-                const wxString orig = pBankTransaction->transNum_.Lower();
-                if (!orig.Contains(transNumber))
-                    continue;
-            }
-
-            (*trans_).push_back(pBankTransaction);
-        }
-    }
-
-    std::sort((*trans_).begin(), (*trans_).end(), sortTransactionsByDate1);
 
     EndModal(wxID_OK);
 }
@@ -565,11 +445,18 @@ wxString mmFilterTransactionsDialog::userDateRangeStr() const
     {
         wxString dtBegin = mmGetDateForDisplay(db_, fromDateCtrl_->GetValue());
         wxString dtEnd = mmGetDateForDisplay(db_, toDateControl_->GetValue());
-        dateStr << _("From ") << dtBegin << _(" to ") << dtEnd;
+        dateStr << wxString::Format(_("From %s to %s"), dtBegin.c_str(), dtEnd.c_str());
     }
     return dateStr;
 }
 
+int mmFilterTransactionsDialog::getPayeeID() const
+{
+    wxString payeeStr = btnPayee_->GetLabelText();
+    int payeeID = core_->payeeList_.GetPayeeId(payeeStr);
+    return payeeID;
+
+}
 wxString mmFilterTransactionsDialog::userPayeeStr() const
 {
     if (payeeCheckBox_->IsChecked())
@@ -584,10 +471,35 @@ wxString mmFilterTransactionsDialog::userCategoryStr() const
     return wxT("");
 }
 
+wxString mmFilterTransactionsDialog::getStatus() const
+{
+    wxString status;
+    wxStringClientData* status_obj =
+        (wxStringClientData *)choiceStatus_->GetClientObject(choiceStatus_->GetSelection());
+    if (status_obj) status = status_obj->GetData().Left(1);
+    status.Replace(wxT("N"), wxT(""));
+    return status;
+}
+
+wxString mmFilterTransactionsDialog::getType() const
+{
+    wxString withdraval = wxT("");
+    wxString deposit = wxT("");
+    wxString transfer = wxT("");
+    if (cbTypeWithdrawal_->GetValue())
+        withdraval = TRANS_TYPE_WITHDRAWAL_STR;
+    if (cbTypeDeposit_->GetValue())
+        deposit = TRANS_TYPE_DEPOSIT_STR;
+    if (cbTypeTransfer_->GetValue())
+        transfer = TRANS_TYPE_TRANSFER_STR;
+
+    return withdraval+wxT(";")+deposit+wxT(";")+transfer;
+}
+
 wxString mmFilterTransactionsDialog::userStatusStr() const
 {
     if (statusCheckBox_->IsChecked())
-        return choiceStatus_->GetLabelText();
+        return choiceStatus_->GetStringSelection();
     return wxT("");
 }
 
@@ -597,13 +509,38 @@ wxString mmFilterTransactionsDialog::userTypeStr() const
     if (typeCheckBox_->IsChecked())
     {
         if (cbTypeWithdrawal_->GetValue())
-            transCode = TRANS_TYPE_WITHDRAWAL_STR;
+            transCode = wxGetTranslation(TRANS_TYPE_WITHDRAWAL_STR);
         if (cbTypeDeposit_->GetValue())
-            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << TRANS_TYPE_DEPOSIT_STR;
+            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", "))
+                << wxGetTranslation(TRANS_TYPE_DEPOSIT_STR);
         if (cbTypeTransfer_->GetValue())
-            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << TRANS_TYPE_TRANSFER_STR;
+            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", "))
+                << wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
     }
     return transCode;
+}
+
+int mmFilterTransactionsDialog::getAccountID()
+{
+    return core_->accountList_.GetAccountId(accountDropDown_->GetStringSelection());
+}
+
+double mmFilterTransactionsDialog::getAmountMin()
+{
+    double amount = 0;
+    if (!mmex::formatCurrencyToDouble(amountMinEdit_->GetValue(), amount) || (amount < 0.0))
+        amount = 0;
+
+    return amount;
+}
+
+double mmFilterTransactionsDialog::getAmountMax()
+{
+    double amount = 0;
+    if (!mmex::formatCurrencyToDouble(amountMaxEdit_->GetValue(), amount) || (amount < 0.0))
+        amount = 0;
+
+    return amount;
 }
 
 wxString mmFilterTransactionsDialog::userAmountRangeStr() const
@@ -613,7 +550,7 @@ wxString mmFilterTransactionsDialog::userAmountRangeStr() const
     {
         wxString minamt = amountMinEdit_->GetValue();
         wxString maxamt = amountMaxEdit_->GetValue();
-        amountRangeStr << _("Min: ") << minamt << _(" Max: ") << maxamt;
+        amountRangeStr << _("Min: ") << minamt << wxT(" ") << _("Max: ") << maxamt;
     }
     return amountRangeStr;
 }
