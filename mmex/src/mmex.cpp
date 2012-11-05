@@ -3290,7 +3290,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
         = new std::vector< boost::shared_ptr<mmBankTransaction> >;
 
 
-    mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(NULL, m_core.get(), this);
+    mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
 
