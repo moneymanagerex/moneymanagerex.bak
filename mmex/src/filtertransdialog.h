@@ -78,7 +78,7 @@ private:
     /// Creates the controls and sizers
     void CreateControls();
     void dataToControls();
-    wxString GetStoredSettings(const int id);
+    wxString GetStoredSettings(int id);
     wxString GetCurrentSettings();
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOXACCOUNT
