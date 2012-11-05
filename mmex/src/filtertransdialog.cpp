@@ -70,7 +70,7 @@ bool mmFilterTransactionsDialog::Create( wxWindow* parent, wxWindowID id,
     wxDialog::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
-    GetStoredSettings(0);
+    GetStoredSettings(-1);
     dataToControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
@@ -299,7 +299,9 @@ void mmFilterTransactionsDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, num, choices, num, wxRA_SPECIFY_COLS);
     m_radio_box_->Connect(wxID_APPLY, wxEVT_COMMAND_RADIOBOX_SELECTED,
         wxCommandEventHandler(mmFilterTransactionsDialog::OnSettingsSelected), NULL, this);
-    //TODO: Under constraction
+
+    int view_no = core_->iniSettings_->GetIntSetting(wxT("TRANSACTIONS_FILTER_VIEW_NO"), 0);
+    m_radio_box_->SetSelection(view_no);
     m_radio_box_->Show(true);
 
     itemBoxSizer3->Add(settings_box_sizer, flags.Center());
@@ -643,8 +645,13 @@ void mmFilterTransactionsDialog::OnSettingsSelected( wxCommandEvent& event )
     dataToControls();
 }
 
-wxString mmFilterTransactionsDialog::GetStoredSettings(const int id)
+wxString mmFilterTransactionsDialog::GetStoredSettings(int id)
 {
+    if (id < 0) {
+        id = core_->iniSettings_->GetIntSetting(wxT("TRANSACTIONS_FILTER_VIEW_NO"), 0);
+    } else {
+        core_->iniSettings_->SetIntSetting(wxT("TRANSACTIONS_FILTER_VIEW_NO"), id);
+    }
     settings_string_ = core_->iniSettings_->GetStringSetting(
                               wxString::Format(wxT("TRANSACTIONS_FILTER_%d"), id),
                               wxT("0;;0;;0;;0;;0;;0;;0;;0;;0;;0;;0;;"));
