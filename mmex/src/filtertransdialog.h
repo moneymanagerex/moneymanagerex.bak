@@ -44,11 +44,9 @@ public:
         long style = SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE
     );
 
-    int getRefAccountID() {return refAccountID_;}
-    wxString getRefAccountStr() {return refAccountStr_;}
-
     bool getAccountCheckBox() {return accountCheckBox_->GetValue();}
-    int getAccountID();
+    int getAccountID() {return refAccountID_;}
+    wxString getAccountName();
 
     bool getDateRangeCheckBox() {return dateRangeCheckBox_->GetValue();}
     wxDateTime getFromDateCtrl() {return fromDateCtrl_->GetValue();}
@@ -85,14 +83,9 @@ public:
     wxString userDateRangeStr() const;
     /// Returns the Status string, when Status is selected.
     wxString userStatusStr() const;
-    /// Returns the Type string, when Type is selected.
-    wxString userTypeStr() const;
     /// Returns the amount range string, when Amount Range is selected.
     wxString userAmountRangeStr() const;
-    /// Returns the transaction Number string, when Number is selected.
-    wxString userTransNumberStr() const;
-    /// Returns the user Note string, when Notes is selected.
-    wxString userNotesStr() const;
+    wxString userTypeStr() const;
 
     /// Returns true with valid dates, when the dialog date range is selected.
     bool getDateRange(wxDateTime& startDate, wxDateTime& endDate) const;
@@ -160,6 +153,7 @@ private:
     int payeeID_;
     int refAccountID_;
     wxString refAccountStr_;
+    void accountSelected(wxCommandEvent& event);
 
 };
 

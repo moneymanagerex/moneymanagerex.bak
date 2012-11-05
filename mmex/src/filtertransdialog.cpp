@@ -91,6 +91,7 @@ void mmFilterTransactionsDialog::dataToControls()
     accountCheckBox_ ->SetValue(status);
     accountDropDown_ ->Enable(status);
     accountDropDown_ ->SetStringSelection(value);
+    refAccountID_ = core_->accountList_.GetAccountId(value);
 
     status = get_next_value(tkz, value);
     dateRangeCheckBox_ ->SetValue(status);
@@ -186,6 +187,9 @@ void mmFilterTransactionsDialog::CreateControls()
 
     accountDropDown_ = new wxChoice( itemPanel, wxID_STATIC, wxDefaultPosition, wxSize(fieldWidth,-1), as, 0 );
     itemPanelSizer->Add(accountDropDown_, flags);
+    accountDropDown_ -> Connect(wxID_ANY, wxEVT_COMMAND_CHOICE_SELECTED,
+        wxCommandEventHandler(mmFilterTransactionsDialog::accountSelected), NULL, this);
+    
     //--End of Row --------------------------------------------------------
 
     dateRangeCheckBox_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Date Range"),
@@ -210,7 +214,8 @@ void mmFilterTransactionsDialog::CreateControls()
 
     btnPayee_ = new wxButton( itemPanel, wxID_STATIC, _("Select Payee"),
                              wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
-    btnPayee_->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmFilterTransactionsDialog::OnPayee), NULL, this);
+    btnPayee_->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
+        wxCommandEventHandler(mmFilterTransactionsDialog::OnPayee), NULL, this);
 
     itemPanelSizer->Add(btnPayee_, flags);
     //--End of Row --------------------------------------------------------
@@ -222,7 +227,8 @@ void mmFilterTransactionsDialog::CreateControls()
 
     btnCategory_ = new wxButton( itemPanel, wxID_STATIC, wxT(""),
                                 wxDefaultPosition, wxSize(fieldWidth,-1));
-    btnCategory_->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmFilterTransactionsDialog::OnCategs), NULL, this);
+    btnCategory_->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
+        wxCommandEventHandler(mmFilterTransactionsDialog::OnCategs), NULL, this);
 
     itemPanelSizer->Add(btnCategory_, flags);
     //--End of Row --------------------------------------------------------
@@ -427,6 +433,12 @@ void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
     }
 }
 
+wxString mmFilterTransactionsDialog::getAccountName()
+{
+	wxString accountName = core_->accountList_.GetAccountName(refAccountID_);
+	return accountName;
+}
+
 bool mmFilterTransactionsDialog::getDateRange(wxDateTime& startDate, wxDateTime& endDate) const
 {
     if (dateRangeCheckBox_->IsChecked())
@@ -496,13 +508,6 @@ wxString mmFilterTransactionsDialog::getType() const
     return withdraval+wxT(";")+deposit+wxT(";")+transfer;
 }
 
-wxString mmFilterTransactionsDialog::userStatusStr() const
-{
-    if (statusCheckBox_->IsChecked())
-        return choiceStatus_->GetStringSelection();
-    return wxT("");
-}
-
 wxString mmFilterTransactionsDialog::userTypeStr() const
 {
     wxString transCode = wxEmptyString;
@@ -511,18 +516,18 @@ wxString mmFilterTransactionsDialog::userTypeStr() const
         if (cbTypeWithdrawal_->GetValue())
             transCode = wxGetTranslation(TRANS_TYPE_WITHDRAWAL_STR);
         if (cbTypeDeposit_->GetValue())
-            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", "))
-                << wxGetTranslation(TRANS_TYPE_DEPOSIT_STR);
+            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << wxGetTranslation(TRANS_TYPE_DEPOSIT_STR);
         if (cbTypeTransfer_->GetValue())
-            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", "))
-                << wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
+            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
     }
     return transCode;
 }
 
-int mmFilterTransactionsDialog::getAccountID()
+wxString mmFilterTransactionsDialog::userStatusStr() const
 {
-    return core_->accountList_.GetAccountId(accountDropDown_->GetStringSelection());
+    if (statusCheckBox_->IsChecked())
+        return choiceStatus_->GetStringSelection();
+    return wxT("");
 }
 
 double mmFilterTransactionsDialog::getAmountMin()
@@ -553,20 +558,6 @@ wxString mmFilterTransactionsDialog::userAmountRangeStr() const
         amountRangeStr << _("Min: ") << minamt << wxT(" ") << _("Max: ") << maxamt;
     }
     return amountRangeStr;
-}
-
-wxString mmFilterTransactionsDialog::userTransNumberStr() const
-{
-    if (transNumberCheckBox_->IsChecked())
-        return transNumberEdit_->GetValue().Trim().Lower();
-    return wxT("");
-}
-
-wxString mmFilterTransactionsDialog::userNotesStr() const
-{
-    if (notesCheckBox_->IsChecked())
-        return notesEdit_->GetValue().Trim().Lower();
-    return wxT("");
 }
 
 void mmFilterTransactionsDialog::OnButtonSaveClick( wxCommandEvent& /*event*/ )
@@ -642,4 +633,12 @@ wxString mmFilterTransactionsDialog::GetCurrentSettings()
     settings_string_ << notesEdit_->GetValue() << wxT(";");
 
     return settings_string_;
+}
+
+void mmFilterTransactionsDialog::accountSelected(wxCommandEvent& event)
+{
+    int id = event.GetId();
+    wxString accountName = accountDropDown_->GetStringSelection();
+    refAccountStr_ = accountName;
+    refAccountID_ = core_->accountList_.GetAccountId(accountName);
 }
