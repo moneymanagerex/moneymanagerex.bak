@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-28 16:33+0300\n"
-"PO-Revision-Date: 2012-10-28 16:44+0300\n"
+"PO-Revision-Date: 2012-11-05 13:24+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -2430,7 +2430,7 @@ msgstr "Баланс фильтра: "
 
 #: src/mmcheckingpanel.cpp:585
 msgid "Account Bal: "
-msgstr "Бананс счёта: "
+msgstr "Баланс счёта: "
 
 #: src/mmcheckingpanel.cpp:587
 msgid "Reconciled Bal: "
@@ -2442,7 +2442,7 @@ msgstr "Разница: "
 
 #: src/mmcheckingpanel.cpp:652
 msgid "New Transaction"
-msgstr "Внесение новой проводки"
+msgstr "Новая транзакция"
 
 #: src/mmcheckingpanel.cpp:656
 msgid "Edit selected transaction"
