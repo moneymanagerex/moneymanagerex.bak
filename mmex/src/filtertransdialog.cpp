@@ -187,7 +187,7 @@ void mmFilterTransactionsDialog::CreateControls()
     accountDropDown_ = new wxChoice( itemPanel, wxID_STATIC, wxDefaultPosition, wxSize(fieldWidth,-1), as, 0 );
     itemPanelSizer->Add(accountDropDown_, flags);
     accountDropDown_ -> Connect(wxID_ANY, wxEVT_COMMAND_CHOICE_SELECTED,
-        wxCommandEventHandler(mmFilterTransactionsDialog::accountSelected), NULL, this);
+        wxCommandEventHandler(mmFilterTransactionsDialog::AccountSelected), NULL, this);
     
     //--End of Row --------------------------------------------------------
 
@@ -634,9 +634,9 @@ wxString mmFilterTransactionsDialog::GetCurrentSettings()
     return settings_string_;
 }
 
-void mmFilterTransactionsDialog::accountSelected(wxCommandEvent& event)
+void mmFilterTransactionsDialog::AccountSelected(wxCommandEvent& /*event*/)
 {
-    int id = event.GetId();
+//    int id = event.GetId();
     wxString accountName = accountDropDown_->GetStringSelection();
     refAccountStr_ = accountName;
     refAccountID_ = core_->accountList_.GetAccountId(accountName);

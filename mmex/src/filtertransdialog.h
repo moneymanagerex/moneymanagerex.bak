@@ -152,7 +152,7 @@ private:
     int payeeID_;
     int refAccountID_;
     wxString refAccountStr_;
-    void accountSelected(wxCommandEvent& event);
+    void AccountSelected(wxCommandEvent& /*event*/);
 
 };
 
