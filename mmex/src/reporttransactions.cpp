@@ -28,8 +28,8 @@
 #include "reportbudget.h"
 
 mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans,
-    mmCoreDB* core, int refAccountID, wxString refAccountStr, mmFilterTransactionsDialog* transDialog)
-:mmPrintableBase(core), trans_(trans), refAccountID_(refAccountID), refAccountStr_(refAccountStr), transDialog_(transDialog)
+    mmCoreDB* core, int refAccountID, mmFilterTransactionsDialog* transDialog)
+:mmPrintableBase(core), trans_(trans), refAccountID_(refAccountID), transDialog_(transDialog)
 {
 }
 
@@ -48,7 +48,10 @@ wxString mmReportTransactions::getHTMLText()
 
     wxString transHeading = _("Transaction List ");
     if (refAccountID_ > -1)
-        transHeading += wxString() << _("for Account: ") << refAccountStr_;
+    {
+        transHeading = wxString::Format(_("Transaction List for Account: %s")
+            ,core_->accountList_.GetAccountName(refAccountID_).c_str());
+    }
     hb.addHeader(2, transHeading);
 
     bool includeDateRange = false;

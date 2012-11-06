@@ -52,7 +52,6 @@ mmFilterTransactionsDialog::mmFilterTransactionsDialog(
     wxWindow* parent, wxWindowID id, const wxString& caption,
     const wxPoint& pos, const wxSize& size,long style)
 : core_(core)
-, db_(core->db_.get())
 , categID_(-1)
 , subcategID_(-1)
 , payeeID_(-1)
@@ -90,7 +89,6 @@ void mmFilterTransactionsDialog::dataToControls()
     accountCheckBox_ ->SetValue(status);
     accountDropDown_ ->Enable(status);
     accountDropDown_ ->SetStringSelection(value);
-    refAccountID_ = core_->accountList_.GetAccountId(value);
 
     status = get_next_value(tkz, value);
     dateRangeCheckBox_ ->SetValue(status);
@@ -186,9 +184,7 @@ void mmFilterTransactionsDialog::CreateControls()
 
     accountDropDown_ = new wxChoice( itemPanel, wxID_STATIC, wxDefaultPosition, wxSize(fieldWidth,-1), as, 0 );
     itemPanelSizer->Add(accountDropDown_, flags);
-    accountDropDown_ -> Connect(wxID_ANY, wxEVT_COMMAND_CHOICE_SELECTED,
-        wxCommandEventHandler(mmFilterTransactionsDialog::AccountSelected), NULL, this);
-    
+
     //--End of Row --------------------------------------------------------
 
     dateRangeCheckBox_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Date Range"),
@@ -368,32 +364,41 @@ void mmFilterTransactionsDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
 
 void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 {
+    if (accountCheckBox_->GetValue())
+    {
+        refAccountStr_ = accountDropDown_->GetStringSelection();
+        refAccountID_ = core_->accountList_.GetAccountId(refAccountStr_);
+    }
 
-            if (amountRangeCheckBox_->GetValue())
+    if (payeeCheckBox_->GetValue())
+    {
+        payeeID_ = core_->payeeList_.GetPayeeId(btnPayee_->GetLabel());
+    }
+
+    if (amountRangeCheckBox_->GetValue())
+    {
+        wxString minamt = amountMinEdit_->GetValue();
+        wxString maxamt = amountMaxEdit_->GetValue();
+        if (!minamt.IsEmpty())
+        {
+            double amount;
+            if (!mmex::formatCurrencyToDouble(minamt, amount) || (amount < 0.0))
             {
-                wxString minamt = amountMinEdit_->GetValue();
-                wxString maxamt = amountMaxEdit_->GetValue();
-                if (!minamt.IsEmpty())
-                {
-                    double amount;
-                    if (!mmex::formatCurrencyToDouble(minamt, amount) || (amount < 0.0))
-                    {
-                        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
-                        return;
-                    }
-                }
-
-                if (!maxamt.IsEmpty())
-                {
-                    double amount;
-                    if (!mmex::formatCurrencyToDouble(maxamt, amount) || (amount < 0.0))
-                    {
-                        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
-                        return;
-                    }
-                }
+                mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+                return;
             }
+        }
 
+        if (!maxamt.IsEmpty())
+        {
+            double amount;
+            if (!mmex::formatCurrencyToDouble(maxamt, amount) || (amount < 0.0))
+            {
+                mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+                return;
+            }
+        }
+    }
 
     EndModal(wxID_OK);
 }
@@ -434,8 +439,8 @@ void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
 
 wxString mmFilterTransactionsDialog::getAccountName()
 {
-	wxString accountName = core_->accountList_.GetAccountName(refAccountID_);
-	return accountName;
+    wxString accountName = core_->accountList_.GetAccountName(refAccountID_);
+    return accountName;
 }
 
 bool mmFilterTransactionsDialog::getDateRange(wxDateTime& startDate, wxDateTime& endDate) const
@@ -632,12 +637,4 @@ wxString mmFilterTransactionsDialog::GetCurrentSettings()
     settings_string_ << notesEdit_->GetValue() << wxT(";");
 
     return settings_string_;
-}
-
-void mmFilterTransactionsDialog::AccountSelected(wxCommandEvent& /*event*/)
-{
-//    int id = event.GetId();
-    wxString accountName = accountDropDown_->GetStringSelection();
-    refAccountStr_ = accountName;
-    refAccountID_ = core_->accountList_.GetAccountId(accountName);
 }
