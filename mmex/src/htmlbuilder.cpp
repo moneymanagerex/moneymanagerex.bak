@@ -30,7 +30,7 @@ mmHTMLBuilder::mmHTMLBuilder() {
 
 void mmHTMLBuilder::init()
 {
-    html += wxT("<html>\n<head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\"><title>");  
+    html += wxT("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /><title>");  
     html += mmex::getProgramName();
     html += wxT(" - ");
     html += _("Report");
@@ -41,22 +41,22 @@ void mmHTMLBuilder::init()
     //if I need more space on the top of home page and reports I will delete user name from settings
     if (mmIniOptions::instance().userNameString_ != wxT (""))
     {
-    int cols = 1;
-    startTable(wxT("100%"));
-    startTableRow();
-    if (mmIniOptions::instance().enableCustomLogo_)
-    {
+        int cols = 1;
+        startTable(wxT("100%"));
+        startTableRow();
+        if (mmIniOptions::instance().enableCustomLogo_)
+        {
+            startTableCell();
+            addImage(mmIniOptions::instance().logoName_);
+            endTableCell();
+            cols++;
+        }
         startTableCell();
-        addImage(mmIniOptions::instance().logoName_);
+        addHeader(2, mmIniOptions::instance().userNameString_);
         endTableCell();
-        cols++;
-    }
-    startTableCell();
-    addHeader(2, mmIniOptions::instance().userNameString_);
-    endTableCell();
-    endTableRow();
-    endTable();
-    addHorizontalLine(2);
+        endTableRow();
+        endTable();
+        addHorizontalLine(2);
     }
 }
 
