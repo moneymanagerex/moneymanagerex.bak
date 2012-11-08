@@ -91,20 +91,24 @@ class mmAssetsPanel : public mmPanelBase
 
 public:
     mmAssetsPanel(wxWindow *parent, mmCoreDB* core);
-   ~mmAssetsPanel();
-
-    void enableEditDeleteButtons(bool enable);
-    int initVirtualListControl(int trx_id = -1, int col = 0, bool asc = true);
-
-    wxString getItem(long item, long column);
+    ~mmAssetsPanel();
     const std::vector<mmAssetHolder*>& getTrans() const { return m_trans; }
     void updateExtraAssetData(int selIndex);
+    int initVirtualListControl(int trx_id = -1, int col = 0, bool asc = true);
+    wxString getItem(long item, long column);
+    void SetFilter(wxString filter) {filter_=filter; }
+    int GetListCtrlWidth(int id) {return m_listCtrlAssets->GetColumnWidth(id);}
+    void SetListCtrlColumn(int m_selected_col, wxListItem item)
+        {m_listCtrlAssets->SetColumn(m_selected_col, item);}
+
+private:
+    void enableEditDeleteButtons(bool enable);
     assetsListCtrl* m_listCtrlAssets;
+
     wxStaticText* itemStaticTextMainFilter_;
     wxString filter_;
     wxStaticText* header_text_;
 
-private:
     boost::scoped_ptr<wxImageList> m_imageList;
     std::vector<mmAssetHolder*> m_trans;
 

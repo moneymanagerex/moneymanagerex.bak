@@ -96,7 +96,7 @@ mmAssetsPanel::~mmAssetsPanel()
 void assetsListCtrl::OnItemResize(wxListEvent& event)
 {
     int i = event.GetColumn();
-    int width = cp_->m_listCtrlAssets->GetColumnWidth(i);
+    int width = cp_->GetListCtrlWidth(i);
     cp_->core_->iniSettings_->SetIntSetting(wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), width);
 }
 
@@ -104,7 +104,7 @@ void assetsListCtrl::InitVariables()
 {
     m_selected_col = 0;
     m_asc = true;
-    cp_->filter_ = wxT(" 'Property','Automobile','Household Object','Art','Jewellery','Cash','Other' ");
+    cp_->SetFilter(wxT(" 'Property','Automobile','Household Object','Art','Jewellery','Cash','Other' "));
 }
 
 void mmAssetsPanel::CreateControls()
@@ -505,7 +505,7 @@ void assetsListCtrl::OnColClick(wxListEvent& event)
     wxListItem item;
     item.SetMask(wxLIST_MASK_IMAGE);
     item.SetImage(-1);
-    cp_->m_listCtrlAssets->SetColumn(m_selected_col, item);
+    cp_->SetListCtrlColumn(m_selected_col, item);
 
     m_selected_col = event.GetColumn();
 
