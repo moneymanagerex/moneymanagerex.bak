@@ -47,7 +47,13 @@ public:
         selectedIndex_(-1)
     {}
 
-public:
+    void OnNewBDSeries(wxCommandEvent& event);
+    void OnEditBDSeries(wxCommandEvent& event);
+    void OnDeleteBDSeries(wxCommandEvent& event);
+    void OnEnterBDTransaction(wxCommandEvent& event);
+    void OnSkipBDTransaction(wxCommandEvent& event);
+
+private:
     /* required overrides for virtual style list control */
     virtual wxString OnGetItemText(long item, long column) const;
     virtual int OnGetItemImage(long item) const;
@@ -62,15 +68,8 @@ public:
     void OnListItemDeselected(wxListEvent& event);
     void OnItemResize(wxListEvent& event);
 
-    void OnNewBDSeries(wxCommandEvent& event);
-    void OnEditBDSeries(wxCommandEvent& event);
-    void OnDeleteBDSeries(wxCommandEvent& event);
-
-    void OnEnterBDTransaction(wxCommandEvent& event);
-    void OnSkipBDTransaction(wxCommandEvent& event);
     void refreshVisualList(int selected_index = -1);
 
-private:
     wxListItemAttr attr1_; // style1
     wxListItemAttr attr2_; // style2
     mmBillsDepositsPanel* cp_;
@@ -133,15 +132,17 @@ public:
                 const wxSize& size = wxDefaultSize,
                 long style = wxTAB_TRAVERSAL | wxNO_BORDER,
                 const wxString& name = wxPanelNameStr);
-      
-    void CreateControls();
-
+    /* Helper Functions/data */
+    std::vector<mmBDTransactionHolder> trans_;
+	void updateBottomPanelData(int selIndex);
     /* updates the Repeating transactions panel data */
     int initVirtualListControl(int id = -1);
-	void updateBottomPanelData(int selIndex);
-
     /* Getter for Virtual List Control */
     wxString getItem(long item, long column);
+	int GetListCtrlWidth(int id) {return listCtrlAccount_->GetColumnWidth(id);}
+
+private:      
+    void CreateControls();
   
     /* Event handlers for Buttons */
     void OnNewBDSeries(wxCommandEvent& event);
@@ -155,11 +156,8 @@ public:
 
     void OnViewPopupSelected(wxCommandEvent& event);
 
-    /* Helper Functions/data */
-    std::vector<mmBDTransactionHolder> trans_;
     void sortTable();
 
-public:
     wxImageList* m_imageList;
     billsDepositsListCtrl* listCtrlAccount_;
 };
