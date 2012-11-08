@@ -430,10 +430,10 @@ void assetsListCtrl::OnListKeyDown(wxListEvent& event)
 
 void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
 {
-    mmAssetDialog dlg(this, cp_->core_, 0, false);
+    mmAssetDialog dlg(this, cp_->core_, NULL, false);
     if (dlg.ShowModal() == wxID_OK)
     {
-        doRefreshItems(dlg.transID_);
+        doRefreshItems(dlg.GetAssetID());
     }
 }
 
@@ -471,8 +471,7 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
     {
         mmDBWrapper::deleteAsset(cp_->core_->db_.get(), cp_->getTrans()[selectedIndex_]->id_);
         DeleteItem(selectedIndex_);
-        cp_->initVirtualListControl(m_selected_col, m_asc);
-
+        cp_->initVirtualListControl(selectedIndex_, m_selected_col, m_asc);
         selectedIndex_ = -1;
         cp_->updateExtraAssetData(selectedIndex_);
     }
@@ -492,7 +491,7 @@ void assetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     mmAssetDialog dlg(this, cp_->core_, cp_->getTrans()[selectedIndex_], true);
 
     if (dlg.ShowModal() == wxID_OK)
-        doRefreshItems(dlg.transID_);
+        doRefreshItems(dlg.GetAssetID());
 
     cp_->updateExtraAssetData(selectedIndex_);
 }
