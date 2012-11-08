@@ -375,20 +375,13 @@ void billsDepositsListCtrl::OnItemRightClick(wxListEvent& event)
 wxString mmBillsDepositsPanel::getItem(long item, long column)
 {
     if (column == 0) return trans_[item].payeeStr_;
-    if (column == 1) return trans_[item].accountName_;
-
-    if (column == 2)
-    {
-        if (trans_[item].transType_ == TRANS_TYPE_WITHDRAWAL_STR) return _("Withdrawal");
-        else if (trans_[item].transType_ == TRANS_TYPE_DEPOSIT_STR) return _("Deposit");
-        else if (trans_[item].transType_ == TRANS_TYPE_TRANSFER_STR) return _("Transfer");
-    }
-
-    if (column == 3) return trans_[item].transAmtString_;
-    if (column == 4) return trans_[item].nextOccurStr_;
-    if (column == 5) return trans_[item].repeatsStr_;
-    if (column == 6) return trans_[item].daysRemainingStr_;
-    if (column == 7) return trans_[item].notes_;
+    else if (column == 1) return trans_[item].accountName_;
+    else if (column == 2) return wxGetTranslation(trans_[item].transType_);
+    else if (column == 3) return trans_[item].transAmtString_;
+    else if (column == 4) return trans_[item].nextOccurStr_;
+    else if (column == 5) return wxGetTranslation(trans_[item].repeatsStr_);
+    else if (column == 6) return trans_[item].daysRemainingStr_;
+    else if (column == 7) return trans_[item].notes_;
 
     return wxT("");
 }
@@ -448,7 +441,7 @@ void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
 {
     mmBDDialog dlg(cp_->db_, cp_->core_, 0, false, false, this );
     if ( dlg.ShowModal() == wxID_OK )
-        refreshVisualList(cp_->initVirtualListControl(dlg.transID_));
+        refreshVisualList(cp_->initVirtualListControl(dlg.GetTransID()));
 }
 
 void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
@@ -458,7 +451,7 @@ void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
 
     mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
-        refreshVisualList(cp_->initVirtualListControl(dlg.transID_));
+        refreshVisualList(cp_->initVirtualListControl(dlg.GetTransID()));
 }
 
 void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
@@ -505,7 +498,7 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 
     mmBDDialog dlg(cp_->core_->db_.get(), cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this);
     if ( dlg.ShowModal() == wxID_OK )
-        refreshVisualList(cp_->initVirtualListControl(dlg.transID_));
+        refreshVisualList(cp_->initVirtualListControl(dlg.GetTransID()));
 }
 
 void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)

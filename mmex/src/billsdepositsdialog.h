@@ -48,7 +48,9 @@ public:
         const wxPoint& pos = SYMBOL_BDDIALOG_POSITION, 
         const wxSize& size = SYMBOL_BDDIALOG_SIZE, 
         long style = SYMBOL_BDDIALOG_STYLE );
+    int GetTransID() {return transID_;}
 
+private:
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_BDDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_BDDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_BDDIALOG_POSITION, 
@@ -76,7 +78,6 @@ public:
     void OnCalendarSelChanged(wxCalendarEvent& event);
     int transID_;
 
-private:
     wxSQLite3Database* db_;
     mmCoreDB* core_;
     
