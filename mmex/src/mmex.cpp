@@ -2917,7 +2917,7 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
             msgStr = _("Password not entered for encrypted Database.\n");
 
         msgStr << fileName;
-        wxMessageBox(msgStr, dialogErrorMessageHeading, wxICON_ERROR);
+        wxMessageBox(msgStr, dialogErrorMessageHeading, wxOK|wxICON_ERROR);
         menuEnableItems(false);
         return false;
     }

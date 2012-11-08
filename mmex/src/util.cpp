@@ -61,7 +61,7 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
             wxString s = wxT("Can't find language files (.mo) at \"");
             s << langPath << wxT('\"');
 
-            wxMessageDialog dlg(parent, s, wxT("Error"), wxICON_ERROR);
+            wxMessageDialog dlg(parent, s, wxT("Error"), wxOK|wxICON_ERROR);
             dlg.ShowModal();
         }
 
@@ -364,7 +364,7 @@ wxString mmSelectLanguage(wxWindow *parent, boost::shared_ptr<MMEX_IniSettings> 
             //TODO fix string for proper translation
             wxString s = wxT("Directory of language files does not exist:\n\"");
             s << langPath << wxT('\"');
-            wxMessageDialog dlg(parent, s, wxT("Error"), wxICON_ERROR);
+            wxMessageDialog dlg(parent, s, wxT("Error"), wxOK|wxICON_ERROR);
             dlg.ShowModal();
         }
 

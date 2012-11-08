@@ -261,7 +261,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
             // If the file does not exist and cannot be created, throw an error
             if ( !sqlSourceFile.Exists() && !sqlSourceFile.Create() )
             {
-                wxMessageBox(_("Unable to write to file."),reportIndex_->UserDialogHeading(), wxICON_ERROR);
+                wxMessageBox(_("Unable to write to file."),reportIndex_->UserDialogHeading(), wxOK|wxICON_ERROR);
                 return;
             }
 
