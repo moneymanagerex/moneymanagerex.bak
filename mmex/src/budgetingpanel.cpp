@@ -474,7 +474,7 @@ wxString mmBudgetingPanel::getItem(long item, long column)
 {
     if (column == 0) return trans_[item].catStr_;
     if (column == 1) return trans_[item].subCatStr_;
-    if (column == 2) return trans_[item].period_;
+    if (column == 2) return wxGetTranslation(trans_[item].period_);
     if (column == 3) return trans_[item].amtString_;
     if (column == 4) return trans_[item].estimatedStr_;
     if (column == 5) return trans_[item].actualStr_;
