@@ -326,9 +326,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 
     mmOptions::instance().databaseUpdated_ = true;
     if (!m_edit)
-        transID_ = core_->db_.get()->GetLastRowId().ToLong();
-    else
-        transID_ = assetID_;
+        assetID_ = core_->db_.get()->GetLastRowId().ToLong();
 
     EndModal(wxID_OK);
 }

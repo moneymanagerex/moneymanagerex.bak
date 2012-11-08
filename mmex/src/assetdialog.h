@@ -32,12 +32,10 @@ class mmAssetDialog : public wxDialog
 public:
     mmAssetDialog() : core_(), asset_holder_(), m_edit() {}
     mmAssetDialog(wxWindow *parent, mmCoreDB* core, mmAssetHolder* asset_holder, bool edit);
-    void changeFocus(wxChildFocusEvent& event);
-    int transID_;
+    int GetAssetID() {return assetID_;}
 
 private:
     mmCoreDB* core_;
-    int assetID_;
     mmAssetHolder* asset_holder_;
     bool m_edit;
     bool assetRichText;
@@ -63,6 +61,8 @@ private:
     
     void fillControls();
     void dataToControls();
+    void changeFocus(wxChildFocusEvent& event);
+    int assetID_;
 
 };
 #endif
