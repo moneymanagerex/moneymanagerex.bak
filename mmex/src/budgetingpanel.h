@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -107,24 +107,26 @@ public:
 
     /* updates the checking panel data */
     void initVirtualListControl();
-    
-    /* Getter for Virtual List Control */
-    wxString getItem(long item, long column);
-  
     void save_column_width(const int width);
 
-    std::vector<mmBudgetEntryHolder> trans_;
+    /* Getter for Virtual List Control */
+    wxString getItem(long item, long column);
 
-    wxImageList* m_imageList;
+    void DisplayBudgetingDetails(int budgetYearID);
+    int GetBudgetYearID() {return budgetYearID_;}
+    wxString GetCurrentView() {return currentView_;}
+    int GetItemImage(long item) const;
+    void OnListItemActivated(int selectedIndex);
+    int GetTransID(long item) {return trans_[item].id_;}
+
+private:
+
+    std::vector<mmBudgetEntryHolder> trans_;
     budgetingListCtrl* listCtrlBudget_;
     wxString currentView_;
     int budgetYearID_;
-
-    void DisplayBudgetingDetails(int budgetYearID);
-
-private:
     mmGUIFrame* mainFrame_;
-
+    wxImageList* m_imageList;
     wxStaticText* budgetReportHeading_;
     wxStaticText* income_estimated_;
     wxStaticText* income_actual_;
@@ -138,7 +140,7 @@ private:
                 const wxSize& size = wxDefaultSize,
                 long style = wxTAB_TRAVERSAL | wxNO_BORDER,
                 const wxString& name = wxPanelNameStr);
-      
+
     void CreateControls();
     bool DisplayEntryAllowed(mmBudgetEntryHolder& budgetEntry);
     void UpdateBudgetHeading();

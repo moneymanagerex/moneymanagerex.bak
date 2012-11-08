@@ -484,12 +484,15 @@ wxString mmBudgetingPanel::getItem(long item, long column)
 
 int budgetingListCtrl::OnGetItemImage(long item) const
 {
-    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ == 0.0)) return 3;
-    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ != 0.0)) return 2;
-    if (cp_->trans_[item].estimated_ < cp_->trans_[item].actual_) return 0;
-    if (fabs(cp_->trans_[item].estimated_ - cp_->trans_[item].actual_)  < 0.001) return 0;
-
-   return 1;
+    return cp_->GetItemImage(item);
+}
+int mmBudgetingPanel::GetItemImage(long item) const
+{
+    if ((trans_[item].estimated_ == 0.0) && (trans_[item].actual_ == 0.0)) return 3;
+    if ((trans_[item].estimated_ == 0.0) && (trans_[item].actual_ != 0.0)) return 2;
+    if (trans_[item].estimated_ < trans_[item].actual_) return 0;
+    if (fabs(trans_[item].estimated_ - trans_[item].actual_)  < 0.001) return 0;
+    return 1;
 }
 
 wxString budgetingListCtrl::OnGetItemText(long item, long column) const
@@ -499,8 +502,8 @@ wxString budgetingListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr* budgetingListCtrl::OnGetItemAttr(long item) const
 {
-    if ((cp_->trans_[item].id_ < 0) &&
-        (cp_->currentView_ != wxT("View Budget Category Summary")) )
+    if ((cp_->GetTransID(item) < 0) &&
+        (cp_->GetCurrentView() != wxT("View Budget Category Summary")) )
     {
         return (wxListItemAttr *)&attr3_;
     }
@@ -512,21 +515,24 @@ wxListItemAttr* budgetingListCtrl::OnGetItemAttr(long item) const
 void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
+    cp_->OnListItemActivated(selectedIndex_);
+    RefreshItem(selectedIndex_);
+}
+
+void mmBudgetingPanel::OnListItemActivated(int selectedIndex)
+{
     /***************************************************************************
      A TOTALS entry does not contain a budget entry, therefore ignore the event.
      ***************************************************************************/
-    if (cp_->trans_[selectedIndex_].id_ >= 0)
+    if (trans_[selectedIndex].id_ < 0) return;
+    mmBudgetEntryDialog dlg(
+        db_, core_, GetBudgetYearID(),
+        trans_[selectedIndex].categID_,
+        trans_[selectedIndex].subcategID_,
+        trans_[selectedIndex].estimatedStr_,
+        trans_[selectedIndex].actualStr_, this);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        mmBudgetEntryDialog dlg(
-            cp_->db_, cp_->core_, cp_->budgetYearID_,
-            cp_->trans_[selectedIndex_].categID_,
-            cp_->trans_[selectedIndex_].subcategID_,
-            cp_->trans_[selectedIndex_].estimatedStr_,
-            cp_->trans_[selectedIndex_].actualStr_, this);
-        if ( dlg.ShowModal() == wxID_OK )
-        {
-            cp_->initVirtualListControl();
-            RefreshItem(selectedIndex_);
-        }
+        initVirtualListControl();
     }
 }
