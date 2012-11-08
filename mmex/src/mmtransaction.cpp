@@ -197,7 +197,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
                 errMsg << core->accountList_.GetAccountName(accountID_)
                     << wxT("\n\n")
                     << _("Subsequent errors not displayed.");
-                wxMessageBox(errMsg,_("MMEX DATABASE ERROR"),wxICON_ERROR);
+                wxMessageBox(errMsg,_("MMEX DATABASE ERROR"), wxOK|wxICON_ERROR);
                 core->displayDatabaseError_ = false;
             }
             payeeID_  = -1;
