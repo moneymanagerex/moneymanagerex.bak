@@ -315,7 +315,7 @@ void mmIniOptions::loadOptions(boost::shared_ptr<MMEX_IniSettings> pIniSettings)
 
     // Read the preference as a string and convert to int
     transPayeeSelectionNone_ = pIniSettings->GetIntSetting(wxT("TRANSACTION_PAYEE_NONE"), 0);
-    
+
     // For the category selection, default behavior should remain that the last category used for the payee is selected.
     //  This is item 1 (0-indexed) in the list.
     transCategorySelectionNone_ = pIniSettings->GetIntSetting(wxT("TRANSACTION_CATEGORY_NONE"), 1);
@@ -674,7 +674,7 @@ bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
     val = 0;
     const CurrencyFormatter &fmt = CurrencyFormatter::instance();
     wxString s = str;
-    
+
     // remove separators from the amount.
     wxString gs = fmt.getGroupSeparator();
     if (s.Find(gs)) s.Replace(gs, wxEmptyString);
@@ -979,4 +979,92 @@ wxImageList* navtree_images_list_()
     imageList_->Add(wxBitmap(wxImage(rubik_cube_xpm).Scale(16, 16)));
 
     return imageList_;
+}
+
+void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
+{
+    const int currencyID = core->currencyList_.getBaseCurrencySettings();
+    const wxString base_symbol = core->currencyList_.getCurrencySharedPtr(currencyID)->currencySymbol_;
+    if(base_symbol.IsEmpty())
+    {
+        wxMessageBox(_("Could not find base currency symbol!"), _("Update Currency Rate"), wxOK|wxICON_WARNING);
+        return;
+    }
+
+    wxString site;
+    for (int idx = 0; idx < (int)core->currencyList_.currencies_.size(); idx++)
+    {
+        const wxString symbol = core->currencyList_.currencies_[idx]->currencySymbol_.Upper();
+
+        site << symbol << base_symbol << wxT("=X+");
+    }
+    if (site.Right(1).Contains(wxT("+"))) site.RemoveLast(1);
+    site = wxString::Format(wxT("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv"), site.c_str());
+
+    wxString rates;
+    int err_code = site_content(site, rates);
+    if (err_code != wxID_OK) {
+        if (err_code == 2)
+            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxOK|wxICON_WARNING);
+        else if (err_code == 1)
+            wxMessageBox(_("Unable to connect!"), _("Error"), wxOK|wxICON_WARNING);
+        return;
+    }
+
+    wxString CurrencySymbol, dName;
+    double dRate = 0;
+
+    std::map<wxString, std::pair<double, wxString> > currency_data;
+
+    // Break it up into lines
+    wxStringTokenizer tkz(rates, wxT("\r\n"));
+
+    while (tkz.HasMoreTokens())
+    {
+        wxString csvline = tkz.GetNextToken();
+
+        wxStringTokenizer csvsimple(csvline, wxT("\","),wxTOKEN_STRTOK);
+        if (csvsimple.HasMoreTokens())
+        {
+            CurrencySymbol = csvsimple.GetNextToken();
+            if (csvsimple.HasMoreTokens())
+            {
+                csvsimple.GetNextToken().ToDouble(&dRate);
+                if (csvsimple.HasMoreTokens())
+                    dName = csvsimple.GetNextToken();
+            }
+        }
+        currency_data.insert(std::make_pair(CurrencySymbol, std::make_pair(dRate, dName)));
+    }
+
+    wxString msg = _("Currency rate updated");
+    msg << wxT("\n\n");
+
+    core->db_.get()->Begin();
+
+    for (int idx = 0; idx < (int)core->currencyList_.currencies_.size(); idx++)
+    {
+        const wxString currency_symbol = core->currencyList_.currencies_[idx]->currencySymbol_.Upper();
+        if (!currency_symbol.IsEmpty())
+        {
+            wxString currency_symbols_pair = currency_symbol + base_symbol + wxT("=X");
+            std::pair<double, wxString> data = currency_data[currency_symbols_pair];
+
+            wxString valueStr;
+            double new_rate = data.first;
+            double old_rate = core->currencyList_.currencies_[idx]->baseConv_;
+            mmex::formatDoubleToCurrencyEdit(old_rate, valueStr);
+            msg << currency_symbol << wxT("\t : ")
+                << valueStr << wxT(" -> ");
+            mmex::formatDoubleToCurrencyEdit(new_rate, valueStr);
+            msg << valueStr << wxT("\n");
+            core->currencyList_.currencies_[idx]->baseConv_ = new_rate;
+            core->currencyList_.updateCurrency(core->currencyList_.currencies_[idx]);
+        }
+    }
+
+    core->db_.get()->Commit();
+
+    wxMessageDialog msgDlg(parent, msg, _("Currency rate updated"));
+    msgDlg.ShowModal();
 }
