@@ -132,10 +132,10 @@ void SplitDetailDialog::CreateControls()
     wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(buttonSizer, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxButton* itemButtonOK = new wxButton( this, wxID_OK, _("OK"));
+    wxButton* itemButtonOK = new wxButton( this, wxID_OK);
     buttonSizer->Add(itemButtonOK, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButtonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"));
+    wxButton* itemButtonCancel = new wxButton( this, wxID_CANCEL);
     buttonSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 

@@ -205,20 +205,17 @@ void mmBudgetEntryDialog::CreateControls()
 
     textAmount_ = new wxTextCtrl( itemPanel7, 
         ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, wxT(""), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
-    itemGridSizer2->Add(textAmount_, 0, 
-        wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    itemGridSizer2->Add(textAmount_);
     textAmount_->SetToolTip(_("Enter the amount budgeted for this category."));
     textAmount_->SetFocus();
     
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
    
-    wxButton* itemButton7 = new wxButton( this, 
-        wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton7 = new wxButton( this, wxID_OK);
     itemBoxSizer9->Add(itemButton7, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( this, wxID_CANCEL, 
-        _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton8 = new wxButton( this, wxID_CANCEL);
     itemBoxSizer9->Add(itemButton8, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
