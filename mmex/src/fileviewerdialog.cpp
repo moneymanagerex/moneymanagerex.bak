@@ -83,7 +83,7 @@ void fileviewer::CreateControls()
     //Scroll to the top of file
     itemTextCtrl3->SetInsertionPoint(0);
     
-    wxButton* itemButtonOK = new wxButton( this, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButtonOK = new wxButton( this, wxID_OK);
     itemBoxSizer2->Add(itemButtonOK, 0, wxALIGN_RIGHT|wxALL, 4);
     itemButtonOK->SetFocus();
 }
