@@ -1,6 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
- 
+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -29,7 +29,7 @@
 class mmCoreDB;
 class MMEX_IniSettings;
 
-struct ValuePair 
+struct ValuePair
 {
     wxString label;
     double   amount;
@@ -38,10 +38,10 @@ struct ValuePair
 class mmListBoxItem: public wxClientData
 {
 public:
-    mmListBoxItem(int index, const wxString& name) 
+    mmListBoxItem(int index, const wxString& name)
         : index_(index), name_(name)
     {}
-    
+
     int getIndex() const { return index_; }
     wxString getName() const { return name_; }
 
@@ -62,7 +62,7 @@ public:
     bool isBudgetingNode() const { return isBudgetingNode_; }
 
 private:
-    int id_; 
+    int id_;
     bool isString_;
     bool isBudgetingNode_;
     wxString stringData_;
@@ -160,7 +160,7 @@ public:
     bool budgetSetupWithoutSummaries_;
     bool budgetSummaryWithoutCategories_;
     bool ignoreFutureTransactions_;
-   
+
     int transPayeeSelectionNone_;
     int transCategorySelectionNone_;
     int transStatusReconciled_;
@@ -183,37 +183,37 @@ public:
 namespace mmex
 {
 
-template <class T> 
-class Singleton 
-{ 
-public: 
-    static inline T& instance() 
-    { 
-        static T _instance; 
-        return _instance; 
-    } 
+template <class T>
+class Singleton
+{
+public:
+    static inline T& instance()
+    {
+        static T _instance;
+        return _instance;
+    }
 
-private: 
-    Singleton(void); 
-    ~Singleton(void); 
-    Singleton(const Singleton<T>&); 
-    Singleton<T>& operator= (const Singleton<T> &); 
-}; 
+private:
+    Singleton(void);
+    ~Singleton(void);
+    Singleton(const Singleton<T>&);
+    Singleton<T>& operator= (const Singleton<T> &);
+};
 
 class CurrencyFormatter
 {
 public:
     CurrencyFormatter();
-	static CurrencyFormatter& instance();
+    static CurrencyFormatter& instance();
 
     void loadDefaultSettings();
     void loadSettings(const mmCurrency &cur);
 
-    void loadSettings(const wxString &pfx, const wxString &sfx, 
-        	    wxChar dec, wxChar grp, 
-        	    const wxString &unit, const wxString &cent, 
-        	    int scale 
-        	    );
+    void loadSettings(const wxString &pfx, const wxString &sfx,
+                wxChar dec, wxChar grp,
+                const wxString &unit, const wxString &cent,
+                int scale
+                );
 
     wxString getPrefix() const { return m_pfx_symbol; }
     wxString getSuffix() const { return m_sfx_symbol; }
@@ -221,7 +221,7 @@ public:
     wxChar getDecimalPoint() const { return m_decimal_point; }
     wxChar getGroupSeparator() const { return m_group_separator; }
 
-	int getScale() const { return m_scale; }
+    int getScale() const { return m_scale; }
 
 private:
     wxString m_pfx_symbol;   // Leading currency symbol
@@ -244,26 +244,26 @@ bool formatCurrencyToDouble( const wxString& str, double& val );
 
 namespace boost
 {
- 	inline std::size_t hash_value(const wxChar* string)
-	{
-		long int_key = 0;
+    inline std::size_t hash_value(const wxChar* string)
+    {
+        long int_key = 0;
 
-		while (*string) {
-			int_key += static_cast<wxUChar>(*string++);
-	        }
+        while (*string) {
+            int_key += static_cast<wxUChar>(*string++);
+            }
 
-		return int_key;
-	}
+        return int_key;
+    }
 
    /* problems using wxWidgets 2.9.x */
-	inline std::size_t hash_value(const wxString& value)
-	{
+    inline std::size_t hash_value(const wxString& value)
+    {
         size_t key = 0;
         for(wxString::const_iterator it = value.begin(); it != value.end(); ++ it)
             key += static_cast<wxUChar>(*it);
 
         return key;
-	}
+    }
 
 } // namespace boost
 
@@ -273,58 +273,58 @@ namespace DateTimeProviders {
 
 struct Today
 {
-	inline static wxDateTime StartRange()
-	{
-		return wxDateTime::Now().GetDateOnly();
-	}
-	inline static wxDateTime EndRange()
-	{
-		return StartRange() + wxTimeSpan(23, 59, 59, 999);
-	}
+    inline static wxDateTime StartRange()
+    {
+        return wxDateTime::Now().GetDateOnly();
+    }
+    inline static wxDateTime EndRange()
+    {
+        return StartRange() + wxTimeSpan(23, 59, 59, 999);
+    }
 };
 
 template <int year, wxDateTime::Month month, int day>
 struct CustomDate
 {
-	inline static wxDateTime StartRange()
-	{
-		return wxDateTime(day, month, year, 0, 0, 0, 0);
-	}
-	inline static wxDateTime EndRange()
-	{
-		return wxDateTime(day, month, year, 23, 59, 59, 999);
-	}
+    inline static wxDateTime StartRange()
+    {
+        return wxDateTime(day, month, year, 0, 0, 0, 0);
+    }
+    inline static wxDateTime EndRange()
+    {
+        return wxDateTime(day, month, year, 23, 59, 59, 999);
+    }
 };
 
 template <int Period, typename CurrentData = Today>
 struct LastDays
 {
-	inline static wxDateTime StartRange()
-	{
-		wxDateTime today = CurrentData::StartRange();
-		return today.Subtract((Period - 1) * wxDateSpan::Day());;
-	}
-	inline static wxDateTime EndRange()
-	{
-		return CurrentData::EndRange();
-	}
+    inline static wxDateTime StartRange()
+    {
+        wxDateTime today = CurrentData::StartRange();
+        return today.Subtract((Period - 1) * wxDateSpan::Day());;
+    }
+    inline static wxDateTime EndRange()
+    {
+        return CurrentData::EndRange();
+    }
 };
 
 template <int MonthsAgoStart, int MonthsAgoEnd = 0, typename CurrentData = Today>
 struct LastMonths
 {
-	BOOST_STATIC_ASSERT(MonthsAgoStart >= MonthsAgoEnd);
+    BOOST_STATIC_ASSERT(MonthsAgoStart >= MonthsAgoEnd);
 
-	inline static wxDateTime StartRange()
-	{
-		wxDateTime datePast = CurrentData::StartRange().Subtract(MonthsAgoStart * wxDateSpan::Month());
-		wxDateTime result(1, datePast.GetMonth(), datePast.GetYear());
-        	return result;
-	}
-	inline static wxDateTime EndRange()
-	{
-		return StartRange().Add((MonthsAgoStart-MonthsAgoEnd+1) * wxDateSpan::Month()).Subtract(wxTimeSpan(0,0,0,1));
-	}
+    inline static wxDateTime StartRange()
+    {
+        wxDateTime datePast = CurrentData::StartRange().Subtract(MonthsAgoStart * wxDateSpan::Month());
+        wxDateTime result(1, datePast.GetMonth(), datePast.GetYear());
+            return result;
+    }
+    inline static wxDateTime EndRange()
+    {
+        return StartRange().Add((MonthsAgoStart-MonthsAgoEnd+1) * wxDateSpan::Month()).Subtract(wxTimeSpan(0,0,0,1));
+    }
 };
 
 template <typename CurrentData = Today>
@@ -345,10 +345,10 @@ public:
     {
         wxArrayString list;
         wxString valid_chars(wxT("-12 345,678.90"));
-        size_t len = valid_chars.Length(); 
+        size_t len = valid_chars.Length();
         for (size_t i=0; i<len; i++) {
             list.Add(wxString(valid_chars.GetChar(i)));
-        } 
+        }
         SetIncludes(list);
     }
 };
@@ -357,6 +357,7 @@ wxImageList* navtree_images_list_();
 
 /// Located here as a function to allow removal in GTK
 void windowsFreezeThaw(wxWindow* pWindow);
+void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core);
 
 #endif // _MM_EX_UTIL_H_
 //----------------------------------------------------------------------------
