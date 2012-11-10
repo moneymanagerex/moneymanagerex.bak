@@ -88,15 +88,15 @@ private:
     void changeFocus(wxChildFocusEvent& event);
     void onTextEntered(wxCommandEvent& event);
     void onChoiceTransChar(wxKeyEvent& event);
-    void onChoiceStatusChar(wxKeyEvent& event);
-    void OnButtonPayeeChar(wxKeyEvent& event);
-    void OnButtonPayeeMouse(wxMouseEvent& event);
     void OnButtonDateChar(wxKeyEvent& event);
     void OnAdvanceChecked(wxCommandEvent& event);
-    void SetTransferControls(bool transfers = false);
-    void SetAdvancedTransferControls(bool advanced = false);
+    void SetTransferControls();
+
     void activateSplitTransactionsDlg();
     void SetSplitState();
+    //TODO: that functions not needed for wx2.9
+    void onChoiceStatusChar(wxKeyEvent& event);
+    void OnButtonPayeeChar(wxKeyEvent& event);
 
     wxTextCtrl *textNumber_;
     wxTextCtrl *textAmount_;
@@ -128,6 +128,7 @@ private:
     int payeeID_;
     int toID_;
     double toTransAmount_;
+    double transAmount_;
     bool advancedToTransAmountSet_;
     boost::shared_ptr<mmSplitTransactionEntries> split_;
 
