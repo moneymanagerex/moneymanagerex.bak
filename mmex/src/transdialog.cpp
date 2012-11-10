@@ -907,6 +907,7 @@ void mmTransDialog::SetAdvancedTransferControls(bool advanced)
     if (advanced)
     {
         toTextAmount_->Enable();
+        textAmount_->Enable();
         advancedToTransAmountSet_ = true;
         // Display the transfer amount in the toTextAmount control.
         if (toTransAmount_ >= 0)
@@ -925,7 +926,10 @@ void mmTransDialog::SetAdvancedTransferControls(bool advanced)
     }
     else
     {
-        toTextAmount_->Disable();
+        if (accountID_ == referenceAccountID_)
+            toTextAmount_->Disable();
+        else
+            textAmount_->Disable();
         advancedToTransAmountSet_ = false;
     }
 }
