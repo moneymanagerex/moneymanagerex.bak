@@ -99,6 +99,7 @@ private:
 
     wxButton* itemButtonEdit_;
     wxButton* itemButtonDelete_;
+    void OnOnlineUpdateCurRate(wxCommandEvent& event);
 };
 
 #endif // _MM_EX_MAINCURRENCY_DIALOG_H_

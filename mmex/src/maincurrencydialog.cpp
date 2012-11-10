@@ -119,9 +119,19 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText( this, wxID_STATIC,
-       _("Currency List"));
-    itemBoxSizer2->Add(itemStaticText3, flagsExpand);
+    wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer22, flagsExpand);
+
+    wxBitmapButton* update_button = new wxBitmapButton(this, 
+        wxID_STATIC, wxBitmap(update_currency_xpm));
+    itemBoxSizer22->Add(update_button, flags);
+    update_button->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
+        wxCommandEventHandler(mmMainCurrencyDialog::OnOnlineUpdateCurRate), NULL, this);
+    update_button->SetToolTip(_("Online update currency rate"));
+    itemBoxSizer22->AddSpacer(10);
+
+    itemBoxSizer22->Add(new wxStaticText( this, wxID_STATIC,
+       _("Currency List")), flags);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
@@ -326,4 +336,8 @@ void mmMainCurrencyDialog::OnListItemActivated(wxListEvent& event)
         OnBtnEdit(event);
 }
 
-
+void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
+{
+    OnlineUpdateCurRate(this, core_);
+    fillControls();
+}
