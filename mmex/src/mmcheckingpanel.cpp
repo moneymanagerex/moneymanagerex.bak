@@ -578,7 +578,7 @@ void mmCheckingPanel::CreateControls()
     wxStaticText* itemStaticText17 = new wxStaticText( headerPanel,
             ID_PANEL_CHECKING_STATIC_BALHEADER4, _("Displayed Bal: "));
     wxStaticText* itemStaticText18 = new wxStaticText( headerPanel,
-            ID_PANEL_CHECKING_STATIC_BALHEADER5, wxT("$"));
+            ID_PANEL_CHECKING_STATIC_BALHEADER5, wxT("$"), wxDefaultPosition, wxSize(120,-1));
 
     wxFlexGridSizer* balances_header = new wxFlexGridSizer(0,8,5,10);
     itemBoxSizerVHeader->Add(balances_header);
