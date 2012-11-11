@@ -90,7 +90,7 @@ private:
     void onChoiceTransChar(wxKeyEvent& event);
     void OnButtonDateChar(wxKeyEvent& event);
     void OnAdvanceChecked(wxCommandEvent& event);
-    void SetTransferControls();
+    void SetTransferControls(bool transfer = true);
 
     void activateSplitTransactionsDlg();
     void SetSplitState();
