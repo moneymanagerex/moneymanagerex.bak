@@ -1405,7 +1405,7 @@ void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
 
 int TransactionListCtrl::OnMarkTransactionDB(const wxString& status)
 {
-    if (m_selectedIndex == -1) return -1;
+    if (m_selectedIndex < 0) return -1;
 
     int transID = m_cp->m_trans[m_selectedIndex]->transactionID();
     if (mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status))
@@ -1662,25 +1662,25 @@ void TransactionListCtrl::OnChar(wxKeyEvent& event)
 
 void TransactionListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 {
-    if (m_selectedIndex != -1)
-        m_selectedForCopy = m_cp->m_trans[m_selectedIndex]->transactionID();
+    if (m_selectedIndex < 0) return;
+
+    m_selectedForCopy = m_cp->m_trans[m_selectedIndex]->transactionID();
 }
 //----------------------------------------------------------------------------
 
 void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
-    if (m_selectedForCopy != -1)
-    {
-        bool useOriginalDate = m_cp->core_->iniSettings_->GetBoolSetting(INIDB_USE_ORG_DATE_COPYPASTE, false);
+    if (m_selectedForCopy < 0) return;
 
-        boost::shared_ptr<mmBankTransaction> pCopiedTrans =
-            m_cp->core_->bTransactionList_.copyTransaction(m_cp->core_, m_selectedForCopy, m_cp->accountID(), useOriginalDate);
+    bool useOriginalDate = m_cp->core_->iniSettings_->GetBoolSetting(INIDB_USE_ORG_DATE_COPYPASTE, false);
 
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(m_cp->accountID()).lock();
-        pCopiedTrans->updateAllData(m_cp->core_, m_cp->accountID(), pCurrencyPtr, true);
-        int transID = pCopiedTrans->transactionID();
-        refreshVisualList(transID);
-    }
+    boost::shared_ptr<mmBankTransaction> pCopiedTrans =
+        m_cp->core_->bTransactionList_.copyTransaction(m_cp->core_, m_selectedForCopy, m_cp->accountID(), useOriginalDate);
+
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(m_cp->accountID()).lock();
+    pCopiedTrans->updateAllData(m_cp->core_, m_cp->accountID(), pCurrencyPtr, true);
+    int transID = pCopiedTrans->transactionID();
+    refreshVisualList(transID);
 }
 //----------------------------------------------------------------------------
 
@@ -1766,15 +1766,14 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 
 void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
-    if (m_selectedIndex != -1)
+    if (m_selectedIndex < 0) return;
+
+    mmTransDialog dlg(m_cp->core_, m_cp->accountID(),
+       m_cp->m_trans[m_selectedIndex], true, this);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        mmTransDialog dlg(m_cp->core_, m_cp->accountID(),
-           m_cp->m_trans[m_selectedIndex], true, this);
-        if ( dlg.ShowModal() == wxID_OK )
-        {
-            int transID = dlg.getTransID();
-            refreshVisualList(transID);
-        }
+        int transID = dlg.getTransID();
+        refreshVisualList(transID);
     }
 }
 //----------------------------------------------------------------------------
@@ -1811,6 +1810,7 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 void TransactionListCtrl::refreshVisualList(const int trans_id)
 {
     m_cp->initVirtualListControl(trans_id);
+
     if (m_selectedIndex >= (long)m_cp->m_trans.size() || m_selectedIndex < 0)
         m_selectedIndex = g_asc ? (long)m_cp->m_trans.size() - 1 : 0;
     if (m_cp->m_trans.size() > 0) {
@@ -1848,7 +1848,7 @@ int TransactionListCtrl::destinationAccountID(wxString accName)
 
 void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 {
-    if (m_selectedIndex == -1) return;
+    if (m_selectedIndex < 0) return;
     int toAccountID = destinationAccountID(m_cp->m_trans[m_selectedIndex]->fromAccountStr_);
     if ( toAccountID != -1 )
     {
@@ -1874,26 +1874,20 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 //----------------------------------------------------------------------------
 void TransactionListCtrl::OnViewSplitTransaction(wxCommandEvent& /*event*/)
 {
-    if (m_selectedIndex != -1)
-    {
-        if (m_cp->m_trans[m_selectedIndex]->categID_ < 0)
-            m_cp->DisplaySplitCategories(m_cp->m_trans[m_selectedIndex]->transactionID());
-    }
+    if (m_selectedIndex < 0) return;
+
+    if (m_cp->m_trans[m_selectedIndex]->categID_ < 0)
+        m_cp->DisplaySplitCategories(m_cp->m_trans[m_selectedIndex]->transactionID());
+
 }
 
 //----------------------------------------------------------------------------
 void TransactionListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
-    if (m_selectedIndex == -1) return;
+    if (m_selectedIndex < 0) return;
 
-    int transID = m_cp->m_trans[m_selectedIndex]->transactionID();
-    mmTransDialog dlg(m_cp->core_,  m_cp->accountID(),
-        m_cp->m_trans[m_selectedIndex], true, this);
-    if ( dlg.ShowModal() == wxID_OK )
-    {
-        refreshVisualList(transID);
-        m_cp->updateExtraTransactionData(m_selectedIndex);
-    }
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_EDIT);
+    AddPendingEvent(evt);
 }
 
 //----------------------------------------------------------------------------
