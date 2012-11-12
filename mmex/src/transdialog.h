@@ -78,13 +78,13 @@ private:
     void OnQuit(wxCloseEvent& event);
     void OnCategs(wxCommandEvent& event);
     void OnPayee(wxCommandEvent& event);
+    void OnPayeeUpdated(wxCommandEvent& event /*wxKeyEvent& event*/);
     void OnAutoTransNum(wxCommandEvent& event);
     void OnTransTypeChanged(wxCommandEvent& event);
     void OnSpin(wxSpinEvent&);
     void OnDateChanged(wxDateEvent& event);
     void dataToControls();
     void updateControlsForTransType();
-    void displayControlsToolTips(int transType/*, bool enableAdvanced = false*/);
     void changeFocus(wxChildFocusEvent& event);
     void onTextEntered(wxCommandEvent& event);
     void onChoiceTransChar(wxKeyEvent& event);
@@ -94,9 +94,6 @@ private:
 
     void activateSplitTransactionsDlg();
     void SetSplitState();
-    //TODO: that functions not needed for wx2.9
-    void onChoiceStatusChar(wxKeyEvent& event);
-    void OnButtonPayeeChar(wxKeyEvent& event);
 
     wxTextCtrl *textNumber_;
     wxTextCtrl *textAmount_;
@@ -104,7 +101,8 @@ private:
     wxTextCtrl *textNotes_;
     wxTextCtrl* textCategory_;
     wxButton* bCategory_;
-    wxButton* bPayee_;
+    wxBitmapButton* bPayee_;
+    wxComboBox* cbPayee_;
     wxCheckBox* cSplit_;
     wxCheckBox* cAdvanced_;
     wxButton* bAuto_;

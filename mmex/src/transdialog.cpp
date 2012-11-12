@@ -42,7 +42,6 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_BUTTON(wxID_CANCEL, mmTransDialog::OnCancel)
     EVT_CLOSE(mmTransDialog::OnQuit)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONCATEGS, mmTransDialog::OnCategs)
-    EVT_BUTTON(ID_DIALOG_TRANS_BUTTONPAYEE, mmTransDialog::OnPayee)
     EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmTransDialog::OnTransTypeChanged)
     EVT_CHECKBOX(ID_DIALOG_TRANS_ADVANCED_CHECKBOX, mmTransDialog::OnAdvanceChecked)
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
@@ -114,38 +113,22 @@ void mmTransDialog::dataToControls()
     wxDateEvent dateEvent(dpc_, trx_date, wxEVT_DATE_CHANGED);
     GetEventHandler()->ProcessEvent(dateEvent);
 
+    wxString transTypeString;
+    wxString dispAmount;
     if (edit_)
     {
         wxString statusString = pBankTransaction_->status_;
         if (statusString == wxT("")) statusString = wxT("N");
         choiceStatus_->SetSelection(wxString(wxT("NRVFD")).Find(statusString));
-    }
-    else
-        choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
 
-    wxString transTypeString;
-    if (edit_)
-    {
         transTypeString = pBankTransaction_->transType_;
         transaction_type_->SetStringSelection(wxGetTranslation(transTypeString));
-    }
-    else
-        transaction_type_->SetSelection(0);
 
-    if (edit_)
-    {
         categID_ = pBankTransaction_->categID_;
         categoryName_ = core_->categoryList_.GetCategoryName(categID_);
         subcategID_ = pBankTransaction_->subcategID_;
         subCategoryName_ = core_->categoryList_.GetSubCategoryName(categID_, subcategID_);
-    }
-    else
-    {
-        //TODO:
-    }
 
-    if (edit_)
-    {
         accountID_ = pBankTransaction_->accountID_;
         toID_ = pBankTransaction_->toAccountID_;
 
@@ -158,9 +141,17 @@ void mmTransDialog::dataToControls()
 
         transAmount_ = pBankTransaction_->amt_;
         toTransAmount_ = pBankTransaction_->toAmt_;
+
+        mmex::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
+        textAmount_->SetValue(dispAmount);
+        mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
+        toTextAmount_->SetValue(dispAmount);
     }
     else
     {
+        choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+        transaction_type_->SetSelection(0);
+
         notesColour_ = textNotes_->GetForegroundColour();
         textNotes_->SetForegroundColour(wxColour(wxT("GREY")));
         textNotes_->SetValue(notesTip_);
@@ -171,15 +162,6 @@ void mmTransDialog::dataToControls()
     if (transAmount_ > 0.0)
         edit_currency_rate = toTransAmount_ / transAmount_;
 
-    wxString dispAmount;
-    if (edit_)
-    {
-        mmex::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
-        textAmount_->SetValue(dispAmount);
-        mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
-        toTextAmount_->SetValue(dispAmount);
-    }
-
     updateControlsForTransType();
     cAdvanced_->SetValue(advancedToTransAmountSet_);
 
@@ -188,7 +170,8 @@ void mmTransDialog::dataToControls()
 
     if (transTypeString == TRANS_TYPE_TRANSFER_STR)
     {
-        advancedToTransAmountSet_ = (transAmount_!=toTransAmount_);
+        advancedToTransAmountSet_ = (transAmount_ != toTransAmount_);
+        payeeName = cbPayee_->GetValue();
         SetTransferControls();  // hide appropriate fields
     }
     else
@@ -202,13 +185,13 @@ void mmTransDialog::dataToControls()
         {
             //If user does not want payee to be auto filled for the new transaction
             payeeName = resetPayeeString();
-            payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_, categID_, subcategID_);
             payeeUnknown_ = true;
 
             if ( mmIniOptions::instance().transPayeeSelectionNone_ > 0)
             {
-                if (payeeID_ > -1)
+                if (payeeID_ < 0)
                 {
+                    payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_, categID_, subcategID_);
                     payeeName = core_->payeeList_.GetPayeeName(payeeID_);
                     payeeUnknown_ = false;
                 }
@@ -239,7 +222,7 @@ void mmTransDialog::dataToControls()
     }
 
     bCategory_->SetLabel(categString);
-    bPayee_->SetLabel(payeeName);
+    cbPayee_->SetValue(payeeName);
 
     if (split_->numEntries() > 0)
     {
@@ -249,27 +232,87 @@ void mmTransDialog::dataToControls()
 
 }
 
+void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
+{
+    updateControlsForTransType();
+}
+
+void mmTransDialog::updateControlsForTransType()
+{
+    SetTransferControls(transaction_type_->GetSelection()==DEF_TRANSFER);
+
+    if (!edit_)
+    {
+        wxString categString;
+        if (mmIniOptions::instance().transCategorySelectionNone_ == 0) // Default Category = "None"
+            categString = resetCategoryString();
+        else
+        {
+            categID_ = core_->bTransactionList_.getTransferCategoryID(accountID_, subcategID_);
+            categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
+        }
+        bCategory_->SetLabel(categString);
+    }
+}
+
 void mmTransDialog::SetTransferControls(bool transfer)
 {
     cAdvanced_->SetValue(advancedToTransAmountSet_);
     cAdvanced_->Enable(transfer);
+    bPayee_->Enable(!transfer);
+    cbPayee_->Clear();
+    wxArrayString data;
+    wxString dataStr;
+    int type_num = transaction_type_->GetSelection();
+
+    if (transfer) {
+        textAmount_->SetToolTip(amountTransferTip_);
+    } else {
+        textAmount_->SetToolTip(amountNormalTip_);
+    }
+
     if (accountID_ == referenceAccountID_ && transfer)
     {
         toTextAmount_->Enable(cAdvanced_->GetValue());
-        if (toID_>0) bPayee_->SetLabel(core_->accountList_.GetAccountName(toID_));
+        if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
         payee_label_->SetLabel(_("To"));
+        data = core_->accountList_.getAccountsName(accountID_);
+        cbPayee_->SetToolTip(_("Specify which account the transfer is going to"));
     }
     else if (accountID_ != referenceAccountID_ && transfer)
     {
         textAmount_->Enable(cAdvanced_->GetValue());
-        if (accountID_>0) bPayee_->SetLabel(core_->accountList_.GetAccountName(accountID_));
+        if (accountID_ > 0) dataStr = (core_->accountList_.GetAccountName(accountID_));
         payee_label_->SetLabel(_("From"));
+        data = core_->accountList_.getAccountsName(toID_);
+        cbPayee_->SetToolTip(_("Specify which account the transfer is comming from"));
     }
     else
     {
+        if (type_num == DEF_WITHDRAWAL)
+        {
+            cbPayee_->SetToolTip(_("Specify where the transaction is coming from"));
+            payee_label_->SetLabel(_("From"));
+        }
+        else
+        {
+            cbPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
+            payee_label_->SetLabel(_("Payee"));
+        }
+
         toTextAmount_->Enable(false);
         toTextAmount_->SetValue(wxT(""));
+        data = core_->payeeList_.FilterPayees(wxT(""));
+        dataStr = core_->payeeList_.GetPayeeName(payeeID_);
     }
+
+    for (size_t i = 0; i < data.Count(); ++i)
+    {
+        cbPayee_ ->Append(data[i]);
+    }
+    if (!cbPayee_ -> SetStringSelection(dataStr))
+        cbPayee_ -> SetSelection(0);
+
 }
 
 void mmTransDialog::CreateControls()
@@ -372,17 +415,29 @@ void mmTransDialog::CreateControls()
     flex_sizer->Add(amountSizer);
 
     // Payee ---------------------------------------------
+    wxBoxSizer* payeeSizer = new wxBoxSizer(wxHORIZONTAL);
     payee_label_ = new wxStaticText(this, wxID_STATIC, _("Payee"));
 
-    wxString payeeName = resetPayeeString();
+    cbPayee_ = new wxComboBox(this, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
+        wxDefaultPosition, wxSize(190, -1),
+        core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
+    //cbPayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::OnPayeeChanged), NULL, this);
+    cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
+        wxCommandEventHandler(mmTransDialog::OnPayeeUpdated), NULL, this);
+    if (edit_) cbPayee_ -> SetEvtHandlerEnabled(false);
 
-    bPayee_ = new wxButton( this, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName,
-        wxDefaultPosition, wxSize((choiceStatus_->GetSize().GetWidth()+border)*2, -1));
+#if wxCHECK_VERSION(2,9,0)
+    cbPayee_->AutoComplete(core_->payeeList_.FilterPayees(wxT("")));
+#endif
 
-    bPayee_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonPayeeChar), NULL, this);
+    bPayee_ = new wxBitmapButton( this, ID_DIALOG_TRANS_BUTTONPAYEE, wxBitmap(user_edit_xpm));
+    bPayee_->Connect(ID_DIALOG_TRANS_BUTTONPAYEE, wxEVT_COMMAND_BUTTON_CLICKED,
+        wxCommandEventHandler(mmTransDialog::OnPayee), NULL, this);
 
     flex_sizer->Add(payee_label_, flags);
-    flex_sizer->Add(bPayee_, flags);
+    flex_sizer->Add(payeeSizer);
+    payeeSizer->Add(cbPayee_, flags);
+    payeeSizer->Add(bPayee_, flags);
 
     // Split Category -------------------------------------------
     cSplit_ = new wxCheckBox(this, ID_DIALOG_TRANS_SPLITCHECKBOX,
@@ -394,7 +449,7 @@ void mmTransDialog::CreateControls()
 
     // Category -------------------------------------------------
     bCategory_ = new wxButton(this, ID_DIALOG_TRANS_BUTTONCATEGS, wxT(""),
-        wxDefaultPosition, bPayee_->GetSize());
+        wxDefaultPosition, wxSize(230, -1));
 
     flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Category")), flags);
     flex_sizer->Add(bCategory_, flags);
@@ -402,12 +457,12 @@ void mmTransDialog::CreateControls()
     // Number  ---------------------------------------------
     textNumber_ = new wxTextCtrl(this,
         ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), wxDefaultPosition,
-        wxSize(180, -1), wxTE_PROCESS_ENTER);
+        cbPayee_->GetSize(), wxTE_PROCESS_ENTER);
     textNumber_->Connect(ID_DIALOG_TRANS_TEXTNUMBER, wxEVT_COMMAND_TEXT_ENTER,
         wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     bAuto_ = new wxButton(this,
-        ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT("..."), wxDefaultPosition, wxSize(40, -1));
+        ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT("..."), wxDefaultPosition, bPayee_->GetSize());
     bAuto_ -> Connect(ID_DIALOG_TRANS_BUTTONTRANSNUM,
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmTransDialog::OnAutoTransNum), NULL, this);
 
@@ -466,57 +521,58 @@ void mmTransDialog::CreateControls()
     this->SetSizer(box_sizer1);
 }
 
+void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
+{
+    wxString value = cbPayee_->GetValue();
+
+    if (transaction_type_->GetSelection() != DEF_TRANSFER)
+        payeeID_ = core_->payeeList_.GetPayeeId(value);
+    else
+        toID_ = core_->accountList_.GetAccountId(value);
+    event.Skip();
+}
+
 void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 {
-    if (transaction_type_->GetSelection() == DEF_TRANSFER)
-    {
-        wxArrayString as = core_->accountList_.getAccountsName(accountID_);
+    mmPayeeDialog dlg(parent_, core_);
 
-        wxSingleChoiceDialog scd(parent_, _("Account name"), _("Select Account"), as);
-        if (scd.ShowModal() == wxID_OK)
+    if ( dlg.ShowModal() == wxID_OK )
+    {
+        payeeID_ = dlg.getPayeeId();
+        if (payeeID_ == -1)
         {
-            wxString acctName = scd.GetStringSelection();
-            toID_ = core_->accountList_.GetAccountId(acctName);
-            bPayee_->SetLabel(acctName);
+            cbPayee_->SetValue(resetPayeeString());
+            payeeUnknown_ = true;
+            return;
+        }
+
+        boost::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
+        cbPayee_->SetValue(mmReadyDisplayString(pPayee->name_));
+        payeeUnknown_ = false;
+
+        // If this is a Split Transaction, ignore displaying last category for payee
+        if (split_->numEntries())
+            return;
+
+        // Only for new transactions: if user want to autofill last category used for payee.
+        if ( mmIniOptions::instance().transCategorySelectionNone_ == 1 && ( !edit_ && !categUpdated_ ) )
+        {
+            // if payee has memory of last category used then display last category for payee
+            if (pPayee->categoryId_ != -1)
+            {
+                categID_ = pPayee->categoryId_;
+                subcategID_ = pPayee->subcategoryId_;
+                categoryName_ = core_->categoryList_.GetCategoryName(categID_);
+                subCategoryName_ = core_->categoryList_.GetSubCategoryName(
+                        categID_, subcategID_);
+                bCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
+            }
         }
     }
     else
     {
-        mmPayeeDialog dlg(parent_, core_);
-
-        if ( dlg.ShowModal() == wxID_OK )
-        {
-            payeeID_ = dlg.getPayeeId();
-            if (payeeID_ == -1)
-            {
-                bPayee_->SetLabel(resetPayeeString());
-                payeeUnknown_ = true;
-                return;
-            }
-
-            boost::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
-            bPayee_->SetLabel(mmReadyDisplayString(pPayee->name_));
-            payeeUnknown_ = false;
-
-            // If this is a Split Transaction, ignore displaying last category for payee
-            if (split_->numEntries())
-                return;
-
-            // Only for new transactions: if user want to autofill last category used for payee.
-            if ( mmIniOptions::instance().transCategorySelectionNone_ == 1 && ( !edit_ && !categUpdated_ ) )
-            {
-                // if payee has memory of last category used then display last category for payee
-                if (pPayee->categoryId_ != -1)
-                {
-                    categID_ = pPayee->categoryId_;
-                    subcategID_ = pPayee->subcategoryId_;
-                    categoryName_ = core_->categoryList_.GetCategoryName(categID_);
-                    subCategoryName_ = core_->categoryList_.GetSubCategoryName(
-                            categID_, subcategID_);
-                    bCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
-                }
-            }
-        }
+        if (core_->payeeList_.GetPayeeId(cbPayee_->GetValue())<0)
+            cbPayee_->SetValue(resetPayeeString());
     }
 }
 
@@ -594,71 +650,11 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
     }
 }
 
-void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
-{
-    updateControlsForTransType();
-}
-
-void mmTransDialog::updateControlsForTransType()
-{
-    int type_num = transaction_type_->GetSelection();
-
-    if (type_num != DEF_TRANSFER)
-    {
-        if (type_num == DEF_WITHDRAWAL)
-        {
-            displayControlsToolTips(DEF_WITHDRAWAL);
-            payee_label_->SetLabel(_("From"));
-            bPayee_->SetToolTip(_("Specify where the transaction is going to"));
-        }
-        else
-        {
-            displayControlsToolTips(DEF_DEPOSIT);
-            payee_label_->SetLabel(_("Payee"));
-            bPayee_->SetToolTip(_("Specify where the transaction is coming from"));
-        }
-        SetTransferControls(false);
-        if (payeeUnknown_)
-            bPayee_->SetLabel(_("Select Payee"));
-        else
-            bPayee_->SetLabel(core_->payeeList_.GetPayeeName(payeeID_));
-    }
-    else
-    {
-        displayControlsToolTips(DEF_TRANSFER/*, true*/);
-        SetTransferControls();
-
-        if (core_->accountList_.getNumBankAccounts() == 2)
-        {
-            wxArrayString accName = core_->accountList_.getAccountsName(accountID_);
-            wxString accNameStr = accName[0];
-            bPayee_->SetLabel(accNameStr);
-            toID_ = core_->accountList_.GetAccountId(accNameStr);
-        }
-        else
-            bPayee_->SetLabel(_("Select To Account"));
-
-        if (!edit_)
-        {
-            wxString categString;
-            if (mmIniOptions::instance().transCategorySelectionNone_ == 0) // Default Category = "None"
-                categString = resetCategoryString();
-            else
-            {
-                categID_ = core_->bTransactionList_.getTransferCategoryID(accountID_, subcategID_);
-                categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
-            }
-            bCategory_->SetLabel(categString);
-        }
-    }
-}
-
 wxString mmTransDialog::resetPayeeString(/*bool normal*/) //normal is deposits or withdrawls
 {
-    wxString payeeStr;
+    wxString payeeStr = wxT("");
     if (transaction_type_->GetSelection() != DEF_TRANSFER)
     {
-        payeeStr = _("Select Payee");
         payeeID_ = -1;
         wxArrayString filtd = core_->payeeList_.FilterPayees(wxT(""));
         if (filtd.Count() == 1)
@@ -670,7 +666,6 @@ wxString mmTransDialog::resetPayeeString(/*bool normal*/) //normal is deposits o
     }
     else
     {
-        payeeStr = _("Select To Account");
         toID_ = -1;
     }
 
@@ -686,17 +681,6 @@ wxString mmTransDialog::resetCategoryString()
     return catStr;
 }
 
-void mmTransDialog::displayControlsToolTips(int transType/*, bool enableAdvanced*/ /* = false */)
-{
-    if (transType == DEF_TRANSFER) {
-        bPayee_->SetToolTip(_("Specify which account the transfer is going to"));
-        textAmount_->SetToolTip(amountTransferTip_);
-    } else {
-        bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
-        textAmount_->SetToolTip(amountNormalTip_);
-    }
-}
-
 void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString transaction_type = wxT("");
@@ -705,8 +689,13 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     if (payeeID_ == -1 && transaction_type != TRANS_TYPE_TRANSFER_STR)
     {
-        mmShowErrorMessageInvalid(this, _("Payee"));
-        return;
+        wxString payee_name = cbPayee_->GetValue();
+        if (payee_name.IsEmpty())
+        {
+            mmShowErrorMessageInvalid(this, _("Payee"));
+            return;
+        }
+        payeeID_ = core_->payeeList_.AddPayee(payee_name);
     }
 
     if (toID_ == -1 && transaction_type == TRANS_TYPE_TRANSFER_STR)
@@ -936,9 +925,22 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 
     if (oject_in_focus_ == textNotes_->GetId())
         return;
-    //if (oject_in_focus_ == bPayee_->GetId())
-    //    return;
-    if ((int)oject_in_focus_ == (int)textAmount_->GetId())
+
+    if (oject_in_focus_ == cbPayee_->GetId())
+    {
+        if (!cbPayee_->GetValue().IsEmpty()) {
+            cbPayee_->SetValue(wxT(""));
+            wxCommandEvent evt(wxEVT_COMMAND_TEXT_UPDATED, ID_DIALOG_TRANS_PAYEECOMBO);
+            AddPendingEvent(evt);
+            return;
+        }
+        else {
+            itemButtonCancel_->SetFocus();
+            return;
+        }
+    }
+
+    if (oject_in_focus_ == textAmount_->GetId())
     {
         if (!textAmount_->IsEmpty()) {
             textAmount_->SetValue(wxT(""));
@@ -1022,72 +1024,6 @@ void mmTransDialog::activateSplitTransactionsDlg()
     }
 }
 
-void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
-{
-    //it's for debuging
-    //wxSafeShowMessage(wxT(":"), wxString::Format(wxT("%i"), event.GetUnicodeKey()));
-    if (event.GetKeyCode() != WXK_DOWN && event.GetKeyCode()!=WXK_UP)
-    {
-        event.Skip();
-        return;
-    }
-    size_t c = 0;
-    wxString currentPayeeName = bPayee_->GetLabel();
-    wxArrayString filtd;
-    if (transaction_type_->GetSelection() != DEF_TRANSFER)
-    {
-        filtd = core_->payeeList_.FilterPayees(wxT(""));
-        if (filtd.IsEmpty()) //No payee present. Should be added one as minimum
-            return;
-        if (currentPayeeName == _("Select Payee"))
-            c = 0;
-        else
-        {
-            for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i)
-            {
-                if (filtd.Item(i) == currentPayeeName)
-                {
-                    c = i;
-                    break;
-                }
-            }
-        }
-
-    } else
-    {
-        filtd = core_->accountList_.getAccountsName(accountID_);
-        if (filtd.IsEmpty())
-            //No accounts present. Should be added one as minimum
-            return;
-        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i)
-        {
-            if (filtd.Item(i) == currentPayeeName)
-            {
-                c = i;
-                break;
-            }
-        }
-    }
-    if (event.GetKeyCode()==WXK_DOWN)
-    {
-        if ((c + 1) < (size_t)filtd.GetCount())
-            currentPayeeName = filtd.Item(++c);
-    }
-    else if (event.GetKeyCode()==WXK_UP)
-    {
-        if (c > 0)
-            currentPayeeName = filtd.Item(--c);
-    }
-
-    currentPayeeName = filtd.Item(c);
-    bPayee_->SetLabel(currentPayeeName);
-
-    if (transaction_type_->GetSelection() == DEF_TRANSFER)
-        toID_ = core_->accountList_.GetAccountId(currentPayeeName);
-    else
-        payeeID_ = core_->payeeList_.GetPayeeId(currentPayeeName);
-}
-
 void mmTransDialog::OnButtonDateChar(wxKeyEvent& event)
 {
     if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT)) {
@@ -1107,7 +1043,7 @@ void mmTransDialog::OnButtonDateChar(wxKeyEvent& event)
 
             dpc_->SetValue (date);
             //process date change event for set weekday name
-            wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
+            wxDateEvent dateEvent(dpc_, date, wxEVT_DATE_CHANGED);
             GetEventHandler()->ProcessEvent(dateEvent);
         }
 
@@ -1137,29 +1073,6 @@ void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
         event.Skip();
     }
     updateControlsForTransType();
-}
-
-void mmTransDialog::onChoiceStatusChar(wxKeyEvent& event)
-{
-    int i = choiceStatus_->GetSelection();
-    if (event.GetKeyCode()==WXK_DOWN)
-    {
-        if (i < DEF_STATUS_DUPLICATE)
-        {
-            choiceStatus_->SetSelection(++i);
-        }
-    }
-    else if (event.GetKeyCode()==WXK_UP)
-    {
-        if (i > DEF_STATUS_NONE)
-        {
-            choiceStatus_->SetSelection(--i);
-        }
-    }
-    else
-    {
-        event.Skip();
-    }
 }
 
 void mmTransDialog::SetDialogToDuplicateTransaction()
