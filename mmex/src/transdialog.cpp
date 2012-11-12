@@ -261,7 +261,6 @@ void mmTransDialog::SetTransferControls(bool transfer)
     cAdvanced_->Enable(transfer);
     bPayee_->Enable(!transfer);
     cbPayee_->Clear();
-    wxArrayString data;
     wxString dataStr;
     int type_num = transaction_type_->GetSelection();
 
@@ -276,7 +275,6 @@ void mmTransDialog::SetTransferControls(bool transfer)
         toTextAmount_->Enable(cAdvanced_->GetValue());
         if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
         payee_label_->SetLabel(_("To"));
-        data = core_->accountList_.getAccountsName(accountID_);
         cbPayee_->SetToolTip(_("Specify which account the transfer is going to"));
     }
     else if (accountID_ != referenceAccountID_ && transfer)
@@ -284,7 +282,6 @@ void mmTransDialog::SetTransferControls(bool transfer)
         textAmount_->Enable(cAdvanced_->GetValue());
         if (accountID_ > 0) dataStr = (core_->accountList_.GetAccountName(accountID_));
         payee_label_->SetLabel(_("From"));
-        data = core_->accountList_.getAccountsName(toID_);
         cbPayee_->SetToolTip(_("Specify which account the transfer is comming from"));
     }
     else
@@ -302,17 +299,16 @@ void mmTransDialog::SetTransferControls(bool transfer)
 
         toTextAmount_->Enable(false);
         toTextAmount_->SetValue(wxT(""));
-        data = core_->payeeList_.FilterPayees(wxT(""));
         dataStr = core_->payeeList_.GetPayeeName(payeeID_);
     }
 
-    for (size_t i = 0; i < data.Count(); ++i)
-    {
-        cbPayee_ ->Append(data[i]);
-    }
-    if (!cbPayee_ -> SetStringSelection(dataStr))
-        cbPayee_ -> SetSelection(0);
+    cbPayee_ -> SetValue(wxT(""));
+    wxCommandEvent ev(wxEVT_COMMAND_TEXT_ENTER, ID_DIALOG_TRANS_PAYEECOMBO);
+    //GetEventHandler()->AddPendingEvent(ev);
+    OnPayeeTextEnter(ev);
 
+    if (!cbPayee_ -> SetStringSelection(dataStr))
+        cbPayee_ -> SetValue(wxT(""));
 }
 
 void mmTransDialog::CreateControls()
@@ -421,14 +417,11 @@ void mmTransDialog::CreateControls()
     cbPayee_ = new wxComboBox(this, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
         wxDefaultPosition, wxSize(190, -1),
         core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
-    //cbPayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::OnPayeeChanged), NULL, this);
+    cbPayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_ENTER,
+        wxCommandEventHandler(mmTransDialog::OnPayeeTextEnter), NULL, this);
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmTransDialog::OnPayeeUpdated), NULL, this);
     if (edit_) cbPayee_ -> SetEvtHandlerEnabled(false);
-
-#if wxCHECK_VERSION(2,9,0)
-    cbPayee_->AutoComplete(core_->payeeList_.FilterPayees(wxT("")));
-#endif
 
     bPayee_ = new wxBitmapButton( this, ID_DIALOG_TRANS_BUTTONPAYEE, wxBitmap(user_edit_xpm));
     bPayee_->Connect(ID_DIALOG_TRANS_BUTTONPAYEE, wxEVT_COMMAND_BUTTON_CLICKED,
@@ -473,6 +466,21 @@ void mmTransDialog::CreateControls()
     number_sizer->Add(bAuto_, flags);
 
     // Notes  ---------------------------------------------
+/*
+    wxNotebook* trx_notebook = new wxNotebook(this,
+        wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
+    wxPanel* notes_tab = new wxPanel(trx_notebook, wxID_ANY);
+    trx_notebook->AddPage(notes_tab, _("Notes"));
+    wxBoxSizer *notes_sizer = new wxBoxSizer(wxVERTICAL);
+    notes_tab->SetSizer(notes_sizer);
+
+    textNotes_ = new wxTextCtrl(notes_tab, ID_DIALOG_TRANS_TEXTNOTES, wxT(""),
+        wxDefaultPosition, wxSize(290,120), wxTE_MULTILINE);
+
+    box_sizer->Add(trx_notebook);
+    notes_sizer->Add(textNotes_, flags);
+*/
+
     notesTip_ = _("Notes");
     textNotes_ = new wxTextCtrl(this, ID_DIALOG_TRANS_TEXTNOTES, wxT(""),
         wxDefaultPosition, wxSize(-1,80), wxTE_MULTILINE);
@@ -529,6 +537,49 @@ void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
         payeeID_ = core_->payeeList_.GetPayeeId(value);
     else
         toID_ = core_->accountList_.GetAccountId(value);
+    event.Skip();
+}
+
+void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
+{
+    wxString value = cbPayee_->GetValue(), new_value;
+
+    cbPayee_ -> SetEvtHandlerEnabled(false);
+    cbPayee_ -> Clear();
+    wxArrayString data;
+
+    if (transaction_type_->GetSelection() != DEF_TRANSFER)
+    {
+        data = core_->payeeList_.FilterPayees(wxT(""));
+        for (size_t i=0; i< data.Count(); ++i)
+        {
+            if (data[i].Lower().Matches(value.Lower() + wxT("*")))
+                cbPayee_ ->Append(data[i]);
+        }
+        cbPayee_ ->SetSelection(0);
+        new_value = cbPayee_->GetStringSelection();
+        payeeID_ = core_->payeeList_.GetPayeeId(new_value);
+    }
+    else
+    {
+        data = core_->accountList_.getAccountsName(accountID_);
+        for (size_t i=0; i< data.Count(); ++i)
+        {
+            if (data[i].Lower().Matches(value.Lower() + wxT("*")))
+                cbPayee_ ->Append(data[i]);
+        }
+        cbPayee_ ->SetSelection(0);
+        new_value = cbPayee_->GetStringSelection();
+        toID_ = core_->accountList_.GetAccountId(new_value);
+    }
+#if wxCHECK_VERSION(2,9,0)
+        cbPayee_->AutoComplete(data);
+#endif
+
+    if (value == new_value)
+        bCategory_->SetFocus();
+
+    cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
 }
 
