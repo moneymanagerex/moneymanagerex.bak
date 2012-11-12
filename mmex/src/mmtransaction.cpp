@@ -875,23 +875,25 @@ int mmBankTransactionList::getTransferCategoryID(const int accountID, int& subca
 int mmBankTransactionList::getLastUsedPayeeID(const int accountID, int& categID, int& subcategID) const
 {
     int payee_id = -1;
-    if (transactions_.empty()) return payee_id;
-    for (const_iterator i = (transactions_.end()-1); i >= transactions_.begin(); --i)
+    int index = transactions_.size() - 1;
+    bool searching = true;
+    while (searching && index >= 0)
     {
-        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
-
+        boost::shared_ptr<const mmBankTransaction> pBankTransaction = transactions_[index];
         if (pBankTransaction)
         {
-            if (pBankTransaction->accountID_ != accountID
-                || pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+            if (pBankTransaction->accountID_ == accountID && 
+                pBankTransaction->transType_ != TRANS_TYPE_TRANSFER_STR)
             {
-                continue; // skip
+                payee_id   = pBankTransaction->payeeID_;
+                categID    = pBankTransaction->categID_;
+                subcategID = pBankTransaction->subcategID_;
+                searching = false;
             }
-            payee_id   = pBankTransaction->payeeID_;
-            categID    = pBankTransaction->categID_;
-            subcategID = pBankTransaction->subcategID_;
         }
+        index --;
     }
+
     return payee_id;
 }
 
