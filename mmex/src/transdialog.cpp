@@ -262,6 +262,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
     bPayee_->Enable(!transfer);
     cbPayee_->Clear();
     wxString dataStr;
+    wxArrayString data;
     int type_num = transaction_type_->GetSelection();
 
     if (transfer) {
@@ -275,6 +276,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
         toTextAmount_->Enable(cAdvanced_->GetValue());
         if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
         payee_label_->SetLabel(_("To"));
+        data = core_->accountList_.getAccountsName(accountID_);
         cbPayee_->SetToolTip(_("Specify which account the transfer is going to"));
     }
     else if (accountID_ != referenceAccountID_ && transfer)
@@ -282,6 +284,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
         textAmount_->Enable(cAdvanced_->GetValue());
         if (accountID_ > 0) dataStr = (core_->accountList_.GetAccountName(accountID_));
         payee_label_->SetLabel(_("From"));
+        data = core_->accountList_.getAccountsName(toID_);
         cbPayee_->SetToolTip(_("Specify which account the transfer is comming from"));
     }
     else
@@ -296,17 +299,19 @@ void mmTransDialog::SetTransferControls(bool transfer)
             cbPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
             payee_label_->SetLabel(_("Payee"));
         }
-
+        data = core_->payeeList_.FilterPayees(wxT(""));
         toTextAmount_->Enable(false);
         toTextAmount_->SetValue(wxT(""));
         dataStr = core_->payeeList_.GetPayeeName(payeeID_);
     }
 
-    cbPayee_ -> SetValue(wxT(""));
-    wxCommandEvent ev(wxEVT_COMMAND_TEXT_ENTER, ID_DIALOG_TRANS_PAYEECOMBO);
-    //GetEventHandler()->AddPendingEvent(ev);
-    OnPayeeTextEnter(ev);
-
+    for (size_t i = 0; i < data.Count(); ++i)
+    {
+        cbPayee_ ->Append(data[i]);
+    }
+#if wxCHECK_VERSION(2,9,0)
+    cbPayee_->AutoComplete(data);
+#endif
     if (!cbPayee_ -> SetStringSelection(dataStr))
         cbPayee_ -> SetValue(wxT(""));
 }
@@ -801,7 +806,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         }
     }
 
-    if (advancedToTransAmountSet_)
+    if (transaction_type == TRANS_TYPE_TRANSFER_STR)
     {
         wxString amountStr = toTextAmount_->GetValue().Trim();
         if (amountStr.IsEmpty() || !mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
@@ -814,8 +819,17 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
             toTextAmount_->SetFocus();
             return;
         }
-    } else
-        toTransAmount_ = amount;
+        if (!advancedToTransAmountSet_)
+        {
+            if (accountID_ == referenceAccountID_)
+                toTransAmount_ = amount;
+            else
+            {
+                transAmount_ = toTransAmount_;
+                amount = toTransAmount_;
+            }
+        }
+    }
 
     int toAccountID = -1;
     int fromAccountID = accountID_;
