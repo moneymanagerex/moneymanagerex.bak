@@ -78,7 +78,7 @@ private:
     void OnQuit(wxCloseEvent& event);
     void OnCategs(wxCommandEvent& event);
     void OnPayee(wxCommandEvent& event);
-    void OnPayeeUpdated(wxCommandEvent& event /*wxKeyEvent& event*/);
+    void OnPayeeUpdated(wxCommandEvent& event);
     void OnPayeeTextEnter(wxCommandEvent& event);
     void OnAutoTransNum(wxCommandEvent& event);
     void OnTransTypeChanged(wxCommandEvent& event);

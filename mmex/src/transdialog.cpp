@@ -223,6 +223,7 @@ void mmTransDialog::dataToControls()
 
     bCategory_->SetLabel(categString);
     cbPayee_->SetValue(payeeName);
+    cbPayee_ -> SetEvtHandlerEnabled(true);
 
     if (split_->numEntries() > 0)
     {
@@ -260,8 +261,8 @@ void mmTransDialog::SetTransferControls(bool transfer)
     cAdvanced_->SetValue(advancedToTransAmountSet_);
     cAdvanced_->Enable(transfer);
     bPayee_->Enable(!transfer);
+    wxString dataStr = cbPayee_->GetValue();
     cbPayee_->Clear();
-    wxString dataStr;
     wxArrayString data;
     int type_num = transaction_type_->GetSelection();
 
@@ -313,7 +314,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
     cbPayee_->AutoComplete(data);
 #endif
     if (!cbPayee_ -> SetStringSelection(dataStr))
-        cbPayee_ -> SetValue(wxT(""));
+        cbPayee_ -> SetValue(dataStr);
 }
 
 void mmTransDialog::CreateControls()
@@ -426,7 +427,8 @@ void mmTransDialog::CreateControls()
         wxCommandEventHandler(mmTransDialog::OnPayeeTextEnter), NULL, this);
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmTransDialog::OnPayeeUpdated), NULL, this);
-    if (edit_) cbPayee_ -> SetEvtHandlerEnabled(false);
+
+    cbPayee_ -> SetEvtHandlerEnabled(!edit_);
 
     bPayee_ = new wxBitmapButton( this, ID_DIALOG_TRANS_BUTTONPAYEE, wxBitmap(user_edit_xpm));
     bPayee_->Connect(ID_DIALOG_TRANS_BUTTONPAYEE, wxEVT_COMMAND_BUTTON_CLICKED,
