@@ -122,7 +122,6 @@ void mmTransDialog::dataToControls()
         choiceStatus_->SetSelection(wxString(wxT("NRVFD")).Find(statusString));
 
         transTypeString = pBankTransaction_->transType_;
-        transaction_type_->SetStringSelection(wxGetTranslation(transTypeString));
 
         categID_ = pBankTransaction_->categID_;
         categoryName_ = core_->categoryList_.GetCategoryName(categID_);
@@ -150,7 +149,7 @@ void mmTransDialog::dataToControls()
     else
     {
         choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
-        transaction_type_->SetSelection(0);
+        transTypeString = TRANS_TYPE_WITHDRAWAL_STR;
 
         notesColour_ = textNotes_->GetForegroundColour();
         textNotes_->SetForegroundColour(wxColour(wxT("GREY")));
@@ -162,8 +161,20 @@ void mmTransDialog::dataToControls()
     if (transAmount_ > 0.0)
         edit_currency_rate = toTransAmount_ / transAmount_;
 
-    updateControlsForTransType();
+    size_t begin = 0, size = sizeof(TRANSACTION_TYPE)/sizeof(wxString);
+    if (transTypeString == TRANS_TYPE_TRANSFER_STR)
+    {
+        begin = size-1;
+        transaction_type_->Disable();
+    }
+    else if (core_->accountList_.getNumBankAccounts() < 2 || edit_) size--;
+    for(size_t i = begin; i < size; ++i)
+    transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
+        new wxStringClientData(TRANSACTION_TYPE[i]));
+    transaction_type_->SetStringSelection(wxGetTranslation(transTypeString));
+
     cAdvanced_->SetValue(advancedToTransAmountSet_);
+    updateControlsForTransType();
 
     wxString payeeName;
     wxString categString = _("Select Category");
@@ -222,14 +233,9 @@ void mmTransDialog::dataToControls()
     }
 
     bCategory_->SetLabel(categString);
-    cbPayee_->SetValue(payeeName);
-    cbPayee_ -> SetEvtHandlerEnabled(true);
 
     if (split_->numEntries() > 0)
-    {
-        //transAmount = split_->getTotalSplits();
         textAmount_->Enable(false);
-    }
 
 }
 
@@ -240,7 +246,9 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 
 void mmTransDialog::updateControlsForTransType()
 {
-    SetTransferControls(transaction_type_->GetSelection()==DEF_TRANSFER);
+    //FIXME:
+    //SetTransferControls(transaction_type_->GetSelection()==DEF_TRANSFER);
+    SetTransferControls(transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR));
 
     if (!edit_)
     {
@@ -258,10 +266,13 @@ void mmTransDialog::updateControlsForTransType()
 
 void mmTransDialog::SetTransferControls(bool transfer)
 {
+    cbPayee_ -> SetEvtHandlerEnabled(false);
     cAdvanced_->SetValue(advancedToTransAmountSet_);
     cAdvanced_->Enable(transfer);
+    cSplit_->Enable(!transfer);
+    cSplit_->SetValue(false);
     bPayee_->Enable(!transfer);
-    wxString dataStr = cbPayee_->GetValue();
+    wxString dataStr = wxT("");
     cbPayee_->Clear();
     wxArrayString data;
     int type_num = transaction_type_->GetSelection();
@@ -274,6 +285,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
 
     if (accountID_ == referenceAccountID_ && transfer)
     {
+        textAmount_->Enable(true);
         toTextAmount_->Enable(cAdvanced_->GetValue());
         if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
         payee_label_->SetLabel(_("To"));
@@ -283,6 +295,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
     else if (accountID_ != referenceAccountID_ && transfer)
     {
         textAmount_->Enable(cAdvanced_->GetValue());
+        toTextAmount_->Enable(true);
         if (accountID_ > 0) dataStr = (core_->accountList_.GetAccountName(accountID_));
         payee_label_->SetLabel(_("From"));
         data = core_->accountList_.getAccountsName(toID_);
@@ -315,6 +328,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
 #endif
     if (!cbPayee_ -> SetStringSelection(dataStr))
         cbPayee_ -> SetValue(dataStr);
+    cbPayee_ -> SetEvtHandlerEnabled(true);
 }
 
 void mmTransDialog::CreateControls()
@@ -376,13 +390,6 @@ void mmTransDialog::CreateControls()
     // Type --------------------------------------------
     transaction_type_ = new wxChoice(this, ID_DIALOG_TRANS_TYPE,
         wxDefaultPosition, wxSize(110, -1));
-
-    // Restrict choise if accounts number less than 2
-    size_t size = sizeof(TRANSACTION_TYPE)/sizeof(wxString);
-    if (core_->accountList_.getNumBankAccounts() < 2) size--;
-    for(size_t i = 0; i < size; ++i)
-    transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
-        new wxStringClientData(TRANSACTION_TYPE[i]));
 
     cAdvanced_ = new wxCheckBox(this,
         ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"),
