@@ -100,8 +100,8 @@ void mmFilterTransactionsDialog::dataToControls()
 
     status = get_next_value(tkz, value);
     payeeCheckBox_ ->SetValue(status);
-    btnPayee_ ->Enable(status);
-    btnPayee_ ->SetLabel(value);
+    cbPayee_ ->Enable(status);
+    cbPayee_ ->SetValue(value);
 
     status = get_next_value(tkz, value);
     categoryCheckBox_ ->SetValue(status);
@@ -207,12 +207,18 @@ void mmFilterTransactionsDialog::CreateControls()
                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemPanelSizer->Add(payeeCheckBox_, flags);
 
-    btnPayee_ = new wxButton( itemPanel, wxID_STATIC, _("Select Payee"),
-                             wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
-    btnPayee_->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
-        wxCommandEventHandler(mmFilterTransactionsDialog::OnPayee), NULL, this);
+    cbPayee_ = new wxComboBox(itemPanel, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
+        wxDefaultPosition, wxSize(fieldWidth, -1),
+        core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
+    /*cbPayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_ENTER,
+        wxCommandEventHandler(mmFilterTransactionsDialog::OnPayeeTextEnter), NULL, this);
+    cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
+        wxCommandEventHandler(mmFilterTransactionsDialog::OnPayeeUpdated), NULL, this);*/
+#if wxCHECK_VERSION(2,9,0)
+        cbPayee_->AutoComplete(core_->payeeList_.FilterPayees(wxT(""));
+#endif
 
-    itemPanelSizer->Add(btnPayee_, flags);
+    itemPanelSizer->Add(cbPayee_, flags);
     //--End of Row --------------------------------------------------------
 
     categoryCheckBox_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Category"),
@@ -349,7 +355,7 @@ void mmFilterTransactionsDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
     accountDropDown_->Enable(accountCheckBox_->GetValue());
     fromDateCtrl_->Enable(dateRangeCheckBox_->GetValue());
     toDateControl_->Enable(dateRangeCheckBox_->GetValue());
-    btnPayee_->Enable(payeeCheckBox_->GetValue());
+    cbPayee_->Enable(payeeCheckBox_->GetValue());
     btnCategory_->Enable(categoryCheckBox_->GetValue());
     choiceStatus_->Enable(statusCheckBox_->GetValue());
     cbTypeWithdrawal_->Enable(typeCheckBox_->GetValue());
@@ -372,7 +378,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 
     if (payeeCheckBox_->GetValue())
     {
-        payeeID_ = core_->payeeList_.GetPayeeId(btnPayee_->GetLabel());
+        payeeID_ = core_->payeeList_.GetPayeeId(cbPayee_->GetValue());
     }
 
     if (amountRangeCheckBox_->GetValue())
@@ -421,20 +427,18 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
 
 }
 
-void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
+bool mmFilterTransactionsDialog::somethingSelected()
 {
-    mmPayeeDialog dlg(this, core_);
-    if ( dlg.ShowModal() == wxID_OK )
-    {
-        payeeID_ = dlg.getPayeeId();
-        if (payeeID_ == -1)
-        {
-            btnPayee_->SetLabel(wxT("Select Payee"));
-            return;
-        }
-        wxString payeeName = core_->payeeList_.GetPayeeName(payeeID_);
-        btnPayee_->SetLabel(mmReadyDisplayString(payeeName));
-    }
+    return
+    getAccountCheckBox()
+    && getDateRangeCheckBox()
+    && getPayeeCheckBox()
+    && getCategoryCheckBox()
+    && getStatusCheckBox()
+    && getTypeCheckBox()
+    && getAmountRangeCheckBox()
+    && getNumberCheckBox()
+    && getNotesCheckBox();
 }
 
 wxString mmFilterTransactionsDialog::getAccountName()
@@ -468,7 +472,7 @@ wxString mmFilterTransactionsDialog::userDateRangeStr() const
 
 int mmFilterTransactionsDialog::getPayeeID() const
 {
-    wxString payeeStr = btnPayee_->GetLabelText();
+    wxString payeeStr = cbPayee_->GetValue();
     int payeeID = core_->payeeList_.GetPayeeId(payeeStr);
     return payeeID;
 
@@ -476,7 +480,7 @@ int mmFilterTransactionsDialog::getPayeeID() const
 wxString mmFilterTransactionsDialog::userPayeeStr() const
 {
     if (payeeCheckBox_->IsChecked())
-        return btnPayee_->GetLabelText();
+        return cbPayee_->GetValue();
     return wxT("");
 }
 
@@ -611,7 +615,7 @@ wxString mmFilterTransactionsDialog::GetCurrentSettings()
     settings_string_ << toDateControl_->GetValue().FormatISODate() << wxT(";");
 
     settings_string_ << payeeCheckBox_->GetValue() << wxT(";");
-    settings_string_ << btnPayee_->GetLabel() << wxT(";");
+    settings_string_ << cbPayee_->GetValue() << wxT(";");
 
     settings_string_ << categoryCheckBox_->GetValue() << wxT(";");
     settings_string_ << btnCategory_ ->GetLabel() << wxT(";");
