@@ -42,10 +42,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db, boost::shared_ptr<MM
     LoadCategories();                           // populate categoryList_
     payeeList_.LoadPayees();                    // populate payeeList_
     accountList_.LoadAccounts(currencyList_);   // populate accountList_
-    LoadTransactions();                         // populate bTransactionList_
-
-    // Update All transactions in case of errors
-    bTransactionList_.updateAllTransactions();
+    bTransactionList_.LoadTransactions(this);   // populate bTransactionList_
 }
 //----------------------------------------------------------------------------
 
@@ -86,19 +83,5 @@ void mmCoreDB::LoadCategories()
     {
         categoryList_.entries_.push_back(pCat);
     }
-}
-//----------------------------------------------------------------------------
-
-void mmCoreDB::LoadTransactions()
-{
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_CHECKINGACCOUNT_V1);
-
-    while (q1.NextRow())
-    {
-        boost::shared_ptr<mmBankTransaction> ptrBase(new mmBankTransaction(this, q1));
-        bTransactionList_.transactions_.push_back(ptrBase);
-    }
-
-    q1.Finalize();
 }
 //----------------------------------------------------------------------------

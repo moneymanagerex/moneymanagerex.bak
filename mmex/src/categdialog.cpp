@@ -385,7 +385,7 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
         return;
     }
 
-    core_->bTransactionList_.updateAllTransactionsForCategory(core_, categID, subcategID);
+    core_->bTransactionList_.UpdateAllTransactionsForCategory(core_, categID, subcategID);
 
     treeCtrl_->SetItemText(selectedItemId_, text);
 }

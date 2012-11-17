@@ -57,8 +57,6 @@ public:
 
     /// Loads database Categories into memory
     void LoadCategories();
-    /// Loads database primary Transactions into memory.
-    void LoadTransactions();
 };
 
 //----------------------------------------------------------------------------

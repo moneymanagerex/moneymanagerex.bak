@@ -281,7 +281,7 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
     if (newName != wxGetEmptyString())
 	{
 		core_->payeeList_.UpdatePayee(m_payee_id, newName);
-		core_->bTransactionList_.updateAllTransactionsForPayee(core_, m_payee_id);
+		core_->bTransactionList_.UpdateAllTransactionsForPayee(core_, m_payee_id);
 		editButton->Disable();
 		fillControls();
 		
