@@ -139,10 +139,10 @@ mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db) :
 }
 
 mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
- : mmTransaction(q1.GetInt(wxT("TRANSID"))),
-                 db_(core->db_),
-                 isInited_(false),
-                 updateRequired_(false)
+: mmTransaction(q1.GetInt(wxT("TRANSID"))),
+                db_(core->db_),
+                isInited_(false),
+                updateRequired_(false)
 {
     date_ = mmGetStorageStringAsDate(q1.GetString(wxT("TRANSDATE")));
     transNum_    = q1.GetString(wxT("TRANSACTIONNUMBER"));
@@ -528,18 +528,18 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(mmCo
             pCopyTransaction->accountID_ = pBankTransaction->accountID_;
     }
     pCopyTransaction->toAccountID_ = pBankTransaction->toAccountID_;
-    pCopyTransaction->amt_ =  pBankTransaction->amt_;
-    pCopyTransaction->toAmt_= pBankTransaction->toAmt_;
+    pCopyTransaction->amt_         = pBankTransaction->amt_;
+    pCopyTransaction->toAmt_       = pBankTransaction->toAmt_;
     pCopyTransaction->payee_       = pBankTransaction->payee_;
-    pCopyTransaction->payeeID_=    pBankTransaction->payeeID_;
-    pCopyTransaction->transType_=    pBankTransaction->transType_;
-    pCopyTransaction->status_ =    (useOriginalDate ? wxT("D") : pBankTransaction->status_);
-    pCopyTransaction->transNum_=   pBankTransaction->transNum_;
-    pCopyTransaction->notes_=   pBankTransaction->notes_;
-    pCopyTransaction->categID_  =   pBankTransaction->categID_;
-    pCopyTransaction->subcategID_ =   pBankTransaction->subcategID_;
-    pCopyTransaction->date_=    (useOriginalDate ? pBankTransaction->date_ : wxDateTime::Now());
-    pCopyTransaction->category_ = pBankTransaction->category_;
+    pCopyTransaction->payeeID_     = pBankTransaction->payeeID_;
+    pCopyTransaction->transType_   = pBankTransaction->transType_;
+    pCopyTransaction->status_      = (useOriginalDate ? wxT("D") : pBankTransaction->status_);
+    pCopyTransaction->transNum_    = pBankTransaction->transNum_;
+    pCopyTransaction->notes_       = pBankTransaction->notes_;
+    pCopyTransaction->categID_     = pBankTransaction->categID_;
+    pCopyTransaction->subcategID_  = pBankTransaction->subcategID_;
+    pCopyTransaction->date_        = (useOriginalDate ? pBankTransaction->date_ : wxDateTime::Now());
+    pCopyTransaction->category_    = pBankTransaction->category_;
 
     // we need to create a new pointer for Split transactions.
     boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
@@ -582,44 +582,6 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(mmCo
     return pCopyTransaction;
 }
 
-void mmBankTransactionList::updateTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
-{
-    if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-        pBankTransaction->payeeID_ = -1;
-
-    static const char sql[] =
-    "update CHECKINGACCOUNT_V1 "
-    "SET ACCOUNTID=?, TOACCOUNTID=?, PAYEEID=?, TRANSCODE=?, "
-        "TRANSAMOUNT=?, STATUS=?, TRANSACTIONNUMBER=?, NOTES=?, "
-        "CATEGID=?, SUBCATEGID=?, TRANSDATE=?, TOTRANSAMOUNT=? "
-    "WHERE TRANSID = ?";
-
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
-    mmBankTransaction &r = *pBankTransaction;
-
-    int i = 0;
-    st.Bind(++i, r.accountID_);
-    st.Bind(++i, r.toAccountID_);
-    st.Bind(++i, r.payeeID_);
-    st.Bind(++i, r.transType_);
-    st.Bind(++i, r.amt_);
-    st.Bind(++i, r.status_);
-    st.Bind(++i, r.transNum_);
-    st.Bind(++i, r.notes_);
-    st.Bind(++i, r.categID_);
-    st.Bind(++i, r.subcategID_);
-    st.Bind(++i, r.date_.FormatISODate());
-    st.Bind(++i, r.toAmt_);
-    st.Bind(++i, r.transactionID());
-
-    wxASSERT(st.GetParamCount() == i);
-    st.ExecuteUpdate();
-
-    r.splitEntries_->updateToDB(db_, r.transactionID(), true);
-    st.Finalize();
-    mmOptions::instance().databaseUpdated_ = true;
-}
-
 boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr(int accountID, int transactionID) const
 {
     for (const_iterator i = transactions_.begin(); i!= transactions_.end(); ++i)
@@ -658,7 +620,58 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
     return boost::shared_ptr<mmBankTransaction> ();
 }
 
-void mmBankTransactionList::updateAllTransactions()
+void mmBankTransactionList::LoadTransactions(mmCoreDB* core)
+{
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_CHECKINGACCOUNT_V1);
+
+    while (q1.NextRow())
+    {
+        boost::shared_ptr<mmBankTransaction> pAccountTransaction(new mmBankTransaction(core, q1));
+        transactions_.push_back(pAccountTransaction);
+    }
+
+    q1.Finalize();
+}
+
+void mmBankTransactionList::UpdateTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
+{
+    if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+        pBankTransaction->payeeID_ = -1;
+
+    static const char sql[] =
+    "update CHECKINGACCOUNT_V1 "
+    "SET ACCOUNTID=?, TOACCOUNTID=?, PAYEEID=?, TRANSCODE=?, "
+        "TRANSAMOUNT=?, STATUS=?, TRANSACTIONNUMBER=?, NOTES=?, "
+        "CATEGID=?, SUBCATEGID=?, TRANSDATE=?, TOTRANSAMOUNT=? "
+    "WHERE TRANSID = ?";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    mmBankTransaction &r = *pBankTransaction;
+
+    int i = 0;
+    st.Bind(++i, r.accountID_);
+    st.Bind(++i, r.toAccountID_);
+    st.Bind(++i, r.payeeID_);
+    st.Bind(++i, r.transType_);
+    st.Bind(++i, r.amt_);
+    st.Bind(++i, r.status_);
+    st.Bind(++i, r.transNum_);
+    st.Bind(++i, r.notes_);
+    st.Bind(++i, r.categID_);
+    st.Bind(++i, r.subcategID_);
+    st.Bind(++i, r.date_.FormatISODate());
+    st.Bind(++i, r.toAmt_);
+    st.Bind(++i, r.transactionID());
+
+    wxASSERT(st.GetParamCount() == i);
+    st.ExecuteUpdate();
+
+    r.splitEntries_->updateToDB(db_, r.transactionID(), true);
+    st.Finalize();
+    mmOptions::instance().databaseUpdated_ = true;
+}
+
+void mmBankTransactionList::UpdateAllTransactions()
 {
     // We need to update all transactions incase of errors when loading
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
@@ -666,13 +679,13 @@ void mmBankTransactionList::updateAllTransactions()
         boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction && pBankTransaction->updateRequired_)
         {
-           updateTransaction(pBankTransaction);
+           UpdateTransaction(pBankTransaction);
            pBankTransaction->updateRequired_ = false;
         }
     }
 }
 
-void mmBankTransactionList::updateAllTransactionsForCategory(mmCoreDB* core,
+void mmBankTransactionList::UpdateAllTransactionsForCategory(mmCoreDB* core,
                                                              int categID,
                                                              int subCategID)
 {
@@ -705,7 +718,7 @@ void mmBankTransactionList::updateAllTransactionsForCategory(mmCoreDB* core,
     }
 }
 
-int mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core, int payeeID)
+int mmBankTransactionList::UpdateAllTransactionsForPayee(mmCoreDB* core, int payeeID)
 {
     // We need to update all transactions incase of errors when loading
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)

@@ -1865,7 +1865,7 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
             pTransaction->amt_ = pTransaction->toAmt_;
             pTransaction->toAmt_ = amount;
         }
-        m_cp->core_->bTransactionList_.updateTransaction(pTransaction);
+        m_cp->core_->bTransactionList_.UpdateTransaction(pTransaction);
 
     }
     refreshVisualList();

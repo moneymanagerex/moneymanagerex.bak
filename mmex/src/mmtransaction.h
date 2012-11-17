@@ -151,7 +151,16 @@ public:
     bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     boost::shared_ptr<mmBankTransaction> copyTransaction(mmCoreDB* pCore,
        const long transactionID, const long accountID, const bool useOriginalDate);
-    void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
+
+    /// Loads database primary Transactions into memory.
+    void LoadTransactions(mmCoreDB* core);
+
+    /* Update Transactions */
+    void UpdateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
+    void UpdateAllTransactions();
+    void UpdateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
+    int UpdateAllTransactionsForPayee(mmCoreDB* core, int payeeID);
+
     bool removeTransaction(int accountID, int transactionID);
     bool deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
@@ -176,11 +185,6 @@ public:
     int getTransferCategoryID(const int accountID, int& subcategID) const;
     int getLastUsedPayeeID(const int accountID, int& categID, int& subcategID) const;
     wxArrayString getTransactionNumber(const int accountID, const wxDateTime transaction_date) const;
-
-    /* Update Transactions */
-    void updateAllTransactions();
-    void updateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
-    int updateAllTransactionsForPayee(mmCoreDB* core, int payeeID);
 
     /* Data */
     typedef std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator const_iterator;

@@ -933,7 +933,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     }
     else
     {
-        core_->bTransactionList_.updateTransaction(pTransaction);
+        core_->bTransactionList_.UpdateTransaction(pTransaction);
     }
 
     EndModal(wxID_OK);
