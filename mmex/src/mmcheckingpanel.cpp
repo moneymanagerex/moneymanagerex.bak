@@ -1012,7 +1012,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
 
         if (transFilterActive_)
         {
-            toAdd  = true;  // remove transaction from list and add if wanted.
+            toAdd  = transFilterDlg_->somethingSelected();  // remove transaction from list and add if wanted.
             if (transFilterDlg_->getAccountCheckBox())
                 toAdd = toAdd && (transFilterDlg_->getAccountID() == pBankTransaction->accountID_ || transFilterDlg_->getAccountID() == pBankTransaction->toAccountID_);
             if (transFilterDlg_->getDateRangeCheckBox())

@@ -43,6 +43,7 @@ public:
         long style = SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE
     );
 
+    bool somethingSelected();
     bool getAccountCheckBox() {return accountCheckBox_->GetValue();}
     int getAccountID() {return refAccountID_;}
     wxString getAccountName();
@@ -114,7 +115,6 @@ private:
     bool get_next_value(wxStringTokenizer& tkz, wxString& value);
 
     void OnCategs(wxCommandEvent& event);
-    void OnPayee(wxCommandEvent& event);
 
     /// Should we show tooltips?
     static bool ShowToolTips();
@@ -126,7 +126,7 @@ private:
     wxDatePickerCtrl* fromDateCtrl_;
     wxDatePickerCtrl* toDateControl_;
     wxCheckBox* payeeCheckBox_;
-    wxButton* btnPayee_;
+    wxComboBox* cbPayee_;
     wxCheckBox* categoryCheckBox_;
     wxButton* btnCategory_;
     wxCheckBox* statusCheckBox_;
