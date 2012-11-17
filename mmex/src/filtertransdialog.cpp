@@ -431,14 +431,14 @@ bool mmFilterTransactionsDialog::somethingSelected()
 {
     return
     getAccountCheckBox()
-    && getDateRangeCheckBox()
-    && getPayeeCheckBox()
-    && getCategoryCheckBox()
-    && getStatusCheckBox()
-    && getTypeCheckBox()
-    && getAmountRangeCheckBox()
-    && getNumberCheckBox()
-    && getNotesCheckBox();
+    || getDateRangeCheckBox()
+    || getPayeeCheckBox()
+    || getCategoryCheckBox()
+    || getStatusCheckBox()
+    || getTypeCheckBox()
+    || getAmountRangeCheckBox()
+    || getNumberCheckBox()
+    || getNotesCheckBox();
 }
 
 wxString mmFilterTransactionsDialog::getAccountName()
