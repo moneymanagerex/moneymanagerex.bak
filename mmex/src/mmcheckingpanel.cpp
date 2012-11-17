@@ -16,12 +16,12 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 //----------------------------------------------------------------------------
+
 #include "mmcheckingpanel.h"
 #include "transdialog.h"
 #include "splittransactionsdialog.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include "transactionfilterdialog.h"
 #include "mmex.h"
 #include "constants.h"
 //----------------------------------------------------------------------------
@@ -462,7 +462,7 @@ bool mmCheckingPanel::Create(
     /* Set up the transaction filter.  The transFilter dialog will be destroyed
        when the checking panel is destroyed. */
     transFilterActive_ = false;
-    transFilterDlg_    = new TransFilterDialog(core_, this);
+    transFilterDlg_    = new mmFilterTransactionsDialog(core_, this);
 
     initVirtualListControl();
     windowsFreezeThaw(this);
@@ -1012,19 +1012,27 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
 
         if (transFilterActive_)
         {
-            toAdd  = false;  // remove transaction from list and add if wanted.
-            if ( transFilterDlg_->byDateRange(pBankTransaction->date_) &&
-                 transFilterDlg_->byPayee(pBankTransaction->payeeStr_) &&
-                 transFilterDlg_->bySplitCategory(pBankTransaction.get()) &&
-                 transFilterDlg_->byCategory(pBankTransaction->catStr_, pBankTransaction->subCatStr_) &&
-                 transFilterDlg_->byStatus(pBankTransaction->status_)  &&
-                 transFilterDlg_->byType(pBankTransaction->transType_) &&
-                 transFilterDlg_->byTransNumber(pBankTransaction->transNum_) &&
-                 transFilterDlg_->byNotes(pBankTransaction->notes_)
-               )
-            {
-                toAdd  = true;
-            }
+            toAdd  = true;  // remove transaction from list and add if wanted.
+            if (transFilterDlg_->getAccountCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getAccountID() == pBankTransaction->accountID_ || transFilterDlg_->getAccountID() == pBankTransaction->toAccountID_);
+            if (transFilterDlg_->getDateRangeCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getFromDateCtrl() <= pBankTransaction->date_ && transFilterDlg_->getToDateControl() >= pBankTransaction->date_);
+            if (transFilterDlg_->getPayeeCheckBox())
+                toAdd = toAdd && (transFilterDlg_->userPayeeStr() == pBankTransaction->payeeStr_);
+            if (transFilterDlg_->getCategoryCheckBox())
+                toAdd = toAdd && (pBankTransaction->containsCategory(transFilterDlg_->getCategoryID(),
+                    transFilterDlg_->getSubCategoryID(), transFilterDlg_->getSubCategoryID() < 0));
+            if (transFilterDlg_->getStatusCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getStatus() == pBankTransaction->status_);
+            if (transFilterDlg_->getTypeCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getType().Contains(pBankTransaction->transType_));
+            if (transFilterDlg_->getAmountRangeCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getAmountMin() <= pBankTransaction->amt_ && transFilterDlg_->getAmountMax() >= pBankTransaction->amt_);
+            if (transFilterDlg_->getNumberCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getNumber().Trim().Lower() == pBankTransaction->transNum_.Lower());
+            if (transFilterDlg_->getNotesCheckBox())
+                toAdd = toAdd && (pBankTransaction->notes_.Lower().Matches(transFilterDlg_->getNotes().Trim().Lower().Prepend(wxT("*")).Append(wxT("*"))));
+
         }
 
         if (toAdd)
@@ -1287,17 +1295,18 @@ void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
 
     if (e == wxEVT_LEFT_DOWN) {
-        int dlgResult = transFilterDlg_->ShowModal();
-        if ( dlgResult == wxID_OK )
+
+        if (transFilterDlg_->ShowModal() == wxID_OK)
         {
             transFilterActive_ = true;
             wxBitmap activeBitmapFilterIcon(tipicon_xpm);
             bitmapFilterIcon = activeBitmapFilterIcon;
         }
-        else if ( dlgResult == wxID_CANCEL )
+        else
         {
             transFilterActive_ = false;
         }
+
     } else {
         if (transFilterActive_ == false) return;
         transFilterActive_ = false;
