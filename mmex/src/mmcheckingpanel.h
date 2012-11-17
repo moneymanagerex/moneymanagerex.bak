@@ -20,6 +20,7 @@
 #ifndef _MM_EX_CHECKINGPANEL_H_
 #define _MM_EX_CHECKINGPANEL_H_
 //----------------------------------------------------------------------------
+#include "filtertransdialog.h"
 #include "defs.h"
 #include "mmpanelbase.h"
 //----------------------------------------------------------------------------
@@ -30,7 +31,7 @@
 class mmGUIFrame;
 class mmBankTransaction;
 class TransactionListCtrl;
-class TransFilterDialog;
+class mmFilterTransactionsDialog;
 //----------------------------------------------------------------------------
 
 // This structure is currently not being used.
@@ -114,7 +115,7 @@ private:
     wxStaticText* itemStaticTextMainFilter_;
     wxStaticText* statTextTransFilter_;
     wxStaticBitmap* bitmapTransFilter_;
-    TransFilterDialog* transFilterDlg_;
+    mmFilterTransactionsDialog* transFilterDlg_;
 
     wxString m_currentView;
     mmGUIFrame* mainFrame_;
