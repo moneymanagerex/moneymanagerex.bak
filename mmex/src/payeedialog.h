@@ -58,6 +58,7 @@ private:
     void OnTextCtrlChanged(wxCommandEvent& event);
     void OnSelChanged(wxCommandEvent& event);
     void OnComboSelected(wxCommandEvent& event);
+    void OnPayeeRelocate(wxCommandEvent& event);
     void OnDoubleClicked(wxCommandEvent& event);
     void OnFocus(wxFocusEvent& event);
     void OnSetFocus(wxFocusEvent& event);
