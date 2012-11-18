@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -30,7 +30,7 @@
 #include "mmcoredb.h"
 #include "dbwrapper.h"
 
-enum { 
+enum {
     ID_DIALOG_CURRENCY = wxID_HIGHEST + 1,
     ID_DIALOG_CURRENCY_BUTTON_ADD,
     ID_DIALOG_CURRENCY_BUTTON_SELECT,
@@ -45,11 +45,11 @@ enum {
     ID_DIALOG_CURRENCY_TEXT_SCALE,
     ID_DIALOG_CURRENCY_TEXT_BASECONVRATE,
     ID_DIALOG_CURRENCY_BUTTON_CANCEL,
-	ID_DIALOG_CURRENCY_TEXT_SYMBOL,
+    ID_DIALOG_CURRENCY_TEXT_SYMBOL,
 };
 
 class mmCurrencyDialog : public wxDialog
-{    
+{
     DECLARE_DYNAMIC_CLASS( mmCurrencyDialog )
     DECLARE_EVENT_TABLE()
 
@@ -57,31 +57,32 @@ public:
     mmCurrencyDialog();
     ~mmCurrencyDialog();
     mmCurrencyDialog(mmCoreDB* core,
-       int currencyID,
-        wxWindow* parent, 
-        wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_CURRENCYDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_CURRENCYDIALOG_SIZE, 
+        int currencyID,
+        wxWindow* parent,
+        wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_CURRENCYDIALOG_POSITION,
+        const wxSize& size = SYMBOL_CURRENCYDIALOG_SIZE,
         long style = SYMBOL_CURRENCYDIALOG_STYLE );
-    mmCurrencyDialog(mmCoreDB* core, wxWindow* parent, 
-        wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_CURRENCYDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_CURRENCYDIALOG_SIZE, 
+    mmCurrencyDialog(mmCoreDB* core, wxWindow* parent,
+        wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_CURRENCYDIALOG_POSITION,
+        const wxSize& size = SYMBOL_CURRENCYDIALOG_SIZE,
         long style = SYMBOL_CURRENCYDIALOG_STYLE );
 
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_CURRENCYDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_CURRENCYDIALOG_SIZE, 
+    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_CURRENCYDIALOG_POSITION,
+        const wxSize& size = SYMBOL_CURRENCYDIALOG_SIZE,
         long style = SYMBOL_CURRENCYDIALOG_STYLE );
 
 private:
     void CreateControls();
-    
+
     // utility functions
     void OnUpdate(wxCommandEvent& event);
+    void OnCurrencyNameSelected(wxCommandEvent& event);
     void updateControls();
     void fillControls();
 
@@ -90,9 +91,12 @@ private:
     wxStaticText* baseRateSample_;
     wxStaticText* sampleText_;
     wxComboBox* currencySymbolCombo_;
-    
-	int currencyID_;
-  
+
+    wxArrayString currency_symbols_;
+    wxArrayString currency_names_;
+
+    int currencyID_;
+
 public:
 
 };
