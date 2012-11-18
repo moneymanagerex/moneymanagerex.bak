@@ -17,12 +17,12 @@
  ********************************************************/
 
 #include "payeedialog.h"
+#include "relocatepayeedialog.h"
 #include "util.h"
 #include "defs.h"
 #include "paths.h"
 #include "dbwrapper.h"
 #include "mmcoredb.h"
-
 #include <wx/event.h>
 
 namespace
@@ -92,8 +92,17 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     SetSizer(itemBoxSizer2);
 
+    wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer22);
+    wxBitmapButton* payee_relocate = new wxBitmapButton(this, 
+        wxID_STATIC, wxBitmap(relocate_payees_xpm));
+    itemBoxSizer22->Add(payee_relocate, flags);
+    payee_relocate->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
+        wxCommandEventHandler(mmPayeeDialog::OnPayeeRelocate), NULL, this);
+    payee_relocate->SetToolTip(_("Change all transactions using one Payee to another Payee"));
+    itemBoxSizer22->AddSpacer(10);
     wxStaticText* itemStaticTextName = new wxStaticText( this, wxID_STATIC, _("Find Payee: "));
-    itemBoxSizer2->Add(itemStaticTextName, flags);
+    itemBoxSizer22->Add(itemStaticTextName, flags);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, flagsExpand);
@@ -103,7 +112,7 @@ void mmPayeeDialog::CreateControls()
     listBox_ = new wxListBox( this, IDD_LISTBOX_PAYEES, wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
-    itemBoxSizer2->Add(new wxStaticText( this, wxID_STATIC, _("Filter Payees: ")), flags);
+    itemBoxSizer2->Add(new wxStaticText( this, wxID_STATIC, _("Filter Payees: ")), flags); 
 
     textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString());
     itemBoxSizer2->Add(textCtrl, flagsExpand);
@@ -294,4 +303,20 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
         listBox_->SetStringSelection(newName);
         OnSelChanged(event);
     }
+}
+
+void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
+{
+    relocatePayeeDialog* dlg = new relocatePayeeDialog(core_, this);
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        wxString msgStr;
+        msgStr << _("Payee Relocation Completed.") << wxT("\n\n")
+            << wxString::Format(_("Records have been updated in the database: %s"),
+                dlg->updatedPayeesCount().c_str())
+            << wxT("\n\n");
+        wxMessageBox(msgStr, _("Payee Relocation Result"));
+        mmOptions::instance().databaseUpdated_ = true;
+    }
+
 }
