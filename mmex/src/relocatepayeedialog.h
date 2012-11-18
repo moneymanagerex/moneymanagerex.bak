@@ -45,6 +45,9 @@ public:
         const wxSize& size = SYMBOL_RELOCATEPAYEEDIALOG_SIZE,
         long style = SYMBOL_RELOCATEPAYEEDIALOG_STYLE );
 
+    wxString updatedPayeesCount();
+
+private:
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_RELOCATEPAYEEDIALOG_IDNAME,
         const wxString& caption = SYMBOL_RELOCATEPAYEEDIALOG_TITLE,
         const wxPoint& pos = SYMBOL_RELOCATEPAYEEDIALOG_POSITION,
@@ -53,21 +56,15 @@ public:
 
     void CreateControls();
 
-    // utility functions
-    void OnSelectSource(wxCommandEvent& event);
-    void OnSelectDest(wxCommandEvent& event);
     void OnOk(wxCommandEvent& event);
 
-    wxString updatedPayeesCount();
-
-private:
     mmCoreDB* core_;
 
     int sourcePayeeID_;
     int destPayeeID_;
 
-    wxButton* sourceBtn_;
-    wxButton* destBtn_;
+    wxComboBox* cbSourcePayee_;
+    wxComboBox* cbDestPayee_;
     int changedPayees_;
 };
 

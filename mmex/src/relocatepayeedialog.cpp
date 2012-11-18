@@ -19,7 +19,6 @@
 
 #include "relocatepayeedialog.h"
 #include "paths.h"
-#include "payeedialog.h"
 #include "wx/statline.h"
 
 #define SQLITE_OK           0   /* Successful result */
@@ -27,8 +26,6 @@
 IMPLEMENT_DYNAMIC_CLASS( relocatePayeeDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( relocatePayeeDialog, wxDialog )
-    EVT_BUTTON(wxID_CLEAR, relocatePayeeDialog::OnSelectSource)
-    EVT_BUTTON(wxID_NEW, relocatePayeeDialog::OnSelectDest)
     EVT_BUTTON(wxID_OK, relocatePayeeDialog::OnOk)
 END_EVENT_TABLE()
 
@@ -81,10 +78,14 @@ void relocatePayeeDialog::CreateControls()
         _("Relocate all source payees to the destination payee"));
     wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC,
         wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
-    sourceBtn_ = new wxButton( this, wxID_CLEAR,_("Source Payee"),
-        wxDefaultPosition, btnSize);
-    destBtn_ = new wxButton( this, wxID_NEW, _("Destination Payee"),
-        wxDefaultPosition, btnSize);
+
+    cbSourcePayee_ = new wxComboBox(this, wxID_STATIC, wxT(""),
+        wxDefaultPosition, btnSize,
+        core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
+    cbDestPayee_ = new wxComboBox(this, wxID_NEW, wxT(""),
+        wxDefaultPosition, btnSize,
+        core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
+
     wxStaticLine* lineBottom = new wxStaticLine(this,wxID_STATIC,
         wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
 
@@ -98,9 +99,10 @@ void relocatePayeeDialog::CreateControls()
     boxSizer->Add(lineTop, flagsExpand);
 
     request_sizer->Add(new wxStaticText( this, wxID_STATIC,_("Relocate:")), flags);
-    request_sizer->Add(sourceBtn_, flags);
     request_sizer->Add(new wxStaticText( this, wxID_STATIC,_("to:")), flags);
-    request_sizer->Add(destBtn_, flags);
+    request_sizer->Add(cbSourcePayee_, flags);
+    request_sizer->Add(cbDestPayee_, flags);
+
     boxSizer->Add(request_sizer, flagsExpand);
     boxSizer->Add(lineBottom, flagsExpand);
 
@@ -113,37 +115,6 @@ void relocatePayeeDialog::CreateControls()
     boxSizer->Add(buttonBoxSizer, flags);
 }
 
-void relocatePayeeDialog::OnSelectSource(wxCommandEvent& /*event*/)
-{
-    mmPayeeDialog* sourcePayee = new mmPayeeDialog(this, core_);
-    if (sourcePayee->ShowModal() == wxID_OK)
-    {
-        sourcePayeeID_    = sourcePayee->getPayeeId();
-
-        wxString payee_name;
-        if (sourcePayeeID_ != -1 )
-            payee_name = core_->payeeList_.GetPayeeName(sourcePayeeID_);
-
-        if (payee_name != wxT(""))
-            sourceBtn_->SetLabel(payee_name);
-    }
-}
-
-void relocatePayeeDialog::OnSelectDest(wxCommandEvent& /*event*/)
-{
-    mmPayeeDialog* destPayee = new mmPayeeDialog(this, core_);
-    if (destPayee->ShowModal() == wxID_OK)
-    {
-        destPayeeID_    = destPayee->getPayeeId();
-
-        wxString payee_name;
-        if (destPayeeID_ != -1 )
-            payee_name = core_->payeeList_.GetPayeeName(destPayeeID_);
-        if (payee_name != wxT(""))
-            destBtn_->SetLabel(payee_name);
-    }
-}
-
 wxString relocatePayeeDialog::updatedPayeesCount()
 {
     wxString countStr;
@@ -154,20 +125,23 @@ wxString relocatePayeeDialog::updatedPayeesCount()
 
 void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
 {
+    wxString destPayeeName, sourcePayeeName;
+    destPayeeName = cbDestPayee_->GetValue();
+    sourcePayeeName = cbSourcePayee_->GetValue();
+    destPayeeID_ = core_->payeeList_.GetPayeeId(destPayeeName);
+    sourcePayeeID_ = core_->payeeList_.GetPayeeId(sourcePayeeName);
     if ((sourcePayeeID_ > 0) &&  (destPayeeID_ > 0) )
     {
         wxString msgStr = _("Please Confirm:") ;
         msgStr << wxT("\n\n");
         msgStr << wxString::Format( _("Changing all payees of: %s \n\n  to payee: %s"),
-             sourceBtn_->GetLabelText().c_str(), destBtn_->GetLabelText().c_str());
+             sourcePayeeName.c_str(), destPayeeName.c_str());
 
         int ans = wxMessageBox(msgStr,_("Payee Relocation Confirmation"), wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)
         {
             if (core_->bTransactionList_.RelocatePayee(core_, destPayeeID_, sourcePayeeID_, changedPayees_) == 0)
             {
-
-
                 EndModal(wxID_OK);
             }
         }
