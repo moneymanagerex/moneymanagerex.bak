@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -46,16 +46,16 @@ BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
     EVT_LISTBOX(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnSelChanged)
     EVT_LISTBOX_DCLICK(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnDoubleClicked)
     EVT_TEXT(IDD_TEXTCTRL_PAYEENAME, mmPayeeDialog::OnTextCtrlChanged)
-    EVT_CHAR_HOOK(mmPayeeDialog::OnListKeyDown)    
+    EVT_CHAR_HOOK(mmPayeeDialog::OnListKeyDown)
 END_EVENT_TABLE()
 
 
-mmPayeeDialog::mmPayeeDialog(wxWindow *parent, mmCoreDB *core, bool showSelectButton) : 
-	m_payee_id(-1),
-	core_(core),
-	showSelectButton_(showSelectButton)
+mmPayeeDialog::mmPayeeDialog(wxWindow *parent, mmCoreDB *core, bool showSelectButton) :
+    m_payee_id(-1),
+    core_(core),
+    showSelectButton_(showSelectButton)
 {
-	do_create(parent);
+    do_create(parent);
 }
 
 void mmPayeeDialog::do_create(wxWindow* parent)
@@ -64,7 +64,7 @@ void mmPayeeDialog::do_create(wxWindow* parent)
 
     long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX | wxRESIZE_BORDER | wxWANTS_CHARS;
     if (!wxDialog::Create(parent, wxID_ANY, _("Organize Payees"), wxDefaultPosition, wxDefaultSize, style)) {
-    	return;
+        return;
     }
 
     CreateControls();
@@ -114,23 +114,23 @@ void mmPayeeDialog::CreateControls()
 
     addButton = new wxButton( this, wxID_ADD);
     itemBoxSizer5->Add(addButton, flags.Border(1));
-	addButton->Disable();
+    addButton->Disable();
 
     editButton = new wxButton( this, wxID_EDIT);
     itemBoxSizer5->Add(editButton, flags);
     editButton->Disable();
-	
+
     deleteButton = new wxButton( this, wxID_REMOVE);
     itemBoxSizer5->Add(deleteButton, flags);
-	deleteButton->Disable();
-	
+    deleteButton->Disable();
+
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, flagsExpand);
 
     selectButton = new wxButton( this, wxID_OK, _("&Select"));
     itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     selectButton->Disable();
-    
+
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
     itemBoxSizer9->Add(itemCancelButton,  flags);
@@ -145,7 +145,7 @@ void mmPayeeDialog::CreateControls()
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 {
     long keycode = event.GetKeyCode();
-	
+
     // Check to see if the up or down arrow is pressed while text control has focus
     wxWindow *win = wxWindow::FindFocus();
     wxTextCtrl *text = wxDynamicCast(win, wxTextCtrl);
@@ -161,9 +161,9 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
         listBox_->Select(listBox_->GetSelection()-1);
         wxCommandEvent event;
         OnSelChanged(event);
-	}
-	else
-	{
+    }
+    else
+    {
         // text control doesn't have focus OR up/down not pressed OR up/down not possible
     }
 
@@ -180,40 +180,40 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 
 void mmPayeeDialog::fillControls()
 {
-	wxArrayString filtd = core_->payeeList_.FilterPayees(textCtrl->GetValue());
+    wxArrayString filtd = core_->payeeList_.FilterPayees(textCtrl->GetValue());
 
-	listBox_->Clear();
+    listBox_->Clear();
 
-	for (size_t i = 0; i < filtd.GetCount(); ++i) {
-		listBox_->Append(filtd.Item(i));
-	}
+    for (size_t i = 0; i < filtd.GetCount(); ++i) {
+        listBox_->Append(filtd.Item(i));
+    }
 }
 
 void mmPayeeDialog::OnTextCtrlChanged(wxCommandEvent& event)
 {
-	bool filter_ok = !textCtrl->GetValue().IsEmpty();
-	addButton->Enable(filter_ok);
-	
-	wxString payee = listBox_->GetStringSelection();
-	fillControls();
-	
-	if (!listBox_->IsEmpty() && !listBox_->SetStringSelection(payee)) {
-		listBox_->Select(0);
-	}
+    bool filter_ok = !textCtrl->GetValue().IsEmpty();
+    addButton->Enable(filter_ok);
 
-	OnSelChanged(event);
+    wxString payee = listBox_->GetStringSelection();
+    fillControls();
+
+    if (!listBox_->IsEmpty() && !listBox_->SetStringSelection(payee)) {
+        listBox_->Select(0);
+    }
+
+    OnSelChanged(event);
 }
 
 void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 {
-	wxString payee = listBox_->GetStringSelection();
+    wxString payee = listBox_->GetStringSelection();
 
-	m_payee_id = payee.IsEmpty() ? -1 : core_->payeeList_.GetPayeeId(payee);
-	bool ok = m_payee_id != -1;
+    m_payee_id = payee.IsEmpty() ? -1 : core_->payeeList_.GetPayeeId(payee);
+    bool ok = m_payee_id != -1;
 
-	editButton->Enable(ok);
-	deleteButton->Enable(ok);
-	selectButton->Enable(ok && showSelectButton_);
+    editButton->Enable(ok);
+    deleteButton->Enable(ok);
+    selectButton->Enable(ok && showSelectButton_);
 }
 
 void mmPayeeDialog::OnAdd(wxCommandEvent& event)
@@ -235,59 +235,63 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
         fillControls();
 
         listBox_->SetStringSelection(text);
-		
-		// SetStringSelection does not emit event, so we need to do it manually.
-		// This is important because it is where m_payee_id gets set
-		OnSelChanged(event);
+
+        // SetStringSelection does not emit event, so we need to do it manually.
+        // This is important because it is where m_payee_id gets set
+        OnSelChanged(event);
     }
 }
- 
+
 void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
     if (!core_->payeeList_.RemovePayee(m_payee_id))
     {
         wxString deletePayeeErrMsg = _("Payee in use.");
-        deletePayeeErrMsg 
+        deletePayeeErrMsg
             << wxT("\n\n")
             << _("Tip: Change all transactions using this Payee to another Payee\nusing the relocate command:")
             << wxT("\n\n") << _("Tools -> Relocation of -> Payees");
         wxMessageBox(deletePayeeErrMsg,_("Organize Payees: Delete Error"),wxOK|wxICON_ERROR);
         return;
     }
-	textCtrl->Clear();
+    textCtrl->Clear();
     fillControls();
-	OnSelChanged(event);
+    OnSelChanged(event);
 }
- 
+
 void mmPayeeDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
-	if (m_payee_id != -1) {
-		EndModal(wxID_OK);
-	}
+    if (m_payee_id != -1) {
+        EndModal(wxID_OK);
+    }
 }
 
 void mmPayeeDialog::OnDoubleClicked(wxCommandEvent& event)
 {
-    OnBSelect(event);
+    if (showSelectButton_)
+        OnBSelect(event);
+    else
+        OnEdit(event);
+
 }
 
 void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 {
-	wxString oldname = listBox_->GetStringSelection();
-	
-	wxString mesg;
-	mesg.Printf(_("Enter a new name for %s"),oldname.c_str());
-	wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
+    wxString oldname = listBox_->GetStringSelection();
+
+    wxString mesg;
+    mesg.Printf(_("Enter a new name for %s"),oldname.c_str());
+    wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
     if (newName != wxGetEmptyString())
-	{
-		core_->payeeList_.UpdatePayee(m_payee_id, newName);
-		core_->bTransactionList_.UpdateAllTransactionsForPayee(core_, m_payee_id);
-		editButton->Disable();
-		fillControls();
-		
-		// Now we need to make sure that the edited name is selected after the dialog is closed
-		textCtrl->Clear();
-		listBox_->SetStringSelection(newName);
-		OnSelChanged(event);
-	}
+    {
+        core_->payeeList_.UpdatePayee(m_payee_id, newName);
+        core_->bTransactionList_.UpdateAllTransactionsForPayee(core_, m_payee_id);
+        editButton->Disable();
+        fillControls();
+
+        // Now we need to make sure that the edited name is selected after the dialog is closed
+        textCtrl->Clear();
+        listBox_->SetStringSelection(newName);
+        OnSelChanged(event);
+    }
 }
