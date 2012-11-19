@@ -90,6 +90,8 @@ public:
     /// Returns true with valid dates, when the dialog date range is selected.
     bool getDateRange(wxDateTime& startDate, wxDateTime& endDate) const;
 
+    void setAccountToolTip(wxString tip) const;
+
 private:
     /// Creation
     bool Create( wxWindow* parent,
