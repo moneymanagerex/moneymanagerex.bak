@@ -642,3 +642,8 @@ wxString mmFilterTransactionsDialog::GetCurrentSettings()
 
     return settings_string_;
 }
+
+void mmFilterTransactionsDialog::setAccountToolTip(wxString tip) const
+{
+    accountDropDown_->SetToolTip(tip);
+}

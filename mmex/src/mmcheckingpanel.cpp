@@ -1014,7 +1014,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
         {
             toAdd  = transFilterDlg_->somethingSelected();  // remove transaction from list and add if wanted.
             if (transFilterDlg_->getAccountCheckBox())
-                toAdd = toAdd && (transFilterDlg_->getAccountID() == pBankTransaction->accountID_ || transFilterDlg_->getAccountID() == pBankTransaction->toAccountID_);
+                toAdd = toAdd && (transFilterDlg_->getAccountID() == pBankTransaction->toAccountID_);
             if (transFilterDlg_->getDateRangeCheckBox())
                 toAdd = toAdd && (transFilterDlg_->getFromDateCtrl() <= pBankTransaction->date_ && transFilterDlg_->getToDateControl() >= pBankTransaction->date_);
             if (transFilterDlg_->getPayeeCheckBox())
@@ -1295,7 +1295,7 @@ void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
 
     if (e == wxEVT_LEFT_DOWN) {
-
+        transFilterDlg_->setAccountToolTip(wxT("Select account used in transfer transactions"));
         if (transFilterDlg_->ShowModal() == wxID_OK)
         {
             transFilterActive_ = true;
