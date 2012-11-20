@@ -287,6 +287,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
     {
         textAmount_->Enable(true);
         toTextAmount_->Enable(cAdvanced_->GetValue());
+
         if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
         payee_label_->SetLabel(_("To"));
         data = core_->accountList_.getAccountsName(accountID_);
@@ -815,7 +816,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         }
     }
 
-    if (transaction_type == TRANS_TYPE_TRANSFER_STR)
+    if (transaction_type == TRANS_TYPE_TRANSFER_STR && advancedToTransAmountSet_)
     {
         wxString amountStr = toTextAmount_->GetValue().Trim();
         if (amountStr.IsEmpty() || !mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
@@ -837,6 +838,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
                 transAmount_ = toTransAmount_;
                 amount = toTransAmount_;
             }
+            toTextAmount_->SetValue(wxString()<<amount);
         }
     }
 
