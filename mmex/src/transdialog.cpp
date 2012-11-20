@@ -209,7 +209,7 @@ void mmTransDialog::dataToControls()
             }
         }
     }
-
+    updateControlsForTransType();
     if (edit_)
     {
         *split_.get() = *core_->bTransactionList_.getBankTransactionPtr(pBankTransaction_->transactionID())->splitEntries_.get();
@@ -327,8 +327,10 @@ void mmTransDialog::SetTransferControls(bool transfer)
 #if wxCHECK_VERSION(2,9,0)
     cbPayee_->AutoComplete(data);
 #endif
+
     if (!cbPayee_ -> SetStringSelection(dataStr))
         cbPayee_ -> SetValue(dataStr);
+
     cbPayee_ -> SetEvtHandlerEnabled(true);
 }
 
