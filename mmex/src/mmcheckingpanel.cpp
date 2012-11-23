@@ -736,64 +736,39 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 //----------------------------------------------------------------------------
 wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
 {
-    char sql[] =
-    "select  ta.accountname  as INTOACC, "
-    "a.accountname as FROMACC, c.transcode as TRANSCODE, "
-    "c.TRANSAMOUNT as TRANSAMOUNT,  TOTRANSAMOUNT, "
-    "cf.pfx_symbol as PFX_SYMBOL, cf.sfx_symbol as SFX_SYMBOL, "
-    "tcf.pfx_symbol as TOPFX_SYMBOL, tcf.sfx_symbol as TOSFX_SYMBOL, "
-    "cf.CURRENCYNAME as CURRENCYNAME,  tcf.CURRENCYNAME as TOCURRENCYNAME, "
-    "cf.CURRENCYID as CURRENCYID,  tcf.CURRENCYID as TOCURRENCYID, "
-    "cf.BASECONVRATE as BASECONVRATE, "
-    "tcf.BASECONVRATE as TOBASECONVRATE, "
-    "c.ACCOUNTID as ACCOUNTID, "
-    "c.TOACCOUNTID as TOACCOUNTID, "
-    "i.infovalue as BASECURRENCYID "
-    "from  checkingaccount_v1 c "
-    "left join  accountlist_v1  ta on ta.ACCOUNTID=c.TOACCOUNTID "
-    "left join  accountlist_v1  a on a.ACCOUNTID=c.ACCOUNTID "
-    "left join currencyformats_v1 tcf on tcf.currencyid=ta.currencyid "
-    "left join currencyformats_v1 cf on cf.currencyid=a.currencyid "
-    "left join infotable_v1 i on i.infoname='BASECURRENCYID' "
-    "where c.transid = ? ";
+    int accountId = m_trans[selIndex]->accountID_;
+    int toaccountId = m_trans[selIndex]->toAccountID_;
+    wxString intoaccStr = core_->accountList_.GetAccountName(toaccountId);
+    wxString fromaccStr = core_->accountList_.GetAccountName(accountId);
+    int basecurrencyid = core_->currencyList_.getBaseCurrencySettings();
+    wxString transcodeStr = m_trans[selIndex]->transType_;
 
-    wxSQLite3Statement st = core_->db_.get()->PrepareStatement(sql);
-    st.Bind(1, m_trans[selIndex]->transactionID());
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-
-    wxString intoaccStr = q1.GetString(wxT("INTOACC"));
-    wxString fromaccStr = q1.GetString(wxT("FROMACC"));
-    int basecurrencyid = q1.GetInt(wxT("BASECURRENCYID"));
-    wxString transcodeStr = q1.GetString(wxT("TRANSCODE"));
-
-    wxString cursfxStr = q1.GetString(wxT("SFX_SYMBOL"));
-    wxString tocursfxStr = q1.GetString(wxT("TOSFX_SYMBOL"));
-    wxString curpfxStr = q1.GetString(wxT("PFX_SYMBOL"));
-    wxString tocurpfxStr = q1.GetString(wxT("TOPFX_SYMBOL"));
-    wxString currencynameStr = q1.GetString(wxT("CURRENCYNAME"));
-    wxString tocurrencynameStr = q1.GetString(wxT("TOCURRENCYNAME"));
-    int currencyid = q1.GetInt(wxT("CURRENCYID"));
-    double amount = q1.GetDouble(wxT("TRANSAMOUNT"));
+    double amount = m_trans[selIndex]->amt_;
     wxString amountStr;
-    double convrate = q1.GetDouble(wxT("BASECONVRATE"));
-    double toconvrate = q1.GetDouble(wxT("TOBASECONVRATE"));
-    int accountId = q1.GetInt(wxT("ACCOUNTID"));
-    int toaccountId = q1.GetInt(wxT("TOACCOUNTID"));
+    double convrate = core_->accountList_.getAccountBaseCurrencyConvRate(accountId);
+    double toconvrate = core_->accountList_.getAccountBaseCurrencyConvRate(toaccountId);
+
+    boost::shared_ptr<mmCurrency> pCurrency = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
+    int currencyid = pCurrency->currencyID_;
+    wxString curpfxStr = pCurrency->pfxSymbol_;
+    wxString cursfxStr = pCurrency->sfxSymbol_;
 
     wxString infoStr = wxT("");
     if (transcodeStr == TRANS_TYPE_TRANSFER_STR)
     {
-        int tocurrencyid = q1.GetInt(wxT("TOCURRENCYID"));
-        double toamount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(toaccountId).lock();
+        wxASSERT(pCurrencyPtr);
+        wxString tocurpfxStr = pCurrencyPtr->pfxSymbol_;
+        wxString tocursfxStr = pCurrencyPtr->sfxSymbol_;
+        
+        int tocurrencyid = pCurrencyPtr->currencyID_;
+        double toamount = m_trans[selIndex]->toAmt_;
         wxString toamountStr;
         double convertion = 0.0;
         if (toamount != 0.0 && amount != 0.0)
             convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
         wxString convertionStr;
 
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(toaccountId).lock();
-        wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         mmex::formatDoubleToCurrency(toamount, toamountStr);
         mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
