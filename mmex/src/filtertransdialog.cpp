@@ -215,7 +215,7 @@ void mmFilterTransactionsDialog::CreateControls()
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmFilterTransactionsDialog::OnPayeeUpdated), NULL, this);*/
 #if wxCHECK_VERSION(2,9,0)
-        cbPayee_->AutoComplete(core_->payeeList_.FilterPayees(wxT(""));
+        cbPayee_->AutoComplete(core_->payeeList_.FilterPayees(wxT("")));
 #endif
 
     itemPanelSizer->Add(cbPayee_, flags);

@@ -190,7 +190,7 @@ void mmCurrencyDialog::CreateControls()
     itemFlexGridSizer3->Add(currencySymbolCombo_, flagsExpand);
 
 #if wxCHECK_VERSION(2,9,0)
-    currencyNameCombo_->AutoComplete(currency_symbols);
+    currencyNameCombo_->AutoComplete(currency_symbols_);
 #endif
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Unit Name")), flags);
