@@ -22,6 +22,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "paths.h"
 #include <boost/version.hpp>
 
+/*************************************************************************
+ Revision of last commit: $Revision$
+ Author of last commit:   $Author$
+
+ When creating a build:
+ Update the MMEX_REVISION_ID string to the latest SVN Revision first,
+ OR
+ Commit a change to the SVN repository, then create the build.
+ *************************************************************************/
+const wxString MMEX_REVISION_ID = wxT("$Rev$");
 //----------------------------------------------------------------------------
 
 wxString mmex::getProgramName()
@@ -32,7 +42,7 @@ wxString mmex::getProgramName()
 
 wxString mmex::getProgramVersion()
 {
-    wxString revision(_MM_EX_REVISION_ID); 
+    wxString revision(MMEX_REVISION_ID);
     revision.Replace(wxT("$"), wxEmptyString);
 
 /**************************************************
