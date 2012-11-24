@@ -282,6 +282,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
         toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
     } else {
         textAmount_->SetToolTip(amountNormalTip_);
+        toTextAmount_->UnsetToolTip();
     }
 
     if (accountID_ == referenceAccountID_ && transfer)
