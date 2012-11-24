@@ -324,7 +324,7 @@ public:
     void OnViewSplitTransaction(wxCommandEvent& event);
     long m_selectedIndex;
     long m_selectedForCopy;
-    void refreshVisualList(const int trans_id = -1);
+    void refreshVisualList(const int trans_id = -1, long topItemIndex = -1);
 
 private:
     DECLARE_NO_COPY_CLASS(TransactionListCtrl)
@@ -363,6 +363,7 @@ private:
 
     //  Returns the account ID by user selection
     int destinationAccountID(wxString accName);
+    long topItemIndex_;
 };
 //----------------------------------------------------------------------------
 
@@ -760,7 +761,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         wxASSERT(pCurrencyPtr);
         wxString tocurpfxStr = pCurrencyPtr->pfxSymbol_;
         wxString tocursfxStr = pCurrencyPtr->sfxSymbol_;
-        
+
         int tocurrencyid = pCurrencyPtr->currencyID_;
         double toamount = m_trans[selIndex]->toAmt_;
         wxString toamountStr;
@@ -1411,7 +1412,7 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
     else wxASSERT(false);
 
     int transID = OnMarkTransactionDB(status);
-    refreshVisualList(transID);
+    refreshVisualList(transID, topItemIndex_);
 }
 //----------------------------------------------------------------------------
 
@@ -1678,7 +1679,7 @@ void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
 
     //find the topmost visible item - this will be used to set
     // where to display the list again after refresh
-//    long topItemIndex = GetTopItem();
+    topItemIndex_ = GetTopItem() + GetCountPerPage() -1;
 
     //Read status of the selected transaction
     wxString status = m_cp->m_trans[m_selectedIndex]->status_;
@@ -1744,7 +1745,7 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     m_cp->core_->db_.get()->Commit();
 
     int transID = m_cp->m_trans[m_selectedIndex]->transactionID();
-    refreshVisualList(transID);
+    refreshVisualList(transID, topItemIndex_);
 }
 //----------------------------------------------------------------------------
 
@@ -1791,12 +1792,16 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void TransactionListCtrl::refreshVisualList(const int trans_id)
+void TransactionListCtrl::refreshVisualList(const int trans_id, long topItemIndex)
 {
     m_cp->initVirtualListControl(trans_id);
 
+    if (topItemIndex >= (long)m_cp->m_trans.size())
+        topItemIndex = g_asc ? (long)m_cp->m_trans.size() - 1 : 0;
+
     if (m_selectedIndex >= (long)m_cp->m_trans.size() || m_selectedIndex < 0)
         m_selectedIndex = g_asc ? (long)m_cp->m_trans.size() - 1 : 0;
+
     if (m_cp->m_trans.size() > 0) {
         RefreshItems(0, m_cp->m_trans.size() - 1);
     }
@@ -1807,8 +1812,12 @@ void TransactionListCtrl::refreshVisualList(const int trans_id)
     {
         SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
         SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        EnsureVisible(m_selectedIndex);
+        if (topItemIndex > -1)
+            EnsureVisible(topItemIndex);
+        else
+            EnsureVisible(m_selectedIndex);
     }
+
     m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 
