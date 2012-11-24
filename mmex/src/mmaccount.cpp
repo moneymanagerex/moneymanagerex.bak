@@ -214,7 +214,6 @@ bool mmAccountList::currencyInUse(int currencyID) const
         if ((*it)->currencyID_ == currencyID) return true;
     }
 
-    wxASSERT(false);
     return false;
 }
 
