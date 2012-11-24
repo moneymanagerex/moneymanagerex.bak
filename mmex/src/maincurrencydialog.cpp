@@ -102,10 +102,9 @@ void mmMainCurrencyDialog::fillControls()
         currencyListBox_->SetItem(idx, 0, (*it)->currencySymbol_);
         currencyListBox_->SetItem(idx, 1, (*it)->currencyName_);
         currencyListBox_->SetItem(idx, 2, mnemo_sign);
-        currencyListBox_->SetItem(idx, 3, wxString()<<(*it)->baseConv_);
-
+        currencyListBox_->SetItem(idx++, 3, wxString()<<(*it)->baseConv_);
     }
-    currencyListBox_->SetItemCount(idx);
+
     if (idx>0)
         currencyListBox_->RefreshItems(0, --idx);
 }
