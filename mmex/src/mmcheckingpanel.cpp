@@ -747,7 +747,6 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     double amount = m_trans[selIndex]->amt_;
     wxString amountStr;
     double convrate = core_->accountList_.getAccountBaseCurrencyConvRate(accountId);
-    double toconvrate = core_->accountList_.getAccountBaseCurrencyConvRate(toaccountId);
 
     boost::shared_ptr<mmCurrency> pCurrency = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
     int currencyid = pCurrency->currencyID_;
@@ -757,6 +756,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     wxString infoStr = wxT("");
     if (transcodeStr == TRANS_TYPE_TRANSFER_STR)
     {
+        double toconvrate = core_->accountList_.getAccountBaseCurrencyConvRate(toaccountId);
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(toaccountId).lock();
         wxASSERT(pCurrencyPtr);
         wxString tocurpfxStr = pCurrencyPtr->pfxSymbol_;
@@ -820,15 +820,15 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         {
             //load settings for base currency
             wxString currencyName = core_->currencyList_.getCurrencyName(basecurrencyid);
-            boost::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
-            wxASSERT(pCurrency);
+            boost::shared_ptr<mmCurrency> pCurrencyBase = core_->currencyList_.getCurrencySharedPtr(currencyName);
+            wxASSERT(pCurrencyBase);
             wxString basecuramountStr;
-            mmDBWrapper::loadCurrencySettings(core_->db_.get(), pCurrency->currencyID_);
+            mmDBWrapper::loadCurrencySettings(core_->db_.get(), pCurrencyBase->currencyID_);
             mmex::formatDoubleToCurrency(amount*convrate, basecuramountStr);
 
-            pCurrency = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
-            wxASSERT(pCurrency);
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrency);
+            pCurrencyBase = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
+            wxASSERT(pCurrencyBase);
+            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyBase);
             mmex::formatDoubleToCurrency(amount, amountStr);
 
             //output
