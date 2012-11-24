@@ -279,6 +279,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
 
     if (transfer) {
         textAmount_->SetToolTip(amountTransferTip_);
+        toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
     } else {
         textAmount_->SetToolTip(amountNormalTip_);
     }
@@ -514,7 +515,6 @@ void mmTransDialog::CreateControls()
         transaction_type_->SetToolTip(_("Specify the type of transactions to be created."));
         cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
         textAmount_->SetToolTip(amountNormalTip_);
-        toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
         bPayee_->SetToolTip(_("Specify where the transaction is going to"));
         cSplit_->SetToolTip(_("Use split Categories"));
         bCategory_->SetToolTip(_("Specify the category for this transaction"));
