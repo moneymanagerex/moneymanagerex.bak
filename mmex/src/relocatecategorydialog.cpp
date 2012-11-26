@@ -84,7 +84,7 @@ void relocateCategoryDialog::CreateControls()
     wxSize btnSize = wxSize(180,-1);
 
     wxStaticText* headerText = new wxStaticText( this, wxID_STATIC,
-        _("Relocate all source categories to the destination category"));
+        _("Relocate all source categories \nto the destination category"));
     wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC); 
 
     sourceBtn_ = new wxButton( this, wxID_CLEAR,_("Source Category"));
@@ -102,9 +102,8 @@ void relocateCategoryDialog::CreateControls()
     boxSizer->Add(lineTop, flagsExpand);
 
     request_sizer->Add(new wxStaticText( this, wxID_STATIC,_("Relocate:")), flags);
-    request_sizer->Add(sourceBtn_, flags);
-
     request_sizer->Add(new wxStaticText( this, wxID_STATIC,_("to:")), flags);
+    request_sizer->Add(sourceBtn_, flags);
     request_sizer->Add(destBtn_, flags);
     boxSizer->Add(request_sizer);
 
