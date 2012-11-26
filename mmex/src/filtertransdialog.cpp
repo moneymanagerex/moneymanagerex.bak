@@ -420,8 +420,8 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
 
     if (dlg.ShowModal() == wxID_OK)
     {
-        categID_ = dlg.categID_;
-        subcategID_ = dlg.subcategID_;
+        categID_ = dlg.getCategId();
+        subcategID_ = dlg.getSubCategId();
         btnCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
     }
 
