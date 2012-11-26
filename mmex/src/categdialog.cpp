@@ -107,8 +107,10 @@ void mmCategDialog::fillControls()
         treeCtrl_->SortChildren(maincat);
     }
     treeCtrl_->Expand(root_);
-    //TODO: May be users will want parameter for this
-    if (itemCheckBox_->IsChecked()) treeCtrl_->ExpandAll();
+
+    bool result = core_->iniSettings_->GetBoolSetting(wxT("EXPAND_CATEGS_TREE"), false);
+    if (result) treeCtrl_->ExpandAll();
+    itemCheckBox_->SetValue(result);
 
     treeCtrl_->SortChildren(root_);
     treeCtrl_->SelectItem(selectedItemId_);
@@ -130,7 +132,7 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer33 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer3->Add(itemBoxSizer33);
 
-    wxBitmapButton* bCateg_relocate = new wxBitmapButton(this, 
+    wxBitmapButton* bCateg_relocate = new wxBitmapButton(this,
         wxID_STATIC, wxBitmap(relocate_categories_xpm));
     bCateg_relocate->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(mmCategDialog::OnCategoryRelocation), NULL, this);
@@ -460,5 +462,7 @@ void mmCategDialog::OnChbClick(wxCommandEvent& /*event*/)
     {
         treeCtrl_->CollapseAll();
         treeCtrl_->Expand(root_);
-        treeCtrl_->SelectItem(selectedItemId_);    }
+        treeCtrl_->SelectItem(selectedItemId_);
+    }
+    core_->iniSettings_->SetBoolSetting(wxT("EXPAND_CATEGS_TREE"), itemCheckBox_->IsChecked());
 }
