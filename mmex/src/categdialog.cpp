@@ -16,6 +16,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+#include "relocatecategorydialog.h"
 #include "categdialog.h"
 #include "util.h"
 #include "defs.h"
@@ -76,6 +77,7 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmCategDialog::fillControls()
 {
+    treeCtrl_->DeleteAllItems();
     root_ = treeCtrl_->AddRoot(_("Categories"));
     selectedItemId_ = root_;
     treeCtrl_->SetItemBold(root_, true);
@@ -103,26 +105,19 @@ void mmCategDialog::fillControls()
         }
 
         treeCtrl_->SortChildren(maincat);
-        //Do not expand categories is nice
-        //TODO: May be users will want parameter for this
-        //treeCtrl_->Expand(maincat);
     }
-
     treeCtrl_->Expand(root_);
+    //TODO: May be users will want parameter for this
+    if (itemCheckBox_->IsChecked()) treeCtrl_->ExpandAll();
+
     treeCtrl_->SortChildren(root_);
-
-    wxButton* addButton = (wxButton*)FindWindow(wxID_ADD);
-    wxButton* editButton = (wxButton*)FindWindow(wxID_EDIT);
-    wxButton* selectButton = (wxButton*)FindWindow(wxID_OK);
-    wxButton* deleteButton = (wxButton*)FindWindow(wxID_REMOVE);
-
     treeCtrl_->SelectItem(selectedItemId_);
 
     textCtrl_->SetValue(wxT (""));
-    selectButton->Disable();
-    deleteButton->Disable();
-    editButton->Disable();
-    addButton->Enable();
+    selectButton_->Disable();
+    deleteButton_->Disable();
+    editButton_->Disable();
+    addButton_->Enable();
 }
 
 void mmCategDialog::CreateControls()
@@ -130,8 +125,27 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
+    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
+    itemBoxSizer2->Add(itemBoxSizer3, 0, wxGROW|wxALL, 1);
+    wxBoxSizer* itemBoxSizer33 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer3->Add(itemBoxSizer33);
+
+    wxBitmapButton* bCateg_relocate = new wxBitmapButton(this, 
+        wxID_STATIC, wxBitmap(relocate_categories_xpm));
+    bCateg_relocate->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
+        wxCommandEventHandler(mmCategDialog::OnCategoryRelocation), NULL, this);
+    bCateg_relocate->SetToolTip(_("Reassign all categories to another category"));
+
+    itemCheckBox_ = new wxCheckBox( this, wxID_STATIC, _("Expand"), wxDefaultPosition,
+        wxDefaultSize, wxCHK_2STATE );
+    bool showBeginApp = false; //pIniSettings_->GetBoolSetting(wxT("SHOWBEGINAPP"), true);
+    itemCheckBox_->SetValue(showBeginApp);
+    itemCheckBox_->Connect(wxID_STATIC, wxEVT_COMMAND_CHECKBOX_CLICKED,
+        wxCommandEventHandler(mmCategDialog::OnChbClick), NULL, this);
+
+    itemBoxSizer33->Add(bCateg_relocate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer33->AddSpacer(10);
+    itemBoxSizer33->Add(itemCheckBox_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 #if defined (__WXGTK__) || defined (__WXMAC__)
     treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS,
@@ -151,25 +165,25 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( this, wxID_ADD);
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-     itemButton7->SetToolTip(_("Add a new category"));
+    addButton_ = new wxButton( this, wxID_ADD);
+    itemBoxSizer5->Add(addButton_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+     addButton_->SetToolTip(_("Add a new category"));
 
-    wxButton* itemButton71 = new wxButton( this, wxID_EDIT);
-    itemBoxSizer5->Add(itemButton71, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton71->SetToolTip(_("Edit the name of an existing category"));
+    editButton_ = new wxButton( this, wxID_EDIT);
+    itemBoxSizer5->Add(editButton_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    editButton_->SetToolTip(_("Edit the name of an existing category"));
 
-    wxButton* itemButton8 = new wxButton( this, wxID_REMOVE);
-    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton8->SetToolTip(_("Delete an existing category. The category cannot be used by existing transactions."));
+    deleteButton_ = new wxButton( this, wxID_REMOVE);
+    itemBoxSizer5->Add(deleteButton_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    deleteButton_->SetToolTip(_("Delete an existing category. The category cannot be used by existing transactions."));
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton11 = new wxButton( this, wxID_OK,
+    selectButton_ = new wxButton( this, wxID_OK,
         _("&Select"));
-    itemBoxSizer9->Add(itemButton11, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton11->SetToolTip(_("Select the currently selected category as the selected category for the transaction"));
+    itemBoxSizer9->Add(selectButton_, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    selectButton_->SetToolTip(_("Select the currently selected category as the selected category for the transaction"));
 
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
@@ -331,32 +345,28 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
         subcategID = iData->getSubCategID();
     }
 
-    wxButton* addButton = (wxButton*)FindWindow(wxID_ADD);
-    wxButton* editButton = (wxButton*)FindWindow(wxID_EDIT);
-    wxButton* selectButton = (wxButton*)FindWindow(wxID_OK);
-    wxButton* deleteButton = (wxButton*)FindWindow(wxID_REMOVE);
     if (selectedItemId_ == root_ || !selectedItemId_)
     {
         textCtrl_->SetValue(wxT(""));
-        selectButton->Disable();
-        deleteButton->Disable();
-        editButton->Disable();
-        addButton->Enable();
+        selectButton_->Disable();
+        deleteButton_->Disable();
+        editButton_->Disable();
+        addButton_->Enable();
     }
     else
     {
         if(bEnableSelect_ == true) {
-            selectButton->Enable();
+            selectButton_->Enable();
         }
-        deleteButton->Enable();
-        editButton->Enable();
+        deleteButton_->Enable();
+        editButton_->Enable();
         if (subcategID != -1)
         {
             // this is a sub categ, cannot add
-            addButton->Disable();
+            addButton_->Disable();
         }
         else
-            addButton->Enable();
+            addButton_->Enable();
     }
 }
 
@@ -426,3 +436,29 @@ void mmCategDialog::setTreeSelection(wxString catName, wxString subCatName)
     }
 }
 
+void mmCategDialog::OnCategoryRelocation(wxCommandEvent& /*event*/)
+{
+    relocateCategoryDialog* dlg = new relocateCategoryDialog(core_, this);
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        wxString msgStr;
+        msgStr << _("Category Relocation Completed.") << wxT("\n\n")
+               << wxString::Format( _("Records have been updated in the database: %s"),
+                    dlg->updatedCategoriesCount().c_str())
+               << wxT("\n\n")
+               << _("MMEX must be shutdown and restarted for all the changes to be seen.");
+        wxMessageBox(msgStr,_("Category Relocation Result"));
+        mmOptions::instance().databaseUpdated_ = true;
+    }
+}
+
+void mmCategDialog::OnChbClick(wxCommandEvent& /*event*/)
+{
+    if (itemCheckBox_->IsChecked())
+        treeCtrl_->ExpandAll();
+    else
+    {
+        treeCtrl_->CollapseAll();
+        treeCtrl_->Expand(root_);
+        treeCtrl_->SelectItem(selectedItemId_);    }
+}

@@ -89,16 +89,18 @@ private:
     wxTreeItemId selectedItemId_;
     wxTextCtrl* textCtrl_;
     wxTreeItemId root_;
-    bool bEnableSelect_;
-    void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true);
     wxTreeItemId getTreeItemFor(wxTreeItemId itemID, wxString itemText);
-    wxButton* addButton; 
-    wxButton* editButton;
-    wxButton* selectButton;
-    wxButton* deleteButton;
+    wxButton* addButton_; 
+    wxButton* editButton_;
+    wxButton* selectButton_;
+    wxButton* deleteButton_;
+    wxCheckBox* itemCheckBox_;
 
-    void setFields(int categID, int subcategID) ; 
+    void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true); 
+    void OnCategoryRelocation(wxCommandEvent& /*event*/);
+    void OnChbClick(wxCommandEvent& /*event*/);
 
+    bool bEnableSelect_;
     int categID_;
     int subcategID_;
 
