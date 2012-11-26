@@ -65,6 +65,11 @@ public:
         const wxSize& size = SYMBOL_CATEGDIALOG_SIZE, 
         long style = SYMBOL_CATEGDIALOG_STYLE );
 
+    void setTreeSelection(wxString catName, wxString subCatName);
+    int getCategId() {return categID_;}
+    int getSubCategId() {return subcategID_;}
+
+private:
     void CreateControls();
  
     // utility functions
@@ -78,9 +83,7 @@ public:
     void fillControls();
     void OnSelChanged(wxTreeEvent& event);
     void OnDoubleClicked(wxTreeEvent& event);
-    void setTreeSelection(wxString catName, wxString subCatName);
 
-private:
     mmCoreDB* core_;
     wxTreeCtrl* treeCtrl_; 
     wxTreeItemId selectedItemId_;
@@ -89,11 +92,16 @@ private:
     bool bEnableSelect_;
     void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true);
     wxTreeItemId getTreeItemFor(wxTreeItemId itemID, wxString itemText);
+    wxButton* addButton; 
+    wxButton* editButton;
+    wxButton* selectButton;
+    wxButton* deleteButton;
 
-public:
+    void setFields(int categID, int subcategID) ; 
+
     int categID_;
     int subcategID_;
-    void setFields(int categID, int subcategID) ; 
+
 };
 
 #endif

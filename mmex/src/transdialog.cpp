@@ -707,8 +707,8 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
         dlg.setTreeSelection(categoryName_, subCategoryName_);
         if ( dlg.ShowModal() == wxID_OK )
         {
-            categID_ = dlg.categID_;
-            subcategID_ = dlg.subcategID_;
+            categID_ = dlg.getCategId();
+            subcategID_ = dlg.getSubCategId();
             categUpdated_ = true;
 
             categoryName_ = core_->categoryList_.GetCategoryName(categID_);

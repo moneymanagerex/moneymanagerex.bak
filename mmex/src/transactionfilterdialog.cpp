@@ -272,10 +272,10 @@ void TransFilterDialog::OnCategorySelect(wxCommandEvent& /*event*/)
     {
         //categID_ = dlg.categID_;
         //subcategID_ = dlg.subcategID_;
-        catName_ = mmReadyDisplayString(core_->categoryList_.GetCategoryName(dlg.categID_));
-        subCatName_ = core_->categoryList_.GetSubCategoryName(dlg.categID_, dlg.subcategID_);
+        catName_ = mmReadyDisplayString(core_->categoryList_.GetCategoryName(dlg.getCategId()));
+        subCatName_ = core_->categoryList_.GetSubCategoryName(dlg.getCategId(), dlg.getSubCategId());
 
-        btnCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(dlg.categID_, dlg.subcategID_));
+        btnCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(dlg.getCategId(), dlg.getSubCategId()));
     }
 }
 

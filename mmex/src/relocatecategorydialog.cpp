@@ -124,8 +124,8 @@ void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
     mmCategDialog* sourceCat = new mmCategDialog(core_ , this, true);
     if (sourceCat->ShowModal() == wxID_OK)
     {
-        sourceCatID_    = sourceCat->categID_;
-        sourceSubCatID_ = sourceCat->subcategID_;      
+        sourceCatID_    = sourceCat->getCategId();
+        sourceSubCatID_ = sourceCat->getSubCategId();      
         sourceBtn_->SetLabel(core_->categoryList_.GetFullCategoryString(sourceCatID_, sourceSubCatID_));
     }
     sourceCat->Destroy();
@@ -136,8 +136,8 @@ void relocateCategoryDialog::OnSelectDest(wxCommandEvent& /*event*/)
     mmCategDialog* destCat = new mmCategDialog(core_ , this, true);
     if (destCat->ShowModal() == wxID_OK)
     {
-        destCatID_    = destCat->categID_;
-        destSubCatID_ = destCat->subcategID_;
+        destCatID_    = destCat->getCategId();
+        destSubCatID_ = destCat->getSubCategId();
 
         destBtn_->SetLabel(core_->categoryList_.GetFullCategoryString(destCatID_, destSubCatID_));
     }

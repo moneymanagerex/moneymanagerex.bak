@@ -687,8 +687,8 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
       dlg.setTreeSelection(categoryName_, subCategoryName_);
       if ( dlg.ShowModal() == wxID_OK )
       {
-         categID_ = dlg.categID_;
-         subcategID_ = dlg.subcategID_;
+         categID_ = dlg.getCategId();
+         subcategID_ = dlg.getSubCategId();
 
          wxString categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
          bCategory_->SetLabel(categString);
