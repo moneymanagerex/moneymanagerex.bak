@@ -197,14 +197,10 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
     if (mmIniOptions::instance().disableCategoryModify_)
         return;
 
-    wxString text = textCtrl_->GetValue();
+    wxString text = wxGetTextFromUser(_("Enter the name for the new category:")
+        , _("Organize Categories: Add Category"), textCtrl_->GetValue());
     if (text.IsEmpty())
-    {
-        wxString errMsg = _("Category cannot be empty");
-        errMsg << wxT("          ");  // added to adjust dialog size
-        wxMessageBox(errMsg, _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
         return;
-    }
 
     if (selectedItemId_ == root_)
     {
