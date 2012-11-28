@@ -198,7 +198,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
         return;
 
     wxString text = wxGetTextFromUser(_("Enter the name for the new category:")
-        , _("Organize Categories: Add Category"), textCtrl_->GetValue());
+        , _("Add Category"), textCtrl_->GetValue());
     if (text.IsEmpty())
         return;
 
@@ -263,9 +263,7 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
         return;
 
     if (selectedItemId_ == root_ || !selectedItemId_ )
-    {
         return;
-    }
 
     mmTreeItemCateg* iData
         = dynamic_cast<mmTreeItemCateg*>(treeCtrl_->GetItemData(selectedItemId_));
@@ -374,11 +372,15 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
         return;
 
     if (selectedItemId_ == root_ || !selectedItemId_ )
-    {
         return;
-    }
 
-    wxString text = textCtrl_->GetValue();
+    wxString old_name = treeCtrl_->GetItemText(selectedItemId_);
+    wxString msg = wxString::Format(_("Enter a new name for %s"), old_name.c_str());
+    wxString text = wxGetTextFromUser(msg
+        , _("Edit Category"), textCtrl_->GetValue());
+    if (text.IsEmpty())
+        return;
+    textCtrl_->SetValue(text);
 
     mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>
         (treeCtrl_->GetItemData(selectedItemId_));
