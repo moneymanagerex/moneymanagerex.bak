@@ -120,7 +120,7 @@ void relocateCategoryDialog::CreateControls()
 
 void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
 {
-    mmCategDialog* sourceCat = new mmCategDialog(core_ , this, true);
+    mmCategDialog* sourceCat = new mmCategDialog(core_ , this, true, false);
     if (sourceCat->ShowModal() == wxID_OK)
     {
         sourceCatID_    = sourceCat->getCategId();

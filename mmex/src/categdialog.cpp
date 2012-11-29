@@ -43,7 +43,7 @@ mmCategDialog::mmCategDialog( )
 }
 
 mmCategDialog::mmCategDialog(mmCoreDB* core,
-                             wxWindow* parent, bool bEnableSelect,
+                             wxWindow* parent, bool bEnableSelect, bool bEnableRelocate,
                              wxWindowID id, const wxString& caption,
                              const wxPoint& pos, const wxSize& size, long style )
 {
@@ -53,6 +53,7 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
     subcategID_ = -1;
     selectedItemId_ = 0;
     bEnableSelect_ = bEnableSelect;
+    bEnableRelocate_ = bEnableRelocate;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -120,6 +121,7 @@ void mmCategDialog::fillControls()
     deleteButton_->Disable();
     editButton_->Disable();
     addButton_->Enable();
+    btnCateg_relocate_->Enable(bEnableRelocate_);
 }
 
 void mmCategDialog::CreateControls()
@@ -132,11 +134,11 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer33 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer3->Add(itemBoxSizer33);
 
-    wxBitmapButton* bCateg_relocate = new wxBitmapButton(this,
+    btnCateg_relocate_ = new wxBitmapButton(this,
         wxID_STATIC, wxBitmap(relocate_categories_xpm));
-    bCateg_relocate->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
+    btnCateg_relocate_->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(mmCategDialog::OnCategoryRelocation), NULL, this);
-    bCateg_relocate->SetToolTip(_("Reassign all categories to another category"));
+    btnCateg_relocate_->SetToolTip(_("Reassign all categories to another category"));
 
     itemCheckBox_ = new wxCheckBox( this, wxID_STATIC, _("Expand"), wxDefaultPosition,
         wxDefaultSize, wxCHK_2STATE );
@@ -145,7 +147,7 @@ void mmCategDialog::CreateControls()
     itemCheckBox_->Connect(wxID_STATIC, wxEVT_COMMAND_CHECKBOX_CLICKED,
         wxCommandEventHandler(mmCategDialog::OnChbClick), NULL, this);
 
-    itemBoxSizer33->Add(bCateg_relocate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer33->Add(btnCateg_relocate_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemBoxSizer33->AddSpacer(10);
     itemBoxSizer33->Add(itemCheckBox_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
@@ -297,10 +299,6 @@ void mmCategDialog::OnBSelect(wxCommandEvent& /*event*/)
         return;
     }
 
-    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>
-        (treeCtrl_->GetItemData(selectedItemId_));
-    categID_ = iData->getCategID();
-    subcategID_ = iData->getSubCategID();
     EndModal(wxID_OK);
 }
 
@@ -333,12 +331,12 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
 
     mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>
         (treeCtrl_->GetItemData(selectedItemId_));
-    int categID = -1;
-    int subcategID = -1;
+    categID_ = -1;
+    subcategID_ = -1;
     if (iData)
     {
-        categID    = iData->getCategID();
-        subcategID = iData->getSubCategID();
+        categID_ = iData->getCategID();
+        subcategID_ = iData->getSubCategID();
     }
 
     if (selectedItemId_ == root_ || !selectedItemId_)
@@ -356,7 +354,7 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
         }
         deleteButton_->Enable();
         editButton_->Enable();
-        if (subcategID != -1)
+        if (subcategID_ != -1)
         {
             // this is a sub categ, cannot add
             addButton_->Disable();
