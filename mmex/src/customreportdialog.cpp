@@ -53,6 +53,13 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
+    wxAcceleratorEntry entries[1];
+    entries[0].Set(wxACCEL_NORMAL, WXK_F9, wxID_REFRESH);
+    wxAcceleratorTable accel(1, entries);
+    SetAcceleratorTable(accel);
+ 
+    Connect(wxID_REFRESH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(mmCustomSQLDialog::OnRun));
+
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
@@ -97,7 +104,7 @@ void mmCustomSQLDialog::CreateControls()
      Center Area
      ***************************************/
     wxStaticText* sourceTitleText = new wxStaticText( this, wxID_STATIC, _("SQL Source Script:"));
-    mainBoxSizer->Add(sourceTitleText, 0,  wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxADJUST_MINSIZE, 9);
+    mainBoxSizer->Add(sourceTitleText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxADJUST_MINSIZE, 9);
 
     wxBoxSizer* centerHorizontalBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     mainBoxSizer->Add(centerHorizontalBoxSizer, 1, wxGROW|wxALL, 5);
