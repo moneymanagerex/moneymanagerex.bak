@@ -703,7 +703,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
     }
     else
     {
-        mmCategDialog dlg(core_, parent_);
+        mmCategDialog dlg(core_, parent_, true, false);
         dlg.setTreeSelection(categoryName_, subCategoryName_);
         if ( dlg.ShowModal() == wxID_OK )
         {
