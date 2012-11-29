@@ -34,9 +34,6 @@ relocateCategoryDialog::relocateCategoryDialog( )
 {
     core_           =  0;
 
-    sourceCatID_    = -1;
-    sourceSubCatID_ = -1;
-
     destCatID_      = -1;
     destSubCatID_   = -1;
     changedCats_    = 0;
@@ -45,13 +42,14 @@ relocateCategoryDialog::relocateCategoryDialog( )
 }
 
 relocateCategoryDialog::relocateCategoryDialog( mmCoreDB* core,
-    wxWindow* parent, wxWindowID id, const wxString& caption,
+    wxWindow* parent, int sourceCatID, int sourceSubCatID,
+    wxWindowID id, const wxString& caption,
     const wxPoint& pos, const wxSize& size, long style )
 {
     core_           = core;
 
-    sourceCatID_    = -1;
-    sourceSubCatID_ = -1;
+    sourceCatID_    = sourceCatID;
+    sourceSubCatID_ = sourceSubCatID;
 
     destCatID_      = -1;
     destSubCatID_   = -1;
@@ -85,16 +83,18 @@ void relocateCategoryDialog::CreateControls()
 
     wxStaticText* headerText = new wxStaticText( this, wxID_STATIC,
         _("Relocate all source categories \nto the destination category"));
-    wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC); 
+    wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC);
 
     sourceBtn_ = new wxButton( this, wxID_CLEAR,_("Source Category"));
+    if (sourceCatID_ > -1)
+        sourceBtn_->SetLabel(core_->categoryList_.GetFullCategoryString(sourceCatID_, sourceSubCatID_));
     destBtn_ = new wxButton( this, wxID_NEW,_("Destination Category"));
-    wxStaticLine* lineBottom = new wxStaticLine(this, wxID_STATIC); 
-    
+    wxStaticLine* lineBottom = new wxStaticLine(this, wxID_STATIC);
+
     wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(topSizer);
     wxBoxSizer* boxSizer = new wxBoxSizer(wxVERTICAL);
-	wxFlexGridSizer* request_sizer = new wxFlexGridSizer(0, 2, 0, 0);
+    wxFlexGridSizer* request_sizer = new wxFlexGridSizer(0, 2, 0, 0);
 
     topSizer->Add(boxSizer, flags);
 
@@ -121,10 +121,14 @@ void relocateCategoryDialog::CreateControls()
 void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
 {
     mmCategDialog* sourceCat = new mmCategDialog(core_ , this, true, false);
+
+    sourceCat->setTreeSelection(core_->categoryList_.GetCategoryName(sourceCatID_),
+        core_->categoryList_.GetSubCategoryName(sourceCatID_, sourceSubCatID_));
+
     if (sourceCat->ShowModal() == wxID_OK)
     {
         sourceCatID_    = sourceCat->getCategId();
-        sourceSubCatID_ = sourceCat->getSubCategId();      
+        sourceSubCatID_ = sourceCat->getSubCategId();
         sourceBtn_->SetLabel(core_->categoryList_.GetFullCategoryString(sourceCatID_, sourceSubCatID_));
     }
     sourceCat->Destroy();
@@ -132,7 +136,7 @@ void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
 
 void relocateCategoryDialog::OnSelectDest(wxCommandEvent& /*event*/)
 {
-    mmCategDialog* destCat = new mmCategDialog(core_ , this, true);
+    mmCategDialog* destCat = new mmCategDialog(core_ , this, true, false);
     if (destCat->ShowModal() == wxID_OK)
     {
         destCatID_    = destCat->getCategId();
@@ -153,7 +157,7 @@ wxString relocateCategoryDialog::updatedCategoriesCount()
 
 void relocateCategoryDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    if ((sourceCatID_ > 0) && (destCatID_ > 0) ) 
+    if ((sourceCatID_ > 0) && (destCatID_ > 0) )
     {
         wxString msgStr = _("Please Confirm:");
         msgStr << wxT("\n\n") << _("Changing all categories of: ")
@@ -164,7 +168,7 @@ void relocateCategoryDialog::OnOk(wxCommandEvent& /*event*/)
         {
             if (core_->bTransactionList_.RelocateCategory(core_,
                 destCatID_, destSubCatID_, sourceCatID_, sourceSubCatID_, changedCats_, changedSubCats_) == 0)
-	            EndModal(wxID_OK);
+                EndModal(wxID_OK);
         }
     }
 }

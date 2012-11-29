@@ -436,7 +436,7 @@ void mmCategDialog::setTreeSelection(wxString catName, wxString subCatName)
 
 void mmCategDialog::OnCategoryRelocation(wxCommandEvent& /*event*/)
 {
-    relocateCategoryDialog* dlg = new relocateCategoryDialog(core_, this);
+    relocateCategoryDialog* dlg = new relocateCategoryDialog(core_, this, categID_, subcategID_);
     if (dlg->ShowModal() == wxID_OK)
     {
         wxString msgStr;
