@@ -42,6 +42,7 @@ BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
     EVT_BUTTON(wxID_ADD, mmPayeeDialog::OnAdd)
     EVT_BUTTON(wxID_REMOVE, mmPayeeDialog::OnDelete)
     EVT_BUTTON(wxID_OK, mmPayeeDialog::OnBSelect)
+    EVT_BUTTON(wxID_CANCEL, mmPayeeDialog::OnCancel)
     EVT_BUTTON(wxID_EDIT, mmPayeeDialog::OnEdit)
     EVT_LISTBOX(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnSelChanged)
     EVT_LISTBOX_DCLICK(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnDoubleClicked)
@@ -141,8 +142,8 @@ void mmPayeeDialog::CreateControls()
     selectButton->Disable();
 
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
-    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
-    itemBoxSizer9->Add(itemCancelButton,  flags);
+    btnCancel_ = new wxButton( this, wxID_CANCEL);
+    itemBoxSizer9->Add(btnCancel_,  flags);
 
     textCtrl_->SetToolTip(_("Enter a search string.  You can use * as a wildcard to match zero or more characters or ? to match a single character."));
     addButton->SetToolTip(_("Add a new payee name"));
@@ -174,14 +175,6 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
     else
     {
         // text control doesn't have focus OR up/down not pressed OR up/down not possible
-    }
-
-    if(keycode == 13 && showSelectButton_) {
-        wxCommandEvent event;
-        OnBSelect(event);
-    } else if (keycode == 27) {
-        m_payee_id = -1;
-        Close();
     }
 
     event.Skip();
@@ -319,4 +312,20 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
         mmOptions::instance().databaseUpdated_ = true;
     }
 
+}
+
+void mmPayeeDialog::OnCancel(wxCommandEvent& event)
+{
+    if (!textCtrl_->GetValue().IsEmpty())
+    {
+        textCtrl_->Clear();
+        return;
+	}
+    else if (!btnCancel_->HasFocus())
+    {
+        btnCancel_->SetFocus();
+        return;
+    }
+    else
+        EndModal(wxID_CANCEL);
 }
