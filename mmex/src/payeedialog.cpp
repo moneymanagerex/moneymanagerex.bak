@@ -114,9 +114,9 @@ void mmPayeeDialog::CreateControls()
 
     itemBoxSizer2->Add(new wxStaticText( this, wxID_STATIC, _("Filter Payees: ")), flags); 
 
-    textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString());
-    itemBoxSizer2->Add(textCtrl, flagsExpand);
-    textCtrl->SetFocus();
+    textCtrl_ = new wxSearchCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString());
+    itemBoxSizer2->Add(textCtrl_, flagsExpand);
+    textCtrl_->SetFocus();
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, flagsExpand);
@@ -144,7 +144,7 @@ void mmPayeeDialog::CreateControls()
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
     itemBoxSizer9->Add(itemCancelButton,  flags);
 
-    textCtrl->SetToolTip(_("Enter a search string.  You can use * as a wildcard to match zero or more characters or ? to match a single character."));
+    textCtrl_->SetToolTip(_("Enter a search string.  You can use * as a wildcard to match zero or more characters or ? to match a single character."));
     addButton->SetToolTip(_("Add a new payee name"));
     editButton->SetToolTip(_("Change the name of an existing payee"));
     deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
@@ -189,7 +189,7 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 
 void mmPayeeDialog::fillControls()
 {
-    wxArrayString filtd = core_->payeeList_.FilterPayees(textCtrl->GetValue());
+    wxArrayString filtd = core_->payeeList_.FilterPayees(textCtrl_->GetValue());
 
     listBox_->Clear();
 
@@ -200,7 +200,7 @@ void mmPayeeDialog::fillControls()
 
 void mmPayeeDialog::OnTextCtrlChanged(wxCommandEvent& event)
 {
-    bool filter_ok = !textCtrl->GetValue().IsEmpty();
+    bool filter_ok = !textCtrl_->GetValue().IsEmpty();
     addButton->Enable(filter_ok);
 
     wxString payee = listBox_->GetStringSelection();
@@ -228,7 +228,7 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 void mmPayeeDialog::OnAdd(wxCommandEvent& event)
 {
     wxString text = wxGetTextFromUser(_("Enter the name for the new payee:")
-        , _("Organize Payees: Add Payee"), textCtrl->GetValue());
+        , _("Organize Payees: Add Payee"), textCtrl_->GetValue());
     if (text.IsEmpty()) {
         return;
     }
@@ -240,7 +240,7 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
     else
     {
         core_->payeeList_.AddPayee(text);
-        textCtrl->Clear();
+        textCtrl_->Clear();
         fillControls();
 
         listBox_->SetStringSelection(text);
@@ -263,7 +263,7 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
         wxMessageBox(deletePayeeErrMsg,_("Organize Payees: Delete Error"),wxOK|wxICON_ERROR);
         return;
     }
-    textCtrl->Clear();
+    textCtrl_->Clear();
     fillControls();
     OnSelChanged(event);
 }
@@ -299,7 +299,7 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
         fillControls();
 
         // Now we need to make sure that the edited name is selected after the dialog is closed
-        textCtrl->Clear();
+        textCtrl_->Clear();
         listBox_->SetStringSelection(newName);
         OnSelChanged(event);
     }

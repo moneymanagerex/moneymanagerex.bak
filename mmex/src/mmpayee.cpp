@@ -187,8 +187,7 @@ wxArrayString mmPayeeList::FilterPayees(const wxString& patt) const
 
     for (size_t idx = 0; idx < (int)entries_.size(); idx++)
     {
-        const wxString payee_name = entries_[idx]->name_.Lower();
-        if (payee_name.Matches(wxT("*") + patt.Lower() + wxT("*")))
+        if (entries_[idx]->name_.Lower().Matches(patt.Lower().Append(wxT("*"))))
             payee_list.Add(entries_[idx]->name_);
     }
     return payee_list;

@@ -20,6 +20,7 @@
 #define _MM_EX_PAYEEDIALOG_H_
 
 #include "defs.h"
+#include <wx/srchctrl.h>
 
 class mmCoreDB;
 
@@ -42,7 +43,7 @@ private:
     wxButton* editButton;
     wxButton* deleteButton;
     wxButton* selectButton;
-    wxTextCtrl* textCtrl;
+    wxSearchCtrl* textCtrl_;
 
     mmPayeeDialog() : m_payee_id(-1) {}
 
