@@ -52,7 +52,7 @@ class mmCategDialog : public wxDialog
 public:
     mmCategDialog();
     mmCategDialog(mmCoreDB* core, wxWindow* parent,
-        bool bEnableSelect = true, 
+        bool bEnableSelect = true, bool bEnableRelocate = true,
         wxWindowID id = SYMBOL_CATEGDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_CATEGDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_CATEGDIALOG_POSITION, 
@@ -94,6 +94,7 @@ private:
     wxButton* editButton_;
     wxButton* selectButton_;
     wxButton* deleteButton_;
+    wxBitmapButton* btnCateg_relocate_;
     wxCheckBox* itemCheckBox_;
 
     void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true); 
@@ -101,6 +102,7 @@ private:
     void OnChbClick(wxCommandEvent& /*event*/);
 
     bool bEnableSelect_;
+    bool bEnableRelocate_;
     int categID_;
     int subcategID_;
 
