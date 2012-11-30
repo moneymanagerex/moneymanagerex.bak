@@ -135,7 +135,7 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-    currencyListBox_ = new wxListCtrl( this, ID_LISTBOX, wxDefaultPosition, wxDefaultSize,
+    currencyListBox_ = new wxListCtrl( this, ID_LISTBOX, wxDefaultPosition, wxSize(-1, 200),
         wxLC_REPORT);
 
     // Add first column
@@ -201,6 +201,9 @@ void mmMainCurrencyDialog::CreateControls()
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
     itemBoxSizer9->Add(itemCancelButton,  flags);
     itemCancelButton->SetFocus();
+    
+    this->SetMinSize(wxSize(200,300));
+    this->Fit();
 }
 
 bool mmMainCurrencyDialog::ShowToolTips()
