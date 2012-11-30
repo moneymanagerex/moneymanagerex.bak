@@ -115,7 +115,7 @@ void mmPayeeDialog::CreateControls()
 
     itemBoxSizer2->Add(new wxStaticText( this, wxID_STATIC, _("Filter Payees: ")), flags); 
 
-    textCtrl_ = new wxSearchCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString());
+    textCtrl_ = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString());
     itemBoxSizer2->Add(textCtrl_, flagsExpand);
     textCtrl_->SetFocus();
 
