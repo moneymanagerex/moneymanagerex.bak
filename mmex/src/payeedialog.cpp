@@ -316,12 +316,14 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::OnCancel(wxCommandEvent& event)
 {
+    wxWindow *w = FindFocus();
+
     if (!textCtrl_->GetValue().IsEmpty())
     {
         textCtrl_->Clear();
         return;
 	}
-    else if (!btnCancel_->HasFocus())
+    else if (w && w->GetId() != btnCancel_->GetId())
     {
         btnCancel_->SetFocus();
         return;
