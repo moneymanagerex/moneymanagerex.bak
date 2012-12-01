@@ -174,7 +174,6 @@ void mmTransDialog::dataToControls()
     transaction_type_->SetStringSelection(wxGetTranslation(transTypeString));
 
     cAdvanced_->SetValue(advancedToTransAmountSet_);
-    updateControlsForTransType();
 
     wxString payeeName;
     wxString categString = _("Select Category");
@@ -248,14 +247,12 @@ void mmTransDialog::updateControlsForTransType()
 {
     //FIXME:
     //SetTransferControls(transaction_type_->GetSelection()==DEF_TRANSFER);
-    SetTransferControls(transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR));
-
+    bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR); 
+    SetTransferControls(transfer_transaction);
     if (!edit_)
     {
-        wxString categString;
-        if (mmIniOptions::instance().transCategorySelectionNone_ == 0) // Default Category = "None"
-            categString = resetCategoryString();
-        else
+        wxString categString = resetCategoryString();
+        if (transfer_transaction && mmIniOptions::instance().transCategorySelectionNone_ != 0)
         {
             categID_ = core_->bTransactionList_.getTransferCategoryID(accountID_, subcategID_);
             categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);

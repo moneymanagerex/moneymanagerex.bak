@@ -858,29 +858,25 @@ int mmBankTransactionList::getTransferCategoryID(const int accountID, int& subca
 {
     int categ_id = -1;
     subcategID = -1;
-    if (transactions_.empty()) return categ_id;
-    for (const_iterator i = (transactions_.end()-1); i >= transactions_.begin(); --i)
+    int index = transactions_.size() - 1;
+    bool searching = true;
+    while (searching && index >= 0)
     {
-        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
-
-        if (pBankTransaction)
+        boost::shared_ptr<const mmBankTransaction> pTransaction = transactions_[index];
+        if (pTransaction)
         {
-            if ((pBankTransaction->accountID_ == accountID
-                || pBankTransaction->toAccountID_ == accountID)
-                && pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+            if ((pTransaction->accountID_ == accountID || pTransaction->toAccountID_ == accountID)
+                && pTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
             {
-                categ_id = pBankTransaction->categID_;
+                categ_id = pTransaction->categID_;
                 if (categ_id > -1)
                 {
-                    subcategID = pBankTransaction->subcategID_;
-                    break;
+                    subcategID = pTransaction->subcategID_;
+                    searching = false;
                 }
             }
-            else
-            {
-                continue; // skip
-            }
         }
+        index --;
     }
     return categ_id;
 }

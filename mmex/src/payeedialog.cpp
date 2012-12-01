@@ -314,7 +314,7 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
 
 }
 
-void mmPayeeDialog::OnCancel(wxCommandEvent& event)
+void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
 {
     wxWindow *w = FindFocus();
 
