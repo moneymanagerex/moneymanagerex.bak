@@ -63,6 +63,6 @@ private:
     void OnDoubleClicked(wxCommandEvent& event);
     void OnFocus(wxFocusEvent& event);
     void OnSetFocus(wxFocusEvent& event);
-    void OnCancel(wxCommandEvent& event);
+    void OnCancel(wxCommandEvent& /*event*/);
 };
 #endif // _MM_EX_PAYEEDIALOG_H_
