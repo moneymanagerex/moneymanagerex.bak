@@ -168,9 +168,12 @@ void mmTransDialog::dataToControls()
         transaction_type_->Disable();
     }
     else if (core_->accountList_.getNumBankAccounts() < 2 || edit_) size--;
+    
     for(size_t i = begin; i < size; ++i)
-    transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
+    {
+        transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
         new wxStringClientData(TRANSACTION_TYPE[i]));
+    }
     transaction_type_->SetStringSelection(wxGetTranslation(transTypeString));
 
     cAdvanced_->SetValue(advancedToTransAmountSet_);
@@ -274,17 +277,20 @@ void mmTransDialog::SetTransferControls(bool transfer)
     wxArrayString data;
     int type_num = transaction_type_->GetSelection();
 
-    if (transfer) {
+    if (transfer)
+    {
         textAmount_->SetToolTip(amountTransferTip_);
         toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
-    } else {
+    }
+    else
+    {
         textAmount_->SetToolTip(amountNormalTip_);
         toTextAmount_->UnsetToolTip();
     }
 
-    if (accountID_ == referenceAccountID_ && transfer)
+    if ((accountID_ == referenceAccountID_) && transfer)
     {
-        textAmount_->Enable(true);
+        //textAmount_->Enable(true);
         toTextAmount_->Enable(cAdvanced_->GetValue());
 
         if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
@@ -292,10 +298,10 @@ void mmTransDialog::SetTransferControls(bool transfer)
         data = core_->accountList_.getAccountsName(accountID_);
         cbPayee_->SetToolTip(_("Specify which account the transfer is going to"));
     }
-    else if (accountID_ != referenceAccountID_ && transfer)
+    else if ((accountID_ != referenceAccountID_) && transfer)
     {
-        textAmount_->Enable(cAdvanced_->GetValue());
-        toTextAmount_->Enable(true);
+        //textAmount_->Enable(cAdvanced_->GetValue());
+        toTextAmount_->Enable(cAdvanced_->GetValue());
         if (accountID_ > 0) dataStr = (core_->accountList_.GetAccountName(accountID_));
         payee_label_->SetLabel(_("From"));
         data = core_->accountList_.getAccountsName(toID_);
@@ -688,6 +694,7 @@ void mmTransDialog::OnDateChanged(wxDateEvent& event)
 void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
 {
     advancedToTransAmountSet_ = cAdvanced_->GetValue();
+    toTextAmount_->SetValue(textAmount_->GetValue());
     SetTransferControls();
 }
 
@@ -839,6 +846,13 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
                 amount = toTransAmount_;
             }
             toTextAmount_->SetValue(wxString()<<amount);
+        }
+    }
+    else
+    {
+        if (transaction_type == TRANS_TYPE_TRANSFER_STR)
+        {
+            toTransAmount_ = amount;
         }
     }
 
