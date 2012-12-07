@@ -39,49 +39,9 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db, boost::shared_ptr<MM
 
     /* Load the DB into memory */
     currencyList_.LoadCurrencies();             // populate currencyList_
-    LoadCategories();                           // populate categoryList_
+    categoryList_.LoadCategories();             // populate categoryList_
     payeeList_.LoadPayees();                    // populate payeeList_
     accountList_.LoadAccounts(currencyList_);   // populate accountList_
     bTransactionList_.LoadTransactions(this);   // populate bTransactionList_
-}
-//----------------------------------------------------------------------------
-
-void mmCoreDB::LoadCategories()
-{
-    boost::shared_ptr<mmCategory> pCat;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_CATEGORIES);
-
-    while (q1.NextRow())
-    {
-        int catID = q1.GetInt(wxT("CATEGID"));
-        
-        if (!pCat || pCat->categID_ != catID)
-        {
-            if (pCat)
-            {
-                categoryList_.entries_.push_back(pCat);
-            }
-            pCat.reset(new mmCategory(catID, q1.GetString(wxT("CATEGNAME"))));
-        }
-
-        int sub_idx = q1.FindColumnIndex(wxT("SUBCATEGID"));
-        wxASSERT(sub_idx);
-
-        if (!q1.IsNull(sub_idx))
-        {
-            int subcatID = q1.GetInt(sub_idx);
-            boost::shared_ptr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString(wxT("SUBCATEGNAME"))));
-
-            pSubCat->parent_ = pCat;
-            pCat->children_.push_back(pSubCat);
-        }
-    }
-
-    q1.Finalize();
-
-    if (pCat)
-    {
-        categoryList_.entries_.push_back(pCat);
-    }
 }
 //----------------------------------------------------------------------------

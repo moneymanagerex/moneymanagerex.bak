@@ -978,7 +978,7 @@ TEST(copy_paste_transactions)
 
     pCopiedTrans->amt_   = 200;
     pCopiedTrans->toAmt_ = 200;
-    pCore->bTransactionList_.updateTransaction(pCopiedTrans);
+    pCore->bTransactionList_.UpdateTransaction(pCopiedTrans);
 
     double balance = pCore->bTransactionList_.getBalance(account_id);
     CHECK(balance == -300);

@@ -20,6 +20,45 @@
 #include "mmcategory.h"
 #include "dbwrapper.h"
 
+void mmCategoryList::LoadCategories()
+{
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_CATEGORIES);
+
+    boost::shared_ptr<mmCategory> pCat;
+    while (q1.NextRow())
+    {
+        int catID = q1.GetInt(wxT("CATEGID"));
+
+        if (!pCat || pCat->categID_ != catID)
+        {
+            if (pCat)
+            {
+                entries_.push_back(pCat);
+            }
+            pCat.reset(new mmCategory(catID, q1.GetString(wxT("CATEGNAME"))));
+        }
+
+        int sub_idx = q1.FindColumnIndex(wxT("SUBCATEGID"));
+        wxASSERT(sub_idx);
+
+        if (!q1.IsNull(sub_idx))
+        {
+            int subcatID = q1.GetInt(sub_idx);
+            boost::shared_ptr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString(wxT("SUBCATEGNAME"))));
+
+            pSubCat->parent_ = pCat;
+            pCat->children_.push_back(pSubCat);
+        }
+    }
+
+    q1.Finalize();
+
+    if (pCat)
+    {
+        entries_.push_back(pCat);
+    }
+}
+
 bool mmCategoryList::CategoryExists(const wxString& categoryName) const
 {
     for (const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
