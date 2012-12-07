@@ -59,6 +59,7 @@ public:
     boost::shared_ptr<mmCategory> GetCategorySharedPtr(int category, int subcategory) const;
     int GetSubCategoryID(int parentID, const wxString& subCategoryName) const;
 
+    void LoadCategories();
     int AddCategory(const wxString& category);
     int AddSubCategory(int parentID, const wxString& text);
     

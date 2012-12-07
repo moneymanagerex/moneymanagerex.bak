@@ -54,9 +54,6 @@ public:
     mmAccountList accountList_;
     mmBankTransactionList bTransactionList_;
     bool displayDatabaseError_;
-
-    /// Loads database Categories into memory
-    void LoadCategories();
 };
 
 //----------------------------------------------------------------------------
