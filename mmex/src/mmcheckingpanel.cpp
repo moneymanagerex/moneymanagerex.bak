@@ -86,9 +86,9 @@ void createColumns(MMEX_IniSettings *pIniSettings, wxListCtrl &lst)
 
     const wxString def_data[3*COL_MAX] =
     {
-        wxTRANSLATE("Date"), wxT("80"), wxT("L"),
-        wxTRANSLATE("Number"), wxT("-2"), wxT("R"),
-        wxTRANSLATE("Payee"), wxT("150"), wxT("L"),
+        wxTRANSLATE("      Date"), wxT("80"), wxT("L"),
+        wxTRANSLATE("Number"), wxT("-2"), wxT("L"),
+        wxTRANSLATE("      Payee"), wxT("150"), wxT("L"),
         wxTRANSLATE("Status"), wxT("-2"), wxT("L"),
         wxTRANSLATE("Category"), wxT("-2"), wxT("L"),
         wxTRANSLATE("Withdrawal"), wxT("-2"), wxT("R"),
@@ -1575,6 +1575,10 @@ int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
                 res = ICON_TRANS_WITHDRAWAL;
             else
                 res = ICON_TRANS_DEPOSIT;
+        }
+        else
+        {
+            res = ICON_TRANS_TRANSFER;
         }
     }
 
