@@ -600,18 +600,16 @@ void mmCheckingPanel::CreateControls()
 
     wxSize imageSize(16, 16);
     m_imageList.reset(new wxImageList(imageSize.GetWidth(), imageSize.GetHeight()));
-    m_imageList->Add(wxBitmap(wxImage(reconciled_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(void_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(flag_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(unreconciled_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(uparrow_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(downarrow_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(duplicate_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(trans_from_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(trans_into_xpm).Scale(16, 16)));
-    wxImage EmptyImage = wxBitmap('0', 1, 1).ConvertToImage().Scale(16, 16);
-    EmptyImage.SetMaskColour(255,255,255);
-    m_imageList->Add(EmptyImage);
+    m_imageList->Add(wxImage(reconciled_xpm).Scale(16, 16));
+    m_imageList->Add(wxImage(void_xpm).Scale(16, 16));
+    m_imageList->Add(wxImage(flag_xpm).Scale(16, 16));
+    m_imageList->Add(wxImage(unreconciled_xpm).Scale(16, 16));
+    m_imageList->Add(wxImage(uparrow_xpm).Scale(16, 16));
+    m_imageList->Add(wxImage(downarrow_xpm).Scale(16, 16));
+    m_imageList->Add(wxImage(duplicate_xpm).Scale(16, 16));
+    m_imageList->Add(wxImage(trans_from_xpm).Scale(16, 16));
+    m_imageList->Add(wxImage(trans_into_xpm).Scale(16, 16));
+    m_imageList->Add(wxBitmap('\t', 1, 1).ConvertToImage().Scale(16, 16), wxColour(255,255,255));
 
     m_listCtrlAccount = new TransactionListCtrl( this, itemSplitterWindow10,
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize,
