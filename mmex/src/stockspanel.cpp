@@ -469,7 +469,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         //// ------------------
         if (updated && dPrice > 0)
         {
-            if(StockSymbolWithSuffix.Find(wxT(".L")) != wxNOT_FOUND)
+            if(StockSymbolWithSuffix.substr(StockSymbolWithSuffix.Find(wxT("."))) == wxT(".L"))
                 dPrice = dPrice / 100;    
             stocks_data.insert(std::make_pair(StockSymbolWithSuffix, std::make_pair(dPrice, dName)));
         }
