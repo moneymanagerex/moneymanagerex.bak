@@ -609,6 +609,9 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(wxImage(duplicate_xpm).Scale(16, 16)));
     m_imageList->Add(wxBitmap(wxImage(trans_from_xpm).Scale(16, 16)));
     m_imageList->Add(wxBitmap(wxImage(trans_into_xpm).Scale(16, 16)));
+    wxImage EmptyImage = wxBitmap('0', 1, 1).ConvertToImage().Scale(16, 16);
+    EmptyImage.SetMaskColour(255,255,255);
+    m_imageList->Add(EmptyImage);
 
     m_listCtrlAccount = new TransactionListCtrl( this, itemSplitterWindow10,
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize,
