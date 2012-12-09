@@ -259,6 +259,8 @@ void mmTransDialog::updateControlsForTransType()
         {
             categID_ = core_->bTransactionList_.getTransferCategoryID(accountID_, subcategID_);
             categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
+            categoryName_    = core_->categoryList_.GetCategoryName(categID_);
+            subCategoryName_ = core_->categoryList_.GetSubCategoryName(categID_, subcategID_);
         }
         bCategory_->SetLabel(categString);
     }
