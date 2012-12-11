@@ -3558,14 +3558,8 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 {
     // Set up system information
     wxString versionDetails = wxString()
-        << wxT("MMEX: ")     << mmex::getProgramVersion()       << wxT("\n")
-        << _("System: ")     << wxPlatformInfo::Get().GetOperatingSystemIdName() << wxT("\n\n")
-        << wxVERSION_STRING  << wxT("\n")
-        << wxT("Boost C++ ") << (BOOST_VERSION/100000)          << wxT('.')
-                             << (BOOST_VERSION / 100 % 1000)    << wxT('.')
-                             << (BOOST_VERSION % 100)           << wxT("\n")
-        << wxT("SQLite3: ")  << wxSQLite3Database::GetVersion() << wxT("\n")
-        << wxT("wxSQLite3: 3.0.0 by Ulrich Telle")              << wxT("\n\n");
+        << mmex::getProgramDescription() << wxT("\n")
+        << wxT("\n");
 
     // Access current version details page
     wxString site = wxT("http://www.codelathe.com/mmex/version.html");
