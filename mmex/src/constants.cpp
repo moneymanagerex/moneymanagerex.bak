@@ -78,7 +78,7 @@ wxString mmex::getProgramDescription()
                 << (BOOST_VERSION / 100 % 1000) << wxT('.')
                 << (BOOST_VERSION % 100) << wxT("\n")
                 << wxT("SQLite3 ") << wxSQLite3Database::GetVersion()
-                << wxT(",  wxSQLite 3.0.0");
+                << wxT(",  wxSQLite 3.0.1");
     return description;
 }
 
