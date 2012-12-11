@@ -439,9 +439,12 @@ void mmTransDialog::CreateControls()
 
     cbPayee_ = new wxComboBox(this, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
         wxDefaultPosition, wxSize(190, -1),
-        core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
-    cbPayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_ENTER,
-        wxCommandEventHandler(mmTransDialog::OnPayeeTextEnter), NULL, this);
+        core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
+    /*Note: If you want to use EVT_TEXT_ENTER(id,func) to receive wxEVT_COMMAND_TEXT_ENTER events,
+	  you have to add the wxTE_PROCESS_ENTER window style flag.
+      If you create a wxComboBox with the flag wxTE_PROCESS_ENTER, the tab key won't jump to the next control anymore.*/
+	//cbPayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_ENTER,
+    //    wxCommandEventHandler(mmTransDialog::OnPayeeTextEnter), NULL, this);
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmTransDialog::OnPayeeUpdated), NULL, this);
 
@@ -557,15 +560,22 @@ void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
     wxString value = cbPayee_->GetValue();
 
     if (transaction_type_->GetSelection() != DEF_TRANSFER)
+	{
         payeeID_ = core_->payeeList_.GetPayeeId(value);
+		if (payeeID_ < 0) OnPayeeTextEnter(event);
+	}
     else
+	{
         toID_ = core_->accountList_.GetAccountId(value);
+		if (toID_ < 0) OnPayeeTextEnter(event);
+	}
     event.Skip();
+
 }
 
 void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 {
-    wxString value = cbPayee_->GetValue(), new_value;
+    wxString value = cbPayee_->GetValue();
 
     cbPayee_ -> SetEvtHandlerEnabled(false);
     cbPayee_ -> Clear();
@@ -579,9 +589,6 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
             if (data[i].Lower().Matches(value.Lower() + wxT("*")))
                 cbPayee_ ->Append(data[i]);
         }
-        cbPayee_ ->SetSelection(0);
-        new_value = cbPayee_->GetStringSelection();
-        payeeID_ = core_->payeeList_.GetPayeeId(new_value);
     }
     else
     {
@@ -591,17 +598,13 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
             if (data[i].Lower().Matches(value.Lower() + wxT("*")))
                 cbPayee_ ->Append(data[i]);
         }
-        cbPayee_ ->SetSelection(0);
-        new_value = cbPayee_->GetStringSelection();
-        toID_ = core_->accountList_.GetAccountId(new_value);
     }
 #if wxCHECK_VERSION(2,9,0)
         cbPayee_->AutoComplete(data);
 #endif
 
-    if (value == new_value)
-        bCategory_->SetFocus();
-
+	cbPayee_->SetValue(value);
+	cbPayee_->SetInsertionPoint(value.Length());
     cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
 }
