@@ -86,9 +86,9 @@ void createColumns(MMEX_IniSettings *pIniSettings, wxListCtrl &lst)
 
     const wxString def_data[3*COL_MAX] =
     {
-        wxTRANSLATE("      Date"), wxT("80"), wxT("L"),
+        wxString(wxTRANSLATE("Date")).Prepend(wxT("      ")), wxT("80"), wxT("L"),
         wxTRANSLATE("Number"), wxT("-2"), wxT("L"),
-        wxTRANSLATE("      Payee"), wxT("150"), wxT("L"),
+        wxString(wxTRANSLATE("Payee")).Prepend(wxT("      ")), wxT("150"), wxT("L"),
         wxTRANSLATE("Status"), wxT("-2"), wxT("L"),
         wxTRANSLATE("Category"), wxT("-2"), wxT("L"),
         wxTRANSLATE("Withdrawal"), wxT("-2"), wxT("R"),
