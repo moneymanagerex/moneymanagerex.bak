@@ -609,7 +609,11 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxImage(duplicate_xpm).Scale(16, 16));
     m_imageList->Add(wxImage(trans_from_xpm).Scale(16, 16));
     m_imageList->Add(wxImage(trans_into_xpm).Scale(16, 16));
-    m_imageList->Add(wxImage(empty_xpm).Scale(16, 16));
+
+	wxBitmap icon(empty_xpm);
+    wxMask* pMask = new wxMask( icon, wxColor( 0, 0, 0 ) );
+    icon.SetMask( pMask );
+    m_imageList->Add(icon);
 
     m_listCtrlAccount = new TransactionListCtrl( this, itemSplitterWindow10,
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize,
