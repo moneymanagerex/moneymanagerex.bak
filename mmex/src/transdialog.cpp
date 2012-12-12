@@ -168,7 +168,7 @@ void mmTransDialog::dataToControls()
         transaction_type_->Disable();
     }
     else if (core_->accountList_.getNumBankAccounts() < 2 || edit_) size--;
-    
+
     for(size_t i = begin; i < size; ++i)
     {
         transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
@@ -178,13 +178,12 @@ void mmTransDialog::dataToControls()
 
     cAdvanced_->SetValue(advancedToTransAmountSet_);
 
-    wxString payeeName;
     wxString categString = _("Select Category");
 
     if (transTypeString == TRANS_TYPE_TRANSFER_STR)
     {
         advancedToTransAmountSet_ = (transAmount_ != toTransAmount_);
-        payeeName = cbPayee_->GetValue();
+        payee_name_ = cbPayee_->GetValue();
         SetTransferControls();  // hide appropriate fields
     }
     else
@@ -192,12 +191,12 @@ void mmTransDialog::dataToControls()
         cAdvanced_->Disable();
         if (edit_)
         {
-            payeeName = pBankTransaction_->payeeStr_;
+            payee_name_ = pBankTransaction_->payeeStr_;
         }
         else
         {
             //If user does not want payee to be auto filled for the new transaction
-            payeeName = resetPayeeString();
+            payee_name_ = resetPayeeString();
             payeeUnknown_ = true;
 
             if ( mmIniOptions::instance().transPayeeSelectionNone_ > 0)
@@ -205,12 +204,13 @@ void mmTransDialog::dataToControls()
                 if (payeeID_ < 0)
                 {
                     payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_, categID_, subcategID_);
-                    payeeName = core_->payeeList_.GetPayeeName(payeeID_);
+                    payee_name_ = core_->payeeList_.GetPayeeName(payeeID_);
                     payeeUnknown_ = false;
                 }
             }
         }
     }
+	prev_payee_name_ = payee_name_;
     updateControlsForTransType();
     if (edit_)
     {
@@ -250,7 +250,7 @@ void mmTransDialog::updateControlsForTransType()
 {
     //FIXME:
     //SetTransferControls(transaction_type_->GetSelection()==DEF_TRANSFER);
-    bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR); 
+    bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
     SetTransferControls(transfer_transaction);
     if (!edit_)
     {
@@ -437,14 +437,13 @@ void mmTransDialog::CreateControls()
     wxBoxSizer* payeeSizer = new wxBoxSizer(wxHORIZONTAL);
     payee_label_ = new wxStaticText(this, wxID_STATIC, _("Payee"));
 
+    /*Note: If you want to use EVT_TEXT_ENTER(id,func) to receive wxEVT_COMMAND_TEXT_ENTER events,
+      you have to add the wxTE_PROCESS_ENTER window style flag.
+      If you create a wxComboBox with the flag wxTE_PROCESS_ENTER, the tab key won't jump to the next control anymore.*/
     cbPayee_ = new wxComboBox(this, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
         wxDefaultPosition, wxSize(190, -1),
         core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
-    /*Note: If you want to use EVT_TEXT_ENTER(id,func) to receive wxEVT_COMMAND_TEXT_ENTER events,
-	  you have to add the wxTE_PROCESS_ENTER window style flag.
-      If you create a wxComboBox with the flag wxTE_PROCESS_ENTER, the tab key won't jump to the next control anymore.*/
-	//cbPayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_ENTER,
-    //    wxCommandEventHandler(mmTransDialog::OnPayeeTextEnter), NULL, this);
+
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmTransDialog::OnPayeeUpdated), NULL, this);
 
@@ -557,55 +556,57 @@ void mmTransDialog::CreateControls()
 
 void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
 {
-    wxString value = cbPayee_->GetValue();
+	prev_payee_name_ = payee_name_;
+    payee_name_ = cbPayee_->GetValue();
 
     if (transaction_type_->GetSelection() != DEF_TRANSFER)
-	{
-        payeeID_ = core_->payeeList_.GetPayeeId(value);
-		if (payeeID_ < 0) OnPayeeTextEnter(event);
-	}
+    {
+        payeeID_ = core_->payeeList_.GetPayeeId(payee_name_);
+    }
     else
-	{
-        toID_ = core_->accountList_.GetAccountId(value);
-		if (toID_ < 0) OnPayeeTextEnter(event);
-	}
-    event.Skip();
+    {
+        toID_ = core_->accountList_.GetAccountId(payee_name_);
+    }
 
+    if (prev_payee_name_ != payee_name_)
+    {
+        wxCommandEvent evt(wxTE_PROCESS_ENTER, ID_DIALOG_TRANS_PAYEECOMBO);
+        OnPayeeTextEnter(evt);
+    }
+
+    event.Skip();
 }
 
 void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 {
-    wxString value = cbPayee_->GetValue();
+	wxString value = cbPayee_->GetValue();
 
     cbPayee_ -> SetEvtHandlerEnabled(false);
     cbPayee_ -> Clear();
     wxArrayString data;
 
     if (transaction_type_->GetSelection() != DEF_TRANSFER)
-    {
         data = core_->payeeList_.FilterPayees(wxT(""));
-        for (size_t i=0; i< data.Count(); ++i)
-        {
-            if (data[i].Lower().Matches(value.Lower() + wxT("*")))
-                cbPayee_ ->Append(data[i]);
-        }
-    }
     else
-    {
         data = core_->accountList_.getAccountsName(accountID_);
-        for (size_t i=0; i< data.Count(); ++i)
-        {
-            if (data[i].Lower().Matches(value.Lower() + wxT("*")))
-                cbPayee_ ->Append(data[i]);
-        }
+
+    for (size_t i=0; i< data.Count(); ++i)
+    {
+        if (data[i].Lower().Matches(value.Lower().Append(wxT("*"))))
+            cbPayee_ ->Append(data[i]);
     }
 #if wxCHECK_VERSION(2,9,0)
         cbPayee_->AutoComplete(data);
 #endif
 
-	cbPayee_->SetValue(value);
-	cbPayee_->SetInsertionPoint(value.Length());
+    if (cbPayee_->GetCount() == 1)
+		cbPayee_->SetSelection(0);
+	else
+		cbPayee_->SetValue(value);
+    cbPayee_->SetInsertionPoint(value.Length());
     cbPayee_ -> SetEvtHandlerEnabled(true);
+
+    //wxSafeShowMessage(prev_payee_name_ + wxT("--") , payee_name_);
     event.Skip();
 }
 
