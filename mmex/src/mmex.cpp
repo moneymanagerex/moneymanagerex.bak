@@ -3869,12 +3869,13 @@ void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnCurrency(wxCommandEvent& /*event*/)
 {
     mmMainCurrencyDialog(m_core.get(),this, false).ShowModal();
+    createHomePage();    
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnWizardCancel(wxWizardEvent& event)
 {
-     event.Veto();
+    event.Veto();
 }
 //----------------------------------------------------------------------------
 
