@@ -6,7 +6,6 @@
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
 
- This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -347,7 +346,6 @@ void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 
 void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
 {
-    int menu_item = event.GetId();
     currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
     int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
     if (baseCurrencyID == currencyID_) return;
@@ -355,6 +353,7 @@ void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
     core_->currencyList_.setBaseCurrencySettings(currencyID_);
 
     fillControls();
+	event.Skip();
 }
 
 void mmMainCurrencyDialog::OnItemRightClick(wxListEvent& event)
@@ -366,4 +365,5 @@ void mmMainCurrencyDialog::OnItemRightClick(wxListEvent& event)
     mainMenu->Append(new wxMenuItem(mainMenu, 0, _("Set as Base Currency")));
 
     PopupMenu(mainMenu);
+	event.Skip();
 }
