@@ -1012,7 +1012,7 @@ void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
     }
 
     wxString CurrencySymbol, dName;
-    double dRate = 0;
+    double dRate = 1;
 
     std::map<wxString, std::pair<double, wxString> > currency_data;
 
@@ -1052,6 +1052,8 @@ void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
 
             wxString valueStr;
             double new_rate = data.first;
+            if (base_symbol == currency_symbol) new_rate = 1;
+
             double old_rate = core->currencyList_.currencies_[idx]->baseConv_;
             mmex::formatDoubleToCurrencyEdit(old_rate, valueStr);
             msg << currency_symbol << wxT("\t : ")
