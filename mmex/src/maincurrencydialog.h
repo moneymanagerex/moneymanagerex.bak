@@ -63,6 +63,15 @@ public:
         const wxSize& size = SYMBOL_MAINCURRENCYDIALOG_SIZE,
         long style = SYMBOL_MAINCURRENCYDIALOG_STYLE );
 
+    static bool Execute(mmCoreDB* core, wxWindow* parent, int& currencyID);
+
+private:
+    wxSQLite3Database* db_;
+    mmCoreDB* core_;
+    wxListCtrl* currencyListBox_;
+    bool bEnableSelect_;
+    static bool ShowToolTips();
+
     /// Creation
     bool Create( wxWindow* parent,
         wxWindowID id = SYMBOL_MAINCURRENCYDIALOG_IDNAME,
@@ -70,7 +79,6 @@ public:
         const wxPoint& pos = SYMBOL_MAINCURRENCYDIALOG_POSITION,
         const wxSize& size = SYMBOL_MAINCURRENCYDIALOG_SIZE,
         long style = SYMBOL_MAINCURRENCYDIALOG_STYLE );
-
     /// Creates the controls and sizers
     void CreateControls();
     void OnBtnAdd(wxCommandEvent& event);
@@ -81,25 +89,15 @@ public:
     void OnListItemDeselected(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
     void fillControls();
-    double selectedIndex_;
-
-    wxBitmap GetBitmapResource( const wxString& name );
-
-    wxIcon GetIconResource( const wxString& name );
-    static bool ShowToolTips();
-
-    int currencyID_;
-    static bool Execute(mmCoreDB* core, wxWindow* parent, int& currencyID);
-
-private:
-    wxSQLite3Database* db_;
-    mmCoreDB* core_;
-    wxListCtrl* currencyListBox_;
-    bool bEnableSelect_;
-
     wxButton* itemButtonEdit_;
     wxButton* itemButtonDelete_;
+
+    int currencyID_;
+    double selectedIndex_;
+
     void OnOnlineUpdateCurRate(wxCommandEvent& event);
+    void OnItemRightClick(wxListEvent& event);
+    void OnMenuSelected(wxCommandEvent& event);
 };
 
 #endif // _MM_EX_MAINCURRENCY_DIALOG_H_
