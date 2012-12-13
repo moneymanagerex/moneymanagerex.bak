@@ -49,18 +49,11 @@ bool mmQIFDialog::Create( wxWindow* parent, wxWindowID id, const wxString& capti
 
     SetIcon(mmex::getProgramIcon());
 
-    //dataToControls();
-
     Centre();
     Fit();
 
     return TRUE;
 }
-
-//void mmQIFDialog::dataToControls()
-//{
-//
-//}
 
 void mmQIFDialog::CreateControls()
 {
@@ -72,38 +65,44 @@ void mmQIFDialog::CreateControls()
 
     wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(main_sizer);
-    wxBoxSizer* box_sizer0 = new wxBoxSizer(wxHORIZONTAL);
-    main_sizer->Add(box_sizer0, flags);
     wxBoxSizer* box_sizer1 = new wxBoxSizer(wxVERTICAL);
-    box_sizer0->Add(box_sizer1, 1, wxGROW);
-    wxBoxSizer* box_sizer2 = new wxBoxSizer(wxVERTICAL);
-    box_sizer0->Add(box_sizer2, 1, wxGROW);
+    main_sizer->Add(box_sizer1, 1, wxGROW);
 
-    wxStaticBox* static_box = new wxStaticBox(this, wxID_STATIC, _("Export to QIF"));
-    wxStaticBoxSizer* box_sizer = new wxStaticBoxSizer(static_box, wxVERTICAL);
-    box_sizer1->Add(box_sizer, flags);
+    wxNotebook* export_notebook = new wxNotebook(this,
+        wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
+    wxPanel* main_tab = new wxPanel(export_notebook, wxID_ANY);
+    export_notebook->AddPage(main_tab, _("Parameters"));
+    wxBoxSizer *tab1_sizer = new wxBoxSizer(wxVERTICAL);
+    main_tab->SetSizer(tab1_sizer);
+
+    wxPanel* log_tab = new wxPanel(export_notebook, wxID_ANY);
+    export_notebook->AddPage(log_tab, _("Log"));
+    wxBoxSizer *tab2_sizer = new wxBoxSizer(wxVERTICAL);
+    log_tab->SetSizer(tab2_sizer);
+
+	box_sizer1->Add(export_notebook, flags);
 
     //
     wxString choices[] = { _("QIF"), _("CSV")};
     int num = sizeof(choices) / sizeof(wxString);
-    m_radio_box_ = new wxRadioBox(this, wxID_STATIC, wxT("")
+    m_radio_box_ = new wxRadioBox(main_tab, wxID_STATIC, wxT("")
         , wxDefaultPosition, wxDefaultSize, num, choices, 2, wxRA_SPECIFY_COLS);
-    box_sizer->Add(m_radio_box_, flags.Center());
+    tab1_sizer->Add(m_radio_box_, flags.Center());
 
     wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 2, 0, 0);
-    box_sizer->Add(flex_sizer, flags.Left());
+    tab1_sizer->Add(flex_sizer, flags.Left());
 
     // Categories -------------------------------------------------
-    cCategs_ = new wxCheckBox(this, wxID_STATIC,
+    cCategs_ = new wxCheckBox(main_tab, wxID_STATIC,
         _("Categories"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cCategs_->SetValue(FALSE);
     flex_sizer->Add(cCategs_, flags);
     flex_sizer->AddSpacer(1);
 
     // Accounts --------------------------------------------
-    accountsCheckBox_ = new wxCheckBox( this, wxID_STATIC, _("Accounts"),
+    accountsCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("Accounts"),
                                         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    bSelectedAccounts_ = new wxButton(this, wxID_STATIC, _("Select accounts"), wxDefaultPosition, wxSize(fieldWidth,-1));
+    bSelectedAccounts_ = new wxButton(main_tab, wxID_STATIC, _("Select accounts"), wxDefaultPosition, wxSize(fieldWidth,-1));
     bSelectedAccounts_ -> Connect(wxID_ANY,
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFDialog::OnAccountsButton), NULL, this);
     accountsCheckBox_->SetValue(true);
@@ -111,18 +110,18 @@ void mmQIFDialog::CreateControls()
     flex_sizer->Add(bSelectedAccounts_, flags);
 
     // From Date --------------------------------------------
-    dateFromCheckBox_ = new wxCheckBox( this, wxID_STATIC, _("From Date"),
+    dateFromCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("From Date"),
                                         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    fromDateCtrl_ = new wxDatePickerCtrl( this, wxID_STATIC, wxDefaultDateTime,
+    fromDateCtrl_ = new wxDatePickerCtrl( main_tab, wxID_STATIC, wxDefaultDateTime,
                                          wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
     fromDateCtrl_->Enable(false);
     flex_sizer->Add(dateFromCheckBox_, flags);
     flex_sizer->Add(fromDateCtrl_, flags);
 
     // To Date --------------------------------------------
-    dateToCheckBox_ = new wxCheckBox( this, wxID_STATIC, _("To Date"),
+    dateToCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("To Date"),
                                         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    toDateCtrl_ = new wxDatePickerCtrl( this, wxID_STATIC, wxDefaultDateTime,
+    toDateCtrl_ = new wxDatePickerCtrl( main_tab, wxID_STATIC, wxDefaultDateTime,
                                          wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
     toDateCtrl_->Enable(false);
     flex_sizer->Add(dateToCheckBox_, flags);
@@ -131,14 +130,14 @@ void mmQIFDialog::CreateControls()
     // Encoding --------------------------------------------
 
     // File Name --------------------------------------------
-    toFileCheckBox_ = new wxCheckBox( this, wxID_STATIC, _("Write to File"),
+    toFileCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("Write to File"),
                                         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     toFileCheckBox_->SetValue(true);
-    file_name_label_ = new wxStaticText(this, wxID_STATIC, _("File Name:"));
-    button_search_ = new wxButton(this, wxID_OPEN, _("&Search"));
+    file_name_label_ = new wxStaticText(main_tab, wxID_STATIC, _("File Name:"));
+    button_search_ = new wxButton(main_tab, wxID_OPEN, _("&Search"));
     button_search_->Connect(wxID_OPEN, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFDialog::OnSearch), NULL, this);
 
-    m_text_ctrl_ = new wxTextCtrl(this, wxID_FILE, wxEmptyString,
+    m_text_ctrl_ = new wxTextCtrl(main_tab, wxID_FILE, wxEmptyString,
         wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER );
     m_text_ctrl_->Connect(wxID_FILE, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(mmQIFDialog::OnFileNameChanged), NULL, this);
     m_text_ctrl_->Connect(wxID_FILE, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmQIFDialog::OnFileNameEntered), NULL, this);
@@ -147,15 +146,14 @@ void mmQIFDialog::CreateControls()
     flex_sizer->AddSpacer(1);
     flex_sizer->Add(file_name_label_, flags);
     flex_sizer->Add(button_search_, flags);
-    box_sizer->Add(m_text_ctrl_, 1, wxALL|wxGROW, 5);
+    tab1_sizer->Add(m_text_ctrl_, 1, wxALL|wxGROW, 5);
 
     //Log viewer
-    box_sizer2->AddSpacer(border);
-    log_field_ = new wxTextCtrl( this, wxID_STATIC, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
-    box_sizer2->Add(log_field_, 1, wxGROW|wxALL, border);
+    log_field_ = new wxTextCtrl( log_tab, wxID_STATIC, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
+    tab2_sizer->Add(log_field_, 1, wxGROW|wxALL, border);
 
-    wxButton* itemClearButton = new wxButton(this, wxID_CLEAR);
-    box_sizer2->Add(itemClearButton, flags);
+    wxButton* itemClearButton = new wxButton(log_tab, wxID_CLEAR);
+    tab2_sizer->Add(itemClearButton, flags);
     itemClearButton->Connect(wxID_CLEAR, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFDialog::OnButtonClear), NULL, this);
 
     /**********************************************************************************************
