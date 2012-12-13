@@ -210,10 +210,9 @@ void mmFilterTransactionsDialog::CreateControls()
     cbPayee_ = new wxComboBox(itemPanel, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
         wxDefaultPosition, wxSize(fieldWidth, -1),
         core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
-    /*cbPayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_ENTER,
-        wxCommandEventHandler(mmFilterTransactionsDialog::OnPayeeTextEnter), NULL, this);
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
-        wxCommandEventHandler(mmFilterTransactionsDialog::OnPayeeUpdated), NULL, this);*/
+        wxCommandEventHandler(mmFilterTransactionsDialog::OnPayeeUpdated), NULL, this);
+
 #if wxCHECK_VERSION(2,9,0)
         cbPayee_->AutoComplete(core_->payeeList_.FilterPayees(wxT("")));
 #endif
@@ -646,4 +645,38 @@ wxString mmFilterTransactionsDialog::GetCurrentSettings()
 void mmFilterTransactionsDialog::setAccountToolTip(wxString tip) const
 {
     accountDropDown_->SetToolTip(tip);
+}
+
+void mmFilterTransactionsDialog::OnPayeeUpdated(wxCommandEvent& event)
+{
+    wxComboBox* cbPayeeInFocus = (wxComboBox*)FindFocus();
+
+    wxString value = cbPayeeInFocus->GetValue();
+
+    if (value == prev_value_) return;
+    //Line above to fix infinite loop for wx-2.9 GTK
+    //Line below seems does not working in wx-2.9 GTK
+    cbPayeeInFocus -> SetEvtHandlerEnabled(false);
+    prev_value_ = value;
+    cbPayeeInFocus -> Clear();
+    wxArrayString data;
+
+    data = core_->payeeList_.FilterPayees(wxT(""));
+    for (size_t i = 0; i < data.Count(); ++i)
+    {
+        if (data[i].Lower().Matches(value.Lower().Append(wxT("*"))))
+            cbPayeeInFocus ->Append(data[i]);
+    }
+
+#if wxCHECK_VERSION(2,9,0)
+        cbSourcePayee_->AutoComplete(data);
+#endif
+
+    if (cbPayeeInFocus->GetCount() == 1)
+        cbPayeeInFocus->SetSelection(0);
+    else
+        cbPayeeInFocus->SetValue(value);
+    cbPayeeInFocus->SetInsertionPoint(value.Length());
+    cbPayeeInFocus -> SetEvtHandlerEnabled(true);
+    event.Skip();
 }
