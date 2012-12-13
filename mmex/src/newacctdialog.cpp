@@ -203,56 +203,65 @@ void mmNewAcctDialog::CreateControls()
         ID_DIALOG_NEWACCT_BUTTON_CURRENCY, currName );
     grid_sizer->Add(itemButton71, flagsExpand);
 
-    grid_sizer->Add(new wxStaticText(this, wxID_STATIC,
-        _("Account Number:")), flags);
-
-    wxTextCtrl* itemTextCtrl6 = new wxTextCtrl(this,
-        ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER, wxT(""));
-    grid_sizer->Add(itemTextCtrl6, flagsExpand);
-
-    grid_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Held At:")), flags);
-
-    wxTextCtrl* itemTextCtrl8 = new wxTextCtrl(this,
-        ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT, wxT("") );
-    grid_sizer->Add(itemTextCtrl8, flagsExpand);
-
-    grid_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Website:")), flags);
-    wxTextCtrl* itemTextCtrl10 = new wxTextCtrl(this,
-        ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE, wxT("") );
-    grid_sizer->Add(itemTextCtrl10, flagsExpand);
-
-    grid_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Contact:")),
-        flags);
-    wxTextCtrl* itemTextCtrl12 = new wxTextCtrl(this,
-        ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT, wxT("") );
-    grid_sizer->Add(itemTextCtrl12, flagsExpand);
-
-    grid_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Access Info:")),
-         flags);
-    wxTextCtrl* itemTextCtrl14 = new wxTextCtrl(this,
-        ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO, wxT("*********"));
-    grid_sizer->Add(itemTextCtrl14, flagsExpand);
-
     wxCheckBox* itemCheckBox10 = new wxCheckBox( this,
         ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT, _("Favorite Account"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBox10->SetValue(TRUE);
     grid_sizer->AddSpacer(1);
     grid_sizer->Add(itemCheckBox10, flags);
     
-    //Notes
-    notesLabel_ = _("Notes");
-    notesCtrl_ = new wxTextCtrl(this,
-        ID_DIALOG_NEWACCT_TEXTCTRL_NOTES,
-        wxT(""), wxDefaultPosition, wxSize(250, 90), wxTE_MULTILINE );
-    itemBoxSizer3->Add(notesCtrl_, flagsExpand);
-	if (!edit_)
-    {
-        notesColour_ = notesCtrl_->GetForegroundColour();
-        notesCtrl_->SetForegroundColour(wxColour(wxT("GREY")));
-        notesCtrl_->SetValue(notesLabel_);
-        int font_size = notesCtrl_->GetFont().GetPointSize();
-        notesCtrl_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
-    }
+    // Notes  ---------------------------------------------
+
+    wxNotebook* acc_notebook = new wxNotebook(this,
+        wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
+    wxPanel* notes_tab = new wxPanel(acc_notebook, wxID_ANY);
+    acc_notebook->AddPage(notes_tab, _("Notes"));
+    wxBoxSizer *notes_sizer = new wxBoxSizer(wxVERTICAL);
+    notes_tab->SetSizer(notes_sizer);
+
+    notesCtrl_ = new wxTextCtrl(notes_tab, ID_DIALOG_NEWACCT_TEXTCTRL_NOTES, wxT(""),
+        wxDefaultPosition, wxSize(240,180), wxTE_MULTILINE);
+    notes_sizer->Add(notesCtrl_, flagsExpand);
+    //
+
+    wxPanel* others_tab = new wxPanel(acc_notebook, wxID_ANY);
+    acc_notebook->AddPage(others_tab, _("Others"));
+    wxBoxSizer *others_sizer = new wxBoxSizer(wxVERTICAL);
+    others_tab->SetSizer(others_sizer);
+
+    wxFlexGridSizer* grid_sizer2 = new wxFlexGridSizer(0, 2, 0, 0);
+    others_sizer->Add(grid_sizer2, flagsExpand);
+
+    grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC,
+        _("Account Number:")), flags);
+
+    wxTextCtrl* itemTextCtrl6 = new wxTextCtrl(others_tab,
+        ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER, wxT(""), wxDefaultPosition, wxSize(120,-1));
+    grid_sizer2->Add(itemTextCtrl6, flagsExpand);
+
+    grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Held At:")), flags);
+
+    wxTextCtrl* itemTextCtrl8 = new wxTextCtrl(others_tab,
+        ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT, wxT("") );
+    grid_sizer2->Add(itemTextCtrl8, flagsExpand);
+
+    grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Website:")), flags);
+    wxTextCtrl* itemTextCtrl10 = new wxTextCtrl(others_tab,
+        ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE, wxT("") );
+    grid_sizer2->Add(itemTextCtrl10, flagsExpand);
+
+    grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Contact:")),
+        flags);
+    wxTextCtrl* itemTextCtrl12 = new wxTextCtrl(others_tab,
+        ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT, wxT("") );
+    grid_sizer2->Add(itemTextCtrl12, flagsExpand);
+
+    grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Access Info:")),
+         flags);
+    wxTextCtrl* itemTextCtrl14 = new wxTextCtrl(others_tab,
+        ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO, wxT("*********"));
+    grid_sizer2->Add(itemTextCtrl14, flagsExpand);
+
+    itemBoxSizer3->Add(acc_notebook);
 
     //Buttons
     wxPanel* itemPanel27 = new wxPanel( this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
@@ -275,6 +284,8 @@ void mmNewAcctDialog::CreateControls()
     wxButton* itemButton30 = new wxButton( itemPanel27, wxID_CANCEL);
     itemBoxSizer28->Add(itemButton30, flags);
 
+	Fit();
+	
     if (true == true)
     {
 	    textAccountName_->SetToolTip(_("Enter the Name of the Account. This name can be renamed at any time."));
