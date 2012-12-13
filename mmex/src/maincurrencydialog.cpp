@@ -31,9 +31,12 @@ BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
     EVT_BUTTON(wxID_SELECTALL, mmMainCurrencyDialog::OnBtnSelect)
     EVT_BUTTON(wxID_REMOVE, mmMainCurrencyDialog::OnBtnDelete)
 
+    EVT_MENU_RANGE(0, 1, mmMainCurrencyDialog::OnMenuSelected)
+
     EVT_LIST_ITEM_ACTIVATED(ID_LISTBOX,   mmMainCurrencyDialog::OnListItemActivated)
     EVT_LIST_ITEM_SELECTED(ID_LISTBOX,    mmMainCurrencyDialog::OnListItemSelected)
     EVT_LIST_ITEM_DESELECTED(ID_LISTBOX,  mmMainCurrencyDialog::OnListItemDeselected)
+    EVT_LIST_ITEM_RIGHT_CLICK(ID_LISTBOX, mmMainCurrencyDialog::OnItemRightClick)
 END_EVENT_TABLE()
 
 
@@ -107,6 +110,15 @@ void mmMainCurrencyDialog::fillControls()
 
     if (idx>0)
         currencyListBox_->RefreshItems(0, --idx);
+    else
+        selectedIndex_ = -1;
+
+    if (selectedIndex_ >= 0 )
+    {
+        currencyListBox_->SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        currencyListBox_->SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        currencyListBox_->EnsureVisible(selectedIndex_);
+    }
 }
 
 void mmMainCurrencyDialog::CreateControls()
@@ -114,14 +126,14 @@ void mmMainCurrencyDialog::CreateControls()
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
     flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Expand();
-    
+
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer22, flagsExpand);
 
-    wxBitmapButton* update_button = new wxBitmapButton(this, 
+    wxBitmapButton* update_button = new wxBitmapButton(this,
         wxID_STATIC, wxBitmap(update_currency_xpm));
     itemBoxSizer22->Add(update_button, flags);
     update_button->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
@@ -201,7 +213,7 @@ void mmMainCurrencyDialog::CreateControls()
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
     itemBoxSizer9->Add(itemCancelButton,  flags);
     itemCancelButton->SetFocus();
-    
+
     this->SetMinSize(wxSize(200,300));
     this->Fit();
 }
@@ -211,50 +223,39 @@ bool mmMainCurrencyDialog::ShowToolTips()
     return TRUE;
 }
 
-wxBitmap mmMainCurrencyDialog::GetBitmapResource( const wxString& /*name*/ )
-{
-    // Bitmap retrieval
-    return wxNullBitmap;
-}
-
-wxIcon mmMainCurrencyDialog::GetIconResource( const wxString& /*name*/ )
-{
-    return wxNullIcon;
-}
-
 void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
 {
-	wxArrayString currency_names;
-	wxArrayString currency_symbols;
-	for(size_t i = 0; i < sizeof(CURRENCIES)/sizeof(wxString); ++i)
-	{
-	   currency_symbols.Add(CURRENCIES[i]);
-	   currency_names.Add(CURRENCIES[++i]);
-	}
-	wxString currText = wxGetSingleChoice (_("Name of Currency to Add"), _("Add Currency"), currency_names);
-	if (!currText.IsEmpty())
-	{
-		wxString currency_symbol = currency_symbols[currency_names.Index(currText)];
-		int currID = core_->currencyList_.getCurrencyID(currText);
-		if (currID == -1)
-		{
-			boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
-			pCurrency->currencyName_ = currText;
-			pCurrency->currencySymbol_ = currency_symbol;
-			core_->currencyList_.AddCurrency(pCurrency);
-			currencyID_ = core_->currencyList_.getCurrencyID(currText);
+    wxArrayString currency_names;
+    wxArrayString currency_symbols;
+    for(size_t i = 0; i < sizeof(CURRENCIES)/sizeof(wxString); ++i)
+    {
+       currency_symbols.Add(CURRENCIES[i]);
+       currency_names.Add(CURRENCIES[++i]);
+    }
+    wxString currText = wxGetSingleChoice (_("Name of Currency to Add"), _("Add Currency"), currency_names);
+    if (!currText.IsEmpty())
+    {
+        wxString currency_symbol = currency_symbols[currency_names.Index(currText)];
+        int currID = core_->currencyList_.getCurrencyID(currText);
+        if (currID == -1)
+        {
+            boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
+            pCurrency->currencyName_ = currText;
+            pCurrency->currencySymbol_ = currency_symbol;
+            core_->currencyList_.AddCurrency(pCurrency);
+            currencyID_ = core_->currencyList_.getCurrencyID(currText);
 
-			mmCurrencyDialog* dlg = new mmCurrencyDialog(core_, currencyID_, this);
-			dlg->ShowModal();
+            mmCurrencyDialog* dlg = new mmCurrencyDialog(core_, currencyID_, this);
+            dlg->ShowModal();
 
-		}
-		else
-		{
-			wxMessageBox(_("Attempt to Add a currency which already exists!")
-				,_("Currency Dialog"), wxOK|wxICON_ERROR);
-		}
-	}
-	fillControls();
+        }
+        else
+        {
+            wxMessageBox(_("Attempt to Add a currency which already exists!")
+                ,_("Currency Dialog"), wxOK|wxICON_ERROR);
+        }
+    }
+    fillControls();
 
 }
 
@@ -313,7 +314,7 @@ void mmMainCurrencyDialog::OnListItemDeselected(wxListEvent& /*event*/)
     selectedIndex_ = -1;
     currencyID_ = -1;
     itemButtonEdit_->Enable(false);
-	itemButtonDelete_->Enable(false);
+    itemButtonDelete_->Enable(false);
 }
 
 void mmMainCurrencyDialog::OnListItemSelected(wxListEvent& event)
@@ -342,4 +343,27 @@ void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 {
     OnlineUpdateCurRate(this, core_);
     fillControls();
+}
+
+void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
+{
+    int menu_item = event.GetId();
+    currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
+    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
+    if (baseCurrencyID == currencyID_) return;
+
+    core_->currencyList_.setBaseCurrencySettings(currencyID_);
+
+    fillControls();
+}
+
+void mmMainCurrencyDialog::OnItemRightClick(wxListEvent& event)
+{
+    wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, wxID_ANY) ;
+    ev.SetEventObject( this );
+
+    wxMenu* mainMenu = new wxMenu;
+    mainMenu->Append(new wxMenuItem(mainMenu, 0, _("Set as Base Currency")));
+
+    PopupMenu(mainMenu);
 }
