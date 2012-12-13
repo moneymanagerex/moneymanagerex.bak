@@ -114,6 +114,7 @@ private:
     void OnButtoncancelClick( wxCommandEvent& event );
     void OnButtonSaveClick( wxCommandEvent& event );
     void OnSettingsSelected( wxCommandEvent& event );
+    void OnPayeeUpdated(wxCommandEvent& event);
     bool get_next_value(wxStringTokenizer& tkz, wxString& value);
 
     void OnCategs(wxCommandEvent& event);
@@ -122,6 +123,7 @@ private:
     static bool ShowToolTips();
 
     wxString settings_string_;
+    wxString prev_value_;
     wxCheckBox* accountCheckBox_;
     wxChoice* accountDropDown_;
     wxCheckBox* dateRangeCheckBox_;
