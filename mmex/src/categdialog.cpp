@@ -115,6 +115,7 @@ void mmCategDialog::fillControls()
 
     treeCtrl_->SortChildren(root_);
     treeCtrl_->SelectItem(selectedItemId_);
+    treeCtrl_->EnsureVisible(selectedItemId_);
 
     textCtrl_->SetValue(wxT (""));
     selectButton_->Disable();
@@ -453,12 +454,16 @@ void mmCategDialog::OnCategoryRelocation(wxCommandEvent& /*event*/)
 void mmCategDialog::OnChbClick(wxCommandEvent& /*event*/)
 {
     if (itemCheckBox_->IsChecked())
+    {
         treeCtrl_->ExpandAll();
+        treeCtrl_->SelectItem(selectedItemId_);
+    }
     else
     {
         treeCtrl_->CollapseAll();
         treeCtrl_->Expand(root_);
         treeCtrl_->SelectItem(selectedItemId_);
     }
+    treeCtrl_->EnsureVisible(selectedItemId_);
     core_->iniSettings_->SetBoolSetting(wxT("EXPAND_CATEGS_TREE"), itemCheckBox_->IsChecked());
 }
