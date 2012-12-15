@@ -88,44 +88,25 @@ void mmAssetDialog::dataToControls()
 {
     assetID_ = asset_holder_->id_;
 
-    m_assetName->SetValue(asset_holder_->assetName_/*q1.GetString(wxT("ASSETNAME"))*/);
-    m_notes->SetValue(asset_holder_->assetNotes_/*q1.GetString(wxT("NOTES"))*/);
+    m_assetName->SetValue(asset_holder_->assetName_);
+    m_notes->SetValue(asset_holder_->assetNotes_);
 
-    wxString dateString = asset_holder_->assetDate_/*q1.GetString(wxT("STARTDATE"))*/;
-    wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+    wxDateTime dtdt = asset_holder_->assetDate_;
     wxString dt = mmGetDateForDisplay(core_->db_.get(), dtdt);
     m_dpc->SetValue(dtdt);
 
     wxString value;
-    mmex::formatDoubleToCurrencyEdit(asset_holder_->value_/*q1.GetDouble(wxT("VALUE"))*/, value);
+    mmex::formatDoubleToCurrencyEdit(asset_holder_->value_, value);
     m_value->SetValue(value);
 
     wxString valueChangeRate;
-    valueChangeRate.Printf(wxT("%.3f"), asset_holder_->valueChange_/*q1.GetDouble(wxT("VALUECHANGERATE"))*/);
+    valueChangeRate.Printf(wxT("%.3f"), asset_holder_->valueChange_);
     m_valueChangeRate->SetValue(valueChangeRate);
 
-    wxString valueChangeTypeStr = asset_holder_->assetValueChange_;//q1.GetString(wxT("VALUECHANGE"));
-    if (valueChangeTypeStr == wxT("None"))
-    {
-        m_valueChange->SetSelection(DEF_CHANGE_NONE);
-        enableDisableRate(false);
-    }
-    else if (valueChangeTypeStr == wxT("Appreciates"))
-    {
-        m_valueChange->SetSelection(DEF_CHANGE_APPRECIATE);
-        enableDisableRate(true);
-    }
-    else if (valueChangeTypeStr == wxT("Depreciates"))
-
-    {
-        m_valueChange->SetSelection(DEF_CHANGE_DEPRECIATE);
-        enableDisableRate(true);
-    }
-    else
-    {
-        wxASSERT(false);
-    }
-    m_assetType->SetStringSelection(wxGetTranslation(asset_holder_->assetType_/*q1.GetString(wxT("ASSETTYPE"))*/));
+    wxString valueChangeTypeStr = asset_holder_->sAssetValueChange_;
+	m_valueChange->SetStringSelection(wxGetTranslation(valueChangeTypeStr));
+	enableDisableRate(valueChangeTypeStr != wxT("None"));
+    m_assetType->SetStringSelection(wxGetTranslation(asset_holder_->assetType_));
 }
 
 void mmAssetDialog::fillControls()
@@ -289,7 +270,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
     double valueChangeRate = 0;
-    if(valueChangeRateStr.ToDouble(&valueChangeRate) == false) {
+    if(!valueChangeRateStr.ToDouble(&valueChangeRate)) {
         valueChangeRate = -1.0;
     }
     //This should be unnecessary with hidden controls
