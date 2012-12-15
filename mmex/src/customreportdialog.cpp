@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -19,8 +19,10 @@
 #include "customreportdialog.h"
 #include "paths.h"
 #include "util.h"
-#include <wx/cshelp.h>
-#include <wx/html/helpctrl.h>
+//#include <wx/cshelp.h>
+//#include <wx/html/helpctrl.h>
+#include <wx/helpbase.h>
+#include <wx/help.h>
 
 const int titleTextWidth   = 350; // Determines width of Headings Textbox.
 const int sourceTextHeight = 200; // Determines height of Source Textbox.
@@ -47,17 +49,17 @@ mmCustomSQLDialog::mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxWindow
     Create(parent_, id, caption, pos, size, style);
 }
 
-bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id, 
+bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
                         const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
-    wxAcceleratorEntry entries[1];
+    wxAcceleratorEntry entries[2];
     entries[0].Set(wxACCEL_NORMAL, WXK_F9, wxID_REFRESH);
     wxAcceleratorTable accel(1, entries);
     SetAcceleratorTable(accel);
- 
+
     Connect(wxID_REFRESH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(mmCustomSQLDialog::OnRun));
 
     CreateControls();
@@ -71,7 +73,7 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
 }
 
 void mmCustomSQLDialog::CreateControls()
-{    
+{
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
 
@@ -79,7 +81,7 @@ void mmCustomSQLDialog::CreateControls()
     this->SetSizer(mainBoxSizer);
 
     /****************************************
-     Heading Panel 
+     Heading Panel
      ***************************************/
     wxPanel* headingPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     mainBoxSizer->Add(headingPanel, flags);
@@ -148,10 +150,9 @@ void mmCustomSQLDialog::CreateControls()
     buttonPanelSizer->Add(button_Close, flags);
     button_Close->SetToolTip(_("Save changes before closing. Changes without Save will be lost."));
 
-    //TODO: Help page
     //wxButton* button_Help = new wxButton( buttonPanel, wxID_HELP);
     //buttonPanelSizer->Add(button_Help, flags);
-    
+
     button_Save_->Disable(); // Will be activated if text changes in either text field.
 
     if (edit_)
@@ -172,7 +173,7 @@ void mmCustomSQLDialog::CreateControls()
             sqlSourceTxtCtrl_->ChangeValue(sqlData);
         }
         button_Open_->Disable();
-    } 
+    }
     else
     {
         button_Run_->Disable();
@@ -191,7 +192,7 @@ wxString mmCustomSQLDialog::sqlReportTitle()
 
 void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
 {
-    wxString sqlScriptFileName = wxFileSelector( _("Load Custom SQL file:"), 
+    wxString sqlScriptFileName = wxFileSelector( _("Load Custom SQL file:"),
                                                  mmex::getPathUser(mmex::DIRECTORY),
                                                  wxEmptyString, wxEmptyString,  wxT("SQL File(*.sql)|*.sql"), wxFD_FILE_MUST_EXIST);
     if ( !sqlScriptFileName.empty() )
@@ -200,15 +201,15 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
         loadedFileName_ = selectedFileName.GetFullName();
         wxString sqlText;
 
-        wxTextFile sqlFile(sqlScriptFileName);  
+        wxTextFile sqlFile(sqlScriptFileName);
         if (sqlFile.Open())
         {
-            sqlText << sqlFile.GetFirstLine(); 
+            sqlText << sqlFile.GetFirstLine();
             while (! sqlFile.Eof())
             {
                 wxString nextLine = sqlFile.GetNextLine();
                 if (! nextLine.IsEmpty())
-                    sqlText << wxT("\n"); 
+                    sqlText << wxT("\n");
                 sqlText << nextLine;
             }
             sqlSourceTxtCtrl_->SetValue(sqlText);
@@ -252,7 +253,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
         reportIndex_->getUserTitleSelection(_(" entry location:\n\nOK....: Insert before selected entry\nCancel: Add at bottom of List."));
     }
 
-    if ( headingOnlyCheckBox_->GetValue() ) 
+    if ( headingOnlyCheckBox_->GetValue() )
     {
         reportIndex_->addReportTitle(reportTitleTxtCtrl_->GetValue(), edit_);
         navCtrlUpdateRequired_ = true;
@@ -297,6 +298,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
 
 void mmCustomSQLDialog::OnRun(wxCommandEvent& /*event*/)
 {
+   if (sqlSourceTxtCtrl_->IsEmpty()) return;
    sqlQuery_ = sqlSourceTxtCtrl_->GetValue();
    EndModal(wxID_MORE);
 }
@@ -323,16 +325,14 @@ void mmCustomSQLDialog::SetDialogBoxForHeadings()
 {
     subMenuCheckBox_->Enable( !headingOnlyCheckBox_->GetValue());
     sqlSourceTxtCtrl_->Enable(!headingOnlyCheckBox_->GetValue());
-    button_Open_->Enable(!headingOnlyCheckBox_->GetValue());
-    button_Run_->Enable(!headingOnlyCheckBox_->GetValue());
+    button_Open_->Enable(!headingOnlyCheckBox_->GetValue() && sqlSourceTxtCtrl_->IsEmpty());
+    button_Run_->Enable(!headingOnlyCheckBox_->GetValue() && !sqlSourceTxtCtrl_->IsEmpty());
 }
 
 void mmCustomSQLDialog::OnCheckedHeading(wxCommandEvent& /*event*/)
 {
-    if (!reportTitleTxtCtrl_->IsEmpty())
-    {
-        button_Save_->Enable();
-    }
+    button_Save_->Enable(!reportTitleTxtCtrl_->IsEmpty());
+
     SetDialogBoxForHeadings();
 }
 
@@ -350,24 +350,7 @@ void mmCustomSQLDialog::OnTextChangeHeading(wxCommandEvent& /*event*/)
 
 void mmCustomSQLDialog::OnTextChangeSubReport(wxCommandEvent& /*event*/)
 {
-    if (!reportTitleTxtCtrl_->IsEmpty())
-    {
-        button_Save_->Enable();
-    }
-    if (!sqlSourceTxtCtrl_->IsEmpty())
-    {
-        button_Run_->Enable();
-        button_Open_->Disable();
-    }
+    button_Save_->Enable(!reportTitleTxtCtrl_->IsEmpty());
+    button_Run_->Enable(!sqlSourceTxtCtrl_->IsEmpty());
+    button_Open_->Enable(sqlSourceTxtCtrl_->IsEmpty());
 }
-
-//void mmCustomSQLDialog::OnDialogContextHelp(wxCommandEvent & event)
-//{
-//    dlg(this);
-//    dlg.ShowModal();
-//}
-
-//mmCustomSQLDialog::~mmCustomSQLDialog()
-//{
-//    wxMessageBox(wxT("Testing that the dialog is being destroyed.\nGoodby.."),wxT("Custom SQL Dialog destructor..."));
-//}
