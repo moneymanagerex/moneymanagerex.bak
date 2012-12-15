@@ -1057,7 +1057,8 @@ void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
             double old_rate = core->currencyList_.currencies_[idx]->baseConv_;
             mmex::formatDoubleToCurrencyEdit(old_rate, valueStr);
             mmex::formatDoubleToCurrencyEdit(new_rate, newValueStr);
-            msg << wxString::Format(_("%s\t: %s -> %s\n"), currency_symbol, valueStr, newValueStr);
+            msg << wxString::Format(_("%s\t: %s -> %s\n"),
+                currency_symbol.c_str(), valueStr.c_str(), newValueStr.c_str());
             core->currencyList_.currencies_[idx]->baseConv_ = new_rate;
             core->currencyList_.updateCurrency(core->currencyList_.currencies_[idx]);
         }
