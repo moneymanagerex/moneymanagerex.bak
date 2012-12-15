@@ -669,7 +669,7 @@ void mmFilterTransactionsDialog::OnPayeeUpdated(wxCommandEvent& event)
     }
 
 #if wxCHECK_VERSION(2,9,0)
-        cbSourcePayee_->AutoComplete(data);
+        cbPayeeInFocus->AutoComplete(data);
 #endif
 
     if (cbPayeeInFocus->GetCount() == 1)
