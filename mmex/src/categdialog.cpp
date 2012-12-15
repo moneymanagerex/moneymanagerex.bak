@@ -32,6 +32,8 @@ BEGIN_EVENT_TABLE( mmCategDialog, wxDialog )
     EVT_BUTTON(wxID_EDIT, mmCategDialog::OnEdit)
     EVT_TREE_SEL_CHANGED(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnSelChanged)
     EVT_TREE_ITEM_ACTIVATED(ID_DIALOG_CATEG_TREECTRL_CATS,  mmCategDialog::OnDoubleClicked)
+    EVT_MENU_RANGE(0, 2, mmCategDialog::OnMenuSelected)
+    EVT_TREE_ITEM_MENU(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnItemRightClick)
 END_EVENT_TABLE()
 
 mmCategDialog::mmCategDialog( )
@@ -54,6 +56,17 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
     selectedItemId_ = 0;
     bEnableSelect_ = bEnableSelect;
     bEnableRelocate_ = bEnableRelocate;
+
+    //Get Hiden Categories id from stored string
+    hiden_categs_.clear();
+    wxString sSettings = core_->iniSettings_->GetStringSetting(wxT("HIDEN_CATEGS_ID"), wxT(""));
+    wxStringTokenizer token(sSettings, wxT(";"));
+    while (token.HasMoreTokens())
+    {
+        hiden_categs_.Add( token.GetNextToken() );
+    }
+    //
+
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -69,7 +82,6 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->SetSizeHints(this);
 
     SetIcon(mmex::getProgramIcon());
-
     fillControls();
 
     Centre();
@@ -78,40 +90,52 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmCategDialog::fillControls()
 {
+    if (!core_) return;
+
     treeCtrl_->DeleteAllItems();
     root_ = treeCtrl_->AddRoot(_("Categories"));
     selectedItemId_ = root_;
     treeCtrl_->SetItemBold(root_, true);
     treeCtrl_->SetFocus ();
-
-    if (!core_) return;
+    NormalColor_ = treeCtrl_->GetItemTextColour(root_);
+    bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDEN_CATEGS"), true);
+    cbShowAll_->SetValue(bResult);
 
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
+        wxTreeItemId maincat;
         const boost::shared_ptr<mmCategory> category = *it;
-        wxTreeItemId maincat = treeCtrl_->AppendItem(root_, category->categName_);
-        treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));
-
-        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
-                cit != category->children_.end();
-                ++ cit)
+        bool bShow = categShowStatus(category->categID_, -1);
+        if (cbShowAll_->IsChecked() || bShow)
         {
-            const boost::shared_ptr<mmCategory> sub_category = *cit;
-            wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, sub_category->categName_);
-            treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(category->categID_, sub_category->categID_));
+            maincat = treeCtrl_->AppendItem(root_, category->categName_);
+            treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));
+            if (!bShow) treeCtrl_->SetItemTextColour(maincat, wxColour(wxT("GREY")));
 
-            if (categID_ == category->categID_ && subcategID_ == sub_category->categID_)
-                selectedItemId_ = subcat;
+            for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
+                    cit != category->children_.end();
+                    ++ cit)
+            {
+                const boost::shared_ptr<mmCategory> sub_category = *cit;
+                bShow = categShowStatus(category->categID_, sub_category->categID_);
+                if (cbShowAll_->IsChecked() || bShow)
+                {
+                    wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, sub_category->categName_);
+                    treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(category->categID_, sub_category->categID_));
+                    if (!bShow) treeCtrl_->SetItemTextColour(subcat, wxColour(wxT("GREY")));
+
+                    if (categID_ == category->categID_ && subcategID_ == sub_category->categID_)
+                        selectedItemId_ = subcat;
+                }
+            }
+            treeCtrl_->SortChildren(maincat);
         }
-
-        treeCtrl_->SortChildren(maincat);
     }
     treeCtrl_->Expand(root_);
-
-    bool result = core_->iniSettings_->GetBoolSetting(wxT("EXPAND_CATEGS_TREE"), false);
-    if (result) treeCtrl_->ExpandAll();
-    itemCheckBox_->SetValue(result);
+    bResult = core_->iniSettings_->GetBoolSetting(wxT("EXPAND_CATEGS_TREE"), false);
+    if (bResult) treeCtrl_->ExpandAll();
+    itemCheckBox_->SetValue(bResult);
 
     treeCtrl_->SortChildren(root_);
     treeCtrl_->SelectItem(selectedItemId_);
@@ -141,16 +165,22 @@ void mmCategDialog::CreateControls()
         wxCommandEventHandler(mmCategDialog::OnCategoryRelocation), NULL, this);
     btnCateg_relocate_->SetToolTip(_("Reassign all categories to another category"));
 
-    itemCheckBox_ = new wxCheckBox( this, wxID_STATIC, _("Expand"), wxDefaultPosition,
-        wxDefaultSize, wxCHK_2STATE );
-    bool showBeginApp = false; //pIniSettings_->GetBoolSetting(wxT("SHOWBEGINAPP"), true);
-    itemCheckBox_->SetValue(showBeginApp);
+    itemCheckBox_ = new wxCheckBox(this, wxID_STATIC, _("Expand"), wxDefaultPosition,
+        wxDefaultSize, wxCHK_2STATE);
     itemCheckBox_->Connect(wxID_STATIC, wxEVT_COMMAND_CHECKBOX_CLICKED,
-        wxCommandEventHandler(mmCategDialog::OnChbClick), NULL, this);
+        wxCommandEventHandler(mmCategDialog::OnExpandChbClick), NULL, this);
+
+    cbShowAll_ = new wxCheckBox(this, wxID_SELECTALL, _("Show All"), wxDefaultPosition,
+        wxDefaultSize, wxCHK_2STATE);
+    cbShowAll_->SetToolTip(_("Show all hiden categories"));
+    cbShowAll_->Connect(wxID_SELECTALL, wxEVT_COMMAND_CHECKBOX_CLICKED,
+        wxCommandEventHandler(mmCategDialog::OnShowHidenChbClick), NULL, this);
 
     itemBoxSizer33->Add(btnCateg_relocate_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemBoxSizer33->AddSpacer(10);
     itemBoxSizer33->Add(itemCheckBox_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer33->AddSpacer(10);
+    itemBoxSizer33->Add(cbShowAll_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 #if defined (__WXGTK__) || defined (__WXMAC__)
     treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS,
@@ -451,7 +481,7 @@ void mmCategDialog::OnCategoryRelocation(wxCommandEvent& /*event*/)
     }
 }
 
-void mmCategDialog::OnChbClick(wxCommandEvent& /*event*/)
+void mmCategDialog::OnExpandChbClick(wxCommandEvent& /*event*/)
 {
     if (itemCheckBox_->IsChecked())
     {
@@ -466,4 +496,75 @@ void mmCategDialog::OnChbClick(wxCommandEvent& /*event*/)
     }
     treeCtrl_->EnsureVisible(selectedItemId_);
     core_->iniSettings_->SetBoolSetting(wxT("EXPAND_CATEGS_TREE"), itemCheckBox_->IsChecked());
+}
+
+void mmCategDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
+{
+    if (cbShowAll_->IsChecked())
+    {
+        treeCtrl_->SelectItem(selectedItemId_);
+    }
+    else
+    {
+        treeCtrl_->SelectItem(selectedItemId_);
+    }
+    core_->iniSettings_->SetBoolSetting(wxT("SHOW_HIDEN_CATEGS"), cbShowAll_->IsChecked());
+    fillControls();
+}
+
+void mmCategDialog::OnMenuSelected(wxCommandEvent& event)
+{
+    int id = event.GetId();
+
+    wxString index = wxString::Format(wxT("*%i:%i*"),categID_, subcategID_);
+    if (id == 0)
+    {
+        treeCtrl_->SetItemTextColour(selectedItemId_, wxColour(wxT("GREY")));
+        if (hiden_categs_.Index(index) == wxNOT_FOUND )
+            hiden_categs_.Add(index);
+    }
+    else if (id == 1)
+    {
+        treeCtrl_->SetItemTextColour(selectedItemId_, NormalColor_);
+        hiden_categs_.Remove(index);
+    }
+    else if (id == 2)
+    {
+        hiden_categs_.Clear();
+    }
+
+    wxString sSettings = wxT("");
+    for (size_t i = 0; i < hiden_categs_.GetCount(); i++)
+    {
+        sSettings.Append(hiden_categs_[i]).Append(wxT(";"));
+    }
+
+    sSettings.RemoveLast(1);
+    core_->iniSettings_->SetStringSetting(wxT("HIDEN_CATEGS_ID"), sSettings);
+
+    if (!cbShowAll_->IsChecked() || id == 2) fillControls();
+    event.Skip();
+}
+
+void mmCategDialog::OnItemRightClick(wxTreeEvent& event)
+{
+    wxMenu* mainMenu = new wxMenu;
+    mainMenu->Append(new wxMenuItem(mainMenu, 0, _("Hide Selected Category")));
+    mainMenu->Append(new wxMenuItem(mainMenu, 1, _("Unhide Selected Category")));
+    mainMenu->AppendSeparator();
+    mainMenu->Append(new wxMenuItem(mainMenu, 2, _("Clear Settings")));
+
+    bool bItemHiden = (treeCtrl_->GetItemTextColour(selectedItemId_) != NormalColor_);
+    mainMenu->Enable(0, !bItemHiden && (selectedItemId_ != root_));
+    mainMenu->Enable(1, bItemHiden && (selectedItemId_ != root_));
+
+    PopupMenu(mainMenu, event.GetPoint());
+    delete mainMenu;
+    event.Skip();
+}
+
+bool mmCategDialog::categShowStatus(int categId, int subCategId)
+{
+    wxString index = wxString::Format(wxT("*%i:%i*"),categId, subCategId);
+    return hiden_categs_.Index(index) == wxNOT_FOUND;
 }

@@ -96,16 +96,22 @@ private:
     wxButton* deleteButton_;
     wxBitmapButton* btnCateg_relocate_;
     wxCheckBox* itemCheckBox_;
+    wxCheckBox* cbShowAll_;
 
     void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true); 
     void OnCategoryRelocation(wxCommandEvent& /*event*/);
-    void OnChbClick(wxCommandEvent& /*event*/);
+    void OnExpandChbClick(wxCommandEvent& /*event*/);
+    void OnShowHidenChbClick (wxCommandEvent& /*event*/);
+    void OnMenuSelected(wxCommandEvent& event);
+    void OnItemRightClick(wxTreeEvent& event);
+    bool categShowStatus(int categId, int subCategId);
 
     bool bEnableSelect_;
     bool bEnableRelocate_;
     int categID_;
     int subcategID_;
-
+    wxColour NormalColor_;
+    wxArrayString hiden_categs_;
 };
 
 #endif
