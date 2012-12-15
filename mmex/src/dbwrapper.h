@@ -31,14 +31,15 @@ static const char SELECT_ALL_FROM_ASSETS_V1[] =
     "select a.ASSETNAME as ASSETNAME, "
        "a.STARTDATE as STARTDATE, "
        "a.ASSETTYPE as ASSETTYPE, "
-        "a.value + (a.value/100*VALUECHANGERATE) "
+       "a.value + (a.value/100*VALUECHANGERATE) "
        "* (case VALUECHANGE when 'Appreciates' then 1 when 'Depreciates' then -1 else 0 end ) "
-       "* (julianday('now', 'localtime') - julianday(a.STARTDATE, 'localtime')) / 365 as VALUE, "
+       "* (julianday('now', 'localtime') - julianday(a.STARTDATE, 'localtime')) / 365 as TODAY_VALUE, "
        "a.NOTES as NOTES, "
        "a.STARTDATE as STARTDATE, "
        "a.VALUECHANGE as VALUECHANGE, "
        "a.ASSETID as ASSETID, "
-       "a.VALUECHANGERATE as VALUECHANGERATE "
+       "a.VALUECHANGERATE as VALUECHANGERATE, "
+	   "a.value as VALUE "
     "from ASSETS_V1 a ";
 
 static const char SELECT_ROW_FROM_ASSETS_V1[] =

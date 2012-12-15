@@ -272,25 +272,27 @@ int mmAssetsPanel::initVirtualListControl(int id, int col, bool asc)
         th.assetName_ = q1.GetString(wxT("ASSETNAME"));
 
         wxString dateString = q1.GetString(wxT("STARTDATE"));
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-        th.assetDate_ = mmGetDateForDisplay(core_->db_.get(), dtdt);
+        th.assetDate_ = mmGetStorageStringAsDate(dateString);
 
         th.assetType_ =  q1.GetString(wxT("ASSETTYPE"));
-        th.value_ = mmDBWrapper::getAssetValue(core_->db_.get(), th.id_);
-        th.assetValueChange_ =  q1.GetString(wxT("VALUECHANGE"));
+        th.sAssetValueChange_ =  q1.GetString(wxT("VALUECHANGE"));
 
         th.assetNotes_ = q1.GetString(wxT("NOTES"));
 
         th.valueChange_ = q1.GetDouble(wxT("VALUECHANGERATE"));
-        total += q1.GetDouble(wxT("VALUE"));
+        th.value_ = q1.GetDouble(wxT("VALUE"));
 
+		th.todayValue_ = mmDBWrapper::getAssetValue(core_->db_.get(), th.id_);
+        total += th.todayValue_;
+
+        mmex::formatDoubleToCurrencyEdit(th.todayValue_, th.todayValueStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         mmex::formatDoubleToCurrencyEdit(th.valueChange_, th.valueChangeStr_);
 
         m_trans.push_back( new mmAssetHolder (th));
 
-        if (th.id_ == id) selected_item = cnt;
-    }
+		if (th.id_ == id) selected_item = cnt;
+    }	
 
     m_listCtrlAssets->SetItemCount(cnt);
     q1.Finalize();
@@ -336,8 +338,8 @@ wxString mmAssetsPanel::getItem(long item, long column)
 {
     if (column == COL_NAME)  return m_trans[item]->assetName_;
     if (column == COL_TYPE)  return wxGetTranslation(m_trans[item]->assetType_);
-    if (column == COL_VALUE) return m_trans[item]->valueStr_;
-    if (column == COL_DATE)  return m_trans[item]->assetDate_;
+    if (column == COL_VALUE) return m_trans[item]->todayValueStr_;
+    if (column == COL_DATE)  return mmGetDateForDisplay(core_->db_.get(), m_trans[item]->assetDate_);
     if (column == COL_NOTES) return m_trans[item]->assetNotes_;
 
     return wxGetEmptyString();
@@ -371,8 +373,8 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
         wxString miniInfo;
 
         miniInfo << wxT("\t") << _("Change in Value") << wxT(": ")
-            << wxGetTranslation(m_trans[selIndex]->assetValueChange_);
-        if (m_trans[selIndex]->assetValueChange_ != wxT("None"))
+            << wxGetTranslation(m_trans[selIndex]->sAssetValueChange_);
+        if (m_trans[selIndex]->sAssetValueChange_ != wxT("None"))
             miniInfo<< wxT(" = ") << m_trans[selIndex]->valueChange_ << wxT("%");
         st->SetLabel(m_trans[selIndex]->assetNotes_);
         stm->SetLabel(miniInfo);

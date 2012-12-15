@@ -76,13 +76,17 @@ struct mmAssetHolder: public mmHolderBase
 {
     wxString assetName_;
     wxString assetType_;
-    wxString valueChangeStr_;
-    wxString assetDate_;
+    wxDateTime assetDate_;
     wxString assetNotes_;
-    wxString assetValueChange_;
+    wxString sAssetValueChange_;
     wxString asset_notes_;
 
     double valueChange_;
+    wxString valueChangeStr_;
+	double value_;
+	wxString valueStr_;
+	double todayValue_;
+	wxString todayValueStr_;
 };
 
 class mmAssetsPanel : public mmPanelBase
