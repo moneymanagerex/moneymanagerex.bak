@@ -82,13 +82,13 @@ void relocateCategoryDialog::CreateControls()
     wxSize btnSize = wxSize(180,-1);
 
     wxStaticText* headerText = new wxStaticText( this, wxID_STATIC,
-        _("Relocate all source categories \nto the destination category"));
-    wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC);
+        _("Relocate all source categories to the destination category"));
+    wxStaticLine* lineTop = new wxStaticLine(this, wxID_STATIC);
 
-    sourceBtn_ = new wxButton( this, wxID_CLEAR,_("Source Category"));
+    sourceBtn_ = new wxButton( this, wxID_CLEAR,_("Source Category"), wxDefaultPosition, wxSize(200, -1));
     if (sourceCatID_ > -1)
         sourceBtn_->SetLabel(core_->categoryList_.GetFullCategoryString(sourceCatID_, sourceSubCatID_));
-    destBtn_ = new wxButton( this, wxID_NEW,_("Destination Category"));
+    destBtn_ = new wxButton( this, wxID_NEW,_("Destination Category"), wxDefaultPosition, wxSize(200, -1));
     wxStaticLine* lineBottom = new wxStaticLine(this, wxID_STATIC);
 
     wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL);
@@ -116,6 +116,8 @@ void relocateCategoryDialog::CreateControls()
     buttonBoxSizer->Add(okButton, flags);
     buttonBoxSizer->Add(cancelButton, flags);
     boxSizer->Add(buttonBoxSizer, flags);
+
+    this->Fit();
 }
 
 void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
