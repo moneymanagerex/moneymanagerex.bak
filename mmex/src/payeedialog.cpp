@@ -25,17 +25,6 @@
 #include "mmcoredb.h"
 #include <wx/event.h>
 
-namespace
-{
-
-enum {
-    IDD_TEXTCTRL_PAYEENAME = wxID_HIGHEST + 1,
-    IDD_LISTBOX_PAYEES,
-};
-
-} // namespace
-
-
 IMPLEMENT_DYNAMIC_CLASS( mmPayeeDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
@@ -44,9 +33,10 @@ BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
     EVT_BUTTON(wxID_OK, mmPayeeDialog::OnBSelect)
     EVT_BUTTON(wxID_CANCEL, mmPayeeDialog::OnCancel)
     EVT_BUTTON(wxID_EDIT, mmPayeeDialog::OnEdit)
-    EVT_LISTBOX(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnSelChanged)
-    EVT_LISTBOX_DCLICK(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnDoubleClicked)
-    EVT_TEXT(IDD_TEXTCTRL_PAYEENAME, mmPayeeDialog::OnTextCtrlChanged)
+    EVT_BUTTON(wxID_SAVE, mmPayeeDialog::saveFilterSettings)
+    EVT_LISTBOX(wxID_ANY, mmPayeeDialog::OnSelChanged)
+    EVT_LISTBOX_DCLICK(wxID_ANY, mmPayeeDialog::OnDoubleClicked)
+    EVT_TEXT(wxID_ANY, mmPayeeDialog::OnTextCtrlChanged)
     EVT_CHAR_HOOK(mmPayeeDialog::OnListKeyDown)
 END_EVENT_TABLE()
 
@@ -79,7 +69,12 @@ void mmPayeeDialog::do_create(wxWindow* parent)
     }
 
     SetIcon(mmex::getProgramIcon());
+
+    wxString sResult = core_->iniSettings_->GetStringSetting(wxT("SHOW_HIDEN_PAYEES"), wxT(""));
+    hideTextCtrl_->ChangeValue(sResult);
+
     fillControls();
+
     Centre();
 }
 
@@ -95,36 +90,35 @@ void mmPayeeDialog::CreateControls()
 
     wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer22);
-    wxBitmapButton* payee_relocate = new wxBitmapButton(this, 
+    wxBitmapButton* payee_relocate = new wxBitmapButton(this,
         wxID_STATIC, wxBitmap(relocate_payees_xpm));
     itemBoxSizer22->Add(payee_relocate, flags);
     payee_relocate->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(mmPayeeDialog::OnPayeeRelocate), NULL, this);
     payee_relocate->SetToolTip(_("Change all transactions using one Payee to another Payee"));
     itemBoxSizer22->AddSpacer(10);
-    wxStaticText* itemStaticTextName = new wxStaticText( this, wxID_STATIC, _("Find Payee: "));
-    itemBoxSizer22->Add(itemStaticTextName, flags);
+
+    cbShowAll_ = new wxCheckBox(this, wxID_SELECTALL, _("Show All"), wxDefaultPosition,
+        wxDefaultSize, wxCHK_2STATE);
+    cbShowAll_->SetToolTip(_("Show all hiden payees"));
+    itemBoxSizer22->Add(cbShowAll_, flags);
+    cbShowAll_->Connect(wxID_SELECTALL, wxEVT_COMMAND_CHECKBOX_CLICKED,
+        wxCommandEventHandler(mmPayeeDialog::OnShowHidenChbClick), NULL, this);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, flagsExpand);
 
     wxArrayString filtd = core_->payeeList_.FilterPayees(wxT(""));
     int vertical_size_ = (filtd.GetCount()>10 ? 320 : 240);
-    listBox_ = new wxListBox( this, IDD_LISTBOX_PAYEES, wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
+    listBox_ = new wxListBox( this, wxID_ANY,
+       wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
-
-    itemBoxSizer2->Add(new wxStaticText( this, wxID_STATIC, _("Filter Payees: ")), flags); 
-
-    textCtrl_ = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString());
-    itemBoxSizer2->Add(textCtrl_, flagsExpand);
-    textCtrl_->SetFocus();
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, flagsExpand);
 
     addButton = new wxButton( this, wxID_ADD);
     itemBoxSizer5->Add(addButton, flags.Border(1));
-    addButton->Disable();
 
     editButton = new wxButton( this, wxID_EDIT);
     itemBoxSizer5->Add(editButton, flags);
@@ -133,6 +127,36 @@ void mmPayeeDialog::CreateControls()
     deleteButton = new wxButton( this, wxID_REMOVE);
     itemBoxSizer5->Add(deleteButton, flags);
     deleteButton->Disable();
+
+
+    wxNotebook* acc_notebook = new wxNotebook(this,
+        wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
+    wxPanel* notes_tab = new wxPanel(acc_notebook, wxID_ANY);
+    acc_notebook->AddPage(notes_tab, _("Filter"));
+    wxBoxSizer *notes_sizer = new wxBoxSizer(wxVERTICAL);
+    notes_tab->SetSizer(notes_sizer);
+    itemBoxSizer2->Add(acc_notebook, flagsExpand);
+
+    textCtrl_ = new wxTextCtrl( notes_tab, wxID_ANY, wxT(""),
+        wxDefaultPosition, wxSize(240,-1));
+    notes_sizer->Add(textCtrl_, flagsExpand);
+    textCtrl_->SetFocus();
+
+    wxPanel* others_tab = new wxPanel(acc_notebook, wxID_ANY);
+    acc_notebook->AddPage(others_tab, _("Hide"));
+    wxBoxSizer *others_sizer = new wxBoxSizer(wxHORIZONTAL);
+    others_tab->SetSizer(others_sizer);
+
+    hideTextCtrl_ = new wxTextCtrl( others_tab, wxID_ANY, wxT(""),
+        wxDefaultPosition, wxSize(210,-1));
+    others_sizer->Add(hideTextCtrl_, flagsExpand);
+
+    wxBitmapButton* save_button = new wxBitmapButton( others_tab,
+        wxID_SAVE, wxNullBitmap, wxDefaultPosition,
+        wxSize(hideTextCtrl_->GetSize().GetHeight(), hideTextCtrl_->GetSize().GetHeight()));
+    save_button->Show(true);
+    save_button->SetBitmapLabel(save_xpm);
+    others_sizer->Add(save_button, flags);
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, flagsExpand);
@@ -182,20 +206,25 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 
 void mmPayeeDialog::fillControls()
 {
+    bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDEN_PAYEES"), true);
+    cbShowAll_->SetValue(bResult);
+
     wxArrayString filtd = core_->payeeList_.FilterPayees(textCtrl_->GetValue());
 
     listBox_->Clear();
 
     for (size_t i = 0; i < filtd.GetCount(); ++i) {
-        listBox_->Append(filtd.Item(i));
+        bool bHideItem = filtd.Item(i).Matches(hideTextCtrl_->GetValue().Append(wxT("*")))
+            && !hideTextCtrl_->GetValue().IsEmpty();
+        if (cbShowAll_->IsChecked() || !bHideItem)
+        {
+            listBox_->Append(filtd.Item(i));
+        }
     }
 }
 
 void mmPayeeDialog::OnTextCtrlChanged(wxCommandEvent& event)
 {
-    bool filter_ok = !textCtrl_->GetValue().IsEmpty();
-    addButton->Enable(filter_ok);
-
     wxString payee = listBox_->GetStringSelection();
     fillControls();
 
@@ -311,7 +340,12 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
         wxMessageBox(msgStr, _("Payee Relocation Result"));
         mmOptions::instance().databaseUpdated_ = true;
     }
+}
 
+void mmPayeeDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
+{
+    core_->iniSettings_->SetBoolSetting(wxT("SHOW_HIDEN_PAYEES"), cbShowAll_->IsChecked());
+    fillControls();
 }
 
 void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
@@ -322,7 +356,7 @@ void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
     {
         textCtrl_->Clear();
         return;
-	}
+    }
     else if (w && w->GetId() != btnCancel_->GetId())
     {
         btnCancel_->SetFocus();
@@ -330,4 +364,10 @@ void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
     }
     else
         EndModal(wxID_CANCEL);
+}
+
+void mmPayeeDialog::saveFilterSettings(wxCommandEvent& event)
+{
+    core_->iniSettings_->SetStringSetting(wxT("SHOW_HIDEN_PAYEES"), hideTextCtrl_->GetValue());
+    event.Skip();
 }
