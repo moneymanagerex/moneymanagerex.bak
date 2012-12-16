@@ -32,7 +32,7 @@ BEGIN_EVENT_TABLE( mmCategDialog, wxDialog )
     EVT_BUTTON(wxID_EDIT, mmCategDialog::OnEdit)
     EVT_TREE_SEL_CHANGED(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnSelChanged)
     EVT_TREE_ITEM_ACTIVATED(ID_DIALOG_CATEG_TREECTRL_CATS,  mmCategDialog::OnDoubleClicked)
-    EVT_MENU_RANGE(0, 2, mmCategDialog::OnMenuSelected)
+    EVT_MENU_RANGE(0, 9, mmCategDialog::OnMenuSelected)
     EVT_TREE_ITEM_MENU(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnItemRightClick)
 END_EVENT_TABLE()
 
@@ -59,7 +59,7 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
 
     //Get Hiden Categories id from stored string
     hiden_categs_.clear();
-    wxString sSettings = core_->iniSettings_->GetStringSetting(wxT("HIDEN_CATEGS_ID"), wxT(""));
+    wxString sSettings = mmDBWrapper::getInfoSettingValue(core_->db_.get(), wxT("HIDEN_CATEGS_ID"), wxT(""));
     wxStringTokenizer token(sSettings, wxT(";"));
     while (token.HasMoreTokens())
     {
@@ -538,9 +538,9 @@ void mmCategDialog::OnMenuSelected(wxCommandEvent& event)
     {
         sSettings.Append(hiden_categs_[i]).Append(wxT(";"));
     }
-
     sSettings.RemoveLast(1);
-    core_->iniSettings_->SetStringSetting(wxT("HIDEN_CATEGS_ID"), sSettings);
+
+    mmDBWrapper::setInfoSettingValue(core_->db_.get(), wxT("HIDEN_CATEGS_ID"), sSettings);
 
     if (!cbShowAll_->IsChecked() || id == 2) fillControls();
     event.Skip();
