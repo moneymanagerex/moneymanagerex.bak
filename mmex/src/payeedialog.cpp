@@ -37,6 +37,7 @@ BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
     EVT_LISTBOX(wxID_ANY, mmPayeeDialog::OnSelChanged)
     EVT_LISTBOX_DCLICK(wxID_ANY, mmPayeeDialog::OnDoubleClicked)
     EVT_TEXT(wxID_ANY, mmPayeeDialog::OnTextCtrlChanged)
+    EVT_TEXT_ENTER(wxID_ANY, mmPayeeDialog::OnBSelect)
     EVT_CHAR_HOOK(mmPayeeDialog::OnListKeyDown)
 END_EVENT_TABLE()
 
@@ -70,7 +71,7 @@ void mmPayeeDialog::do_create(wxWindow* parent)
 
     SetIcon(mmex::getProgramIcon());
 
-    wxString sResult = core_->iniSettings_->GetStringSetting(wxT("SHOW_HIDEN_PAYEES"), wxT(""));
+    wxString sResult = core_->iniSettings_->GetStringSetting(wxT("HIDEN_PAYEES_STRING"), wxT(""));
     hideTextCtrl_->ChangeValue(sResult);
 
     fillControls();
@@ -100,7 +101,7 @@ void mmPayeeDialog::CreateControls()
 
     cbShowAll_ = new wxCheckBox(this, wxID_SELECTALL, _("Show All"), wxDefaultPosition,
         wxDefaultSize, wxCHK_2STATE);
-    cbShowAll_->SetToolTip(_("Show all hiden payees"));
+    cbShowAll_->SetToolTip(_("Show all hidden payees"));
     itemBoxSizer22->Add(cbShowAll_, flags);
     cbShowAll_->Connect(wxID_SELECTALL, wxEVT_COMMAND_CHECKBOX_CLICKED,
         wxCommandEventHandler(mmPayeeDialog::OnShowHidenChbClick), NULL, this);
@@ -138,7 +139,7 @@ void mmPayeeDialog::CreateControls()
     itemBoxSizer2->Add(acc_notebook, flagsExpand);
 
     textCtrl_ = new wxTextCtrl( notes_tab, wxID_ANY, wxT(""),
-        wxDefaultPosition, wxSize(240,-1));
+        wxDefaultPosition, wxSize(240,-1), wxTE_PROCESS_ENTER);
     notes_sizer->Add(textCtrl_, flagsExpand);
     textCtrl_->SetFocus();
 
@@ -206,7 +207,7 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 
 void mmPayeeDialog::fillControls()
 {
-    bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDEN_PAYEES"), true);
+    bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), true);
     cbShowAll_->SetValue(bResult);
 
     wxArrayString filtd = core_->payeeList_.FilterPayees(textCtrl_->GetValue());
@@ -344,7 +345,7 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
 {
-    core_->iniSettings_->SetBoolSetting(wxT("SHOW_HIDEN_PAYEES"), cbShowAll_->IsChecked());
+    core_->iniSettings_->SetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), cbShowAll_->IsChecked());
     fillControls();
 }
 
@@ -368,6 +369,6 @@ void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::saveFilterSettings(wxCommandEvent& event)
 {
-    core_->iniSettings_->SetStringSetting(wxT("SHOW_HIDEN_PAYEES"), hideTextCtrl_->GetValue());
+    core_->iniSettings_->SetStringSetting(wxT("HIDEN_PAYEES_STRING"), hideTextCtrl_->GetValue());
     event.Skip();
 }
