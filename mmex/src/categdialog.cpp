@@ -31,6 +31,7 @@ BEGIN_EVENT_TABLE( mmCategDialog, wxDialog )
     EVT_BUTTON(wxID_REMOVE, mmCategDialog::OnDelete)
     EVT_BUTTON(wxID_EDIT, mmCategDialog::OnEdit)
     EVT_TREE_SEL_CHANGED(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnSelChanged)
+	EVT_TREE_ITEM_RIGHT_CLICK(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnSelChanged)
     EVT_TREE_ITEM_ACTIVATED(ID_DIALOG_CATEG_TREECTRL_CATS,  mmCategDialog::OnDoubleClicked)
     EVT_MENU_RANGE(0, 9, mmCategDialog::OnMenuSelected)
     EVT_TREE_ITEM_MENU(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnItemRightClick)
@@ -354,9 +355,10 @@ void mmCategDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmCategDialog::OnSelChanged(wxTreeEvent& event)
 {
-    selectedItemId_ = event.GetItem();
-    if (!selectedItemId_)
-        return;
+    wxTreeItemId selectedItemId = selectedItemId_;
+	selectedItemId_ = event.GetItem();
+    if (!selectedItemId_) return;
+	if (selectedItemId != selectedItemId_) treeCtrl_->SelectItem(selectedItemId_);
 
     textCtrl_->SetValue(treeCtrl_->GetItemText(selectedItemId_));
 
