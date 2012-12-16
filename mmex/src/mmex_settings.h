@@ -36,10 +36,14 @@ class MMEX_IniRecord
 {
 public:
     /// Create a new record setting.
-    MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db, wxString name);
+    MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db
+        , bool main_db
+        , wxString name);
 
     /// Create an existing record setting.
-    MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db, wxSQLite3ResultSet& q1);
+    MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db
+        , bool main_db
+        , wxSQLite3ResultSet& q1);
 
     /// Set the value of the record
     void SetValue(const wxString& value);
@@ -49,6 +53,7 @@ public:
 
 private:
     boost::shared_ptr<wxSQLite3Database> iniDb_;
+    bool main_db_;
     int settingId_;
     wxString settingName_;
     wxString settingValue_;
@@ -63,7 +68,7 @@ class MMEX_IniSettings
 {
 public:
     /// Constructor
-    MMEX_IniSettings(boost::shared_ptr<wxSQLite3Database> ini_db);
+    MMEX_IniSettings(boost::shared_ptr<wxSQLite3Database> ini_db, bool main_db = false);
     ~MMEX_IniSettings();
 
     bool GetBoolSetting(const wxString& name, bool default_value);
@@ -80,6 +85,7 @@ public:
     void Save();
 private:
     boost::shared_ptr<wxSQLite3Database> ini_db_;
+    bool main_db_;
     std::vector< boost::shared_ptr<MMEX_IniRecord> > ini_records_;
 
     MMEX_IniRecord* GetRecord(const wxString& name);

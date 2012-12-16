@@ -1124,7 +1124,6 @@ TEST(New_INIDB_TEST_5)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    boost::shared_ptr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
     pSettings->Load();
 
@@ -1140,6 +1139,92 @@ TEST(New_INIDB_TEST_5)
     displayTimeTaken(wxT("New_INIDB_TEST_5"), start_time);
 }
 #endif
+
+#if 1
+TEST(New_INFO_DB_TEST_1)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    boost::shared_ptr<wxSQLite3Database> pdb = get_pInidb();
+//    boost::shared_ptr<wxSQLite3Database> pdb = get_pDb();
+
+    MMEX_IniSettings pdb_settings(pdb, true);
+    pdb_settings.Load();
+
+    const wxString name   = wxT("setting name");
+    const wxString val    = wxT("setting value");
+    const wxString new_val = wxT("new setting value");
+
+    wxString test_name =  pdb_settings.GetStringSetting(name, val);
+    CHECK_EQUAL(test_name, val);
+
+    pdb_settings.SetStringSetting(name, new_val);
+    test_name =  pdb_settings.GetStringSetting(name, val);
+    CHECK_EQUAL(test_name, new_val);
+//    pdb_settings->Save();
+
+    displayTimeTaken(wxT("New_INFO_DB_TEST_1"), start_time);
+}
+#endif
+
+#if 1
+TEST(New_INFO_DB_TEST_2)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    //  Save the details in the global ini database
+    boost::shared_ptr<wxSQLite3Database> pdb = get_pInidb();
+
+    MMEX_IniSettings pdb_settings(pdb, true);
+    pdb_settings.Load();
+
+    const wxString name   = wxT("Test 2 Setting name");
+    const wxString val    = wxT("Test 2 Setting value");
+    const wxString new_val = wxT("Test 2 new setting value");
+
+    wxString test_name =  pdb_settings.GetStringSetting(name, val);
+    CHECK_EQUAL(test_name, val);
+
+    pdb_settings.SetStringSetting(name, new_val);
+    test_name =  pdb_settings.GetStringSetting(name, val);
+    CHECK_EQUAL(test_name, new_val);
+
+    displayTimeTaken(wxT("New_INFO_DB_TEST_2"), start_time);
+}
+#endif
+
+#if 1
+TEST(New_INFO_DB_TEST_3)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    //  Save the details in the main database
+    boost::shared_ptr<wxSQLite3Database> pdb = get_pDb();
+
+    MMEX_IniSettings pdb_settings(pdb, true);
+    pdb_settings.Load();
+
+    const wxString name   = wxT("Test 3 Setting name");
+    const wxString val    = wxT("Test 3 Setting value");
+    const wxString new_val = wxT("Test 3 new setting value");
+
+    wxString test_name =  pdb_settings.GetStringSetting(name, val);
+    CHECK_EQUAL(test_name, val);
+
+    pdb_settings.SetStringSetting(name, new_val);
+    test_name =  pdb_settings.GetStringSetting(name, val);
+    CHECK_EQUAL(test_name, new_val);
+
+    const wxString prev_name = wxT("settings name");
+    const wxString prev_val  = wxT("settings value");
+
+    test_name =  pdb_settings.GetStringSetting(prev_name, wxT(""));
+    CHECK_EQUAL(test_name, prev_val);
+
+    displayTimeTaken(wxT("New_INFO_DB_TEST_3"), start_time);
+}
+#endif
+
 } // SUITE end Inidb_test
 
 //----------------------------------------------------------------------------

@@ -33,21 +33,48 @@ const char UPDATE_INI_RECORD[] = "update SETTING_V1 set SETTINGVALUE = ? where S
 const char INSERT_INI_RECORD[] = "insert into SETTING_V1 (SETTINGNAME, SETTINGVALUE) values (?, ?)";
 const char SELECT_INI_RECORD[] = "select * from SETTING_V1";
 
+//---------------------------------------------------------------------------
+const wxString INFO_TABLE_NAME = wxT("INFOTABLE_V1");
+const char CREATE_INFO_TABLE[] =
+    "create table INFOTABLE_V1 ("
+    "INFOID integer not null primary key, "
+    "INFONAME TEXT NOT NULL UNIQUE, "
+    "INFOVALUE TEXT)";
+
+const char UPDATE_INFO_RECORD[] = "update INFOTABLE_V1 set INFOVALUE = ? where INFONAME = ?";
+const char INSERT_INFO_RECORD[] = "insert into INFOTABLE_V1 (INFONAME, INFOVALUE) values (?, ?)";
+const char SELECT_INFO_RECORD[] = "select * from INFOTABLE_V1";
+
 /****************************************************************************
  MMEX_IniRecord Class methods
  ****************************************************************************/
-MMEX_IniRecord::MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db, wxString name)
+MMEX_IniRecord::MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db
+    , bool main_db
+    , wxString name)
 : iniDb_(ini_db)
+, main_db_(main_db)
 , settingId_(-1)
 , settingName_(name)
 {}
 
-MMEX_IniRecord::MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db, wxSQLite3ResultSet& q1)
+MMEX_IniRecord::MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db
+    , bool main_db
+    , wxSQLite3ResultSet& q1)
 : iniDb_(ini_db)
+, main_db_(main_db)
 {
-    settingId_    = q1.GetInt(wxT("SETTINGID"));
-    settingName_  = q1.GetString(wxT("SETTINGNAME"));
-    settingValue_ = q1.GetString(wxT("SETTINGVALUE"));
+    if (main_db)
+    {
+        settingId_    = q1.GetInt(wxT("INFOID"));
+        settingName_  = q1.GetString(wxT("INFONAME"));
+        settingValue_ = q1.GetString(wxT("INFOVALUE"));
+    }
+    else
+    {
+        settingId_    = q1.GetInt(wxT("SETTINGID"));
+        settingName_  = q1.GetString(wxT("SETTINGNAME"));
+        settingValue_ = q1.GetString(wxT("SETTINGVALUE"));
+    }
 }
 
 wxString MMEX_IniRecord::Name()
@@ -69,7 +96,9 @@ void MMEX_IniRecord::Save()
 {
     try
     {
-        wxSQLite3Statement st = iniDb_->PrepareStatement(UPDATE_INI_RECORD);
+        wxSQLite3Statement st;
+        if (main_db_) st = iniDb_->PrepareStatement(UPDATE_INFO_RECORD);
+        else          st = iniDb_->PrepareStatement(UPDATE_INI_RECORD);
         st.Bind(1, settingValue_);
         st.Bind(2, settingName_);
 
@@ -78,7 +107,8 @@ void MMEX_IniRecord::Save()
 
         if (!rows_affected)
         {
-            st = iniDb_->PrepareStatement(INSERT_INI_RECORD);
+            if (main_db_) st = iniDb_->PrepareStatement(INSERT_INFO_RECORD);
+            else          st = iniDb_->PrepareStatement(INSERT_INI_RECORD);
             st.Bind(1, settingName_);
             st.Bind(2, settingValue_);
 
@@ -98,21 +128,28 @@ void MMEX_IniRecord::Save()
 /****************************************************************************
  MMEX_IniSettings Class methods
  ****************************************************************************/
-MMEX_IniSettings::MMEX_IniSettings(boost::shared_ptr<wxSQLite3Database> ini_db)
+MMEX_IniSettings::MMEX_IniSettings(boost::shared_ptr<wxSQLite3Database> ini_db, bool main_db)
 : ini_db_(ini_db)
+, main_db_(main_db)
 {
     try
     {
-        if (!ini_db->TableExists(INI_TABLE_NAME))
+        wxString table_name = INI_TABLE_NAME;
+        if (main_db_)
         {
-            ini_db->ExecuteUpdate(CREATE_INI_TABLE);
+            table_name = INFO_TABLE_NAME;
+        }
+        if (!ini_db->TableExists(table_name))
+        {
+            if (main_db_) ini_db->ExecuteUpdate(CREATE_INFO_TABLE);
+            else          ini_db->ExecuteUpdate(CREATE_INI_TABLE);
         }
         Load();
     }
     catch (const wxSQLite3Exception& e)
     {
         wxLogDebug(wxT("MMEX_IniSettings Constructor: Exception: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("MMEX_IniSettings Constructor: create/Load table SETTING_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        wxLogError(wxT("MMEX_IniSettings Constructor: create/Load table. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
     }
 }
 
@@ -123,10 +160,12 @@ MMEX_IniSettings::~MMEX_IniSettings()
 
 void MMEX_IniSettings::Load()
 {
-    wxSQLite3ResultSet q1 = ini_db_->ExecuteQuery(SELECT_INI_RECORD);
+    wxSQLite3ResultSet q1;
+    if (main_db_) q1 = ini_db_->ExecuteQuery(SELECT_INFO_RECORD);
+    else          q1 = ini_db_->ExecuteQuery(SELECT_INI_RECORD);
     while (q1.NextRow())
     {
-        boost::shared_ptr<MMEX_IniRecord> pRecord(new MMEX_IniRecord(ini_db_, q1));
+        boost::shared_ptr<MMEX_IniRecord> pRecord(new MMEX_IniRecord(ini_db_, main_db_, q1));
         ini_records_.push_back(pRecord);
     }
     q1.Finalize();
@@ -194,7 +233,7 @@ void MMEX_IniSettings::SetBoolSetting(const wxString& name, bool value)
     MMEX_IniRecord* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, name));
+        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
@@ -207,7 +246,7 @@ void MMEX_IniSettings::SetIntSetting(const wxString& name, int value)
     MMEX_IniRecord* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, name));
+        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
@@ -219,7 +258,7 @@ void MMEX_IniSettings::SetStringSetting(const wxString& name, const wxString& va
     MMEX_IniRecord* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, name));
+        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
