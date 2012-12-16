@@ -368,6 +368,7 @@ void mmTransDialog::CreateControls()
 #ifdef __WXGTK__
     dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KEY_UP,
         wxKeyEventHandler(mmTransDialog::OnButtonDateChar), NULL, this);
+    dpc_->SetFocus();
 #endif
 
     //Text field for day of the week
