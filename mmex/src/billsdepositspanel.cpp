@@ -82,6 +82,11 @@ bool mmBillsDepositsPanel::Create( wxWindow *parent,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
+    /* Set up the transaction filter.  The transFilter dialog will be destroyed
+       when the checking panel is destroyed. */
+    transFilterActive_ = false;
+    transFilterDlg_    = new mmFilterTransactionsDialog(core_, this);
+
     initVirtualListControl();
     if (trans_.size() > 1)
         listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
@@ -112,10 +117,24 @@ void mmBillsDepositsPanel::CreateControls()
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
     int font_size = this->GetFont().GetPointSize() + 2;
-    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER,
+    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, wxID_ANY,
         _("Repeating Transactions"));
     itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
+
+    wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizerVHeader->Add(itemBoxSizerHHeader2);
+
+    wxBitmap itemStaticBitmap(rightarrow_xpm);
+    bitmapTransFilter_ = new wxStaticBitmap( headerPanel, wxID_ANY, itemStaticBitmap);
+    itemBoxSizerHHeader2->Add(bitmapTransFilter_, 0, wxALL, 1);
+    bitmapTransFilter_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmBillsDepositsPanel::OnFilterTransactions), NULL, this);
+    bitmapTransFilter_->Connect(wxID_ANY, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmBillsDepositsPanel::OnFilterTransactions), NULL, this);
+
+    itemBoxSizerHHeader2->AddSpacer(5);
+    wxStaticText* statTextTransFilter_ = new wxStaticText( headerPanel, wxID_ANY,
+        _("Transaction Filter"));
+    itemBoxSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_CENTER_VERTICAL, 0);
 
     /* ---------------------- */
     wxSplitterWindow* itemSplitterWindowBillsDeposit = new wxSplitterWindow( this,
@@ -241,12 +260,14 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
         th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
         int repeats        = q1.GetInt(wxT("REPEATS"));
         th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
+        th.sStatus_         = q1.GetString(wxT("STATUS"));
         th.transType_      = q1.GetString(wxT("TRANSCODE"));
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
         th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
         th.accountName_    = core_->accountList_.GetAccountName(th.accountID_);
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+        th.sNumber_        = q1.GetString(wxT("TRANSACTIONNUMBER"));
         th.notes_          = q1.GetString(wxT("NOTES"));
         th.categID_        = q1.GetInt(wxT("CATEGID"));
         th.categoryStr_    = core_->categoryList_.GetCategoryName(th.categID_);
@@ -310,8 +331,35 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
 
             th.payeeStr_ = toAccount;
         }
+        bool toAdd = true;
 
-        trans_.push_back(th);
+        if (transFilterActive_)
+        {
+            toAdd  = transFilterDlg_->somethingSelected();
+            if (transFilterDlg_->getAccountCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getAccountID() == th.accountID_);
+            if (transFilterDlg_->getDateRangeCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getFromDateCtrl() <= th.nextOccurDate_
+                    && transFilterDlg_->getToDateControl() >= th.nextOccurDate_);
+            if (transFilterDlg_->getPayeeCheckBox())
+                toAdd = toAdd && (transFilterDlg_->userPayeeStr() == core_->payeeList_.GetPayeeName(th.payeeID_));
+            if (transFilterDlg_->getCategoryCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getCategoryID() == th.categID_
+                    && (transFilterDlg_->getSubCategoryID() == th.subcategID_ || transFilterDlg_->getSubCategoryID()<0));
+            if (transFilterDlg_->getStatusCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getStatus() == th.sStatus_);
+            if (transFilterDlg_->getTypeCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getType().Contains(th.transType_));
+            if (transFilterDlg_->getAmountRangeCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getAmountMin() <= th.amt_ && transFilterDlg_->getAmountMax() >= th.amt_);
+            if (transFilterDlg_->getNumberCheckBox())
+                toAdd = toAdd && (transFilterDlg_->getNumber().Trim().Lower() == th.sNumber_.Lower());
+            if (transFilterDlg_->getNotesCheckBox())
+                toAdd = toAdd && (th.notes_.Lower().Matches(transFilterDlg_->getNotes().Trim().Lower().Prepend(wxT("*")).Append(wxT("*"))));
+
+        }
+
+        if (toAdd) trans_.push_back(th);
         if (th.id_ == id) selected_item = cnt;
     }
 
@@ -536,7 +584,7 @@ void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
 void billsDepositsListCtrl::refreshVisualList(int selected_index)
 {
 
-    //TODO
+    //TODO:
     if (selected_index >= (long)cp_->trans_.size() || selected_index < 0)
         selected_index = /*g_asc*/ true ? (long)cp_->trans_.size() - 1 : 0;
     if (cp_->trans_.size() > 0) {
@@ -553,5 +601,37 @@ void billsDepositsListCtrl::refreshVisualList(int selected_index)
     }
     selectedIndex_ = selected_index;
     cp_->updateBottomPanelData(selected_index);
+}
+
+void mmBillsDepositsPanel::OnFilterTransactions(wxMouseEvent& event)
+{
+
+    int e = event.GetEventType();
+
+    wxBitmap bitmapFilterIcon(rightarrow_xpm);
+
+    if (e == wxEVT_LEFT_DOWN)
+    {
+
+        if (transFilterDlg_->ShowModal() == wxID_OK)
+        {
+            transFilterActive_ = true;
+            wxBitmap activeBitmapFilterIcon(tipicon_xpm);
+            bitmapFilterIcon = activeBitmapFilterIcon;
+        }
+        else
+        {
+            transFilterActive_ = false;
+        }
+
+    } else {
+        if (transFilterActive_ == false) return;
+        transFilterActive_ = false;
+    }
+
+    wxImage pic = bitmapFilterIcon.ConvertToImage();
+    bitmapTransFilter_->SetBitmap(pic);
+
+    initVirtualListControl();
 }
 
