@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -19,6 +19,7 @@
 #ifndef _MM_EX_BILLSDEPOSITSPANEL_H_
 #define _MM_EX_BILLSDEPOSITSPANEL_H_
 
+#include "filtertransdialog.h"
 #include "mmpanelbase.h"
 #include "guiid.h"
 #include "defs.h"
@@ -89,22 +90,25 @@ struct mmBDTransactionHolder: public mmHolderBase
     int payeeID_;
     wxString payeeStr_;
 
+    wxString sStatus_;
+
     wxString transType_;
     wxString transAmtString_;
     double amt_;
 
     wxString transToAmtString_;
     double toAmt_;
-    
+
     int accountID_;
     int toAccountID_;
 
-	wxString accountName_;
-	wxString notes_;
-	int categID_;
-	wxString categoryStr_;
+    wxString accountName_;
+    wxString sNumber_;
+    wxString notes_;
+    int categID_;
+    wxString categoryStr_;
     int subcategID_;
-	wxString subcategoryStr_;
+    wxString subcategoryStr_;
 
     bool bd_repeat_user_;
     bool bd_repeat_auto_;
@@ -134,16 +138,16 @@ public:
                 const wxString& name = wxPanelNameStr);
     /* Helper Functions/data */
     std::vector<mmBDTransactionHolder> trans_;
-	void updateBottomPanelData(int selIndex);
+    void updateBottomPanelData(int selIndex);
     /* updates the Repeating transactions panel data */
     int initVirtualListControl(int id = -1);
     /* Getter for Virtual List Control */
     wxString getItem(long item, long column);
-	int GetListCtrlWidth(int id) {return listCtrlAccount_->GetColumnWidth(id);}
+    int GetListCtrlWidth(int id) {return listCtrlAccount_->GetColumnWidth(id);}
 
-private:      
+private:
     void CreateControls();
-  
+
     /* Event handlers for Buttons */
     void OnNewBDSeries(wxCommandEvent& event);
     void OnEditBDSeries(wxCommandEvent& event);
@@ -160,6 +164,11 @@ private:
 
     wxImageList* m_imageList;
     billsDepositsListCtrl* listCtrlAccount_;
+
+    bool transFilterActive_;
+    void OnFilterTransactions(wxMouseEvent& event);
+    mmFilterTransactionsDialog* transFilterDlg_;
+    wxStaticBitmap* bitmapTransFilter_;
 };
 #endif
 
