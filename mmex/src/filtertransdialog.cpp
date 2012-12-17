@@ -365,7 +365,7 @@ void mmFilterTransactionsDialog::OnCheckboxClick( wxCommandEvent& event )
     notesEdit_->Enable(notesCheckBox_->IsChecked());
     transNumberEdit_->Enable(transNumberCheckBox_->IsChecked());
     accountDropDown_->Enable(accountCheckBox_->IsChecked());
-    
+
     event.Skip();
 }
 
@@ -651,34 +651,32 @@ void mmFilterTransactionsDialog::setAccountToolTip(wxString tip) const
 
 void mmFilterTransactionsDialog::OnPayeeUpdated(wxCommandEvent& event)
 {
-    wxComboBox* cbPayeeInFocus = (wxComboBox*)FindFocus();
-
-    wxString value = cbPayeeInFocus->GetValue();
+    wxString value = cbPayee_->GetValue();
 
     if (value == prev_value_) return;
     //Line above to fix infinite loop for wx-2.9 GTK
     //Line below seems does not working in wx-2.9 GTK
-    cbPayeeInFocus -> SetEvtHandlerEnabled(false);
+    cbPayee_ -> SetEvtHandlerEnabled(false);
     prev_value_ = value;
-    cbPayeeInFocus -> Clear();
+    cbPayee_ -> Clear();
     wxArrayString data;
 
     data = core_->payeeList_.FilterPayees(wxT(""));
     for (size_t i = 0; i < data.Count(); ++i)
     {
         if (data[i].Lower().Matches(value.Lower().Append(wxT("*"))))
-            cbPayeeInFocus ->Append(data[i]);
+            cbPayee_ ->Append(data[i]);
     }
 
 #if wxCHECK_VERSION(2,9,0)
-        cbPayeeInFocus->AutoComplete(data);
+        cbPayee_->AutoComplete(data);
 #endif
 
-    if (cbPayeeInFocus->GetCount() == 1)
-        cbPayeeInFocus->SetSelection(0);
+    if (cbPayee_->GetCount() == 1)
+        cbPayee_->SetSelection(0);
     else
-        cbPayeeInFocus->SetValue(value);
-    cbPayeeInFocus->SetInsertionPoint(value.Length());
-    cbPayeeInFocus -> SetEvtHandlerEnabled(true);
+        cbPayee_->SetValue(value);
+    cbPayee_->SetInsertionPoint(value.Length()+1);
+    cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
 }
