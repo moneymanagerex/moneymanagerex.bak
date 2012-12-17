@@ -58,10 +58,7 @@ enum EIcons
     ICON_NONE,
     ICON_DESC,
     ICON_ASC,
-    ICON_DUPLICATE,
-    ICON_TRANS_WITHDRAWAL,
-    ICON_TRANS_DEPOSIT,
-    ICON_TRANS_TRANSFER
+    ICON_DUPLICATE
 };
 //----------------------------------------------------------------------------
 EColumn g_sortcol = COL_DEF_SORT; // index of column to sort
@@ -88,7 +85,7 @@ void createColumns(MMEX_IniSettings *pIniSettings, wxListCtrl &lst)
     {
         wxString(wxTRANSLATE("Date")).Prepend(wxT("      ")), wxT("80"), wxT("L"),
         wxTRANSLATE("Number"), wxT("-2"), wxT("L"),
-        wxString(wxTRANSLATE("Payee")).Prepend(wxT("      ")), wxT("150"), wxT("L"),
+        wxString(wxTRANSLATE("Payee")).Prepend(wxT("   ")), wxT("150"), wxT("L"),
         wxTRANSLATE("Status"), wxT("-2"), wxT("L"),
         wxTRANSLATE("Category"), wxT("-2"), wxT("L"),
         wxTRANSLATE("Withdrawal"), wxT("-2"), wxT("R"),
@@ -607,13 +604,6 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxImage(uparrow_xpm).Scale(16, 16));
     m_imageList->Add(wxImage(downarrow_xpm).Scale(16, 16));
     m_imageList->Add(wxImage(duplicate_xpm).Scale(16, 16));
-    m_imageList->Add(wxImage(trans_from_xpm).Scale(16, 16));
-    m_imageList->Add(wxImage(trans_into_xpm).Scale(16, 16));
-
-	wxBitmap icon(empty_xpm);
-    wxMask* pMask = new wxMask( icon, wxColor( 0, 0, 0 ) );
-    icon.SetMask( pMask );
-    m_imageList->Add(icon);
 
     m_listCtrlAccount = new TransactionListCtrl( this, itemSplitterWindow10,
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize,
@@ -1542,7 +1532,22 @@ wxString mmCheckingPanel::getItem(long item, long column) const
 
 wxString TransactionListCtrl::OnGetItemText(long item, long column) const
 {
-    return m_cp->getItem(item, column);
+    wxString item_text = m_cp->getItem(item, column);
+    if(column == COL_PAYEE_STR)
+    {
+        size_t index = item;
+        bool ok = m_cp && index < m_cp->m_trans.size();
+        mmBankTransaction *tr = ok ? m_cp->m_trans[index] : 0;
+        if (tr->transType_ == TRANS_TYPE_TRANSFER_STR)
+        {
+            if ( tr->accountID_ == m_cp->accountID() )
+                item_text.Prepend(wxT("> "));
+            else
+                item_text.Prepend(wxT("< "));
+        }
+        else item_text.Prepend(wxT("   "));
+	}
+	return item_text;
 }
 //----------------------------------------------------------------------------
 
@@ -1566,25 +1571,6 @@ int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
             res = ICON_VOID;
         else if (status == wxT("D"))
             res = ICON_DUPLICATE;
-    }
-
-    if(column == COL_PAYEE_STR)
-    {
-        size_t index = item;
-        bool ok = m_cp && index < m_cp->m_trans.size();
-        mmBankTransaction *tr = ok ? m_cp->m_trans[index] : 0;
-
-        if (tr->transType_ == TRANS_TYPE_TRANSFER_STR)
-        {
-            if ( tr->accountID_ == m_cp->accountID() )
-                res = ICON_TRANS_WITHDRAWAL;
-            else
-                res = ICON_TRANS_DEPOSIT;
-        }
-        else
-        {
-            res = ICON_TRANS_TRANSFER;
-        }
     }
 
     return res;
