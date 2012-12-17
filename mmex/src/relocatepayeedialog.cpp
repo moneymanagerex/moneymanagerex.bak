@@ -152,7 +152,11 @@ void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
 
 void relocatePayeeDialog::OnPayeeUpdated(wxCommandEvent& event)
 {
-    wxComboBox* cbPayeeInFocus = (wxComboBox*)FindFocus();
+    wxWindow *w = FindFocus();
+
+    wxComboBox *cbPayeeInFocus = cbSourcePayee_;
+    if (w && w->GetId() == wxID_NEW)
+	    cbPayeeInFocus = cbDestPayee_;
 
     wxString value = cbPayeeInFocus->GetValue();
 
