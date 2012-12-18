@@ -1002,7 +1002,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
             if (transFilterDlg_->getNumberCheckBox())
                 toAdd = toAdd && (transFilterDlg_->getNumber().Trim().Lower() == pBankTransaction->transNum_.Lower());
             if (transFilterDlg_->getNotesCheckBox())
-                toAdd = toAdd && (pBankTransaction->notes_.Lower().Matches(transFilterDlg_->getNotes().Trim().Lower().Prepend(wxT("*")).Append(wxT("*"))));
+                toAdd = toAdd && (pBankTransaction->notes_.Lower().Matches(transFilterDlg_->getNotes().Trim().Lower()));
 
         }
 
@@ -1951,7 +1951,7 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
         const wxString t = getItem(selectedItem, COL_NOTES);
         if (valid_amount) mmex::formatCurrencyToDouble(getItem(selectedItem, COL_DEPOSIT), deposit);
         if (valid_amount) mmex::formatCurrencyToDouble(getItem(selectedItem, COL_WITHDRAWAL), withdrawal);
-        if (t.Lower().Matches(wxT("*") + search_string + wxT("*"))
+        if (t.Lower().Matches(search_string)
             || (valid_amount && amount == deposit && !withdrawal_only)
             || (valid_amount && amount == withdrawal))
         {

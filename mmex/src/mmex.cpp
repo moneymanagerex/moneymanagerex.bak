@@ -3349,7 +3349,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
                 {
                     const wxString transNumber = dlg->getNumber().Trim().Lower();
                     const wxString orig = pBankTransaction->transNum_.Lower();
-                    if (!orig.Matches(wxT("*") + transNumber + wxT("*")))
+                    if (!orig.Matches(transNumber))
                         continue;
                 }
 
