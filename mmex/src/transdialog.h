@@ -92,7 +92,7 @@ private:
     void OnButtonDateChar(wxKeyEvent& event);
     void OnAdvanceChecked(wxCommandEvent& event);
     void SetTransferControls(bool transfer = true);
-
+    void OnKeyDown(wxKeyEvent& event);
     void activateSplitTransactionsDlg();
     void SetSplitState();
 

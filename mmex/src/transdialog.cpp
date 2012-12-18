@@ -420,6 +420,7 @@ void mmTransDialog::CreateControls()
         wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
     textAmount_->Connect(ID_DIALOG_TRANS_TEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER,
         wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
+	textAmount_->Connect( wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnKeyDown), NULL, this);
 
     toTextAmount_ = new wxTextCtrl( this, ID_DIALOG_TRANS_TOTEXTAMOUNT, wxT(""),
         wxDefaultPosition, wxSize(110, -1),
@@ -1182,4 +1183,11 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
    boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
    core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID())->getSplitTransactions(core_, splitTransEntries.get());
    split_.get()->entries_ = splitTransEntries->entries_;
+}
+
+void mmTransDialog::OnKeyDown(wxKeyEvent& event)
+{
+   int key_code = event.GetUnicodeKey();
+   if (key_code > 57) return;
+   event.Skip();
 }
