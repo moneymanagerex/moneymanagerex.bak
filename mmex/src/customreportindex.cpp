@@ -1,5 +1,5 @@
 /*************************************************************************
- Copyright (C) 2011 Stefano Giorgio      
+ Copyright (C) 2011 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@
 // Methods for Class: customSQLReportIndex
 //===============================================================
 customSQLReportIndex::customSQLReportIndex()
-:activeSqlReports_ (false), validTitle_ (false), reportIsSubReport_(false), currentReportFileIndex_(0)      
+:activeSqlReports_ (false), validTitle_ (false), reportIsSubReport_(false), currentReportFileIndex_(0)
 {
-    indexFile_  = new wxTextFile(mmex::getPathUser(mmex::CUSTOM_REPORTS));  
+    indexFile_  = new wxTextFile(mmex::getPathUser(mmex::CUSTOM_REPORTS));
     if (indexFile_->Exists())
     {
         indexFile_ ->Open();
@@ -42,7 +42,7 @@ void customSQLReportIndex::initIndexFileHeader()
         bool result = indexFile_->Create();
         if (result)
         {
-            indexFile_->AddLine(_("Custom SQL Reports"));
+            indexFile_->AddLine(_("Custom Reports"));
             indexFile_->AddLine(wxT(""));
             indexFile_->AddLine(_("Report Name[|Report Filename.sql[|SUB]]"));
             indexFile_->AddLine(wxT("========================================"));
@@ -117,7 +117,7 @@ wxString customSQLReportIndex::currentReportFileName(bool withfilePath)
     if ( ! currentReportFileName_.IsEmpty() )
     {
         if (withfilePath)
-            returnStr = wxString() << mmex::getPathUser(mmex::DIRECTORY) << currentReportFileName_; 
+            returnStr = wxString() << mmex::getPathUser(mmex::DIRECTORY) << currentReportFileName_;
     }
     return returnStr;
 }
@@ -153,7 +153,7 @@ void customSQLReportIndex::LoadArrays(wxArrayString& titleArray, wxArrayString& 
 
 wxString customSQLReportIndex::UserDialogHeading()
 {
-    return _("Custom SQL Reports");
+    return _("Custom Reports");
 }
 
 wxString customSQLReportIndex::getUserTitleSelection(wxString description)
@@ -165,7 +165,7 @@ wxString customSQLReportIndex::getUserTitleSelection(wxString description)
     LoadArrays(reportTitles, reportFileNames, reportIsSub);
 
     validTitle_ = false;
-    wxString msgStr = wxString() << _("Select the Custom SQL Report") << description;
+    wxString msgStr = wxString::Format(_("Select the Custom Report %s"), description.c_str());
     wxSingleChoiceDialog reportTitleSelectionDlg(0,msgStr, UserDialogHeading(), reportTitles);
 
     int selectionIndex = -1;
@@ -195,8 +195,8 @@ wxString customSQLReportIndex::getUserTitleSelection(wxString description)
 
 void customSQLReportIndex::getSelectedTitleSelection(wxString titleIndex)
 {
-    long index; 
-    wxStringTokenizer tk(titleIndex, wxT("_")); // get the 3rd token 'Custom_Report_xx'   
+    long index;
+    wxStringTokenizer tk(titleIndex, wxT("_")); // get the 3rd token 'Custom_Report_xx'
     tk.GetNextToken();
     tk.GetNextToken();
     wxString indexStr = tk.GetNextToken();
@@ -260,16 +260,16 @@ void customSQLReportIndex::deleteSelectedReportTitle()
 bool customSQLReportIndex::getSqlFileData(wxString& sqlText)
 {
     bool result = false;
-    wxTextFile sqlFile(currentReportFileName());  
+    wxTextFile sqlFile(currentReportFileName());
     if ( sqlFile.Exists() )
     {
         sqlFile.Open();
-        sqlText << sqlFile.GetFirstLine(); 
+        sqlText << sqlFile.GetFirstLine();
         while (! sqlFile.Eof())
         {
             wxString nextLine = sqlFile.GetNextLine();
             if (! nextLine.IsEmpty())
-                sqlText << wxT("\n"); 
+                sqlText << wxT("\n");
             sqlText << nextLine;
         }
         result = true;

@@ -963,7 +963,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     /* ================================================================================================= */
     if (custRepIndex_->hasActiveSQLReports())
     {
-        wxTreeItemId customSqlReports = navTreeCtrl_->AppendItem(root, _("Custom SQL Reports"), 8, 8);
+        wxTreeItemId customSqlReports = navTreeCtrl_->AppendItem(root, _("Custom Reports"), 8, 8);
         navTreeCtrl_->SetItemBold(customSqlReports, true);
         navTreeCtrl_->SetItemData(customSqlReports, new mmTreeItemData(NAVTREECTRL_CUSTOM_REPORTS));
 
@@ -1333,12 +1333,19 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
 void mmGUIFrame::CreateCustomReport(int index)
 {
     wxString rfn = custRepIndex_->reportFileName(index);
+    wxString sReporttype = rfn.substr(rfn.Length()-4);
+    if (sReporttype == wxT(".sql"))
+        sReporttype = wxT("SQL");
+    else
+        sReporttype = wxT("Lua");
+
     if (rfn != wxT(""))
     {
         wxString sqlStr;
         if (custRepIndex_->getSqlFileData(sqlStr) )
         {
-            mmCustomSQLReport* csr = new mmCustomSQLReport(this, m_core.get(), custRepIndex_->currentReportTitle(), sqlStr);
+            mmCustomSQLReport* csr = new mmCustomSQLReport(this, m_core.get()
+                , custRepIndex_->currentReportTitle(), sqlStr, sReporttype);
             menuPrintingEnable(true);
             createReportsPage(csr);
         }
@@ -2676,14 +2683,14 @@ void mmGUIFrame::createMenu()
         MENU_CUSTOM_SQL_REPORT_EDIT, _("Edit..."), _("Edit an existing SQL report"));
     menuItemCustomReportEdit->SetBitmap(wxBitmap(edit_custom_sql_xpm));
     wxMenuItem* menuItemCustomReportDelete = new wxMenuItem(menuCustomSqlReports,
-        MENU_CUSTOM_SQL_REPORT_DELETE, _("Delete..."), _("Remove a file from the Custom SQL Reports menu"));
+        MENU_CUSTOM_SQL_REPORT_DELETE, _("Delete..."), _("Remove a file from the Custom Reports menu"));
     menuItemCustomReportDelete->SetBitmap(wxBitmap(delete_custom_sql_xpm));
     // Add menu items to the Custom SQL Reports menu
     menuCustomSqlReports->Append(menuItemCustomReportNew);
     menuCustomSqlReports->Append(menuItemCustomReportEdit);
     menuCustomSqlReports->Append(menuItemCustomReportDelete);
     // Add menu to Tools menu
-    menuTools->AppendSubMenu(menuCustomSqlReports,_("Custom SQL Reports..."),_("Create or modify SQL reports for the Reports section"));
+    menuTools->AppendSubMenu(menuCustomSqlReports,_("Custom Reports..."),_("Create or modify reports for the Reports section"));
 
     menuTools->AppendSeparator();
 
@@ -2805,7 +2812,7 @@ void mmGUIFrame::createToolBar()
     toolBar_->AddSeparator();
     toolBar_->AddTool(MENU_TRANSACTIONREPORT, _("Transaction Report Filter"), toolBarBitmaps[8], _("Transaction Report Filter"));
     toolBar_->AddSeparator();
-    toolBar_->AddTool(MENU_CUSTOM_SQL_REPORT_NEW, _("Custom SQL Manager"), toolBarBitmaps[9], _("Create new Custom SQL Reports"));
+    toolBar_->AddTool(MENU_CUSTOM_SQL_REPORT_NEW, _("Custom Reports Manager"), toolBarBitmaps[9], _("Create new Custom Reports"));
 
     // after adding the buttons to the toolbar, must call Realize() to reflect changes
     toolBar_->Realize();
@@ -3869,7 +3876,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnCurrency(wxCommandEvent& /*event*/)
 {
     mmMainCurrencyDialog(m_core.get(),this, false).ShowModal();
-    createHomePage();    
+    createHomePage();
 }
 //----------------------------------------------------------------------------
 
@@ -4093,11 +4100,13 @@ void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
     wxBeginBusyCursor(wxHOURGLASS_CURSOR);
     while (dialogStatus == wxID_MORE)
     {
-        if (dlg->sqlQuery() != wxT(""))
+        if (dlg->sScript() != wxT(""))
         {
-            mmCustomSQLReport* csr = new mmCustomSQLReport(this, m_core.get(), dlg->sqlReportTitle(), dlg->sqlQuery());
+            mmCustomSQLReport* csr = new mmCustomSQLReport(this,
+                m_core.get(), dlg->sReportTitle(), dlg->sScript(), dlg->sSctiptType());
             menuPrintingEnable(true);
             createReportsPage(csr);
+
         }
         dialogStatus = dlg->ShowModal();
     }

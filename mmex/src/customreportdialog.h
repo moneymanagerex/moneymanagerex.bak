@@ -23,7 +23,7 @@
 #include "guiid.h"
 #include "customreportindex.h"
 
-#define SYMBOL_CUSTOMSQLDIALOG_TITLE _("Custom SQL Reports Manager")
+#define SYMBOL_CUSTOMSQLDIALOG_TITLE _("Custom Reports Manager")
 #define SYMBOL_CUSTOMSQLDIALOG_POSITION wxDefaultPosition
 #define SYMBOL_CUSTOMSQLDIALOG_SIZE wxSize(500, 400)
 #define SYMBOL_CUSTOMSQLDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
@@ -45,13 +45,15 @@ public:
         const wxSize& size      = SYMBOL_CUSTOMSQLDIALOG_SIZE,
         long style              = SYMBOL_CUSTOMSQLDIALOG_STYLE );
 
-    wxString sqlQuery();
-    wxString sqlReportTitle();
+    wxString sScript();
+    wxString sReportTitle();
+    wxString sSctiptType();
 
 private:
+    wxWindow* parent_;
     customSQLReportIndex* reportIndex_;
-    wxTextCtrl* sqlSourceTxtCtrl_;
-    wxString sqlQuery_;
+    wxTextCtrl* sSourceTxtCtrl_;
+    wxString sQuery_;
     bool newFileCreated_;
     wxString loadedFileName_;
     bool edit_;
@@ -62,7 +64,7 @@ private:
     wxTextCtrl* reportTitleTxtCtrl_;
     wxCheckBox* headingOnlyCheckBox_;
     wxCheckBox* subMenuCheckBox_;
-    wxWindow* parent_;
+    wxRadioBox* m_radio_box_;
 
     bool Create( wxWindow* parent,
         wxWindowID id = wxID_ANY,

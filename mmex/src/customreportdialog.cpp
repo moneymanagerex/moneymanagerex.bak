@@ -42,7 +42,7 @@ END_EVENT_TABLE()
 
 mmCustomSQLDialog::mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxWindow* parent, bool edit,
                                      wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
-:reportIndex_(reportIndex), sqlSourceTxtCtrl_(), edit_(edit), navCtrlUpdateRequired_(false), newFileCreated_(true), parent_(parent)
+:reportIndex_(reportIndex), sSourceTxtCtrl_(), edit_(edit), navCtrlUpdateRequired_(false), newFileCreated_(true), parent_(parent)
 {
     Create(parent_, id, caption, pos, size, style);
 }
@@ -94,7 +94,7 @@ void mmCustomSQLDialog::CreateControls()
     flex_sizer->Add(new wxStaticText( this, wxID_ANY, _("Script type:")), flags.Bottom());
     wxString choices[] = { _("SQL"), _("Lua")};
     int num = sizeof(choices) / sizeof(wxString);
-    wxRadioBox* m_radio_box_ = new wxRadioBox(this, wxID_STATIC, wxT("")
+    m_radio_box_ = new wxRadioBox(this, wxID_STATIC, wxT("")
         , wxDefaultPosition, wxDefaultSize, num, choices, 2, wxRA_SPECIFY_COLS);
     flex_sizer->Add(m_radio_box_, flags.Center());
 
@@ -124,9 +124,9 @@ void mmCustomSQLDialog::CreateControls()
     headingPanelSizerH->Add(headingPanelSizerV3, 1, wxGROW|wxALL, 5);
     
     headingPanelSizerV3->Add(new wxStaticText( this, wxID_ANY, _("Custom script:")), flags);
-    sqlSourceTxtCtrl_ = new wxTextCtrl( this, wxID_VIEW_DETAILS, wxT(""),
+    sSourceTxtCtrl_ = new wxTextCtrl( this, wxID_VIEW_DETAILS, wxT(""),
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
-    headingPanelSizerV3->Add(sqlSourceTxtCtrl_, 1, wxGROW|wxALL);
+    headingPanelSizerV3->Add(sSourceTxtCtrl_, 1, wxGROW|wxALL);
     headingPanelSizerV3->Add(headingPanelSizerH4, flagsExpand.Center());
 
     button_Open_ = new wxButton( this, wxID_OPEN);
@@ -178,7 +178,7 @@ void mmCustomSQLDialog::CreateControls()
 
             wxString sqlData;
             reportIndex_->getSqlFileData(sqlData);
-            sqlSourceTxtCtrl_->ChangeValue(sqlData);
+            sSourceTxtCtrl_->ChangeValue(sqlData);
         }
         button_Open_->Disable();
     }
@@ -188,28 +188,39 @@ void mmCustomSQLDialog::CreateControls()
     }
 }
 
-wxString mmCustomSQLDialog::sqlQuery()
+wxString mmCustomSQLDialog::sScript()
 {
-    return sqlQuery_;
+    return sQuery_;
 }
 
-wxString mmCustomSQLDialog::sqlReportTitle()
+wxString mmCustomSQLDialog::sReportTitle()
 {
     return reportTitleTxtCtrl_->GetValue();
 }
 
+wxString mmCustomSQLDialog::sSctiptType()
+{
+    int i = m_radio_box_->GetSelection();
+    if (i == 0)
+        return wxT("SQL");
+    else
+        return wxT("Lua");
+}
+
 void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
 {
-    wxString sqlScriptFileName = wxFileSelector( _("Load Custom SQL file:"),
-                                                 mmex::getPathUser(mmex::DIRECTORY),
-                                                 wxEmptyString, wxEmptyString,  wxT("SQL File(*.sql)|*.sql"), wxFD_FILE_MUST_EXIST);
-    if ( !sqlScriptFileName.empty() )
+    wxString sScriptFileName = wxFileSelector( sSctiptType()==wxT("SQL") ?
+        _("Load Custom SQL file:") : _("Load Custom Lua file:"),
+        mmex::getPathUser(mmex::DIRECTORY), wxEmptyString, wxEmptyString,
+        sSctiptType()==wxT("SQL") ? wxT("SQL File(*.sql)|*.sql") : wxT("Lua File(*.lua)|*.lua")
+        , wxFD_FILE_MUST_EXIST);
+    if ( !sScriptFileName.empty() )
     {
-        wxFileName selectedFileName(sqlScriptFileName);
+        wxFileName selectedFileName(sScriptFileName);
         loadedFileName_ = selectedFileName.GetFullName();
         wxString sqlText;
 
-        wxTextFile sqlFile(sqlScriptFileName);
+        wxTextFile sqlFile(sScriptFileName);
         if (sqlFile.Open())
         {
             sqlText << sqlFile.GetFirstLine();
@@ -220,13 +231,13 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
                     sqlText << wxT("\n");
                 sqlText << nextLine;
             }
-            sqlSourceTxtCtrl_->SetValue(sqlText);
+            sSourceTxtCtrl_->SetValue(sqlText);
             newFileCreated_ = false;
             sqlFile.Close();
         }
         else
         {
-            wxString msg = wxString() << _("Unable to open file.") << sqlScriptFileName << wxT("\n\n");
+            wxString msg = wxString() << _("Unable to open file.") << sScriptFileName << wxT("\n\n");
             wxMessageBox(msg,reportIndex_->UserDialogHeading(),wxOK|wxICON_ERROR);
         }
     }
@@ -243,7 +254,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
     wxString reportfileName;
     reportfileName = reportTitleTxtCtrl_->GetValue();   // Get name from report title.
     reportfileName.Replace(wxT(" "),wxT("_"));          // Replace spaces with underscore character
-    reportfileName += wxT(".sql");                      // Add the file extenstion
+    reportfileName += sSctiptType()==wxT("SQL") ? wxT(".sql") : wxT(".lua");                      // Add the file extenstion
 
     if (reportfileName == loadedFileName_)
     {
@@ -269,31 +280,31 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
     else
     {
         // If we have a filename, and we have something to save, save the file.
-        wxString sqlSource = sqlSourceTxtCtrl_->GetValue();
+        wxString sqlSource = sSourceTxtCtrl_->GetValue();
         if ( !reportfileName.empty() && !sqlSource.empty() )
         {
-            wxTextFile sqlSourceFile(mmex::getPathUser(mmex::DIRECTORY) + reportfileName);
+            wxTextFile tfSourceFile(mmex::getPathUser(mmex::DIRECTORY) + reportfileName);
 
             // If the file does not exist and cannot be created, throw an error
-            if ( !sqlSourceFile.Exists() && !sqlSourceFile.Create() )
+            if ( !tfSourceFile.Exists() && !tfSourceFile.Create() )
             {
                 wxMessageBox(_("Unable to write to file."),reportIndex_->UserDialogHeading(), wxOK|wxICON_ERROR);
                 return;
             }
 
             // if the file does exist, then update the file contents to the new value.
-            if (sqlSourceFile.Exists())
+            if (tfSourceFile.Exists())
             {
                 // Make sure the file is open
-                if (! sqlSourceFile.IsOpened())
+                if (! tfSourceFile.IsOpened())
                 {
-                    sqlSourceFile.Open();
+                    tfSourceFile.Open();
                 }
-                sqlSourceFile.Clear();
-                sqlSourceFile.AddLine(sqlSource);
+                tfSourceFile.Clear();
+                tfSourceFile.AddLine(sqlSource);
             }
-            sqlSourceFile.Write();
-            sqlSourceFile.Close();
+            tfSourceFile.Write();
+            tfSourceFile.Close();
         }
 
         // update the index file
@@ -306,19 +317,19 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
 
 void mmCustomSQLDialog::OnRun(wxCommandEvent& /*event*/)
 {
-   if (sqlSourceTxtCtrl_->IsEmpty()) return;
-   sqlQuery_ = sqlSourceTxtCtrl_->GetValue();
+   if (sSourceTxtCtrl_->IsEmpty()) return;
+   sQuery_ = sSourceTxtCtrl_->GetValue();
    EndModal(wxID_MORE);
 }
 
 void mmCustomSQLDialog::OnClear(wxCommandEvent& /*event*/)
 {
-    sqlSourceTxtCtrl_->Clear();
+    sSourceTxtCtrl_->Clear();
     button_Save_->Disable();
     button_Run_->Disable();
     if (! headingOnlyCheckBox_->GetValue())
         button_Open_->Enable();
-    sqlSourceTxtCtrl_->SetFocus();
+    sSourceTxtCtrl_->SetFocus();
 }
 
 void mmCustomSQLDialog::OnClose(wxCommandEvent& /*event*/)
@@ -332,9 +343,9 @@ void mmCustomSQLDialog::OnClose(wxCommandEvent& /*event*/)
 void mmCustomSQLDialog::SetDialogBoxForHeadings()
 {
     subMenuCheckBox_->Enable( !headingOnlyCheckBox_->GetValue());
-    sqlSourceTxtCtrl_->Enable(!headingOnlyCheckBox_->GetValue());
-    button_Open_->Enable(!headingOnlyCheckBox_->GetValue() && sqlSourceTxtCtrl_->IsEmpty());
-    button_Run_->Enable(!headingOnlyCheckBox_->GetValue() && !sqlSourceTxtCtrl_->IsEmpty());
+    sSourceTxtCtrl_->Enable(!headingOnlyCheckBox_->GetValue());
+    button_Open_->Enable(!headingOnlyCheckBox_->GetValue() && sSourceTxtCtrl_->IsEmpty());
+    button_Run_->Enable(!headingOnlyCheckBox_->GetValue() && !sSourceTxtCtrl_->IsEmpty());
 }
 
 void mmCustomSQLDialog::OnCheckedHeading(wxCommandEvent& /*event*/)
@@ -359,6 +370,6 @@ void mmCustomSQLDialog::OnTextChangeHeading(wxCommandEvent& /*event*/)
 void mmCustomSQLDialog::OnTextChangeSubReport(wxCommandEvent& /*event*/)
 {
     button_Save_->Enable(!reportTitleTxtCtrl_->IsEmpty());
-    button_Run_->Enable(!sqlSourceTxtCtrl_->IsEmpty());
-    button_Open_->Enable(sqlSourceTxtCtrl_->IsEmpty());
+    button_Run_->Enable(!sSourceTxtCtrl_->IsEmpty());
+    button_Open_->Enable(sSourceTxtCtrl_->IsEmpty());
 }
