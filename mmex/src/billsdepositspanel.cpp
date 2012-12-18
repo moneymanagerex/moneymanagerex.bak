@@ -355,7 +355,7 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
             if (transFilterDlg_->getNumberCheckBox())
                 toAdd = toAdd && (transFilterDlg_->getNumber().Trim().Lower() == th.sNumber_.Lower());
             if (transFilterDlg_->getNotesCheckBox())
-                toAdd = toAdd && (th.notes_.Lower().Matches(transFilterDlg_->getNotes().Trim().Lower().Prepend(wxT("*")).Append(wxT("*"))));
+                toAdd = toAdd && (th.notes_.Lower().Matches(transFilterDlg_->getNotes().Trim().Lower()));
 
         }
 
