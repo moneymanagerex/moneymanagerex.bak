@@ -1,5 +1,5 @@
 /*************************************************************************
- Copyright (C) 2011 Stefano Giorgio      
+ Copyright (C) 2011 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -24,14 +24,16 @@
 class mmCustomSQLReport : public mmPrintableBase
 {
 public:
-    mmCustomSQLReport(wxWindow* parent, mmCoreDB* core, const wxString& reportTitle, const wxString& sqlQuery);
+    mmCustomSQLReport(wxWindow* parent, mmCoreDB* core
+        , const wxString& reportTitle, const wxString& sqlQuery, const wxString& sSctiptType);
 
     wxString getHTMLText();
     void displayReportHeader(mmHTMLBuilder& hb, const wxString reportTitle);
 
 private:
     wxString reportTitle_;
-    wxString sqlQuery_;
+    wxString sScript_;
+    wxString sSctiptType_;
     wxWindow* parent_;
 };
 

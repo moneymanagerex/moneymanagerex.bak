@@ -26,6 +26,14 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/static_assert.hpp>
 
+#include <iostream>
+
+extern "C" {
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+}
+
 class mmCoreDB;
 class MMEX_IniSettings;
 
@@ -358,6 +366,11 @@ wxImageList* navtree_images_list_();
 /// Located here as a function to allow removal in GTK
 void windowsFreezeThaw(wxWindow* pWindow);
 void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core);
+
+//Lua functions
+wxString lua2cppReportErrors(lua_State *L, int status);
+int cpp2luaGetTranslation(lua_State *L);
+int lua2cppGetString(wxString sInput, wxString& sOutput, wxString& sError);
 
 #endif // _MM_EX_UTIL_H_
 //----------------------------------------------------------------------------

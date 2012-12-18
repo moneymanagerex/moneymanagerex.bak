@@ -1069,3 +1069,57 @@ void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
     wxMessageDialog msgDlg(parent, msg, _("Currency rate updated"));
     msgDlg.ShowModal();
 }
+
+wxString lua2cppReportErrors(lua_State *L, int status)
+{
+    if ( status != 0 )
+    {
+        wxString e = wxString::Format(_("Error: %s\n"), wxString::FromUTF8(lua_tostring(L, -1)).c_str());
+        lua_pop(L, 1); // remove error message
+        return e;
+    }
+    return wxT("");
+}
+
+int cpp2luaGetTranslation(lua_State *L)
+{
+    wxString data = wxString::FromUTF8(lua_tostring(L, -1));
+    data = wxGetTranslation(data);
+    lua_pushstring(L, data.ToUTF8());
+
+    return 1;
+}
+
+int lua2cppGetString(wxString sInput, wxString& sOutput, wxString& sError)
+{
+    // create new Lua state
+    int result;
+    lua_State *L;
+    L = luaL_newstate();
+    luaopen_string(L);
+    luaL_openlibs(L);
+
+    // make my_function() available to Lua programs
+    lua_register(L, "cpp2luaGetTranslation", cpp2luaGetTranslation);
+
+    result = luaL_loadstring(L, sInput.ToUTF8());
+    if (result)
+    {
+        sError = lua2cppReportErrors(L, result);
+        return result;
+    }
+
+    result = lua_pcall(L, 0, LUA_MULTRET, 0);
+
+    if (result)
+    {
+        sError = lua2cppReportErrors(L, result);
+        return result;
+    }
+    sOutput = wxString::FromUTF8(lua_tostring(L, -1));
+
+    // close the Lua state
+    lua_close(L);
+
+    return result;
+}
