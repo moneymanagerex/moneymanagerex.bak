@@ -1090,6 +1090,20 @@ int cpp2luaGetTranslation(lua_State *L)
     return 1;
 }
 
+int cpp2luaGetTextFromUser(lua_State *L)
+{
+    wxString value = wxString::FromUTF8(lua_tostring(L, -1));
+    lua_pop(L, 1); // remove error message
+    wxString header = wxString::FromUTF8(lua_tostring(L, -1));
+    lua_pop(L, 1); // remove error message
+    wxString message = wxString::FromUTF8(lua_tostring(L, -1));
+    lua_pop(L, 1); // remove error message
+    value = wxGetTextFromUser(message, header, value);
+    lua_pushstring(L, value.ToUTF8());
+
+    return 1;
+}
+
 int lua2cppGetString(wxString sInput, wxString& sOutput, wxString& sError)
 {
     // create new Lua state
@@ -1100,7 +1114,8 @@ int lua2cppGetString(wxString sInput, wxString& sOutput, wxString& sError)
     luaL_openlibs(L);
 
     // make my_function() available to Lua programs
-    lua_register(L, "cpp2luaGetTranslation", cpp2luaGetTranslation);
+    lua_register(L, "_", cpp2luaGetTranslation);
+    lua_register(L, "cpp2luaGetTextFromUser", cpp2luaGetTextFromUser);
 
     result = luaL_loadstring(L, sInput.ToUTF8());
     if (result)
@@ -1123,3 +1138,4 @@ int lua2cppGetString(wxString sInput, wxString& sOutput, wxString& sError)
 
     return result;
 }
+
