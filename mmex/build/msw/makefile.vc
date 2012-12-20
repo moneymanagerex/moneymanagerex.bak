@@ -19,7 +19,7 @@ MAKEARGS = PREFIX="$(PREFIX)" EXEC_PREFIX="$(EXEC_PREFIX)" CC="$(CC)" \
 	WX_VERSION="$(WX_VERSION)" WX_MONOLITHIC="$(WX_MONOLITHIC)" \
 	WX_PYTHON="$(WX_PYTHON)" BOOST_DIR="$(BOOST_DIR)" \
 	VSTUDIO_VER="$(VSTUDIO_VER)" TARGET_CPU="$(TARGET_CPU)"
-WXSQLITE_CXXFLAGS = /MD$(__DEBUGINFO_1) /DWIN32 /W4 $(__DEBUGINFO) \
+WXSQLITE_CXXFLAGS = /MD$(__DEBUGINFO_2) /DWIN32 /W4 $(__DEBUGINFO) \
 	$(____DEBUGINFO) \
 	/Fdvc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.pdb \
 	$(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) $(__WXUNICODE_DEFINE_p) \
@@ -30,20 +30,58 @@ WXSQLITE_CXXFLAGS = /MD$(__DEBUGINFO_1) /DWIN32 /W4 $(__DEBUGINFO) \
 	$(CPPFLAGS) $(CXXFLAGS)
 WXSQLITE_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite_wxsqlite3.obj
-SQLITE_CFLAGS = /MD$(__DEBUGINFO_1) /DWIN32 /W4 $(__DEBUGINFO) $(____DEBUGINFO) \
+SQLITE_CFLAGS = /MD$(__DEBUGINFO_2) /DWIN32 /W4 $(__DEBUGINFO) $(____DEBUGINFO) \
 	/Fdvc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.pdb \
 	$(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) /DSQLITE_CORE /DSQLITE_HAS_CODEC \
 	/DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
 SQLITE_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite_sqlite3secure.obj
-MMEX_CXXFLAGS = /MD$(__DEBUGINFO_1) /DWIN32 $(__WXUNICODE_DEFINE_p) \
+LUA_CFLAGS = /MD$(__DEBUGINFO_2) /DWIN32 /W4 $(__DEBUGINFO) $(____DEBUGINFO) \
+	/Fdvc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua.pdb \
+	$(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) $(CPPFLAGS) $(CFLAGS)
+LUA_OBJECTS =  \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lapi.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lauxlib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lbaselib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lbitlib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lcode.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lcorolib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lctype.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ldblib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ldebug.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ldo.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ldump.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lfunc.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lgc.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_linit.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_liolib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_llex.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lmathlib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lmem.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_loadlib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lobject.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lopcodes.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_loslib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lparser.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lstate.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lstring.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lstrlib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ltable.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ltablib.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ltm.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lua.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_luac.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lundump.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lvm.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lzio.obj
+MMEX_CXXFLAGS = /MD$(__DEBUGINFO_2) /DWIN32 $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) /D__WXMSW__ \
 	/I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	/I$(WX_DIR)\include /W4 $(__DEBUGINFO) $(____DEBUGINFO) \
 	/Fdvc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.pdb \
 	$(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) /I$(BOOST_DIR) /I..\..\lib\sqlite \
-	/I..\..\lib\wxsqlite /DNOPCH /D_WINDOWS /EHsc /GR $(__mmex_CL_FLAGS) \
-	$(CPPFLAGS) $(CXXFLAGS)
+	/I..\..\lib\wxsqlite /I..\..\lib\lua\src /DNOPCH /D_WINDOWS /EHsc /GR \
+	$(__mmex_CL_FLAGS) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_aboutdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_appstartdialog.obj \
@@ -67,7 +105,6 @@ MMEX_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_filtertransdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_guiid.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_htmlbuilder.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_led.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_maincurrencydialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmaccount.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmcategory.obj \
@@ -75,6 +112,7 @@ MMEX_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmcoredb.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmcurrency.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmex.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmex_settings.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmgraphgenerator.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmgraphincexpensesmonth.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmgraphpie.obj \
@@ -84,19 +122,18 @@ MMEX_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmpayee.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmreportspanel.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmtransaction.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmyahoo.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_newacctdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_optionsdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_paths.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_payeedialog.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_qifimport.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_qif_export.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_qif_import.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_recentfiles.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_relocatecategorydialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_relocatepayeedialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportbudget.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportbudgetcategorysummary.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportbudgetingperf.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportbudgetsetup.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportcashflow.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportcategexp.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportcategovertimeperf.obj \
@@ -114,12 +151,10 @@ MMEX_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_stockdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_stockspanel.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_transactionfilterdialog.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_src_transdialog.obj \
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_transdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_univcsvdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_util.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_yahoosettingsdialog.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_platfdep.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_win_transdialog.obj
+	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_platfdep.obj
 MMEX_RESOURCES =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex.res
 
@@ -189,34 +224,34 @@ __WXDEBUG_DEFINE_p_2 = /d __WXDEBUG__
 __WXDEBUG_DEFINE_p_2 = /d __WXDEBUG__
 !endif
 !if "$(WX_DEBUG)" == "0"
-__DEBUGINFO_37 = 
+__DEBUGINFO_52 = 
 !endif
 !if "$(WX_DEBUG)" == "1"
-__DEBUGINFO_37 = /DEBUG
+__DEBUGINFO_52 = /DEBUG
 !endif
 !if "$(WX_DEBUG)" == "0"
-____DEBUGINFO_38_p_1 = 
+____DEBUGINFO_53_p_1 = 
 !endif
 !if "$(WX_DEBUG)" == "1"
-____DEBUGINFO_38_p_1 = /d _DEBUG
+____DEBUGINFO_53_p_1 = /d _DEBUG
 !endif
 !if "$(WX_DEBUG)" == "0"
-__DEBUGINFO_40 = /opt:ref /opt:icf
+__DEBUGINFO_55 = /opt:ref /opt:icf
 !endif
 !if "$(WX_DEBUG)" == "1"
-__DEBUGINFO_40 = 
+__DEBUGINFO_55 = 
 !endif
 !if "$(WX_DEBUG)" == "0"
-__DEBUGINFO_41 = 
+__DEBUGINFO_56 = 
 !endif
 !if "$(WX_DEBUG)" == "1"
-__DEBUGINFO_41 = $(__DEBUGINFO_40)
+__DEBUGINFO_56 = $(__DEBUGINFO_55)
 !endif
 !if "$(WX_DEBUG)" == "0"
-__DEBUG_DEFINE_p_3 = /d NDEBUG
+__DEBUG_DEFINE_p_4 = /d NDEBUG
 !endif
 !if "$(WX_DEBUG)" == "1"
-__DEBUG_DEFINE_p_3 = /d _DEBUG
+__DEBUG_DEFINE_p_4 = /d _DEBUG
 !endif
 !if "$(WX_DEBUG)" == "0"
 __mmex_CL_FLAGS = /Zi
@@ -296,10 +331,10 @@ ____DEBUGINFO =
 ____DEBUGINFO = /D_DEBUG
 !endif
 !if "$(WX_DEBUG)" == "0"
-__DEBUGINFO_1 = 
+__DEBUGINFO_2 = 
 !endif
 !if "$(WX_DEBUG)" == "1"
-__DEBUGINFO_1 = d
+__DEBUGINFO_2 = d
 !endif
 !if "$(WX_DEBUG)" == "0"
 __OPTIMIZEFLAG = /O2
@@ -342,43 +377,31 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH):
 
 ### Targets: ###
 
-all: vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe sub_po
+all: vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe sub_po
 
 install: install_mmex
 	-mkdir $(PREFIX)\mmex
 	( cd ..\..\doc && copy /Y  *.txt $(PREFIX)\mmex )
 	-mkdir $(PREFIX)\mmex\res
-	( cd ..\..\resources && copy /Y  currency_seed.db3 $(PREFIX)\mmex\res )
+	( cd ..\..\resources && copy /Y  currency_seed.csv $(PREFIX)\mmex\res )
 	-mkdir $(PREFIX)\mmex\res
 	( cd ..\..\resources && copy /Y  mmex.ico $(PREFIX)\mmex\res )
-	-mkdir $(PREFIX)\mmex\res
-	( cd ..\..\resources && copy /Y  splash.png $(PREFIX)\mmex\res )
 	-mkdir $(PREFIX)\mmex\res
 	( cd ..\..\resources && copy /Y  kaching.wav $(PREFIX)\mmex\res )
 	-mkdir $(PREFIX)\mmex\help
 	( cd ..\..\doc\help && copy /Y  *.html $(PREFIX)\mmex\help )
 	-mkdir $(PREFIX)\mmex\help
 	( cd ..\..\doc\help && copy /Y  *.png $(PREFIX)\mmex\help )
-	-mkdir $(PREFIX)\mmex\help
-	( cd ..\..\doc\help && copy /Y  *.jpg $(PREFIX)\mmex\help )
-	-mkdir $(PREFIX)\mmex\help\index_fichiers
-	( cd ..\..\doc\help\index_fichiers && copy /Y  *.png $(PREFIX)\mmex\help\index_fichiers )
-	-mkdir $(PREFIX)\mmex\po
-	( cd ..\..\po && copy /Y  *.po $(PREFIX)\mmex\po )
 	-mkdir $(PREFIX)\mmex\po
 	( cd ..\..\po && copy /Y  *.mo $(PREFIX)\mmex\po )
 
 uninstall: uninstall_mmex
 	-if exist $(PREFIX)\mmex\*.txt -del *.txt
-	-if exist $(PREFIX)\mmex\res\currency_seed.db3 -del currency_seed.db3
+	-if exist $(PREFIX)\mmex\res\currency_seed.csv -del currency_seed.csv
 	-if exist $(PREFIX)\mmex\res\mmex.ico -del mmex.ico
-	-if exist $(PREFIX)\mmex\res\splash.png -del splash.png
 	-if exist $(PREFIX)\mmex\res\kaching.wav -del kaching.wav
 	-if exist $(PREFIX)\mmex\help\*.html -del *.html
 	-if exist $(PREFIX)\mmex\help\*.png -del *.png
-	-if exist $(PREFIX)\mmex\help\*.jpg -del *.jpg
-	-if exist $(PREFIX)\mmex\help\index_fichiers\*.png -del *.png
-	-if exist $(PREFIX)\mmex\po\*.po -del *.po
 	-if exist $(PREFIX)\mmex\po\*.mo -del *.mo
 
 clean: 
@@ -387,6 +410,7 @@ clean:
 	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.pch del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.pch
 	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib
 	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.lib del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.lib
+	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua.lib del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua.lib
 	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe
 	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.ilk del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.ilk
 	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.pdb del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.pdb
@@ -412,9 +436,15 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 	$(SQLITE_OBJECTS)
 <<
 
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe: $(MMEX_OBJECTS) vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex.res
-	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)\lib\vc$(____mmex_CPU_SUF_FILENAMES)$(____mmex_LIB_SUF_FILENAMES) /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO_37) /pdb:"vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.pdb" $(__DEBUGINFO_41) $(__mmex_LINK_FLAGS) /SUBSYSTEM:WINDOWS $(LDFLAGS) @<<
-	$(MMEX_OBJECTS) $(MMEX_RESOURCES)  vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.lib $(__WXLIB_CORE_NAME_p) $(__WXLIB_QA_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua.lib: $(LUA_OBJECTS)
+	if exist $@ del $@
+	link /LIB /NOLOGO /OUT:$@ @<<
+	$(LUA_OBJECTS)
+<<
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe: $(MMEX_OBJECTS) vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex.res
+	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)\lib\vc$(____mmex_CPU_SUF_FILENAMES)$(____mmex_LIB_SUF_FILENAMES) /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO_52) /pdb:"vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.pdb" $(__DEBUGINFO_56) $(__mmex_LINK_FLAGS) /SUBSYSTEM:WINDOWS $(LDFLAGS) @<<
+	$(MMEX_OBJECTS) $(MMEX_RESOURCES)  vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua.lib $(__WXLIB_CORE_NAME_p) $(__WXLIB_QA_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib
 <<
 	mt.exe -manifest "vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe.manifest" -outputresource:"vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe";1
 
@@ -445,6 +475,108 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite_sqlite3secure.obj: ..\..\lib\sqlite\sqlite3secure.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE_CFLAGS) ..\..\lib\sqlite\sqlite3secure.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lapi.obj: ..\..\lib\lua\src\lapi.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lapi.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lauxlib.obj: ..\..\lib\lua\src\lauxlib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lauxlib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lbaselib.obj: ..\..\lib\lua\src\lbaselib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lbaselib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lbitlib.obj: ..\..\lib\lua\src\lbitlib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lbitlib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lcode.obj: ..\..\lib\lua\src\lcode.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lcode.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lcorolib.obj: ..\..\lib\lua\src\lcorolib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lcorolib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lctype.obj: ..\..\lib\lua\src\lctype.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lctype.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ldblib.obj: ..\..\lib\lua\src\ldblib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\ldblib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ldebug.obj: ..\..\lib\lua\src\ldebug.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\ldebug.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ldo.obj: ..\..\lib\lua\src\ldo.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\ldo.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ldump.obj: ..\..\lib\lua\src\ldump.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\ldump.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lfunc.obj: ..\..\lib\lua\src\lfunc.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lfunc.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lgc.obj: ..\..\lib\lua\src\lgc.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lgc.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_linit.obj: ..\..\lib\lua\src\linit.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\linit.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_liolib.obj: ..\..\lib\lua\src\liolib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\liolib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_llex.obj: ..\..\lib\lua\src\llex.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\llex.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lmathlib.obj: ..\..\lib\lua\src\lmathlib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lmathlib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lmem.obj: ..\..\lib\lua\src\lmem.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lmem.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_loadlib.obj: ..\..\lib\lua\src\loadlib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\loadlib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lobject.obj: ..\..\lib\lua\src\lobject.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lobject.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lopcodes.obj: ..\..\lib\lua\src\lopcodes.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lopcodes.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_loslib.obj: ..\..\lib\lua\src\loslib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\loslib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lparser.obj: ..\..\lib\lua\src\lparser.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lparser.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lstate.obj: ..\..\lib\lua\src\lstate.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lstate.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lstring.obj: ..\..\lib\lua\src\lstring.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lstring.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lstrlib.obj: ..\..\lib\lua\src\lstrlib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lstrlib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ltable.obj: ..\..\lib\lua\src\ltable.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\ltable.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ltablib.obj: ..\..\lib\lua\src\ltablib.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\ltablib.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_ltm.obj: ..\..\lib\lua\src\ltm.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\ltm.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lua.obj: ..\..\lib\lua\src\lua.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lua.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_luac.obj: ..\..\lib\lua\src\luac.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\luac.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lundump.obj: ..\..\lib\lua\src\lundump.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lundump.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lvm.obj: ..\..\lib\lua\src\lvm.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lvm.c
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\lua_lzio.obj: ..\..\lib\lua\src\lzio.c
+	$(CC) /c /nologo /TC /Fo$@ $(LUA_CFLAGS) ..\..\lib\lua\src\lzio.c
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_aboutdialog.obj: ..\..\src\aboutdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\aboutdialog.cpp
@@ -512,9 +644,6 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_htmlbuilder.obj: ..\..\src\htmlbuilder.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\htmlbuilder.cpp
 
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_led.obj: ..\..\src\led.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\led.cpp
-
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_maincurrencydialog.obj: ..\..\src\maincurrencydialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\maincurrencydialog.cpp
 
@@ -535,6 +664,9 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmex.obj: ..\..\src\mmex.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\mmex.cpp
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmex_settings.obj: ..\..\src\mmex_settings.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\mmex_settings.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmgraphgenerator.obj: ..\..\src\mmgraphgenerator.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\mmgraphgenerator.cpp
@@ -563,9 +695,6 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmtransaction.obj: ..\..\src\mmtransaction.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\mmtransaction.cpp
 
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_mmyahoo.obj: ..\..\src\mmyahoo.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\mmyahoo.cpp
-
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_newacctdialog.obj: ..\..\src\newacctdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\newacctdialog.cpp
 
@@ -578,8 +707,11 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_payeedialog.obj: ..\..\src\payeedialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\payeedialog.cpp
 
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_qifimport.obj: ..\..\src\qifimport.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\qifimport.cpp
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_qif_export.obj: ..\..\src\qif_export.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\qif_export.cpp
+
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_qif_import.obj: ..\..\src\qif_import.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\qif_import.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_recentfiles.obj: ..\..\src\recentfiles.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\recentfiles.cpp
@@ -598,9 +730,6 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportbudgetingperf.obj: ..\..\src\reportbudgetingperf.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\reportbudgetingperf.cpp
-
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportbudgetsetup.obj: ..\..\src\reportbudgetsetup.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\reportbudgetsetup.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_reportcashflow.obj: ..\..\src\reportcashflow.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\reportcashflow.cpp
@@ -653,7 +782,7 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_transactionfilterdialog.obj: ..\..\src\transactionfilterdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\transactionfilterdialog.cpp
 
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_src_transdialog.obj: ..\..\src\transdialog.cpp
+vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_transdialog.obj: ..\..\src\transdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\transdialog.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_univcsvdialog.obj: ..\..\src\univcsvdialog.cpp
@@ -662,15 +791,9 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_util.obj: ..\..\src\util.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\util.cpp
 
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_yahoosettingsdialog.obj: ..\..\src\yahoosettingsdialog.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\yahoosettingsdialog.cpp
-
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_platfdep.obj: ..\..\src\win\platfdep.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\win\platfdep.cpp
 
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_win_transdialog.obj: ..\..\src\win\transdialog.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\win\transdialog.cpp
-
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex.res: ..\..\resources\mmex.rc
-	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_38_p_1) $(__DEBUG_DEFINE_p_3) /i $(BOOST_DIR) /i ..\..\lib\sqlite /i ..\..\lib\wxsqlite /d NOPCH /d _WINDOWS ..\..\resources\mmex.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_53_p_1) $(__DEBUG_DEFINE_p_4) /i $(BOOST_DIR) /i ..\..\lib\sqlite /i ..\..\lib\wxsqlite /i ..\..\lib\lua\src /d NOPCH /d _WINDOWS ..\..\resources\mmex.rc
 
