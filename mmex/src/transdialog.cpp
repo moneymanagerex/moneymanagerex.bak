@@ -610,10 +610,10 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 		cbPayee_->SetValue(value);
 
 	cbPayee_->SetInsertionPoint(value.Length());
-    cbPayee_ -> SetEvtHandlerEnabled(true);
 
 //    wxSafeShowMessage(payee_name_ + wxT("--") , payee_name_);
 	OnPayeeUpdated(event);
+    cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
 }
 
