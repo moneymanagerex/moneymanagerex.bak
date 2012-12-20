@@ -135,7 +135,6 @@ private:
     double  edit_currency_rate;
 
     wxString payee_name_;
-    wxString prev_payee_name_;
     wxString amountNormalTip_;
     wxString amountTransferTip_;
     wxString notesTip_;

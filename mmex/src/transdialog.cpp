@@ -210,7 +210,6 @@ void mmTransDialog::dataToControls()
             }
         }
     }
-	prev_payee_name_ = payee_name_;
     updateControlsForTransType();
     if (edit_)
     {
@@ -558,10 +557,11 @@ void mmTransDialog::CreateControls()
 
 void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
 {
-	prev_payee_name_ = payee_name_;
+	wxString prev_payee_name = payee_name_;
     payee_name_ = cbPayee_->GetValue();
 
-    if (transaction_type_->GetSelection() != DEF_TRANSFER)
+    bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
+    if (!transfer_transaction)
     {
         payeeID_ = core_->payeeList_.GetPayeeId(payee_name_);
     }
@@ -570,7 +570,7 @@ void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
         toID_ = core_->accountList_.GetAccountId(payee_name_);
     }
 
-    if (prev_payee_name_ != payee_name_ || payee_name_.IsEmpty())
+    if (prev_payee_name != payee_name_ || payee_name_.IsEmpty())
     {
         wxCommandEvent evt(wxTE_PROCESS_ENTER, ID_DIALOG_TRANS_PAYEECOMBO);
         OnPayeeTextEnter(evt);
@@ -587,7 +587,8 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
     cbPayee_ -> Clear();
     wxArrayString data;
 
-    if (transaction_type_->GetSelection() != DEF_TRANSFER)
+    bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
+    if (!transfer_transaction)
         data = core_->payeeList_.FilterPayees(wxT(""));
     else
         data = core_->accountList_.getAccountsName(accountID_);
@@ -602,13 +603,17 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 #endif
 
     if (cbPayee_->GetCount() == 1)
+	{
 		cbPayee_->SetSelection(0);
+	}
 	else
 		cbPayee_->SetValue(value);
-    cbPayee_->SetInsertionPoint(value.Length());
+
+	cbPayee_->SetInsertionPoint(value.Length());
     cbPayee_ -> SetEvtHandlerEnabled(true);
 
-    //wxSafeShowMessage(prev_payee_name_ + wxT("--") , payee_name_);
+//    wxSafeShowMessage(payee_name_ + wxT("--") , payee_name_);
+	OnPayeeUpdated(event);
     event.Skip();
 }
 
