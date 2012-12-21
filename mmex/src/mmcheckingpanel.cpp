@@ -1407,7 +1407,11 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
     else wxASSERT(false);
 
     int transID = OnMarkTransactionDB(status);
-    refreshVisualList(transID, topItemIndex_);
+
+	if (m_cp->transFilterActive_ || (m_cp->m_currentView != VIEW_TRANS_ALL_STR))
+	    refreshVisualList(transID, topItemIndex_);
+	else
+		m_cp->m_listCtrlAccount->RefreshItems(m_selectedIndex, m_selectedIndex);
 }
 //----------------------------------------------------------------------------
 
