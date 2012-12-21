@@ -113,6 +113,7 @@ private:
 
     wxString categoryName_;
     wxString subCategoryName_;
+	wxString sTransaction_type_;
 
     wxChoice* choiceStatus_;
     wxChoice* transaction_type_;

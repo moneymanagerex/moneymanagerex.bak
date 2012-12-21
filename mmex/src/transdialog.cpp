@@ -113,7 +113,6 @@ void mmTransDialog::dataToControls()
     wxDateEvent dateEvent(dpc_, trx_date, wxEVT_DATE_CHANGED);
     GetEventHandler()->ProcessEvent(dateEvent);
 
-    wxString transTypeString;
     wxString dispAmount;
     if (edit_)
     {
@@ -121,7 +120,7 @@ void mmTransDialog::dataToControls()
         if (statusString == wxT("")) statusString = wxT("N");
         choiceStatus_->SetSelection(wxString(wxT("NRVFD")).Find(statusString));
 
-        transTypeString = pBankTransaction_->transType_;
+        sTransaction_type_ = pBankTransaction_->transType_;
 
         categID_ = pBankTransaction_->categID_;
         categoryName_ = core_->categoryList_.GetCategoryName(categID_);
@@ -149,7 +148,7 @@ void mmTransDialog::dataToControls()
     else
     {
         choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
-        transTypeString = TRANS_TYPE_WITHDRAWAL_STR;
+        sTransaction_type_ = TRANS_TYPE_WITHDRAWAL_STR;
 
         notesColour_ = textNotes_->GetForegroundColour();
         textNotes_->SetForegroundColour(wxColour(wxT("GREY")));
@@ -162,7 +161,7 @@ void mmTransDialog::dataToControls()
         edit_currency_rate = toTransAmount_ / transAmount_;
 
     size_t begin = 0, size = sizeof(TRANSACTION_TYPE)/sizeof(wxString);
-    if (transTypeString == TRANS_TYPE_TRANSFER_STR)
+    if (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR)
     {
         begin = size-1;
         transaction_type_->Disable();
@@ -174,13 +173,13 @@ void mmTransDialog::dataToControls()
         transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
         new wxStringClientData(TRANSACTION_TYPE[i]));
     }
-    transaction_type_->SetStringSelection(wxGetTranslation(transTypeString));
+    transaction_type_->SetStringSelection(wxGetTranslation(sTransaction_type_));
 
     cAdvanced_->SetValue(advancedToTransAmountSet_);
 
     wxString categString = _("Select Category");
 
-    if (transTypeString == TRANS_TYPE_TRANSFER_STR)
+	if (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR)
     {
         advancedToTransAmountSet_ = (transAmount_ != toTransAmount_);
         payee_name_ = cbPayee_->GetValue();
@@ -214,17 +213,6 @@ void mmTransDialog::dataToControls()
     if (edit_)
     {
         *split_.get() = *core_->bTransactionList_.getBankTransactionPtr(pBankTransaction_->transactionID())->splitEntries_.get();
-
-        if (split_->numEntries() > 0)
-        {
-            bCategory_->SetLabel(_("Split Category"));
-            cSplit_->SetValue(true);
-            cSplit_->Disable();
-        }
-        else
-        {
-            categString = pBankTransaction_->fullCatStr_;
-        }
     }
     else
     {
@@ -232,24 +220,23 @@ void mmTransDialog::dataToControls()
             if (categID_ > -1) categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
 
     }
-
-    bCategory_->SetLabel(categString);
-
-    if (split_->numEntries() > 0)
-        textAmount_->Enable(false);
+    SetSplitState();
 
 }
 
 void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 {
-    updateControlsForTransType();
+    sTransaction_type_ = TRANS_TYPE_WITHDRAWAL_STR;
+    wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(transaction_type_->GetSelection());
+    if (type_obj) sTransaction_type_ = type_obj->GetData();
+
+    if (payeeID_ == -1 && sTransaction_type_ != TRANS_TYPE_TRANSFER_STR)
+        updateControlsForTransType();
 }
 
 void mmTransDialog::updateControlsForTransType()
 {
-    //FIXME:
-    //SetTransferControls(transaction_type_->GetSelection()==DEF_TRANSFER);
-    bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
+    bool transfer_transaction = sTransaction_type_ == TRANS_TYPE_TRANSFER_STR;
     SetTransferControls(transfer_transaction);
     if (!edit_)
     {
@@ -713,10 +700,9 @@ void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
 
 void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
 {
-    if (cSplit_->GetValue())
+    if (cSplit_->IsChecked())
     {
         activateSplitTransactionsDlg();
-        SetSplitState();
     }
     else
     {
@@ -730,10 +716,9 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
 
             categoryName_ = core_->categoryList_.GetCategoryName(categID_);
             subCategoryName_ = core_->categoryList_.GetSubCategoryName(categID_, subcategID_);
-
-            bCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
         }
     }
+    SetSplitState();
 }
 
 wxString mmTransDialog::resetPayeeString(/*bool normal*/) //normal is deposits or withdrawls
@@ -760,18 +745,15 @@ wxString mmTransDialog::resetPayeeString(/*bool normal*/) //normal is deposits o
 
 wxString mmTransDialog::resetCategoryString()
 {
-    const wxString catStr = _("Select Category");
     categID_ = -1;
     subcategID_ = -1;
 
-    return catStr;
+    return _("Select Category");
 }
 
 void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    wxString transaction_type = wxT("");
-    wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(transaction_type_->GetSelection());
-    if (type_obj) transaction_type = type_obj->GetData();
+    wxString transaction_type = sTransaction_type_;
 
     if (payeeID_ == -1 && transaction_type != TRANS_TYPE_TRANSFER_STR)
     {
@@ -971,41 +953,58 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
 void mmTransDialog::SetSplitState()
 {
-    if (split_->numEntries() > 0)
-        cSplit_->Disable();
-    else
-    {
-        cSplit_->Enable();
-        cSplit_->SetValue(false);
-        bCategory_->SetLabel(_("Select Category"));
-    }
+    int entries = split_->numEntries();
+	wxString categString;
+	if (split_->numEntries() > 0)
+        categString = _("Split Category");
+	else
+	{
+		if (categID_ < 0)
+			categString = edit_ ? pBankTransaction_->fullCatStr_ : _("Select Category");
+		else
+			categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
+	}
+
+    bCategory_->SetLabel(categString);
+    cSplit_->SetValue(entries > 0);
+    cSplit_->Enable(entries < 2 || categID_ > -1);
+	textAmount_->Enable(entries < 1);
 }
 
 void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 {
     /* Reset Category */
-    categID_ = -1;
-    subcategID_ = -1;
-    split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
-
-    if (cSplit_->GetValue())
+    //split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
+    if (cSplit_->IsChecked())
     {
-        bCategory_->SetLabel(_("Split Category"));
         textAmount_->Enable(false);
-        wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
-        textAmount_->SetValue(dispAmount);
         activateSplitTransactionsDlg();
         SetSplitState();
     }
     else
     {
-        bCategory_->SetLabel(_("Select Category"));
-        textAmount_->Enable(true);
+        if (split_->numEntries() != 1)
+		{
+			transAmount_ = 0;
+		}
+		else
+		{
+			categID_    = split_->entries_[0]->categID_;
+            subcategID_ = split_->entries_[0]->subCategID_;
+            transAmount_  = split_->entries_[0]->splitAmount_;
+
+			if (transAmount_ < 0 )
+			{
+				transAmount_ = - transAmount_;
+                transaction_type_->SetStringSelection(wxGetTranslation(TRANS_TYPE_WITHDRAWAL_STR));
+			}
+            split_->removeSplitByIndex(0);
+		}
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
+        mmex::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
         textAmount_->SetValue(dispAmount);
     }
+    SetSplitState();
 }
 
 //----------------------------------------------------------------------------
@@ -1116,7 +1115,21 @@ void mmTransDialog::onTextEntered(wxCommandEvent& event)
 
 void mmTransDialog::activateSplitTransactionsDlg()
 {
-    SplitTransactionDialog dlg(core_, split_.get(), transaction_type_->GetSelection(), this);
+	bool bDeposit = sTransaction_type_ == TRANS_TYPE_DEPOSIT_STR;
+	boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+	if (categID_ > -1)
+	{
+        pSplitEntry->splitAmount_  = bDeposit ? transAmount_ : transAmount_;
+        pSplitEntry->categID_      = categID_;
+        pSplitEntry->subCategID_   = subcategID_;
+        pSplitEntry->category_      = core_->categoryList_.GetCategorySharedPtr(categID_, subcategID_);
+        wxASSERT(pSplitEntry->category_.lock());
+        split_->addSplit(pSplitEntry);
+	}
+	categID_ = -1;
+    subcategID_ = -1;
+
+	SplitTransactionDialog dlg(core_, split_.get(), transaction_type_->GetSelection(), this);
     if (dlg.ShowModal() == wxID_OK)
     {
         double amount = split_->getTotalSplits();
