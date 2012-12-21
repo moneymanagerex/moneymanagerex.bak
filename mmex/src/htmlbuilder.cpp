@@ -39,7 +39,7 @@ void mmHTMLBuilder::init()
     html += wxString::Format(wxT("<font size=\"%d\">\n"), font_size_);
 
     //if I need more space on the top of home page and reports I will delete user name from settings
-    if (mmIniOptions::instance().userNameString_ != wxT (""))
+    if (mmOptions::instance().userNameString_ != wxT (""))
     {
         int cols = 1;
         startTable(wxT("100%"));
@@ -52,7 +52,7 @@ void mmHTMLBuilder::init()
             cols++;
         }
         startTableCell();
-        addHeader(2, mmIniOptions::instance().userNameString_);
+        addHeader(2, mmOptions::instance().userNameString_);
         endTableCell();
         endTableRow();
         endTable();

@@ -189,7 +189,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
         wxString dt = wxDateTime::Now().FormatISODate();
         //wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
-        wxString date_format = mmOptions::instance().dateFormat;
+        wxString date_format = mmOptions::instance().dateFormat_;
         wxString payee, type, amount, categ, subcateg, transNum, notes, convDate, from_account_name;
         wxDateTime dtdt = wxDateTime::Now();
         int payeeID = -1, categID = -1, subCategID = -1, to_account_id = -1;
