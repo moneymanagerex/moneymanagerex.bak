@@ -121,8 +121,10 @@ public:
     void loadOptions( wxSQLite3Database* db );
     void saveOptions( wxSQLite3Database* db );
 
-    wxString dateFormat;
-    wxString language;
+    wxString dateFormat_;
+    wxString language_;
+    wxString userNameString_;
+
     wxString financialYearStartDayString_;
     wxString financialYearStartMonthString_;
     bool databaseUpdated_;
@@ -134,7 +136,6 @@ public:
     mmIniOptions();
     static mmIniOptions& instance();
     void loadOptions(boost::shared_ptr<MMEX_IniSettings> pIniSettings);
-    void loadInfoOptions( wxSQLite3Database* db );
     int account_image_id(mmCoreDB* core, int account_id);
 
     bool enableAssets_;
@@ -151,9 +152,8 @@ public:
     wxString logoName_;
     int html_font_size_;
     bool enableCustomAboutDialog_;
-    wxString aboutCompanyName_;
+//    wxString aboutCompanyName_;
     bool disableCategoryModify_;
-    wxString userNameString_;
     bool enableCustomTemplateDB_;
     wxString customTemplateDB_;
 

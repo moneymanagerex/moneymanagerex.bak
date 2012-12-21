@@ -746,7 +746,7 @@ void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
     }
 
     dateFormat_ = DisplayDate2FormatDate(newFormat);
-    mmOptions::instance().dateFormat=dateFormat_;
+    mmOptions::instance().dateFormat_ = dateFormat_;
 
     sampleDateText_->SetLabel(wxDateTime::Now().Format(dateFormat_));
     core_->bTransactionList_.ChangeDateFormat();
@@ -1000,8 +1000,8 @@ void mmOptionsDialog::SaveNewSystemSettings()
 void mmOptionsDialog::SaveGeneralPanelSettings()
 {
     wxTextCtrl* stun = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME);
-    mmIniOptions::instance().userNameString_ = stun->GetValue();
-    mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), mmIniOptions::instance().userNameString_); 
+    mmOptions::instance().userNameString_ = stun->GetValue();
+    mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), mmOptions::instance().userNameString_); 
 
     wxButton *languageButton = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     core_->iniSettings_->SetStringSetting(LANGUAGE_PARAMETER, languageButton->GetLabel().Lower());

@@ -266,8 +266,8 @@ void correctEmptyFileExt(wxString ext, wxString & fileName)
 
 //----------------------------------------------------------------------------
 mmOptions::mmOptions()
-: dateFormat(mmex::DEFDATEFORMAT)
-, language(wxT("english"))
+: dateFormat_(mmex::DEFDATEFORMAT)
+, language_(wxT("english"))
 , databaseUpdated_(false)
 {}
 
@@ -280,8 +280,9 @@ mmOptions& mmOptions::instance()
 //----------------------------------------------------------------------------
 void mmOptions::loadOptions(wxSQLite3Database* db)
 {
-    dateFormat = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
-
+    dateFormat_     = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
+    
     financialYearStartDayString_   = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
     financialYearStartMonthString_ = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
 }
@@ -289,7 +290,7 @@ void mmOptions::loadOptions(wxSQLite3Database* db)
 //----------------------------------------------------------------------------
 void mmOptions::saveOptions(wxSQLite3Database* db)
 {
-    mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat);
+    mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat_);
 }
 
 // --------------------------------------------------------------------------
@@ -321,11 +322,6 @@ void mmIniOptions::loadOptions(boost::shared_ptr<MMEX_IniSettings> pIniSettings)
     transCategorySelectionNone_ = pIniSettings->GetIntSetting(wxT("TRANSACTION_CATEGORY_NONE"), 1);
     transStatusReconciled_      = pIniSettings->GetIntSetting(wxT("TRANSACTION_STATUS_RECONCILED"), 0);
     transDateDefault_           = pIniSettings->GetIntSetting(wxT("TRANSACTION_DATE_DEFAULT"), 0);
-}
-
-void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
-{
-    mmIniOptions::instance().userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
 }
 
 // ---------------------------------------------------------------------------
@@ -376,7 +372,7 @@ wxString mmSelectLanguage(wxWindow *parent, boost::shared_ptr<MMEX_IniSettings> 
         lang = pIniSettings->GetStringSetting(LANGUAGE_PARAMETER, wxT("english"));
         if (!lang.empty() && locale.AddCatalog(lang) && locale.IsLoaded(lang))
         {
-            mmOptions::instance().language = lang;
+            mmOptions::instance().language_ = lang;
             return lang;
         }
     }
@@ -387,7 +383,7 @@ wxString mmSelectLanguage(wxWindow *parent, boost::shared_ptr<MMEX_IniSettings> 
     {
         bool ok = locale.AddCatalog(lang) && locale.IsLoaded(lang);
         if (!ok)  lang.clear(); // bad .mo file
-        mmOptions::instance().language = lang;
+        mmOptions::instance().language_ = lang;
         pIniSettings->SetStringSetting(LANGUAGE_PARAMETER, lang);
     }
 
@@ -445,7 +441,7 @@ wxString mmGetNiceDateString(const wxDateTime &dt)
 
 wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
 {
-    wxString dateFmt = mmOptions::instance().dateFormat;
+    wxString dateFmt = mmOptions::instance().dateFormat_;
     dateFmt.Replace(wxT("%Y%m%d"), wxT("%Y %m %d"));
     dateFmt.Replace(wxT("."), wxT(" "));
     dateFmt.Replace(wxT(","), wxT(" "));
@@ -486,7 +482,7 @@ wxString inQuotes(wxString label, wxString& delimiter)
 
 wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
 {
-    return dt.Format(mmOptions::instance().dateFormat);
+    return dt.Format(mmOptions::instance().dateFormat_);
 }
 
 wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString& dtstr, const wxString& date_format)
@@ -494,7 +490,7 @@ wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString&
     //wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     wxString date_mask = date_format;
     if (date_format.IsEmpty())
-        wxString date_mask = mmOptions::instance().dateFormat;
+        wxString date_mask = mmOptions::instance().dateFormat_;
     wxString date = dtstr;
 
     //For correct date parsing, adjust separator format to: %x/%x/%x

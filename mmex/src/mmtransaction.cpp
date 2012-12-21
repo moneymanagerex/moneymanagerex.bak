@@ -1272,7 +1272,7 @@ void mmBankTransactionList::ChangeDateFormat()
         boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
-            pBankTransaction->dateStr_ = (pBankTransaction->date_).Format(mmOptions::instance().dateFormat);
+            pBankTransaction->dateStr_ = (pBankTransaction->date_).Format(mmOptions::instance().dateFormat_);
         }
     }
 }

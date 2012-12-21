@@ -2906,7 +2906,7 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
            m_core->currencyList_.LoadBaseCurrencySettings();
 
            /* Load User Name and Other Settings */
-           mmIniOptions::instance().loadInfoOptions(m_db.get());
+           mmOptions::instance().loadOptions(m_db.get());
 
            /* Jump to new account creation screen */
            wxCommandEvent evt;
@@ -2947,7 +2947,7 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     SetTitle(title);
 
     m_topCategories.Clear();
-    mmIniOptions::instance().loadInfoOptions(m_db.get());
+    mmOptions::instance().loadOptions(m_db.get());
 
     if (m_db)
     {
