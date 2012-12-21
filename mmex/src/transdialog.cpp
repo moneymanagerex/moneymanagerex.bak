@@ -881,6 +881,12 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
         toAccountID = toID_;
         payeeID_ = -1;
+
+		if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
+        {
+            fromAccountID = toID_;
+			toAccountID = referenceAccountID_;
+        }
     }
     else
     {
@@ -889,11 +895,6 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         pPayee->categoryId_ = categID_;
         pPayee->subcategoryId_ = subcategID_;
         pPayee->UpdateDb(core_->db_.get());
-
-        if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
-        {
-            fromAccountID = referenceAccountID_;
-        }
     }
 
     if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
