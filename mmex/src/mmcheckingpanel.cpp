@@ -1819,7 +1819,11 @@ void TransactionListCtrl::refreshVisualList(const int trans_id, long topItemInde
 //  Called only when moving a deposit/withdraw transaction to a new account.
 int TransactionListCtrl::destinationAccountID(wxString accName)
 {
-    wxArrayString as = m_cp->core_->accountList_.getAccountsName(m_cp->accountID());
+    int account_id = m_cp->m_trans[m_selectedIndex]->accountID_;
+	if (m_cp->accountID() == m_cp->m_trans[m_selectedIndex]->accountID_
+	    && m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR)
+	    account_id = m_cp->m_trans[m_selectedIndex]->toAccountID_;
+	wxArrayString as = m_cp->core_->accountList_.getAccountsName(account_id);
 
     wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
     wxSingleChoiceDialog scd(this, _("Select the destination Account "), headerMsg , as);
@@ -1837,7 +1841,8 @@ int TransactionListCtrl::destinationAccountID(wxString accName)
 void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex < 0) return;
-    int toAccountID = destinationAccountID(m_cp->m_trans[m_selectedIndex]->fromAccountStr_);
+	wxString sDestAccount = m_cp->m_trans[m_selectedIndex]->fromAccountStr_;
+    int toAccountID = destinationAccountID(sDestAccount);
     if ( toAccountID != -1 )
     {
         boost::shared_ptr<mmBankTransaction> pTransaction;
