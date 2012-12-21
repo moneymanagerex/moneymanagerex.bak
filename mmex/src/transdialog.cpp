@@ -570,7 +570,7 @@ void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
         toID_ = core_->accountList_.GetAccountId(payee_name_);
     }
 
-    if (prev_payee_name != payee_name_ || payee_name_.IsEmpty())
+    if (prev_payee_name != payee_name_)
     {
         wxCommandEvent evt(wxTE_PROCESS_ENTER, ID_DIALOG_TRANS_PAYEECOMBO);
         OnPayeeTextEnter(evt);
