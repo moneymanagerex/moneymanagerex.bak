@@ -230,8 +230,7 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
     wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(transaction_type_->GetSelection());
     if (type_obj) sTransaction_type_ = type_obj->GetData();
 
-    if (payeeID_ == -1 && sTransaction_type_ != TRANS_TYPE_TRANSFER_STR)
-        updateControlsForTransType();
+    updateControlsForTransType();
 }
 
 void mmTransDialog::updateControlsForTransType()
