@@ -1111,7 +1111,7 @@ int lua2cppGetString(wxString sInput, wxString& sOutput, wxString& sError)
 
     // make my_function() available to Lua programs
     lua_register(L, "_", cpp2luaGetTranslation);
-    lua_register(L, "cpp2luaGetTextFromUser", cpp2luaGetTextFromUser);
+    lua_register(L, "mmGetTextFromUser", cpp2luaGetTextFromUser);
 
     result = luaL_loadstring(L, sInput.ToUTF8());
     if (result)
