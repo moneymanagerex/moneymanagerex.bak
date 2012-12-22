@@ -4515,8 +4515,8 @@ void mmGUIFrame::BackupDatabase(wxString filename, bool updateRequired)
         backupFile = wxFindNextFile();
     }
 
-    // limit the amount of backup files to 4
-    if (backupFileArray.Count() > 4)
+    int max =  m_core->iniSettings_->GetIntSetting(wxT("MAX_BACKUP_FILES"), 4);
+    if (backupFileArray.Count() > max)
     {
         backupFileArray.Sort(true);
         // ensure file is not read only before deleting file.
