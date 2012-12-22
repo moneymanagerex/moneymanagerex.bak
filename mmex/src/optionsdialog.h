@@ -64,7 +64,7 @@ private:
     wxComboBox* choiceDateFormat_;
     wxChoice* choiceVisible_;
     wxChoice* choiceTransVisible_;
-	wxChoice* choiceFontSize_;
+    wxChoice* choiceFontSize_;
     wxChoice* monthSelection_;
 
     /// set colour variables.
@@ -85,8 +85,9 @@ private:
     wxCheckBox* cbBudgetSetupWithoutSummary_;
     wxCheckBox* cbBudgetSummaryWithoutCateg_;
     wxCheckBox* cbIgnoreFutureTransactions_;
-    
+
     wxStaticText* sampleDateText_;
+    wxSpinCtrl *scMax_files_;
 
     bool restartRequired_;
     bool changesApplied_;
