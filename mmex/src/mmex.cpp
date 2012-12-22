@@ -4516,7 +4516,7 @@ void mmGUIFrame::BackupDatabase(wxString filename, bool updateRequired)
     }
 
     int max =  m_core->iniSettings_->GetIntSetting(wxT("MAX_BACKUP_FILES"), 4);
-    if (backupFileArray.Count() > max)
+    if (backupFileArray.Count() > (size_t)max)
     {
         backupFileArray.Sort(true);
         // ensure file is not read only before deleting file.
