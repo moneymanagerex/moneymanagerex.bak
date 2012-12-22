@@ -115,44 +115,29 @@ void mmPayeeDialog::CreateControls()
        wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
-    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer5, flagsExpand);
-
-    addButton = new wxButton( this, wxID_ADD);
-    itemBoxSizer5->Add(addButton, flags.Border(1));
-
-    editButton = new wxButton( this, wxID_EDIT);
-    itemBoxSizer5->Add(editButton, flags);
-    editButton->Disable();
-
-    deleteButton = new wxButton( this, wxID_REMOVE);
-    itemBoxSizer5->Add(deleteButton, flags);
-    deleteButton->Disable();
-
-
-    wxNotebook* acc_notebook = new wxNotebook(this,
+    wxNotebook* payee_notebook = new wxNotebook(this,
         wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
-    wxPanel* notes_tab = new wxPanel(acc_notebook, wxID_ANY);
-    acc_notebook->AddPage(notes_tab, _("Filter"));
+    wxPanel* filter_tab = new wxPanel(payee_notebook, wxID_ANY);
+    payee_notebook->AddPage(filter_tab, _("Filter"));
     wxBoxSizer *notes_sizer = new wxBoxSizer(wxVERTICAL);
-    notes_tab->SetSizer(notes_sizer);
-    itemBoxSizer2->Add(acc_notebook, flagsExpand);
+    filter_tab->SetSizer(notes_sizer);
+    itemBoxSizer2->Add(payee_notebook, flagsExpand);
 
-    textCtrl_ = new wxTextCtrl( notes_tab, wxID_ANY, wxT(""),
+    textCtrl_ = new wxTextCtrl( filter_tab, wxID_ANY, wxT(""),
         wxDefaultPosition, wxSize(240,-1), wxTE_PROCESS_ENTER);
     notes_sizer->Add(textCtrl_, flagsExpand);
     textCtrl_->SetFocus();
 
-    wxPanel* others_tab = new wxPanel(acc_notebook, wxID_ANY);
-    acc_notebook->AddPage(others_tab, _("Hide"));
+    wxPanel* hide_tab = new wxPanel(payee_notebook, wxID_ANY);
+    payee_notebook->AddPage(hide_tab, _("Hide"));
     wxBoxSizer *others_sizer = new wxBoxSizer(wxHORIZONTAL);
-    others_tab->SetSizer(others_sizer);
+    hide_tab->SetSizer(others_sizer);
 
-    hideTextCtrl_ = new wxTextCtrl( others_tab, wxID_ANY, wxT(""),
-        wxDefaultPosition, wxSize(210,-1));
-    others_sizer->Add(hideTextCtrl_, flagsExpand);
+    hideTextCtrl_ = new wxTextCtrl( hide_tab, wxID_ANY, wxT(""),
+        wxDefaultPosition, wxDefaultSize);
+    others_sizer->Add(hideTextCtrl_, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxBitmapButton* save_button = new wxBitmapButton( others_tab,
+    wxBitmapButton* save_button = new wxBitmapButton( hide_tab,
         wxID_SAVE, wxNullBitmap, wxDefaultPosition,
         wxSize(hideTextCtrl_->GetSize().GetHeight(), hideTextCtrl_->GetSize().GetHeight()));
     save_button->Show(true);
@@ -161,6 +146,21 @@ void mmPayeeDialog::CreateControls()
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, flagsExpand);
+
+    wxPanel* maintenance_tab = new wxPanel(payee_notebook, wxID_ANY);
+    payee_notebook->AddPage(maintenance_tab, _("Tools"));
+    wxBoxSizer *maintenance_sizer = new wxBoxSizer(wxHORIZONTAL);
+    maintenance_tab->SetSizer(maintenance_sizer);
+
+    addButton = new wxButton( maintenance_tab, wxID_ADD);
+    editButton = new wxButton( maintenance_tab, wxID_EDIT);
+    editButton->Disable();
+    deleteButton = new wxButton( maintenance_tab, wxID_REMOVE);
+    deleteButton->Disable();
+
+    maintenance_sizer->Add(addButton, flags.Border(1));
+    maintenance_sizer->Add(editButton, flags);
+    maintenance_sizer->Add(deleteButton, flags);
 
     selectButton = new wxButton( this, wxID_OK, _("&Select"));
     itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
