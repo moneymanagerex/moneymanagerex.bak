@@ -179,7 +179,7 @@ void mmTransDialog::dataToControls()
 
     wxString categString = _("Select Category");
 
-	if (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR)
+    if (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR)
     {
         advancedToTransAmountSet_ = (transAmount_ != toTransAmount_);
         payee_name_ = cbPayee_->GetValue();
@@ -405,7 +405,7 @@ void mmTransDialog::CreateControls()
         wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
     textAmount_->Connect(ID_DIALOG_TRANS_TEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER,
         wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
-	textAmount_->Connect( wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnKeyDown), NULL, this);
+    textAmount_->Connect( wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnKeyDown), NULL, this);
 
     toTextAmount_ = new wxTextCtrl( this, ID_DIALOG_TRANS_TOTEXTAMOUNT, wxT(""),
         wxDefaultPosition, wxSize(110, -1),
@@ -543,7 +543,7 @@ void mmTransDialog::CreateControls()
 
 void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
 {
-	wxString prev_payee_name = payee_name_;
+    wxString prev_payee_name = payee_name_;
     payee_name_ = cbPayee_->GetValue();
 
     bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
@@ -567,7 +567,7 @@ void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
 
 void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 {
-	wxString value = cbPayee_->GetValue();
+    wxString value = cbPayee_->GetValue();
 
     cbPayee_ -> SetEvtHandlerEnabled(false);
     cbPayee_ -> Clear();
@@ -589,16 +589,16 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 #endif
 
     if (cbPayee_->GetCount() == 1)
-	{
-		cbPayee_->SetSelection(0);
-	}
-	else
-		cbPayee_->SetValue(value);
+    {
+        cbPayee_->SetSelection(0);
+    }
+    else
+        cbPayee_->SetValue(value);
 
-	cbPayee_->SetInsertionPoint(value.Length());
+    cbPayee_->SetInsertionPoint(value.Length());
 
 //    wxSafeShowMessage(payee_name_ + wxT("--") , payee_name_);
-	OnPayeeUpdated(event);
+    OnPayeeUpdated(event);
     cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
 }
@@ -863,10 +863,10 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         toAccountID = toID_;
         payeeID_ = -1;
 
-		if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
+        if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
         {
             fromAccountID = toID_;
-			toAccountID = referenceAccountID_;
+            toAccountID = referenceAccountID_;
         }
     }
     else
@@ -953,21 +953,21 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 void mmTransDialog::SetSplitState()
 {
     int entries = split_->numEntries();
-	wxString categString;
-	if (split_->numEntries() > 0)
+    wxString categString;
+    if (split_->numEntries() > 0)
         categString = _("Split Category");
-	else
-	{
-		if (categID_ < 0)
-			categString = edit_ ? pBankTransaction_->fullCatStr_ : _("Select Category");
-		else
-			categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
-	}
+    else
+    {
+        if (categID_ < 0)
+            categString = edit_ ? pBankTransaction_->fullCatStr_ : wxString(_("Select Category"));
+        else
+            categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
+    }
 
     bCategory_->SetLabel(categString);
     cSplit_->SetValue(entries > 0);
     cSplit_->Enable(entries < 2 || categID_ > -1);
-	textAmount_->Enable(entries < 1);
+    textAmount_->Enable(entries < 1);
 }
 
 void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
@@ -983,22 +983,22 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     else
     {
         if (split_->numEntries() != 1)
-		{
-			transAmount_ = 0;
-		}
-		else
-		{
-			categID_    = split_->entries_[0]->categID_;
+        {
+            transAmount_ = 0;
+        }
+        else
+        {
+            categID_    = split_->entries_[0]->categID_;
             subcategID_ = split_->entries_[0]->subCategID_;
             transAmount_  = split_->entries_[0]->splitAmount_;
 
-			if (transAmount_ < 0 )
-			{
-				transAmount_ = - transAmount_;
+            if (transAmount_ < 0 )
+            {
+                transAmount_ = - transAmount_;
                 transaction_type_->SetStringSelection(wxGetTranslation(TRANS_TYPE_WITHDRAWAL_STR));
-			}
+            }
             split_->removeSplitByIndex(0);
-		}
+        }
         wxString dispAmount;
         mmex::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
         textAmount_->SetValue(dispAmount);
@@ -1114,21 +1114,21 @@ void mmTransDialog::onTextEntered(wxCommandEvent& event)
 
 void mmTransDialog::activateSplitTransactionsDlg()
 {
-	bool bDeposit = sTransaction_type_ == TRANS_TYPE_DEPOSIT_STR;
-	boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
-	if (categID_ > -1)
-	{
+    bool bDeposit = sTransaction_type_ == TRANS_TYPE_DEPOSIT_STR;
+    boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+    if (categID_ > -1)
+    {
         pSplitEntry->splitAmount_  = bDeposit ? transAmount_ : transAmount_;
         pSplitEntry->categID_      = categID_;
         pSplitEntry->subCategID_   = subcategID_;
         pSplitEntry->category_      = core_->categoryList_.GetCategorySharedPtr(categID_, subcategID_);
         wxASSERT(pSplitEntry->category_.lock());
         split_->addSplit(pSplitEntry);
-	}
-	categID_ = -1;
+    }
+    categID_ = -1;
     subcategID_ = -1;
 
-	SplitTransactionDialog dlg(core_, split_.get(), transaction_type_->GetSelection(), this);
+    SplitTransactionDialog dlg(core_, split_.get(), transaction_type_->GetSelection(), this);
     if (dlg.ShowModal() == wxID_OK)
     {
         double amount = split_->getTotalSplits();
