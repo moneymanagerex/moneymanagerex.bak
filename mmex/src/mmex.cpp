@@ -4515,7 +4515,7 @@ void mmGUIFrame::BackupDatabase(wxString filename, bool updateRequired)
         backupFile = wxFindNextFile();
     }
 
-    int max =  m_core->iniSettings_->GetIntSetting(wxT("MAX_BACKUP_FILES"), 4);
+    int max =  m_inisettings->GetIntSetting(wxT("MAX_BACKUP_FILES"), 4);
     if (backupFileArray.Count() > (size_t)max)
     {
         backupFileArray.Sort(true);
