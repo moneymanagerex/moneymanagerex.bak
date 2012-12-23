@@ -112,9 +112,10 @@ private:
     wxStaticText* header_text_;
     wxStaticText* info_panel_;
     wxStaticText* info_panel_mini_;
-    wxStaticText* itemStaticTextMainFilter_;
+    wxStaticText* stxtMainFilter_;
     wxStaticText* statTextTransFilter_;
     wxStaticBitmap* bitmapTransFilter_;
+	wxStaticBitmap* bitmapMainFilter_;
     mmFilterTransactionsDialog* transFilterDlg_;
 
     wxString m_currentView;
