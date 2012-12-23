@@ -71,7 +71,7 @@ void mmPayeeDialog::do_create(wxWindow* parent)
 
     SetIcon(mmex::getProgramIcon());
 
-    wxString sResult = core_->iniSettings_->GetStringSetting(wxT("HIDEN_PAYEES_STRING"), wxT(""));
+    wxString sResult = core_->dbInfoSettings_->GetStringSetting(wxT("HIDEN_PAYEES_STRING"), wxT(""));
     hideTextCtrl_->ChangeValue(sResult);
 
     fillControls();
@@ -207,7 +207,7 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 
 void mmPayeeDialog::fillControls()
 {
-    bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), true);
+    bool bResult = core_->dbInfoSettings_->GetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), true);
     cbShowAll_->SetValue(bResult);
 
     wxArrayString filtd = core_->payeeList_.FilterPayees(textCtrl_->GetValue());
@@ -345,7 +345,7 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
 {
-    core_->iniSettings_->SetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), cbShowAll_->IsChecked());
+    core_->dbInfoSettings_->SetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), cbShowAll_->IsChecked());
     fillControls();
 }
 
@@ -369,6 +369,6 @@ void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::saveFilterSettings(wxCommandEvent& event)
 {
-    core_->iniSettings_->SetStringSetting(wxT("HIDEN_PAYEES_STRING"), hideTextCtrl_->GetValue());
+    core_->dbInfoSettings_->SetStringSetting(wxT("HIDEN_PAYEES_STRING"), hideTextCtrl_->GetValue());
     event.Skip();
 }
