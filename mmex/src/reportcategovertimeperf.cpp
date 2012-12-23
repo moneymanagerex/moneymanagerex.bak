@@ -252,7 +252,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     // begin of table
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     wxSQLite3ResultSet q1 = getDb().ExecuteQuery(SELECT_ALL_CATEGORIES);
 

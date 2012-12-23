@@ -106,7 +106,7 @@ void mmBudgetEntryDialog::fillControls()
     else
         wxASSERT(false);
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
     wxString displayAmtString = wxT("0");
 
     if (amt <= 0.0)

@@ -252,7 +252,7 @@ int mmAssetsPanel::initVirtualListControl(int id, int col, bool asc)
 
     m_listCtrlAssets->SetColumn(col, item);
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     const  wxString sql = wxString::FromUTF8(SELECT_ALL_FROM_ASSETS_V1)
         + wxString::Format(wxT(" where ASSETTYPE in ( %s ) "), filter_.c_str())

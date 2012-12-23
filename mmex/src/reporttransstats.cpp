@@ -14,7 +14,7 @@ mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)  :
 wxString mmReportTransactionStats::getHTMLText()
 {
     int yearsHist = 5; //How many years should show the report 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     wxString rangeStr = wxString::Format(wxT("%d - %d"), year_ - yearsHist + 1, year_);
 

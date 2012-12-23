@@ -37,7 +37,7 @@ class mmOptionsDialog: public wxDialog
 
 public:
     mmOptionsDialog( );
-    mmOptionsDialog(mmCoreDB* db,
+    mmOptionsDialog(mmCoreDB* core,
         wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME,
         const wxString& caption = SYMBOL_MMOPTIONSDIALOG_TITLE,
         const wxPoint& pos = SYMBOL_MMOPTIONSDIALOG_POSITION,

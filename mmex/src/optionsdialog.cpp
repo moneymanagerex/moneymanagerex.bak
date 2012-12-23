@@ -100,8 +100,8 @@ bool mmOptionsDialog::Create(
     listDetailsPanelColor_ = mmColors::listDetailsPanelColor;
     listFutureDateColor_   = mmColors::listFutureDateColor;
 
-    currencyId_ = core_->currencyList_.getBaseCurrencySettings();
-    dateFormat_ = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    currencyId_ = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
+    dateFormat_ = core_->dbInfoSettings_->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
 
     CreateControls();
     Centre();
@@ -183,7 +183,7 @@ void mmOptionsDialog::CreateControls()
     headerStaticBoxSizer->Add(new wxStaticText(generalPanel, wxID_STATIC,
         _("User Name")), flags);
 
-    wxString userName = mmDBWrapper::getInfoSettingValue(db_, wxT("USERNAME"), wxT(""));
+    wxString userName = core_->dbInfoSettings_->GetStringSetting(wxT("USERNAME"), wxT(""));
     wxTextCtrl* userNameTextCtr = new wxTextCtrl(generalPanel, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME,
         userName);
     userNameTextCtr->SetToolTip(_("The User Name is used as a title for the database."));
@@ -254,9 +254,8 @@ void mmOptionsDialog::CreateControls()
     financialYearStaticBoxSizer->Add(financialYearStaticBoxSizerGrid);
 
     financialYearStaticBoxSizerGrid->Add(new wxStaticText(generalPanel, wxID_STATIC, _("Start Day")), flags);
+    int day = core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_DAY"), 1);
 
-    wxString financialPeriodStartDay = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
-    int day = wxAtoi(financialPeriodStartDay);
     wxSpinCtrl *textFPSDay = new wxSpinCtrl(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY,
         wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 31, day);
     textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
@@ -272,9 +271,8 @@ void mmOptionsDialog::CreateControls()
     monthSelection_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH,
         wxDefaultPosition, wxSize(100, -1), financialMonthsSelection);
     financialYearStaticBoxSizerGrid->Add(monthSelection_, flags);
-    wxString financialPeriodStartMonth = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
 
-    int monthItem = wxAtoi(financialPeriodStartMonth);
+    int monthItem = core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_MONTH"), 7);
     monthSelection_->SetSelection(monthItem - 1);
     monthSelection_->SetToolTip(_("Specify month for start of financial year"));
 
@@ -508,7 +506,7 @@ void mmOptionsDialog::CreateControls()
     itemStaticTextURL->SetFont(staticBoxFontSetting);
     othersPanelSizer->Add(itemStaticTextURL, flags);
 
-    wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
+    wxString stockURL = core_->dbInfoSettings_->GetStringSetting(wxT("STOCKURL"), mmex::DEFSTOCKURL);
     wxTextCtrl* itemTextCtrURL = new wxTextCtrl(othersPanel, ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL);
     othersPanelSizer->Add(itemTextCtrURL, flagsExpand);
     itemTextCtrURL->SetToolTip(_("Clear the field to Reset the value to system default."));
@@ -640,7 +638,7 @@ void mmOptionsDialog::CreateControls()
     importExportStaticBoxSizer->Add(userDefinedSizer);
     importExportStaticBoxSizer->AddSpacer(5);
 
-    wxString delimiter = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
+    wxString delimiter = core_->dbInfoSettings_->GetStringSetting(wxT("DELIMITER"), mmex::DEFDELIMTER);
 
     wxRadioButton* delimiterRadioButtonU4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4, _("User Defined"));
     wxRadioButton* delimiterRadioButtonC4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4, _("Comma"));
@@ -722,7 +720,7 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 {
-    int currencyID = core_->currencyList_.getBaseCurrencySettings();
+    int currencyID = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     if (mmMainCurrencyDialog::Execute(core_, this, currencyID) && currencyID != -1)
     {
@@ -967,12 +965,12 @@ void mmOptionsDialog::SaveFinancialYearStart()
     wxSpinCtrl* fysDay = (wxSpinCtrl*)FindWindow(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY);
     wxString fysDayVal = wxString::Format(wxT("%d"),fysDay->GetValue());
     mmOptions::instance().financialYearStartDayString_ = fysDayVal;
-    mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), fysDayVal);
+    core_->dbInfoSettings_->SetStringSetting(wxT("FINANCIAL_YEAR_START_DAY"), fysDayVal); 
 
     //Save Financial Year Start Month
     wxString fysMonthVal = wxString() << monthSelection_->GetSelection() + 1;
     mmOptions::instance().financialYearStartMonthString_ = fysMonthVal;
-    mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), fysMonthVal);
+    core_->dbInfoSettings_->SetStringSetting(wxT("FINANCIAL_YEAR_START_MONTH"), fysMonthVal); 
 }
 
 void mmOptionsDialog::SaveStocksUrl()
@@ -981,7 +979,7 @@ void mmOptionsDialog::SaveStocksUrl()
     wxString stockURL = url->GetValue();
     if (!stockURL.IsEmpty())
     {
-        mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKURL"), stockURL);
+        core_->dbInfoSettings_->SetStringSetting(wxT("STOCKURL"), stockURL);
     }
     else
     {
@@ -1011,14 +1009,14 @@ void mmOptionsDialog::SaveGeneralPanelSettings()
 {
     wxTextCtrl* stun = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME);
     mmOptions::instance().userNameString_ = stun->GetValue();
-    mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), mmOptions::instance().userNameString_);
+    core_->dbInfoSettings_->SetStringSetting(wxT("USERNAME"), mmOptions::instance().userNameString_);
 
     wxButton *languageButton = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     core_->iniSettings_->SetStringSetting(LANGUAGE_PARAMETER, languageButton->GetLabel().Lower());
     mmSelectLanguage(this, core_->iniSettings_, false);
 
-    core_->currencyList_.setBaseCurrencySettings(currencyId_);
-    mmDBWrapper::setInfoSettingValue(db_, wxT("DATEFORMAT"), dateFormat_);
+    core_->currencyList_.setBaseCurrencySettings(core_->dbInfoSettings_.get(), currencyId_);
+    core_->dbInfoSettings_->SetStringSetting(wxT("DATEFORMAT"), dateFormat_);
     SaveFinancialYearStart();
 }
 
@@ -1123,7 +1121,7 @@ void mmOptionsDialog::SaveImportExportPanelSettings()
 {
     wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4);
     wxString delim = st->GetValue();
-    if (!delim.IsEmpty()) mmDBWrapper::setInfoSettingValue(db_, wxT("DELIMITER"), delim);
+    if (!delim.IsEmpty()) core_->dbInfoSettings_->SetStringSetting(wxT("DELIMITER"), delim); 
 }
 
 bool mmOptionsDialog::GetUpdateCurrencyRateSetting()

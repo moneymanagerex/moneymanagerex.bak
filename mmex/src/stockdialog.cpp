@@ -46,7 +46,7 @@ mmStockDialog::mmStockDialog(mmCoreDB* core, mmStockTransactionHolder* stock_hol
     edit_ = edit;
     accountID_ = accountID;
     Create(parent, id, caption, pos, size, style);
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 }
 
 bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
@@ -233,7 +233,7 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
     if (!stockSymbol.IsEmpty())
     {
         // Use Google for stock quotes
-        wxString stockURL = mmDBWrapper::getInfoSettingValue(core_->db_.get(), wxT("STOCKURL"), mmex::DEFSTOCKURL);
+        wxString stockURL = core_->dbInfoSettings_->GetStringSetting(wxT("STOCKURL"), mmex::DEFSTOCKURL);
         //wxString paddedURL = wxT("\"") + stockURL + wxT("\"");
         //wxString httpString = wxString::Format(paddedURL, stockSymbol);
         //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL );
@@ -244,7 +244,7 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
             int hasSuffix = stockSymbol.Find(wxT("."));
             if ( hasSuffix == wxNOT_FOUND)
             {
-                wxString stockSuffix = mmDBWrapper::getInfoSettingValue(core_->db_.get(),wxT("HTTP_YAHOO_SUFFIX"), wxT(""));
+                wxString stockSuffix = core_->dbInfoSettings_->GetStringSetting(wxT("HTTP_YAHOO_SUFFIX"), wxT(""));
                 if (! stockSuffix.IsEmpty() )
                     stockSymbol << stockSuffix;
             }

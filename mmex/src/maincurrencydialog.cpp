@@ -86,7 +86,7 @@ void mmMainCurrencyDialog::fillControls()
     if (!core_) return;
 
     currencyListBox_->DeleteAllItems();
-    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
+    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     std::pair<mmCurrencyList::const_iterator, mmCurrencyList::const_iterator> range = core_->currencyList_.range();
     int idx = 0;
@@ -275,7 +275,8 @@ void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ < 0) return;
 
-    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
+//    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
+    int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting(wxT("BASECURRENCYID"), 1);
     bool usedAsBase = currencyID_ == baseCurrencyID;
 
     if (core_->accountList_.currencyInUse(currencyID_) || usedAsBase)
@@ -348,10 +349,13 @@ void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
 {
     currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
-    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
+//    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
+    int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting(wxT("BASECURRENCYID"), 1);
+
     if (baseCurrencyID == currencyID_) return;
 
-    core_->currencyList_.setBaseCurrencySettings(currencyID_);
+//    core_->currencyList_.setBaseCurrencySettings(currencyID_);
+    core_->dbInfoSettings_->SetIntSetting(wxT("BASECURRENCYID"), currencyID_);
 
     fillControls();
 	event.Skip();

@@ -83,9 +83,9 @@ mmCurrencyList::mmCurrencyList(boost::shared_ptr<wxSQLite3Database> db)
 : db_(db)
 {}
 
-void mmCurrencyList::LoadBaseCurrencySettings() const
+void mmCurrencyList::LoadBaseCurrencySettings(MMEX_IniSettings* info_table) const
 {
-    int currencyID = wxAtoi(mmDBWrapper::getInfoSettingValue(db_.get(), wxT("BASECURRENCYID"), wxT("-1")));
+    int currencyID = info_table->GetIntSetting(wxT("BASECURRENCYID"), -1);
 
     if (currencyID != -1)
     {
@@ -97,14 +97,14 @@ void mmCurrencyList::LoadBaseCurrencySettings() const
     }
 }
 
-int mmCurrencyList::getBaseCurrencySettings() const
+int mmCurrencyList::getBaseCurrencySettings(MMEX_IniSettings* info_table) const
 {
-   return wxAtoi(mmDBWrapper::getInfoSettingValue(db_.get(), wxT("BASECURRENCYID"), wxT("1")));
+   return info_table->GetIntSetting(wxT("BASECURRENCYID"), 1);
 }
 
-void mmCurrencyList::setBaseCurrencySettings(int currencyID)
+void mmCurrencyList::setBaseCurrencySettings(MMEX_IniSettings* info_table, int currencyID)
 {
-   mmDBWrapper::setInfoSettingValue(db_.get(), wxT("BASECURRENCYID"), wxString()<<currencyID);
+   info_table->SetIntSetting(wxT("BASECURRENCYID"), currencyID);
 }
 
 int mmCurrencyList::AddCurrency(boost::shared_ptr<mmCurrency> pCurrency)

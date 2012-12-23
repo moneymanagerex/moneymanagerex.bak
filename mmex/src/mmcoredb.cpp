@@ -17,6 +17,8 @@
  ********************************************************/
 
 #include "mmcoredb.h"
+#include "constants.h"
+#include "guiid.h"
 #include "util.h"
 
 //----------------------------------------------------------------------------
@@ -34,8 +36,23 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db, boost::shared_ptr<MM
     {
         throw wxSQLite3Exception(WXSQLITE_ERROR, wxT("Null pointer to database"));
     }
+    
+    // Create a global listing for info settings.
+    dbInfoSettings_.reset(new MMEX_IniSettings(db, true));
 
-    mmOptions::instance().loadOptions(db_.get());
+    // Initialize the database if creating a new one.
+    if (!dbInfoSettings_->Exists(wxT("MMEXVERSION")))
+    {
+        dbInfoSettings_->SetStringSetting(wxT("MMEXVERSION"), mmex::getProgramVersion());
+        dbInfoSettings_->SetStringSetting(wxT("DATAVERSION"), mmex::DATAVERSION);
+        dbInfoSettings_->SetStringSetting(wxT("CREATEDATE"), wxDateTime::Now().FormatISODate());
+        dbInfoSettings_->SetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+        dbInfoSettings_->Save();
+    }
+    mmOptions::instance().loadOptions(dbInfoSettings_.get());
+
+    /* Create the appropriate tables first if required */ 
+    mmDBWrapper::initDB(db_.get());
 
     /* Load the DB into memory */
     currencyList_.LoadCurrencies();             // populate currencyList_

@@ -57,7 +57,7 @@ mmAssetDialog::mmAssetDialog(wxWindow* parent, mmCoreDB* core, mmAssetHolder* as
     long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX;
 
     if (Create(parent, wxID_ANY, _("New/Edit Asset"), wxDefaultPosition, wxSize(400, 300), style))
-        core_->currencyList_.LoadBaseCurrencySettings();
+        core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 }
 
 bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)

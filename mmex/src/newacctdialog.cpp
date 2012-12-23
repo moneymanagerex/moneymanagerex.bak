@@ -192,7 +192,7 @@ void mmNewAcctDialog::CreateControls()
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Currency:")), flags);
 
-    currencyID_ = core_->currencyList_.getBaseCurrencySettings();
+    currencyID_ = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
     wxString currName = _("Select Currency");
     if (currencyID_ != -1)
     {
@@ -447,7 +447,7 @@ void mmNewAcctDialog::OnCustonImage(wxCommandEvent& event)
 {
     int selectedImage = event.GetId();
     
-    mmDBWrapper::setInfoSettingValue(core_->db_.get(), wxString::Format(wxT("ACC_IMAGE_ID_%d"), accountID_), wxString()<<selectedImage);
+    core_->dbInfoSettings_->SetStringSetting(wxString::Format(wxT("ACC_IMAGE_ID_%d"), accountID_), wxString()<<selectedImage);
     if (selectedImage == 0)
         selectedImage = mmIniOptions::instance().account_image_id(core_, accountID_);
 

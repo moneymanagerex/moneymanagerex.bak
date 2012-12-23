@@ -228,12 +228,14 @@ TEST(ViewExists)
 }
 //----------------------------------------------------------------------------
 
-TEST(initDB)
+TEST(init_DB)
 {
-    wxSQLite3Database* pDb = get_pDb().get();
+    const wxDateTime start_time(wxDateTime::UNow());
 
-    mmDBWrapper::initDB(pDb, 0);
-    CHECK(true);
+    mmCoreDB* pCore = pDb_core().get();
+    CHECK(pCore->displayDatabaseError_ == true);
+
+    displayTimeTaken(wxT("init_DB"), start_time);    
 }
 //----------------------------------------------------------------------------
 #if 0
@@ -586,9 +588,9 @@ TEST(setBaseCurrencySettings)
 
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
     CHECK(id > 0);
-    pCore->currencyList_.setBaseCurrencySettings(id);
+    pCore->currencyList_.setBaseCurrencySettings(pCore->dbInfoSettings_.get(), id);
 
-    int base_id = pCore->currencyList_.getBaseCurrencySettings();
+    int base_id = pCore->currencyList_.getBaseCurrencySettings(pCore->dbInfoSettings_.get());
 
     CHECK(base_id == id);
     displayTimeTaken(wxT("setBaseCurrencySettings"), start_time);
@@ -603,7 +605,7 @@ TEST(getBaseCurrencySettings)
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
     CHECK(id > 0);
 
-    int base_id = pCore->currencyList_.getBaseCurrencySettings();
+    int base_id = pCore->currencyList_.getBaseCurrencySettings(pCore->dbInfoSettings_.get());
     CHECK(base_id == id);
     displayTimeTaken(wxT("getBaseCurrencySettings"), start_time);
 }
@@ -614,7 +616,7 @@ TEST(loadBaseCurrencySettings)
     const wxDateTime start_time(wxDateTime::UNow());
     mmCoreDB* pCore = pDb_core().get();
 
-    pCore->currencyList_.LoadBaseCurrencySettings();
+    pCore->currencyList_.LoadBaseCurrencySettings(pCore->dbInfoSettings_.get());
 
     CHECK(true);
     displayTimeTaken(wxT("loadBaseCurrencySettings"), start_time);
@@ -638,7 +640,7 @@ TEST(getCurrencyBaseConvRate)
 #endif
 //----------------------------------------------------------------------------
 
-TEST(loadSettings)
+TEST(load_Currency_Settings)
 {
     const wxDateTime start_time(wxDateTime::UNow());
     wxSQLite3Database* pDb = get_pDb().get();
@@ -648,22 +650,23 @@ TEST(loadSettings)
     CHECK(id > 0);
 
     mmDBWrapper::loadCurrencySettings(pDb, id);
-    displayTimeTaken(wxT("loadSettings"), start_time);
+    displayTimeTaken(wxT("load_Currency_Settings"), start_time);
 }
 //----------------------------------------------------------------------------
 
 TEST(setInfoSettingValue)
 {
     const wxDateTime start_time(wxDateTime::UNow());
-    wxSQLite3Database* pDb = get_pDb().get();
+    mmCoreDB* pCore = pDb_core().get();
 
     const wxString name = wxT("settings name");
     const wxString val = wxT("settings value");
 
-    mmDBWrapper::setInfoSettingValue(pDb, name, val);
+    pCore->dbInfoSettings_->SetStringSetting(name, val);
 
-    wxString s = mmDBWrapper::getInfoSettingValue(pDb, name, wxT(""));
+    wxString s = pCore->dbInfoSettings_->GetStringSetting(name, wxT(""));
     CHECK(s == val);
+    pCore->dbInfoSettings_->Save(); // ensure they end up in the database
     displayTimeTaken(wxT("setInfoSettingValue"), start_time);
 }
 //----------------------------------------------------------------------------
@@ -671,19 +674,20 @@ TEST(setInfoSettingValue)
 TEST(getInfoSettingValue)
 {
     const wxDateTime start_time(wxDateTime::UNow());
-    wxSQLite3Database* pDb = get_pDb().get();
+    mmCoreDB* pCore = pDb_core().get();
 
     const wxString name = wxT("wrong name");
     const wxString defVal = wxT("default value");
 
-    wxString s = mmDBWrapper::getInfoSettingValue(pDb, name, defVal);
+    wxString s = pCore->dbInfoSettings_->GetStringSetting(name, defVal);
     CHECK(s == defVal);
 
     // --
 
-    mmDBWrapper::setInfoSettingValue(pDb, name, defVal);
-    s = mmDBWrapper::getInfoSettingValue(pDb, name, wxT(""));
+    pCore->dbInfoSettings_->SetStringSetting(name, defVal);
+    s = pCore->dbInfoSettings_->GetStringSetting(name, wxT(""));
     CHECK(s == defVal);
+    pCore->dbInfoSettings_->Save(); // ensure they end up in the database
     displayTimeTaken(wxT("getInfoSettingValue"), start_time);
 }
 //----------------------------------------------------------------------------
@@ -1145,15 +1149,14 @@ TEST(New_INFO_DB_TEST_1)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    boost::shared_ptr<wxSQLite3Database> pdb = get_pInidb();
-//    boost::shared_ptr<wxSQLite3Database> pdb = get_pDb();
+    //  Using the details from the master table database
+    boost::shared_ptr<wxSQLite3Database> pdb = get_pDb();
 
     MMEX_IniSettings pdb_settings(pdb, true);
-    pdb_settings.Load();
 
-    const wxString name   = wxT("setting name");
-    const wxString val    = wxT("setting value");
-    const wxString new_val = wxT("new setting value");
+    const wxString name    = wxT("New_info_test_1: setting name");
+    const wxString val     = wxT("New_info_test_1: setting value");
+    const wxString new_val = wxT("New_info_test_1: new setting value");
 
     wxString test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, val);
@@ -1161,7 +1164,7 @@ TEST(New_INFO_DB_TEST_1)
     pdb_settings.SetStringSetting(name, new_val);
     test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, new_val);
-//    pdb_settings->Save();
+    pdb_settings.Save();
 
     displayTimeTaken(wxT("New_INFO_DB_TEST_1"), start_time);
 }
@@ -1172,15 +1175,14 @@ TEST(New_INFO_DB_TEST_2)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    //  Save the details in the global ini database
+    // Using the details from the global ini database
     boost::shared_ptr<wxSQLite3Database> pdb = get_pInidb();
 
     MMEX_IniSettings pdb_settings(pdb, true);
-    pdb_settings.Load();
 
-    const wxString name   = wxT("Test 2 Setting name");
-    const wxString val    = wxT("Test 2 Setting value");
-    const wxString new_val = wxT("Test 2 new setting value");
+    const wxString name    = wxT("New_info_test_2: setting name");
+    const wxString val     = wxT("New_info_test_2: setting value");
+    const wxString new_val = wxT("New_info_test_2: new setting value");
 
     wxString test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, val);
@@ -1188,6 +1190,7 @@ TEST(New_INFO_DB_TEST_2)
     pdb_settings.SetStringSetting(name, new_val);
     test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, new_val);
+    pdb_settings.Save();
 
     displayTimeTaken(wxT("New_INFO_DB_TEST_2"), start_time);
 }
@@ -1202,11 +1205,10 @@ TEST(New_INFO_DB_TEST_3)
     boost::shared_ptr<wxSQLite3Database> pdb = get_pDb();
 
     MMEX_IniSettings pdb_settings(pdb, true);
-    pdb_settings.Load();
 
-    const wxString name   = wxT("Test 3 Setting name");
-    const wxString val    = wxT("Test 3 Setting value");
-    const wxString new_val = wxT("Test 3 new setting value");
+    const wxString name    = wxT("New_info_test_3: setting name");
+    const wxString val     = wxT("New_info_test_3: setting value");
+    const wxString new_val = wxT("New_info_test_3: new setting value");
 
     wxString test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, val);
@@ -1220,6 +1222,7 @@ TEST(New_INFO_DB_TEST_3)
 
     test_name =  pdb_settings.GetStringSetting(prev_name, wxT(""));
     CHECK_EQUAL(test_name, prev_val);
+    pdb_settings.Save();
 
     displayTimeTaken(wxT("New_INFO_DB_TEST_3"), start_time);
 }
