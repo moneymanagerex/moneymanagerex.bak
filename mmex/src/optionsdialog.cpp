@@ -185,9 +185,9 @@ void mmOptionsDialog::CreateControls()
 
     wxString userName = core_->dbInfoSettings_->GetStringSetting(wxT("USERNAME"), wxT(""));
     wxTextCtrl* userNameTextCtr = new wxTextCtrl(generalPanel, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME,
-        userName);
+        userName, wxDefaultPosition, wxSize(200, -1));
     userNameTextCtr->SetToolTip(_("The User Name is used as a title for the database."));
-    headerStaticBoxSizer->Add(userNameTextCtr, flagsExpand);
+    headerStaticBoxSizer->Add(userNameTextCtr, 1, wxEXPAND|wxALL, 5);
     generalPanelSizer->Add(headerStaticBoxSizer, flagsExpand);
 
     // Language Settings
@@ -321,12 +321,12 @@ void mmOptionsDialog::CreateControls()
     view_strings.Add(VIEW_TRANS_LAST_3MONTHS_STR);
 
     choiceTransVisible_ = new wxChoice(viewsPanel, wxID_STATIC,
-        wxDefaultPosition, wxSize(220, -1));
+        wxDefaultPosition, wxDefaultSize);
     for(size_t i = 0; i < view_strings.GetCount(); ++i)
         choiceTransVisible_->Append(wxGetTranslation(view_strings[i]),
         new wxStringClientData(view_strings[i]));
 
-    view_sizer1->Add(choiceTransVisible_, flags);
+    view_sizer1->Add(choiceTransVisible_,flags);
 
     wxString vTrans = core_->iniSettings_->GetStringSetting(wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     choiceTransVisible_->SetStringSelection(wxGetTranslation(vTrans));
@@ -965,12 +965,12 @@ void mmOptionsDialog::SaveFinancialYearStart()
     wxSpinCtrl* fysDay = (wxSpinCtrl*)FindWindow(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY);
     wxString fysDayVal = wxString::Format(wxT("%d"),fysDay->GetValue());
     mmOptions::instance().financialYearStartDayString_ = fysDayVal;
-    core_->dbInfoSettings_->SetStringSetting(wxT("FINANCIAL_YEAR_START_DAY"), fysDayVal); 
+    core_->dbInfoSettings_->SetStringSetting(wxT("FINANCIAL_YEAR_START_DAY"), fysDayVal);
 
     //Save Financial Year Start Month
     wxString fysMonthVal = wxString() << monthSelection_->GetSelection() + 1;
     mmOptions::instance().financialYearStartMonthString_ = fysMonthVal;
-    core_->dbInfoSettings_->SetStringSetting(wxT("FINANCIAL_YEAR_START_MONTH"), fysMonthVal); 
+    core_->dbInfoSettings_->SetStringSetting(wxT("FINANCIAL_YEAR_START_MONTH"), fysMonthVal);
 }
 
 void mmOptionsDialog::SaveStocksUrl()
@@ -1121,7 +1121,7 @@ void mmOptionsDialog::SaveImportExportPanelSettings()
 {
     wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4);
     wxString delim = st->GetValue();
-    if (!delim.IsEmpty()) core_->dbInfoSettings_->SetStringSetting(wxT("DELIMITER"), delim); 
+    if (!delim.IsEmpty()) core_->dbInfoSettings_->SetStringSetting(wxT("DELIMITER"), delim);
 }
 
 bool mmOptionsDialog::GetUpdateCurrencyRateSetting()
