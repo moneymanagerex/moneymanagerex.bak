@@ -278,19 +278,19 @@ mmOptions& mmOptions::instance()
 }
 
 //----------------------------------------------------------------------------
-void mmOptions::loadOptions(wxSQLite3Database* db)
+void mmOptions::loadOptions(MMEX_IniSettings* info_table)
 {
-    dateFormat_     = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
-    userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
+    dateFormat_     = info_table->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    userNameString_ = info_table->GetStringSetting(wxT("USERNAME"), wxT(""));
     
-    financialYearStartDayString_   = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
-    financialYearStartMonthString_ = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
+    financialYearStartDayString_   = info_table->GetStringSetting(wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
+    financialYearStartMonthString_ = info_table->GetStringSetting(wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
 }
 
 //----------------------------------------------------------------------------
-void mmOptions::saveOptions(wxSQLite3Database* db)
+void mmOptions::saveOptions(MMEX_IniSettings* info_table)
 {
-    mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat_);
+    info_table->SetStringSetting(wxT("DATEFORMAT"), dateFormat_);
 }
 
 // --------------------------------------------------------------------------
@@ -907,7 +907,7 @@ int site_content(const wxString& site, wxString& output)
 int mmIniOptions::account_image_id(mmCoreDB* core, int account_id)
 {
     double selectedImage = 9;
-    wxString image_num_str = mmDBWrapper::getInfoSettingValue(core->db_.get(),
+    wxString image_num_str = core->dbInfoSettings_->GetStringSetting(
         wxString::Format(wxT("ACC_IMAGE_ID_%d"), account_id), wxT(""));
     if (mmex::formatCurrencyToDouble(image_num_str, selectedImage))
     {
@@ -979,7 +979,7 @@ wxImageList* navtree_images_list_()
 
 void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
 {
-    const int currencyID = core->currencyList_.getBaseCurrencySettings();
+    const int currencyID = core->currencyList_.getBaseCurrencySettings(core->dbInfoSettings_.get());
     const wxString base_symbol = core->currencyList_.getCurrencySharedPtr(currencyID)->currencySymbol_;
     if(base_symbol.IsEmpty())
     {

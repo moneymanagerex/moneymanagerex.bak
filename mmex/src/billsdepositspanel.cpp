@@ -243,7 +243,7 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
     trans_.clear();
     listCtrlAccount_->DeleteAllItems();
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     const  wxString sql = wxString::FromUTF8(SELECT_ALL_FROM_BILLSDEPOSITS_V1)
         + wxT(" order by ") + (wxT(" NEXTOCCURRENCEDATE"));

@@ -258,7 +258,7 @@ void mmUnivCSVDialog::CreateControls()
     itemStaticText66->SetFont(staticBoxFontSetting);
     //itemStaticText66->Enable(!this->is_importer_);
     
-    wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    wxString default_date_format = core_->dbInfoSettings_->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     choiceDateFormat_ = new wxChoice(itemPanel7, ID_DIALOG_OPTIONS_DATE_FORMAT);
     for(size_t i = 0; i < date_format_mask().Count(); ++i)
     {
@@ -273,7 +273,7 @@ void mmUnivCSVDialog::CreateControls()
     int num = sizeof(choices) / sizeof(wxString);
     m_radio_box_ = new wxRadioBox(this, wxID_RADIO_BOX, wxT(""), wxDefaultPosition, wxDefaultSize, num, choices, 4, wxRA_SPECIFY_COLS);
  
-    delimit_ = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
+    delimit_ = core_->dbInfoSettings_->GetStringSetting(wxT("DELIMITER"), mmex::DEFDELIMTER);
     
     textDelimiter4 = new wxTextCtrl( this, ID_UD_DELIMIT, delimit_, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
     textDelimiter4->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
@@ -955,7 +955,7 @@ void mmUnivCSVDialog::update_preview()
     }
     else // exporter preview
     {
-        wxString date_format = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+        wxString date_format = core_->dbInfoSettings_->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
         wxString acctName = m_choice_account_->GetStringSelection();
         int fromAccountID = core_->accountList_.GetAccountId(acctName);
 

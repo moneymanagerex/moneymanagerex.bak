@@ -736,7 +736,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     int toaccountId = m_trans[selIndex]->toAccountID_;
     wxString intoaccStr = core_->accountList_.GetAccountName(toaccountId);
     wxString fromaccStr = core_->accountList_.GetAccountName(accountId);
-    int basecurrencyid = core_->currencyList_.getBaseCurrencySettings();
+    int basecurrencyid = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
     wxString transcodeStr = m_trans[selIndex]->transType_;
 
     double amount = m_trans[selIndex]->amt_;
@@ -1141,7 +1141,7 @@ void mmCheckingPanel::OnMoveTransaction(wxCommandEvent& event)
 void mmCheckingPanel::initViewTransactionsHeader()
 {
     wxString vTrans = core_->iniSettings_->GetStringSetting(wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
-    m_currentView   = mmDBWrapper::getInfoSettingValue(core_->db_.get(), wxString::Format(wxT("CHECK_FILTER_ID_%d"), m_AccountID), vTrans);
+    m_currentView   = core_->dbInfoSettings_->GetStringSetting(wxString::Format(wxT("CHECK_FILTER_ID_%d"), m_AccountID), vTrans);
 
     SetTransactionFilterState(m_currentView == VIEW_TRANS_ALL_STR);
     itemStaticTextMainFilter_->SetLabel(wxGetTranslation(m_currentView));
@@ -1222,10 +1222,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     m_listCtrlAccount->m_selectedIndex = -1;
     m_listCtrlAccount->refreshVisualList();
 
-    core_->db_.get()->Begin();
-    mmDBWrapper::setInfoSettingValue(core_->db_.get(),
-         wxString::Format(wxT("CHECK_FILTER_ID_%ld"), (long)m_AccountID), m_currentView);
-    core_->db_.get()->Commit();
+    core_->dbInfoSettings_->SetStringSetting(wxString::Format(wxT("CHECK_FILTER_ID_%ld"), (long)m_AccountID), m_currentView);
 }
 
 void mmCheckingPanel::DeleteViewedTransactions()

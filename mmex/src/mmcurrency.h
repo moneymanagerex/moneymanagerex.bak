@@ -23,6 +23,7 @@
 
 class wxSQLite3Database;
 class wxSQLite3ResultSet;
+class MMEX_IniSettings;
 
 class mmCurrency
 {
@@ -64,9 +65,9 @@ public:
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName) const;
 
-    void LoadBaseCurrencySettings() const;
-    int getBaseCurrencySettings() const;
-    void setBaseCurrencySettings(int currencyID);
+    void LoadBaseCurrencySettings(MMEX_IniSettings* info_table) const;
+    int getBaseCurrencySettings(MMEX_IniSettings* info_table) const;
+    void setBaseCurrencySettings(MMEX_IniSettings* info_table, int currencyID);
 
     std::vector< boost::shared_ptr<mmCurrency> > currencies_;
 

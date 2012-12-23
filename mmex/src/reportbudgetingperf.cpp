@@ -123,7 +123,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     hb.addTableHeaderCell(_("%"));
 	hb.endTableRow();
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     wxSQLite3Statement st = db_->PrepareStatement(SELECT_SUBCATEGS_FROM_SUBCATEGORY_V1);
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_CATEGORY_V1);

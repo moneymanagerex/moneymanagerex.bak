@@ -118,8 +118,8 @@ class mmOptions
 public:
     mmOptions();
     static mmOptions& instance();
-    void loadOptions( wxSQLite3Database* db );
-    void saveOptions( wxSQLite3Database* db );
+    void loadOptions( MMEX_IniSettings* info_table );
+    void saveOptions( MMEX_IniSettings* info_table );
 
     wxString dateFormat_;
     wxString language_;

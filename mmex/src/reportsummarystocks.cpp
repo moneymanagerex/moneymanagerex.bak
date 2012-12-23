@@ -137,7 +137,7 @@ wxString mmReportSummaryStocks::getHTMLText()
 
     }
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     double invested = 0;
     double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);

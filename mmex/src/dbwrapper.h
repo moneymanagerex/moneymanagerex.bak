@@ -436,8 +436,8 @@ boost::shared_ptr<wxSQLite3Database> Open(const wxString &dbpath, const wxString
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
 
 /* Creating new DBs */
-void initDB(wxSQLite3Database* db, wxProgressDialog* pgd);
-void createInfoV1Table(wxSQLite3Database* db);
+void initDB(wxSQLite3Database* db);
+//void createInfoV1Table(wxSQLite3Database* db);
 void createCurrencyV1Table(wxSQLite3Database* db);
 void createAccountListV1Table(wxSQLite3Database* db);
 void createCheckingAccountV1Table(wxSQLite3Database* db);
@@ -497,8 +497,8 @@ bool deleteCurrency(wxSQLite3Database* db, int currencyID);
 int addCurrency(wxSQLite3Database* db, std::vector<wxString> data);
 
 /* Operations on INFOTABLE */
-wxString getInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal = wxGetEmptyString());
-void setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
+//wxString getInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal = wxGetEmptyString());
+//void setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
 
 wxString getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSettings, const wxString &defaultVal = wxGetEmptyString());
 

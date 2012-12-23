@@ -46,6 +46,8 @@ public:
     boost::shared_ptr<wxSQLite3Database> db_;
     // Global access point to inidb settings
     boost::shared_ptr<MMEX_IniSettings> iniSettings_;
+    // Global access point to database information settings
+    boost::shared_ptr<MMEX_IniSettings> dbInfoSettings_;
 
     /* These variables form a global data access point. */
     mmCurrencyList currencyList_;

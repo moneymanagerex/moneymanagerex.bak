@@ -26,7 +26,7 @@ void mmReportCashFlow::activateBankAccounts()
 
 wxString mmReportCashFlow::getHTMLText()
 {
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     mmHTMLBuilder hb;
     hb.init();
@@ -302,7 +302,7 @@ wxString mmReportCashFlow::getHTMLText()
         }
     }
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
     bool initialMonths = true;
     int displayYear    = wxDateTime::Now().GetYear();

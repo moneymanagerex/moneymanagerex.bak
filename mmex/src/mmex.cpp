@@ -665,7 +665,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
     bool autoExecuteSilent;
     bool requireExecution;
 
-    m_core->currencyList_.LoadBaseCurrencySettings();
+    m_core->currencyList_.LoadBaseCurrencySettings(m_core->dbInfoSettings_.get());
     wxSQLite3ResultSet q1 = m_db.get()->ExecuteQuery(SELECT_ALL_FROM_BILLSDEPOSITS_V1);
     while (q1.NextRow())
     {
@@ -2903,10 +2903,10 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
            wizard->CenterOnParent();
            wizard->RunIt(true);
 
-           m_core->currencyList_.LoadBaseCurrencySettings();
+           m_core->currencyList_.LoadBaseCurrencySettings(m_core->dbInfoSettings_.get());
 
            /* Load User Name and Other Settings */
-           mmOptions::instance().loadOptions(m_db.get());
+           mmOptions::instance().loadOptions(m_core->dbInfoSettings_.get());
 
            /* Jump to new account creation screen */
            wxCommandEvent evt;
@@ -2937,17 +2937,12 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
 
 void mmGUIFrame::openDataBase(const wxString& fileName)
 {
-    mmDBWrapper::initDB(m_db.get(), 0);
-
     wxString title = mmex::getProgramName() + wxT(" : ") + fileName;
-
     if (mmex::isPortableMode())
         title << wxT(" [") << _("portable mode") << wxT(']');
 
     SetTitle(title);
-
     m_topCategories.Clear();
-    mmOptions::instance().loadOptions(m_db.get());
 
     if (m_db)
     {
@@ -4191,14 +4186,14 @@ void mmGUIFrame::DeleteCustomSqlReport()
 
 void wxNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
 {
-    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings();
+    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
 
     if (mmMainCurrencyDialog::Execute(parent_->m_core, this, currencyID_) && currencyID_ != -1)
     {
         wxString currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
         wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
         bn->SetLabel(currName);
-        parent_->m_core->currencyList_.setBaseCurrencySettings(currencyID_);
+        parent_->m_core->currencyList_.setBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get(), currencyID_);
     }
 }
 //----------------------------------------------------------------------------
@@ -4208,7 +4203,7 @@ wxNewDatabaseWizardPage1::wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) 
     parent_(parent),
     currencyID_(-1)
 {
-    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings();
+    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
     wxString currName = _("Set Currency");
     if (currencyID_ != -1)
         currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
@@ -4260,7 +4255,7 @@ bool wxNewDatabaseWizardPage1::TransferDataFromWindow()
         return false;
     }
     userName = itemUserName_->GetValue().Trim();
-    mmDBWrapper::setInfoSettingValue(parent_->m_core->db_.get(), wxT("USERNAME"), userName);
+    parent_->m_core->dbInfoSettings_->SetStringSetting(wxT("USERNAME"), userName);
 
     return true;
 }
@@ -4342,7 +4337,7 @@ bool wxAddAccountPage2::TransferDataFromWindow()
     else if (acctType == 2)
         acctTypeStr = ACCOUNT_TYPE_TERM;
 
-    int currencyID = parent_->m_core->currencyList_.getBaseCurrencySettings();
+    int currencyID = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
     if (currencyID == -1)
     {
         wxString errorMsg;

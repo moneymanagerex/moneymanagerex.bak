@@ -60,7 +60,7 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
 
     //Get Hiden Categories id from stored string
     hiden_categs_.clear();
-    wxString sSettings = mmDBWrapper::getInfoSettingValue(core_->db_.get(), wxT("HIDEN_CATEGS_ID"), wxT(""));
+    wxString sSettings = core_->dbInfoSettings_->GetStringSetting(wxT("HIDEN_CATEGS_ID"), wxT(""));
     wxStringTokenizer token(sSettings, wxT(";"));
     while (token.HasMoreTokens())
     {
@@ -542,7 +542,7 @@ void mmCategDialog::OnMenuSelected(wxCommandEvent& event)
     }
     sSettings.RemoveLast(1);
 
-    mmDBWrapper::setInfoSettingValue(core_->db_.get(), wxT("HIDEN_CATEGS_ID"), sSettings);
+    core_->dbInfoSettings_->SetStringSetting(wxT("HIDEN_CATEGS_ID"), sSettings);
 
     if (!cbShowAll_->IsChecked() || id == 2) fillControls();
     event.Skip();

@@ -318,7 +318,7 @@ void mmQIFDialog::mmExportQIF()
     const bool write_to_file = toFileCheckBox_->GetValue();
     wxString error_msg;
     wxString buffer_qif, buffer_csv;
-    delimit_ = mmDBWrapper::getInfoSettingValue(core_->db_.get(), wxT("DELIMITER"), mmex::DEFDELIMTER);
+    delimit_ = core_->dbInfoSettings_->GetStringSetting(wxT("DELIMITER"), mmex::DEFDELIMTER);
     long numRecords = 0;
 
     //Export categories

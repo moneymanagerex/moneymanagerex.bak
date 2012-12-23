@@ -42,7 +42,7 @@ wxString mmReportSummaryAssets::getHTMLText()
     hb.addTableHeaderCell(_("Notes"));
     hb.endTableRow();
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
     
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_ASSETS_V1);
 
@@ -72,7 +72,7 @@ wxString mmReportSummaryAssets::getHTMLText()
     /* Assets */
     double assetBalance = mmDBWrapper::getAssetBalance(db_);
     wxString assetBalanceStr;
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
     mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
     hb.addRowSeparator(4);

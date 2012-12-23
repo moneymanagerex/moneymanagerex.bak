@@ -88,7 +88,7 @@ bool mmStocksPanel::Create(wxWindow *parent,
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);
 
-    strLastUpdate_ = mmDBWrapper::getInfoSettingValue(core_->db_.get(), wxT("STOCKS_LAST_REFRESH_DATETIME"), wxT(""));
+    strLastUpdate_ = core_->dbInfoSettings_->GetStringSetting(wxT("STOCKS_LAST_REFRESH_DATETIME"), wxT(""));
     windowsFreezeThaw(this);
     CreateControls();
     GetSizer()->Fit(this);
@@ -247,7 +247,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     wxString str = core_->accountList_.GetAccountName(accountID_);
     header_text_->SetLabel(_("Stock Investments: ") + str);
 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
     double originalVal = 0.0;
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountID_).lock();
@@ -530,7 +530,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
     strLastUpdate_.Printf(_("%s on %s"), LastRefreshDT_.FormatTime().c_str(),
                              LastRefreshDT_.FormatDate().c_str());
-    mmDBWrapper::setInfoSettingValue(core_->db_.get(), wxT("STOCKS_LAST_REFRESH_DATETIME"), strLastUpdate_);
+    core_->dbInfoSettings_->SetStringSetting(wxT("STOCKS_LAST_REFRESH_DATETIME"), strLastUpdate_);
 
     stock_details_->SetLabel(_("Stock prices successfully updated"));    
     stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_.c_str()));

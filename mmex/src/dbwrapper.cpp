@@ -169,6 +169,7 @@ void createDefaultCategories(wxSQLite3Database* db)
 
 //----------------------------------------------------------------------------
 
+#if 0
 void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 {
     try{
@@ -222,6 +223,7 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
         wxLogError(wxT("create table INFOTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
     }
 }
+#endif
 
 void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
 {
@@ -634,57 +636,45 @@ void removeCruft(wxSQLite3Database* db)
     This routine sets up a new DB as well as update an old one
 */
 
-void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
+void mmDBWrapper::initDB(wxSQLite3Database* db)
 {
-    /* Create INFOTABLE_V1 Tables */
     db->Begin();
 
-    createInfoV1Table(db);
-    if (pgd) pgd->Update(10);
+    /* Create INFOTABLE_V1 Tables */
+//    createInfoV1Table(db);
 
     /* Create Currency Settings */
     createCurrencyV1Table(db);
-    if (pgd) pgd->Update(20);
 
     /* Create ACCOUNTLIST_V1 Tables */
     createAccountListV1Table(db);
-    if (pgd) pgd->Update(30);
 
     /* Create CHECKINGACCOUNT_V1 Tables */
     createCheckingAccountV1Table(db);
-    if (pgd) pgd->Update(40);
 
     /* Create PAYEE_V1 Tables */
     createPayeeV1Table(db);
-    if (pgd) pgd->Update(50);
 
     /* Create CATEGORY_V1 Tables */
     createCategoryV1Table(db);
-    if (pgd) pgd->Update(60);
 
     /* Create Budgeting_V1 Tables */
     createBudgetingV1Table(db);
-    if (pgd) pgd->Update(75);
 
     /* Create Bills & Deposits V1 Table */
     createBillsDepositsV1Table(db);
-    if (pgd) pgd->Update(80);
 
     /* Create Stock V1 Table */
     createStockV1Table(db);
-    if (pgd) pgd->Update(85);
 
     /* Create Asset V1 Table */
     createAssetsV1Table(db);
-    if (pgd) pgd->Update(90);
 
     /* Create SplitTransactions V1 Table */
     createSplitTransactionsV1Table(db);
-    if (pgd) pgd->Update(95);
 
     /* Create AllData view */
     createAllDataView(db);
-    if (pgd) pgd->Update(99);
 
     /* Remove Any cruft */
     removeCruft(db);
@@ -1100,6 +1090,7 @@ bool mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database &db, int transID
     return true;
 }
 
+#if 0
 wxString mmDBWrapper::getInfoSettingValue(wxSQLite3Database* db, const wxString& settingName,
                                             const wxString& defaultVal)
 {
@@ -1117,7 +1108,9 @@ wxString mmDBWrapper::getInfoSettingValue(wxSQLite3Database* db, const wxString&
 
     return value;
 }
+#endif
 
+#if 0
 void mmDBWrapper::setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName,
                                      const wxString& settingValue)
 {
@@ -1145,6 +1138,7 @@ void mmDBWrapper::setInfoSettingValue(wxSQLite3Database* db, const wxString& set
         wxLogError(wxString::Format(_("Set Info Setting Value %s = %s. Error: %s"), settingName.c_str(), settingValue.c_str(), e.GetMessage().c_str()));
     }
 }
+#endif
 
 void mmDBWrapper::addBudgetYear(wxSQLite3Database* db, const wxString &year)
 {
