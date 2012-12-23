@@ -256,8 +256,6 @@ void mmTransDialog::SetTransferControls(bool transfer)
     cbPayee_ -> SetEvtHandlerEnabled(false);
     cAdvanced_->SetValue(advancedToTransAmountSet_);
     cAdvanced_->Enable(transfer);
-    cSplit_->Enable(!transfer);
-    cSplit_->SetValue(false);
     bPayee_->Enable(!transfer);
     wxString dataStr = wxT("");
     cbPayee_->Clear();
@@ -268,6 +266,11 @@ void mmTransDialog::SetTransferControls(bool transfer)
     {
         textAmount_->SetToolTip(amountTransferTip_);
         toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
+		if (cSplit_->IsChecked())
+		{
+			cSplit_->SetValue(false);
+			split_->entries_.clear();
+		}
     }
     else
     {
@@ -322,7 +325,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
 
     if (!cbPayee_ -> SetStringSelection(dataStr))
         cbPayee_ -> SetValue(dataStr);
-
+	SetSplitState();
     cbPayee_ -> SetEvtHandlerEnabled(true);
 }
 
@@ -966,7 +969,8 @@ void mmTransDialog::SetSplitState()
 
     bCategory_->SetLabel(categString);
     cSplit_->SetValue(entries > 0);
-    cSplit_->Enable((entries < 2 || categID_ > -1) && sTransaction_type_ != TRANS_TYPE_TRANSFER_STR);
+    cSplit_->Enable((entries == 1 || entries == 0 && categID_ > -1) && sTransaction_type_ != TRANS_TYPE_TRANSFER_STR);
+
     textAmount_->Enable(entries < 1);
 }
 
@@ -976,9 +980,7 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     //split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
     if (cSplit_->IsChecked())
     {
-        textAmount_->Enable(false);
         activateSplitTransactionsDlg();
-        SetSplitState();
     }
     else
     {
