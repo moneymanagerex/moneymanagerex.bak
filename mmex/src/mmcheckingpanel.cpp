@@ -462,6 +462,7 @@ bool mmCheckingPanel::Create(
     transFilterActive_ = false;
     transFilterDlg_    = new mmFilterTransactionsDialog(core_, this);
 
+    initViewTransactionsHeader();
     initVirtualListControl();
     windowsFreezeThaw(this);
 
@@ -480,7 +481,14 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
     // depending on the clicked control's window id.
     switch( event.GetId() )
     {
-        case ID_PANEL_CHECKING_STATIC_BITMAP_VIEW :
+        case ID_PANEL_CHECKING_STATIC_BITMAP_FILTER :
+        {
+            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER);
+            GetEventHandler()->AddPendingEvent(ev);
+
+            break;
+        }
+        default:
         {
             wxMenu menu;
             menu.Append(MENU_VIEW_ALLTRANSACTIONS, wxGetTranslation(VIEW_TRANS_ALL_STR));
@@ -499,13 +507,6 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_LAST3MONTHS, wxGetTranslation(VIEW_TRANS_LAST_3MONTHS_STR));
 
             PopupMenu(&menu, event.GetPosition());
-
-            break;
-        }
-        case ID_PANEL_CHECKING_STATIC_BITMAP_FILTER :
-        {
-            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER);
-            GetEventHandler()->AddPendingEvent(ev);
 
             break;
         }
@@ -533,7 +534,6 @@ void mmCheckingPanel::CreateControls()
     header_text_ = new wxStaticText( headerPanel, wxID_STATIC, wxT(""));
     int font_size = this->GetFont().GetPointSize() + 2;
     header_text_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-
     itemBoxSizerVHeader2->Add(header_text_);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
@@ -542,30 +542,27 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerHHeader2->Add(itemFlexGridSizerHHeader2);
 
     wxBitmap itemStaticBitmap(rightarrow_xpm);
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW,
+    bitmapMainFilter_ = new wxStaticBitmap( headerPanel, wxID_ANY,
         itemStaticBitmap);
-    itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL, 0);
-    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterResetToViewAll), NULL, this);
-    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
+    itemFlexGridSizerHHeader2->Add(bitmapMainFilter_);
+    bitmapMainFilter_->Connect(wxID_ANY, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterResetToViewAll), NULL, this);
+    bitmapMainFilter_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
 
-    itemStaticTextMainFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW,
-        wxT(""));
-    itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, 0, wxALIGN_CENTER_VERTICAL, 0);
+    stxtMainFilter_ = new wxStaticText( headerPanel, wxID_ANY, wxT(""));
+    itemFlexGridSizerHHeader2->Add(stxtMainFilter_, 0, wxALIGN_CENTER_VERTICAL);
 
     itemFlexGridSizerHHeader2->AddSpacer(20);
 
     bitmapTransFilter_ = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER,
         itemStaticBitmap);
     itemFlexGridSizerHHeader2->Add(bitmapTransFilter_, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 150);
-    bitmapTransFilter_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
-    bitmapTransFilter_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
+    bitmapTransFilter_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
+    bitmapTransFilter_->Connect(wxID_ANY, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
 
-    statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_FILTER,
-        _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_CENTER_VERTICAL, 0);
+    statTextTransFilter_ = new wxStaticText( headerPanel, wxID_ANY,
+        _("Transaction Filter"));
+    itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_CENTER_VERTICAL);
     SetTransactionFilterState(false);
-
-    initViewTransactionsHeader();
 
     wxStaticText* itemStaticText12 = new wxStaticText( headerPanel,
             ID_PANEL_CHECKING_STATIC_BALHEADER1, wxT("$"), wxDefaultPosition, wxSize(120,-1));
@@ -1144,7 +1141,7 @@ void mmCheckingPanel::initViewTransactionsHeader()
     m_currentView   = core_->dbInfoSettings_->GetStringSetting(wxString::Format(wxT("CHECK_FILTER_ID_%d"), m_AccountID), vTrans);
 
     SetTransactionFilterState(m_currentView == VIEW_TRANS_ALL_STR);
-    itemStaticTextMainFilter_->SetLabel(wxGetTranslation(m_currentView));
+    stxtMainFilter_->SetLabel(wxGetTranslation(m_currentView));
 }
 //----------------------------------------------------------------------------
 void mmCheckingPanel::OnFilterResetToViewAll(wxMouseEvent& event) {
@@ -1155,7 +1152,7 @@ void mmCheckingPanel::OnFilterResetToViewAll(wxMouseEvent& event) {
         return;
     }
 
-    itemStaticTextMainFilter_->SetLabel(_("View All transactions"));
+    stxtMainFilter_->SetLabel(_("View All transactions"));
     m_currentView = VIEW_TRANS_ALL_STR;
     SetTransactionFilterState(true);
 
@@ -1177,13 +1174,10 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         return;
     }
 
-    bool show_filter_ = false;
-
     if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
     {
         m_currentView = VIEW_TRANS_ALL_STR;
         transFilterActive_ = false;
-        show_filter_ = true;
     }
     else if (evt == MENU_VIEW_RECONCILED)
         m_currentView = VIEW_TRANS_RECONCILED_STR;
@@ -1212,11 +1206,8 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     else
         wxASSERT(false);
 
-    itemStaticTextMainFilter_->SetLabel(wxGetTranslation(m_currentView));
-
-    bitmapTransFilter_->Enable(show_filter_);
-    statTextTransFilter_->Enable(show_filter_);
-
+    stxtMainFilter_->SetLabel(wxGetTranslation(m_currentView));
+    SetTransactionFilterState(m_currentView == VIEW_TRANS_ALL_STR);
     m_listCtrlAccount->DeleteAllItems();
 
     m_listCtrlAccount->m_selectedIndex = -1;
@@ -1252,12 +1243,6 @@ void mmCheckingPanel::DeleteFlaggedTransactions(const wxString status)
 
 void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
 {
-    if (m_currentView != VIEW_TRANS_ALL_STR)
-    {
-        event.Skip();
-        return;
-    }
-
     int e = event.GetEventType();
 
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
@@ -2007,6 +1992,8 @@ void mmCheckingPanel::DisplayAccountDetails(int accountID)
 
 void mmCheckingPanel::SetTransactionFilterState(bool active)
 {
-    bitmapTransFilter_->Enable(active);
-    statTextTransFilter_->Enable(active);
+    bitmapTransFilter_->Enable(active || transFilterActive_);
+    statTextTransFilter_->Enable(active || transFilterActive_);
+	bitmapMainFilter_->Enable(!transFilterActive_);
+    stxtMainFilter_->Enable(!transFilterActive_);
 }
