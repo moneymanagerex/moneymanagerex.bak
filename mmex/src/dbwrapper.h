@@ -430,14 +430,13 @@ enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
 namespace mmDBWrapper
 {
 
-//int isReadOnly(wxSQLite3Database &db);
 boost::shared_ptr<wxSQLite3Database> Open(const wxString &dbpath, const wxString &key = wxGetEmptyString());
 
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
 
 /* Creating new DBs */
 void initDB(wxSQLite3Database* db);
-//void createInfoV1Table(wxSQLite3Database* db);
+
 void createCurrencyV1Table(wxSQLite3Database* db);
 void createAccountListV1Table(wxSQLite3Database* db);
 void createCheckingAccountV1Table(wxSQLite3Database* db);
@@ -496,10 +495,6 @@ double getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID);
 bool deleteCurrency(wxSQLite3Database* db, int currencyID);
 int addCurrency(wxSQLite3Database* db, std::vector<wxString> data);
 
-/* Operations on INFOTABLE */
-//wxString getInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal = wxGetEmptyString());
-//void setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
-
 wxString getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSettings, const wxString &defaultVal = wxGetEmptyString());
 
 /* Stocks API */
@@ -512,7 +507,6 @@ double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, bool conv
 void deleteAsset(wxSQLite3Database* db, int assetID);
 double getAssetBalance(wxSQLite3Database* db);
 double getAssetValue(wxSQLite3Database* db, int assetID);
-
 
 //----------------------------------------------------------------------------
 
