@@ -17,13 +17,17 @@
  *************************************************************************/
 
 #include "customreportdisplay.h"
+#include "lua_interface.h"
 #include "util.h"
 
 mmCustomSQLReport::mmCustomSQLReport(wxWindow* parent, mmCoreDB* core
-    , const wxString& reportTitle, const wxString& sScript, const wxString& sSctiptType):
-    mmPrintableBase(core), parent_(parent), reportTitle_(reportTitle), sScript_(sScript), sSctiptType_(sSctiptType)
-{
-}
+, const wxString& reportTitle, const wxString& sScript, const wxString& sScriptType)
+: mmPrintableBase(core)
+, parent_(parent)
+, reportTitle_(reportTitle)
+, sScript_(sScript)
+, sScriptType_(sScriptType)
+{}
 
 void mmCustomSQLReport::displayReportHeader(mmHTMLBuilder& hb, const wxString reportTitle)
 {
@@ -40,7 +44,7 @@ wxString mmCustomSQLReport::getHTMLText()
     hb.startTable(wxT("90%"));
 
     wxString lower;
-    if (sSctiptType_ == wxT("SQL"))
+    if (sScriptType_ == wxT("SQL"))
     {
         int rows = 0;
         wxString error_string;
@@ -112,14 +116,12 @@ wxString mmCustomSQLReport::getHTMLText()
         delete [] alignRight;
         sqlQueryResult.Finalize();
     }
-    else if (sSctiptType_ == wxT("Lua"))
+    else if (sScriptType_ == wxT("LUA"))
     {
-        wxString sOutput, sError;
-        int e = lua2cppGetString(sScript_, sOutput, sError);
-        if (e == 0)
-            hb.addParaText(sOutput);
-        else
-            hb.addParaText(sError);
+        TLuaInterface lua;
+        wxString lua_result = lua.RunLuaCode(sScript_);
+
+        hb.addParaText(lua_result);
     }
     else
         wxASSERT(true);
@@ -127,7 +129,7 @@ wxString mmCustomSQLReport::getHTMLText()
     hb.endTable();
     hb.endCenter();
 
-    if (sSctiptType_ == wxT("SQL"))
+    if (sScriptType_ == wxT("SQL"))
     {
         if (lower.Contains(wxT("update")))
              hb.addHeader(2, _("Dababase updated succesfully"));

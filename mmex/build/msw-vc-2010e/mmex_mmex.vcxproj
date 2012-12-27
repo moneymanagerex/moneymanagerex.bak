@@ -349,6 +349,7 @@
     <ClCompile Include="..\..\src\filtertransdialog.cpp" />
     <ClCompile Include="..\..\src\guiid.cpp" />
     <ClCompile Include="..\..\src\htmlbuilder.cpp" />
+    <ClCompile Include="..\..\src\lua_interface.cpp" />
     <ClCompile Include="..\..\src\maincurrencydialog.cpp" />
     <ClCompile Include="..\..\src\mmaccount.cpp" />
     <ClCompile Include="..\..\src\mmcategory.cpp" />
@@ -424,6 +425,7 @@
     <ClInclude Include="..\..\src\filtertransdialog.h" />
     <ClInclude Include="..\..\src\guiid.h" />
     <ClInclude Include="..\..\src\htmlbuilder.h" />
+    <ClInclude Include="..\..\src\lua_interface.h" />
     <ClInclude Include="..\..\src\maincurrencydialog.h" />
     <ClInclude Include="..\..\src\mm_Scriptable_Objects.h" />
     <ClInclude Include="..\..\src\mmaccount.h" />

@@ -1332,20 +1332,15 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
 
 void mmGUIFrame::CreateCustomReport(int index)
 {
-    wxString rfn = custRepIndex_->reportFileName(index);
-    wxString sReporttype = rfn.substr(rfn.Length()-4);
-    if (sReporttype == wxT(".sql"))
-        sReporttype = wxT("SQL");
-    else
-        sReporttype = wxT("Lua");
-
-    if (rfn != wxT(""))
+    if (custRepIndex_->reportFileName(index) != wxT(""))
     {
-        wxString sqlStr;
-        if (custRepIndex_->getSqlFileData(sqlStr) )
+        wxString sScript;
+        if (custRepIndex_->getSqlFileData(sScript) )
         {
             mmCustomSQLReport* csr = new mmCustomSQLReport(this, m_core.get()
-                , custRepIndex_->currentReportTitle(), sqlStr, sReporttype);
+                , custRepIndex_->currentReportTitle()
+                , sScript
+                , custRepIndex_->currentReportFileType());
             menuPrintingEnable(true);
             createReportsPage(csr);
         }
@@ -4169,7 +4164,11 @@ void mmGUIFrame::DeleteCustomSqlReport()
 
         if (! custRepIndex_->currentReportFileName(false).IsEmpty())
         {
-            msg = wxString() << _("Do you want to delete the SQL file as well?") << wxT("\n");
+            if (custRepIndex_->currentReportFileType() == wxT("LUA"))
+                msg = wxString() << _("Do you want to delete the LUA file as well?");
+            else
+                msg = wxString() << _("Do you want to delete the SQL file as well?");
+            msg << wxT("\n");
             if ( wxMessageBox(msg, custRepIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
             {
                 if (wxFileExists(custRepIndex_->currentReportFileName()))
