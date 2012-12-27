@@ -234,13 +234,19 @@
     <ClCompile Include="..\..\..\src\qif_import.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\dbwrapper_test.cpp">
-      <Filter>Test Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tests\util_test.cpp">
       <Filter>Test Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\tests\mmex_tests.cpp">
+      <Filter>Test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lua_interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\mmex_lua_test.cpp">
+      <Filter>Test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\dbwrapper_test.cpp">
       <Filter>Test Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -477,6 +483,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\qif_import.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lua_interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

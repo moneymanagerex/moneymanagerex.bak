@@ -96,6 +96,10 @@ void mmCustomSQLDialog::CreateControls()
     int num = sizeof(choices) / sizeof(wxString);
     m_radio_box_ = new wxRadioBox(this, wxID_STATIC, wxT("")
         , wxDefaultPosition, wxDefaultSize, num, choices, 2, wxRA_SPECIFY_COLS);
+    if (reportIndex_->currentReportFileType() == wxT("LUA"))
+    {
+        m_radio_box_->SetSelection(1);
+    }
     flex_sizer->Add(m_radio_box_, flags.Center());
 
     headingOnlyCheckBox_ = new wxCheckBox(this, DIALOG_CUSTOM_SQL_CHKBOX_HEADING_ONLY, _("Heading"));
@@ -204,7 +208,7 @@ wxString mmCustomSQLDialog::sSctiptType()
     if (i == 0)
         return wxT("SQL");
     else
-        return wxT("Lua");
+        return wxT("LUA");
 }
 
 void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)

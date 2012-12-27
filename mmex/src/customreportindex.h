@@ -62,6 +62,8 @@ public:
     /** Returns the report filename.
         Valid after calling: : nextReportTitle() or reportFileName() */
     wxString currentReportFileName(bool withfilePath = true);
+    wxString currentReportFileExt();
+    wxString currentReportFileType();
 
     /** Return index of user selected report title as ID: Custom_Report_xxx.
         sets: validTitle_ currentReportTitle_ currentReportFileName_ currentReportFileIndex_ */
@@ -96,7 +98,10 @@ private:
     wxTextFile* indexFile_; 
     wxString currentReportTitle_;
     wxString currentReportFileName_;
+    wxString currentReportFileExt_;
+    wxString currentReportFileType_;
 
+    void SetNewCurrentFileValues();
     void LoadArrays(wxArrayString& titleArray, wxArrayString& fileNameArray, wxArrayString& subArray);
 };
 

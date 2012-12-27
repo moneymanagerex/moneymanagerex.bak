@@ -96,10 +96,14 @@ wxString customSQLReportIndex::nextReportTitle()
         if (!line.IsEmpty())
         {
             wxStringTokenizer tk(line, wxT("|"));
-            currentReportTitle_     = tk.GetNextToken();
-            currentReportFileName_  = tk.GetNextToken();
+            currentReportTitle_    = tk.GetNextToken();
+            currentReportFileName_ = tk.GetNextToken();
+            SetNewCurrentFileValues();
+
             if (tk.HasMoreTokens())
+            {
                 reportIsSubReport_ = true;
+            }
             validTitle_ = true;
         }
     }
@@ -117,9 +121,21 @@ wxString customSQLReportIndex::currentReportFileName(bool withfilePath)
     if ( ! currentReportFileName_.IsEmpty() )
     {
         if (withfilePath)
+        {
             returnStr = wxString() << mmex::getPathUser(mmex::DIRECTORY) << currentReportFileName_;
+        }
     }
     return returnStr;
+}
+
+wxString customSQLReportIndex::currentReportFileExt()
+{
+    return currentReportFileExt_;
+}
+
+wxString customSQLReportIndex::currentReportFileType()
+{
+    return currentReportFileType_;
 }
 
 wxString customSQLReportIndex::reportFileName(int index)
@@ -156,6 +172,18 @@ wxString customSQLReportIndex::UserDialogHeading()
     return _("Custom Reports");
 }
 
+void customSQLReportIndex::SetNewCurrentFileValues()
+{
+    currentReportFileExt_ = currentReportFileName_.substr(currentReportFileName_.Length()-4);
+    currentReportFileExt_.MakeUpper();
+    if (currentReportFileExt_ == wxT(".SQL"))
+        currentReportFileType_ = wxT("SQL");
+    else if (currentReportFileExt_ == wxT(".LUA"))
+        currentReportFileType_ = wxT("LUA");
+    else 
+        currentReportFileType_ = wxT("");
+}
+
 wxString customSQLReportIndex::getUserTitleSelection(wxString description)
 {
     wxArrayString reportTitles;
@@ -176,6 +204,7 @@ wxString customSQLReportIndex::getUserTitleSelection(wxString description)
         {
             currentReportTitle_     = reportTitles.Item(selectionIndex);
             currentReportFileName_  = reportFileNames.Item(selectionIndex);
+            SetNewCurrentFileValues();
             validTitle_ = true;
             if ( reportIsSub.Item(selectionIndex) == wxT("SUB"))
                 reportIsSubReport_ = true;
@@ -209,6 +238,7 @@ void customSQLReportIndex::getSelectedTitleSelection(wxString titleIndex)
 
     currentReportTitle_     = reportTitles.Item(index);
     currentReportFileName_  = reportFileNames.Item(index);
+    SetNewCurrentFileValues();
     currentReportFileIndex_ = index + 4;  // Add number of header lines in file.
     validTitle_ = true;
     if ( reportIsSub.Item(index) == wxT("SUB"))

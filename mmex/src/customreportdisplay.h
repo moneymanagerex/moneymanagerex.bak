@@ -25,7 +25,7 @@ class mmCustomSQLReport : public mmPrintableBase
 {
 public:
     mmCustomSQLReport(wxWindow* parent, mmCoreDB* core
-        , const wxString& reportTitle, const wxString& sqlQuery, const wxString& sSctiptType);
+        , const wxString& reportTitle, const wxString& sScript, const wxString& sScriptType);
 
     wxString getHTMLText();
     void displayReportHeader(mmHTMLBuilder& hb, const wxString reportTitle);
@@ -33,7 +33,7 @@ public:
 private:
     wxString reportTitle_;
     wxString sScript_;
-    wxString sSctiptType_;
+    wxString sScriptType_;
     wxWindow* parent_;
 };
 

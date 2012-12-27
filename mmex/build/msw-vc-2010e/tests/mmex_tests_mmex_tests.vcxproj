@@ -345,9 +345,9 @@
     <ClCompile Include="..\..\..\src\customreportdisplay.cpp" />
     <ClCompile Include="..\..\..\src\customreportindex.cpp" />
     <ClCompile Include="..\..\..\src\dbwrapper.cpp" />
+    <ClCompile Include="..\..\..\src\lua_interface.cpp" />
     <ClCompile Include="..\..\..\src\qif_export.cpp" />
     <ClCompile Include="..\..\..\src\qif_import.cpp" />
-    <ClCompile Include="..\..\..\src\tests\dbwrapper_test.cpp" />
     <ClCompile Include="..\..\..\src\fileviewerdialog.cpp" />
     <ClCompile Include="..\..\..\src\filtertransdialog.cpp" />
     <ClCompile Include="..\..\..\src\guiid.cpp" />
@@ -360,6 +360,8 @@
     <ClCompile Include="..\..\..\src\mmcurrency.cpp" />
     <ClCompile Include="..\..\..\src\mmex.cpp" />
     <ClCompile Include="..\..\..\src\mmex_settings.cpp" />
+    <ClCompile Include="..\..\..\src\tests\dbwrapper_test.cpp" />
+    <ClCompile Include="..\..\..\src\tests\mmex_lua_test.cpp" />
     <ClCompile Include="..\..\..\src\tests\mmex_tests.cpp" />
     <ClCompile Include="..\..\..\src\mmgraphgenerator.cpp" />
     <ClCompile Include="..\..\..\src\mmgraphincexpensesmonth.cpp" />
@@ -427,6 +429,7 @@
     <ClInclude Include="..\..\..\src\filtertransdialog.h" />
     <ClInclude Include="..\..\..\src\guiid.h" />
     <ClInclude Include="..\..\..\src\htmlbuilder.h" />
+    <ClInclude Include="..\..\..\src\lua_interface.h" />
     <ClInclude Include="..\..\..\src\maincurrencydialog.h" />
     <ClInclude Include="..\..\..\src\mm_Scriptable_Objects.h" />
     <ClInclude Include="..\..\..\src\mmaccount.h" />
