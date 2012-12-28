@@ -65,6 +65,7 @@ private:
     wxCheckBox* headingOnlyCheckBox_;
     wxCheckBox* subMenuCheckBox_;
     wxRadioBox* m_radio_box_;
+    wxTreeCtrl* treeCtrl_;
 
     bool Create( wxWindow* parent,
         wxWindowID id = wxID_ANY,
@@ -75,6 +76,7 @@ private:
 
     /// Creates the controls and sizers
     void CreateControls();
+    void fillControls();
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
     void OnRun(wxCommandEvent& event);
@@ -84,7 +86,7 @@ private:
     void OnCheckedSubReport(wxCommandEvent& event);
     void OnTextChangeHeading(wxCommandEvent& event);
     void OnTextChangeSubReport(wxCommandEvent& event);
-    void SetDialogBoxForHeadings();    
+    void SetDialogBoxForHeadings();
 };
 
 #endif

@@ -67,104 +67,12 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
     SetIcon(mmex::getProgramIcon());
     Centre();
 
+    fillControls();
     return TRUE;
 }
 
-void mmCustomSQLDialog::CreateControls()
+void mmCustomSQLDialog::fillControls()
 {
-    wxSizerFlags flags, flagsExpand;
-    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
-
-    wxBoxSizer* mainBoxSizer = new wxBoxSizer(wxVERTICAL);
-    this->SetSizer(mainBoxSizer);
-
-    /****************************************
-     Parameters Area
-     ***************************************/
-
-    wxBoxSizer* headingPanelSizerH = new wxBoxSizer(wxHORIZONTAL);
-    mainBoxSizer->Add(headingPanelSizerH, 5, wxGROW|wxALL, 5);
-
-    wxBoxSizer* headingPanelSizerH2 = new wxBoxSizer(wxVERTICAL);
-    headingPanelSizerH2->AddSpacer(15);
-
-    headingPanelSizerH->Add(headingPanelSizerH2);
-	wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 2, 0, 0);
-    //
-    flex_sizer->Add(new wxStaticText( this, wxID_ANY, _("Script type:")), flags.Bottom());
-    wxString choices[] = { _("SQL"), _("Lua")};
-    int num = sizeof(choices) / sizeof(wxString);
-    m_radio_box_ = new wxRadioBox(this, wxID_STATIC, wxT("")
-        , wxDefaultPosition, wxDefaultSize, num, choices, 2, wxRA_SPECIFY_COLS);
-    if (reportIndex_->currentReportFileType() == wxT("LUA"))
-    {
-        m_radio_box_->SetSelection(1);
-    }
-    flex_sizer->Add(m_radio_box_, flags.Center());
-
-    headingOnlyCheckBox_ = new wxCheckBox(this, DIALOG_CUSTOM_SQL_CHKBOX_HEADING_ONLY, _("Heading"));
-    flex_sizer->Add(headingOnlyCheckBox_, flags);
-
-    subMenuCheckBox_ = new wxCheckBox( this, DIALOG_CUSTOM_SQL_CHKBOX_SUB_REPORT, _("Sub-Menu"));
-    flex_sizer->Add(subMenuCheckBox_, flags);
-
-    flex_sizer->Add(new wxStaticText( this, wxID_ANY, _("Report Title:")), flags);
-    flex_sizer->AddSpacer(1);
-
-    reportTitleTxtCtrl_ = new wxTextCtrl( this, wxID_FILE, wxT(""),
-        wxDefaultPosition, wxSize(titleTextWidth,-1));
-    reportTitleTxtCtrl_->SetToolTip(_("Report Title is used as the file name of the SQL script."));
-
-    headingPanelSizerH2->Add(flex_sizer, flags);
-    headingPanelSizerH2->Add(reportTitleTxtCtrl_, flags);
-    headingPanelSizerH2->AddSpacer(titleTextWidth);
-
-    /****************************************
-     Script Area
-     ***************************************/
-    // ListBox for source code
-    wxBoxSizer* headingPanelSizerV3 = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer* headingPanelSizerH4 = new wxBoxSizer(wxHORIZONTAL);
-    headingPanelSizerH->Add(headingPanelSizerV3, 1, wxGROW|wxALL, 5);
-    
-    headingPanelSizerV3->Add(new wxStaticText( this, wxID_ANY, _("Custom script:")), flags);
-    sSourceTxtCtrl_ = new wxTextCtrl( this, wxID_VIEW_DETAILS, wxT(""),
-        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
-    headingPanelSizerV3->Add(sSourceTxtCtrl_, 1, wxGROW|wxALL);
-    headingPanelSizerV3->Add(headingPanelSizerH4, flagsExpand.Center());
-
-    button_Open_ = new wxButton( this, wxID_OPEN);
-    headingPanelSizerH4->Add(button_Open_, flags.Center());
-    button_Open_->SetToolTip(_("Locate and load an SQL script file into the script area."));
-
-    button_Save_ = new wxButton( this, wxID_SAVE);
-    headingPanelSizerH4->Add(button_Save_, flags);
-    button_Save_->SetToolTip(_("Save SQL script to file name set by the Report Title."));
-
-    wxButton* button_Clear = new wxButton( this, wxID_CLEAR);
-    headingPanelSizerH4->Add(button_Clear, flags);
-    button_Clear->SetToolTip(_("Clear the SQL Source script area"));
-
-    /****************************************
-     Bottom Panel
-     ***************************************/
-    wxPanel* buttonPanel = new wxPanel( this, wxID_STATIC,  wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    mainBoxSizer->Add(buttonPanel, flagsExpand.Center());
-
-    wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonPanel->SetSizer(buttonPanelSizer);
-
-    button_Run_ = new wxButton( buttonPanel, wxID_REFRESH, _("&Run"));
-    buttonPanelSizer->Add(button_Run_, flags);
-    button_Run_->SetToolTip(_("Test script. Save before running. SQL errors will result in loss of script."));
-
-    wxButton* button_Close = new wxButton( buttonPanel, wxID_CLOSE);
-    buttonPanelSizer->Add(button_Close, flags);
-    button_Close->SetToolTip(_("Save changes before closing. Changes without Save will be lost."));
-
-    //wxButton* button_Help = new wxButton( buttonPanel, wxID_HELP);
-    //buttonPanelSizer->Add(button_Help, flags);
-
     button_Save_->Disable(); // Will be activated if text changes in either text field.
 
     if (edit_)
@@ -190,6 +98,140 @@ void mmCustomSQLDialog::CreateControls()
     {
         button_Run_->Disable();
     }
+
+    treeCtrl_->DeleteAllItems();
+    wxTreeItemId root_ = treeCtrl_->AddRoot(_("Custom Reports"));
+
+    customSQLReportIndex* custRepIndex_ = new customSQLReportIndex();
+    if (custRepIndex_->hasActiveSQLReports())
+    {
+        int reportNumber = -1;
+        wxString reportNumberStr;
+        wxTreeItemId customSqlReportRootItem;
+        custRepIndex_->resetReportsIndex();
+        wxString reportTitle = custRepIndex_->nextReportTitle();
+        while (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReportItem;
+            if (custRepIndex_->reportIsSubReport() && reportNumber >= 0 )
+            {
+                customSqlReportItem = treeCtrl_->AppendItem(customSqlReportRootItem, reportTitle);
+            }
+            else
+            {
+                customSqlReportItem = treeCtrl_->AppendItem(root_, reportTitle);
+                customSqlReportRootItem = customSqlReportItem;
+            }
+            reportNumberStr.Printf(wxT("Custom_Report_%d"), ++reportNumber);
+            treeCtrl_->SetItemData(customSqlReportItem, new mmTreeItemData(reportNumberStr));
+            reportTitle = custRepIndex_->nextReportTitle();
+        }
+    }
+    treeCtrl_->ExpandAll();
+    //TODO: Under construncion
+    treeCtrl_->Disable();
+}
+
+void mmCustomSQLDialog::CreateControls()
+{
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxEXPAND).Border(wxALL, 5).Proportion(1);
+
+    wxBoxSizer* mainBoxSizer = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(mainBoxSizer);
+
+    /****************************************
+     Parameters Area
+     ***************************************/
+
+    wxBoxSizer* headingPanelSizerH = new wxBoxSizer(wxHORIZONTAL);
+    mainBoxSizer->Add(headingPanelSizerH, 5, wxGROW|wxALL, 5);
+
+    wxBoxSizer* headingPanelSizerH2 = new wxBoxSizer(wxVERTICAL);
+    headingPanelSizerH2->AddSpacer(15);
+
+    headingPanelSizerH->Add(headingPanelSizerH2, 0, wxEXPAND);
+    wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 2, 0, 0);
+    //
+    flex_sizer->Add(new wxStaticText( this, wxID_ANY, _("Script type:")), flags);
+    wxString choices[] = { _("SQL"), _("Lua")};
+    int num = sizeof(choices) / sizeof(wxString);
+    m_radio_box_ = new wxRadioBox(this, wxID_STATIC, wxT("")
+        , wxDefaultPosition, wxDefaultSize, num, choices, 2, wxRA_SPECIFY_COLS);
+    if (reportIndex_->currentReportFileType() == wxT("LUA"))
+    {
+        m_radio_box_->SetSelection(1);
+    }
+    flex_sizer->Add(m_radio_box_, flags.Center());
+
+    headingOnlyCheckBox_ = new wxCheckBox(this, DIALOG_CUSTOM_SQL_CHKBOX_HEADING_ONLY, _("Heading"));
+    flex_sizer->Add(headingOnlyCheckBox_, flags);
+
+    subMenuCheckBox_ = new wxCheckBox( this, DIALOG_CUSTOM_SQL_CHKBOX_SUB_REPORT, _("Sub-Menu"));
+    flex_sizer->Add(subMenuCheckBox_, flags);
+
+    flex_sizer->Add(new wxStaticText( this, wxID_ANY, _("Report Title:")), flags);
+    flex_sizer->AddSpacer(1);
+
+    reportTitleTxtCtrl_ = new wxTextCtrl( this, wxID_FILE, wxT(""),
+        wxDefaultPosition, wxSize(titleTextWidth,-1));
+    reportTitleTxtCtrl_->SetToolTip(_("Report Title is used as the file name of the SQL script."));
+
+    treeCtrl_ = new wxTreeCtrl( this, wxID_ANY,
+    wxDefaultPosition, wxSize(titleTextWidth, titleTextWidth)
+        , wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
+
+    headingPanelSizerH2->Add(flex_sizer, flags);
+    headingPanelSizerH2->Add(reportTitleTxtCtrl_, flags);
+    headingPanelSizerH2->Add(treeCtrl_, flagsExpand);
+
+    /****************************************
+     Script Area
+     ***************************************/
+    // ListBox for source code
+    wxBoxSizer* headingPanelSizerV3 = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* headingPanelSizerH4 = new wxBoxSizer(wxHORIZONTAL);
+    headingPanelSizerH->Add(headingPanelSizerV3, flagsExpand);
+
+    headingPanelSizerV3->Add(new wxStaticText( this, wxID_ANY, _("Custom script:")), flags);
+    sSourceTxtCtrl_ = new wxTextCtrl( this, wxID_VIEW_DETAILS, wxT(""),
+        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
+    headingPanelSizerV3->Add(sSourceTxtCtrl_, flagsExpand);
+    headingPanelSizerV3->Add(headingPanelSizerH4, flags.Center());
+
+    button_Open_ = new wxButton( this, wxID_OPEN);
+    headingPanelSizerH4->Add(button_Open_, flags);
+    button_Open_->SetToolTip(_("Locate and load an SQL script file into the script area."));
+
+    button_Save_ = new wxButton( this, wxID_SAVE);
+    headingPanelSizerH4->Add(button_Save_, flags);
+    button_Save_->SetToolTip(_("Save SQL script to file name set by the Report Title."));
+
+    wxButton* button_Clear = new wxButton( this, wxID_CLEAR);
+    headingPanelSizerH4->Add(button_Clear, flags);
+    button_Clear->SetToolTip(_("Clear the SQL Source script area"));
+
+    /****************************************
+     Bottom Panel
+     ***************************************/
+    wxPanel* buttonPanel = new wxPanel( this, wxID_STATIC,  wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    mainBoxSizer->Add(buttonPanel, flags);
+
+    wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
+    buttonPanel->SetSizer(buttonPanelSizer);
+
+    button_Run_ = new wxButton( buttonPanel, wxID_REFRESH, _("&Run"));
+    buttonPanelSizer->Add(button_Run_, flags);
+    button_Run_->SetToolTip(_("Test script. Save before running. SQL errors will result in loss of script."));
+
+    wxButton* button_Close = new wxButton( buttonPanel, wxID_CLOSE);
+    buttonPanelSizer->Add(button_Close, flags);
+    button_Close->SetToolTip(_("Save changes before closing. Changes without Save will be lost."));
+
+    //wxButton* button_Help = new wxButton( buttonPanel, wxID_HELP);
+    //buttonPanelSizer->Add(button_Help, flags);
+
 }
 
 wxString mmCustomSQLDialog::sScript()
