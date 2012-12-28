@@ -50,7 +50,8 @@ private:
     // List of mmex_library functions
     void Open_MMEX_Library();
     // All Lua functions provided by C++ for MMEX
-    static int cpp2lua_GetUserText(lua_State* lua);
+	static int cpp2lua_GetSingleChoice(lua_State* lua);
+    static int cpp2lua_GetTextFromUser(lua_State* lua);
     static int cpp2lua_GetTranslation(lua_State* lua);
 };
 

@@ -70,18 +70,49 @@ wxString TLuaInterface::LuaErrorResult()
 
  New functions needed to be registered with Lua using following values:
  ..., "name_of_lua_function", name_of_static_method_defined_in TLuaInterface);
+
+ Lua syntax: See comment above the defined function 
  *****************************************************************************/
 void TLuaInterface::Open_MMEX_Library()
 {
-    lua_register(lua_, "_",             cpp2lua_GetTranslation);
-    lua_register(lua_, "mmGetUserText", cpp2lua_GetUserText);
+    lua_register(lua_, "_",                 cpp2lua_GetTranslation);
+    lua_register(lua_, "mmGetTextFromUser", cpp2lua_GetTextFromUser);
+	lua_register(lua_, "mmGetSingleChoice", cpp2lua_GetSingleChoice);
 }
 
 /******************************************************************************
- Lua extended function:
- mmGetUserText("field_name", "dialog_heading", "default_value")
+ mmGetSingleChoice(lua_table, _("Choose Accounts"), _("Dialogue"))
  *****************************************************************************/
-int TLuaInterface::cpp2lua_GetUserText(lua_State* lua)
+int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
+{
+	luaL_checktype(lua, 1, LUA_TTABLE);
+	size_t len = lua_rawlen(lua, 1);
+
+	wxArrayString data;
+	for(unsigned int i = 1; i <= len; i++)
+	{
+		lua_rawgeti(lua, 1, i);
+		data.Add(wxString::FromUTF8(luaL_checkstring(lua, -1)));  
+		lua_pop(lua, 1);
+	}
+
+	wxString header = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1); // remove error message
+
+    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1); // remove error message
+
+	wxString value;
+    value = wxGetSingleChoice(message, header, data);
+    lua_pushstring(lua, value.ToUTF8());
+
+    return 1;
+}
+
+/******************************************************************************
+ mmGetTextFromUser("field_name", "dialog_heading", "default_value")
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_GetTextFromUser(lua_State* lua)
 {
     wxString value = wxString::FromUTF8(lua_tostring(lua, -1));
     lua_pop(lua, 1); // remove error message
@@ -99,7 +130,6 @@ int TLuaInterface::cpp2lua_GetUserText(lua_State* lua)
 }
 
 /*****************************************************************************
- Lua extended function:
  _("translation_string")
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetTranslation(lua_State *lua)
