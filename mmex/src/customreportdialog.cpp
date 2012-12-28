@@ -129,7 +129,7 @@ void mmCustomSQLDialog::fillControls()
     }
     treeCtrl_->ExpandAll();
     //TODO: Under construncion
-    treeCtrl_->Disable();
+    //treeCtrl_->Show(false);
 }
 
 void mmCustomSQLDialog::CreateControls()
@@ -178,9 +178,12 @@ void mmCustomSQLDialog::CreateControls()
         wxDefaultPosition, wxSize(titleTextWidth,-1));
     reportTitleTxtCtrl_->SetToolTip(_("Report Title is used as the file name of the SQL script."));
 
+    long treeCtrlFlags = wxTR_SINGLE | wxTR_HAS_BUTTONS;
+#if defined (__WXWIN__) 
+	treeCtrlFlags = wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES;
+#endif
     treeCtrl_ = new wxTreeCtrl( this, wxID_ANY,
-    wxDefaultPosition, wxSize(titleTextWidth, titleTextWidth)
-        , wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
+        wxDefaultPosition, wxSize(titleTextWidth, titleTextWidth), treeCtrlFlags );
 
     headingPanelSizerH2->Add(flex_sizer, flags);
     headingPanelSizerH2->Add(reportTitleTxtCtrl_, flags);
@@ -360,6 +363,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
         edit_ = true;
         loadedFileName_ = reportfileName;
     }
+    fillControls();
 }
 
 void mmCustomSQLDialog::OnRun(wxCommandEvent& /*event*/)
