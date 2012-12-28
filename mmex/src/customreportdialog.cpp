@@ -287,6 +287,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
         wxString sqlSource = sSourceTxtCtrl_->GetValue();
         if ( !reportfileName.empty() && !sqlSource.empty() )
         {
+            reportfileName.Replace(wxT(":"),wxT("_")); // else windows 7 will hide the filename.
             wxTextFile tfSourceFile(mmex::getPathUser(mmex::DIRECTORY) + reportfileName);
 
             // If the file does not exist and cannot be created, throw an error
