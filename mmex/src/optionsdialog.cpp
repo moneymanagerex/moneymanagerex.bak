@@ -24,7 +24,6 @@
 #include <wx/colordlg.h>
 #include <wx/combobox.h>
 #include "mmgraphgenerator.h"
-#include <wx/spinctrl.h>
 #include <wx/statline.h>
 #include <limits>
 #include "constants.h"
