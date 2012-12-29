@@ -76,8 +76,60 @@ wxString TLuaInterface::LuaErrorResult()
 void TLuaInterface::Open_MMEX_Library()
 {
     lua_register(lua_, "_",                 cpp2lua_GetTranslation);
+    lua_register(lua_, "mmBell",            cpp2lua_Bell);
+    lua_register(lua_, "mmMessageBox",      cpp2lua_MessageBox);
     lua_register(lua_, "mmGetTextFromUser", cpp2lua_GetTextFromUser);
 	lua_register(lua_, "mmGetSingleChoice", cpp2lua_GetSingleChoice);
+}
+
+/******************************************************************************
+ mmBell() - Does nothing except ring the stystem bell
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_Bell(lua_State* lua)
+{
+    int stack_pos;                  // prevent compiler
+    stack_pos = lua_gettop(lua);    // warnings
+    wxBell();
+
+    return 0;
+}
+
+/******************************************************************************
+ mmMessageBox(_("Message"), _("Caption"), Style)
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
+{
+    int mm_style = lua_tointeger(lua, -1);
+    lua_pop(lua, 1); // remove error message
+
+    wxString caption = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1); // remove error message
+
+    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1); // remove error message
+
+    double win_style;
+
+    if      (mm_style == 1) win_style = wxOK;
+    else if (mm_style == 2) win_style = wxYES_NO;
+    else if (mm_style == 3) win_style = wxCANCEL;
+    else if (mm_style == 13 || mm_style == 31) win_style = wxCANCEL + wxOK;
+    else if (mm_style == 23 || mm_style == 32) win_style = wxCANCEL + wxYES_NO;
+    else if (mm_style == 4) win_style = wxICON_EXCLAMATION;
+    else if (mm_style == 5) win_style = wxICON_HAND;
+    else if (mm_style == 6) win_style = wxICON_ERROR;
+    else if (mm_style == 7) win_style = wxICON_QUESTION;
+    else win_style = wxICON_INFORMATION;
+
+    int ans = wxMessageBox(message, caption, win_style);
+
+    if (ans == 2 || ans == 4) mm_style = 1; // OK or Yes
+    else if (ans == 8)        mm_style = 2; // No
+    else if (ans == 16)       mm_style = 3; // Cancel
+    else mm_style = ans;
+
+    lua_pushinteger(lua, mm_style);
+    return 1;
 }
 
 /******************************************************************************
@@ -140,3 +192,4 @@ int TLuaInterface::cpp2lua_GetTranslation(lua_State *lua)
 
     return 1;
 }
+
