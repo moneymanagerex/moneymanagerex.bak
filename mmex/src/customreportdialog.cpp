@@ -17,6 +17,7 @@
  ********************************************************/
 
 #include "customreportdialog.h"
+#include "customreportindex.h"
 #include "paths.h"
 #include "util.h"
 #include <wx/helpbase.h>
@@ -28,7 +29,6 @@ const int sourceTextHeight = 200; // Determines height of Source Textbox.
 IMPLEMENT_DYNAMIC_CLASS( mmCustomSQLDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
-    //EVT_BUTTON(wxID_HELP, mmCustomSQLDialog::OnDialogContextHelp)
     EVT_BUTTON(wxID_OPEN,  mmCustomSQLDialog::OnOpen)
     EVT_BUTTON(wxID_SAVE,  mmCustomSQLDialog::OnSave)
     EVT_BUTTON(wxID_REFRESH, mmCustomSQLDialog::OnRun)
@@ -38,6 +38,9 @@ BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
     EVT_CHECKBOX(DIALOG_CUSTOM_SQL_CHKBOX_SUB_REPORT,   mmCustomSQLDialog::OnCheckedSubReport)
     EVT_TEXT( wxID_FILE, mmCustomSQLDialog::OnTextChangeHeading)
     EVT_TEXT( wxID_VIEW_DETAILS,       mmCustomSQLDialog::OnTextChangeSubReport)
+	EVT_TREE_ITEM_RIGHT_CLICK(wxID_ANY, mmCustomSQLDialog::OnItemRightClick)
+    EVT_TREE_SEL_CHANGED(wxID_ANY, mmCustomSQLDialog::OnSelChanged)
+	//EVT_TREE_ITEM_ACTIVATED(wxID_ANY,  mmCustomSQLDialog::OnDoubleClicked)
 END_EVENT_TABLE()
 
 mmCustomSQLDialog::mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxWindow* parent, bool edit,
@@ -45,6 +48,7 @@ mmCustomSQLDialog::mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxWindow
 :reportIndex_(reportIndex), sSourceTxtCtrl_(), edit_(edit), navCtrlUpdateRequired_(false), newFileCreated_(true), parent_(parent)
 {
     Create(parent_, id, caption, pos, size, style);
+	selectedItemId_ = 0;
 }
 
 bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
@@ -122,14 +126,14 @@ void mmCustomSQLDialog::fillControls()
                 customSqlReportItem = treeCtrl_->AppendItem(root_, reportTitle);
                 customSqlReportRootItem = customSqlReportItem;
             }
+			//if (customSqlReportItem == selectedItemId_) treeCtrl_->SelectItem(selectedItemId_);
             reportNumberStr.Printf(wxT("Custom_Report_%d"), ++reportNumber);
             treeCtrl_->SetItemData(customSqlReportItem, new mmTreeItemData(reportNumberStr));
             reportTitle = custRepIndex_->nextReportTitle();
         }
     }
     treeCtrl_->ExpandAll();
-    //TODO: Under construncion
-    //treeCtrl_->Show(false);
+	treeCtrl_->Show(false);
 }
 
 void mmCustomSQLDialog::CreateControls()
@@ -179,11 +183,11 @@ void mmCustomSQLDialog::CreateControls()
     reportTitleTxtCtrl_->SetToolTip(_("Report Title is used as the file name of the SQL script."));
 
     long treeCtrlFlags = wxTR_SINGLE | wxTR_HAS_BUTTONS;
-#if defined (__WXWIN__) 
+#if defined (__WXWIN__)
 	treeCtrlFlags = wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES;
 #endif
     treeCtrl_ = new wxTreeCtrl( this, wxID_ANY,
-        wxDefaultPosition, wxSize(titleTextWidth, titleTextWidth), treeCtrlFlags );
+    wxDefaultPosition, wxSize(titleTextWidth, titleTextWidth), treeCtrlFlags );
 
     headingPanelSizerH2->Add(flex_sizer, flags);
     headingPanelSizerH2->Add(reportTitleTxtCtrl_, flags);
@@ -231,9 +235,6 @@ void mmCustomSQLDialog::CreateControls()
     wxButton* button_Close = new wxButton( buttonPanel, wxID_CLOSE);
     buttonPanelSizer->Add(button_Close, flags);
     button_Close->SetToolTip(_("Save changes before closing. Changes without Save will be lost."));
-
-    //wxButton* button_Help = new wxButton( buttonPanel, wxID_HELP);
-    //buttonPanelSizer->Add(button_Help, flags);
 
 }
 
@@ -363,7 +364,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
         edit_ = true;
         loadedFileName_ = reportfileName;
     }
-    fillControls();
+	fillControls();
 }
 
 void mmCustomSQLDialog::OnRun(wxCommandEvent& /*event*/)
@@ -423,4 +424,28 @@ void mmCustomSQLDialog::OnTextChangeSubReport(wxCommandEvent& /*event*/)
     button_Save_->Enable(!reportTitleTxtCtrl_->IsEmpty());
     button_Run_->Enable(!sSourceTxtCtrl_->IsEmpty());
     button_Open_->Enable(sSourceTxtCtrl_->IsEmpty());
+}
+
+void mmCustomSQLDialog::OnItemRightClick(wxTreeEvent& event)
+{
+    wxTreeItemId id = event.GetItem();
+	treeCtrl_ ->SelectItem(id);
+
+	wxMenu* customReportMenu = new wxMenu;
+    customReportMenu->Append(1, _("Edit Custom Report"));
+    customReportMenu->Append(2, _("Delete Custom Report"));
+    PopupMenu(&*customReportMenu);
+
+}
+
+void mmCustomSQLDialog::OnSelChanged(wxTreeEvent& event)
+{
+	selectedItemId_ = event.GetItem();
+    mmTreeItemData* iData = dynamic_cast<mmTreeItemData*>(treeCtrl_->GetItemData(selectedItemId_));
+    if (!iData) return;
+
+	reportIndex_->getSelectedTitleSelection(iData->getString());
+
+	edit_ = true;
+    fillControls();
 }

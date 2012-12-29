@@ -66,6 +66,7 @@ private:
     wxCheckBox* subMenuCheckBox_;
     wxRadioBox* m_radio_box_;
     wxTreeCtrl* treeCtrl_;
+	wxTreeItemId selectedItemId_;
 
     bool Create( wxWindow* parent,
         wxWindowID id = wxID_ANY,
@@ -87,6 +88,8 @@ private:
     void OnTextChangeHeading(wxCommandEvent& event);
     void OnTextChangeSubReport(wxCommandEvent& event);
     void SetDialogBoxForHeadings();
+	void OnItemRightClick(wxTreeEvent& event);
+	void OnSelChanged(wxTreeEvent& event);
 };
 
 #endif
