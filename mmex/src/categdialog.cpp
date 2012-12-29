@@ -102,6 +102,9 @@ void mmCategDialog::fillControls()
     bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDEN_CATEGS"), true);
     cbShowAll_->SetValue(bResult);
 
+    wxFont italicFont = wxFont(treeCtrl_->GetFont());
+    italicFont.SetStyle(wxFONTSTYLE_ITALIC);
+
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
@@ -113,6 +116,8 @@ void mmCategDialog::fillControls()
             maincat = treeCtrl_->AppendItem(root_, category->categName_);
             treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));
             if (!bShow) treeCtrl_->SetItemTextColour(maincat, wxColour(wxT("GREY")));
+            //TODO: If category does not used - change font to italic
+            if (false) treeCtrl_->SetItemFont(maincat, italicFont);
 
             for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
                     cit != category->children_.end();
@@ -322,6 +327,13 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
     }
 
     treeCtrl_->Delete(selectedItemId_);
+
+    wxString sIndex = wxString::Format(wxT("*%i:%i*"),categID, subcategID);
+    wxString sSettings = core_->dbInfoSettings_->GetStringSetting(wxT("HIDEN_CATEGS_ID"), wxT(""));
+    sSettings.Replace(sIndex, wxT(""));
+    sSettings.Replace(wxT(";;"), wxT(";"));
+    core_->dbInfoSettings_->GetStringSetting(wxT("HIDEN_CATEGS_ID"), sSettings);
+
 }
 
 void mmCategDialog::OnBSelect(wxCommandEvent& /*event*/)
