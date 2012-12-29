@@ -2093,14 +2093,10 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
         {
-            navTreeCtrl_->UnselectAll();    // item in navTreeCtrl_ to enable re-selection.
-            processPendingEvents();         // Clear event buffer before activating report.
             OnCashFlowSpecificAccounts();
         }
         else if (iData->getString() == wxT("Transaction Report"))
         {
-            navTreeCtrl_->UnselectAll();    // item in navTreeCtrl_ to enable re-selection.
-            processPendingEvents();         // Clear event buffer before activating report.
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
             AddPendingEvent(evt);           // Events will be processed in due course.
         }
@@ -2211,10 +2207,13 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnItemRightClick(wxTreeEvent& event)
 {
-    if (menuBar_->FindItem(MENU_ORGCATEGS)->IsEnabled() )
-        showTreePopupMenu(event.GetItem(), event.GetPoint());
+    wxTreeItemId id = event.GetItem();
+	if (menuBar_->FindItem(MENU_ORGCATEGS)->IsEnabled() )
+        showTreePopupMenu(id, event.GetPoint());
     else
         wxMessageBox(_("MMEX has been opened without an active database."),_("MMEX: Menu Popup Error"), wxOK|wxICON_EXCLAMATION);
+
+	navTreeCtrl_ ->SelectItem(id);
 }
 //----------------------------------------------------------------------------
 
