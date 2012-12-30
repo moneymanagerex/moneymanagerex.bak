@@ -116,8 +116,9 @@ void mmCategDialog::fillControls()
             maincat = treeCtrl_->AppendItem(root_, category->categName_);
             treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));
             if (!bShow) treeCtrl_->SetItemTextColour(maincat, wxColour(wxT("GREY")));
-            //TODO: If category does not used - change font to italic
-            if (false) treeCtrl_->SetItemFont(maincat, italicFont);
+            //If category does not used - change font style to italic
+            if (!core_->bTransactionList_.IsCategoryUsed(core_, category->categID_, -1))
+                treeCtrl_->SetItemFont(maincat, italicFont);
 
             for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
                     cit != category->children_.end();
@@ -130,6 +131,8 @@ void mmCategDialog::fillControls()
                     wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, sub_category->categName_);
                     treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(category->categID_, sub_category->categID_));
                     if (!bShow) treeCtrl_->SetItemTextColour(subcat, wxColour(wxT("GREY")));
+                    if (!core_->bTransactionList_.IsCategoryUsed(core_, category->categID_, sub_category->categID_, false))
+                        treeCtrl_->SetItemFont(subcat, italicFont);
 
                     if (categID_ == category->categID_ && subcategID_ == sub_category->categID_)
                         selectedItemId_ = subcat;
@@ -394,10 +397,8 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
     }
     else
     {
-        if(bEnableSelect_ == true) {
-            selectButton_->Enable();
-        }
-        deleteButton_->Enable();
+        selectButton_->Enable(bEnableSelect_);
+        deleteButton_->Enable(!core_->bTransactionList_.IsCategoryUsed(core_, categID_, subcategID_, subcategID_ == -1));
         editButton_->Enable();
         if (subcategID_ != -1)
         {
@@ -510,6 +511,7 @@ void mmCategDialog::OnExpandChbClick(wxCommandEvent& /*event*/)
     }
     treeCtrl_->EnsureVisible(selectedItemId_);
     core_->iniSettings_->SetBoolSetting(wxT("EXPAND_CATEGS_TREE"), itemCheckBox_->IsChecked());
+    core_->iniSettings_->Save();
 }
 
 void mmCategDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
@@ -523,6 +525,7 @@ void mmCategDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
         treeCtrl_->SelectItem(selectedItemId_);
     }
     core_->iniSettings_->SetBoolSetting(wxT("SHOW_HIDEN_CATEGS"), cbShowAll_->IsChecked());
+    core_->iniSettings_->Save();
     fillControls();
 }
 
@@ -555,6 +558,7 @@ void mmCategDialog::OnMenuSelected(wxCommandEvent& event)
     sSettings.RemoveLast(1);
 
     core_->dbInfoSettings_->SetStringSetting(wxT("HIDEN_CATEGS_ID"), sSettings);
+    core_->dbInfoSettings_->Save();
 
     if (!cbShowAll_->IsChecked() || id == 2) fillControls();
     event.Skip();
