@@ -17,12 +17,11 @@
  ********************************************************/
 
 #include "reportsummary.h"
-
+#include "constants.h"
 #include "defs.h"
 #include "htmlbuilder.h"
 #include "reportbase.h"
 #include "util.h"
-#include "dbwrapper.h"
 
 mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame) : 
 	mmPrintableBase(core),

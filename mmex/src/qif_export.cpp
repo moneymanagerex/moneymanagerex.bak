@@ -1,6 +1,6 @@
 /*******************************************************
  ********************************************************/
-
+#include "constants.h"
 #include "qif_export.h"
 #include "wx/datectrl.h"
 #include "wx/dateevt.h"

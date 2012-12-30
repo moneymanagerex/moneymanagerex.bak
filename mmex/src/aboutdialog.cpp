@@ -96,10 +96,6 @@ void mmAboutDialog::CreateControls()
     wxStaticText* itemStaticText88 = new wxStaticText(this,
         wxID_STATIC, mmex::getProgramCopyright());
 
-    wxStaticText* itemStaticText7 = new wxStaticText(this,
-        wxID_STATIC, mmex::getProgramDescription());
-    itemBoxSizer->Add(itemStaticText7, flags);
-
     //Read data from file
     wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
     wxFileInputStream input(filePath);
@@ -122,6 +118,12 @@ void mmAboutDialog::CreateControls()
     //Create tabs
     wxNotebook* about_notebook = new wxNotebook(this,
         wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
+
+    wxPanel* about_tab = new wxPanel(about_notebook, wxID_ANY);
+    about_notebook->AddPage(about_tab, _("About"));
+    wxBoxSizer *about_sizer = new wxBoxSizer(wxVERTICAL);
+    about_tab->SetSizer(about_sizer);
+
     wxPanel* developers_tab = new wxPanel(about_notebook, wxID_ANY);
     about_notebook->AddPage(developers_tab, _("Developers"));
     wxBoxSizer *developers_sizer = new wxBoxSizer(wxVERTICAL);
@@ -143,6 +145,12 @@ void mmAboutDialog::CreateControls()
     sponsors_tab->SetSizer(sponsors_sizer);
 
     wxSize internal_size = wxSize(400, 200); //developers_tab_->GetBestVirtualSize();
+
+    wxTextCtrl* about_text = new wxTextCtrl( about_tab,
+        wxID_STATIC, mmex::getProgramDescription(),
+        wxDefaultPosition, internal_size, wxTE_MULTILINE );
+    about_text->SetEditable(false);
+    about_sizer->Add(about_text, flags);
 
     wxTextCtrl* developers_text = new wxTextCtrl( developers_tab,
         wxID_STATIC, data[0], wxDefaultPosition, internal_size, wxTE_MULTILINE );
