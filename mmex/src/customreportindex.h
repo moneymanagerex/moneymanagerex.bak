@@ -88,6 +88,8 @@ public:
 
     /** Returns the file contents if the .SQL file */ 
     bool getSqlFileData(wxString& sqlText);
+    
+    int getCustomReportId() {return currentReportFileIndex_ - 4;}
 
 private:
     bool activeSqlReports_;
