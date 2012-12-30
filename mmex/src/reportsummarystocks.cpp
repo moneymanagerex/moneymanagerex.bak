@@ -17,12 +17,11 @@
  ********************************************************/
 
 #include "reportsummarystocks.h"
-
+#include "constants.h"
 #include "defs.h"
 #include "htmlbuilder.h"
 #include "reportbase.h"
 #include "util.h"
-#include "dbwrapper.h"
 #include "stockspanel.h"
 
 static const char SELECT_ROW_SYMBOL_FROM_STOCK_V1[] = 

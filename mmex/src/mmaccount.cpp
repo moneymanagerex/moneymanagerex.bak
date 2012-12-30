@@ -18,6 +18,7 @@
 
 #include "mmaccount.h"
 #include "util.h"
+#include "constants.h"
 
 mmAccount::mmAccount(wxSQLite3ResultSet& q1)
 {
