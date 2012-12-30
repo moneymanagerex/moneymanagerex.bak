@@ -164,15 +164,15 @@ public:
     bool removeTransaction(int accountID, int transactionID);
     bool deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
-	int RelocatePayee(mmCoreDB* core, const int destPayeeID, const int sourcePayeeID, int& changedPayees_);
-	int RelocateCategory(mmCoreDB* core,
-	    const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID,
-	    int& changedCats, int& changedSubCats);
-	void ChangeDateFormat();
+    int RelocatePayee(mmCoreDB* core, const int destPayeeID, const int sourcePayeeID, int& changedPayees_);
+    int RelocateCategory(mmCoreDB* core,
+        const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID,
+        int& changedCats, int& changedSubCats);
+    void ChangeDateFormat();
 
     /* Query Functions */
     void getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses, double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
-    // The setting asDeposit is only valid if evaluateTransfer is true 
+    // The setting asDeposit is only valid if evaluateTransfer is true
     double getAmountForCategory(const mmCoreDB* core, int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool evaluateTransfer = false, bool asDeposit = false, bool ignoreFuture = false) const;
     double getAmountForPayee(const mmCoreDB* core, int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
     void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
@@ -185,6 +185,7 @@ public:
     int getTransferCategoryID(const int accountID, int& subcategID) const;
     int getLastUsedPayeeID(const int accountID, int& categID, int& subcategID) const;
     wxArrayString getTransactionNumber(const int accountID, const wxDateTime transaction_date) const;
+    bool IsCategoryUsed(mmCoreDB* core, const int iCatID, const int iSubCatID, bool bIgnor_subcat = true) const;
 
     /* Data */
     typedef std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator const_iterator;
