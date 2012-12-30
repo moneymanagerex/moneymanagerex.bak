@@ -332,9 +332,18 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
     treeCtrl_->Delete(selectedItemId_);
 
     wxString sIndex = wxString::Format(wxT("*%i:%i*"),categID, subcategID);
-    wxString sSettings = core_->dbInfoSettings_->GetStringSetting(wxT("HIDEN_CATEGS_ID"), wxT(""));
-    sSettings.Replace(sIndex, wxT(""));
-    sSettings.Replace(wxT(";;"), wxT(";"));
+    wxString sSettings = wxT("");
+    for (size_t i = 0; i < hiden_categs_.GetCount(); i++)
+    {
+        if (subcategID != -1 && hiden_categs_[i] == sIndex)
+            hiden_categs_.RemoveAt(i, i);
+        else if (subcategID == -1 && hiden_categs_[i].Contains(wxString::Format(wxT("*%i:"),categID)))
+            hiden_categs_.RemoveAt(i, i);
+        else
+	        sSettings << hiden_categs_[i] << wxT(";");    
+    }
+    sIndex.RemoveLast(1);
+
     core_->dbInfoSettings_->SetStringSetting(wxT("HIDEN_CATEGS_ID"), sSettings);
     core_->dbInfoSettings_->Save();
 }
