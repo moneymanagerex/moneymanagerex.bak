@@ -21,6 +21,7 @@
 
 #include "defs.h"
 #include <iostream>
+#include "mmcoredb.h"
 
 extern "C" {
 #include "lualib.h"
@@ -30,14 +31,15 @@ extern "C" {
 class TLuaInterface
 {
 public:
-    TLuaInterface();
+    TLuaInterface(const mmCoreDB* core);
     ~TLuaInterface();
     
     wxString RunLuaCode(wxString lua_code);
 
 private:
-    lua_State* lua_;
+    const mmCoreDB*  core_;
 
+    lua_State* lua_;
     int lua_result_;
     wxString LuaErrorResult();
 
