@@ -19,7 +19,8 @@
 #include "lua_interface.h"
 
 // Constructor: Initialises Lua when an instant is created.
-TLuaInterface::TLuaInterface()
+TLuaInterface::TLuaInterface(const mmCoreDB* core)
+:core_(core)
 {
     lua_ = luaL_newstate();
     wxASSERT(lua_);
