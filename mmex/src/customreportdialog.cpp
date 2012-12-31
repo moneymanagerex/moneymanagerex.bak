@@ -109,8 +109,7 @@ void mmCustomSQLDialog::fillControls()
     treeCtrl_->DeleteAllItems();
     wxTreeItemId root_ = treeCtrl_->AddRoot(_("Custom Reports"));
 
-    customSQLReportIndex* custRepIndex_ = new customSQLReportIndex();
-    if (custRepIndex_->hasActiveSQLReports())
+    if (reportIndex_->hasActiveSQLReports())
     {
         if (reportIndex_->currentReportFileType() == wxT("LUA"))
         {
@@ -119,12 +118,12 @@ void mmCustomSQLDialog::fillControls()
         int reportNumber = -1;
         wxString reportNumberStr;
         wxTreeItemId customSqlReportRootItem;
-        custRepIndex_->resetReportsIndex();
-        wxString reportTitle = custRepIndex_->nextReportTitle();
-        while (custRepIndex_->validTitle())
+        reportIndex_->resetReportsIndex();
+        wxString reportTitle = reportIndex_->nextReportTitle();
+        while (reportIndex_->validTitle())
         {
             wxTreeItemId customSqlReportItem;
-            if (custRepIndex_->reportIsSubReport() && reportNumber >= 0 )
+            if (reportIndex_->reportIsSubReport() && reportNumber >= 0 )
             {
                 customSqlReportItem = treeCtrl_->AppendItem(customSqlReportRootItem, reportTitle);
             }
@@ -138,7 +137,7 @@ void mmCustomSQLDialog::fillControls()
 
             if (reportNumber == iSelectedId_) treeCtrl_->SelectItem(customSqlReportItem);
 
-            reportTitle = custRepIndex_->nextReportTitle();
+            reportTitle = reportIndex_->nextReportTitle();
         }
     }
     treeCtrl_->ExpandAll();
