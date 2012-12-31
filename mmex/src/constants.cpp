@@ -73,14 +73,16 @@ wxString mmex::getProgramFacebookSite()
 
 wxString mmex::getProgramDescription()
 {
-    wxString description =  wxVERSION_STRING;
-    description << wxT("\n")
+    wxString description;
+    description << _("MMEX is using the following support products") << wxT(":\n")
+                << wxT("==========================================\n")
+                << wxVERSION_STRING << wxT("\n")
                 << wxT("Boost C++ ") << (BOOST_VERSION/100000) << wxT('.')
                 << (BOOST_VERSION / 100 % 1000) << wxT('.')
                 << (BOOST_VERSION % 100) << wxT("\n")
-                << wxT("SQLite3 ") << wxSQLite3Database::GetVersion()<< wxT("\n")
+                << wxT("SQLite3 ") << wxSQLite3Database::GetVersion() << wxT("\n")
                 << wxT("wxSQLite 3.0.1")<< wxT("\n")
-                << wxT("Lua 5.0.2");
+                << wxT("Lua 5.2.1");
     return description;
 }
 
