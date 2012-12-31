@@ -1,20 +1,20 @@
-/*******************************************************
-Copyright (C) 2012 Stefano Giorgio
+/*************************************************************************
+ Copyright (C) 2011 Stefano Giorgio
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ********************************************************/
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *************************************************************************/
 
 /****************************************************************************
  These tests can be run independantly of other tests by excluding
@@ -24,21 +24,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  Note: Total test time is meaningless with this module included.
 
  ****************************************************************************/
-//----------------------------------------------------------------------------
 #include <UnitTest++.h>
-#include "defs.h"
-#include <iostream>
-//----------------------------------------------------------------------------
-
+#include "testing_util.h"
 #include "lua_interface.h"
-
-void display_time_taken(const wxString msg, const wxDateTime start_time)
-{
-    const wxDateTime end_time(wxDateTime::UNow());
-    const wxString time_dif = (end_time - start_time).Format(wxT("%S%l"));
-
-    printf(wxString::Format(wxT("Time Taken: %s milliseconds - Test: %s \n"), time_dif.c_str(), msg.c_str()).char_str());
-}
 
 /*****************************************************************************************
  The tests for testing mmex_settings - in a database.
@@ -105,8 +93,9 @@ TEST(lua_interface_test)
     }
 #endif
 
-    display_time_taken(wxT("lua_interface_test"), start_time);
+    displayTimeTaken(wxT("lua_interface_test"), start_time);
 }
+
 TEST(mmex_lua_test_end)
 {
     // Separate from other tests

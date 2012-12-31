@@ -31,14 +31,12 @@ extern "C" {
 class TLuaInterface
 {
 public:
-    TLuaInterface(const mmCoreDB* core);
+    TLuaInterface();
     ~TLuaInterface();
     
     wxString RunLuaCode(wxString lua_code);
 
 private:
-    const mmCoreDB*  core_;
-
     lua_State* lua_;
     int lua_result_;
     wxString LuaErrorResult();
