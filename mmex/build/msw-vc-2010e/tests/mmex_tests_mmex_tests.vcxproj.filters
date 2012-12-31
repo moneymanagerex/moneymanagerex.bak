@@ -249,6 +249,9 @@
     <ClCompile Include="..\..\..\src\tests\dbwrapper_test.cpp">
       <Filter>Test Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\testing_util.cpp">
+      <Filter>Test Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\aboutdialog.h">
@@ -487,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\lua_interface.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\tests\testing_util.h">
+      <Filter>Test Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
