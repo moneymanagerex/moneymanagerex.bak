@@ -41,59 +41,58 @@ TEST(mmex_lua_test_start)
     printf("\n");
 }
 
-TEST(lua_interface_test)
+TEST(lua_interface_hello_world)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
     TLuaInterface* lua_core = new TLuaInterface();
 
-    {// Lua test code block 1
-        wxString lua_program = wxString() <<
-            wxT("print \"\"                        \n") <<
-            wxT("print \"Message from Lua.\"       \n") <<
-            wxT("print \"Hello World.\"            \n") <<
-            wxT("print \"\"                        \n")
-        ; // end of text script 
+    wxString lua_program = wxString() <<
+        wxT("print \"\"                        \n") <<
+        wxT("print \"Message from Lua.\"       \n") <<
+        wxT("print \"Hello World.\"            \n") <<
+        wxT("print \"\"                        \n")
+    ; // end of text script 
 
-        wxString lua_code_result = lua_core->RunLuaCode(lua_program);
-        printf(lua_code_result.char_str());
-    }
+    wxString lua_code_result = lua_core->RunLuaCode(lua_program);
+    printf(lua_code_result.char_str());
 
-    printf("Test - Lua syntax with error\n");
-    {// Lua test code block 2
-        wxString lua_program = wxString() << 
-            wxT("print \"\"                        \n")
-            wxT("print \"Message from Lua.\"       \n")
-            wxT("print \"Hello World.\"            \n")
-            wxT("print                             \n") // missing empty quotes
-        ; // end of text script 
+    displayTimeTaken(wxT("lua_interface_hello_world"), start_time);
+}
 
-        wxString lua_code_result = lua_core->RunLuaCode(lua_program);
-        printf(lua_code_result.char_str());
-    }
+TEST(lua_interface_lua_syntax_error)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TLuaInterface* lua_core = new TLuaInterface();
 
-#if 0
-    printf("Test - Lua CPP calls\n");
-    {// Lua test code block 3
+    wxString lua_program = wxString() << 
+        wxT("print \"\"                        \n")
+        wxT("print \"Message from Lua.\"       \n")
+        wxT("print \"Hello World.\"            \n")
+        wxT("print                             \n") // missing empty quotes
+    ; // end of text script 
 
-        wxString lua_program = wxString() <<
-            wxT("var = \"Message from Lua.\"       \n") <<
-            wxT("var = var .. \"Hello World.\"     \n") <<
-            wxT("var = var .. \"\n\"               \n") <<
-            wxT("var = var .. _\"Amount\"          \n") <<
-            // Following commented out line crashes in test mode.
-            //  wxT("var = mmGetUserText(_(\"Amount\"), _(\"Dialogue\"), 2012) ") <<
-            wxT("var = _\"User \".. var            \n") <<
-            wxT("print \"\"                        \n") <<
-            wxT("return var                        \n")
-        ; // end of text script 
-        
-        wxString lua_code_result = lua_core->RunLuaCode(lua_program);
-        printf(lua_code_result.char_str());
-    }
-#endif
+    wxString lua_code_result = lua_core->RunLuaCode(lua_program);
+    printf(lua_code_result.char_str());
 
-    displayTimeTaken(wxT("lua_interface_test"), start_time);
+    displayTimeTaken(wxT("lua_interface_lua_syntax_error"), start_time);
+}
+
+TEST(lua_interface_test_sql)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TLuaInterface* lua_core = new TLuaInterface();
+
+    wxString lua_program = wxString() <<
+        wxT("sql_script = \"select * from category_v1\"       \n") <<
+        wxT("var = mmSQLite3ResultSet(sql_script)             \n") <<
+        wxT("return var                                       \n")
+    ; // end of text script 
+
+    wxString lua_code_result = lua_core->RunLuaCode(lua_program);
+    printf(lua_code_result.char_str());
+
+    displayTimeTaken(wxT("lua_interface_test_sql"), start_time);
 }
 
 TEST(mmex_lua_test_end)
@@ -102,10 +101,10 @@ TEST(mmex_lua_test_end)
     printf("___________________________________________________________________\n");
     printf("\n");
     printf("\n");
-#ifndef _DBWRAPPER_TEST_IS_INCLUDED_IN_BUILD_
-    std::cout << "Press ENTER to continue... ";
-    std::cin.get();
-#endif
+//#ifndef _DBWRAPPER_TEST_IS_INCLUDED_IN_BUILD_
+//    std::cout << "Press ENTER to continue... ";
+//    std::cin.get();
+//#endif
 }
 
 } // SUITE end Inidb_test
