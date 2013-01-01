@@ -74,7 +74,7 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
 
     edit_ = reportIndex_->getSelectedTitleSelection(customSqlReportSelectedItem_);
     iSelectedId_ = reportIndex_->getCustomReportId();
-wxSafeShowMessage( wxString()<<iSelectedId_, customSqlReportSelectedItem_);
+
     fillControls();
     return TRUE;
 }
