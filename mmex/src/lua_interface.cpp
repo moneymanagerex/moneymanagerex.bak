@@ -17,6 +17,7 @@
  *************************************************************************/
 
 #include "lua_interface.h"
+#include "util.h"
 
 // Constructor: Initialises Lua when an instant is created.
 TLuaInterface::TLuaInterface()
@@ -79,7 +80,8 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmBell",            cpp2lua_Bell);
     lua_register(lua_, "mmMessageBox",      cpp2lua_MessageBox);
     lua_register(lua_, "mmGetTextFromUser", cpp2lua_GetTextFromUser);
-	lua_register(lua_, "mmGetSingleChoice", cpp2lua_GetSingleChoice);
+    lua_register(lua_, "mmGetSingleChoice", cpp2lua_GetSingleChoice);
+    lua_register(lua_, "mmGetSiteContent",  cpp2lua_GetSiteContent);
 }
 
 /******************************************************************************
@@ -137,24 +139,24 @@ int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
 {
-	luaL_checktype(lua, 1, LUA_TTABLE);
-	size_t len = lua_rawlen(lua, 1);
+    luaL_checktype(lua, 1, LUA_TTABLE);
+    size_t len = lua_rawlen(lua, 1);
 
-	wxArrayString data;
-	for(unsigned int i = 1; i <= len; i++)
-	{
-		lua_rawgeti(lua, 1, i);
-		data.Add(wxString::FromUTF8(luaL_checkstring(lua, -1)));  
-		lua_pop(lua, 1);
-	}
+    wxArrayString data;
+    for(unsigned int i = 1; i <= len; i++)
+    {
+        lua_rawgeti(lua, 1, i);
+        data.Add(wxString::FromUTF8(luaL_checkstring(lua, -1)));  
+        lua_pop(lua, 1);
+    }
 
-	wxString header = wxString::FromUTF8(lua_tostring(lua, -1));
+    wxString header = wxString::FromUTF8(lua_tostring(lua, -1));
     lua_pop(lua, 1); // remove error message
 
     wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
     lua_pop(lua, 1); // remove error message
 
-	wxString value;
+    wxString value;
     value = wxGetSingleChoice(message, header, data);
     lua_pushstring(lua, value.ToUTF8());
 
@@ -193,3 +195,23 @@ int TLuaInterface::cpp2lua_GetTranslation(lua_State *lua)
     return 1;
 }
 
+/******************************************************************************
+ mmGetSiteContent("address")
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
+{
+    wxString sSite_address = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1); // remove error message
+
+    wxString sOutput;
+    int error = site_content(sSite_address, sOutput);
+
+    if (error == 2)
+        sOutput = _("Cannot get data from WWW!");
+    else if (error == 1)
+        sOutput = _("Unable to connect");
+    lua_pushstring(lua, sOutput.ToUTF8());
+    lua_pushinteger(lua, error);
+
+    return 2;
+}
