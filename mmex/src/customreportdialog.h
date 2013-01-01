@@ -38,7 +38,7 @@ public:
     mmCustomSQLDialog( ) {}
 //    virtual ~mmCustomSQLDialog();
 
-    mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxWindow* parent, bool edit = false,
+    mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxString customSqlReportSelectedItem, wxWindow* parent,
         wxWindowID id           = wxID_ANY,
         const wxString& caption = SYMBOL_CUSTOMSQLDIALOG_TITLE,
         const wxPoint& pos      = SYMBOL_CUSTOMSQLDIALOG_POSITION,
@@ -52,15 +52,17 @@ public:
 private:
     wxWindow* parent_;
     customSQLReportIndex* reportIndex_;
-    wxTextCtrl* sSourceTxtCtrl_;
+    wxTextCtrl* tcSourceTxtCtrl_;
     wxString sQuery_;
     bool newFileCreated_;
     wxString loadedFileName_;
+    wxString customSqlReportSelectedItem_;
     bool edit_;
     bool navCtrlUpdateRequired_;
     wxButton* button_Open_;
     wxButton* button_Save_;
     wxButton* button_Run_;
+	wxButton* button_Clear_;
     wxTextCtrl* reportTitleTxtCtrl_;
     wxCheckBox* headingOnlyCheckBox_;
     wxCheckBox* subMenuCheckBox_;
@@ -87,7 +89,7 @@ private:
     void OnCheckedSubReport(wxCommandEvent& event);
     void OnTextChangeHeading(wxCommandEvent& event);
     void OnTextChangeSubReport(wxCommandEvent& event);
-    void SetDialogBoxForHeadings();
+    void SetDialogBoxForHeadings(bool bHeading);
     void OnItemRightClick(wxTreeEvent& event);
     void OnSelChanged(wxTreeEvent& event);
     void OnLabelChanged(wxTreeEvent& event);

@@ -284,7 +284,7 @@ private:
     void OnCheckUpdate(wxCommandEvent& event);
     void OnReportIssues(wxCommandEvent& event);
     void OnBeNotified(wxCommandEvent& event);
-	void OnFacebook(wxCommandEvent& event);
+    void OnFacebook(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 
     void OnItemRightClick(wxTreeEvent& event);
@@ -298,23 +298,18 @@ private:
     void OnViewOpenAccounts(wxCommandEvent& event);
 
     /* Custom SQL Report*/
-    bool CustomSQLReportSelected(int& customSqlReportID, mmTreeItemData* iData );
+    bool IsCustomSQLReportSelected(int& customSqlReportID, mmTreeItemData* iData );
     void CreateCustomReport(int index);
-    void EditCustomSqlReport();
-    void DeleteCustomSqlReport();
-    void RunCustomSqlDialog(bool forEdit = false);
-    bool expandedReportNavTree_;
+    void RunCustomSqlDialog(wxString customSqlReportSelectedItem = wxT(""));
     bool expandedCustomSqlReportNavTree_;
+
     bool expandedBudgetingNavTree_;
+    bool expandedReportNavTree_;
 
     void OnTreeItemExpanded(wxTreeEvent& event);
     void OnTreeItemCollapsed(wxTreeEvent& event);
 
-    void OnNewCustomSqlReport(wxCommandEvent& event);
     void OnEditCustomSqlReport(wxCommandEvent& event);
-    void OnPopupEditCustomSqlReport(wxCommandEvent& event);
-    void OnDeleteCustomSqlReport(wxCommandEvent& event);
-    void OnPopupDeleteCustomSqlReport(wxCommandEvent& event);
 
     bool IsUpdateAvailable(wxString page);
     void processPendingEvents();

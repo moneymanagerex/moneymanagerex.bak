@@ -71,7 +71,7 @@ public:
 
     /** Gets the report title from the given ID: Custom_Report_xxx.
         sets: currentReportTitle_ currentReportFileName_ currentReportFileIndex_  */
-    void getSelectedTitleSelection(wxString titleIndex);
+    bool getSelectedTitleSelection(wxString titleIndex);
 
     /** Adds a new listing to the index file at the currentReportFileIndex_
         call getUserTitleSelection() or getSelectedTitleSelection() first. */
@@ -89,7 +89,7 @@ public:
     /** Returns the file contents if the .SQL file */ 
     bool getSqlFileData(wxString& sqlText);
     
-    int getCustomReportId() {return currentReportFileIndex_ - 4;}
+    int getCustomReportId() {return currentReportFileIndex_;}
 
 private:
     bool activeSqlReports_;

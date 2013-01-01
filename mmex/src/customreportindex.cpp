@@ -68,7 +68,7 @@ void customSQLReportIndex::resetReportsIndex()
         indexFile_->GetNextLine();  // Blank Line
         indexFile_->GetNextLine();  // Headings Line
         indexFile_->GetNextLine();  // Separator line
-        currentReportFileIndex_ = 4;
+        currentReportFileIndex_ = 0;
         validTitle_         = false;
         reportIsSubReport_  = false;
     }
@@ -107,6 +107,8 @@ wxString customSQLReportIndex::nextReportTitle()
             validTitle_ = true;
         }
     }
+    else
+        currentReportFileIndex_ = 0;
     return currentReportTitle_;
 }
 
@@ -217,17 +219,17 @@ wxString customSQLReportIndex::getUserTitleSelection(wxString description)
         selectionIndex = reportTitles.GetCount();
     }
 
-    currentReportFileIndex_ = selectionIndex + 4;  // Add File header line Count.
+    currentReportFileIndex_ = selectionIndex;  // Add File header line Count.
 
     return wxString() << wxT("Custom_Report_") << selectionIndex;
 }
 
-void customSQLReportIndex::getSelectedTitleSelection(wxString titleIndex)
+bool customSQLReportIndex::getSelectedTitleSelection(wxString titleIndex)
 {
     long index;
     wxStringTokenizer tk(titleIndex, wxT("_")); // get the 3rd token 'Custom_Report_xx'
-    tk.GetNextToken();
-    tk.GetNextToken();
+    if (tk.HasMoreTokens()) tk.GetNextToken(); else return false;
+    if (tk.HasMoreTokens()) tk.GetNextToken(); else return false;
     wxString indexStr = tk.GetNextToken();
     indexStr.ToLong(&index);
 
@@ -239,12 +241,13 @@ void customSQLReportIndex::getSelectedTitleSelection(wxString titleIndex)
     currentReportTitle_     = reportTitles.Item(index);
     currentReportFileName_  = reportFileNames.Item(index);
     SetNewCurrentFileValues();
-    currentReportFileIndex_ = index + 4;  // Add number of header lines in file.
+    currentReportFileIndex_ = index;  // Add number of header lines in file.
     validTitle_ = true;
     if ( reportIsSub.Item(index) == wxT("SUB"))
         reportIsSubReport_ = true;
     else
         reportIsSubReport_ = false;
+    return true;
 }
 
 void customSQLReportIndex::addReportTitle(wxString reportTitle, bool updateIndex, wxString reportFileName, bool isSub)
@@ -261,10 +264,10 @@ void customSQLReportIndex::addReportTitle(wxString reportTitle, bool updateIndex
 
         if (updateIndex)
         {
-            indexFile_->RemoveLine(currentReportFileIndex_);
+            indexFile_->RemoveLine(currentReportFileIndex_ + 4);
         }
 
-        indexFile_->InsertLine(indexLine, currentReportFileIndex_);
+        indexFile_->InsertLine(indexLine, currentReportFileIndex_ + 4);
         indexFile_->Write();
         indexFile_->Close();
         indexFile_->Open();
@@ -283,7 +286,7 @@ bool customSQLReportIndex::ReportListHasItems()
 
 void customSQLReportIndex::deleteSelectedReportTitle()
 {
-    indexFile_->RemoveLine(currentReportFileIndex_);
+    indexFile_->RemoveLine(currentReportFileIndex_ + 4);
     indexFile_->Write();
 }
 
