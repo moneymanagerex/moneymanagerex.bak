@@ -319,11 +319,9 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, mmGUIFrame::OnViewOpenAccounts)
 
     /* Custom Sql Reports */
-    EVT_MENU(MENU_CUSTOM_SQL_REPORT_NEW, mmGUIFrame::OnNewCustomSqlReport)
     EVT_MENU(MENU_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnEditCustomSqlReport)
-    EVT_MENU(MENU_CUSTOM_SQL_REPORT_DELETE, mmGUIFrame::OnDeleteCustomSqlReport)
-    EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnPopupEditCustomSqlReport)
-    EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_DELETE, mmGUIFrame::OnPopupDeleteCustomSqlReport)
+    EVT_MENU(MENU_CUSTOM_SQL_REPORT_NEW, mmGUIFrame::OnEditCustomSqlReport)
+    EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnEditCustomSqlReport)
 
     /*Automatic processing of repeat transactions*/
     EVT_TIMER(AUTO_REPEAT_TRANSACTIONS_TIMER_ID, mmGUIFrame::OnAutoRepeatTransactionsTimer)
@@ -836,9 +834,6 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_ORGPAYEE)->Enable(enable);
     menuBar_->FindItem(MENU_CATEGORY_RELOCATION)->Enable(enable);
     menuBar_->FindItem(MENU_PAYEE_RELOCATION)->Enable(enable);
-    menuBar_->FindItem(MENU_CUSTOM_SQL_REPORT_NEW)->Enable(enable);
-    menuBar_->FindItem(MENU_CUSTOM_SQL_REPORT_EDIT)->Enable(enable);
-    menuBar_->FindItem(MENU_CUSTOM_SQL_REPORT_DELETE)->Enable(enable);
     menuBar_->FindItem(MENU_CONVERT_ENC_DB)->Enable(enable);
 
     menuBar_->FindItem(MENU_IMPORT)->Enable(enable);
@@ -1347,19 +1342,17 @@ void mmGUIFrame::CreateCustomReport(int index)
     }
 }
 
-bool mmGUIFrame::CustomSQLReportSelected( int& customSqlReportID, mmTreeItemData* iData )
+bool mmGUIFrame::IsCustomSQLReportSelected( int& customSqlReportID, mmTreeItemData* iData )
 {
-    wxStringTokenizer tk(iData->getString(), wxT("_"));
-    wxString tk1 = tk.GetNextToken();
-    wxString tk2 = tk.GetNextToken();
-    wxString indexStr = tk.GetNextToken();
+    customSqlReportID = 0;
     bool result = false;
-    if (tk1 == wxT("Custom") && tk2 == wxT("Report") && indexStr.IsNumber())
+    wxString sItemName = iData->getString();
+    if (wxNOT_FOUND != sItemName.Index(wxT("Custom_Report_")))
     {
+        sItemName.Replace(wxT("Custom_Report_"), wxT(""));
         long index;
-        indexStr.ToLong(&index);
-        customSqlReportID = index;
-        result = true;
+        result = sItemName.ToLong(&index);
+        if (result) customSqlReportID = index;
     }
     return result;
 }
@@ -1525,7 +1518,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if ( CustomSQLReportSelected(customSqlReportID, iData) )
+        else if ( IsCustomSQLReportSelected(customSqlReportID, iData) )
         {
             CreateCustomReport(customSqlReportID);
         }
@@ -2208,12 +2201,12 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnItemRightClick(wxTreeEvent& event)
 {
     wxTreeItemId id = event.GetItem();
-	if (menuBar_->FindItem(MENU_ORGCATEGS)->IsEnabled() )
+    if (menuBar_->FindItem(MENU_ORGCATEGS)->IsEnabled() )
         showTreePopupMenu(id, event.GetPoint());
     else
         wxMessageBox(_("MMEX has been opened without an active database."),_("MMEX: Menu Popup Error"), wxOK|wxICON_EXCLAMATION);
 
-	navTreeCtrl_ ->SelectItem(id);
+    navTreeCtrl_ ->SelectItem(id);
 }
 //----------------------------------------------------------------------------
 
@@ -2316,7 +2309,6 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             {
                 wxMenu* customReportMenu = new wxMenu;
                 customReportMenu->Append(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, _("Edit Custom Report"));
-                customReportMenu->Append(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_DELETE, _("Delete Custom Report"));
                 PopupMenu(&*customReportMenu, pt);
             }
             else if (iData->getString() == wxT("Budgeting"))
@@ -2667,24 +2659,12 @@ void mmGUIFrame::createMenu()
 
     menuTools->AppendSeparator();
 
-    // Create the head menu
-    wxMenu *menuCustomSqlReports = new wxMenu;
-    // create the menu items
-    wxMenuItem* menuItemCustomReportNew = new wxMenuItem(menuCustomSqlReports,
-        MENU_CUSTOM_SQL_REPORT_NEW, _("New..."), _("Create a new SQL report"));
-    menuItemCustomReportNew->SetBitmap(wxBitmap(new_custom_sql_xpm));
-    wxMenuItem* menuItemCustomReportEdit = new wxMenuItem(menuCustomSqlReports,
-        MENU_CUSTOM_SQL_REPORT_EDIT, _("Edit..."), _("Edit an existing SQL report"));
-    menuItemCustomReportEdit->SetBitmap(wxBitmap(edit_custom_sql_xpm));
-    wxMenuItem* menuItemCustomReportDelete = new wxMenuItem(menuCustomSqlReports,
-        MENU_CUSTOM_SQL_REPORT_DELETE, _("Delete..."), _("Remove a file from the Custom Reports menu"));
-    menuItemCustomReportDelete->SetBitmap(wxBitmap(delete_custom_sql_xpm));
-    // Add menu items to the Custom SQL Reports menu
-    menuCustomSqlReports->Append(menuItemCustomReportNew);
-    menuCustomSqlReports->Append(menuItemCustomReportEdit);
-    menuCustomSqlReports->Append(menuItemCustomReportDelete);
+    // Create Item
+    wxMenuItem* menuItemCustomReportEdit = new wxMenuItem(menuTools,
+        MENU_CUSTOM_SQL_REPORT_EDIT, _("Custom Reports..."), _("Create or modify reports for the Reports section"));
+    menuItemCustomReportEdit->SetBitmap(wxBitmap(customsql_xpm));
     // Add menu to Tools menu
-    menuTools->AppendSubMenu(menuCustomSqlReports,_("Custom Reports..."),_("Create or modify reports for the Reports section"));
+    menuTools->Append(menuItemCustomReportEdit);
 
     menuTools->AppendSeparator();
 
@@ -4082,10 +4062,11 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
     homePanel_->Layout();
 }
 
-void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
+void mmGUIFrame::RunCustomSqlDialog(wxString customSqlReportSelectedItem)
 {
     //Use Shared pointer to ensure object gets destroyed if SQL Script errors hijack the object.
-    boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, this, forEdit ));
+    boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this ));
+    customSqlReportSelectedItem;
     int dialogStatus = dlg->ShowModal();
     wxBeginBusyCursor(wxHOURGLASS_CURSOR);
     while (dialogStatus == wxID_MORE)
@@ -4103,82 +4084,17 @@ void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
     wxEndBusyCursor();
 
     if (dialogStatus == wxID_OK) updateNavTreeControl();
-
+    //TODO: if returns wxID_CANCEL then navigation panel working strange
     dlg->Destroy();
 }
 
 //----------------------------------------------------------------------------
-void mmGUIFrame::OnNewCustomSqlReport(wxCommandEvent& /*event*/)
+
+void mmGUIFrame::OnEditCustomSqlReport(wxCommandEvent&)
 {
-    custRepIndex_->initIndexFileHeader();   // create the index file if not exist.
-    custRepIndex_->resetReportsIndex();     // Reset the file to start
-    RunCustomSqlDialog();
+    //custRepIndex_->getSelectedTitleSelection(customSqlReportSelectedItem_);
+    RunCustomSqlDialog(customSqlReportSelectedItem_);
     updateNavTreeControl();
-}
-
-//----------------------------------------------------------------------------
-void mmGUIFrame::OnEditCustomSqlReport(wxCommandEvent& /*event*/)
-{
-    custRepIndex_->getUserTitleSelection(_(" to Edit:"));
-    EditCustomSqlReport();
-}
-
-void mmGUIFrame::OnPopupEditCustomSqlReport(wxCommandEvent&)
-{
-    custRepIndex_->getSelectedTitleSelection(customSqlReportSelectedItem_);
-    EditCustomSqlReport();
-}
-
-void mmGUIFrame::EditCustomSqlReport()
-{
-    if (custRepIndex_->validTitle())
-    {
-        RunCustomSqlDialog(true);
-    }
-}
-
-//----------------------------------------------------------------------------
-void mmGUIFrame::OnDeleteCustomSqlReport(wxCommandEvent& /*event*/)
-{
-    custRepIndex_->getUserTitleSelection(_(" to Delete:"));
-    if (custRepIndex_->validTitle())
-    {
-        DeleteCustomSqlReport();
-    }
-}
-
-void mmGUIFrame::OnPopupDeleteCustomSqlReport(wxCommandEvent& /*event*/)
-{
-    custRepIndex_->getSelectedTitleSelection(customSqlReportSelectedItem_);
-    DeleteCustomSqlReport();
-}
-
-void mmGUIFrame::DeleteCustomSqlReport()
-{
-    wxString msg = wxString() << _("Delete the Custom Report Title:")
-                              << wxT("\n\n")
-                              << custRepIndex_->currentReportTitle();
-    if ( wxMessageBox(msg ,custRepIndex_->UserDialogHeading(),wxYES_NO|wxICON_QUESTION) == wxYES )
-    {
-        custRepIndex_->deleteSelectedReportTitle();
-
-        if (! custRepIndex_->currentReportFileName(false).IsEmpty())
-        {
-            if (custRepIndex_->currentReportFileType() == wxT("LUA"))
-                msg = wxString() << _("Do you want to delete the LUA file as well?");
-            else
-                msg = wxString() << _("Do you want to delete the SQL file as well?");
-            msg << wxT("\n");
-            if ( wxMessageBox(msg, custRepIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
-            {
-                if (wxFileExists(custRepIndex_->currentReportFileName()))
-                {
-                    wxRemoveFile(custRepIndex_->currentReportFileName());
-                }
-            }
-        }
-        updateNavTreeControl();
-    }
 }
 
 //----------------------------------------------------------------------------
