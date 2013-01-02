@@ -54,6 +54,24 @@ wxString TLuaInterface::RunLuaCode(wxString lua_code)
     return wxString::FromUTF8(lua_tostring(lua_, -1));
 }
 
+// Passes a filename containing Lua code, to be run by Lua.
+wxString TLuaInterface::RunLuaFile(wxString lua_filename)
+{
+    lua_result_ = luaL_loadfile(lua_, lua_filename.ToUTF8());
+    if (lua_result_)
+    {
+        return LuaErrorResult();
+    }
+
+    lua_result_ = lua_pcall(lua_, 0, LUA_MULTRET, 0);
+    if (lua_result_)
+    {
+        return LuaErrorResult();
+    }
+
+    return wxString::FromUTF8(lua_tostring(lua_, -1));
+}
+
 // Decode the error into a literal string
 wxString TLuaInterface::LuaErrorResult()
 {

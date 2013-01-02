@@ -82,4 +82,7 @@ boost::shared_ptr<mmCoreDB> pDb_core();
  
 void const displayTimeTaken(const wxString msg, const wxDateTime start_time);
 
+void display_STD_IO_separation_line();
+void display_STD_IO_line();
+
 // End of file

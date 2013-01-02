@@ -35,6 +35,7 @@ public:
     ~TLuaInterface();
     
     wxString RunLuaCode(wxString lua_code);
+    wxString RunLuaFile(wxString lua_filename);
 
 private:
     lua_State* lua_;

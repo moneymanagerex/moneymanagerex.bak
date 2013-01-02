@@ -127,3 +127,13 @@ void const displayTimeTaken(const wxString msg, const wxDateTime start_time)
     printf(wxString::Format(wxT("Time Taken: %s milliseconds - Test: %s \n"), time_dif.c_str(), msg.c_str()).char_str());
 }
 /*****************************************************************************************/
+
+void display_STD_IO_separation_line()
+{
+    printf("\n___________________________________________________________________\n");
+}
+
+void display_STD_IO_line()
+{
+    printf("\n----------------------\n");
+}
