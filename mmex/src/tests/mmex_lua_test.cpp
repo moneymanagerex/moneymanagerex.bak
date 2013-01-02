@@ -34,15 +34,10 @@
 SUITE(mmex_lua_test)
 {
 
-TEST(mmex_lua_test_start)
-{
-    // Separate from other tests
-    printf("Lua Tests__________________________________________________________\n");
-    printf("\n");
-}
-
 TEST(lua_interface_hello_world)
 {
+    printf("\nLua Tests: START");
+    display_STD_IO_separation_line();
     const wxDateTime start_time(wxDateTime::UNow());
 
     TLuaInterface* lua_core = new TLuaInterface();
@@ -89,22 +84,29 @@ TEST(lua_interface_test_sql)
         wxT("return var                                       \n")
     ; // end of text script 
 
+    display_STD_IO_line();
     wxString lua_code_result = lua_core->RunLuaCode(lua_program);
     printf(lua_code_result.char_str());
+    display_STD_IO_line();
 
     displayTimeTaken(wxT("lua_interface_test_sql"), start_time);
 }
 
-TEST(mmex_lua_test_end)
+TEST(lua_interface_test_RunLuaFile)
 {
-    // Separate from other tests
-    printf("___________________________________________________________________\n");
-    printf("\n");
-    printf("\n");
-//#ifndef _DBWRAPPER_TEST_IS_INCLUDED_IN_BUILD_
-//    std::cout << "Press ENTER to continue... ";
-//    std::cin.get();
-//#endif
+    const wxDateTime start_time(wxDateTime::UNow());
+    TLuaInterface* lua_core = new TLuaInterface();
+
+    wxString lua_test_filename = wxT("./mmex_lua_test_file.lua");
+
+    display_STD_IO_line();
+    wxString lua_code_result = lua_core->RunLuaFile(lua_test_filename);
+    printf(lua_code_result.char_str());
+    display_STD_IO_line();
+
+    displayTimeTaken(wxT("lua_interface_test_RunLuaFile"), start_time);
+    display_STD_IO_separation_line();
+    printf("Lua Tests: END\n\n");
 }
 
 } // SUITE end Inidb_test
