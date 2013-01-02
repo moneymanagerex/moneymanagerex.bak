@@ -413,16 +413,11 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     wxString quotes;
 
     int err_code = site_content(site, quotes);
-    if (err_code != wxID_OK)
+    if (err_code != wxURL_NOERR)
     {
         refresh_button_->SetBitmapLabel(wxBitmap(wxImage(led_red_xpm).Scale(16,16)));
-        if (err_code != wxID_OK) {
-            if (err_code == 2)
-                stock_details_->SetLabel(_("Cannot get data from WWW!"));
-            else if (err_code == 1)
-                stock_details_->SetLabel(_("Unable to connect!"));
-            stock_details_short_->SetLabel(wxT(""));
-        }
+        stock_details_->SetLabel(quotes);
+        stock_details_short_->SetLabel(wxT(""));
         return;
     }
 

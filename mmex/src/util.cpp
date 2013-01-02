@@ -26,6 +26,7 @@
 #include "platfdep.h"
 #include "constants.h"
 
+#include <wx/mstream.h>
 #include <sstream>
 //----------------------------------------------------------------------------
 //#include <wx/sound.h>
@@ -282,7 +283,7 @@ void mmOptions::loadOptions(MMEX_IniSettings* info_table)
 {
     dateFormat_     = info_table->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     userNameString_ = info_table->GetStringSetting(wxT("USERNAME"), wxT(""));
-    
+
     financialYearStartDayString_   = info_table->GetStringSetting(wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
     financialYearStartMonthString_ = info_table->GetStringSetting(wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
 }
@@ -880,40 +881,46 @@ void windowsFreezeThaw(wxWindow* pWindow)
     else pWindow->Freeze();
 }
 
-int site_content(const wxString& site, wxString& output)
-{
-    int err_code = wxID_OK;
-    wxURL url(site);
-    if (url.GetError() == wxURL_NOERR)
+int site_content(const wxString& sSite, wxString& sOutput)
+ {
+    int err_code = wxURL_NOERR;
+    wxURL* url = new wxURL(sSite);
+    err_code = url->GetError();
+    if (err_code == wxURL_NOERR)
     {
-        url.GetProtocol().SetTimeout(10); // 10 secs
-        try
+        url->GetProtocol().SetTimeout(10); // 10 secs
+        wxInputStream* in_stream = url->GetInputStream();
+        if (in_stream)
         {
-            unsigned char buf[16084];
-            wxInputStream* in_stream = url.GetInputStream();
-            if (in_stream)
-            {
-                in_stream->Read(buf, 16084);
-                size_t bytes_read=in_stream->LastRead();
-                delete in_stream;
-                buf[bytes_read] = '\0';
-                output = wxString::FromAscii((const char *)buf);
-            }
-            else
-            {
-                err_code = 2; //Cannot get data from WWW!
-            }
+            long lSize;
+            wxMemoryOutputStream oStream;
+
+            /*reading full stream (and size)*/
+            in_stream->Read(oStream);
+
+            lSize=oStream.GetSize();
+            wxChar* buffer = new wxChar[lSize];
+
+            oStream.SeekO(0);
+            oStream.CopyTo(buffer,lSize);
+            sOutput = wxString::FromAscii((const char *)buffer);
         }
-        catch (...)
-        {
-            err_code = 2;
-        }
+        else
+            err_code = -1; //Cannot get data from WWW!
     }
-    else
+
+    if (err_code != wxURL_NOERR)
     {
-        err_code = 1; //Unable to connect
+        if      (err_code == wxURL_SNTXERR ) sOutput = _("Syntax error in the URL string");
+        else if (err_code == wxURL_NOPROTO ) sOutput = _("Found no protocol which can get this URL");
+        else if (err_code == wxURL_NOHOST  ) sOutput = _("A host name is required for this protocol");
+        else if (err_code == wxURL_NOPATH  ) sOutput = _("A path is required for this protocol");
+        else if (err_code == wxURL_CONNERR ) sOutput = _("Connection error");
+        else if (err_code == wxURL_PROTOERR) sOutput = _("An error occurred during negotiation");
+        else if (err_code == -1) sOutput = _("Cannot get data from WWW!");
+        else sOutput = _("Unknow error");
     }
-    return err_code;
+     return err_code;
 }
 
 int mmIniOptions::account_image_id(mmCoreDB* core, int account_id)
@@ -1009,13 +1016,10 @@ void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
     if (site.Right(1).Contains(wxT("+"))) site.RemoveLast(1);
     site = wxString::Format(wxT("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv"), site.c_str());
 
-    wxString rates;
-    int err_code = site_content(site, rates);
-    if (err_code != wxID_OK) {
-        if (err_code == 2)
-            wxMessageBox(_("Cannot get data from WWW!"), _("Error"), wxOK|wxICON_WARNING);
-        else if (err_code == 1)
-            wxMessageBox(_("Unable to connect!"), _("Error"), wxOK|wxICON_WARNING);
+    wxString sOutput;
+    int err_code = site_content(site, sOutput);
+    if (err_code != wxURL_NOERR) {
+            wxMessageBox(sOutput, _("Error"), wxOK|wxICON_WARNING);
         return;
     }
 
@@ -1025,7 +1029,7 @@ void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
     std::map<wxString, std::pair<double, wxString> > currency_data;
 
     // Break it up into lines
-    wxStringTokenizer tkz(rates, wxT("\r\n"));
+    wxStringTokenizer tkz(sOutput, wxT("\r\n"));
 
     while (tkz.HasMoreTokens())
     {

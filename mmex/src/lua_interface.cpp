@@ -206,10 +206,6 @@ int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
     wxString sOutput;
     int error = site_content(sSite_address, sOutput);
 
-    if (error == 2)
-        sOutput = _("Cannot get data from WWW!");
-    else if (error == 1)
-        sOutput = _("Unable to connect");
     lua_pushstring(lua, sOutput.ToUTF8());
     lua_pushinteger(lua, error);
 
