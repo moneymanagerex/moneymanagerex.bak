@@ -892,21 +892,22 @@ int site_content(const wxString& sSite, wxString& sOutput)
         wxInputStream* in_stream = url->GetInputStream();
         if (in_stream)
         {
-            long lSize;
             wxMemoryOutputStream oStream;
 
             /*reading full stream (and size)*/
             in_stream->Read(oStream);
 
-            lSize=oStream.GetSize();
-            wxChar* buffer = new wxChar[lSize];
+            const size_t size = in_stream->LastRead();
+            char* buffer = new char[size];
 
             oStream.SeekO(0);
-            oStream.CopyTo(buffer,lSize);
+            oStream.CopyTo(buffer, size);
+            buffer[size] = '\0';
             sOutput = wxString::FromAscii((const char *)buffer);
         }
         else
             err_code = -1; //Cannot get data from WWW!
+        delete in_stream;
     }
 
     if (err_code != wxURL_NOERR)
