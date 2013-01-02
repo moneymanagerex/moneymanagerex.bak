@@ -918,7 +918,7 @@ int site_content(const wxString& sSite, wxString& sOutput)
         else if (err_code == wxURL_CONNERR ) sOutput = _("Connection error");
         else if (err_code == wxURL_PROTOERR) sOutput = _("An error occurred during negotiation");
         else if (err_code == -1) sOutput = _("Cannot get data from WWW!");
-        else sOutput = _("Unknow error");
+        else sOutput = _("Unknown error");
     }
      return err_code;
 }
