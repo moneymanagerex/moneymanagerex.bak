@@ -97,6 +97,7 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "_",                 cpp2lua_GetTranslation);
     lua_register(lua_, "mmBell",            cpp2lua_Bell);
     lua_register(lua_, "mmMessageBox",      cpp2lua_MessageBox);
+	lua_register(lua_, "mmSQLite3ResultSet", cpp2lua_SQLite3ResultSet);
     lua_register(lua_, "mmGetTextFromUser", cpp2lua_GetTextFromUser);
     lua_register(lua_, "mmGetSingleChoice", cpp2lua_GetSingleChoice);
     lua_register(lua_, "mmGetSiteContent",  cpp2lua_GetSiteContent);
@@ -150,6 +151,46 @@ int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
 
     lua_pushinteger(lua, mm_style);
     return 1;
+}
+
+/******************************************************************************
+ output, error = mmSQLite3ResultSet("sql_script")  
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
+{
+    wxString sScript = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1); // remove error message
+    wxString sError  = wxT("");
+    wxString sOutput = wxT("");
+ 
+    wxSQLite3ResultSet sqlQueryResult;
+    try
+    {
+        sqlQueryResult = static_db_ptr().get()->ExecuteQuery(sScript);
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+       sError = wxString::Format(_("Error: %s"), e.GetMessage().c_str());
+    }
+
+    if (sError.IsEmpty())
+    {
+        int columnCount = sqlQueryResult.GetColumnCount();
+        while (sqlQueryResult.NextRow())
+        {
+            for (int index = 0; index < columnCount; index ++)
+            {
+                wxString sData = sqlQueryResult.GetAsString(index);
+                sOutput << sData << wxT(" | ");  //it should be Lua table not string
+            }
+            sOutput << wxT("\n");
+        }
+    }
+ 
+    lua_pushstring(lua, sOutput.ToUTF8());
+    lua_pushstring(lua, sError.ToUTF8());
+    
+    return 2;
 }
 
 /******************************************************************************

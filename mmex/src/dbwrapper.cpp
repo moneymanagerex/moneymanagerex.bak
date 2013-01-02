@@ -1841,7 +1841,7 @@ wxString mmDBWrapper::getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSetti
 */
 boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, const wxString &key)
 {
-    boost::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
+    boost::shared_ptr<wxSQLite3Database> db = static_db_ptr();
 
     int err = SQLITE_OK;
     wxString errStr=wxEmptyString;
