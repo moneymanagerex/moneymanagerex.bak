@@ -82,6 +82,7 @@ private:
     void fillControls();
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
+	bool SaveCustomReport();
     void OnRun(wxCommandEvent& event);
     void OnClear(wxCommandEvent& event);
     void OnClose(wxCommandEvent& event);
@@ -93,6 +94,8 @@ private:
     void OnItemRightClick(wxTreeEvent& event);
     void OnSelChanged(wxTreeEvent& event);
     void OnLabelChanged(wxTreeEvent& event);
+	bool DeleteCustomSqlReport();
+	void OnMenuSelected(wxCommandEvent& event);
 };
 
 #endif
