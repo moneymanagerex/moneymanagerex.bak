@@ -884,23 +884,35 @@ int site_content(const wxString& site, wxString& output)
 {
     int err_code = wxID_OK;
     wxURL url(site);
-    if (url.GetError() == wxURL_NOERR) {
+    if (url.GetError() == wxURL_NOERR)
+    {
         url.GetProtocol().SetTimeout(10); // 10 secs
-        unsigned char buf[16084];
-        wxInputStream* in_stream = url.GetInputStream();
-        if (in_stream) {
-            in_stream->Read(buf, 16084);
-            size_t bytes_read=in_stream->LastRead();
-            delete in_stream;
-            buf[bytes_read] = '\0';
-            output = wxString::FromAscii((const char *)buf);
+        try
+        {
+            unsigned char buf[16084];
+            wxInputStream* in_stream = url.GetInputStream();
+            if (in_stream)
+            {
+                in_stream->Read(buf, 16084);
+                size_t bytes_read=in_stream->LastRead();
+                delete in_stream;
+                buf[bytes_read] = '\0';
+                output = wxString::FromAscii((const char *)buf);
+            }
+            else
+            {
+                err_code = 2; //Cannot get data from WWW!
+            }
         }
-        else
-            err_code = 2; //Cannot get data from WWW!
+        catch (...)
+        {
+            err_code = 2;
+        }
     }
     else
+    {
         err_code = 1; //Unable to connect
-
+    }
     return err_code;
 }
 
