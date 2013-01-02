@@ -38,10 +38,12 @@ BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
     EVT_CHECKBOX(DIALOG_CUSTOM_SQL_CHKBOX_SUB_REPORT,   mmCustomSQLDialog::OnCheckedSubReport)
     EVT_TEXT( wxID_FILE, mmCustomSQLDialog::OnTextChangeHeading)
     EVT_TEXT( wxID_VIEW_DETAILS,       mmCustomSQLDialog::OnTextChangeSubReport)
-    EVT_TREE_ITEM_RIGHT_CLICK(wxID_ANY, mmCustomSQLDialog::OnItemRightClick)
+    //EVT_TREE_ITEM_RIGHT_CLICK(wxID_ANY, mmCustomSQLDialog::OnItemRightClick)
     EVT_TREE_SEL_CHANGED(wxID_ANY, mmCustomSQLDialog::OnSelChanged)
     EVT_TREE_END_LABEL_EDIT(wxID_ANY, mmCustomSQLDialog::OnLabelChanged)
+    EVT_TREE_ITEM_MENU(wxID_ANY, mmCustomSQLDialog::OnItemRightClick)
     //EVT_TREE_ITEM_ACTIVATED(wxID_ANY,  mmCustomSQLDialog::OnDoubleClicked)
+	EVT_MENU_RANGE(wxID_NEW, wxID_DELETE, mmCustomSQLDialog::OnMenuSelected)
 END_EVENT_TABLE()
 
 mmCustomSQLDialog::mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxString customSqlReportSelectedItem, wxWindow* parent,
@@ -301,12 +303,18 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
 
 void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
 {
+	if (SaveCustomReport())
+		fillControls();
+}
+
+bool mmCustomSQLDialog::SaveCustomReport()
+{
     wxString reportfileName = reportTitleTxtCtrl_->GetValue();
 
     if (reportfileName.IsEmpty())
     {
         wxMessageBox(_("Please supply the Report Title before saving"),reportIndex_->UserDialogHeading(),wxOK|wxICON_WARNING);
-        return;
+        return false;
     }
 
     reportfileName.Replace(wxT(" "),wxT("_"));          // Replace spaces with underscore character
@@ -346,7 +354,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
             if ( !tfSourceFile.Exists() && !tfSourceFile.Create() )
             {
                 wxMessageBox(_("Unable to write to file."),reportIndex_->UserDialogHeading(), wxOK|wxICON_ERROR);
-                return;
+                return false;
             }
 
             // if the file does exist, then update the file contents to the new value.
@@ -369,8 +377,8 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
         navCtrlUpdateRequired_ = true;
         loadedFileName_ = reportfileName;
     }
-    if (!edit_ && navCtrlUpdateRequired_) fillControls();
     edit_ = true;
+	return true;
 }
 
 void mmCustomSQLDialog::OnRun(wxCommandEvent& /*event*/)
@@ -401,25 +409,26 @@ void mmCustomSQLDialog::OnClose(wxCommandEvent& /*event*/)
 void mmCustomSQLDialog::SetDialogBoxForHeadings(bool bHeading)
 {
     headingOnlyCheckBox_->Enable(tcSourceTxtCtrl_->IsEmpty());
-	headingOnlyCheckBox_->SetValue(bHeading && tcSourceTxtCtrl_->IsEmpty());
-	subMenuCheckBox_->Enable( !headingOnlyCheckBox_->GetValue());
+    headingOnlyCheckBox_->SetValue(bHeading && tcSourceTxtCtrl_->IsEmpty());
+    subMenuCheckBox_->Enable( !headingOnlyCheckBox_->GetValue());
     tcSourceTxtCtrl_->Enable(!headingOnlyCheckBox_->GetValue());
     button_Open_->Enable(!headingOnlyCheckBox_->GetValue() && tcSourceTxtCtrl_->IsEmpty());
     button_Run_->Enable(!headingOnlyCheckBox_->GetValue() && !tcSourceTxtCtrl_->IsEmpty());
-	button_Clear_->Enable(!headingOnlyCheckBox_->GetValue() && !tcSourceTxtCtrl_->IsEmpty());
+    button_Clear_->Enable(!headingOnlyCheckBox_->GetValue() && !tcSourceTxtCtrl_->IsEmpty());
 }
 
 void mmCustomSQLDialog::OnCheckedHeading(wxCommandEvent& /*event*/)
 {
     button_Save_->Enable(!reportTitleTxtCtrl_->IsEmpty());
 
-    SetDialogBoxForHeadings(true);
+    SetDialogBoxForHeadings(headingOnlyCheckBox_->IsChecked());
 }
 
 void mmCustomSQLDialog::OnCheckedSubReport(wxCommandEvent& /*event*/)
 {
     button_Save_->Enable();
     headingOnlyCheckBox_->Enable(!subMenuCheckBox_->GetValue());
+	navCtrlUpdateRequired_=true;
 }
 
 void mmCustomSQLDialog::OnTextChangeHeading(wxCommandEvent& /*event*/)
@@ -441,10 +450,12 @@ void mmCustomSQLDialog::OnItemRightClick(wxTreeEvent& event)
     treeCtrl_ ->SelectItem(id);
 
     wxMenu* customReportMenu = new wxMenu;
-    customReportMenu->Append(1, _("New Custom Report"));
-    customReportMenu->Append(2, _("Delete Custom Report"));
-    PopupMenu(&*customReportMenu);
-
+    customReportMenu->Append(wxID_NEW, _("New SQL Custom Report"));
+    customReportMenu->Append(wxID_NEW+1, _("New Lua Custom Report"));
+    customReportMenu->AppendSeparator();
+    customReportMenu->Append(wxID_DELETE, _("Delete Custom Report"));
+    PopupMenu(customReportMenu);
+	delete customReportMenu;
 }
 
 void mmCustomSQLDialog::OnSelChanged(wxTreeEvent& event)
@@ -459,22 +470,22 @@ void mmCustomSQLDialog::OnSelChanged(wxTreeEvent& event)
     if (reportIndex_->currentReportFileName().IsEmpty())
     {
         tcSourceTxtCtrl_->ChangeValue(wxT(""));
-		headingOnlyCheckBox_->SetValue(true);
+        headingOnlyCheckBox_->SetValue(true);
     }
-	else
-	{
+    else
+    {
         subMenuCheckBox_->SetValue(reportIndex_->reportIsSubReport());
 
         wxString sSQLData;
         reportIndex_->getSqlFileData(sSQLData);
         tcSourceTxtCtrl_->ChangeValue(sSQLData);
-        reportTitleTxtCtrl_->ChangeValue(reportIndex_->currentReportTitle());
         if (reportIndex_->currentReportFileType() == wxT("LUA"))
             m_radio_box_->SetSelection(1);
         else
             m_radio_box_->SetSelection(0);
         edit_ = true;
-	}
+    }
+    reportTitleTxtCtrl_->ChangeValue(reportIndex_->currentReportTitle());
     SetDialogBoxForHeadings(!subMenuCheckBox_->IsChecked());
 }
 
@@ -495,32 +506,57 @@ void mmCustomSQLDialog::OnLabelChanged(wxTreeEvent& event)
 
 }
 
-/*
-void mmGUIFrame::DeleteCustomSqlReport()
+bool mmCustomSQLDialog::DeleteCustomSqlReport()
 {
     wxString msg = wxString() << _("Delete the Custom Report Title:")
                               << wxT("\n\n")
-                              << custRepIndex_->currentReportTitle();
-    if ( wxMessageBox(msg ,custRepIndex_->UserDialogHeading(),wxYES_NO|wxICON_QUESTION) == wxYES )
+                              << reportIndex_->currentReportTitle();
+	int iError = wxMessageBox(msg ,reportIndex_->UserDialogHeading(),wxYES_NO|wxICON_QUESTION);
+    if ( iError == wxYES )
     {
-        custRepIndex_->deleteSelectedReportTitle();
+        reportIndex_->deleteSelectedReportTitle();
 
-        if (! custRepIndex_->currentReportFileName(false).IsEmpty())
+        if (! reportIndex_->currentReportFileName(false).IsEmpty())
         {
-            if (custRepIndex_->currentReportFileType() == wxT("LUA"))
-                msg = wxString() << _("Do you want to delete the LUA file as well?");
+            if (reportIndex_->currentReportFileType() == wxT("LUA"))
+                msg = wxString() << _("Do you want to delete the Lua file as well?");
             else
                 msg = wxString() << _("Do you want to delete the SQL file as well?");
             msg << wxT("\n");
-            if ( wxMessageBox(msg, custRepIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
+            if ( wxMessageBox(msg, reportIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
             {
-                if (wxFileExists(custRepIndex_->currentReportFileName()))
+                if (wxFileExists(reportIndex_->currentReportFileName()))
                 {
-                    wxRemoveFile(custRepIndex_->currentReportFileName());
+                    wxRemoveFile(reportIndex_->currentReportFileName());
                 }
             }
         }
-        updateNavTreeControl();
     }
+	return (iError == wxYES);
 }
-*/
+
+void mmCustomSQLDialog::OnMenuSelected(wxCommandEvent& event)
+{
+    int id = event.GetId();
+    if (id == wxID_NEW)
+    {
+		reportTitleTxtCtrl_->SetValue(_("New SQL Custom Report"));
+		tcSourceTxtCtrl_->ChangeValue(wxT("select 'Hello World'"));
+		loadedFileName_.Clear();
+		m_radio_box_->SetSelection(0);
+		navCtrlUpdateRequired_ = SaveCustomReport();
+	}
+    if (id == wxID_NEW+1)
+    {
+		reportTitleTxtCtrl_->SetValue(_("New Lua Custom Report"));
+		tcSourceTxtCtrl_->ChangeValue(wxT("return \"Hello World\""));
+		loadedFileName_.Clear();
+		m_radio_box_->SetSelection(1);
+		navCtrlUpdateRequired_ = SaveCustomReport();
+	}
+    else if (id == wxID_DELETE)
+    {
+		navCtrlUpdateRequired_ = DeleteCustomSqlReport();
+	}
+    if (navCtrlUpdateRequired_) fillControls();   
+}
