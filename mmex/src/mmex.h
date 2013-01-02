@@ -288,6 +288,7 @@ private:
     void OnAbout(wxCommandEvent& event);
 
     void OnItemRightClick(wxTreeEvent& event);
+    void OnItemMenu(wxTreeEvent& event);
     void OnSelChanged(wxTreeEvent& event);
     void OnPopupDeleteAccount(wxCommandEvent& event);
     void OnPopupEditAccount(wxCommandEvent& event);

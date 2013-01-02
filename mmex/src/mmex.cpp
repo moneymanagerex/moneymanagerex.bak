@@ -297,7 +297,9 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TREEPOPUP_DELETE, mmGUIFrame::OnPopupDeleteAccount)
     EVT_MENU(MENU_TREEPOPUP_IMPORT_QIF, mmGUIFrame::OnPopupImportQIFile)
 
-    EVT_TREE_ITEM_RIGHT_CLICK(ID_NAVTREECTRL, mmGUIFrame::OnItemRightClick)
+    EVT_TREE_ITEM_MENU(wxID_ANY, mmGUIFrame::OnItemMenu)
+    //EVT_TREE_ITEM_RIGHT_CLICK(ID_NAVTREECTRL, mmGUIFrame::OnItemRightClick)
+    EVT_TREE_ITEM_ACTIVATED(ID_NAVTREECTRL, mmGUIFrame::OnItemRightClick)
     EVT_TREE_SEL_CHANGED(ID_NAVTREECTRL, mmGUIFrame::OnSelChanged)
     EVT_TREE_ITEM_EXPANDED(ID_NAVTREECTRL, mmGUIFrame::OnTreeItemExpanded)
     EVT_TREE_ITEM_COLLAPSED(ID_NAVTREECTRL,mmGUIFrame::OnTreeItemCollapsed)
@@ -902,6 +904,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         activeTermAccounts_ = true;
     }
 
+    navTreeCtrl_->SetEvtHandlerEnabled(false);
     navTreeCtrl_->DeleteAllItems();
     //navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
 
@@ -1289,6 +1292,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     } else
         menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Enable(false);
 
+    navTreeCtrl_->SetEvtHandlerEnabled(true);
 }
 //----------------------------------------------------------------------------
 
@@ -2197,15 +2201,18 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
     }
 }
 //----------------------------------------------------------------------------
-
-void mmGUIFrame::OnItemRightClick(wxTreeEvent& event)
+void mmGUIFrame::OnItemMenu(wxTreeEvent& event)
 {
     wxTreeItemId id = event.GetItem();
     if (menuBar_->FindItem(MENU_ORGCATEGS)->IsEnabled() )
         showTreePopupMenu(id, event.GetPoint());
     else
         wxMessageBox(_("MMEX has been opened without an active database."),_("MMEX: Menu Popup Error"), wxOK|wxICON_EXCLAMATION);
+}
 
+void mmGUIFrame::OnItemRightClick(wxTreeEvent& event)
+{
+    wxTreeItemId id = event.GetItem();
     navTreeCtrl_ ->SelectItem(id);
 }
 //----------------------------------------------------------------------------
@@ -4065,7 +4072,8 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 void mmGUIFrame::RunCustomSqlDialog(wxString customSqlReportSelectedItem)
 {
     //Use Shared pointer to ensure object gets destroyed if SQL Script errors hijack the object.
-    boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this ));
+    //boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this ));
+    mmCustomSQLDialog* dlg = new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this);
     customSqlReportSelectedItem;
     int dialogStatus = dlg->ShowModal();
     wxBeginBusyCursor(wxHOURGLASS_CURSOR);
@@ -4083,22 +4091,18 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customSqlReportSelectedItem)
     }
     wxEndBusyCursor();
 
-    if (dialogStatus == wxID_OK) updateNavTreeControl();
-    //TODO: if returns wxID_CANCEL then navigation panel working strange
     dlg->Destroy();
+
+    if (dialogStatus == wxID_OK) updateNavTreeControl();
 }
 
 //----------------------------------------------------------------------------
-
 void mmGUIFrame::OnEditCustomSqlReport(wxCommandEvent&)
 {
-    //custRepIndex_->getSelectedTitleSelection(customSqlReportSelectedItem_);
     RunCustomSqlDialog(customSqlReportSelectedItem_);
-    updateNavTreeControl();
 }
 
 //----------------------------------------------------------------------------
-
 void wxNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
 {
     currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
