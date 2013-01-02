@@ -73,15 +73,18 @@ TEST(lua_interface_lua_syntax_error)
     displayTimeTaken(wxT("lua_interface_lua_syntax_error"), start_time);
 }
 
-TEST(lua_interface_test_sql)
+TEST(lua_interface_test_sql_good)
 {
     const wxDateTime start_time(wxDateTime::UNow());
     TLuaInterface* lua_core = new TLuaInterface();
 
     wxString lua_program = wxString() <<
         wxT("sql_script = \"select * from category_v1\"       \n") <<
-        wxT("var = mmSQLite3ResultSet(sql_script)             \n") <<
-        wxT("return var                                       \n")
+        wxT("result, error = mmSQLite3ResultSet(sql_script)   \n") <<
+        wxT("if ( error ~= \"\" ) then                        \n") <<
+        wxT("   result = error                                \n") <<
+        wxT("end                                              \n") <<
+        wxT("return result                                    \n")
     ; // end of text script 
 
     display_STD_IO_line();
@@ -89,7 +92,29 @@ TEST(lua_interface_test_sql)
     printf(lua_code_result.char_str());
     display_STD_IO_line();
 
-    displayTimeTaken(wxT("lua_interface_test_sql"), start_time);
+    displayTimeTaken(wxT("lua_interface_test_sql_good"), start_time);
+}
+
+TEST(lua_interface_test_sql_bad)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TLuaInterface* lua_core = new TLuaInterface();
+
+    wxString lua_program = wxString() <<
+        wxT("sql_script = \"select * from cat_v1\"            \n") <<
+        wxT("result, error = mmSQLite3ResultSet(sql_script)   \n") <<
+        wxT("if ( error ~= \"\" ) then                        \n") <<
+        wxT("   result = error                                \n") <<
+        wxT("end                                              \n") <<
+        wxT("return result                                    \n")
+    ; // end of text script 
+
+    display_STD_IO_line();
+    wxString lua_code_result = lua_core->RunLuaCode(lua_program);
+    printf(lua_code_result.char_str());
+    display_STD_IO_line();
+
+    displayTimeTaken(wxT("lua_interface_test_sql_bad"), start_time);
 }
 
 TEST(lua_interface_test_RunLuaFile)

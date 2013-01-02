@@ -53,6 +53,7 @@ private:
     // All Lua functions provided by C++ for MMEX
     static int cpp2lua_Bell(lua_State* lua);
     static int cpp2lua_MessageBox(lua_State* lua);
+	static int cpp2lua_SQLite3ResultSet(lua_State* lua);
 	static int cpp2lua_GetSingleChoice(lua_State* lua);
     static int cpp2lua_GetTextFromUser(lua_State* lua);
     static int cpp2lua_GetTranslation(lua_State* lua);

@@ -367,5 +367,7 @@ wxImageList* navtree_images_list_();
 void windowsFreezeThaw(wxWindow* pWindow);
 void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core);
 
+boost::shared_ptr<wxSQLite3Database> static_db_ptr();
+
 #endif // _MM_EX_UTIL_H_
 //----------------------------------------------------------------------------

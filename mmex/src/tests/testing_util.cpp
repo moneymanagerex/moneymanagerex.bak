@@ -18,6 +18,7 @@
  *************************************************************************/
 
 #include "testing_util.h"
+#include "util.h"
 
 /*****************************************************************************************
  This class is used to remove the temporary database on completion.
@@ -97,7 +98,7 @@ wxString getDbPath()
 boost::shared_ptr<wxSQLite3Database> get_pDb()
 {
     static Cleanup temp_database(getDbPath());
-    static boost::shared_ptr<wxSQLite3Database> pDb(new wxSQLite3Database);
+    boost::shared_ptr<wxSQLite3Database> pDb = static_db_ptr();
 
     if (!pDb->IsOpen())
     {

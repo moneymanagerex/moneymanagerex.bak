@@ -1082,3 +1082,10 @@ void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
     wxMessageDialog msgDlg(parent, msg, _("Currency rate updated"));
     msgDlg.ShowModal();
 }
+
+boost::shared_ptr<wxSQLite3Database> static_db_ptr()
+{
+    static boost::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
+    
+    return db;
+}
