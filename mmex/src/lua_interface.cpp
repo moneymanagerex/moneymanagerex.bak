@@ -90,14 +90,14 @@ wxString TLuaInterface::LuaErrorResult()
  New functions needed to be registered with Lua using following values:
  ..., "name_of_lua_function", name_of_static_method_defined_in TLuaInterface);
 
- Lua syntax: See comment above the defined function 
+ Lua syntax: See comment above the defined function
  *****************************************************************************/
 void TLuaInterface::Open_MMEX_Library()
 {
     lua_register(lua_, "_",                 cpp2lua_GetTranslation);
     lua_register(lua_, "mmBell",            cpp2lua_Bell);
     lua_register(lua_, "mmMessageBox",      cpp2lua_MessageBox);
-	lua_register(lua_, "mmSQLite3ResultSet", cpp2lua_SQLite3ResultSet);
+    lua_register(lua_, "mmSQLite3ResultSet", cpp2lua_SQLite3ResultSet);
     lua_register(lua_, "mmGetTextFromUser", cpp2lua_GetTextFromUser);
     lua_register(lua_, "mmGetSingleChoice", cpp2lua_GetSingleChoice);
     lua_register(lua_, "mmGetSiteContent",  cpp2lua_GetSiteContent);
@@ -154,42 +154,74 @@ int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
 }
 
 /******************************************************************************
- output, error = mmSQLite3ResultSet("sql_script")  
+ output, error = mmSQLite3ResultSet("sql_script")
  *****************************************************************************/
 int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
 {
     wxString sScript = wxString::FromUTF8(lua_tostring(lua, -1));
     lua_pop(lua, 1); // remove error message
-    wxString sError  = wxT("");
+    int iError  = 0; //SQLITE_OK;
     wxString sOutput = wxT("");
- 
-    wxSQLite3ResultSet sqlQueryResult;
+
+    int iRowCount = 0;
     try
     {
-        sqlQueryResult = static_db_ptr().get()->ExecuteQuery(sScript);
+        iRowCount = static_db_ptr().get()->ExecuteScalar(wxT("select count (*) from (\n") + sScript + wxT("\n)"));
     }
     catch(const wxSQLite3Exception& e)
     {
-       sError = wxString::Format(_("Error: %s"), e.GetMessage().c_str());
-    }
-
-    if (sError.IsEmpty())
-    {
-        int columnCount = sqlQueryResult.GetColumnCount();
-        while (sqlQueryResult.NextRow())
+        iError = e.GetErrorCode();
+        sOutput = e.GetMessage();
+        if (sOutput.Contains(wxT("update")) ||
+        sOutput.Contains(wxT("delete")) ||
+        sOutput.Contains(wxT("insert")))
         {
-            for (int index = 0; index < columnCount; index ++)
-            {
-                wxString sData = sqlQueryResult.GetAsString(index);
-                sOutput << sData << wxT(" | ");  //it should be Lua table not string
-            }
-            sOutput << wxT("\n");
+            iError = 3; //SQLITE_PERM;
+            sOutput = _("Please, use read only access to DB in this function");
         }
     }
- 
+
+    if (iError == 0) //SQLITE_OK
+    {
+        wxSQLite3ResultSet sqlQueryResult;
+        try
+        {
+            sqlQueryResult = static_db_ptr().get()->ExecuteQuery(sScript);
+        }
+        catch(const wxSQLite3Exception& e)
+        {
+            iError = e.GetErrorCode();
+            sOutput = wxString::Format(_("Error: %s"), e.GetMessage().c_str());
+        }
+
+        if (iError == 0)
+        {
+            int iColumnCount = sqlQueryResult.GetColumnCount();
+            // create the table
+            //lua_createtable(lua, iRowCount, iColumnCount);
+            //int table_index = lua_gettop(lua);
+
+            while (sqlQueryResult.NextRow())
+            {
+                for (int index = 0; index < iColumnCount; index ++)
+                {
+                    wxString sData = sqlQueryResult.GetAsString(index);
+                    //const char* value = (const char*)sData.mb_str();
+                    //lua_pushstring(lua, value);
+                    //lua_rawseti(lua, table_index, index+1);
+                    sOutput<<sData<<wxT("\t|\t");
+                }
+                sOutput.RemoveLast(3);
+                sOutput << wxT("<br>\n");
+            }
+            //lua_setglobal(lua,"table");
+        }
+
+    }
+
     lua_pushstring(lua, sOutput.ToUTF8());
-    lua_pushstring(lua, sError.ToUTF8());
-    
+    lua_pushinteger(lua, iError);
+
     return 2;
 }
 
@@ -205,7 +237,7 @@ int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
     for(unsigned int i = 1; i <= len; i++)
     {
         lua_rawgeti(lua, 1, i);
-        data.Add(wxString::FromUTF8(luaL_checkstring(lua, -1)));  
+        data.Add(wxString::FromUTF8(luaL_checkstring(lua, -1)));
         lua_pop(lua, 1);
     }
 
