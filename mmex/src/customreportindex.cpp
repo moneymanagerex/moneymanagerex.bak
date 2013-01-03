@@ -179,9 +179,9 @@ void customSQLReportIndex::SetNewCurrentFileValues()
     wxFileName fn(currentReportFileName_);
     currentReportFileExt_ = fn.GetExt();
     currentReportFileExt_.MakeUpper();
-    if (currentReportFileExt_ == wxT(".SQL"))
+    if (currentReportFileExt_ == wxT("SQL"))
         currentReportFileType_ = wxT("SQL");
-    else if (currentReportFileExt_ == wxT(".LUA"))
+    else if (currentReportFileExt_ == wxT("LUA"))
         currentReportFileType_ = wxT("LUA");
     else 
         currentReportFileType_ = wxT("");
