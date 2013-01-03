@@ -79,12 +79,13 @@ TEST(lua_interface_test_sql_good)
     TLuaInterface* lua_core = new TLuaInterface();
 
     wxString lua_program = wxString() <<
-        wxT("sql_script = \"select * from category_v1\"       \n") <<
-        wxT("result, error = mmSQLite3ResultSet(sql_script)   \n") <<
-        wxT("if ( error ~= \"\" ) then                        \n") <<
-        wxT("   result = error                                \n") <<
-        wxT("end                                              \n") <<
-        wxT("return result                                    \n")
+        wxT("sql_1 = \"select * from category_v1\"            \n") <<
+        wxT("sql_result = mmSQLite3ResultSet(sql_1)           \n") <<
+        wxT("sql_2 = \"update category_v1 set categid = 1 \"  \n") <<
+        wxT("sql_2 = sql_2 .. \"where categid=1\"             \n") <<
+        wxT("sql_result = sql_result ..                       \n") <<
+        wxT("             mmSQLite3ResultSet(sql_2)           \n") <<
+        wxT("return sql_result                                \n")
     ; // end of text script 
 
     display_STD_IO_line();
@@ -103,9 +104,6 @@ TEST(lua_interface_test_sql_bad)
     wxString lua_program = wxString() <<
         wxT("sql_script = \"select * from cat_v1\"            \n") <<
         wxT("result, error = mmSQLite3ResultSet(sql_script)   \n") <<
-        wxT("if ( error ~= \"\" ) then                        \n") <<
-        wxT("   result = error                                \n") <<
-        wxT("end                                              \n") <<
         wxT("return result                                    \n")
     ; // end of text script 
 

@@ -88,23 +88,41 @@ wxString TLuaInterface::LuaErrorResult()
  Lua extended functions, provided by c++ code:
 
  New functions needed to be registered with Lua using following values:
- ..., "name_of_lua_function", name_of_static_method_defined_in TLuaInterface);
-
- Lua syntax: See comment above the defined function
+ (lua_, "lua_function_name", static_method_name_defined_in TLuaInterface);
  *****************************************************************************/
 void TLuaInterface::Open_MMEX_Library()
 {
-    lua_register(lua_, "_",                 cpp2lua_GetTranslation);
-    lua_register(lua_, "mmBell",            cpp2lua_Bell);
-    lua_register(lua_, "mmMessageBox",      cpp2lua_MessageBox);
+    lua_register(lua_, "_",                  cpp2lua_GetTranslation);
+    lua_register(lua_, "mmBell",             cpp2lua_Bell);
+    lua_register(lua_, "mmMessageBox",       cpp2lua_MessageBox);
     lua_register(lua_, "mmSQLite3ResultSet", cpp2lua_SQLite3ResultSet);
-    lua_register(lua_, "mmGetTextFromUser", cpp2lua_GetTextFromUser);
-    lua_register(lua_, "mmGetSingleChoice", cpp2lua_GetSingleChoice);
-    lua_register(lua_, "mmGetSiteContent",  cpp2lua_GetSiteContent);
+    lua_register(lua_, "mmGetSingleChoice",  cpp2lua_GetSingleChoice);
+    lua_register(lua_, "mmGetTextFromUser",  cpp2lua_GetTextFromUser);
+    lua_register(lua_, "mmGetSiteContent",   cpp2lua_GetSiteContent);
 }
 
 /******************************************************************************
- mmBell() - Does nothing except ring the stystem bell
+ Lua Syntax: See comment above the defined function.
+
+ Note: Generally all functions require a variable to accept a return value.
+       Some functions can return multiple values, shown as xx[, yy]
+       [, yy] represents an optional value. 
+ *****************************************************************************/
+
+/*****************************************************************************
+ _"translation_string" or _("translation_string") similar to wxWidgets
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_GetTranslation(lua_State *lua)
+{
+    wxString data = wxString::FromUTF8(lua_tostring(lua, -1));
+    data = wxGetTranslation(data);
+    lua_pushstring(lua, data.ToUTF8());
+
+    return 1;
+}
+
+/******************************************************************************
+ mmBell() - For Windows, ring the system bell when available. No return value.
  *****************************************************************************/
 int TLuaInterface::cpp2lua_Bell(lua_State* lua)
 {
@@ -154,7 +172,7 @@ int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
 }
 
 /******************************************************************************
- output, error = mmSQLite3ResultSet("sql_script")
+ output[, error] = mmSQLite3ResultSet("sql_script")
  *****************************************************************************/
 int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
 {
@@ -226,7 +244,7 @@ int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
 }
 
 /******************************************************************************
- mmGetSingleChoice(lua_table, _("Choose Accounts"), _("Dialogue"))
+ mmGetSingleChoice(lua_table, "dialog_message", "dialog_heading")
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
 {
@@ -274,20 +292,8 @@ int TLuaInterface::cpp2lua_GetTextFromUser(lua_State* lua)
     return 1;
 }
 
-/*****************************************************************************
- _("translation_string")
- *****************************************************************************/
-int TLuaInterface::cpp2lua_GetTranslation(lua_State *lua)
-{
-    wxString data = wxString::FromUTF8(lua_tostring(lua, -1));
-    data = wxGetTranslation(data);
-    lua_pushstring(lua, data.ToUTF8());
-
-    return 1;
-}
-
 /******************************************************************************
- mmGetSiteContent("address")
+ output[, error] = mmGetSiteContent("url_address")
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
 {
