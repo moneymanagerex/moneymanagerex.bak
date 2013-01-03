@@ -176,7 +176,8 @@ wxString customSQLReportIndex::UserDialogHeading()
 
 void customSQLReportIndex::SetNewCurrentFileValues()
 {
-    currentReportFileExt_ = currentReportFileName_.substr(currentReportFileName_.Length()-4);
+    wxFileName fn(currentReportFileName_);
+    currentReportFileExt_ = fn.GetExt();
     currentReportFileExt_.MakeUpper();
     if (currentReportFileExt_ == wxT(".SQL"))
         currentReportFileType_ = wxT("SQL");
