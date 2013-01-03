@@ -534,6 +534,7 @@ bool mmCustomSQLDialog::DeleteCustomSqlReport()
                 if (wxFileExists(reportIndex_->currentReportFileName()))
                 {
                     wxRemoveFile(reportIndex_->currentReportFileName());
+                    loadedFileName_ = reportIndex_->reportFileName(iSelectedId_);
                 }
             }
         }
@@ -563,6 +564,7 @@ void mmCustomSQLDialog::OnMenuSelected(wxCommandEvent& event)
     else if (id == wxID_DELETE)
     {
         navCtrlUpdateRequired_ = DeleteCustomSqlReport();
+        if (navCtrlUpdateRequired_) iSelectedId_--;
     }
     if (navCtrlUpdateRequired_) fillControls();
 }
