@@ -106,7 +106,7 @@ void TLuaInterface::Open_MMEX_Library()
 
  Note: Generally all functions require a variable to accept a return value.
        Some functions can return multiple values, shown as xx[, yy]
-       [, yy] represents an optional value. 
+       [, yy] represents an optional value.
  *****************************************************************************/
 
 /*****************************************************************************
@@ -173,6 +173,7 @@ int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
 
 /******************************************************************************
  output[, error] = mmSQLite3ResultSet("sql_script")
+ global var SQLQueryResult = { {x1.1 .... x1.n}, {x2.1 .... x2.n} }
  *****************************************************************************/
 int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
 {
@@ -181,10 +182,10 @@ int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
     int iError  = 0; //SQLITE_OK;
     wxString sOutput = wxT("");
 
-    int iRowCount = 0;
+    int iRowsCount = 0;
     try
     {
-        iRowCount = static_db_ptr().get()->ExecuteScalar(wxT("select count (*) from (\n") + sScript + wxT("\n)"));
+        iRowsCount = static_db_ptr().get()->ExecuteScalar(wxT("select count (*) from (\n") + sScript + wxT("\n)"));
     }
     catch(const wxSQLite3Exception& e)
     {
@@ -214,27 +215,31 @@ int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
 
         if (iError == 0)
         {
-            int iColumnCount = sqlQueryResult.GetColumnCount();
-            // create the table
-            //lua_createtable(lua, iRowCount, iColumnCount);
-            //int table_index = lua_gettop(lua);
+            lua_createtable(lua , iRowsCount, 0);  // push the main table T onto the stack
 
-            while (sqlQueryResult.NextRow())
+            int iColumnsCount = sqlQueryResult.GetColumnCount();
+            for (int key = 1; key <= iRowsCount; key ++)
             {
-                for (int index = 0; index < iColumnCount; index ++)
+                sqlQueryResult.NextRow();
+                lua_createtable(lua , iColumnsCount, 0); // push a Row Table R onto the stack
+
+                for (int i = 0; i < iColumnsCount; i++)
                 {
-                    wxString sData = sqlQueryResult.GetAsString(index);
-                    //const char* value = (const char*)sData.mb_str();
-                    //lua_pushstring(lua, value);
-                    //lua_rawseti(lua, table_index, index+1);
+                    wxString sData = sqlQueryResult.GetAsString(i);
+                    // value is at -1, R is at -2
+                    lua_pushstring(lua, sData.ToUTF8());
+                    lua_rawseti(lua, -2, i+1);   // R[i] = Data
+
                     sOutput<<sData<<wxT("\t|\t");
                 }
+                // R is at -1, T is at -2
+                lua_rawseti(lua, -2, key); // T[key] = R
+
                 sOutput.RemoveLast(3);
                 sOutput << wxT("<br>\n");
             }
-            //lua_setglobal(lua,"table");
+            lua_setglobal(lua,"SQLQueryResult");
         }
-
     }
 
     lua_pushstring(lua, sOutput.ToUTF8());
