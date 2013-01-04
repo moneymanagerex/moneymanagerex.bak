@@ -18,6 +18,7 @@
 
 #include "lua_interface.h"
 #include "util.h"
+#include "htmlbuilder.h"
 
 // Constructor: Initialises Lua when an instant is created.
 TLuaInterface::TLuaInterface()
@@ -99,6 +100,8 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmGetSingleChoice",  cpp2lua_GetSingleChoice);
     lua_register(lua_, "mmGetTextFromUser",  cpp2lua_GetTextFromUser);
     lua_register(lua_, "mmGetSiteContent",   cpp2lua_GetSiteContent);
+
+    lua_register(lua_, "mmHTMLBuilder",      cpp2lua_HTMLBuilder);
 }
 
 /******************************************************************************
@@ -312,4 +315,69 @@ int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
     lua_pushinteger(lua, error);
 
     return 2;
+}
+
+/******************************************************************************
+ mmHTMLBuilder("function[, value_1][, value_2][, value_3][, value_4]")
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
+{
+    wxString value_4;
+    if (lua_gettop(lua) > 4 )
+    {
+        value_4 = wxString::FromUTF8(lua_tostring(lua, -1));
+        lua_pop(lua, 1);
+    }
+
+    wxString value_3;
+    if (lua_gettop(lua) > 3 )
+    {
+        value_3 = wxString::FromUTF8(lua_tostring(lua, -1));
+        lua_pop(lua, 1);
+    }
+
+    wxString value_2;
+    if (lua_gettop(lua) > 2 )
+    {
+        value_2 = wxString::FromUTF8(lua_tostring(lua, -1));
+        lua_pop(lua, 1);
+    }
+
+    wxString value_1;
+    if (lua_gettop(lua) > 1 )
+    {
+        value_1 = wxString::FromUTF8(lua_tostring(lua, -1));
+        lua_pop(lua, 1);
+    }
+
+    wxString fn_name = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1);
+
+    wxString html_error = _("HTML_BUILDER: Syntax error function: ");
+    mmHTMLBuilder hb;
+    try
+    {
+        if (fn_name == wxT("Init")) hb.init();
+        else if (fn_name == wxT("StartTable")) hb.startTable(value_1, value_2);
+        else if (fn_name == wxT("StartTableRow")) hb.startTableRow();
+        else if (fn_name == wxT("AddTableHeaderCell")) hb.addTableHeaderCell(value_1, value_2 == wxT("") ? false: true);
+        else if (fn_name == wxT("AddTableCell")) hb.addTableCell(value_1, value_2 == wxEmptyString ? false: true, value_3 == wxEmptyString ? false: true, value_4 == wxEmptyString ? false: true);
+        else if (fn_name == wxT("AddRowSeparator")) hb.addRowSeparator(wxAtoi(value_1.c_str()));
+        else if (fn_name == wxT("EndTableRow")) hb.endTableRow();
+        else if (fn_name == wxT("EndTable")) hb.endTable();
+        else if (fn_name == wxT("AddHorizontalLine")) hb.addHorizontalLine(wxAtoi(value_1.c_str()));
+        else if (fn_name == wxT("End")) hb.end();
+        else
+        {
+            hb.addParaText(html_error + fn_name);
+        }
+    }
+    catch (...)
+    {
+        hb.addParaText(html_error + fn_name);
+    }
+
+    lua_pushstring(lua, hb.getHTMLText().ToUTF8());
+
+    return 1;
 }

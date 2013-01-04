@@ -58,6 +58,8 @@ private:
     static int cpp2lua_GetTextFromUser(lua_State* lua);
     static int cpp2lua_GetTranslation(lua_State* lua);
 	static int cpp2lua_GetSiteContent(lua_State* lua);
+
+    static int cpp2lua_HTMLBuilder(lua_State* lua);
 };
 
 #endif // _MM_EX_LUA_INTERFACE_H_
