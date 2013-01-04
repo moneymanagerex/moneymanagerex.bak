@@ -96,6 +96,7 @@ private:
     void OnLabelChanged(wxTreeEvent& event);
 	bool DeleteCustomSqlReport();
 	void OnMenuSelected(wxCommandEvent& event);
+	void OnSourceTxtChar(wxKeyEvent& event);
 };
 
 #endif

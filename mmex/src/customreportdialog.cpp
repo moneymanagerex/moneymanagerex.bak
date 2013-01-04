@@ -60,7 +60,7 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
-    wxAcceleratorEntry entries[2];
+    wxAcceleratorEntry entries[1];
     entries[0].Set(wxACCEL_NORMAL, WXK_F9, wxID_REFRESH);
     wxAcceleratorTable accel(1, entries);
     SetAcceleratorTable(accel);
@@ -214,6 +214,8 @@ void mmCustomSQLDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
     headingPanelSizerV3->Add(tcSourceTxtCtrl_, flagsExpand);
     headingPanelSizerV3->Add(headingPanelSizerH4, flags.Center());
+    tcSourceTxtCtrl_->Connect(wxID_ANY, wxEVT_CHAR,
+        wxKeyEventHandler(mmCustomSQLDialog::OnSourceTxtChar), NULL, this);
 
     button_Open_ = new wxButton( this, wxID_OPEN);
     headingPanelSizerH4->Add(button_Open_, flags);
@@ -567,4 +569,11 @@ void mmCustomSQLDialog::OnMenuSelected(wxCommandEvent& event)
         if (navCtrlUpdateRequired_) iSelectedId_--;
     }
     if (navCtrlUpdateRequired_) fillControls();
+}
+
+void mmCustomSQLDialog::OnSourceTxtChar(wxKeyEvent& event)
+{
+    if (wxGetKeyState(wxKeyCode('A')) && wxGetKeyState(WXK_CONTROL))
+        tcSourceTxtCtrl_->SetSelection(-1, -1); //select all
+    event.Skip();
 }
