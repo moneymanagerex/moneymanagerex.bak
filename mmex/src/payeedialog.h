@@ -31,23 +31,23 @@ class mmPayeeDialog : public wxDialog
 public:
     mmPayeeDialog(wxWindow* parent, mmCoreDB* core, bool showSelectButton = true);
 
-    int getPayeeId() const { return m_payee_id; }
+    int getPayeeId() const { return m_payee_id_; }
 
 private:
-    int m_payee_id;
+    int m_payee_id_;
     mmCoreDB *core_;
     bool showSelectButton_;
     wxListBox* listBox_;
-    wxButton* addButton;
-    wxButton* editButton;
-    wxButton* deleteButton;
-    wxButton* selectButton;
+    wxButton* addButton_;
+    wxButton* editButton_;
+    wxButton* deleteButton_;
+    wxButton* selectButton_;
     wxButton* btnCancel_;
     wxTextCtrl* textCtrl_;
     wxTextCtrl* hideTextCtrl_;
     wxCheckBox* cbShowAll_;
 
-    mmPayeeDialog() : m_payee_id(-1) {}
+    mmPayeeDialog() : m_payee_id_(-1) {}
 
     void do_create(wxWindow* parent);
     void CreateControls();
@@ -66,7 +66,7 @@ private:
     void OnFocus(wxFocusEvent& event);
     void OnSetFocus(wxFocusEvent& event);
     void OnCancel(wxCommandEvent& /*event*/);
-    void OnShowHidenChbClick(wxCommandEvent& /*event*/);
+    void OnShowHiddenChbClick(wxCommandEvent& /*event*/);
     void saveFilterSettings(wxCommandEvent& event);
 };
 #endif // _MM_EX_PAYEEDIALOG_H_

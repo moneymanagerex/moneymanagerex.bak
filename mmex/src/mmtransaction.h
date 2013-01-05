@@ -186,6 +186,7 @@ public:
     int getLastUsedPayeeID(const int accountID, int& categID, int& subcategID) const;
     wxArrayString getTransactionNumber(const int accountID, const wxDateTime transaction_date) const;
     bool IsCategoryUsed(mmCoreDB* core, const int iCatID, const int iSubCatID, bool bIgnor_subcat = true) const;
+	bool IsPayeeUsed(const int iPayeeID) const;
 
     /* Data */
     typedef std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator const_iterator;
