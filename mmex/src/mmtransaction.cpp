@@ -1307,3 +1307,20 @@ bool mmBankTransactionList::IsCategoryUsed(mmCoreDB* core, const int iCatID, con
 
     return searching;
 }
+
+bool mmBankTransactionList::IsPayeeUsed(const int iPayeeID) const
+{
+    int index = transactions_.size() - 1;
+    bool searching = false;
+    boost::shared_ptr<mmBankTransaction> pBankTransaction;
+    while (!searching && index >= 0)
+    {
+        pBankTransaction = transactions_[index];
+        if (pBankTransaction && (pBankTransaction->payeeID_ == iPayeeID))
+        {
+            searching = true;
+        }
+        index --;
+    }
+    return searching;
+}

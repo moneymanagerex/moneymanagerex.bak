@@ -43,7 +43,7 @@ END_EVENT_TABLE()
 
 
 mmPayeeDialog::mmPayeeDialog(wxWindow *parent, mmCoreDB *core, bool showSelectButton) :
-    m_payee_id(-1),
+    m_payee_id_(-1),
     core_(core),
     showSelectButton_(showSelectButton)
 {
@@ -66,12 +66,12 @@ void mmPayeeDialog::do_create(wxWindow* parent)
 
     if (!showSelectButton_)
     {
-        selectButton->Disable();
+        selectButton_->Disable();
     }
 
     SetIcon(mmex::getProgramIcon());
 
-    wxString sResult = core_->dbInfoSettings_->GetStringSetting(wxT("HIDEN_PAYEES_STRING"), wxT(""));
+    wxString sResult = core_->dbInfoSettings_->GetStringSetting(wxT("HIDDEN_PAYEES_STRING"), wxT(""));
     hideTextCtrl_->ChangeValue(sResult);
 
     fillControls();
@@ -83,8 +83,8 @@ void mmPayeeDialog::CreateControls()
 {
     const int border = 5;
     wxSizerFlags flags, flagsExpand;
-    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
-    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(border);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(border).Expand();
 
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     SetSizer(itemBoxSizer2);
@@ -104,16 +104,13 @@ void mmPayeeDialog::CreateControls()
     cbShowAll_->SetToolTip(_("Show all hidden payees"));
     itemBoxSizer22->Add(cbShowAll_, flags);
     cbShowAll_->Connect(wxID_SELECTALL, wxEVT_COMMAND_CHECKBOX_CLICKED,
-        wxCommandEventHandler(mmPayeeDialog::OnShowHidenChbClick), NULL, this);
-
-    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer3, flagsExpand);
+        wxCommandEventHandler(mmPayeeDialog::OnShowHiddenChbClick), NULL, this);
 
     wxArrayString filtd = core_->payeeList_.FilterPayees(wxT(""));
     int vertical_size_ = (filtd.GetCount()>10 ? 320 : 240);
     listBox_ = new wxListBox( this, wxID_ANY,
        wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
-    itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
+    itemBoxSizer2->Add(listBox_, 1, wxEXPAND|wxALL, 1);
 
     wxNotebook* payee_notebook = new wxNotebook(this,
         wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
@@ -123,7 +120,7 @@ void mmPayeeDialog::CreateControls()
     filter_tab->SetSizer(notes_sizer);
     itemBoxSizer2->Add(payee_notebook, flagsExpand);
 
-    textCtrl_ = new wxTextCtrl( filter_tab, wxID_ANY, wxT(""),
+    textCtrl_ = new wxTextCtrl( filter_tab, wxID_FIND, wxT(""),
         wxDefaultPosition, wxSize(240,-1), wxTE_PROCESS_ENTER);
     notes_sizer->Add(textCtrl_, flagsExpand);
     textCtrl_->SetFocus();
@@ -152,29 +149,29 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer *maintenance_sizer = new wxBoxSizer(wxHORIZONTAL);
     maintenance_tab->SetSizer(maintenance_sizer);
 
-    addButton = new wxButton( maintenance_tab, wxID_ADD);
-    editButton = new wxButton( maintenance_tab, wxID_EDIT);
-    editButton->Disable();
-    deleteButton = new wxButton( maintenance_tab, wxID_REMOVE);
-    deleteButton->Disable();
+    addButton_ = new wxButton( maintenance_tab, wxID_ADD);
+    editButton_ = new wxButton( maintenance_tab, wxID_EDIT);
+    editButton_->Disable();
+    deleteButton_ = new wxButton( maintenance_tab, wxID_REMOVE);
+    deleteButton_->Disable();
 
-    maintenance_sizer->Add(addButton, flags.Border(1));
-    maintenance_sizer->Add(editButton, flags);
-    maintenance_sizer->Add(deleteButton, flags);
+    maintenance_sizer->Add(addButton_, flags.Border(1));
+    maintenance_sizer->Add(editButton_, flags);
+    maintenance_sizer->Add(deleteButton_, flags);
 
-    selectButton = new wxButton( this, wxID_OK, _("&Select"));
-    itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    selectButton->Disable();
+    selectButton_ = new wxButton( this, wxID_OK, _("&Select"));
+    itemBoxSizer9->Add(selectButton_, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    selectButton_->Disable();
 
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
     btnCancel_ = new wxButton( this, wxID_CANCEL);
     itemBoxSizer9->Add(btnCancel_,  flags);
 
     textCtrl_->SetToolTip(_("Enter a search string.  You can use * as a wildcard to match zero or more characters or ? to match a single character."));
-    addButton->SetToolTip(_("Add a new payee name"));
-    editButton->SetToolTip(_("Change the name of an existing payee"));
-    deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
-    selectButton->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
+    addButton_->SetToolTip(_("Add a new payee name"));
+    editButton_->SetToolTip(_("Change the name of an existing payee"));
+    deleteButton_->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
+    selectButton_->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
 }
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
@@ -239,13 +236,12 @@ void mmPayeeDialog::OnTextCtrlChanged(wxCommandEvent& event)
 void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 {
     wxString payee = listBox_->GetStringSelection();
+    m_payee_id_ = payee.IsEmpty() ? -1 : core_->payeeList_.GetPayeeId(payee);
+    bool ok = m_payee_id_ > -1;
 
-    m_payee_id = payee.IsEmpty() ? -1 : core_->payeeList_.GetPayeeId(payee);
-    bool ok = m_payee_id != -1;
-
-    editButton->Enable(ok);
-    deleteButton->Enable(ok);
-    selectButton->Enable(ok && showSelectButton_);
+    editButton_->Enable(ok);
+    deleteButton_->Enable(ok && !core_->bTransactionList_.IsPayeeUsed(m_payee_id_));
+    selectButton_->Enable(ok && showSelectButton_);
 }
 
 void mmPayeeDialog::OnAdd(wxCommandEvent& event)
@@ -269,14 +265,14 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
         listBox_->SetStringSelection(text);
 
         // SetStringSelection does not emit event, so we need to do it manually.
-        // This is important because it is where m_payee_id gets set
+        // This is important because it is where m_payee_id_ gets set
         OnSelChanged(event);
     }
 }
 
 void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
-    if (!core_->payeeList_.RemovePayee(m_payee_id))
+    if (!core_->payeeList_.RemovePayee(m_payee_id_))
     {
         wxString deletePayeeErrMsg = _("Payee in use.");
         deletePayeeErrMsg
@@ -293,7 +289,7 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 
 void mmPayeeDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
-    if (m_payee_id != -1) {
+    if (m_payee_id_ != -1) {
         EndModal(wxID_OK);
     }
 }
@@ -316,9 +312,9 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
     wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
     if (newName != wxGetEmptyString())
     {
-        core_->payeeList_.UpdatePayee(m_payee_id, newName);
-        core_->bTransactionList_.UpdateAllTransactionsForPayee(core_, m_payee_id);
-        editButton->Disable();
+        core_->payeeList_.UpdatePayee(m_payee_id_, newName);
+        core_->bTransactionList_.UpdateAllTransactionsForPayee(core_, m_payee_id_);
+        editButton_->Disable();
         fillControls();
 
         // Now we need to make sure that the edited name is selected after the dialog is closed
@@ -343,7 +339,7 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
     }
 }
 
-void mmPayeeDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
+void mmPayeeDialog::OnShowHiddenChbClick(wxCommandEvent& /*event*/)
 {
     core_->dbInfoSettings_->SetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), cbShowAll_->IsChecked());
     fillControls();
@@ -353,14 +349,9 @@ void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
 {
     wxWindow *w = FindFocus();
 
-    if (!textCtrl_->GetValue().IsEmpty())
+    if (w && !textCtrl_->GetValue().IsEmpty() && w->GetId() == wxID_FIND)
     {
         textCtrl_->Clear();
-        return;
-    }
-    else if (w && w->GetId() != btnCancel_->GetId())
-    {
-        btnCancel_->SetFocus();
         return;
     }
     else
@@ -369,6 +360,6 @@ void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::saveFilterSettings(wxCommandEvent& event)
 {
-    core_->dbInfoSettings_->SetStringSetting(wxT("HIDEN_PAYEES_STRING"), hideTextCtrl_->GetValue());
+    core_->dbInfoSettings_->SetStringSetting(wxT("HIDDEN_PAYEES_STRING"), hideTextCtrl_->GetValue());
     event.Skip();
 }
