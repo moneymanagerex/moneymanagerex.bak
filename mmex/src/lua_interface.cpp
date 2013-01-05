@@ -360,12 +360,20 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
         if (fn_name == wxT("Init")) hb.init();
         else if (fn_name == wxT("StartTable")) hb.startTable(value_1, value_2);
         else if (fn_name == wxT("StartTableRow")) hb.startTableRow();
+        else if (fn_name == wxT("StartTableCell")) hb.startTableCell(value_1);
         else if (fn_name == wxT("AddTableHeaderCell")) hb.addTableHeaderCell(value_1, value_2 == wxT("") ? false: true);
+        else if (fn_name == wxT("AddTableHeaderRow")) hb.addTableHeaderRow(value_1, wxAtoi(value_2.c_str()));
         else if (fn_name == wxT("AddTableCell")) hb.addTableCell(value_1, value_2 == wxEmptyString ? false: true, value_3 == wxEmptyString ? false: true, value_4 == wxEmptyString ? false: true);
         else if (fn_name == wxT("AddRowSeparator")) hb.addRowSeparator(wxAtoi(value_1.c_str()));
+        else if (fn_name == wxT("AddTotalRow")) hb.addTotalRow(value_1, wxAtoi(value_2.c_str()), value_3);
         else if (fn_name == wxT("EndTableRow")) hb.endTableRow();
         else if (fn_name == wxT("EndTable")) hb.endTable();
+        else if (fn_name == wxT("AddDateNow")) hb.addDateNow();
+        else if (fn_name == wxT("AddParaText")) hb.addParaText(value_1);
+        else if (fn_name == wxT("AddLineBreak")) hb.addLineBreak();
         else if (fn_name == wxT("AddHorizontalLine")) hb.addHorizontalLine(wxAtoi(value_1.c_str()));
+        else if (fn_name == wxT("StartCenter")) hb.startCenter();
+        else if (fn_name == wxT("EndCenter")) hb.endCenter();
         else if (fn_name == wxT("End")) hb.end();
         else
         {
