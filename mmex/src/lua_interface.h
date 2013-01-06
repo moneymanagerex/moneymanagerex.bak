@@ -42,6 +42,9 @@ private:
     int lua_result_;
     wxString LuaErrorResult();
 
+    static int SetSqlScriptRowCount(const wxString& sScript, int& iRowsCount, int& iError, wxString& sOutput);
+    static int SetSqlRestltSet(const wxString& sScript, wxSQLite3ResultSet& sqlQueryResult, int& iError, wxString& sOutput);
+
     /**************************************************************************
     Lua function extensions provided by c++ code:
 

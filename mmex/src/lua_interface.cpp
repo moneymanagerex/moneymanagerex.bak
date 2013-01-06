@@ -175,6 +175,42 @@ int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
 }
 
 /******************************************************************************
+ Private Helper functions to access the database
+ *****************************************************************************/
+int TLuaInterface::SetSqlScriptRowCount(const wxString& sScript, int& iRowsCount, int& iError, wxString& sOutput)
+{
+    try
+    {
+        iRowsCount = static_db_ptr().get()->ExecuteScalar(wxT("select count (*) from (\n") + sScript + wxT("\n)"));
+    }
+    catch (const wxSQLite3Exception& e)
+    {
+        iError = e.GetErrorCode();
+        sOutput = e.GetMessage();
+        if (sOutput.Contains(wxT("update")) || sOutput.Contains(wxT("delete")) || sOutput.Contains(wxT("insert")))
+        {
+            iError = 3; //SQLITE_PERM;
+            sOutput = _("Please, use read only access to DB in this function");
+        }
+    }
+    return iError;
+}
+
+int TLuaInterface::SetSqlRestltSet(const wxString& sScript, wxSQLite3ResultSet& sqlQueryResult, int& iError, wxString& sOutput)
+{
+    try
+    {
+        sqlQueryResult = static_db_ptr().get()->ExecuteQuery(sScript);
+    }
+    catch (const wxSQLite3Exception& e)
+    {
+        iError = e.GetErrorCode();
+        sOutput = wxString::Format(_("Error: %s"), e.GetMessage().c_str());
+    }
+    return iError;
+}
+
+/******************************************************************************
  output[, error] = mmSQLite3ResultSet("sql_script")
  global var SQLQueryResult = { {x1.1 .... x1.n}, {x2.1 .... x2.n} }
  *****************************************************************************/
@@ -186,37 +222,11 @@ int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
     wxString sOutput = wxT("");
 
     int iRowsCount = 0;
-    try
-    {
-        iRowsCount = static_db_ptr().get()->ExecuteScalar(wxT("select count (*) from (\n") + sScript + wxT("\n)"));
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        iError = e.GetErrorCode();
-        sOutput = e.GetMessage();
-        if (sOutput.Contains(wxT("update")) ||
-        sOutput.Contains(wxT("delete")) ||
-        sOutput.Contains(wxT("insert")))
-        {
-            iError = 3; //SQLITE_PERM;
-            sOutput = _("Please, use read only access to DB in this function");
-        }
-    }
-
-    if (iError == 0) //SQLITE_OK
+    
+    if (SetSqlScriptRowCount(sScript, iRowsCount, iError, sOutput) == 0) //SQLITE_OK
     {
         wxSQLite3ResultSet sqlQueryResult;
-        try
-        {
-            sqlQueryResult = static_db_ptr().get()->ExecuteQuery(sScript);
-        }
-        catch(const wxSQLite3Exception& e)
-        {
-            iError = e.GetErrorCode();
-            sOutput = wxString::Format(_("Error: %s"), e.GetMessage().c_str());
-        }
-
-        if (iError == 0)
+        if (SetSqlRestltSet(sScript, sqlQueryResult, iError, sOutput) == 0)
         {
             lua_createtable(lua , iRowsCount, 0);  // push the main table T onto the stack
 
@@ -242,6 +252,10 @@ int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
                 sOutput << wxT("<br>\n");
             }
             lua_setglobal(lua,"SQLQueryResult");
+            lua_pushinteger(lua, iRowsCount);
+			lua_setglobal(lua, "x");
+            lua_pushinteger(lua, iColumnsCount);
+			lua_setglobal(lua, "y");
         }
     }
 
