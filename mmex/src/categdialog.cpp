@@ -30,11 +30,11 @@ BEGIN_EVENT_TABLE( mmCategDialog, wxDialog )
     EVT_BUTTON(wxID_ADD, mmCategDialog::OnAdd)
     EVT_BUTTON(wxID_REMOVE, mmCategDialog::OnDelete)
     EVT_BUTTON(wxID_EDIT, mmCategDialog::OnEdit)
-    EVT_TREE_SEL_CHANGED(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnSelChanged)
-    EVT_TREE_ITEM_RIGHT_CLICK(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnSelChanged)
-    EVT_TREE_ITEM_ACTIVATED(ID_DIALOG_CATEG_TREECTRL_CATS,  mmCategDialog::OnDoubleClicked)
+    EVT_TREE_SEL_CHANGED(wxID_ANY, mmCategDialog::OnSelChanged)
+    EVT_TREE_ITEM_RIGHT_CLICK(wxID_ANY, mmCategDialog::OnSelChanged)
+    EVT_TREE_ITEM_ACTIVATED(wxID_ANY,  mmCategDialog::OnDoubleClicked)
+    EVT_TREE_ITEM_MENU(wxID_ANY, mmCategDialog::OnItemRightClick)
     EVT_MENU_RANGE(0, 9, mmCategDialog::OnMenuSelected)
-    EVT_TREE_ITEM_MENU(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnItemRightClick)
 END_EVENT_TABLE()
 
 mmCategDialog::mmCategDialog( )
@@ -58,13 +58,13 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
     bEnableSelect_ = bEnableSelect;
     bEnableRelocate_ = bEnableRelocate;
 
-    //Get Hiden Categories id from stored string
-    hiden_categs_.clear();
-    wxString sSettings = core_->dbInfoSettings_->GetStringSetting(wxT("HIDEN_CATEGS_ID"), wxT(""));
+    //Get Hidden Categories id from stored string
+    hidden_categs_.clear();
+    wxString sSettings = core_->dbInfoSettings_->GetStringSetting(wxT("HIDDEN_CATEGS_ID"), wxT(""));
     wxStringTokenizer token(sSettings, wxT(";"));
     while (token.HasMoreTokens())
     {
-        hiden_categs_.Add( token.GetNextToken() );
+        hidden_categs_.Add( token.GetNextToken() );
     }
     //
 
@@ -99,7 +99,7 @@ void mmCategDialog::fillControls()
     treeCtrl_->SetItemBold(root_, true);
     treeCtrl_->SetFocus ();
     NormalColor_ = treeCtrl_->GetItemTextColour(root_);
-    bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDEN_CATEGS"), true);
+    bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDDEN_CATEGS"), true);
     cbShowAll_->SetValue(bResult);
 
     wxFont italicFont = wxFont(treeCtrl_->GetFont());
@@ -164,7 +164,7 @@ void mmCategDialog::CreateControls()
     this->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer2->Add(itemBoxSizer3, 0, wxGROW|wxALL, 1);
+    itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 1);
     wxBoxSizer* itemBoxSizer33 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer3->Add(itemBoxSizer33);
 
@@ -181,9 +181,9 @@ void mmCategDialog::CreateControls()
 
     cbShowAll_ = new wxCheckBox(this, wxID_SELECTALL, _("Show All"), wxDefaultPosition,
         wxDefaultSize, wxCHK_2STATE);
-    cbShowAll_->SetToolTip(_("Show all hiden categories"));
+    cbShowAll_->SetToolTip(_("Show all hidden categories"));
     cbShowAll_->Connect(wxID_SELECTALL, wxEVT_COMMAND_CHECKBOX_CLICKED,
-        wxCommandEventHandler(mmCategDialog::OnShowHidenChbClick), NULL, this);
+        wxCommandEventHandler(mmCategDialog::OnShowHiddenChbClick), NULL, this);
 
     itemBoxSizer33->Add(btnCateg_relocate_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemBoxSizer33->AddSpacer(10);
@@ -192,10 +192,10 @@ void mmCategDialog::CreateControls()
     itemBoxSizer33->Add(cbShowAll_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 #if defined (__WXGTK__) || defined (__WXMAC__)
-    treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS,
+    treeCtrl_ = new wxTreeCtrl( this, wxID_ANY,
         wxDefaultPosition, wxSize(200, 380));
 #else
-    treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS,
+    treeCtrl_ = new wxTreeCtrl( this, wxID_ANY,
         wxDefaultPosition, wxSize(200, 380), wxTR_SINGLE
         | wxTR_HAS_BUTTONS
         | wxTR_ROW_LINES );
@@ -333,18 +333,18 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
 
     wxString sIndex = wxString::Format(wxT("*%i:%i*"),categID, subcategID);
     wxString sSettings = wxT("");
-    for (size_t i = 0; i < hiden_categs_.GetCount(); i++)
+    for (size_t i = 0; i < hidden_categs_.GetCount(); i++)
     {
-        if (subcategID != -1 && hiden_categs_[i] == sIndex)
-            hiden_categs_.RemoveAt(i, i);
-        else if (subcategID == -1 && hiden_categs_[i].Contains(wxString::Format(wxT("*%i:"),categID)))
-            hiden_categs_.RemoveAt(i, i);
+        if (subcategID != -1 && hidden_categs_[i] == sIndex)
+            hidden_categs_.RemoveAt(i, i);
+        else if (subcategID == -1 && hidden_categs_[i].Contains(wxString::Format(wxT("*%i:"),categID)))
+            hidden_categs_.RemoveAt(i, i);
         else
-	        sSettings << hiden_categs_[i] << wxT(";");    
+	        sSettings << hidden_categs_[i] << wxT(";");    
     }
     sIndex.RemoveLast(1);
 
-    core_->dbInfoSettings_->SetStringSetting(wxT("HIDEN_CATEGS_ID"), sSettings);
+    core_->dbInfoSettings_->SetStringSetting(wxT("HIDDEN_CATEGS_ID"), sSettings);
     core_->dbInfoSettings_->Save();
 }
 
@@ -523,7 +523,7 @@ void mmCategDialog::OnExpandChbClick(wxCommandEvent& /*event*/)
     core_->iniSettings_->Save();
 }
 
-void mmCategDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
+void mmCategDialog::OnShowHiddenChbClick(wxCommandEvent& /*event*/)
 {
     if (cbShowAll_->IsChecked())
     {
@@ -533,7 +533,7 @@ void mmCategDialog::OnShowHidenChbClick(wxCommandEvent& /*event*/)
     {
         treeCtrl_->SelectItem(selectedItemId_);
     }
-    core_->iniSettings_->SetBoolSetting(wxT("SHOW_HIDEN_CATEGS"), cbShowAll_->IsChecked());
+    core_->iniSettings_->SetBoolSetting(wxT("SHOW_HIDDEN_CATEGS"), cbShowAll_->IsChecked());
     core_->iniSettings_->Save();
     fillControls();
 }
@@ -546,27 +546,27 @@ void mmCategDialog::OnMenuSelected(wxCommandEvent& event)
     if (id == 0)
     {
         treeCtrl_->SetItemTextColour(selectedItemId_, wxColour(wxT("GREY")));
-        if (hiden_categs_.Index(index) == wxNOT_FOUND )
-            hiden_categs_.Add(index);
+        if (hidden_categs_.Index(index) == wxNOT_FOUND )
+            hidden_categs_.Add(index);
     }
     else if (id == 1)
     {
         treeCtrl_->SetItemTextColour(selectedItemId_, NormalColor_);
-        hiden_categs_.Remove(index);
+        hidden_categs_.Remove(index);
     }
     else if (id == 2)
     {
-        hiden_categs_.Clear();
+        hidden_categs_.Clear();
     }
 
     wxString sSettings = wxT("");
-    for (size_t i = 0; i < hiden_categs_.GetCount(); i++)
+    for (size_t i = 0; i < hidden_categs_.GetCount(); i++)
     {
-        sSettings.Append(hiden_categs_[i]).Append(wxT(";"));
+        sSettings.Append(hidden_categs_[i]).Append(wxT(";"));
     }
     sSettings.RemoveLast(1);
 
-    core_->dbInfoSettings_->SetStringSetting(wxT("HIDEN_CATEGS_ID"), sSettings);
+    core_->dbInfoSettings_->SetStringSetting(wxT("HIDDEN_CATEGS_ID"), sSettings);
     core_->dbInfoSettings_->Save();
 
     if (!cbShowAll_->IsChecked() || id == 2) fillControls();
@@ -581,9 +581,9 @@ void mmCategDialog::OnItemRightClick(wxTreeEvent& event)
     mainMenu->AppendSeparator();
     mainMenu->Append(new wxMenuItem(mainMenu, 2, _("Clear Settings")));
 
-    bool bItemHiden = (treeCtrl_->GetItemTextColour(selectedItemId_) != NormalColor_);
-    mainMenu->Enable(0, !bItemHiden && (selectedItemId_ != root_));
-    mainMenu->Enable(1, bItemHiden && (selectedItemId_ != root_));
+    bool bItemHidden = (treeCtrl_->GetItemTextColour(selectedItemId_) != NormalColor_);
+    mainMenu->Enable(0, !bItemHidden && (selectedItemId_ != root_));
+    mainMenu->Enable(1, bItemHidden && (selectedItemId_ != root_));
 
     PopupMenu(mainMenu, event.GetPoint());
     delete mainMenu;
@@ -593,5 +593,5 @@ void mmCategDialog::OnItemRightClick(wxTreeEvent& event)
 bool mmCategDialog::categShowStatus(int categId, int subCategId)
 {
     wxString index = wxString::Format(wxT("*%i:%i*"),categId, subCategId);
-    return hiden_categs_.Index(index) == wxNOT_FOUND;
+    return hidden_categs_.Index(index) == wxNOT_FOUND;
 }
