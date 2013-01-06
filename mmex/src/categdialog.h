@@ -101,7 +101,7 @@ private:
     void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true); 
     void OnCategoryRelocation(wxCommandEvent& /*event*/);
     void OnExpandChbClick(wxCommandEvent& /*event*/);
-    void OnShowHidenChbClick (wxCommandEvent& /*event*/);
+    void OnShowHiddenChbClick (wxCommandEvent& /*event*/);
     void OnMenuSelected(wxCommandEvent& event);
     void OnItemRightClick(wxTreeEvent& event);
     bool categShowStatus(int categId, int subCategId);
@@ -111,7 +111,7 @@ private:
     int categID_;
     int subcategID_;
     wxColour NormalColor_;
-    wxArrayString hiden_categs_;
+    wxArrayString hidden_categs_;
 };
 
 #endif
