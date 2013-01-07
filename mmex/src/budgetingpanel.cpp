@@ -137,18 +137,18 @@ void mmBudgetingPanel::UpdateBudgetHeading()
             long year;
             yearStr.ToLong(&year);
             year++;
-            yearStr = wxString() << _("Financial Year: ") << yearStr << wxT(" - ") << year;
+            yearStr = wxString::Format(_("Financial Year: %s - %i"), yearStr.c_str(), year);
         }
         else
         {
-            yearStr = wxString() << _("Year: ") << yearStr;
+            yearStr = wxString::Format(_("Year: %s"), yearStr.c_str());
         }
     }
     else
     {
-        yearStr = wxString() << _("Month: ") << yearStr;
+        yearStr = wxString::Format(_("Month: %s"), yearStr.c_str());
     }
-    budgetReportHeading_->SetLabel(yearStr);
+    budgetReportHeading_->SetLabel(wxString::Format(_("Budget Setup for %s"), yearStr.c_str()));
 }
 
 void mmBudgetingPanel::CreateControls()
@@ -161,23 +161,18 @@ void mmBudgetingPanel::CreateControls()
 
     wxPanel* itemPanel3 = new wxPanel( this, ID_PANEL_REPORTS_HEADER_PANEL,
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer2->Add(itemPanel3, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemPanel3, flags);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     itemPanel3->SetSizer(itemBoxSizerVHeader);
 
-    wxStaticText* budgetReportHeadingText = new wxStaticText( itemPanel3,
-        wxID_STATIC, _("Budget Setup for "));
-    budgetReportHeading_ = new wxStaticText( itemPanel3,
-        ID_PANEL_REPORTS_STATIC_HEADER, wxT("$"), wxDefaultPosition, wxSize(220, -1));
+    budgetReportHeading_ = new wxStaticText(itemPanel3, wxID_ANY, wxT(""));
 
     const int font_size = this->GetFont().GetPointSize();
-    budgetReportHeadingText->SetFont(wxFont(font_size+2, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     budgetReportHeading_->SetFont(wxFont(font_size+2, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
 
     wxBoxSizer* budgetReportHeadingSizer = new wxBoxSizer(wxHORIZONTAL);
-    budgetReportHeadingSizer->Add(budgetReportHeadingText);
-    budgetReportHeadingSizer->Add(budgetReportHeading_);
+    budgetReportHeadingSizer->Add(budgetReportHeading_, 1);
     itemBoxSizerVHeader->Add(budgetReportHeadingSizer, 0, wxALL, 1);
 
     UpdateBudgetHeading();
