@@ -902,6 +902,7 @@ int site_content(const wxString& sSite, wxString& sOutput)
 
             oStream.SeekO(0);
             oStream.CopyTo(buffer, size);
+            oStream.Close();
             buffer[size] = '\0';
             sOutput = wxString::FromAscii((const char *)buffer);
         }
