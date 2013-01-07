@@ -270,14 +270,8 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     wxString notes       = notes_->GetValue();
 
     wxString numSharesStr = numShares_->GetValue().Trim();
-    if (numSharesStr == wxT(""))
-    {
-        mmShowErrorMessageInvalid(this, _("Num Shares"));
-        return;
-    }
-
-     double numShares = 0;
-     if (!numSharesStr.ToDouble(&numShares) /*|| (numShares = 0.0)*/)
+    double numShares = 0;
+    if (!numSharesStr.ToDouble(&numShares) /*|| (numShares = 0.0)*/)
     {
         mmShowErrorMessage(this, _("Invalid number of shares entered "), _("Error"));
         return;
