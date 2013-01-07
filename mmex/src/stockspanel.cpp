@@ -134,9 +134,9 @@ void mmStocksPanel::CreateControls()
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
-    header_text_ = new wxStaticText(headerPanel, wxID_STATIC,
-                                    _("Stock Investments"));
-    header_text_->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+	int font_size = this->GetFont().GetPointSize() + 2;
+    header_text_ = new wxStaticText(headerPanel, wxID_STATIC, wxT(""));
+    header_text_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
 
     header_total_ = new wxStaticText(headerPanel, wxID_STATIC,
                                      _("Total:"), wxDefaultPosition, wxSize(800, 20));
@@ -148,10 +148,10 @@ void mmStocksPanel::CreateControls()
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
 
     itemBoxSizerHHeader->Add(refresh_button_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
-    itemBoxSizerHHeader->Add(header_text_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizerHHeader->Add(header_text_, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 1, wxEXPAND, 1);
-    itemBoxSizerVHeader->Add(header_total_, 0, wxALL, 1);
+    itemBoxSizerVHeader->Add(header_total_, 1, wxALL, 1);
 
     /* ---------------------- */
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow(this,
@@ -201,7 +201,7 @@ void mmStocksPanel::CreateControls()
     itemPanel12->SetSizer(itemBoxSizer4);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer4->Add(itemBoxSizer5, 1, wxALIGN_LEFT|wxALL, 5);
 
     wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
     itemButton6->SetToolTip(_("New Stock Investment"));
@@ -245,7 +245,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     listCtrlAccount_->SetColumn(col, item);
 
     wxString str = core_->accountList_.GetAccountName(accountID_);
-    header_text_->SetLabel(_("Stock Investments: ") + str);
+    header_text_->SetLabel(wxString::Format(_("Stock Investments: %s"), str));
 
     core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
     double originalVal = 0.0;
