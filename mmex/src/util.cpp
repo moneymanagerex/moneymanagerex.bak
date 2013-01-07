@@ -898,12 +898,12 @@ int site_content(const wxString& sSite, wxString& sOutput)
             in_stream->Read(oStream);
 
             const size_t size = in_stream->LastRead();
-            char* buffer = new char[size];
+            char* buffer = new char[size+1];
 
             oStream.SeekO(0);
             oStream.CopyTo(buffer, size);
             oStream.Close();
-            buffer[size] = '\0';
+            buffer[size+1] = '\0';
             sOutput = wxString::FromAscii((const char *)buffer);
         }
         else
