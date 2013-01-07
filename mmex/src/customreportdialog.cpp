@@ -511,7 +511,7 @@ void mmCustomSQLDialog::OnLabelChanged(wxTreeEvent& event)
         wxCommandEvent evt(wxEVT_COMMAND_BUTTON_CLICKED, wxID_SAVE);
         OnSave(evt);
     }
-
+    navCtrlUpdateRequired_ = true;
 }
 
 bool mmCustomSQLDialog::DeleteCustomSqlReport()
@@ -523,6 +523,7 @@ bool mmCustomSQLDialog::DeleteCustomSqlReport()
     if ( iError == wxYES )
     {
         reportIndex_->deleteSelectedReportTitle();
+        navCtrlUpdateRequired_ = true;
 
         if (! reportIndex_->currentReportFileName(false).IsEmpty())
         {
