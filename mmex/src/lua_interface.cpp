@@ -85,6 +85,12 @@ wxString TLuaInterface::LuaErrorResult()
     return error_result;
 }
 
+void TLuaInterface::ReportLuaError(lua_State* lua, wxString& error_str)
+{
+    lua_pushstring(lua, error_str.ToUTF8());
+    lua_error(lua);
+}
+
 /******************************************************************************
  Lua extended functions, provided by c++ code:
 
@@ -96,8 +102,9 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "_",                  cpp2lua_GetTranslation);
     lua_register(lua_, "mmBell",             cpp2lua_Bell);
     lua_register(lua_, "mmMessageBox",       cpp2lua_MessageBox);
-    lua_register(lua_, "mmSQLite3ResultSet", cpp2lua_SQLite3ResultSet);
+    lua_register(lua_, "mmGetSQLResultSet",  cpp2lua_GetSQLResultSet);
     lua_register(lua_, "mmGetSingleChoice",  cpp2lua_GetSingleChoice);
+    lua_register(lua_, "mmGetColumnChoice",  cpp2lua_GetColumnChoice);
     lua_register(lua_, "mmGetTextFromUser",  cpp2lua_GetTextFromUser);
     lua_register(lua_, "mmGetSiteContent",   cpp2lua_GetSiteContent);
 
@@ -113,7 +120,8 @@ void TLuaInterface::Open_MMEX_Library()
  *****************************************************************************/
 
 /*****************************************************************************
- _"translation_string" or _("translation_string") similar to wxWidgets
+ _"translation_string" or _("translation_string")
+ returns the translation string similar to wxWidgets
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetTranslation(lua_State *lua)
 {
@@ -137,7 +145,7 @@ int TLuaInterface::cpp2lua_Bell(lua_State* lua)
 }
 
 /******************************************************************************
- mmMessageBox(_("Message"), _("Caption"), Style)
+ value = mmMessageBox(_("Message"), _("Caption"), Style)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
 {
@@ -211,10 +219,11 @@ int TLuaInterface::SetSqlRestltSet(const wxString& sScript, wxSQLite3ResultSet& 
 }
 
 /******************************************************************************
- output[, error] = mmSQLite3ResultSet("sql_script")
- global var SQLQueryResult = { {x1.1 .... x1.n}, {x2.1 .... x2.n} }
+ output[, error] = mmGetSQLResultSet("sql_script")
+ global SQLResultSet = { { x[1][1] ... x[1][n] }, { x[2][1] ... x[2][n] } }
+ global SQLResultSetX , SQLResultSetY ... spefify size of array
  *****************************************************************************/
-int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
+int TLuaInterface::cpp2lua_GetSQLResultSet(lua_State *lua)
 {
     wxString sScript = wxString::FromUTF8(lua_tostring(lua, -1));
     lua_pop(lua, 1); // remove error message
@@ -251,11 +260,11 @@ int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
                 sOutput.RemoveLast(3);
                 sOutput << wxT("<br>\n");
             }
-            lua_setglobal(lua,"SQLQueryResult");
+            lua_setglobal(lua,"SQLResultSet");
             lua_pushinteger(lua, iRowsCount);
-			lua_setglobal(lua, "x");
+			lua_setglobal(lua, "SQLResultSetX");
             lua_pushinteger(lua, iColumnsCount);
-			lua_setglobal(lua, "y");
+			lua_setglobal(lua, "SQLResultSetY");
         }
     }
 
@@ -266,36 +275,123 @@ int TLuaInterface::cpp2lua_SQLite3ResultSet(lua_State *lua)
 }
 
 /******************************************************************************
- mmGetSingleChoice(lua_table, "dialog_message", "dialog_heading")
+ value = mmGetSingleChoice("message", "heading", choice_array)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
 {
-    luaL_checktype(lua, 1, LUA_TTABLE);
-    size_t len = lua_rawlen(lua, 1);
-
     wxArrayString data;
-    for(unsigned int i = 1; i <= len; i++)
+    if (lua_istable(lua, -1))
     {
-        lua_rawgeti(lua, 1, i);
-        data.Add(wxString::FromUTF8(luaL_checkstring(lua, -1)));
-        lua_pop(lua, 1);
+        size_t len = lua_rawlen(lua , -1);  // get length of array
+        size_t index = 1;
+        while (index <= len)
+        {
+            lua_rawgeti(lua, -1, index);    // put value on the stack
+            data.Add(wxString::FromUTF8(luaL_checkstring(lua, -1)));
+            lua_pop(lua, 1);                // remove value from the stack
+            index ++;
+        }
+        lua_pop(lua, 1);   // remove table from the stack
+    }
+    else
+    {
+        wxString error = _("mmGetTableChoice: Array not recognised");
+        ReportLuaError(lua, error);
     }
 
-    wxString header = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
-
     wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
+    lua_pop(lua, 1); // remove value from stack
+
+    wxString heading = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1); // remove value from stack
+
+    wxASSERT (lua_gettop(lua) == 0);    // stack should be neutral
 
     wxString value;
-    value = wxGetSingleChoice(message, header, data);
+    value = wxGetSingleChoice(message, heading, data);
     lua_pushstring(lua, value.ToUTF8());
 
     return 1;
 }
 
 /******************************************************************************
- mmGetTextFromUser("field_name", "dialog_heading", "default_value")
+ value[, id] = mmColumnChoice("message", "heading", 2D_Array, column)
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_GetColumnChoice(lua_State* lua)
+{
+    int column = lua_tointeger(lua, -1);
+    lua_pop(lua, 1);                // value from the stack
+
+    size_t row_len = 0;
+    wxArrayString data;
+    if (lua_istable(lua, -1))
+    {
+        row_len = lua_rawlen(lua , -1);  // get length of row array
+        size_t index = 1;
+        while (index <= row_len)
+        {
+            lua_rawgeti(lua, -1, index);    // put col array on the stack
+            if (lua_istable(lua, -1))
+            {
+                lua_rawgeti(lua, -1, column);    // put value on the stack
+                wxString value = wxString::FromUTF8(luaL_checkstring(lua, -1));
+                data.Add(value);
+                lua_pop(lua, 1);        // remove value from the stack
+            }
+            else
+            {
+                wxString err_msg = _("mmGetColumnChoice: This is not a 2 dimentional array");
+                ReportLuaError(lua, err_msg);   // This will not return
+            }
+
+            lua_pop(lua, 1);            // remove 2nd array from the stack
+            index ++;
+        }
+        // leave the table on ths stack for later use.
+    }
+    else
+    {
+        wxString error = _("mmGetTableChoice: Array not recognised");
+        ReportLuaError(lua, error);     // This will not return
+    }
+
+    wxString message = wxString::FromUTF8(lua_tostring(lua, -2));
+    lua_remove(lua, -2); // remove value from stack, preserve table.
+    
+    wxString heading = wxString::FromUTF8(lua_tostring(lua, -2));
+    lua_remove(lua, -2); // remove value from stack, preserve table.
+
+    wxASSERT (lua_gettop(lua) == 1);    // table still on stack
+
+    wxString user_value = wxGetSingleChoice(message, heading, data);
+
+    wxString table_id;
+    size_t index = 1;
+    while (index <= row_len)
+    {
+        lua_rawgeti(lua, -1, index);    // put col array on the stack
+        lua_rawgeti(lua, -1, column);   // put value on the stack
+        wxString value = wxString::FromUTF8(luaL_checkstring(lua, -1));
+        if (user_value == value)
+        {
+            lua_pop(lua, 1);            // Remove value from the stack
+            lua_rawgeti(lua, -1, 1);    // put the new id value on the stack
+            table_id = wxString::FromUTF8(luaL_checkstring(lua, -1));
+            index = row_len;            // set index to stop search
+        }
+        lua_pop(lua, 2);                // remove value and array from the stack
+        index ++;
+    }
+    lua_pop(lua, 1);   // remove table from the stack
+    
+    lua_pushstring(lua, user_value.ToUTF8());
+    lua_pushstring(lua, table_id.ToUTF8());
+
+    return 2;
+}
+
+/******************************************************************************
+ value = mmGetTextFromUser("field_name", "dialog_heading", "default_value")
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetTextFromUser(lua_State* lua)
 {
@@ -332,7 +428,7 @@ int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
 }
 
 /******************************************************************************
- mmHTMLBuilder("function[, value_1][, value_2][, value_3][, value_4]")
+ html = mmHTMLBuilder("function[, value_1][, value_2][, value_3][, value_4]")
  *****************************************************************************/
 int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
 {

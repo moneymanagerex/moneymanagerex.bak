@@ -80,11 +80,11 @@ TEST(lua_interface_test_sql_good)
 
     wxString lua_program = wxString() <<
         wxT("sql_1 = \"select * from category_v1\"            \n") <<
-        wxT("sql_result = mmSQLite3ResultSet(sql_1)           \n") <<
+        wxT("sql_result = mmGetSQLResultSet(sql_1)            \n") <<
         wxT("sql_2 = \"update category_v1 set categid = 1 \"  \n") <<
         wxT("sql_2 = sql_2 .. \"where categid=1\"             \n") <<
         wxT("sql_result = sql_result ..                       \n") <<
-        wxT("             mmSQLite3ResultSet(sql_2)           \n") <<
+        wxT("             mmGetSQLResultSet(sql_2)           \n") <<
         wxT("return sql_result                                \n")
     ; // end of text script 
 
@@ -103,7 +103,7 @@ TEST(lua_interface_test_sql_bad)
 
     wxString lua_program = wxString() <<
         wxT("sql_script = \"select * from cat_v1\"            \n") <<
-        wxT("result, error = mmSQLite3ResultSet(sql_script)   \n") <<
+        wxT("result, error = mmGetSQLResultSet(sql_script)   \n") <<
         wxT("return result                                    \n")
     ; // end of text script 
 

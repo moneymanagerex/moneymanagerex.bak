@@ -45,6 +45,8 @@ private:
     static int SetSqlScriptRowCount(const wxString& sScript, int& iRowsCount, int& iError, wxString& sOutput);
     static int SetSqlRestltSet(const wxString& sScript, wxSQLite3ResultSet& sqlQueryResult, int& iError, wxString& sOutput);
 
+    static void ReportLuaError(lua_State* lua, wxString& error_str);
+
     /**************************************************************************
     Lua function extensions provided by c++ code:
 
@@ -56,8 +58,9 @@ private:
     // All Lua functions provided by C++ for MMEX
     static int cpp2lua_Bell(lua_State* lua);
     static int cpp2lua_MessageBox(lua_State* lua);
-	static int cpp2lua_SQLite3ResultSet(lua_State* lua);
+	static int cpp2lua_GetSQLResultSet(lua_State* lua);
 	static int cpp2lua_GetSingleChoice(lua_State* lua);
+    static int cpp2lua_GetColumnChoice(lua_State* lua);
     static int cpp2lua_GetTextFromUser(lua_State* lua);
     static int cpp2lua_GetTranslation(lua_State* lua);
 	static int cpp2lua_GetSiteContent(lua_State* lua);
