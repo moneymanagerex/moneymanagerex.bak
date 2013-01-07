@@ -33,10 +33,10 @@ BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
 
     EVT_MENU_RANGE(0, 1, mmMainCurrencyDialog::OnMenuSelected)
 
-    EVT_LIST_ITEM_ACTIVATED(ID_LISTBOX,   mmMainCurrencyDialog::OnListItemActivated)
-    EVT_LIST_ITEM_SELECTED(ID_LISTBOX,    mmMainCurrencyDialog::OnListItemSelected)
-    EVT_LIST_ITEM_DESELECTED(ID_LISTBOX,  mmMainCurrencyDialog::OnListItemDeselected)
-    EVT_LIST_ITEM_RIGHT_CLICK(ID_LISTBOX, mmMainCurrencyDialog::OnItemRightClick)
+    EVT_LIST_ITEM_ACTIVATED(wxID_ANY,   mmMainCurrencyDialog::OnListItemActivated)
+    EVT_LIST_ITEM_SELECTED(wxID_ANY,    mmMainCurrencyDialog::OnListItemSelected)
+    EVT_LIST_ITEM_DESELECTED(wxID_ANY,  mmMainCurrencyDialog::OnListItemDeselected)
+    EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, mmMainCurrencyDialog::OnItemRightClick)
 END_EVENT_TABLE()
 
 
@@ -134,7 +134,7 @@ void mmMainCurrencyDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer22, flagsExpand);
 
     wxBitmapButton* update_button = new wxBitmapButton(this,
-        wxID_STATIC, wxBitmap(update_currency_xpm));
+        wxID_STATIC, wxBitmap(checkupdate_xpm));
     itemBoxSizer22->Add(update_button, flags);
     update_button->Connect(wxID_STATIC, wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(mmMainCurrencyDialog::OnOnlineUpdateCurRate), NULL, this);
@@ -147,7 +147,7 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-    currencyListBox_ = new wxListCtrl( this, ID_LISTBOX, wxDefaultPosition, wxSize(-1, 200),
+    currencyListBox_ = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200),
         wxLC_REPORT);
 
     // Add first column
