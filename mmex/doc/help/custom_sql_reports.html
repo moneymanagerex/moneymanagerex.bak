@@ -1143,25 +1143,25 @@ Lua via the following command:</P>
 			</P>
 		</TD>
 		<TD WIDTH=59%>
-			<P>local function HTML_AddReportHeader(c1, c2,c3,c4)<BR>__html =
-			html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>__html =
-			html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c1)<BR>__html
-			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c2)<BR>__html
-			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c3)<BR>__html
-			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c4)<BR>__html
+			<P>local function HTML_AddReportHeader(c1, c2,c3,c4)<BR>&nbsp&nbsphtml =
+			html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>&nbsp&nbsphtml =
+			html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c1)<BR>&nbsp&nbsphtml
+			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c2)<BR>&nbsp&nbsphtml
+			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c3)<BR>&nbsp&nbsphtml
+			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c4)<BR>&nbsp&nbsphtml
 			= html..mmHTMLBuilder(&quot;EndTableRow&quot;)<BR>end</P>
-			<P>local function HTML_StartReport()<BR>__html = &quot;&quot;<BR>__html
+			<P>local function HTML_StartReport()<BR>&nbsp&nbsphtml = &quot;&quot;<BR>&nbsp&nbsphtml
 			=
-			html..mmHTMLBuilder(&quot;StartTable&quot;)<BR>__HTML_AddReportHeader(&quot;Index&quot;,
+			html..mmHTMLBuilder(&quot;StartTable&quot;)<BR>&nbsp&nbspHTML_AddReportHeader(&quot;Index&quot;,
 			&quot;Payee&quot;, &quot;CategoryID&quot;, &quot;SubCategoryID&quot;)<BR>end</P>
-			<P>local function HTML_ReportEnd()<BR>__html =
-			html..mmHTMLBuilder(&quot;AddRowSeparator&quot;, 4)<BR>__html =
-			html..mmHTMLBuilder(&quot;EndTable&quot;)<BR>__html =
+			<P>local function HTML_ReportEnd()<BR>&nbsp&nbsphtml =
+			html..mmHTMLBuilder(&quot;AddRowSeparator&quot;, 4)<BR>&nbsp&nbsphtml =
+			html..mmHTMLBuilder(&quot;EndTable&quot;)<BR>&nbsp&nbsphtml =
 			html..mmHTMLBuilder(&quot;AddHorizontalLine&quot;,1)<BR>end</P>
 			<P>--------------------------------------------------<BR>-- Main
 			Function: Start running from
-			here.<BR>--------------------------------------------------<BR>__HTML_StartReport()<BR>--
-			GetData()<BR>__HTML_ReportEnd()<BR>return html</P>
+			here.<BR>--------------------------------------------------<BR>&nbsp&nbspHTML_StartReport()<BR>--
+			GetData()<BR>&nbsp&nbspHTML_ReportEnd()<BR>return html</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
