@@ -55,6 +55,7 @@ private:
     wxHtmlWindow* htmlWindow_;
     mmGUIFrame* frame_;
     mmPrintableBase* rb_;
+    void OnLinkClicked(wxHtmlLinkEvent& event);
 };
 
 #endif
