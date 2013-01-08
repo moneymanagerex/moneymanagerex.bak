@@ -7,9 +7,13 @@
 	<META NAME="AUTHOR" CONTENT="Stefano Giorgio">
 	<META NAME="CREATED" CONTENT="20110710;15312700">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGED" CONTENT="20130103;16394926">
+	<META NAME="CHANGED" CONTENT="20130108;20225894">
 	<META NAME="Originator" CONTENT="Microsoft Word 14">
 	<META NAME="ProgId" CONTENT="Word.Document">
+	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
+	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
+	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
+	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
@@ -706,19 +710,188 @@ MMEX Forum in the Custom SQL Report Scripts section.</FONT></P>
 <P STYLE="margin-bottom: 0.17in"><A NAME="Lua_Scripting_Extensions"></A>
 &nbsp;<FONT FACE="Verdana, sans-serif"><SPAN LANG="en-US"><BR></SPAN></FONT><FONT FACE="Verdana, sans-serif"><FONT SIZE=6><SPAN LANG="en-US"><B>LUA
 Scripting (MMEX Extensions)</B></SPAN></FONT></FONT></P>
-<P LANG="en-US" STYLE="margin-bottom: 0.17in"><FONT FACE="Verdana, sans-serif">Attempting
-to teach LUA programming is beyond the scope of this help file, but
-the following is a quick guide into understanding scripts, and
-possibly creating your own scripts, if required.</FONT></P>
-<P STYLE="margin-bottom: 0.17in">Lua is a programming language
-designed to assist host programs. Further information on Lua can be
-obtained by visiting: http://www.lua.org/about.html</P>
-<P STYLE="margin-bottom: 0.17in">Lua reference manual is available
-from: http://www.lua.org/manual/5.2/</P>
+<P>Lua is a very powerful, yet simple interpreter language, which can
+be easily incorporated into a host program. Lua allows powerful
+scripts to be written that enhance the host program. These scripts
+are written, outside of the host program. This means that some of the
+program code is accessible to the user. Program changes or extensions
+can be easily incorporated into the system, without having to rebuild
+the host program. The programming concepts of Lua, allows for very
+complex programs to be written and run immediately.</P>
+<P>Although attempting to teach LUA programming is beyond the scope
+of this help file, the following will attempt to explain how to
+create a simple script to produce a Custom Report, using the Custom
+Reports Manager.</P>
+<P>Further information on the Lua Programming language can be
+obtained by visiting: <FONT COLOR="#0000ff">http://www.lua.org/about.html</FONT></P>
+<P>The Lua Reference Manual is available from:
+<FONT COLOR="#0000ff">http://www.lua.org/manual/5.2/</FONT></P>
 <P STYLE="margin-bottom: 0.17in"><BR><BR>
 </P>
-<P STYLE="margin-bottom: 0.17in"><B>Lua Functionality <FONT FACE="Verdana, sans-serif">Extension</FONT>
-provided by MMEX</B></P>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.17in"><FONT SIZE=4><B>Brief Introduction
+to Lua</B></FONT></P>
+<P STYLE="margin-bottom: 0.17in">Lua is a programming language, and
+as such has a lot of similarities to other programming languages.</P>
+<P STYLE="margin-bottom: 0.17in">Data is stored in a variable which
+is given a name, and we assign some data to it.</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=83*>
+	<COL WIDTH=173*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=32%>
+			<P>Suppose we want to store a name we write:</P>
+		</TD>
+		<TD WIDTH=68%>
+			<P>table_name = &ldquo;category&rdquo;<BR>Now every time we want
+			to use the name <FONT COLOR="#0000ff">category</FONT>, we use the
+			name <FONT COLOR="#0000ff">table_name</FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><BR>When we write code, we generally
+have a Starting point, and an End point.<BR>Start Point:</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=83*>
+	<COL WIDTH=173*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=32%>
+			<P>table_name = &ldquo;category&rdquo;</P>
+		</TD>
+		<TD WIDTH=68%>
+			<P>The first statement encountered, which can be resolved.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><BR>End Point:</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=83*>
+	<COL WIDTH=173*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=32%>
+			<P>return table_name</P>
+		</TD>
+		<TD WIDTH=68%>
+			<P>This is the <FONT COLOR="#0000ff">return</FONT> statement.<BR>Here
+			we return a value to the calling program, which for our case is
+			MMEX.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><BR>Returning just the table_name in
+a lot of circumstances is fine, but for an ending, not so good.<BR>To
+combining data to have meaning, Lua introduces the dot dot notation.</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P>return &ldquo;<FONT COLOR="#0000ff">Real table name is </FONT>&rdquo;
+			.. table_name .. &ldquo;<FONT COLOR="#0000ff">_v1</FONT>&rdquo;</P>
+		</TD>
+		<TD WIDTH=50%>
+			<P>Combines the data to return one value as:<BR><FONT COLOR="#0000ff">Real
+			table name is category_v1</FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><BR>For a few lines of code, this is
+fine, but to make coding easier, we use functions. We can think of a
+function as a building block, which can be used many times. We can
+change the output by giving the function different values.<BR>Defining
+a function:</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P>function sql_statement(table_name)</P>
+		</TD>
+		<TD WIDTH=50%>
+			<P>Here we declare a function as <FONT COLOR="#0000ff">sql_statement</FONT>
+			and we give it the name of the table.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in">Purpose of the function:</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P>function sql_statement(table_name)<BR>__sql_code = &ldquo;select
+			* from &rdquo; .. table_name .. &ldquo;_v1&rdquo;</P>
+			<P>return sql_code 
+			</P>
+		</TD>
+		<TD WIDTH=50%>
+			<P>Now every time we use this function we get the sql statement
+			for that table.<BR>Makes life much easier.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in">Functions defined before the
+starting point are seen but cannot be resolved. This prevents
+functions being executed before their time.</P>
+<P STYLE="margin-bottom: 0.17in">Arrays: This is where we can assign
+our values in a block, known as an array 
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P>selectable_tables = {&ldquo;Payee&rdquo;,&ldquo;Category&rdquo;,&rdquo;SubCategory&rdquo;}
+						</P>
+		</TD>
+		<TD WIDTH=50%>
+			<P>Here we grouped these as a single block
+			called:<BR>selectable_tables</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.17in">Above we defined our own function,
+but Lua has other functions provided for the user to use. Combining
+our functions with the inbuilt functions we can produce the following
+program which is moderately useful:</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=171*>
+	<COL WIDTH=85*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=67%>
+			<P>table_name = mmGetSingleChoice(&ldquo;Select a table&rdquo;,
+			&ldquo;Lua&rdquo;, selectable_tables)<BR>sql_script =
+			sql_statement(table_name)<BR>value = mmGetSQLResultSet(sql_script)</P>
+			<P>return value</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>Get the table name.<BR>Get the sql code for the table<BR>Get
+			the table data</P>
+			<P>return the result for MMEX to display</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in">Using our function to generate the
+sql code made programming easier, and also easier to maintain.</P>
+<P STYLE="margin-bottom: 0.17in">While this is a trivial programming
+exercise, it provides a brief introduction into programming, using
+Lua as the programming language.<BR><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<P LANG="en-US" STYLE="margin-bottom: 0.17in"><FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B>Command
+Extensions provided by MMEX</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0.17in">Lua allows the host program to
+create its own commands. These commands are specific to MMEX to allow
+powerful Custom Reports to be created by the user. These commands are
+explained in the table below.</P>
+<P STYLE="margin-bottom: 0.17in"><B>Lua Functionality </B><FONT FACE="Verdana, sans-serif"><B>Extension</B></FONT>
+<B>provided by MMEX</B></P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
 	<COL WIDTH=118*>
 	<COL WIDTH=138*>
@@ -753,114 +926,147 @@ provided by MMEX</B></P>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=46%>
-			<P>mmMessageBox(&quot;Message&quot;, &quot;Caption&quot;, Style)</P>
+			<P>value = mmMessageBox(&quot;Message&quot;, &quot;Caption&quot;,
+			Style)</P>
 		</TD>
 		<TD WIDTH=54%>
 			<P>Style is numeric representing the following:</P>
 			<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
-				<COL WIDTH=30*>
-				<COL WIDTH=86*>
-				<COL WIDTH=139*>
+				<COL WIDTH=50*>
+				<COL WIDTH=206*>
 				<TR VALIGN=TOP>
-					<TD WIDTH=12% SDVAL="1" SDNUM="3081;">
+					<TD WIDTH=19% SDVAL="1" SDNUM="3081;">
 						<P>1</P>
 					</TD>
-					<TD WIDTH=34%>
+					<TD WIDTH=81%>
 						<P>OK</P>
 					</TD>
-					<TD WIDTH=54%>
-						<P><BR>
-						</P>
-					</TD>
 				</TR>
 				<TR VALIGN=TOP>
-					<TD WIDTH=12% SDVAL="2" SDNUM="3081;">
+					<TD WIDTH=19% SDVAL="2" SDNUM="3081;">
 						<P>2</P>
 					</TD>
-					<TD WIDTH=34%>
+					<TD WIDTH=81%>
 						<P>yes_NO</P>
 					</TD>
-					<TD WIDTH=54%>
-						<P><BR>
-						</P>
-					</TD>
 				</TR>
 				<TR VALIGN=TOP>
-					<TD WIDTH=12% SDVAL="3" SDNUM="3081;">
+					<TD WIDTH=19% SDVAL="3" SDNUM="3081;">
 						<P>3</P>
 					</TD>
-					<TD WIDTH=34%>
+					<TD WIDTH=81%>
 						<P>CANCEL</P>
 					</TD>
-					<TD WIDTH=54%>
-						<P><BR>
-						</P>
-					</TD>
 				</TR>
 				<TR VALIGN=TOP>
-					<TD WIDTH=12% SDVAL="13" SDNUM="3081;">
+					<TD WIDTH=19% SDVAL="13" SDNUM="3081;">
 						<P>13</P>
 					</TD>
-					<TD WIDTH=34%>
+					<TD WIDTH=81%>
 						<P>OK / CANCEL</P>
-					</TD>
-					<TD WIDTH=54%>
-						<P>31 can also be used</P>
 					</TD>
 				</TR>
 				<TR VALIGN=TOP>
-					<TD WIDTH=12% SDVAL="23" SDNUM="3081;">
+					<TD WIDTH=19% SDVAL="23" SDNUM="3081;">
 						<P>23</P>
 					</TD>
-					<TD WIDTH=34%>
+					<TD WIDTH=81%>
 						<P>yes_NO / CANCEL</P>
-					</TD>
-					<TD WIDTH=54%>
-						<P>32 can also be used</P>
 					</TD>
 				</TR>
 			</TABLE>
-			<P>Return results are same.</P>
+			<P><BR>Return codes are 1, 2, 3, as above.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=46%>
+			<P>value[, error] = mmGetSQLResultSet(&quot;sql_script&quot;)</P>
+		</TD>
+		<TD WIDTH=54%>
+			<P>Defines the following global variables:</P>
+			<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+				<COL WIDTH=63*>
+				<COL WIDTH=193*>
+				<TR VALIGN=TOP>
+					<TD WIDTH=25%>
+						<P>SQLResultSet</P>
+					</TD>
+					<TD WIDTH=75%>
+						<P>t1 = { row=row, column=column}</P>
+						<P>t1[1] = {&ldquo;R1:C1&rdquo;, &ldquo;R1:C2&rdquo;, &ldquo;R1:C3&rdquo;,
+						&ldquo;R1:C4&rdquo;}<BR>t1[2] = {&ldquo;R2:C1&rdquo;, &ldquo;R2:C2&rdquo;,
+						&ldquo;R2:C3&rdquo;, &ldquo;R2:C4&rdquo;}<BR>t1[3] = {&ldquo;R3:C1&rdquo;,
+						&ldquo;R3:C2&rdquo;, &ldquo;R3:C3&rdquo;, &ldquo;R3:C4&rdquo;}<BR>t1[4]
+						= {&ldquo;R4:C1&rdquo;, &ldquo;R4:C2&rdquo;, &ldquo;R4:C3&rdquo;,
+						&ldquo;R4:C4&rdquo;}<BR>t1[5] = {&ldquo;R5:C1&rdquo;, &ldquo;R5:C2&rdquo;,
+						&ldquo;R5:C3&rdquo;, &ldquo;R5:C4&rdquo;}</P>
+						<P>value = t1[3,4]</P>
+						<P>returns: &ldquo;R3:C4&rdquo;</P>
+					</TD>
+				</TR>
+				<TR VALIGN=TOP>
+					<TD WIDTH=25%>
+						<P>SQLResultSetX</P>
+					</TD>
+					<TD WIDTH=75%>
+						<P>Row count</P>
+					</TD>
+				</TR>
+				<TR VALIGN=TOP>
+					<TD WIDTH=25%>
+						<P>SQLResultSetY</P>
+					</TD>
+					<TD WIDTH=75%>
+						<P>Column count</P>
+					</TD>
+				</TR>
+			</TABLE>
 			<P><BR><BR>
 			</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=46%>
-			<P>mmSQLite3ResultSet(&quot;sql_script&quot;)</P>
+			<P>value =mmGetSingleChoice(&quot;label&quot;, &quot;heading&quot;,
+			single_array))</P>
 		</TD>
 		<TD WIDTH=54%>
-			<P>output = mmSQLite3ResultSet(&quot;sql_script&quot;)</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=46%>
-			<P>mmGetTextFromUser(&quot;field_name&quot;, &quot;dialog_heading&quot;,
-			&quot;default_value&quot;)</P>
-		</TD>
-		<TD WIDTH=54%>
-			<P>mmGetTextFromUser(&quot;field_name&quot;, &quot;dialog_heading&quot;,
-			&quot;default_value&quot;)</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=46%>
-			<P>mmGetSingleChoice(lua_table, &quot; field_name&quot;,
-			&quot;dialog_heading&quot;))</P>
-		</TD>
-		<TD WIDTH=54%>
-			<P>value = mmGetSingleChoice(lua_table, _(&quot;Choose Accounts&quot;),
-			_(&quot;Lua Request&quot;))</P>
+			<P>Sample Test Script: Return the table selected by the
+			user<BR>------------------------------------------<BR>tables =
+			{&ldquo;Payee&rdquo;, &ldquo;Category&rdquo;, &ldquo;SubCategory&rdquo;}<BR>value
+			= mmGetSingleChoice(&ldquo;Select a Table&rdquo;, &ldquo;Lua&rdquo;,
+			tables)</P>
 			<P>return value</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=46%>
-			<P>mmGetSiteContent(&quot;address&quot;)</P>
+			<P>value[, id] = mmGetColumnChoice(&ldquo;label&rdquo;, &ldquo;heading&rdquo;,
+			2D_array, column)</P>
 		</TD>
 		<TD WIDTH=54%>
-			<P><BR><BR>
+			<P>Sample Test Script: Returns the selected payee from your payee
+			table.<BR>----------------------------------------------------------------------<BR>sql_script
+			= &ldquo;select * from payee_v1 order by payeename&rdquo;<BR>sql_table,
+			err = mmGetSQLResultSet(sql_script)</P>
+			<P>payee, id = mmGetColumnChoice(&ldquo;Select Payee&rdquo;,
+			&ldquo;Lua&rdquo;, SQLResultSet, 2)</P>
+			<P>return &ldquo;Selected Payee: &rdquo;..payee..&rdquo; has an
+			index of: &rdquo;..id 
 			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=46%>
+			<P>value = mmGetTextFromUser(&quot;label&quot;, &quot;heading&quot;,
+			&quot;default_value&quot;)</P>
+		</TD>
+		<TD WIDTH=54%>
+			<P>Sample Test Script: Accept a value from the
+			user<BR>-------------------------------------------------------------<BR>value
+			= mmGetTextFromUser(&quot;Account Name&quot;, &quot;Lua&quot;,
+			&quot;Savings&quot;)</P>
+			<P>return value</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -873,9 +1079,102 @@ provided by MMEX</B></P>
 			</P>
 		</TD>
 	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=46%>
+			<P>Value, error = mmGetSiteContent(&quot;address&quot;)</P>
+		</TD>
+		<TD WIDTH=54%>
+			<P>Sample Test Script: Returns info from internet site
+			<BR>----------------------------------------------------------------------<BR>site
+			=
+			&quot;http://download.finance.yahoo.com/d/quotes.csv?s=USDEUR=X&amp;f=snd1l1t1&quot;</P>
+			<P>var, error = mmGetSiteContent(site)</P>
+			<P>return var</P>
+		</TD>
+	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0.17in"><BR><BR>
 </P>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<P>MMEX provides formatting commands to allow data to be properly
+displayed in reports.<BR>These commands have been made available to
+Lua via the following command:</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=105*>
+	<COL WIDTH=151*>
+	<TR>
+		<TD COLSPAN=2 WIDTH=100% VALIGN=TOP>
+			<P>HTML = mmHTMLBuilder(&ldquo;html command&rdquo;[, value][,
+			value][, value][, value])</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=41%>
+			<P>HTMLBuilder html command parameter list</P>
+		</TD>
+		<TD WIDTH=59%>
+			<P>Example Code: Note: leading spaces represented as __</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=41%>
+			<P>(&ldquo;Init&rdquo;)</P>
+			<P>(&ldquo;StartTable&quot;, value_1, value_2)</P>
+			<P>(&quot;StartTableRow&quot;)</P>
+			<P>(&quot;StartTableCell&quot;, value_1)</P>
+			<P>(&quot;AddTableHeaderCell&quot;, value_1, value_2) 
+			</P>
+			<P>(&quot;AddTableHeaderRow&quot;, value_1, value_2)</P>
+			<P>(&quot;AddTableCell&quot;, value_1, value_2, value_3, value_4)</P>
+			<P>(&quot;AddRowSeparator&quot;, value_1);</P>
+			<P>(&quot;AddTotalRow&quot;, value_1, value_2, value_3);</P>
+			<P>(&quot;EndTableRow&quot;)</P>
+			<P>(&quot;EndTable&quot;)</P>
+			<P>(&quot;AddDateNow&quot;)</P>
+			<P>(&quot;AddParaText&quot;, value_1);</P>
+			<P>(&quot;AddLineBreak&quot;)</P>
+			<P>(&quot;AddHorizontalLine&quot;, value_1)</P>
+			<P>(&quot;StartCenter&quot;)</P>
+			<P>(&quot;EndCenter&quot;)</P>
+			<P>(&quot;End&quot;) 
+			</P>
+		</TD>
+		<TD WIDTH=59%>
+			<P>local function HTML_AddReportHeader(c1, c2,c3,c4)<BR>__html =
+			html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>__html =
+			html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c1)<BR>__html
+			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c2)<BR>__html
+			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c3)<BR>__html
+			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c4)<BR>__html
+			= html..mmHTMLBuilder(&quot;EndTableRow&quot;)<BR>end</P>
+			<P>local function HTML_StartReport()<BR>__html = &quot;&quot;<BR>__html
+			=
+			html..mmHTMLBuilder(&quot;StartTable&quot;)<BR>__HTML_AddReportHeader(&quot;Index&quot;,
+			&quot;Payee&quot;, &quot;CategoryID&quot;, &quot;SubCategoryID&quot;)<BR>end</P>
+			<P>local function HTML_ReportEnd()<BR>__html =
+			html..mmHTMLBuilder(&quot;AddRowSeparator&quot;, 4)<BR>__html =
+			html..mmHTMLBuilder(&quot;EndTable&quot;)<BR>__html =
+			html..mmHTMLBuilder(&quot;AddHorizontalLine&quot;,1)<BR>end</P>
+			<P>--------------------------------------------------<BR>-- Main
+			Function: Start running from
+			here.<BR>--------------------------------------------------<BR>__HTML_StartReport()<BR>--
+			GetData()<BR>__HTML_ReportEnd()<BR>return html</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=41%>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=59%>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
 <P STYLE="margin-bottom: 0.17in"><BR><BR>
 </P>
 <P STYLE="margin-bottom: 0.17in"><BR><BR>
