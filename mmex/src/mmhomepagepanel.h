@@ -71,11 +71,10 @@ public:
                 long style = wxTAB_TRAVERSAL | wxNO_BORDER,
                 const wxString& name = wxPanelNameStr);
       
-    void CreateControls();
-   
-    void updateAccounts();
     ~mmHomePagePanel();
 private:
+    void CreateControls();   
+    void updateAccounts();
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;
     wxString topCategories_;
