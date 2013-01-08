@@ -910,6 +910,7 @@ int site_content(const wxString& sSite, wxString& sOutput)
             err_code = -1; //Cannot get data from WWW!
         delete in_stream;
     }
+    delete url;
 
     if (err_code != wxURL_NOERR)
     {
@@ -922,7 +923,7 @@ int site_content(const wxString& sSite, wxString& sOutput)
         else if (err_code == -1) sOutput = _("Cannot get data from WWW!");
         else sOutput = _("Unknown error");
     }
-     return err_code;
+    return err_code;
 }
 
 int mmIniOptions::account_image_id(mmCoreDB* core, int account_id)
