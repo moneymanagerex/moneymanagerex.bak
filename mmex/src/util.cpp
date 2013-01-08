@@ -898,13 +898,13 @@ int site_content(const wxString& sSite, wxString& sOutput)
             in_stream->Read(oStream);
 
             const size_t size = in_stream->LastRead();
-            char* buffer = new char[size+1];
+            char* buffer = new char[size];
 
             oStream.SeekO(0);
             oStream.CopyTo(buffer, size);
             oStream.Close();
-            buffer[size+1] = '\0';
-            sOutput = wxString::FromAscii((const char *)buffer);
+            buffer[size] = '\0';
+			sOutput = wxString::FromUTF8(buffer);
         }
         else
             err_code = -1; //Cannot get data from WWW!
