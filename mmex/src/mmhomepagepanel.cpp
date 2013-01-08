@@ -173,7 +173,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
                 (vAccts == wxT("ALL")))
             {
                 hb.startTableRow();
-                hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->id_), pCA->name_, false, true);
+                hb.addTableCellLink(wxString::Format(wxT("ACCT:%d"), pCA->id_), pCA->name_, false, true);
                 hb.addTableCell(reconciledBalanceStr, true);
                 hb.addTableCell(balanceStr, true);
                 hb.endTableRow();
@@ -233,7 +233,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
                     (vAccts == wxT("ALL")))
                 {
                     hb.startTableRow();
-                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->id_), pTA->name_, false, true);
+                    hb.addTableCellLink(wxString::Format(wxT("ACCT:%d"), pTA->id_), pTA->name_, false, true);
                     hb.addTableCell(reconciledBalStr, true);
                     hb.addTableCell(balanceStr, true);
                     hb.endTableRow();
@@ -304,7 +304,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
             hb.startTableRow();
             //////
             //hb.addTableCell(stocknameStr, false,true);
-            hb.addTableCellLink(wxT("STOCK:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+            hb.addTableCellLink(wxString::Format(wxT("STOCK:%d"), stockaccountId), stocknameStr, false, true);
             hb.addTableCell(tGainStr, true);
             hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
