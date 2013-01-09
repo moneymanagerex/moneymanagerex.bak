@@ -1390,10 +1390,10 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
 
     int transID = OnMarkTransactionDB(status);
 
-	if (m_cp->transFilterActive_ || (m_cp->m_currentView != VIEW_TRANS_ALL_STR))
-	    refreshVisualList(transID, topItemIndex_);
-	else
-		m_cp->m_listCtrlAccount->RefreshItems(m_selectedIndex, m_selectedIndex);
+    if (m_cp->transFilterActive_ || (m_cp->m_currentView != VIEW_TRANS_ALL_STR))
+        refreshVisualList(transID, topItemIndex_);
+    else
+        m_cp->m_listCtrlAccount->RefreshItems(m_selectedIndex, m_selectedIndex);
 }
 //----------------------------------------------------------------------------
 
@@ -1532,8 +1532,8 @@ wxString TransactionListCtrl::OnGetItemText(long item, long column) const
                 item_text.Prepend(wxT("< "));
         }
         else item_text.Prepend(wxT("   "));
-	}
-	return item_text;
+    }
+    return item_text;
 }
 //----------------------------------------------------------------------------
 
@@ -1806,10 +1806,10 @@ void TransactionListCtrl::refreshVisualList(const int trans_id, long topItemInde
 int TransactionListCtrl::destinationAccountID(wxString accName)
 {
     int account_id = m_cp->m_trans[m_selectedIndex]->accountID_;
-	if (m_cp->accountID() == m_cp->m_trans[m_selectedIndex]->accountID_
-	    && m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR)
-	    account_id = m_cp->m_trans[m_selectedIndex]->toAccountID_;
-	wxArrayString as = m_cp->core_->accountList_.getAccountsName(account_id);
+    if (m_cp->accountID() == m_cp->m_trans[m_selectedIndex]->accountID_
+        && m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR)
+        account_id = m_cp->m_trans[m_selectedIndex]->toAccountID_;
+    wxArrayString as = m_cp->core_->accountList_.getAccountsName(account_id);
 
     wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
     wxSingleChoiceDialog scd(this, _("Select the destination Account "), headerMsg , as);
@@ -1827,7 +1827,7 @@ int TransactionListCtrl::destinationAccountID(wxString accName)
 void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex < 0) return;
-	wxString sDestAccount = m_cp->m_trans[m_selectedIndex]->fromAccountStr_;
+    wxString sDestAccount = m_cp->m_trans[m_selectedIndex]->fromAccountStr_;
     int toAccountID = destinationAccountID(sDestAccount);
     if ( toAccountID != -1 )
     {
@@ -1918,7 +1918,7 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
     //wxString searchString = event.GetString().c_str();
 
     wxSearchCtrl* st = (wxSearchCtrl*)FindWindow(wxID_FIND);
-    wxString search_string = st->GetValue().Lower();
+    wxString search_string = st->GetValue().Lower().Append(wxT("*"));
 
     if (search_string.IsEmpty()) return;
 
@@ -1994,6 +1994,6 @@ void mmCheckingPanel::SetTransactionFilterState(bool active)
 {
     bitmapTransFilter_->Enable(active || transFilterActive_);
     statTextTransFilter_->Enable(active || transFilterActive_);
-	bitmapMainFilter_->Enable(!transFilterActive_);
+    bitmapMainFilter_->Enable(!transFilterActive_);
     stxtMainFilter_->Enable(!transFilterActive_);
 }
