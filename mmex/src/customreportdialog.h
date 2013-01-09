@@ -22,6 +22,7 @@
 
 #include "guiid.h"
 #include "customreportindex.h"
+#include <wx/timer.h>
 
 #define SYMBOL_CUSTOMSQLDIALOG_TITLE _("Custom Reports Manager")
 #define SYMBOL_CUSTOMSQLDIALOG_POSITION wxDefaultPosition
@@ -36,7 +37,7 @@ class mmCustomSQLDialog: public wxDialog
 public:
     /// Constructors
     mmCustomSQLDialog( ) {}
-//    virtual ~mmCustomSQLDialog();
+    virtual ~mmCustomSQLDialog();
 
     mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxString customSqlReportSelectedItem, wxWindow* parent,
         wxWindowID id           = wxID_ANY,
@@ -62,13 +63,15 @@ private:
     wxButton* button_Open_;
     wxButton* button_Save_;
     wxButton* button_Run_;
-	wxButton* button_Clear_;
+    wxButton* button_Clear_;
     wxTextCtrl* reportTitleTxtCtrl_;
     wxCheckBox* headingOnlyCheckBox_;
     wxCheckBox* subMenuCheckBox_;
     wxRadioBox* m_radio_box_;
     wxTreeCtrl* treeCtrl_;
     int iSelectedId_;
+    wxTimer* timer_;
+    static const int INTERVAL = 250;
 
     bool Create( wxWindow* parent,
         wxWindowID id = wxID_ANY,
@@ -82,7 +85,7 @@ private:
     void fillControls();
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
-	bool SaveCustomReport();
+    bool SaveCustomReport();
     void OnRun(wxCommandEvent& event);
     void OnClear(wxCommandEvent& event);
     void OnClose(wxCommandEvent& event);
@@ -94,9 +97,10 @@ private:
     void OnItemRightClick(wxTreeEvent& event);
     void OnSelChanged(wxTreeEvent& event);
     void OnLabelChanged(wxTreeEvent& event);
-	bool DeleteCustomSqlReport();
-	void OnMenuSelected(wxCommandEvent& event);
-	void OnSourceTxtChar(wxKeyEvent& event);
+    bool DeleteCustomSqlReport();
+    void OnMenuSelected(wxCommandEvent& event);
+    void OnSourceTxtChar(wxKeyEvent& event);
+    void ShowCursorCoordinates(wxTimerEvent& /*event*/);
 };
 
 #endif
