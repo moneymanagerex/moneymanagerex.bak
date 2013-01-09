@@ -221,10 +221,13 @@ void mmCustomSQLDialog::CreateControls()
     headingPanelSizerV3->Add(new wxStaticText( this, wxID_PROPERTIES, _("Custom script:")), flags);
     tcSourceTxtCtrl_ = new wxTextCtrl( this, wxID_VIEW_DETAILS, wxT(""),
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL|wxTE_NOHIDESEL );
-    headingPanelSizerV3->Add(tcSourceTxtCtrl_, flagsExpand);
-    headingPanelSizerV3->Add(headingPanelSizerH4, flags.Center());
     tcSourceTxtCtrl_->Connect(wxID_ANY, wxEVT_CHAR,
         wxKeyEventHandler(mmCustomSQLDialog::OnSourceTxtChar), NULL, this);
+    int font_size = this->GetFont().GetPointSize();
+    wxFont teletype( font_size, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL );
+    tcSourceTxtCtrl_->SetFont(teletype);
+    headingPanelSizerV3->Add(tcSourceTxtCtrl_, flagsExpand);
+    headingPanelSizerV3->Add(headingPanelSizerH4, flags.Center());
 
     button_Open_ = new wxButton( this, wxID_OPEN);
     headingPanelSizerH4->Add(button_Open_, flags);
