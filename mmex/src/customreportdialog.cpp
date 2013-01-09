@@ -44,6 +44,7 @@ BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
     EVT_TREE_ITEM_MENU(wxID_ANY, mmCustomSQLDialog::OnItemRightClick)
     //EVT_TREE_ITEM_ACTIVATED(wxID_ANY,  mmCustomSQLDialog::OnDoubleClicked)
     EVT_MENU_RANGE(wxID_NEW, wxID_DELETE, mmCustomSQLDialog::OnMenuSelected)
+    EVT_TIMER(wxID_ANY, mmCustomSQLDialog::ShowCursorCoordinates)
 END_EVENT_TABLE()
 
 mmCustomSQLDialog::mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxString customSqlReportSelectedItem, wxWindow* parent,
@@ -53,6 +54,12 @@ mmCustomSQLDialog::mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxString
 {
     Create(parent_, id, caption, pos, size, style);
 }
+
+mmCustomSQLDialog::~mmCustomSQLDialog()
+{
+    timer_->Stop();
+}
+
 
 bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
                         const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
@@ -76,6 +83,8 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
 
     edit_ = reportIndex_->getSelectedTitleSelection(customSqlReportSelectedItem_);
     iSelectedId_ = reportIndex_->getCustomReportId();
+    timer_ = new wxTimer(this, wxID_ANY);
+    timer_->Start(INTERVAL);
 
     fillControls();
     return TRUE;
@@ -209,9 +218,9 @@ void mmCustomSQLDialog::CreateControls()
     wxBoxSizer* headingPanelSizerH4 = new wxBoxSizer(wxHORIZONTAL);
     headingPanelSizerH->Add(headingPanelSizerV3, flagsExpand);
 
-    headingPanelSizerV3->Add(new wxStaticText( this, wxID_ANY, _("Custom script:")), flags);
+    headingPanelSizerV3->Add(new wxStaticText( this, wxID_PROPERTIES, _("Custom script:")), flags);
     tcSourceTxtCtrl_ = new wxTextCtrl( this, wxID_VIEW_DETAILS, wxT(""),
-        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
+        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL|wxTE_NOHIDESEL );
     headingPanelSizerV3->Add(tcSourceTxtCtrl_, flagsExpand);
     headingPanelSizerV3->Add(headingPanelSizerH4, flags.Center());
     tcSourceTxtCtrl_->Connect(wxID_ANY, wxEVT_CHAR,
@@ -471,6 +480,9 @@ void mmCustomSQLDialog::OnSelChanged(wxTreeEvent& event)
     mmTreeItemData* iData = dynamic_cast<mmTreeItemData*>(treeCtrl_->GetItemData(event.GetItem()));
     if (!iData) return;
 
+    wxStaticText* st = (wxStaticText*)FindWindow(wxID_PROPERTIES);
+    st->SetLabel(wxString::Format(_("Custom script:")));
+
     iSelectedId_ = reportIndex_->getCustomReportId();
     reportIndex_->getSelectedTitleSelection(iData->getString());
 
@@ -577,4 +589,16 @@ void mmCustomSQLDialog::OnSourceTxtChar(wxKeyEvent& event)
     if (wxGetKeyState(wxKeyCode('A')) && wxGetKeyState(WXK_CONTROL))
         tcSourceTxtCtrl_->SetSelection(-1, -1); //select all
     event.Skip();
+}
+
+void mmCustomSQLDialog::ShowCursorCoordinates(wxTimerEvent& /*event*/)
+{
+    wxWindow *w = FindFocus();
+    if (w && w->GetId() != wxID_VIEW_DETAILS) return;
+
+    long lCursorPosition = tcSourceTxtCtrl_->GetInsertionPoint();
+    wxStaticText* st = (wxStaticText*)FindWindow(wxID_PROPERTIES);
+    long x = 0, y = 0;
+    tcSourceTxtCtrl_->PositionToXY(lCursorPosition, &x, &y);
+    st->SetLabel(wxString::Format(_("Line: %ld position: %ld"), y+1, x+1));
 }
