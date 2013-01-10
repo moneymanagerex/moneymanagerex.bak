@@ -26,7 +26,7 @@
 #include "platfdep.h"
 #include "constants.h"
 
-#include <wx/mstream.h>
+#include <wx/sstream.h>
 #include <sstream>
 //----------------------------------------------------------------------------
 //#include <wx/sound.h>
@@ -883,34 +883,21 @@ void windowsFreezeThaw(wxWindow* pWindow)
 
 int site_content(const wxString& sSite, wxString& sOutput)
  {
-    int err_code = wxURL_NOERR;
-    wxURL* url = new wxURL(sSite);
-    err_code = url->GetError();
+    wxURL url(sSite);
+    int err_code = url.GetError();
     if (err_code == wxURL_NOERR)
     {
-        url->GetProtocol().SetTimeout(10); // 10 secs
-        wxInputStream* in_stream = url->GetInputStream();
+        url.GetProtocol().SetTimeout(10); // 10 secs
+        wxInputStream* in_stream = url.GetInputStream();
         if (in_stream)
         {
-            wxMemoryOutputStream oStream;
-
-            /*reading full stream (and size)*/
-            in_stream->Read(oStream);
-
-            const size_t size = in_stream->LastRead()-1;
-            char* buffer = new char[size];
-
-            oStream.SeekO(0);
-            oStream.CopyTo(buffer, size);
-            oStream.Close();
-            buffer[size] = '\0';
-			sOutput = wxString::FromUTF8(buffer);
-        }
+			wxStringOutputStream out_stream(&sOutput);
+			in_stream->Read(out_stream);
+		}
         else
             err_code = -1; //Cannot get data from WWW!
         delete in_stream;
     }
-    delete url;
 
     if (err_code != wxURL_NOERR)
     {
