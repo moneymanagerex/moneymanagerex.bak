@@ -134,7 +134,7 @@ void mmStocksPanel::CreateControls()
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
-	int font_size = this->GetFont().GetPointSize() + 2;
+    int font_size = this->GetFont().GetPointSize() + 2;
     header_text_ = new wxStaticText(headerPanel, wxID_STATIC, wxT(""));
     header_text_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
 
@@ -245,7 +245,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     listCtrlAccount_->SetColumn(col, item);
 
     wxString str = core_->accountList_.GetAccountName(accountID_);
-    header_text_->SetLabel(wxString::Format(_("Stock Investments: %s"), str));
+    header_text_->SetLabel(wxString::Format(_("Stock Investments: %s"), str.c_str()));
 
     core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
     double originalVal = 0.0;
@@ -465,7 +465,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         if (updated && dPrice > 0)
         {
             if(StockSymbolWithSuffix.substr(StockSymbolWithSuffix.Find(wxT("."))) == wxT(".L"))
-                dPrice = dPrice / 100;    
+                dPrice = dPrice / 100;
             stocks_data.insert(std::make_pair(StockSymbolWithSuffix, std::make_pair(dPrice, dName)));
         }
     }
@@ -527,7 +527,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
                              LastRefreshDT_.FormatDate().c_str());
     core_->dbInfoSettings_->SetStringSetting(wxT("STOCKS_LAST_REFRESH_DATETIME"), strLastUpdate_);
 
-    stock_details_->SetLabel(_("Stock prices successfully updated"));    
+    stock_details_->SetLabel(_("Stock prices successfully updated"));
     stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_.c_str()));
 
 }
@@ -761,7 +761,7 @@ void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
     if (selectedIndex_ < 0) return;
 
     wxListEvent evt(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, ID_PANEL_STOCKS_LISTCTRL);
-    AddPendingEvent(evt);           
+    AddPendingEvent(evt);
 }
 
 void stocksListCtrl::OnListItemActivated(wxListEvent& /*event*/)
@@ -813,9 +813,9 @@ void stocksListCtrl::doRefreshItems(int trx_id)
     {
         RefreshItems(0, cnt > 0 ? cnt - 1 : 0);
     }
-    else 
+    else
         selectedIndex = -1;
-    
+
     if (selectedIndex >= 0 && cnt>0)
     {
         SetItemState(selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
