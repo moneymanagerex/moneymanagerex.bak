@@ -897,7 +897,7 @@ int site_content(const wxString& sSite, wxString& sOutput)
             /*reading full stream (and size)*/
             in_stream->Read(oStream);
 
-            const size_t size = in_stream->LastRead();
+            const size_t size = in_stream->LastRead()-1;
             char* buffer = new char[size];
 
             oStream.SeekO(0);
