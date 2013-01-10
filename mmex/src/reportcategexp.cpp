@@ -148,7 +148,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
         if (categs>1)
         {
             wxString categtotalStr;
-            mmex::formatDoubleToCurrency(categtotal, categtotalStr);hb.startTableRow();
+            mmex::formatDoubleToCurrency(categtotal, categtotalStr);
+            hb.startTableRow();
             hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
             hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
         }
