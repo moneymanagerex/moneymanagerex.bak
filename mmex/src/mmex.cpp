@@ -1331,6 +1331,10 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
 
 void mmGUIFrame::CreateCustomReport(int index)
 {
+    this->SetEvtHandlerEnabled(false);
+    homePageAccountSelect_ = true; // prevent Navigation tree code execution.
+    wxBeginBusyCursor(wxHOURGLASS_CURSOR);
+    
     if (custRepIndex_->reportFileName(index) != wxT(""))
     {
         wxString sScript;
@@ -1344,6 +1348,10 @@ void mmGUIFrame::CreateCustomReport(int index)
             createReportsPage(csr);
         }
     }
+    processPendingEvents();         // clear out pending events
+    this->SetEvtHandlerEnabled(true); 
+    homePageAccountSelect_ = false; // restore Navigation tree code execution.
+    wxEndBusyCursor();
 }
 
 bool mmGUIFrame::IsCustomSQLReportSelected( int& customSqlReportID, mmTreeItemData* iData )
@@ -4072,26 +4080,27 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 void mmGUIFrame::RunCustomSqlDialog(wxString customSqlReportSelectedItem)
 {
     //Use Shared pointer to ensure object gets destroyed if SQL Script errors hijack the object.
-    //boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this ));
-    mmCustomSQLDialog* dlg = new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this);
+    boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this ));
+    //mmCustomSQLDialog* dlg = new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this);
     customSqlReportSelectedItem;
-    int dialogStatus = dlg->ShowModal();
-    wxBeginBusyCursor(wxHOURGLASS_CURSOR);
+    int dialogStatus = wxID_MORE;
+    this->SetEvtHandlerEnabled(false);
     while (dialogStatus == wxID_MORE)
     {
         if (dlg->sScript() != wxT(""))
         {
+            wxBeginBusyCursor(wxHOURGLASS_CURSOR);
             mmCustomSQLReport* csr = new mmCustomSQLReport(this,
                 m_core.get(), dlg->sReportTitle(), dlg->sScript(), dlg->sSctiptType());
             menuPrintingEnable(true);
             createReportsPage(csr);
-
+            wxEndBusyCursor();
         }
         dialogStatus = dlg->ShowModal();
     }
-    wxEndBusyCursor();
-
-    dlg->Destroy();
+    processPendingEvents();         // clear out pending events
+    this->SetEvtHandlerEnabled(true); 
+    //dlg->Destroy();
 
     if (dialogStatus == wxID_OK) updateNavTreeControl();
 }
