@@ -298,7 +298,7 @@ private:
     void OnViewFavoriteAccounts(wxCommandEvent& event);
     void OnViewOpenAccounts(wxCommandEvent& event);
 
-    /* Custom SQL Report*/
+    /* Custom Report*/
     bool IsCustomSQLReportSelected(int& customSqlReportID, mmTreeItemData* iData );
     void CreateCustomReport(int index);
     void RunCustomSqlDialog(wxString customSqlReportSelectedItem = wxT(""));

@@ -231,15 +231,15 @@ void mmCustomSQLDialog::CreateControls()
 
     button_Open_ = new wxButton( this, wxID_OPEN);
     headingPanelSizerH4->Add(button_Open_, flags);
-    button_Open_->SetToolTip(_("Locate and load an SQL script file into the script area."));
+    button_Open_->SetToolTip(_("Locate and load a script file into the script area."));
 
     button_Save_ = new wxButton( this, wxID_SAVE);
     headingPanelSizerH4->Add(button_Save_, flags);
-    button_Save_->SetToolTip(_("Save SQL script to file name set by the Report Title."));
+    button_Save_->SetToolTip(_("Save the script to file name set by the Report Title."));
 
     button_Clear_ = new wxButton( this, wxID_CLEAR);
     headingPanelSizerH4->Add(button_Clear_, flags);
-    button_Clear_->SetToolTip(_("Clear the SQL Source script area"));
+    button_Clear_->SetToolTip(_("Clear the Source script area"));
 
     /****************************************
      Bottom Panel
@@ -252,7 +252,7 @@ void mmCustomSQLDialog::CreateControls()
 
     button_Run_ = new wxButton( buttonPanel, wxID_REFRESH, _("&Run"));
     buttonPanelSizer->Add(button_Run_, flags);
-    button_Run_->SetToolTip(_("Test script. Save before running. SQL errors will result in loss of script."));
+    button_Run_->SetToolTip(_("Test script. Save before running."));
 
     wxButton* button_Close = new wxButton( buttonPanel, wxID_CLOSE);
     buttonPanelSizer->Add(button_Close, flags);
