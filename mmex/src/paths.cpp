@@ -128,7 +128,7 @@ wxString mmex::getPathDoc(EDocFile f)
       wxT("license.txt"),
       wxT("version.txt"),
       wxT("help/index.html"),
-      wxT("help/custom_sql_reports.html"),
+      wxT("help/custom_reports.html"),
       wxT("help/investment.html"),
       wxT("help/budget.html"),
     };
