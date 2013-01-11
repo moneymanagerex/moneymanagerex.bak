@@ -504,10 +504,14 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     createControls();
     recentFiles_ = new RecentDatabaseFiles(m_inisettings, menuRecentFiles_);
 
+    // Load perspective
+    wxString auiPerspective = m_inisettings->GetStringSetting(wxT("AUIPERSPECTIVE"), m_perspective);
+    m_mgr.LoadPerspective(auiPerspective);
+
     // add the toolbars to the manager
     m_mgr.AddPane(toolBar_, wxAuiPaneInfo().
         Name(wxT("toolbar")).Caption(wxT("Toolbar")).ToolbarPane().Top().
-        LeftDockable(false).RightDockable(false));
+        LeftDockable(false).RightDockable(false).MinSize(1000,-1));
 
     // change look and feel of wxAuiManager
     m_mgr.GetArtProvider()->SetMetric(16, 0);
@@ -515,8 +519,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
     // Save default perspective
     m_perspective = m_mgr.SavePerspective();
-    wxString auiPerspective = m_inisettings->GetStringSetting(wxT("AUIPERSPECTIVE"), m_perspective);
-    m_mgr.LoadPerspective(auiPerspective);
+    m_inisettings->SetStringSetting(wxT("AUIPERSPECTIVE"), m_perspective);
 
     // "commit" all changes made to wxAuiManager
     m_mgr.Update();
@@ -1333,7 +1336,7 @@ void mmGUIFrame::CreateCustomReport(int index)
     this->SetEvtHandlerEnabled(false);
     homePageAccountSelect_ = true; // prevent Navigation tree code execution.
     wxBeginBusyCursor(wxHOURGLASS_CURSOR);
-    
+
     if (custRepIndex_->reportFileName(index) != wxT(""))
     {
         wxString sScript;
@@ -1348,7 +1351,7 @@ void mmGUIFrame::CreateCustomReport(int index)
         }
     }
     processPendingEvents();         // clear out pending events
-    this->SetEvtHandlerEnabled(true); 
+    this->SetEvtHandlerEnabled(true);
     homePageAccountSelect_ = false; // restore Navigation tree code execution.
     wxEndBusyCursor();
 }
@@ -4101,7 +4104,7 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customSqlReportSelectedItem)
         dialogStatus = dlg->ShowModal();
     }
     processPendingEvents();         // clear out pending events
-    this->SetEvtHandlerEnabled(true); 
+    this->SetEvtHandlerEnabled(true);
     //dlg->Destroy();
 
     if (dialogStatus == wxID_OK) updateNavTreeControl();
