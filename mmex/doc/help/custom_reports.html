@@ -634,7 +634,7 @@ scripts, the main command we would tend to use is the </SPAN></FONT><FONT FACE="
 FROM AccountList_V1;</B></SPAN></FONT><FONT FACE="Verdana, sans-serif"><SPAN LANG="en-US"><BR>*
 This would display all fields for the table: AccountList_V1</SPAN></FONT></P>
 <P><FONT FACE="Verdana, sans-serif"><SPAN LANG="en-US"><B>SELECT
-AccountName, Status FROM AccountList_V1 where AccountType = &ldquo;Term&rdquo;;</B></SPAN></FONT><FONT FACE="Verdana, sans-serif"><SPAN LANG="en-US"><BR>*
+AccountName, Status FROM AccountList_V1 where AccountType = &quot;Term&quot;;</B></SPAN></FONT><FONT FACE="Verdana, sans-serif"><SPAN LANG="en-US"><BR>*
 This would display the Term Account names and the account status from
 table: AccountList_V1</SPAN></FONT></P>
 <HR SIZE=1>
@@ -744,7 +744,7 @@ is given a name, and we assign some data to it.</P>
 			<P>Suppose we want to store a name we write:</P>
 		</TD>
 		<TD WIDTH=68%>
-			<P>table_name = &ldquo;category&rdquo;<BR>Now every time we want
+			<P>table_name = &quot;category&quot;<BR>Now every time we want
 			to use the name <FONT COLOR="#0000ff">category</FONT>, we use the
 			name <FONT COLOR="#0000ff">table_name</FONT></P>
 		</TD>
@@ -757,7 +757,7 @@ have a Starting point, and an End point.<BR>Start Point:</P>
 	<COL WIDTH=173*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=32%>
-			<P>table_name = &ldquo;category&rdquo;</P>
+			<P>table_name = &quot;category&quot;</P>
 		</TD>
 		<TD WIDTH=68%>
 			<P>The first statement encountered, which can be resolved.</P>
@@ -787,8 +787,8 @@ combining data to have meaning, Lua introduces the dot dot notation.</P>
 	<COL WIDTH=128*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
-			<P>return &ldquo;<FONT COLOR="#0000ff">Real table name is </FONT>&rdquo;
-			.. table_name .. &ldquo;<FONT COLOR="#0000ff">_v1</FONT>&rdquo;</P>
+			<P>return &quot;<FONT COLOR="#0000ff">Real table name is </FONT>&quot;
+			.. table_name .. &quot;<FONT COLOR="#0000ff">_v1</FONT>&quot;</P>
 		</TD>
 		<TD WIDTH=50%>
 			<P>Combines the data to return one value as:<BR><FONT COLOR="#0000ff">Real
@@ -820,8 +820,8 @@ a function:</P>
 	<COL WIDTH=128*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
-			<P>function sql_statement(table_name)<BR>__sql_code = &ldquo;select
-			* from &rdquo; .. table_name .. &ldquo;_v1&rdquo;</P>
+			<P>function sql_statement(table_name)<BR>__sql_code = &quot;select
+			* from &quot; .. table_name .. &quot;_v1&quot;</P>
 			<P>return sql_code 
 			</P>
 		</TD>
@@ -842,7 +842,7 @@ our values in a block, known as an array
 	<COL WIDTH=128*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
-			<P>selectable_tables = {&ldquo;Payee&rdquo;,&ldquo;Category&rdquo;,&rdquo;SubCategory&rdquo;}
+			<P>selectable_tables = {&quot;Payee&quot;,&quot;Category&quot;,&quot;SubCategory&quot;}
 						</P>
 		</TD>
 		<TD WIDTH=50%>
@@ -862,8 +862,8 @@ program which is moderately useful:</P>
 	<COL WIDTH=85*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=67%>
-			<P>table_name = mmGetSingleChoice(&ldquo;Select a table&rdquo;,
-			&ldquo;Lua&rdquo;, selectable_tables)<BR>sql_script =
+			<P>table_name = mmGetSingleChoice(&quot;Select a table&quot;,
+			&quot;Lua&quot;, selectable_tables)<BR>sql_script =
 			sql_statement(table_name)<BR>value = mmGetSQLResultSet(sql_script)</P>
 			<P>return value</P>
 		</TD>
@@ -906,14 +906,14 @@ explained in the table below.</P>
 	<TR VALIGN=TOP>
 		<TD WIDTH=46% HEIGHT=37>
 			<P>_</P>
-			<P>Underscore character can also be used as _(&ldquo;&rdquo;) 
+			<P>Underscore character can also be used as _(&quot;&quot;) 
 			</P>
 		</TD>
 		<TD WIDTH=54%>
 			<P>Similar to wxWidgets to allow the underscore character to get
 			the translation.</P>
-			<P>translated_string = _&rdquo;My English string&rdquo;</P>
-			<P>translated_string = _(&rdquo;My English string&rdquo;)</P>
+			<P>translated_string = _&quot;My English string&quot;</P>
+			<P>translated_string = _(&quot;My English string&quot;)</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -993,15 +993,15 @@ explained in the table below.</P>
 					</TD>
 					<TD WIDTH=75%>
 						<P>t1 = { row=row, column=column}</P>
-						<P>t1[1] = {&ldquo;R1:C1&rdquo;, &ldquo;R1:C2&rdquo;, &ldquo;R1:C3&rdquo;,
-						&ldquo;R1:C4&rdquo;}<BR>t1[2] = {&ldquo;R2:C1&rdquo;, &ldquo;R2:C2&rdquo;,
-						&ldquo;R2:C3&rdquo;, &ldquo;R2:C4&rdquo;}<BR>t1[3] = {&ldquo;R3:C1&rdquo;,
-						&ldquo;R3:C2&rdquo;, &ldquo;R3:C3&rdquo;, &ldquo;R3:C4&rdquo;}<BR>t1[4]
-						= {&ldquo;R4:C1&rdquo;, &ldquo;R4:C2&rdquo;, &ldquo;R4:C3&rdquo;,
-						&ldquo;R4:C4&rdquo;}<BR>t1[5] = {&ldquo;R5:C1&rdquo;, &ldquo;R5:C2&rdquo;,
-						&ldquo;R5:C3&rdquo;, &ldquo;R5:C4&rdquo;}</P>
+						<P>t1[1] = {&quot;R1:C1&quot;, &quot;R1:C2&quot;, &quot;R1:C3&quot;,
+						&quot;R1:C4&quot;}<BR>t1[2] = {&quot;R2:C1&quot;, &quot;R2:C2&quot;,
+						&quot;R2:C3&quot;, &quot;R2:C4&quot;}<BR>t1[3] = {&quot;R3:C1&quot;,
+						&quot;R3:C2&quot;, &quot;R3:C3&quot;, &quot;R3:C4&quot;}<BR>t1[4]
+						= {&quot;R4:C1&quot;, &quot;R4:C2&quot;, &quot;R4:C3&quot;,
+						&quot;R4:C4&quot;}<BR>t1[5] = {&quot;R5:C1&quot;, &quot;R5:C2&quot;,
+						&quot;R5:C3&quot;, &quot;R5:C4&quot;}</P>
 						<P>value = t1[3,4]</P>
-						<P>returns: &ldquo;R3:C4&rdquo;</P>
+						<P>returns: &quot;R3:C4&quot;</P>
 					</TD>
 				</TR>
 				<TR VALIGN=TOP>
@@ -1033,26 +1033,26 @@ explained in the table below.</P>
 		<TD WIDTH=54%>
 			<P>Sample Test Script: Return the table selected by the
 			user<BR>------------------------------------------<BR>tables =
-			{&ldquo;Payee&rdquo;, &ldquo;Category&rdquo;, &ldquo;SubCategory&rdquo;}<BR>value
-			= mmGetSingleChoice(&ldquo;Select a Table&rdquo;, &ldquo;Lua&rdquo;,
+			{&quot;Payee&quot;, &quot;Category&quot;, &quot;SubCategory&quot;}<BR>value
+			= mmGetSingleChoice(&quot;Select a Table&quot;, &quot;Lua&quot;,
 			tables)</P>
 			<P>return value</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=46%>
-			<P>value[, id] = mmGetColumnChoice(&ldquo;label&rdquo;, &ldquo;heading&rdquo;,
+			<P>value[, id] = mmGetColumnChoice(&quot;label&quot;, &quot;heading&quot;,
 			2D_array, column)</P>
 		</TD>
 		<TD WIDTH=54%>
 			<P>Sample Test Script: Returns the selected payee from your payee
 			table.<BR>----------------------------------------------------------------------<BR>sql_script
-			= &ldquo;select * from payee_v1 order by payeename&rdquo;<BR>sql_table,
+			= &quot;select * from payee_v1 order by payeename&quot;<BR>sql_table,
 			err = mmGetSQLResultSet(sql_script)</P>
-			<P>payee, id = mmGetColumnChoice(&ldquo;Select Payee&rdquo;,
-			&ldquo;Lua&rdquo;, SQLResultSet, 2)</P>
-			<P>return &ldquo;Selected Payee: &rdquo;..payee..&rdquo; has an
-			index of: &rdquo;..id 
+			<P>payee, id = mmGetColumnChoice(&quot;Select Payee&quot;,
+			&quot;Lua&quot;, SQLResultSet, 2)</P>
+			<P>return &quot;Selected Payee: &quot;..payee..&quot; has an
+			index of: &quot;..id 
 			</P>
 		</TD>
 	</TR>
@@ -1107,7 +1107,7 @@ Lua via the following command:</P>
 	<COL WIDTH=151*>
 	<TR>
 		<TD COLSPAN=2 WIDTH=100% VALIGN=TOP>
-			<P>HTML = mmHTMLBuilder(&ldquo;html command&rdquo;[, value][,
+			<P>HTML = mmHTMLBuilder(&quot;html command&quot;[, value][,
 			value][, value][, value])</P>
 		</TD>
 	</TR>
@@ -1121,8 +1121,8 @@ Lua via the following command:</P>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=41%>
-			<P>(&ldquo;Init&rdquo;)</P>
-			<P>(&ldquo;StartTable&quot;, value_1, value_2)</P>
+			<P>(&quot;Init&quot;)</P>
+			<P>(&quot;StartTable&quot;, value_1, value_2)</P>
 			<P>(&quot;StartTableRow&quot;)</P>
 			<P>(&quot;StartTableCell&quot;, value_1)</P>
 			<P>(&quot;AddTableHeaderCell&quot;, value_1, value_2) 
