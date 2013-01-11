@@ -320,7 +320,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, mmGUIFrame::OnViewFavoriteAccounts)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, mmGUIFrame::OnViewOpenAccounts)
 
-    /* Custom Sql Reports */
+    /* Custom Reports */
     EVT_MENU(MENU_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnEditCustomSqlReport)
     EVT_MENU(MENU_CUSTOM_SQL_REPORT_NEW, mmGUIFrame::OnEditCustomSqlReport)
     EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnEditCustomSqlReport)
@@ -2317,7 +2317,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
         }
         else
         {
-            // Bring up popup menu to edit or delete the correct Custom SQL Report
+            // Bring up popup menu to edit or delete the correct Custom Report
             customSqlReportSelectedItem_ = iData->getString();
             wxString field = customSqlReportSelectedItem_.Mid(6,8);
             if (field == wxT("_Report_"))
@@ -4079,7 +4079,7 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::RunCustomSqlDialog(wxString customSqlReportSelectedItem)
 {
-    //Use Shared pointer to ensure object gets destroyed if SQL Script errors hijack the object.
+    //Use Shared pointer to ensure object gets destroyed if Script errors hijack the object.
     boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this ));
     //mmCustomSQLDialog* dlg = new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this);
     customSqlReportSelectedItem;
