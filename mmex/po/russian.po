@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-10 13:45+0400\n"
-"PO-Revision-Date: 2013-01-10 13:45+0400\n"
+"PO-Revision-Date: 2013-01-11 15:00+0400\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -31,7 +31,6 @@ msgid "Version: "
 msgstr "Версия: "
 
 #: src/aboutdialog.cpp:123
-#, fuzzy
 msgid "About"
 msgstr "О программе"
 
@@ -783,24 +782,24 @@ msgid "View Budget Category Summary"
 msgstr "Отображать сумму по категориям в бюджете"
 
 #: src/budgetingpanel.cpp:140
-#, fuzzy, c-format
+#, c-format
 msgid "Financial Year: %s - %i"
-msgstr "Финансовый год: "
+msgstr "Финансовый год: %s - %i"
 
 #: src/budgetingpanel.cpp:144
-#, fuzzy, c-format
+#, c-format
 msgid "Year: %s"
-msgstr "Год: "
+msgstr "Год: %s"
 
 #: src/budgetingpanel.cpp:149
-#, fuzzy, c-format
+#, c-format
 msgid "Month: %s"
-msgstr "Месяц: "
+msgstr "Месяц: %s"
 
 #: src/budgetingpanel.cpp:151
-#, fuzzy, c-format
+#, c-format
 msgid "Budget Setup for %s"
-msgstr "Бюджет на "
+msgstr "Бюджет на %s"
 
 #: src/budgetingpanel.cpp:192
 msgid "Viewing All Budget Categories"
@@ -922,17 +921,15 @@ msgstr "Замена одной категории на другую"
 
 #: src/categdialog.cpp:177
 msgid "Expand"
-msgstr ""
+msgstr "Развернуть"
 
 #: src/categdialog.cpp:182 src/payeedialog.cpp:102
-#, fuzzy
 msgid "Show All"
-msgstr "отобразится как:"
+msgstr "Показать все"
 
 #: src/categdialog.cpp:184
-#, fuzzy
 msgid "Show all hidden categories"
-msgstr "Показать все категории бюджета"
+msgstr "Показать скрытые категории"
 
 #: src/categdialog.cpp:207
 msgid "Enter the name of the category to add or edit here"
@@ -966,14 +963,12 @@ msgid ""
 msgstr "Выбор выделенной категории для текущей проводки."
 
 #: src/categdialog.cpp:242
-#, fuzzy
 msgid "Enter the name for the new category:"
-msgstr "Введите имя нового получателя:"
+msgstr "Введите имя новой категории:"
 
 #: src/categdialog.cpp:243
-#, fuzzy
 msgid "Add Category"
-msgstr "Категория"
+msgstr "Добавить категорию"
 
 #: src/categdialog.cpp:251
 msgid "Category with same name exists"
@@ -1038,9 +1033,8 @@ msgid "Enter a new name for %s"
 msgstr "Введите новое имя для %s"
 
 #: src/categdialog.cpp:433
-#, fuzzy
 msgid "Edit Category"
-msgstr "Разделить категорию"
+msgstr "Редактировать категорию"
 
 #: src/categdialog.cpp:445
 msgid "Update Failed"
@@ -1069,19 +1063,16 @@ msgid "Category Relocation Result"
 msgstr "Результат замены категории"
 
 #: src/categdialog.cpp:579
-#, fuzzy
 msgid "Hide Selected Category"
-msgstr "Выберите категорию"
+msgstr "Скрыть категорию"
 
 #: src/categdialog.cpp:580
-#, fuzzy
 msgid "Unhide Selected Category"
-msgstr "Выберите категорию"
+msgstr "Не скрывать категорию"
 
 #: src/categdialog.cpp:582
-#, fuzzy
 msgid "Clear Settings"
-msgstr "Цветовые настройки"
+msgstr "Очистить настройки"
 
 #: src/chart.cpp:218 src/chart.cpp:415
 msgid "Legend:"
@@ -1089,7 +1080,7 @@ msgstr "     Легенда:"
 
 #: src/constants.cpp:77
 msgid "MMEX is using the following support products"
-msgstr ""
+msgstr "MMEX использует следующие продукты"
 
 #: src/currencydialog.cpp:135
 msgid "Converted to:"
@@ -1177,21 +1168,20 @@ msgstr "Основной обменный курс должен быть пол�
 
 #: src/customreportdialog.cpp:126 src/customreportindex.cpp:45
 #: src/customreportindex.cpp:174 src/mmex.cpp:964
-#, fuzzy
 msgid "Custom Reports"
-msgstr "SQL отчёты"
+msgstr "Отчёты пользователя"
 
 #: src/customreportdialog.cpp:182
 msgid "Script type:"
-msgstr ""
+msgstr "Тип скрипта:"
 
 #: src/customreportdialog.cpp:183
 msgid "SQL"
-msgstr ""
+msgstr "SQL"
 
 #: src/customreportdialog.cpp:183
 msgid "Lua"
-msgstr ""
+msgstr "Lua"
 
 #: src/customreportdialog.cpp:189
 msgid "Heading"
@@ -1210,9 +1200,8 @@ msgid "Report Title is used as the file name of the SQL script."
 msgstr "Заголовок отчёта используется как имя файла SQL скрипта."
 
 #: src/customreportdialog.cpp:221 src/customreportdialog.cpp:487
-#, fuzzy
 msgid "Custom script:"
-msgstr "SQL отчёт:"
+msgstr "Скрипт:"
 
 #: src/customreportdialog.cpp:234
 msgid "Locate and load an SQL script file into the script area."
@@ -1247,9 +1236,8 @@ msgid "Load Custom SQL file:"
 msgstr "Загрузить SQL файл:"
 
 #: src/customreportdialog.cpp:285
-#, fuzzy
 msgid "Load Custom Lua file:"
-msgstr "Загрузить SQL файл:"
+msgstr "Загрузить Lua файл:"
 
 #: src/customreportdialog.cpp:312 src/dbwrapper.cpp:207
 #: src/univcsvdialog.cpp:453 src/univcsvdialog.cpp:553
@@ -1278,14 +1266,12 @@ msgid "Unable to write to file."
 msgstr "Невозможно сохранить файл."
 
 #: src/customreportdialog.cpp:473 src/customreportdialog.cpp:568
-#, fuzzy
 msgid "New SQL Custom Report"
-msgstr "Удалить SQL отчёт"
+msgstr "Новый SQL отчёт"
 
 #: src/customreportdialog.cpp:474 src/customreportdialog.cpp:576
-#, fuzzy
 msgid "New Lua Custom Report"
-msgstr "Удалить SQL отчёт"
+msgstr "Новый Lua отчёт"
 
 #: src/customreportdialog.cpp:476
 msgid "Delete Custom Report"
@@ -1296,18 +1282,17 @@ msgid "Delete the Custom Report Title:"
 msgstr "Удалить название запроса:"
 
 #: src/customreportdialog.cpp:546
-#, fuzzy
 msgid "Do you want to delete the Lua file as well?"
-msgstr "Вы действительно хотите удалить SQL файл?"
+msgstr "Удалить и Lua файл тоже?"
 
 #: src/customreportdialog.cpp:548
 msgid "Do you want to delete the SQL file as well?"
-msgstr "Вы действительно хотите удалить SQL файл?"
+msgstr "Удалить и SQL файл тоже?"
 
 #: src/customreportdialog.cpp:606
 #, c-format
 msgid "Line: %ld position: %ld"
-msgstr ""
+msgstr "Строка %ld позиция %ld"
 
 #: src/customreportdisplay.cpp:61
 msgid "SQL Query will modify your Data. Proceed??"
@@ -1353,22 +1338,21 @@ msgid "Data Insertion completed"
 msgstr "Данные внесены"
 
 #: src/customreportdisplay.cpp:144
-#, fuzzy
 msgid "Custom Report: "
-msgstr "SQL отчёт:"
+msgstr "Отчёт пользователя:"
 
 #: src/customreportdisplay.cpp:156
 msgid "Cannot execute unknown Script type"
-msgstr ""
+msgstr "Не могу выполнить неизвестный тип скрипта"
 
 #: src/customreportindex.cpp:47
 msgid "Report Name[|Report Filename.sql[|SUB]]"
 msgstr "Название отчёта[|Report Filename.sql[|SUB]]"
 
 #: src/customreportindex.cpp:199
-#, fuzzy, c-format
+#, c-format
 msgid "Select the Custom Report %s"
-msgstr "Выбрать SQL отчёт"
+msgstr "Выбрать SQL отчёт %s"
 
 #: src/customreportindex.cpp:313
 msgid "Cannot locate file: "
@@ -1673,25 +1657,25 @@ msgid "Today's Date: "
 msgstr "Сегодня: "
 
 #: src/lua_interface.cpp:86
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "Ошибка: %s"
+msgstr "Ошибка: %s\n"
 
 #: src/lua_interface.cpp:206
 msgid "Please, use read only access to DB in this function"
-msgstr ""
+msgstr "Пожалуйста, используйте запросы только для чтения"
 
 #: src/lua_interface.cpp:303 src/lua_interface.cpp:359
 msgid "mmGetTableChoice: Array not recognised"
-msgstr ""
+msgstr "mmGetTableChoice: Массив не распознан"
 
 #: src/lua_interface.cpp:348
 msgid "mmGetColumnChoice: This is not a 2 dimentional array"
-msgstr ""
+msgstr "mmGetColumnChoice: Это не 2-х мерный массив"
 
 #: src/lua_interface.cpp:471
 msgid "HTML_BUILDER: Syntax error function: "
-msgstr ""
+msgstr "HTML_BUILDER: Синтаксическая ошибка функции: "
 
 #: src/maincurrencydialog.cpp:141 src/mmex.cpp:2704
 msgid "Online update currency rate"
@@ -1740,9 +1724,8 @@ msgid "Do you really want to delete the selected Currency?"
 msgstr "Вы действительно хотите удалить выбранную валюту?"
 
 #: src/maincurrencydialog.cpp:370
-#, fuzzy
 msgid "Set as Base Currency"
-msgstr "Основная валюта"
+msgstr "Установить основной валютой"
 
 #: src/mmcheckingpanel.cpp:93 src/mmhomepagepanel.cpp:92
 #: src/reportsummary.cpp:47
@@ -2624,14 +2607,12 @@ msgid "Transaction Report Filter"
 msgstr "Отчёт по критериям"
 
 #: src/mmex.cpp:2680
-#, fuzzy
 msgid "Custom Reports..."
-msgstr "SQL отчёты..."
+msgstr "Отчёты пользователя..."
 
 #: src/mmex.cpp:2680
-#, fuzzy
 msgid "Create or modify reports for the Reports section"
-msgstr "Создать или изменить SQL отчёт"
+msgstr "Создать или изменить отчёт"
 
 #: src/mmex.cpp:2688
 msgid "&Options..."
@@ -2686,7 +2667,7 @@ msgid ""
 "Visit the MMEX forum. See existing user comments, or report new issues with "
 "the software."
 msgstr ""
-"Посетить MMEX форум. Смотрите комментарии пользователей, либо оставить своё "
+"Посетить MMEX форум. Смотрите комментарии пользователей, либо оставьте своё "
 "сообщение о проблемах с программой."
 
 #: src/mmex.cpp:2742
@@ -2750,14 +2731,12 @@ msgid "Show Organize Currency Dialog"
 msgstr "Вызов редактора валют"
 
 #: src/mmex.cpp:2805 src/customreportdialog.h:27
-#, fuzzy
 msgid "Custom Reports Manager"
-msgstr "Менеджер SQL отчётов"
+msgstr "Менеджер отчётов"
 
 #: src/mmex.cpp:2805
-#, fuzzy
 msgid "Create new Custom Reports"
-msgstr "Создать SQL отчёт"
+msgstr "Создать отчёт"
 
 #: src/mmex.cpp:2835
 msgid "Enter database's password"
@@ -2955,9 +2934,9 @@ msgid ""
 "default, and can be changed when editing account details."
 msgstr ""
 "Укажите базовую (или по умолчанию) валюту, которая будет  \n"
-"использоваться с базой данных. В дальнейшем Вы можете изменять \n"
+"использоваться в базе данных. В дальнейшем Вы можете изменять \n"
 "валюту, связанную с каждым счётом, если это будет необходимо. \n"
-"Используйте для этого опции в свойствах счёта."
+"Используйте для этого свойства счёта."
 
 #: src/mmex.cpp:4165 src/optionsdialog.cpp:183
 msgid "User Name"
@@ -3397,31 +3376,31 @@ msgstr "Размер шрифта отчёта"
 
 #: src/optionsdialog.cpp:337
 msgid "XSmall"
-msgstr ""
+msgstr "Микро"
 
 #: src/optionsdialog.cpp:338
 msgid "Small"
-msgstr ""
+msgstr "Маленький"
 
 #: src/optionsdialog.cpp:339
 msgid "Normal"
-msgstr ""
+msgstr "Нормальный"
 
 #: src/optionsdialog.cpp:340
 msgid "Large"
-msgstr ""
+msgstr "Большой"
 
 #: src/optionsdialog.cpp:341
 msgid "XLarge"
-msgstr ""
+msgstr "Оч. большой"
 
 #: src/optionsdialog.cpp:342
 msgid "XXLarge"
-msgstr ""
+msgstr "Ооч. Большой"
 
 #: src/optionsdialog.cpp:343
 msgid "Huge"
-msgstr ""
+msgstr "Огромный"
 
 #: src/optionsdialog.cpp:353
 msgid "Specify which font size is used on the report tables"
@@ -3505,7 +3484,7 @@ msgstr "Строка 0"
 
 #: src/optionsdialog.cpp:459
 msgid "Specify the color for the list row 0"
-msgstr "Укажите цвет непарного ряда в списке"
+msgstr "Укажите цвет нечётного ряда в списке"
 
 #: src/optionsdialog.cpp:465 src/optionsdialog.cpp:468
 msgid "List Row 1"
@@ -3601,7 +3580,7 @@ msgstr "Озвучивать транзакции"
 
 #: src/optionsdialog.cpp:579
 msgid "Select whether to use sounds when entering transactions"
-msgstr "Отметьте, использовать ли звуки при вводе проводок"
+msgstr "Отметьте, использовать ли звуки при вводе транзакций"
 
 #: src/optionsdialog.cpp:582
 msgid "Enable online currency update"
@@ -3642,12 +3621,11 @@ msgstr ""
 
 #: src/optionsdialog.cpp:608
 msgid "Specify max number of backup files"
-msgstr ""
+msgstr "Определите лимит количества резервных файлов"
 
 #: src/optionsdialog.cpp:611
-#, fuzzy
 msgid "Max Files"
-msgstr "CSV файлы"
+msgstr "Лимит файлов"
 
 #: src/optionsdialog.cpp:625
 msgid "Import/Export Settings"
@@ -3675,7 +3653,8 @@ msgstr "ТАБ"
 
 #: src/optionsdialog.cpp:653 src/univcsvdialog.cpp:279
 msgid "Specify the delimiter to use when importing/exporting CSV files"
-msgstr "Укажите какой разделитель использовать при импорте/экспорте CSV файлов"
+msgstr ""
+"Укажите, какой разделитель использовать при импорте/экспорте CSV файлов"
 
 #: src/optionsdialog.cpp:679
 msgid "General"
@@ -3706,29 +3685,27 @@ msgstr ""
 
 #: src/payeedialog.cpp:104
 msgid "Show all hidden payees"
-msgstr ""
+msgstr "Показать скрытых получателей"
 
 #: src/payeedialog.cpp:118
 msgid "Filter"
-msgstr ""
+msgstr "Фильтр"
 
 #: src/payeedialog.cpp:129
 msgid "Hide"
-msgstr ""
+msgstr "Скрыть"
 
 #: src/payeedialog.cpp:148
-#, fuzzy
 msgid "Tools"
-msgstr "&Инструменты"
+msgstr "Инструменты"
 
 #: src/payeedialog.cpp:170
-#, fuzzy
 msgid ""
 "Enter a search string.  You can use * as a wildcard to match zero or more "
 "characters or ? to match a single character."
 msgstr ""
-"Введите строку поиска. Вы можете использовать %, как маску 0 или более "
-"символов или _, как маску одного символа."
+"Введите строку поиска. Вы можете использовать *, как маску 0 или более "
+"символов или ?, как маску одного символа."
 
 #: src/payeedialog.cpp:171
 msgid "Add a new payee name"
@@ -3788,12 +3765,11 @@ msgstr "Изменение получателя"
 
 #: src/qif_export.cpp:74
 msgid "Parameters"
-msgstr ""
+msgstr "Параметры"
 
 #: src/qif_export.cpp:79
-#, fuzzy
 msgid "Log"
-msgstr "Проживание"
+msgstr "Лог"
 
 #: src/qif_export.cpp:86
 msgid "QIF"
@@ -4257,9 +4233,9 @@ msgid "Transaction List "
 msgstr "Список проводок "
 
 #: src/reporttransactions.cpp:52
-#, fuzzy, c-format
+#, c-format
 msgid "Transaction List for Account: %s"
-msgstr "Список проводок "
+msgstr "Список проводок счёта: %s"
 
 #: src/reporttransactions.cpp:177
 msgid "Total Amount: "
@@ -4418,9 +4394,9 @@ msgid "Delete Stock Investment"
 msgstr "Удаление инвестиции"
 
 #: src/stockspanel.cpp:248
-#, fuzzy, c-format
+#, c-format
 msgid "Stock Investments: %s"
-msgstr "Инвестиции: "
+msgstr "Инвестиции: %s"
 
 #: src/stockspanel.cpp:274
 msgid "Total: "
@@ -4825,37 +4801,35 @@ msgstr ""
 
 #: src/util.cpp:917
 msgid "Syntax error in the URL string"
-msgstr ""
+msgstr "Синтаксическая ошибка в URL"
 
 #: src/util.cpp:918
 msgid "Found no protocol which can get this URL"
-msgstr ""
+msgstr "Не найден подходящий протокол для данного URL"
 
 #: src/util.cpp:919
 msgid "A host name is required for this protocol"
-msgstr ""
+msgstr "Хост не задан для данного протокола"
 
 #: src/util.cpp:920
 msgid "A path is required for this protocol"
-msgstr ""
+msgstr "Путь не задан для данного протокола"
 
 #: src/util.cpp:921
-#, fuzzy
 msgid "Connection error"
-msgstr "Соединяюсь..."
+msgstr "Ошибка соединения"
 
 #: src/util.cpp:922
 msgid "An error occurred during negotiation"
-msgstr ""
+msgstr "Произошла ошибка во время установки соединения"
 
 #: src/util.cpp:923
 msgid "Cannot get data from WWW!"
 msgstr "Не могу получить данные из сети!"
 
 #: src/util.cpp:924
-#, fuzzy
 msgid "Unknown error"
-msgstr "Неизвестно"
+msgstr "Неизвестная ошибка"
 
 #: src/util.cpp:1008
 msgid "Could not find base currency symbol!"
@@ -5138,7 +5112,6 @@ msgstr ""
 "клавиша О переключит между Отель, Отдых, Одежда и т.д."
 
 #: src/constants.h:163
-#, fuzzy
 msgid ""
 "Organize Payees Dialog Tip: Using the * key as a wildcard when using the "
 "filter. Example: *c shows Chemist and Doctor, *c*m shows Chemist only."
