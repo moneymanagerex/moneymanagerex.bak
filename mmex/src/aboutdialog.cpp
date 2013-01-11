@@ -43,7 +43,7 @@ END_EVENT_TABLE()
 
 mmAboutDialog::mmAboutDialog( wxWindow* parent) 
 {
-    wxString caption = _("About ") + mmex::getProgramName();
+    wxString caption = wxString(_("About")) << wxT(" ") << mmex::getProgramName();
     Create(parent, ID_DIALOG_ABOUT, caption, wxDefaultPosition,
         wxSize(500, 220), wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX);
 }
