@@ -33,6 +33,26 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *************************************************************************/
 const wxString MMEX_REVISION_ID = wxT("$Rev$");
 //----------------------------------------------------------------------------
+const int mmex::MIN_DATAVERSION = 2;
+const wxChar * const mmex::DATAVERSION = wxT("2");
+const wxChar *const mmex::DEFDATEFORMAT = wxT("%m/%d/%y");
+const wxChar *const mmex::DEFDELIMTER = wxT(",");
+
+// Using google: To specify the exchange, use exch:code 
+// Using yahoo: To specify the exchange, use code.exch 
+
+// const wxChar *const mmex::DEFSTOCKURL = wxT("http://www.google.com/finance?q=%s");
+
+// Will display the stock page when using Looks up the current value
+const wxChar *const mmex::DEFSTOCKURL = wxT("http://finance.yahoo.com/echarts?s=%s");
+
+// Looks up the current value
+// const wxChar *const mmex::DEFSTOCKURL = wxT("http://finance.yahoo.com/lookup?s=%s");
+
+//US Dollar (USD) in Euro (EUR) Chart
+//http://www.google.com/finance?q=CURRENCY%3AUSD
+
+//----------------------------------------------------------------------------
 
 wxString mmex::getProgramName()
 {
@@ -75,7 +95,7 @@ wxString mmex::getProgramDescription()
 {
     wxString description;
     description << _("MMEX is using the following support products") << wxT(":\n")
-                << wxT("==========================================\n")
+                << wxT("======================================\n")
                 << wxVERSION_STRING << wxT("\n")
                 << wxT("Boost C++ ") << (BOOST_VERSION/100000) << wxT('.')
                 << (BOOST_VERSION / 100 % 1000) << wxT('.')

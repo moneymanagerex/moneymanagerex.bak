@@ -38,6 +38,12 @@ class wxString;
 
 namespace mmex
 {
+extern const int MIN_DATAVERSION;
+extern const wxChar * const DATAVERSION;
+
+extern const wxChar *const DEFDATEFORMAT;
+extern const wxChar *const DEFDELIMTER;
+extern const wxChar *const DEFSTOCKURL;
 
 /*
         Uses for titles, reports, etc.
