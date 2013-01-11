@@ -321,9 +321,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, mmGUIFrame::OnViewOpenAccounts)
 
     /* Custom Reports */
-    EVT_MENU(MENU_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnEditCustomSqlReport)
-    EVT_MENU(MENU_CUSTOM_SQL_REPORT_NEW, mmGUIFrame::OnEditCustomSqlReport)
-    EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnEditCustomSqlReport)
+    EVT_MENU(wxID_EDIT, mmGUIFrame::OnEditCustomSqlReport)
 
     /*Automatic processing of repeat transactions*/
     EVT_TIMER(AUTO_REPEAT_TRANSACTIONS_TIMER_ID, mmGUIFrame::OnAutoRepeatTransactionsTimer)
@@ -333,6 +331,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_RECENT_FILES_CLEAR, mmGUIFrame::OnClearRecentFiles)
 
 END_EVENT_TABLE()
+
 //----------------------------------------------------------------------------
 IMPLEMENT_APP(mmGUIApp)
 //----------------------------------------------------------------------------
@@ -2323,7 +2322,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             if (field == wxT("_Report_"))
             {
                 wxMenu* customReportMenu = new wxMenu;
-                customReportMenu->Append(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, _("Edit Custom Report"));
+                customReportMenu->Append(wxID_EDIT, _("Edit Custom Report"));
                 PopupMenu(&*customReportMenu, pt);
             }
             else if (iData->getString() == wxT("Budgeting"))
@@ -2676,7 +2675,7 @@ void mmGUIFrame::createMenu()
 
     // Create Item
     wxMenuItem* menuItemCustomReportEdit = new wxMenuItem(menuTools,
-        MENU_CUSTOM_SQL_REPORT_EDIT, _("Custom Reports..."), _("Create or modify reports for the Reports section"));
+        wxID_EDIT, _("Custom Reports..."), _("Create or modify reports for the Reports section"));
     menuItemCustomReportEdit->SetBitmap(wxBitmap(customsql_xpm));
     // Add menu to Tools menu
     menuTools->Append(menuItemCustomReportEdit);
@@ -2776,7 +2775,7 @@ void mmGUIFrame::createMenu()
 void mmGUIFrame::createToolBar()
 {
     toolBar_ = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT | wxTB_NODIVIDER);
-    wxBitmap toolBarBitmaps[10];
+    wxBitmap toolBarBitmaps[11];
     toolBarBitmaps[0] = wxBitmap(new_xpm);
     toolBarBitmaps[1] = wxBitmap(open_xpm);
     toolBarBitmaps[2] = wxBitmap(save_xpm);
@@ -2787,6 +2786,7 @@ void mmGUIFrame::createToolBar()
     toolBarBitmaps[7] = wxBitmap(money_dollar_xpm);
     toolBarBitmaps[8] = wxBitmap(filter_xpm);
     toolBarBitmaps[9] = wxBitmap(customsql_xpm);
+    toolBarBitmaps[10] = wxBitmap(wrench_xpm);
 
     toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], _("New Database"));
     toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Database"));
@@ -2801,7 +2801,9 @@ void mmGUIFrame::createToolBar()
     toolBar_->AddSeparator();
     toolBar_->AddTool(MENU_TRANSACTIONREPORT, _("Transaction Report Filter"), toolBarBitmaps[8], _("Transaction Report Filter"));
     toolBar_->AddSeparator();
-    toolBar_->AddTool(MENU_CUSTOM_SQL_REPORT_NEW, _("Custom Reports Manager"), toolBarBitmaps[9], _("Create new Custom Reports"));
+    toolBar_->AddTool(wxID_EDIT, _("Custom Reports Manager"), toolBarBitmaps[9], _("Create new Custom Reports"));
+    toolBar_->AddSeparator();
+    toolBar_->AddTool(wxID_PREFERENCES, _("&Options..."), toolBarBitmaps[10], _("Show the Options Dialog"));
 
     // after adding the buttons to the toolbar, must call Realize() to reflect changes
     toolBar_->Realize();
