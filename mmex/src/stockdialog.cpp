@@ -22,6 +22,7 @@
 #include "dbwrapper.h"
 #include "currencydialog.h"
 #include "defs.h"
+#include "constants.h"
 #include "paths.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmStockDialog, wxDialog )
