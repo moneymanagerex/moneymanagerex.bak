@@ -127,9 +127,9 @@ void mmStocksPanel::CreateControls()
     this->SetSizer(itemBoxSizer9);
 
     /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel(this, wxID_STATIC, wxDefaultPosition,
+    wxPanel* headerPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition,
                                         wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
-    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
@@ -138,20 +138,19 @@ void mmStocksPanel::CreateControls()
     header_text_ = new wxStaticText(headerPanel, wxID_STATIC, wxT(""));
     header_text_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
 
-    header_total_ = new wxStaticText(headerPanel, wxID_STATIC,
-                                     _("Total:"), wxDefaultPosition, wxSize(800, 20));
-    wxBitmap pic(led_off_xpm);
+    header_total_ = new wxStaticText(headerPanel, wxID_STATIC, wxT(""));
 
+    wxBitmap pic(led_off_xpm);
     refresh_button_ = new wxBitmapButton( headerPanel, wxID_REFRESH, pic);
     refresh_button_->SetToolTip(_("Refresh Stock Prices from Yahoo"));
 
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
 
-    itemBoxSizerHHeader->Add(refresh_button_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemBoxSizerHHeader->Add(refresh_button_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemBoxSizerHHeader->Add(header_text_, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 1, wxEXPAND, 1);
-    itemBoxSizerVHeader->Add(header_total_, 1, wxALL, 1);
+    itemBoxSizerVHeader->Add(header_total_, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
     /* ---------------------- */
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow(this,
@@ -189,46 +188,46 @@ void mmStocksPanel::CreateControls()
         listCtrlAccount_->SetColumnWidth(i, col_x);
     }
 
-    wxPanel* itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1,
+    wxPanel* BottomPanel = new wxPanel(itemSplitterWindow10, wxID_ANY,
                                         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
-    itemSplitterWindow10->SplitHorizontally(listCtrlAccount_, itemPanel12);
+    itemSplitterWindow10->SplitHorizontally(listCtrlAccount_, BottomPanel);
     itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);
     itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
 
-    wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
-    itemPanel12->SetSizer(itemBoxSizer4);
+    wxBoxSizer* BoxSizerVBottom = new wxBoxSizer(wxVERTICAL);
+    BottomPanel->SetSizer(BoxSizerVBottom);
 
-    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, 1, wxALIGN_LEFT|wxALL, 5);
+    wxBoxSizer* BoxSizerHBottom = new wxBoxSizer(wxHORIZONTAL);
+    BoxSizerVBottom->Add(BoxSizerHBottom, 1, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW);
+    wxButton* itemButton6 = new wxButton(BottomPanel, wxID_NEW);
     itemButton6->SetToolTip(_("New Stock Investment"));
-    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    BoxSizerHBottom->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
-    wxButton* itemButton81 = new wxButton(itemPanel12, wxID_EDIT);
+    wxButton* itemButton81 = new wxButton(BottomPanel, wxID_EDIT);
     itemButton81->SetToolTip(_("Edit Stock Investment"));
-    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    BoxSizerHBottom->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButton81->Enable(false);
 
-    wxButton* itemButton7 = new wxButton(itemPanel12, wxID_DELETE);
+    wxButton* itemButton7 = new wxButton(BottomPanel, wxID_DELETE);
     itemButton7->SetToolTip(_("Delete Stock Investment"));
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    BoxSizerHBottom->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButton7->Enable(false);
 
-    wxButton* bMove = new wxButton(itemPanel12, wxID_MOVE_FRAME, _("&Move"));
+    wxButton* bMove = new wxButton(BottomPanel, wxID_MOVE_FRAME, _("&Move"));
     bMove->SetToolTip(_("Move selected transaction to another account"));
-    itemBoxSizer5->Add(bMove, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    BoxSizerHBottom->Add(bMove, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     bMove->Enable(false);
 
     //Infobar-mini
-    stock_details_short_ = new wxStaticText(itemPanel12, wxID_STATIC, strLastUpdate_);
-    itemBoxSizer5->Add(stock_details_short_, 1, wxGROW|wxTOP, 12);
+    stock_details_short_ = new wxStaticText(BottomPanel, wxID_STATIC, strLastUpdate_);
+    BoxSizerHBottom->Add(stock_details_short_, 1, wxGROW|wxTOP, 12);
     //Infobar
-    stock_details_ = new wxStaticText(itemPanel12, wxID_STATIC, wxT(""),
+    stock_details_ = new wxStaticText(BottomPanel, wxID_STATIC, wxT(""),
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
-    itemBoxSizer4->Add(stock_details_, 1, wxGROW|wxLEFT|wxRIGHT, 14);
+    BoxSizerVBottom->Add(stock_details_, 1, wxGROW|wxLEFT|wxRIGHT, 14);
 
     updateExtraStocksData(-1);
 }
