@@ -891,9 +891,9 @@ int site_content(const wxString& sSite, wxString& sOutput)
         wxInputStream* in_stream = url.GetInputStream();
         if (in_stream)
         {
-			wxStringOutputStream out_stream(&sOutput);
-			in_stream->Read(out_stream);
-		}
+            wxStringOutputStream out_stream(&sOutput);
+            in_stream->Read(out_stream);
+        }
         else
             err_code = -1; //Cannot get data from WWW!
         delete in_stream;
@@ -1077,4 +1077,31 @@ boost::shared_ptr<wxSQLite3Database> static_db_ptr()
     static boost::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
     
     return db;
+}
+
+bool mmCalculator(wxString sInput, wxString& sOutput)
+{
+    //TODO: Add * / and ( ) support
+    double amount = 0;
+    bool result = true;
+    double temp_amount;
+    wxString temp = sInput.Trim();
+    temp.Replace(wxT("+"), wxT("|"));
+    temp.Replace(wxT("-"), wxT("|-"));
+    
+    wxStringTokenizer token(temp, wxT("|"));
+
+    while (token.HasMoreTokens() && result)
+    {
+        if (mmex::formatCurrencyToDouble(token.GetNextToken(), temp_amount))
+        {
+            amount += temp_amount;
+        }
+        else
+            result = false;
+    }
+
+    if (result) mmex::formatDoubleToCurrencyEdit(amount, sOutput);
+
+    return result;
 }
