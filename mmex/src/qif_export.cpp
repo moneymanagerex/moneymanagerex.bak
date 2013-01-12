@@ -160,7 +160,7 @@ void mmQIFDialog::CreateControls()
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
     wxPanel* buttons_panel = new wxPanel(this, wxID_STATIC);
-    main_sizer->Add(buttons_panel, flags.Center().Border(0));
+    main_sizer->Add(buttons_panel, flags.Center().Border(wxALL, 0));
 
     wxStdDialogButtonSizer*  buttons_sizer = new wxStdDialogButtonSizer;
     buttons_panel->SetSizer(buttons_sizer);

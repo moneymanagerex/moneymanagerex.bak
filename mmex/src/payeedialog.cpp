@@ -83,8 +83,8 @@ void mmPayeeDialog::CreateControls()
 {
     const int border = 5;
     wxSizerFlags flags, flagsExpand;
-    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(border);
-    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(border).Expand();
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();
 
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     SetSizer(itemBoxSizer2);
@@ -155,7 +155,7 @@ void mmPayeeDialog::CreateControls()
     deleteButton_ = new wxButton( maintenance_tab, wxID_REMOVE);
     deleteButton_->Disable();
 
-    maintenance_sizer->Add(addButton_, flags.Border(1));
+    maintenance_sizer->Add(addButton_, flags.Border(wxALL, 1));
     maintenance_sizer->Add(editButton_, flags);
     maintenance_sizer->Add(deleteButton_, flags);
 
