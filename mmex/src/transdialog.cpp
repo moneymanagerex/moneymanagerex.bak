@@ -1205,6 +1205,6 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
 void mmTransDialog::OnKeyDown(wxKeyEvent& event)
 {
    int key_code = event.GetUnicodeKey();
-   if (key_code > 57) return;
+   if (key_code > 61) return;
    event.Skip();
 }
