@@ -149,8 +149,8 @@ void mmFilterTransactionsDialog::dataToControls()
 void mmFilterTransactionsDialog::CreateControls()
 {
     wxSizerFlags flags, flagsExpand;
-    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
-    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxEXPAND).Border(wxALL, 5).Proportion(1);
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 0);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxEXPAND).Border(wxALL, 0).Proportion(1);
 
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
 
@@ -159,7 +159,7 @@ void mmFilterTransactionsDialog::CreateControls()
 
     wxStaticBox* static_box_sizer = new wxStaticBox(this, wxID_ANY, _(" Specify "));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(static_box_sizer, wxVERTICAL);
-    itemBoxSizer3->Add(itemStaticBoxSizer4, flagsExpand);
+    itemBoxSizer3->Add(itemStaticBoxSizer4, 1, wxGROW|wxALL, 10);
 
     this->SetSizer(itemBoxSizer2);
 
@@ -170,7 +170,7 @@ void mmFilterTransactionsDialog::CreateControls()
     itemStaticBoxSizer4->Add(itemPanel, 1, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
-    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(0, 2, 0, 0);
+    wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(0, 2, 10, 5);
     itemPanelSizer->AddGrowableCol(1, 1);
 
     itemPanel->SetSizer(itemBoxSizer4);
@@ -286,7 +286,7 @@ void mmFilterTransactionsDialog::CreateControls()
     //--End of Row --------------------------------------------------------
 
     transNumberCheckBox_ = new wxCheckBox( itemPanel, wxID_ANY, _("Number"),
-		wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemPanelSizer->Add(transNumberCheckBox_, flags);
 
     transNumberEdit_ = new wxTextCtrl( itemPanel, wxID_STATIC, wxT(""));
@@ -321,7 +321,7 @@ void mmFilterTransactionsDialog::CreateControls()
      Button Panel with OK/Cancel buttons
     *******************************************************************************/
     wxPanel* buttonPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer3->Add(buttonPanel, flags);
+    itemBoxSizer3->Add(buttonPanel, flags.Border(wxALL, 5));
 
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
@@ -337,7 +337,7 @@ void mmFilterTransactionsDialog::CreateControls()
 
     save_button->Show(true);
 
-    buttonPanelSizer->Add(save_button, flags);
+    buttonPanelSizer->Add(save_button, flags.Border(wxALL, 5));
     buttonPanelSizer->Add(itemButtonOK, flags);
     buttonPanelSizer->Add(itemButtonCancel, flags);
 
