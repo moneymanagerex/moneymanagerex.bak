@@ -65,7 +65,7 @@ public:
     void startTable(const wxString& width = wxGetEmptyString(), const wxString& valign = wxGetEmptyString());
 	
 	/** Starts a table row */
-    void startTableRow();
+    void startTableRow(const wxString& custom_color = wxGetEmptyString());
 	
 	/** Starts a table cell (use only if want to nest other elements inside */
 	void startTableCell(const wxString& width = wxGetEmptyString());
