@@ -7,12 +7,9 @@
 	<META NAME="AUTHOR" CONTENT="Stefano Giorgio">
 	<META NAME="CREATED" CONTENT="20110710;15312700">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGED" CONTENT="20130112;17550936">
+	<META NAME="CHANGED" CONTENT="20130112;22133437">
 	<META NAME="Originator" CONTENT="Microsoft Word 14">
 	<META NAME="ProgId" CONTENT="Word.Document">
-	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<STYLE TYPE="text/css">
@@ -975,14 +972,14 @@ Lua as the programming language.<BR><BR><BR>
 <P STYLE="margin-bottom: 0.17in">&nbsp;</P>
 <HR SIZE=1>
 <P LANG="en-US" STYLE="margin-bottom: 0.17in"><A NAME="mmex_command_extensions"></A>
-<FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B><BR><FONT FACE="Verdana, sans-serif">MMEX
-Command Extensions</FONT></B></FONT></FONT></P>
+<FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B><BR>MMEX Command
+Extensions</B></FONT></FONT></P>
 <P STYLE="margin-bottom: 0.17in"><FONT SIZE=4>Lua allows the host
 program to create its own commands. These commands are specific to
 MMEX to allow powerful Custom Reports to be created by the user.
 These commands are explained in the table below.</FONT></P>
 <P STYLE="margin-bottom: 0.17in"><FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B>Lua
-Functionality </B><B>Extension</B> <B>provided by MMEX</B></FONT></FONT></P>
+Functionality Extension</B> <B>provided by MMEX</B></FONT></FONT></P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
 	<COL WIDTH=118*>
 	<COL WIDTH=138*>
@@ -1118,16 +1115,16 @@ Functionality </B><B>Extension</B> <B>provided by MMEX</B></FONT></FONT></P>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=46%>
-			<P>value =mmGetSingleChoice(&quot;label&quot;, &quot;heading&quot;,
-			single_array))</P>
+			<P>value, row_id = mmGetSingleChoice(&quot;label&quot;, &quot;heading&quot;,
+			single_array)</P>
 		</TD>
 		<TD WIDTH=54%>
 			<P>Sample Test Script: Return the table selected by the
 			user<BR>------------------------------------------<BR>tables =
-			{&quot;Payee&quot;, &quot;Category&quot;, &quot;SubCategory&quot;}<BR>value
-			= mmGetSingleChoice(&quot;Select a Table&quot;, &quot;Lua&quot;,
+			{&quot;Payee&quot;, &quot;Category&quot;, &quot;SubCategory&quot;}<BR>value,
+			id = mmGetSingleChoice(&quot;Select a Table&quot;, &quot;Lua&quot;,
 			tables)</P>
-			<P><FONT COLOR="#0000ff">return</FONT> value</P>
+			<P><FONT COLOR="#0000ff">return</FONT> value, id</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -1172,7 +1169,7 @@ Functionality </B><B>Extension</B> <B>provided by MMEX</B></FONT></FONT></P>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=46%>
-			<P>Value, error = mmGetSiteContent(&quot;address&quot;)</P>
+			<P>value, error = mmGetSiteContent(&quot;address&quot;)</P>
 		</TD>
 		<TD WIDTH=54%>
 			<P>Sample Test Script: Returns info from internet site
@@ -1240,7 +1237,7 @@ following command:</FONT></P>
 		</TD>
 		<TD WIDTH=50%>
 			<P><FONT COLOR="#0000ff">local function</FONT>
-			HTML_AddReportHeader(c1, c2,c3,c4)<BR>&nbsp; &nbsp; html =
+			HTML_AddReportHeader(c1, c2, c3, c4)<BR>&nbsp; &nbsp; html =
 			html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>&nbsp; &nbsp;
 			html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c1)<BR>&nbsp;
 			&nbsp; html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;,
@@ -1281,8 +1278,8 @@ following command:</FONT></P>
 			<P><FONT COLOR="#0000ff">local function</FONT> HTML_AddRowData()<BR>&nbsp;
 			&nbsp; html = html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>&nbsp;
 			&nbsp; col_index = 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">while</FONT>
-			col_index &lt;= SQLResultSetY do<BR>&nbsp; &nbsp; &nbsp; &nbsp;
-			html = html..mmHTMLBuilder(&quot;AddTableCell&quot;,
+			col_index &lt;= SQLResultSetY <FONT COLOR="#0000ff">do</FONT><BR>&nbsp;
+			&nbsp; &nbsp; &nbsp; html = html..mmHTMLBuilder(&quot;AddTableCell&quot;,
 			SQLResultSet[row_index][col_index])<BR>&nbsp; &nbsp; &nbsp; &nbsp;
 			col_index = col_index + 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">end</FONT><BR>&nbsp;
 			&nbsp; html = html..mmHTMLBuilder(&quot;EndTableRow&quot;)<BR><FONT COLOR="#0000ff">end</FONT><BR>--<BR><FONT COLOR="#0000ff">local
@@ -1290,9 +1287,9 @@ following command:</FONT></P>
 			* from payee_v1&quot;<BR>&nbsp; &nbsp;
 			mmGetSQLResultSet(sql_script)<BR>&nbsp; &nbsp; row_index = 1<BR>&nbsp;
 			&nbsp; col_index = 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">while</FONT>
-			row_index &lt;= SQLResultSetX do<BR>&nbsp; &nbsp; &nbsp; &nbsp;
-			HTML_AddRowData()<BR>&nbsp; &nbsp; &nbsp; &nbsp; row_index =
-			row_index + 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">end</FONT><BR><FONT COLOR="#0000ff">end</FONT><BR>--<BR><FONT COLOR="#0000ff">local
+			row_index &lt;= SQLResultSetX <FONT COLOR="#0000ff">do</FONT><BR>&nbsp;
+			&nbsp; &nbsp; &nbsp; HTML_AddRowData()<BR>&nbsp; &nbsp; &nbsp; &nbsp;
+			row_index = row_index + 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">end</FONT><BR><FONT COLOR="#0000ff">end</FONT><BR>--<BR><FONT COLOR="#0000ff">local
 			function</FONT> HTML_AddReportHeader(c1, c2, c3, c4)<BR>&nbsp; &nbsp;
 			html = html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>&nbsp; &nbsp;
 			html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c1)<BR>&nbsp;
