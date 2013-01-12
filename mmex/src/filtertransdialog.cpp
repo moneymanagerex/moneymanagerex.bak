@@ -199,6 +199,7 @@ void mmFilterTransactionsDialog::CreateControls()
 
     wxBoxSizer* dateSizer = new wxBoxSizer(wxHORIZONTAL);
     dateSizer->Add(fromDateCtrl_, flagsExpand);
+    dateSizer->AddSpacer(5);
     dateSizer->Add(toDateControl_, flagsExpand);
     itemPanelSizer->Add(dateSizer, flagsExpand);
     //--End of Row --------------------------------------------------------
@@ -281,6 +282,7 @@ void mmFilterTransactionsDialog::CreateControls()
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
     amountSizer->Add(amountMinEdit_, flagsExpand);
+    amountSizer->AddSpacer(5);
     amountSizer->Add(amountMaxEdit_, flagsExpand);
     itemPanelSizer->Add(amountSizer, flagsExpand);
     //--End of Row --------------------------------------------------------

@@ -128,6 +128,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_filtertransdialog.o \
 	mmex_tests_guiid.o \
 	mmex_tests_htmlbuilder.o \
+	mmex_tests_lua_interface.o \
 	mmex_tests_maincurrencydialog.o \
 	mmex_tests_mmaccount.o \
 	mmex_tests_mmcategory.o \
@@ -179,7 +180,9 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_util.o \
 	mmex_tests_platfdep.o \
 	mmex_tests_dbwrapper_test.o \
+	mmex_tests_mmex_lua_test.o \
 	mmex_tests_mmex_tests.o \
+	mmex_tests_testing_util.o \
 	mmex_tests_util_test.o \
 	$(__mmex_tests___win32rc)
 
@@ -475,6 +478,9 @@ mmex_tests_guiid.o: $(srcdir)/../../src/guiid.cpp
 mmex_tests_htmlbuilder.o: $(srcdir)/../../src/htmlbuilder.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/htmlbuilder.cpp
 
+mmex_tests_lua_interface.o: $(srcdir)/../../src/lua_interface.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/lua_interface.cpp
+
 mmex_tests_maincurrencydialog.o: $(srcdir)/../../src/maincurrencydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/maincurrencydialog.cpp
 
@@ -628,8 +634,14 @@ mmex_tests_platfdep.o: $(srcdir)/../../src/unix/platfdep.cpp
 mmex_tests_dbwrapper_test.o: $(srcdir)/../../src/tests/dbwrapper_test.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/dbwrapper_test.cpp
 
+mmex_tests_mmex_lua_test.o: $(srcdir)/../../src/tests/mmex_lua_test.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/mmex_lua_test.cpp
+
 mmex_tests_mmex_tests.o: $(srcdir)/../../src/tests/mmex_tests.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/mmex_tests.cpp
+
+mmex_tests_testing_util.o: $(srcdir)/../../src/tests/testing_util.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/testing_util.cpp
 
 mmex_tests_util_test.o: $(srcdir)/../../src/tests/util_test.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/util_test.cpp
