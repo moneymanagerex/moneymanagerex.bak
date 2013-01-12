@@ -3,15 +3,13 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.3  (Win32)">
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.4.1  (Win32)">
 	<META NAME="AUTHOR" CONTENT="Stefano Giorgio">
 	<META NAME="CREATED" CONTENT="20110710;15312700">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGED" CONTENT="20130108;20225894">
+	<META NAME="CHANGED" CONTENT="20130112;17550936">
 	<META NAME="Originator" CONTENT="Microsoft Word 14">
 	<META NAME="ProgId" CONTENT="Word.Document">
-	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
@@ -728,10 +726,35 @@ obtained by visiting: <FONT COLOR="#0000ff">http://www.lua.org/about.html</FONT>
 <FONT COLOR="#0000ff">http://www.lua.org/manual/5.2/</FONT></P>
 <P STYLE="margin-bottom: 0.17in"><BR><BR>
 </P>
+<P STYLE="margin-bottom: 0.17in"><A HREF="#brief_intro_to_lua"><FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B>Brief
+Introduction to Lua</B></FONT></FONT></A></P>
+<P STYLE="margin-bottom: 0.17in"><A HREF="#mmex_command_extensions"><FONT FACE="Verdana, sans-serif"><FONT SIZE=4><SPAN LANG="en-US"><B>MMEX
+Command Extensions</B></SPAN></FONT></FONT></A></P>
+<P STYLE="margin-bottom: 0.17in"><A HREF="#html_builder_commands"><FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B>HTML
+Builder Commands</B></FONT></FONT></A></P>
 <P STYLE="margin-bottom: 0.17in"><BR><BR>
 </P>
-<P STYLE="margin-bottom: 0.17in"><FONT SIZE=4><B>Brief Introduction
-to Lua</B></FONT></P>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=213*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=83%>
+			<P STYLE="border: none; padding: 0in"><A HREF="#custom_reports_top"><FONT FACE="Verdana, sans-serif"><B>Back
+			to Top</B></FONT></A></P>
+		</TD>
+		<TD WIDTH=17%>
+			<P STYLE="border: none; padding: 0in"><A HREF="index.html"><FONT FACE="Verdana, sans-serif"><B>Home</B></FONT></A></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in">&nbsp;</P>
+<HR SIZE=1>
+<P STYLE="margin-bottom: 0.17in"><A NAME="brief_intro_to_lua"></A><FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B><BR>Brief
+Introduction to Lua</B></FONT></FONT></P>
 <P STYLE="margin-bottom: 0.17in">Lua is a programming language, and
 as such has a lot of similarities to other programming languages.</P>
 <P STYLE="margin-bottom: 0.17in">Data is stored in a variable which
@@ -744,14 +767,14 @@ is given a name, and we assign some data to it.</P>
 			<P>Suppose we want to store a name we write:</P>
 		</TD>
 		<TD WIDTH=68%>
-			<P>table_name = &quot;category&quot;<BR>Now every time we want
-			to use the name <FONT COLOR="#0000ff">category</FONT>, we use the
+			<P>table_name = &quot;category&quot;<BR>Now every time we want to
+			use the name <FONT COLOR="#0000ff">category</FONT>, we use the
 			name <FONT COLOR="#0000ff">table_name</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0.17in"><BR>When we write code, we generally
-have a Starting point, and an End point.<BR>Start Point:</P>
+have a <B>Start</B>, and an <B>End</B> point.<BR><B>Start Point:</B></P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
 	<COL WIDTH=83*>
 	<COL WIDTH=173*>
@@ -764,7 +787,7 @@ have a Starting point, and an End point.<BR>Start Point:</P>
 		</TD>
 	</TR>
 </TABLE>
-<P STYLE="margin-bottom: 0.17in"><BR>End Point:</P>
+<P STYLE="margin-bottom: 0.17in"><BR><B>End Point:</B></P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
 	<COL WIDTH=83*>
 	<COL WIDTH=173*>
@@ -797,33 +820,43 @@ combining data to have meaning, Lua introduces the dot dot notation.</P>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0.17in"><BR>For a few lines of code, this is
-fine, but to make coding easier, we use functions. We can think of a
+fine, but to make coding easier, we use Functions. We can think of a
 function as a building block, which can be used many times. We can
-change the output by giving the function different values.<BR>Defining
-a function:</P>
+change the output by giving the function different values. Functions
+may or may not return a value.</P>
+<P STYLE="margin-bottom: 0.17in"><B>Note:<BR></B>A function cannot me
+executed as a starting point for a main program.<BR>This is because a
+Function cannot be resolved.</P>
+<P STYLE="margin-bottom: 0.17in"><B>Defining a function:</B></P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
 	<COL WIDTH=128*>
 	<COL WIDTH=128*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
-			<P>function sql_statement(table_name)</P>
+			<P><FONT COLOR="#0000ff">function</FONT> sql_statement(table_name)</P>
+			<P><BR><BR>
+			</P>
+			<P><FONT COLOR="#0000ff">end</FONT></P>
 		</TD>
 		<TD WIDTH=50%>
 			<P>Here we declare a function as <FONT COLOR="#0000ff">sql_statement</FONT>
 			and we give it the name of the table.</P>
+			<P><FONT COLOR="#ff0000">Note</FONT>: Because a function is a
+			block of code, it starts with the word <FONT COLOR="#0000ff">function</FONT>
+			and ends with the word <FONT COLOR="#0000ff">end</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
-<P STYLE="margin-bottom: 0.17in">Purpose of the function:</P>
+<P STYLE="margin-bottom: 0.17in"><B>Purpose of the function:</B></P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
 	<COL WIDTH=128*>
 	<COL WIDTH=128*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
-			<P>function sql_statement(table_name)<BR>__sql_code = &quot;select
-			* from &quot; .. table_name .. &quot;_v1&quot;</P>
-			<P>return sql_code 
-			</P>
+			<P><FONT COLOR="#0000ff">function</FONT>
+			sql_statement(table_name)<BR>&nbsp; &nbsp; <FONT COLOR="#7e0021">local</FONT>
+			sql_code = &quot;select * from &quot; .. table_name .. &quot;_v1&quot;<BR>&nbsp;
+			&nbsp; <FONT COLOR="#7e0021">return</FONT> sql_code<BR><FONT COLOR="#0000ff">end</FONT></P>
 		</TD>
 		<TD WIDTH=50%>
 			<P>Now every time we use this function we get the sql statement
@@ -831,23 +864,67 @@ a function:</P>
 		</TD>
 	</TR>
 </TABLE>
-<P STYLE="margin-bottom: 0.17in">Functions defined before the
-starting point are seen but cannot be resolved. This prevents
-functions being executed before their time.</P>
-<P STYLE="margin-bottom: 0.17in">Arrays: This is where we can assign
-our values in a block, known as an array 
+<P STYLE="margin-bottom: 0.17in"><B>Scope of Variables</B><BR>A
+variable can be defined at any point, and immediately has global
+access.<BR>A local variable is only available within a block of code.</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><B>Global Access</B></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><B>Local Access</B></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT COLOR="#0000ff">function</FONT> GetTableName()<BR>&nbsp;
+			&nbsp; table_name = &ldquo;payee_v1&rdquo;<BR><FONT COLOR="#0000ff">end</FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT COLOR="#0000ff">function</FONT> GetTableName()<BR>&nbsp;
+			&nbsp; <FONT COLOR="#7e0021">local</FONT> table_name =
+			&ldquo;payee_v1&rdquo;<BR><FONT COLOR="#0000ff">end</FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P>-- Main (Starting point)<BR>&nbsp; &nbsp; GetTableName()<BR>&nbsp;
+			&nbsp; my_table = table_name<BR><FONT COLOR="#0000ff">return</FONT>
+			my_table</P>
+		</TD>
+		<TD WIDTH=50%>
+			<P>-- Main (Starting point)<BR>&nbsp; &nbsp; GetTableName()<BR>&nbsp;
+			&nbsp; my_table = table_name<BR><FONT COLOR="#0000ff">return</FONT>
+			my_table</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P>This code will display: payee_v1</P>
+		</TD>
+		<TD WIDTH=50%>
+			<P>This code will display nothing.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><B>Arrays:</B> This is where we can
+assign our values in a block, known as an array 
 </P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
 	<COL WIDTH=128*>
 	<COL WIDTH=128*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
-			<P>selectable_tables = {&quot;Payee&quot;,&quot;Category&quot;,&quot;SubCategory&quot;}
-						</P>
+			<P><FONT COLOR="#0000ff">selectable_tables</FONT> =
+			{&quot;Payee&quot;,&quot;Category&quot;,&quot;SubCategory&quot;} 
+			</P>
 		</TD>
 		<TD WIDTH=50%>
 			<P>Here we grouped these as a single block
-			called:<BR>selectable_tables</P>
+			called:<BR><FONT COLOR="#0000ff">selectable_tables</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -858,19 +935,19 @@ but Lua has other functions provided for the user to use. Combining
 our functions with the inbuilt functions we can produce the following
 program which is moderately useful:</P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=171*>
-	<COL WIDTH=85*>
+	<COL WIDTH=145*>
+	<COL WIDTH=111*>
 	<TR VALIGN=TOP>
-		<TD WIDTH=67%>
-			<P>table_name = mmGetSingleChoice(&quot;Select a table&quot;,
-			&quot;Lua&quot;, selectable_tables)<BR>sql_script =
-			sql_statement(table_name)<BR>value = mmGetSQLResultSet(sql_script)</P>
-			<P>return value</P>
+		<TD WIDTH=57%>
+			<P>&nbsp; &nbsp; table_name = mmGetSingleChoice(&quot;Select a
+			table&quot;, &quot;Lua&quot;, selectable_tables)<BR>&nbsp; &nbsp;
+			sql_script = sql_statement(table_name)<BR>&nbsp; &nbsp; value =
+			mmGetSQLResultSet(sql_script)<BR><FONT COLOR="#0000ff">return</FONT>
+			value</P>
 		</TD>
-		<TD WIDTH=33%>
+		<TD WIDTH=43%>
 			<P>Get the table name.<BR>Get the sql code for the table<BR>Get
-			the table data</P>
-			<P>return the result for MMEX to display</P>
+			the table data<BR>return the result for MMEX to display</P>
 		</TD>
 	</TR>
 </TABLE>
@@ -882,16 +959,30 @@ Lua as the programming language.<BR><BR><BR>
 </P>
 <P STYLE="margin-bottom: 0.17in"><BR><BR>
 </P>
-<P STYLE="margin-bottom: 0.17in"><BR><BR>
-</P>
-<P LANG="en-US" STYLE="margin-bottom: 0.17in"><FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B>Command
-Extensions provided by MMEX</B></FONT></FONT></P>
-<P STYLE="margin-bottom: 0.17in">Lua allows the host program to
-create its own commands. These commands are specific to MMEX to allow
-powerful Custom Reports to be created by the user. These commands are
-explained in the table below.</P>
-<P STYLE="margin-bottom: 0.17in"><B>Lua Functionality </B><FONT FACE="Verdana, sans-serif"><B>Extension</B></FONT>
-<B>provided by MMEX</B></P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=213*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=83%>
+			<P STYLE="border: none; padding: 0in"><A HREF="#custom_reports_top"><FONT FACE="Verdana, sans-serif"><B>Back
+			to Top</B></FONT></A></P>
+		</TD>
+		<TD WIDTH=17%>
+			<P STYLE="border: none; padding: 0in"><A HREF="index.html"><FONT FACE="Verdana, sans-serif"><B>Home</B></FONT></A></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in">&nbsp;</P>
+<HR SIZE=1>
+<P LANG="en-US" STYLE="margin-bottom: 0.17in"><A NAME="mmex_command_extensions"></A>
+<FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B><BR><FONT FACE="Verdana, sans-serif">MMEX
+Command Extensions</FONT></B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0.17in"><FONT SIZE=4>Lua allows the host
+program to create its own commands. These commands are specific to
+MMEX to allow powerful Custom Reports to be created by the user.
+These commands are explained in the table below.</FONT></P>
+<P STYLE="margin-bottom: 0.17in"><FONT FACE="Verdana, sans-serif"><FONT SIZE=4><B>Lua
+Functionality </B><B>Extension</B> <B>provided by MMEX</B></FONT></FONT></P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
 	<COL WIDTH=118*>
 	<COL WIDTH=138*>
@@ -1036,7 +1127,7 @@ explained in the table below.</P>
 			{&quot;Payee&quot;, &quot;Category&quot;, &quot;SubCategory&quot;}<BR>value
 			= mmGetSingleChoice(&quot;Select a Table&quot;, &quot;Lua&quot;,
 			tables)</P>
-			<P>return value</P>
+			<P><FONT COLOR="#0000ff">return</FONT> value</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -1049,10 +1140,10 @@ explained in the table below.</P>
 			table.<BR>----------------------------------------------------------------------<BR>sql_script
 			= &quot;select * from payee_v1 order by payeename&quot;<BR>sql_table,
 			err = mmGetSQLResultSet(sql_script)</P>
-			<P>payee, id = mmGetColumnChoice(&quot;Select Payee&quot;,
-			&quot;Lua&quot;, SQLResultSet, 2)</P>
-			<P>return &quot;Selected Payee: &quot;..payee..&quot; has an
-			index of: &quot;..id 
+			<P>payee, id = mmGetColumnChoice(&quot;Select Payee&quot;, &quot;Lua&quot;,
+			SQLResultSet, 2)</P>
+			<P><FONT COLOR="#0000ff">return</FONT> &quot;Selected Payee:
+			&quot;..payee..&quot; has an index of: &quot;..id 
 			</P>
 		</TD>
 	</TR>
@@ -1066,7 +1157,7 @@ explained in the table below.</P>
 			user<BR>-------------------------------------------------------------<BR>value
 			= mmGetTextFromUser(&quot;Account Name&quot;, &quot;Lua&quot;,
 			&quot;Savings&quot;)</P>
-			<P>return value</P>
+			<P><FONT COLOR="#0000ff">return</FONT> value</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -1089,7 +1180,7 @@ explained in the table below.</P>
 			=
 			&quot;http://download.finance.yahoo.com/d/quotes.csv?s=USDEUR=X&amp;f=snd1l1t1&quot;</P>
 			<P>var, error = mmGetSiteContent(site)</P>
-			<P>return var</P>
+			<P><FONT COLOR="#0000ff">return</FONT> var</P>
 		</TD>
 	</TR>
 </TABLE>
@@ -1099,79 +1190,131 @@ explained in the table below.</P>
 </P>
 <P STYLE="margin-bottom: 0.17in"><BR><BR>
 </P>
-<P>MMEX provides formatting commands to allow data to be properly
-displayed in reports.<BR>These commands have been made available to
-Lua via the following command:</P>
-<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=105*>
-	<COL WIDTH=151*>
-	<TR>
-		<TD COLSPAN=2 WIDTH=100% VALIGN=TOP>
-			<P>HTML = mmHTMLBuilder(&quot;html command&quot;[, value][,
-			value][, value][, value])</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=213*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=83%>
+			<P STYLE="border: none; padding: 0in"><A HREF="#custom_reports_top"><FONT FACE="Verdana, sans-serif"><B>Back
+			to Top</B></FONT></A></P>
+		</TD>
+		<TD WIDTH=17%>
+			<P STYLE="border: none; padding: 0in"><A HREF="index.html"><FONT FACE="Verdana, sans-serif"><B>Home</B></FONT></A></P>
 		</TD>
 	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in">&nbsp;</P>
+<HR SIZE=1>
+<P STYLE="margin-bottom: 0.17in"><A NAME="html_builder_commands"></A><FONT SIZE=4><B><BR>HTML
+Builder Commands</B></FONT></P>
+<P STYLE="margin-bottom: 0.17in; font-weight: normal"><FONT SIZE=4>MMEX
+provides formatting commands to allow data to be properly displayed
+in reports.<BR>These commands have been made available to Lua via the
+following command:</FONT></P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
 	<TR VALIGN=TOP>
-		<TD WIDTH=41%>
+		<TD WIDTH=50%>
+			<P>HTML = mmHTMLBuilder(&quot;html command&quot;[, value][,
+			value][, value][, value])</P>
 			<P>HTMLBuilder html command parameter list</P>
 		</TD>
-		<TD WIDTH=59%>
+		<TD WIDTH=50%>
 			<P>Example Code:</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
-		<TD WIDTH=41%>
-			<P>(&quot;Init&quot;)</P>
-			<P>(&quot;StartTable&quot;, value_1, value_2)</P>
-			<P>(&quot;StartTableRow&quot;)</P>
-			<P>(&quot;StartTableCell&quot;, value_1)</P>
-			<P>(&quot;AddTableHeaderCell&quot;, value_1, value_2) 
-			</P>
-			<P>(&quot;AddTableHeaderRow&quot;, value_1, value_2)</P>
-			<P>(&quot;AddTableCell&quot;, value_1, value_2, value_3, value_4)</P>
-			<P>(&quot;AddRowSeparator&quot;, value_1);</P>
-			<P>(&quot;AddTotalRow&quot;, value_1, value_2, value_3);</P>
-			<P>(&quot;EndTableRow&quot;)</P>
-			<P>(&quot;EndTable&quot;)</P>
-			<P>(&quot;AddDateNow&quot;)</P>
-			<P>(&quot;AddParaText&quot;, value_1);</P>
-			<P>(&quot;AddLineBreak&quot;)</P>
-			<P>(&quot;AddHorizontalLine&quot;, value_1)</P>
-			<P>(&quot;StartCenter&quot;)</P>
-			<P>(&quot;EndCenter&quot;)</P>
-			<P>(&quot;End&quot;) 
-			</P>
+		<TD WIDTH=50%>
+			<P>(&quot;Init&quot;)<BR><BR>(&quot;StartTable&quot;, width_str,
+			align_str)<BR><BR>(&quot;StartTableRow&quot;)<BR><BR>(&quot;StartTableCell&quot;,
+			[text])<BR><BR>(&quot;AddTableHeaderCell&quot;, text[,
+			numeric])<BR><BR>(&quot;AddTableHeaderRow&quot;, value,
+			columns)<BR><BR>(&quot;AddTableCell&quot;, text[, numeric [,
+			italics [, bold] ]])<BR><BR>(&quot;AddRowSeparator&quot;,
+			columns);<BR><BR>(&quot;AddTotalRow&quot;, caption, columns,
+			text);<BR><BR>(&quot;EndTableRow&quot;)<BR><BR>(&quot;EndTable&quot;)<BR><BR>(&quot;AddDateNow&quot;)<BR><BR>(&quot;AddParaText&quot;,
+			text);<BR><BR>(&quot;AddLineBreak&quot;)<BR><BR>(&quot;AddHorizontalLine&quot;,
+			size)<BR><BR>(&quot;StartCenter&quot;)<BR><BR>(&quot;EndCenter&quot;)<BR><BR>(&quot;End&quot;)
+						</P>
 		</TD>
-		<TD WIDTH=59%>
-			<P>local function HTML_AddReportHeader(c1, c2,c3,c4)<BR>&nbsp &nbsp html =
-			html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>&nbsp &nbsp html =
-			html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c1)<BR>&nbsp &nbsp html
-			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c2)<BR>&nbsp &nbsp html
-			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c3)<BR>&nbsp &nbsp html
-			= html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c4)<BR>&nbsp &nbsp html
-			= html..mmHTMLBuilder(&quot;EndTableRow&quot;)<BR>end</P>
-			<P>local function HTML_StartReport()<BR>&nbsp &nbsp html = &quot;&quot;<BR>&nbsp &nbsp html
-			=
-			html..mmHTMLBuilder(&quot;StartTable&quot;)<BR>&nbsp &nbsp HTML_AddReportHeader(&quot;Index&quot;,
-			&quot;Payee&quot;, &quot;CategoryID&quot;, &quot;SubCategoryID&quot;)<BR>end</P>
-			<P>local function HTML_ReportEnd()<BR>&nbsp &nbsp html =
-			html..mmHTMLBuilder(&quot;AddRowSeparator&quot;, 4)<BR>&nbsp &nbsp html =
-			html..mmHTMLBuilder(&quot;EndTable&quot;)<BR>&nbsp &nbsp html =
-			html..mmHTMLBuilder(&quot;AddHorizontalLine&quot;,1)<BR>end</P>
-			<P>--------------------------------------------------<BR>-- Main
-			Function: Start running from
-			here.<BR>--------------------------------------------------<BR>&nbsp &nbsp HTML_StartReport()<BR>--
-			GetData()<BR>&nbsp &nbsp HTML_ReportEnd()<BR>return html</P>
+		<TD WIDTH=50%>
+			<P><FONT COLOR="#0000ff">local function</FONT>
+			HTML_AddReportHeader(c1, c2,c3,c4)<BR>&nbsp; &nbsp; html =
+			html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>&nbsp; &nbsp;
+			html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c1)<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;,
+			c2)<BR>&nbsp; &nbsp; html =
+			html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c3)<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;,
+			c4)<BR>&nbsp; &nbsp; html = html..mmHTMLBuilder(&quot;EndTableRow&quot;)<BR><FONT COLOR="#0000ff">end</FONT></P>
+			<P><FONT COLOR="#0000ff">local function</FONT>
+			HTML_StartReport()<BR>&nbsp; &nbsp; html = &quot;&quot;<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;StartTable&quot;)<BR>&nbsp;
+			&nbsp; HTML_AddReportHeader(&quot;Index&quot;, &quot;Payee&quot;,
+			&quot;CategoryID&quot;, &quot;SubCategoryID&quot;)<BR><FONT COLOR="#0000ff">end</FONT></P>
+			<P><FONT COLOR="#0000ff">local function</FONT> HTML_ReportEnd()<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;AddRowSeparator&quot;,
+			4)<BR>&nbsp; &nbsp; html = html..mmHTMLBuilder(&quot;EndTable&quot;)<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;AddHorizontalLine&quot;,1)<BR><FONT COLOR="#0000ff">end</FONT></P>
+			<P>--------------------------------------------------<BR><FONT COLOR="#7e0021">--
+			Main Function: Start running from
+			here.</FONT><BR>--------------------------------------------------<BR>&nbsp;
+			&nbsp; HTML_StartReport()<BR>-- GetData()<BR>&nbsp; &nbsp;
+			HTML_ReportEnd()<BR><FONT COLOR="#0000ff">return</FONT> html</P>
 		</TD>
 	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=41%>
-			<P><BR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=111*>
+	<COL WIDTH=145*>
+	<TR>
+		<TD COLSPAN=2 WIDTH=100% VALIGN=TOP>
+			<P><B>Complete Code Example</B> 
 			</P>
 		</TD>
-		<TD WIDTH=59%>
-			<P><BR>
-			</P>
+	</TR>
+	<TR>
+		<TD COLSPAN=2 WIDTH=100% VALIGN=TOP>
+			<P><FONT COLOR="#0000ff">local function</FONT> HTML_AddRowData()<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>&nbsp;
+			&nbsp; col_index = 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">while</FONT>
+			col_index &lt;= SQLResultSetY do<BR>&nbsp; &nbsp; &nbsp; &nbsp;
+			html = html..mmHTMLBuilder(&quot;AddTableCell&quot;,
+			SQLResultSet[row_index][col_index])<BR>&nbsp; &nbsp; &nbsp; &nbsp;
+			col_index = col_index + 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">end</FONT><BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;EndTableRow&quot;)<BR><FONT COLOR="#0000ff">end</FONT><BR>--<BR><FONT COLOR="#0000ff">local
+			function</FONT> GetData()<BR>&nbsp; &nbsp; sql_script = &quot;select
+			* from payee_v1&quot;<BR>&nbsp; &nbsp;
+			mmGetSQLResultSet(sql_script)<BR>&nbsp; &nbsp; row_index = 1<BR>&nbsp;
+			&nbsp; col_index = 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">while</FONT>
+			row_index &lt;= SQLResultSetX do<BR>&nbsp; &nbsp; &nbsp; &nbsp;
+			HTML_AddRowData()<BR>&nbsp; &nbsp; &nbsp; &nbsp; row_index =
+			row_index + 1<BR>&nbsp; &nbsp; <FONT COLOR="#0000ff">end</FONT><BR><FONT COLOR="#0000ff">end</FONT><BR>--<BR><FONT COLOR="#0000ff">local
+			function</FONT> HTML_AddReportHeader(c1, c2, c3, c4)<BR>&nbsp; &nbsp;
+			html = html..mmHTMLBuilder(&quot;StartTableRow&quot;)<BR>&nbsp; &nbsp;
+			html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c1)<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;,
+			c2)<BR>&nbsp; &nbsp; html =
+			html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;, c3)<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;AddTableHeaderCell&quot;,
+			c4)<BR>&nbsp; &nbsp; html =
+			html..mmHTMLBuilder(&quot;EndTableRow&quot;)<BR><FONT COLOR="#0000ff">end</FONT><BR>--<BR><FONT COLOR="#0000ff">local
+			function</FONT> HTML_StartReport()<BR>&nbsp; &nbsp; html = &quot;&quot;<BR>&nbsp;
+			&nbsp; html = html..mmHTMLBuilder(&quot;StartTable&quot;)<BR>&nbsp;
+			&nbsp; HTML_AddReportHeader(&quot;Index&quot;, &quot;Payee&quot;,
+			&quot;CategoryID&quot;, &quot;SubCategoryID&quot;)<BR><FONT COLOR="#0000ff">end</FONT><BR>--<BR><FONT COLOR="#0000ff">local
+			function</FONT> HTML_ReportEnd()<BR>&nbsp; &nbsp; html =
+			html..mmHTMLBuilder(&quot;AddRowSeparator&quot;, 4)<BR>&nbsp; &nbsp;
+			html = html..mmHTMLBuilder(&quot;EndTable&quot;)<BR>&nbsp; &nbsp;
+			html = html..mmHTMLBuilder(&quot;AddHorizontalLine&quot;,1)<BR><FONT COLOR="#0000ff">end</FONT><BR>--
+			<BR>--------------------------------------------------<BR><FONT COLOR="#7e0021">--
+			Main Function: Start running from here.
+			</FONT><BR>--------------------------------------------------<BR>&nbsp;
+			&nbsp; HTML_StartReport()<BR>&nbsp; &nbsp; GetData()<BR>&nbsp; &nbsp;
+			HTML_ReportEnd()<BR><FONT COLOR="#0000ff">return</FONT> html<BR>--</P>
 		</TD>
 	</TR>
 </TABLE>
