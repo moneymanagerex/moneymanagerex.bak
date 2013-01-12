@@ -22,8 +22,8 @@
 
 mmHTMLBuilder::mmHTMLBuilder() {
     // init colors from config
-    color0_ = wxT("bgcolor=\"") + mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
-    color1_ = wxT("bgcolor=\"") + mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
+    color0_ = mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX);
+    color1_ = mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX);
     // init font size from config
     font_size_ = mmIniOptions::instance().html_font_size_;
 }
@@ -37,7 +37,7 @@ void mmHTMLBuilder::init()
     html_+= _("Report");
     html_+= wxT("</title>\n</head><body bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
     html_+= wxT("\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
-    html_+= wxString::Format(wxT("<font size=\"%d\">\n"), font_size_);
+    html_+= wxString::Format(wxT("<font size=\"%i\">\n"), font_size_);
 
     //if I need more space on the top of home page and reports I will delete user name from settings
     if (mmOptions::instance().userNameString_ != wxT (""))
@@ -70,20 +70,19 @@ void mmHTMLBuilder::addHeader(const int level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
-    html_+= wxString::Format(wxT("<font size=\"%d\"><b>%s</b></font><br>\n"), header_font_size, header.c_str());
+    html_+= wxString::Format(wxT("<font size=\"%i\"><b>%s</b></font><br>\n"), header_font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addHeaderItalic(const int level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
-    html_+= wxString::Format(wxT("<font size=\"%d\"><i>%s</i></font><br>\n"), header_font_size, header.c_str());
+    html_+= wxString::Format(wxT("<font size=\"%i\"><i>%s</i></font><br>\n"), header_font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addDateNow()
 {
-    wxDateTime now = wxDateTime::Now();
-    wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
+    wxString dt = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()).c_str());
     addHeaderItalic(1, dt);
     addLineBreak();
 }
@@ -135,9 +134,13 @@ void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign)
     bgswitch_ = true;
 }
 
-void mmHTMLBuilder::startTableRow()
+void mmHTMLBuilder::startTableRow(const wxString& custom_color)
 {
-    html_<< wxT("<tr ") << (bgswitch_ ? color1_ : color0_) << wxT(">");
+    wxString s = wxT("<tr bgcolor=\"%s\" >");
+    if (custom_color.IsEmpty())
+        html_ += wxString::Format(s, (bgswitch_ ? color1_ : color0_).c_str());
+    else
+        html_ += wxString::Format(s, custom_color.c_str());
 }
 
 void mmHTMLBuilder::startTableCell(const wxString& width)

@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -114,14 +114,13 @@ void mmReportBudget::initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id
 
 void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange)
 {
-    wxString todaysDate = wxString() 
-        << _("Today's Date: ") << mmGetNiceDateString(wxDateTime::Now())
-        << wxT("<br>") << wxT("<br>");
+    wxString todaysDate = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()).c_str());
+    todaysDate << wxT("<br>") << wxT("<br>");
     if (withDateRange)
-    {   
+    {
         todaysDate
-        << _("From: ") << wxT("<b>") << mmGetNiceDateSimpleString(startYear) <<  wxT("</b> ") 
-        << _("to: ") 
+        << _("From: ") << wxT("<b>") << mmGetNiceDateSimpleString(startYear) <<  wxT("</b> ")
+        << _("to: ")
         << wxT ("<b>") << mmGetNiceDateSimpleString(endYear) << wxT ("</b>");
     }
     hb.addHeaderItalic(1, todaysDate);
@@ -149,7 +148,7 @@ void mmReportBudget::SetDateToEndOfYear(int day, int month, wxDateTime& date, bo
 
 void mmReportBudget::SetBudgetMonth(wxString budgetYearStr, wxDateTime& startDate, wxDateTime& endDate)
 {
-    wxStringTokenizer tz(budgetYearStr,wxT("-")); 
+    wxStringTokenizer tz(budgetYearStr,wxT("-"));
     wxString yearStr = tz.GetNextToken();
     wxString monthStr = tz.GetNextToken();
     int month = wxAtoi(monthStr) - 1;
@@ -197,7 +196,7 @@ void mmReportBudget::AdjustYearValues(int& day, int& month, wxDateTime& year)
 
 void mmReportBudget::AdjustDateForEndFinancialYear(wxDateTime& date)
 {
-    if ( mainFrame_->budgetFinancialYears() ) 
+    if ( mainFrame_->budgetFinancialYears() )
     {
         int day, month;
         GetFinancialYearValues(day, month);
