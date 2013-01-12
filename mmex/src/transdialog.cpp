@@ -266,11 +266,11 @@ void mmTransDialog::SetTransferControls(bool transfer)
     {
         textAmount_->SetToolTip(amountTransferTip_);
         toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
-		if (cSplit_->IsChecked())
-		{
-			cSplit_->SetValue(false);
-			split_->entries_.clear();
-		}
+        if (cSplit_->IsChecked())
+        {
+            cSplit_->SetValue(false);
+            split_->entries_.clear();
+        }
     }
     else
     {
@@ -325,7 +325,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
 
     if (!cbPayee_ -> SetStringSelection(dataStr))
         cbPayee_ -> SetValue(dataStr);
-	SetSplitState();
+    SetSplitState();
     cbPayee_ -> SetEvtHandlerEnabled(true);
 }
 
@@ -1092,22 +1092,20 @@ void mmTransDialog::OnQuit(wxCloseEvent& /*event*/)
 void mmTransDialog::onTextEntered(wxCommandEvent& event)
 {
     double amount;
-    wxString amountStr;
-    if (oject_in_focus_ == textAmount_->GetId()) {
-        amountStr = textAmount_->GetValue().Trim();
-        if (mmex::formatCurrencyToDouble(amountStr, amount)) {
-            mmex::formatDoubleToCurrencyEdit(amount,amountStr);
-            textAmount_->SetValue(amountStr);
-        }
+    wxString sAmount = wxT("");
+
+    if (oject_in_focus_ == textAmount_->GetId()) 
+    {   
+        if (mmCalculator(textAmount_->GetValue(), sAmount))
+            textAmount_->SetValue(sAmount);
     }
-    else if (oject_in_focus_ == toTextAmount_->GetId()) {
-        amountStr = toTextAmount_->GetValue().Trim();
-        if (mmex::formatCurrencyToDouble(amountStr, amount)) {
-            mmex::formatDoubleToCurrencyEdit(amount,amountStr);
-            toTextAmount_->SetValue(amountStr);
-        }
+    else if (oject_in_focus_ == toTextAmount_->GetId()) 
+    {
+        if (mmCalculator(toTextAmount_->GetValue(), sAmount))
+            toTextAmount_->SetValue(sAmount);
     }
-    else if (oject_in_focus_ == textNumber_->GetId()) {
+    else if (oject_in_focus_ == textNumber_->GetId())
+    {
         textNotes_->SetFocus();
     }
 
