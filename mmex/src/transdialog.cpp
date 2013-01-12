@@ -1091,7 +1091,6 @@ void mmTransDialog::OnQuit(wxCloseEvent& /*event*/)
 
 void mmTransDialog::onTextEntered(wxCommandEvent& event)
 {
-    double amount;
     wxString sAmount = wxT("");
 
     if (oject_in_focus_ == textAmount_->GetId()) 
