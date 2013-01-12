@@ -525,7 +525,7 @@ void mmTransDialog::CreateControls()
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
     wxPanel* buttons_panel = new wxPanel(this, wxID_ANY);
-    box_sizer1->Add(buttons_panel, flags.Center().Border(0));
+    box_sizer1->Add(buttons_panel, flags.Center().Border(wxALL, 0));
 
     wxStdDialogButtonSizer*  buttons_sizer = new wxStdDialogButtonSizer;
     buttons_panel->SetSizer(buttons_sizer);
