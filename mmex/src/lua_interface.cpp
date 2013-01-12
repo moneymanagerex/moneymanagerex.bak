@@ -299,10 +299,10 @@ int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
         ReportLuaError(lua, error);
     }
 
-    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
+    wxString heading = wxString::FromUTF8(lua_tostring(lua, -1));
     lua_pop(lua, 1); // remove value from stack
 
-    wxString heading = wxString::FromUTF8(lua_tostring(lua, -1));
+    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
     lua_pop(lua, 1); // remove value from stack
 
     wxASSERT (lua_gettop(lua) == 0);    // stack should be neutral
@@ -315,7 +315,7 @@ int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
 }
 
 /******************************************************************************
- value[, id] = mmColumnChoice("message", "heading", 2D_Array, column)
+ value[, row_id] = mmColumnChoice("message", "heading", 2D_Array, column)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetColumnChoice(lua_State* lua)
 {
@@ -347,7 +347,7 @@ int TLuaInterface::cpp2lua_GetColumnChoice(lua_State* lua)
             lua_pop(lua, 1);            // remove 2nd array from the stack
             index ++;
         }
-        // leave the table on ths stack for later use.
+        lua_pop(lua, 1);   // remove table from the stack
     }
     else
     {
@@ -355,37 +355,16 @@ int TLuaInterface::cpp2lua_GetColumnChoice(lua_State* lua)
         ReportLuaError(lua, error);     // This will not return
     }
 
-    wxString message = wxString::FromUTF8(lua_tostring(lua, -2));
-    lua_remove(lua, -2); // remove value from stack, preserve table.
-    
-    wxString heading = wxString::FromUTF8(lua_tostring(lua, -2));
-    lua_remove(lua, -2); // remove value from stack, preserve table.
+    wxString heading = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1);   // remove value from the stack
 
-    wxASSERT (lua_gettop(lua) == 1);    // table still on stack
+    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1);   // remove value from the stack
 
-    wxString user_value = wxGetSingleChoice(message, heading, data);
+    int row_id = wxGetSingleChoiceIndex(message, heading, data);
 
-    wxString table_id;
-    size_t index = 1;
-    while (index <= row_len)
-    {
-        lua_rawgeti(lua, -1, index);    // put col array on the stack
-        lua_rawgeti(lua, -1, column);   // put value on the stack
-        wxString value = wxString::FromUTF8(luaL_checkstring(lua, -1));
-        if (user_value == value)
-        {
-            lua_pop(lua, 1);            // Remove value from the stack
-            lua_rawgeti(lua, -1, 1);    // put the new id value on the stack
-            table_id = wxString::FromUTF8(luaL_checkstring(lua, -1));
-            index = row_len;            // set index to stop search
-        }
-        lua_pop(lua, 2);                // remove value and array from the stack
-        index ++;
-    }
-    lua_pop(lua, 1);   // remove table from the stack
-    
-    lua_pushstring(lua, user_value.ToUTF8());
-    lua_pushstring(lua, table_id.ToUTF8());
+    lua_pushstring(lua, row_id > -1 ? data[row_id].ToUTF8(): wxString(wxT("")).ToUTF8());
+    lua_pushinteger(lua, row_id > -1 ? row_id + 1: -1);
 
     return 2;
 }
