@@ -4082,14 +4082,13 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
     homePanel_->Layout();
 }
 
-void mmGUIFrame::RunCustomSqlDialog(wxString customSqlReportSelectedItem)
+void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
 {
-    //Use Shared pointer to ensure object gets destroyed if Script errors hijack the object.
-    boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this ));
-    //mmCustomSQLDialog* dlg = new mmCustomSQLDialog(custRepIndex_, customSqlReportSelectedItem, this);
-    customSqlReportSelectedItem;
-    int dialogStatus = wxID_MORE;
     this->SetEvtHandlerEnabled(false);
+    //Use Shared pointer to ensure mmCustomSQLDialog object gets destroyed.
+    boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customReportSelectedItem, this ));
+
+    int dialogStatus = wxID_MORE;
     while (dialogStatus == wxID_MORE)
     {
         if (dlg->sScript() != wxT(""))
@@ -4104,10 +4103,8 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customSqlReportSelectedItem)
         dialogStatus = dlg->ShowModal();
     }
     processPendingEvents();         // clear out pending events
-    this->SetEvtHandlerEnabled(true);
-    //dlg->Destroy();
-
     if (dialogStatus == wxID_OK) updateNavTreeControl();
+    this->SetEvtHandlerEnabled(true);
 }
 
 //----------------------------------------------------------------------------
