@@ -36,7 +36,7 @@ public:
 	void end();
     
 	/** Clears the current HTML document */
-	void clear() { html = wxGetEmptyString(); }
+	void clear() { html_ = wxGetEmptyString(); }
 	
 	/** Create an HTML header and returns as a wxString */
     void addHeader(int level, const wxString& header);
@@ -101,15 +101,15 @@ public:
     void endTableRow();
     void endTableCell();
     
-    wxString getHTMLText() const { return html; }
+    wxString getHTMLText() const { return html_; }
 
-    void addHTML(const wxString& raw) { html += raw; }
+    void addHTML(const wxString& raw) { html_ += raw; }
     
 private:
-    wxString html;
-	bool bgswitch;
-	wxString color0;
-	wxString color1;
+    wxString html_;
+	bool bgswitch_;
+	wxString color0_;
+	wxString color1_;
 	int font_size_;
 };
 
