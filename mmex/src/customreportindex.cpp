@@ -259,8 +259,11 @@ void customSQLReportIndex::addReportTitle(wxString reportTitle, bool updateIndex
         if (!reportFileName.IsEmpty())
         {
             indexLine = indexLine << wxT("|") << reportFileName;
-            if (isSub)
+            reportIsSubReport_ = isSub;
+            if (reportIsSubReport_)
+            {
                 indexLine = indexLine << wxT("|SUB");
+            }
         }
 
         if (updateIndex)

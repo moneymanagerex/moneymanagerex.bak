@@ -92,7 +92,7 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmCustomSQLDialog::fillControls()
 {
-    button_Save_->Disable(); // Will be activated if text changes in either text field.
+    button_Save_->Disable(); // Will be activated when changes detected.
 
     if (edit_)
     {
@@ -120,8 +120,6 @@ void mmCustomSQLDialog::fillControls()
         iSelectedId_ = -1;
     }
 
-    reportIndex_->initIndexFileHeader();   // create the index file if not exist.
-    reportIndex_->resetReportsIndex();     // Reset the file to start
     treeCtrl_->DeleteAllItems();
     wxTreeItemId root_ = treeCtrl_->AddRoot(_("Custom Reports"));
 
@@ -389,10 +387,14 @@ bool mmCustomSQLDialog::SaveCustomReport()
             tfSourceFile.Close();
         }
 
+        if (reportIndex_->reportIsSubReport() != subMenuCheckBox_->GetValue())
+        {
+            navCtrlUpdateRequired_ = true;
+        }
         // update the index file
         reportIndex_->addReportTitle(reportTitleTxtCtrl_->GetValue(), edit_, reportfileName, subMenuCheckBox_->GetValue());
         iSelectedId_ = reportIndex_->getCustomReportId();
-        navCtrlUpdateRequired_ = !edit_;
+        navCtrlUpdateRequired_ = navCtrlUpdateRequired_ || !edit_;
         loadedFileName_ = reportfileName;
     }
     edit_ = true;
@@ -418,7 +420,7 @@ void mmCustomSQLDialog::OnClear(wxCommandEvent& /*event*/)
 
 void mmCustomSQLDialog::OnClose(wxCommandEvent& /*event*/)
 {
-    if (navCtrlUpdateRequired_)
+    if (navCtrlUpdateRequired_ && !button_Save_->IsEnabled())
         EndModal(wxID_OK);
     else
         EndModal(wxID_CANCEL);
