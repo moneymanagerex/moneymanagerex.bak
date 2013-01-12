@@ -135,7 +135,7 @@ void mmNewAcctDialog::fillControlsWithData()
 
     int selectedImage = mmIniOptions::instance().account_image_id(core_, accountID_);
     bitmaps_button_->SetBitmapLabel(navtree_images_list_()->GetBitmap(selectedImage));
-    
+
     accessInfo_ = pAccount->accessInfo_;
 }
 
@@ -143,21 +143,21 @@ void mmNewAcctDialog::CreateControls()
 {
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
-    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Expand();
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5).Expand().Proportion(1);
 
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer3, flagsExpand);
 
     wxFlexGridSizer* grid_sizer = new wxFlexGridSizer(0, 2, 0, 0);
+    grid_sizer->AddGrowableCol(1, 1);
     itemBoxSizer3->Add(grid_sizer, flagsExpand);
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Account Name:")), flags);
 
-    textAccountName_ = new wxTextCtrl( this, ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNAME,
-        wxT(""), wxDefaultPosition, wxSize(110, -1));
+    textAccountName_ = new wxTextCtrl( this, wxID_ANY, wxT(""));
     grid_sizer->Add(textAccountName_, flagsExpand);
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Account Type:")), flags);
@@ -208,7 +208,7 @@ void mmNewAcctDialog::CreateControls()
     itemCheckBox10->SetValue(TRUE);
     grid_sizer->AddSpacer(1);
     grid_sizer->Add(itemCheckBox10, flags);
-    
+
     // Notes  ---------------------------------------------
 
     wxNotebook* acc_notebook = new wxNotebook(this,
@@ -219,7 +219,7 @@ void mmNewAcctDialog::CreateControls()
     notes_tab->SetSizer(notes_sizer);
 
     notesCtrl_ = new wxTextCtrl(notes_tab, ID_DIALOG_NEWACCT_TEXTCTRL_NOTES, wxT(""),
-        wxDefaultPosition, wxSize(240,180), wxTE_MULTILINE);
+        wxDefaultPosition, wxSize(270,180), wxTE_MULTILINE);
     notes_sizer->Add(notesCtrl_, flagsExpand);
     //
 
@@ -229,13 +229,14 @@ void mmNewAcctDialog::CreateControls()
     others_tab->SetSizer(others_sizer);
 
     wxFlexGridSizer* grid_sizer2 = new wxFlexGridSizer(0, 2, 0, 0);
+    grid_sizer2->AddGrowableCol(1, 1);
     others_sizer->Add(grid_sizer2, flagsExpand);
 
     grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC,
         _("Account Number:")), flags);
 
     wxTextCtrl* itemTextCtrl6 = new wxTextCtrl(others_tab,
-        ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER, wxT(""), wxDefaultPosition, wxSize(120,-1));
+        ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER, wxT(""), wxDefaultPosition, wxDefaultSize);
     grid_sizer2->Add(itemTextCtrl6, flagsExpand);
 
     grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Held At:")), flags);
@@ -270,7 +271,7 @@ void mmNewAcctDialog::CreateControls()
     wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel27->SetSizer(itemBoxSizer28);
 
-    bitmaps_button_ = new wxBitmapButton( itemPanel27, 
+    bitmaps_button_ = new wxBitmapButton( itemPanel27,
         wxID_STATIC, wxNullBitmap, wxDefaultPosition,
         wxSize(textAccountName_->GetSize().GetHeight(), textAccountName_->GetSize().GetHeight()));
     itemBoxSizer28->Add(bitmaps_button_, flags);
@@ -284,23 +285,23 @@ void mmNewAcctDialog::CreateControls()
     wxButton* itemButton30 = new wxButton( itemPanel27, wxID_CANCEL);
     itemBoxSizer28->Add(itemButton30, flags);
 
-	Fit();
-	
+    Fit();
+
     if (true == true)
     {
-	    textAccountName_->SetToolTip(_("Enter the Name of the Account. This name can be renamed at any time."));
-	    itemChoice61->SetToolTip(_("Specify the type of account to be created."));
-	    itemChoice6->SetToolTip(_("Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."));
-	    itemTextCtrl19->SetToolTip(_("Enter the initial balance in this account."));
-	    itemButton71->SetToolTip(_("Specify the currency to be used by this account."));
-	    itemCheckBox10->SetToolTip(_("Select whether this is an account that is used often. This is used to filter accounts display view."));
-	    notesCtrl_->SetToolTip(_("Enter user notes and details about this account."));
-	    itemTextCtrl6->SetToolTip(_("Enter the Account Number associated with this account."));
-	    itemTextCtrl8->SetToolTip(_("Enter the name of the financial institution in which the account is held."));
-	    itemTextCtrl10->SetToolTip(_("Enter the URL of the website for the financial institution."));
-	    itemTextCtrl12->SetToolTip(_("Enter any contact information for the financial institution."));
-	    itemTextCtrl14->SetToolTip(_("Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."));
-	}
+        textAccountName_->SetToolTip(_("Enter the Name of the Account. This name can be renamed at any time."));
+        itemChoice61->SetToolTip(_("Specify the type of account to be created."));
+        itemChoice6->SetToolTip(_("Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."));
+        itemTextCtrl19->SetToolTip(_("Enter the initial balance in this account."));
+        itemButton71->SetToolTip(_("Specify the currency to be used by this account."));
+        itemCheckBox10->SetToolTip(_("Select whether this is an account that is used often. This is used to filter accounts display view."));
+        notesCtrl_->SetToolTip(_("Enter user notes and details about this account."));
+        itemTextCtrl6->SetToolTip(_("Enter the Account Number associated with this account."));
+        itemTextCtrl8->SetToolTip(_("Enter the name of the financial institution in which the account is held."));
+        itemTextCtrl10->SetToolTip(_("Enter the URL of the website for the financial institution."));
+        itemTextCtrl12->SetToolTip(_("Enter any contact information for the financial institution."));
+        itemTextCtrl14->SetToolTip(_("Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."));
+    }
 }
 
 void mmNewAcctDialog::OnCancel(wxCommandEvent& /*event*/)
@@ -426,7 +427,7 @@ void mmNewAcctDialog::OnImageButton(wxCommandEvent& /*event*/)
     wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, wxID_ANY) ;
     ev.SetEventObject( this );
 
-	//Skip all images before custom images
+    //Skip all images before custom images
     const int k = 18;
     wxMenu* mainMenu = new wxMenu;
     mainMenu->Append(new wxMenuItem(mainMenu, 0, wxT("-=======-")));
@@ -437,7 +438,7 @@ void mmNewAcctDialog::OnImageButton(wxCommandEvent& /*event*/)
     {
         wxMenuItem* menuItem = new wxMenuItem(mainMenu, i, wxString(_("Image #")) << i - k +1);
         menuItem->SetBitmap(imageList->GetBitmap(i));
-        mainMenu->Append(menuItem);        
+        mainMenu->Append(menuItem);
     }
     //TODO: Provide wxMenu with pictures or spin buttons
     PopupMenu(mainMenu);
@@ -446,7 +447,7 @@ void mmNewAcctDialog::OnImageButton(wxCommandEvent& /*event*/)
 void mmNewAcctDialog::OnCustonImage(wxCommandEvent& event)
 {
     int selectedImage = event.GetId();
-    
+
     core_->dbInfoSettings_->SetStringSetting(wxString::Format(wxT("ACC_IMAGE_ID_%d"), accountID_), wxString()<<selectedImage);
     if (selectedImage == 0)
         selectedImage = mmIniOptions::instance().account_image_id(core_, accountID_);
