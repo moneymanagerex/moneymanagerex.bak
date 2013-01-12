@@ -214,7 +214,7 @@ void mmMainCurrencyDialog::CreateControls()
     itemBoxSizer9->Add(itemCancelButton,  flags);
     itemCancelButton->SetFocus();
 
-    this->SetMinSize(wxSize(200,300));
+    this->SetMinSize(wxSize(350,450));
     this->Fit();
 }
 
