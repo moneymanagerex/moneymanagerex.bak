@@ -68,14 +68,15 @@ private:
     wxChoice* choiceFontSize_;
     wxChoice* monthSelection_;
 
-    /// set colour variables.
-    wxColour navTreeBkColor_;
-    wxColour listAlternativeColor0_;
-    wxColour listAlternativeColor1_;
-    wxColour listBackColor_;
-    wxColour listBorderColor_;
-    wxColour listDetailsPanelColor_;
-    wxColour listFutureDateColor_;
+    /// Colour Buttons.
+    wxButton* navTreeButton_;
+    wxButton* listBackgroundButton_;
+    wxButton* listRowZeroButton_;
+    wxButton* listRowOneButton_;
+    wxButton* listBorderButton_;
+    wxButton* listDetailsButton_;
+    wxButton* futureTransButton_;
+    wxButton* restoreDefaultButton_;
 
     wxCheckBox* cbUseOrgDateCopyPaste_;
     wxCheckBox* cbUseSound_;
