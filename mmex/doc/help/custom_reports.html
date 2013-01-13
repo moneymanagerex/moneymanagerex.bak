@@ -7,9 +7,10 @@
 	<META NAME="AUTHOR" CONTENT="Stefano Giorgio">
 	<META NAME="CREATED" CONTENT="20110710;15312700">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGED" CONTENT="20130113;13242138">
+	<META NAME="CHANGED" CONTENT="20130113;17171683">
 	<META NAME="Originator" CONTENT="Microsoft Word 14">
 	<META NAME="ProgId" CONTENT="Word.Document">
+	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<STYLE TYPE="text/css">
@@ -1235,17 +1236,21 @@ following command:</FONT></P>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
-			<P>(&quot;Init&quot;)<BR><BR>(&quot;StartTable&quot;, width_str,
-			align_str)<BR><BR>(&quot;StartTableRow&quot;)<BR><BR>(&quot;StartTableCell&quot;,
-			[text])<BR><BR>(&quot;AddTableHeaderCell&quot;, text[,
+			<P>(&quot;Init&quot;)</P>
+			<P>(&quot;End&quot;)</P>
+			<P>(&quot;StartTable&quot;, width_str, align_str)<BR><BR>(&quot;EndTable&quot;)</P>
+			<P>(&quot;StartTableRow&quot;, [colour])</P>
+			<P>(&ldquo;EndTableRow&rdquo;)<BR><BR>(&quot;StartTableCell&quot;,
+			[text])<BR><BR>(&quot;EndTableCell&quot;)</P>
+			<P>(&quot;AddTableHeaderCell&quot;, text[,
 			numeric])<BR><BR>(&quot;AddTableHeaderRow&quot;, value,
 			columns)<BR><BR>(&quot;AddTableCell&quot;, text[, numeric [,
 			italics [, bold] ]])<BR><BR>(&quot;AddRowSeparator&quot;,
-			columns);<BR><BR>(&quot;AddTotalRow&quot;, caption, columns,
-			text);<BR><BR>(&quot;EndTableRow&quot;)<BR><BR>(&quot;EndTable&quot;)<BR><BR>(&quot;AddDateNow&quot;)<BR><BR>(&quot;AddParaText&quot;,
-			text);<BR><BR>(&quot;AddLineBreak&quot;)<BR><BR>(&quot;AddHorizontalLine&quot;,
-			size)<BR><BR>(&quot;StartCenter&quot;)<BR><BR>(&quot;EndCenter&quot;)<BR><BR>(&quot;End&quot;)
-						</P>
+			columns);<BR><BR>(&quot;AddTotalRow&quot;, caption, columns, text)</P>
+			<P>(&quot;AddDateNow&quot;)<BR><BR>(&quot;AddParaText&quot;,
+			text)<BR><BR>(&quot;AddLineBreak&quot;)<BR><BR>(&quot;AddHorizontalLine&quot;,
+			size)<BR><BR>(&quot;StartCenter&quot;)<BR><BR>(&quot;EndCenter&quot;)<BR><BR><BR>
+			</P>
 		</TD>
 		<TD WIDTH=50%>
 			<P><FONT COLOR="#0000ff">local function</FONT>
