@@ -91,6 +91,22 @@ void TLuaInterface::ReportLuaError(lua_State* lua, wxString& error_str)
     lua_error(lua);
 }
 
+int TLuaInterface::GetLuaInteger(lua_State* lua)
+{
+    int iValue = lua_tointeger(lua, -1);
+    lua_pop(lua, 1);  // remove the value from the stack
+
+    return iValue;
+}
+
+wxString TLuaInterface::GetLuaString(lua_State* lua)
+{
+    wxString sValue = wxString::FromUTF8(lua_tostring(lua, -1));
+    lua_pop(lua, 1);  // remove the value from the stack
+
+    return sValue;
+}
+
 /******************************************************************************
  Lua extended functions, provided by c++ code:
 
@@ -103,6 +119,7 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmBell",             cpp2lua_Bell);
     lua_register(lua_, "mmMessageBox",       cpp2lua_MessageBox);
     lua_register(lua_, "mmGetSQLResultSet",  cpp2lua_GetSQLResultSet);
+    lua_register(lua_, "mmGetTableColumns",  cpp2lua_GetTableColumns);
     lua_register(lua_, "mmGetSingleChoice",  cpp2lua_GetSingleChoice);
     lua_register(lua_, "mmGetColumnChoice",  cpp2lua_GetColumnChoice);
     lua_register(lua_, "mmGetTextFromUser",  cpp2lua_GetTextFromUser);
@@ -125,9 +142,8 @@ void TLuaInterface::Open_MMEX_Library()
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetTranslation(lua_State *lua)
 {
-    wxString data = wxString::FromUTF8(lua_tostring(lua, -1));
-    data = wxGetTranslation(data);
-    lua_pushstring(lua, data.ToUTF8());
+    wxString sData = wxGetTranslation(GetLuaString(lua));
+    lua_pushstring(lua, sData.ToUTF8());
 
     return 1;
 }
@@ -149,14 +165,9 @@ int TLuaInterface::cpp2lua_Bell(lua_State* lua)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
 {
-    int mm_style = lua_tointeger(lua, -1);
-    lua_pop(lua, 1); // remove error message
-
-    wxString caption = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
-
-    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
+    int mm_style = GetLuaInteger(lua);
+    wxString caption = GetLuaString(lua);
+    wxString message = GetLuaString(lua);
 
     double win_style;
 
@@ -225,8 +236,7 @@ int TLuaInterface::SetSqlRestltSet(const wxString& sScript, wxSQLite3ResultSet& 
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetSQLResultSet(lua_State *lua)
 {
-    wxString sScript = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
+    wxString sScript = GetLuaString(lua);
     int iError  = 0; //SQLITE_OK;
     wxString sOutput = wxT("");
 
@@ -275,6 +285,40 @@ int TLuaInterface::cpp2lua_GetSQLResultSet(lua_State *lua)
 }
 
 /******************************************************************************
+ col_table, size = mmGetTableColumns("sql_script")
+ col_table = { x[1][1] ... x[1][n] }
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_GetTableColumns(lua_State* lua)
+{
+    int iError = 0; 
+    wxString sError = wxT("");
+    int iColumCount = -1;
+
+    // if all OK, put array of columns on the stack from given SQL statement.
+    wxSQLite3ResultSet sqlQueryResult;
+    if (SetSqlRestltSet(GetLuaString(lua), sqlQueryResult, iError, sError) == 0)
+    {
+        iColumCount = sqlQueryResult.GetColumnCount();
+
+        lua_createtable(lua, iColumCount, 0);
+        for (int key = 0; key < iColumCount; ++key)
+        {
+            // create a table entry and place it on the stack
+            lua_pushstring(lua, sqlQueryResult.GetColumnName(key).ToUTF8());
+            lua_rawseti(lua, -2, key + 1);  // set the table Key
+        }
+    }
+	else // incase of an error, ensure stack has 2 values.
+    {
+        lua_pushnil(lua);
+    }
+
+    lua_pushinteger(lua, iColumCount);    // put table size on stack. -1 if error
+
+    return 2;
+}
+
+/******************************************************************************
  value = mmGetSingleChoice("message", "heading", choice_array)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
@@ -299,17 +343,13 @@ int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
         ReportLuaError(lua, error);
     }
 
-    wxString heading = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove value from stack
-
-    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove value from stack
+    wxString heading = GetLuaString(lua);
+    wxString message = GetLuaString(lua);
 
     wxASSERT (lua_gettop(lua) == 0);    // stack should be neutral
 
-    wxString value;
-    value = wxGetSingleChoice(message, heading, data);
-    lua_pushstring(lua, value.ToUTF8());
+    wxString sValue = wxGetSingleChoice(message, heading, data);
+    lua_pushstring(lua, sValue.ToUTF8());
 
     return 1;
 }
@@ -319,8 +359,7 @@ int TLuaInterface::cpp2lua_GetSingleChoice(lua_State* lua)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetColumnChoice(lua_State* lua)
 {
-    int column = lua_tointeger(lua, -1);
-    lua_pop(lua, 1);                // value from the stack
+    int column = GetLuaInteger(lua);
 
     size_t row_len = 0;
     wxArrayString data;
@@ -355,11 +394,8 @@ int TLuaInterface::cpp2lua_GetColumnChoice(lua_State* lua)
         ReportLuaError(lua, error);     // This will not return
     }
 
-    wxString heading = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1);   // remove value from the stack
-
-    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1);   // remove value from the stack
+    wxString heading = GetLuaString(lua);
+    wxString message = GetLuaString(lua);
 
     int row_id = wxGetSingleChoiceIndex(message, heading, data);
 
@@ -374,14 +410,9 @@ int TLuaInterface::cpp2lua_GetColumnChoice(lua_State* lua)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetTextFromUser(lua_State* lua)
 {
-    wxString value = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
-
-    wxString header = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
-
-    wxString message = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
+    wxString value = GetLuaString(lua);
+    wxString header = GetLuaString(lua);
+    wxString message = GetLuaString(lua);
 
     value = wxGetTextFromUser(message, header, value);
     lua_pushstring(lua, value.ToUTF8());
@@ -394,8 +425,7 @@ int TLuaInterface::cpp2lua_GetTextFromUser(lua_State* lua)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
 {
-    wxString sSite_address = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1); // remove error message
+    wxString sSite_address = GetLuaString(lua);
 
     wxString sOutput;
     int error = site_content(sSite_address, sOutput);
@@ -412,35 +442,18 @@ int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
 int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
 {
     wxString value_4;
-    if (lua_gettop(lua) > 4 )
-    {
-        value_4 = wxString::FromUTF8(lua_tostring(lua, -1));
-        lua_pop(lua, 1);
-    }
+    if (lua_gettop(lua) > 4 ) value_4 = GetLuaString(lua);
 
     wxString value_3;
-    if (lua_gettop(lua) > 3 )
-    {
-        value_3 = wxString::FromUTF8(lua_tostring(lua, -1));
-        lua_pop(lua, 1);
-    }
+    if (lua_gettop(lua) > 3 ) value_3 = GetLuaString(lua);
 
     wxString value_2;
-    if (lua_gettop(lua) > 2 )
-    {
-        value_2 = wxString::FromUTF8(lua_tostring(lua, -1));
-        lua_pop(lua, 1);
-    }
+    if (lua_gettop(lua) > 2 ) value_2 = GetLuaString(lua);
 
     wxString value_1;
-    if (lua_gettop(lua) > 1 )
-    {
-        value_1 = wxString::FromUTF8(lua_tostring(lua, -1));
-        lua_pop(lua, 1);
-    }
+    if (lua_gettop(lua) > 1 ) value_1 = GetLuaString(lua);
 
-    wxString fn_name = wxString::FromUTF8(lua_tostring(lua, -1));
-    lua_pop(lua, 1);
+    wxString fn_name = GetLuaString(lua);
 
     wxString html_error = _("HTML_BUILDER: Syntax error function: ");
     mmHTMLBuilder hb;
