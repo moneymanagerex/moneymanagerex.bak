@@ -866,11 +866,11 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         toAccountID = toID_;
         payeeID_ = -1;
 
-        if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
-        {
-            fromAccountID = toID_;
-            toAccountID = referenceAccountID_;
-        }
+        //if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
+        //{
+        //    fromAccountID = toID_;
+        //    toAccountID = referenceAccountID_;
+        //}
     }
     else
     {
