@@ -1196,15 +1196,17 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
     edit_ = false;
     this->SetTitle(_("Duplicate Transaction"));
 
-   // we need to create a new pointer for Split transactions.
-   boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
-   core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID())->getSplitTransactions(core_, splitTransEntries.get());
-   split_.get()->entries_ = splitTransEntries->entries_;
+    // we need to create a new pointer for Split transactions.
+    boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
+    core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID())->getSplitTransactions(core_, splitTransEntries.get());
+    split_.get()->entries_ = splitTransEntries->entries_;
 }
 
 void mmTransDialog::OnKeyDown(wxKeyEvent& event)
 {
-   int key_code = event.GetUnicodeKey();
-   if (key_code > 61) return;
-   event.Skip();
+#if defined (__WXWIN__)
+    int key_code = event.GetUnicodeKey();
+    if (key_code > 61) return;
+#endif
+    event.Skip();
 }
