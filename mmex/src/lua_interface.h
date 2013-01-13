@@ -46,7 +46,8 @@ private:
     static int SetSqlRestltSet(const wxString& sScript, wxSQLite3ResultSet& sqlQueryResult, int& iError, wxString& sOutput);
 
     static void ReportLuaError(lua_State* lua, wxString& error_str);
-
+    static int GetLuaInteger(lua_State* lua);
+    static wxString GetLuaString(lua_State* lua);
     /**************************************************************************
     Lua function extensions provided by c++ code:
 
@@ -59,6 +60,7 @@ private:
     static int cpp2lua_Bell(lua_State* lua);
     static int cpp2lua_MessageBox(lua_State* lua);
 	static int cpp2lua_GetSQLResultSet(lua_State* lua);
+	static int cpp2lua_GetTableColumns(lua_State* lua);
 	static int cpp2lua_GetSingleChoice(lua_State* lua);
     static int cpp2lua_GetColumnChoice(lua_State* lua);
     static int cpp2lua_GetTextFromUser(lua_State* lua);

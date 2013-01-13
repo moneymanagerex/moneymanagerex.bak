@@ -7,7 +7,7 @@
 	<META NAME="AUTHOR" CONTENT="Stefano Giorgio">
 	<META NAME="CREATED" CONTENT="20110710;15312700">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGED" CONTENT="20130112;22133437">
+	<META NAME="CHANGED" CONTENT="20130113;13242138">
 	<META NAME="Originator" CONTENT="Microsoft Word 14">
 	<META NAME="ProgId" CONTENT="Word.Document">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
@@ -1111,6 +1111,18 @@ Functionality Extension</B> <B>provided by MMEX</B></FONT></FONT></P>
 			</TABLE>
 			<P><BR><BR>
 			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=46%>
+			<P>col_table, size = mmGetTableColumns(&ldquo;sql_script&rdquo;)</P>
+		</TD>
+		<TD WIDTH=54%>
+			<P>tbl, size = mmGetTableColumns(&quot;select * from
+			payee_v1&quot;)<BR>value = mmGetSingleChoice(&quot;Select column&quot;,
+			&quot;Lua&quot;, tbl)</P>
+			<P><FONT COLOR="#0000ff">return</FONT> &quot;Table Count:
+			&quot;..size..&quot;&lt;br&gt;Selected column: &quot;.. value</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
