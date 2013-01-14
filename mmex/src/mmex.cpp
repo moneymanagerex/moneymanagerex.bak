@@ -64,92 +64,17 @@
 #include "reporttransstats.h"
 #include "stockspanel.h"
 #include "univcsvdialog.h"
+#include "recentfiles.h"
+
 //----------------------------------------------------------------------------
 #include <boost/version.hpp>
 #include <boost/scoped_array.hpp>
 #include <string>
 #include <wx/debugrpt.h>
 #include <wx/sysopt.h>
-#include <wx/wizard.h>
 //----------------------------------------------------------------------------
-
-namespace
-{
 
 const int REPEAT_TRANS_DELAY_TIME = 7000; // 7 seconds
-
-class mmNewDatabaseWizard : public wxWizard
-{
-public:
-    mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core);
-    void RunIt(bool modal);
-
-    mmCoreDB* m_core;
-
-private:
-    wxWizardPageSimple* page1;
-
-    DECLARE_EVENT_TABLE()
-};
-//----------------------------------------------------------------------------
-
-class wxNewDatabaseWizardPage1 : public wxWizardPageSimple
-{
-public:
-    wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent);
-
-    void OnCurrency(wxCommandEvent& /*event*/);
-    virtual bool TransferDataFromWindow();
-
-private:
-    mmNewDatabaseWizard* parent_;
-    wxButton* itemButtonCurrency_;
-    wxTextCtrl* itemUserName_;
-    int currencyID_;
-
-    wxString userName;
-
-    DECLARE_EVENT_TABLE()
-};
-//----------------------------------------------------------------------------
-
-class mmAddAccountWizard : public wxWizard
-{
-public:
-    mmAddAccountWizard(wxFrame *frame, mmCoreDB* core);
-    void RunIt(bool modal);
-    wxString accountName_;
-
-    mmCoreDB* m_core;
-    int acctID_;
-
-private:
-    wxWizardPageSimple* page1;
-};
-//----------------------------------------------------------------------------
-
-class wxAddAccountPage1 : public wxWizardPageSimple
-{
-public:
-    wxAddAccountPage1(mmAddAccountWizard* parent);
-    virtual bool TransferDataFromWindow();
-
-private:
-    mmAddAccountWizard* parent_;
-    wxTextCtrl* textAccountName_;
-};
-//----------------------------------------------------------------------------
-
-class wxAddAccountPage2 : public wxWizardPageSimple
-{
-public:
-    wxAddAccountPage2(mmAddAccountWizard *parent);
-    virtual bool TransferDataFromWindow();
-
-private:
-    wxChoice* itemChoiceType_;
-    mmAddAccountWizard* parent_;
-};
 //----------------------------------------------------------------------------
 
 /*
@@ -172,6 +97,65 @@ void reportFatalException(wxDebugReport::Context ctx)
     if (preview.Show(rep) && rep.Process()) {
         rep.Reset();
     }
+}
+//----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+IMPLEMENT_APP(mmGUIApp)
+//----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+
+/*
+    wxHandleFatalExceptions implemented for some compilers\platforms only.
+    MinGW could't find this function, wxWidgets 2.8.10.
+
+    P.S. Try for next versions of wxWidgets.
+*/
+
+mmGUIApp::mmGUIApp()
+{
+#ifndef __MINGW32__
+    wxHandleFatalExceptions(); // tell the library to call OnFatalException()
+#endif
+}
+//----------------------------------------------------------------------------
+
+mmGUIApp::SQLiteInit::SQLiteInit()
+{
+    wxSQLite3Database::InitializeSQLite();
+}
+//----------------------------------------------------------------------------
+
+mmGUIApp::SQLiteInit::~SQLiteInit()
+{
+    wxSQLite3Database::ShutdownSQLite();
+}
+//----------------------------------------------------------------------------
+
+/*
+    This method allows catching the exceptions thrown by any event handler.
+*/
+void mmGUIApp::HandleEvent(wxEvtHandler *handler, wxEventFunction func, wxEvent& event) const
+{
+    try
+    {
+        wxApp::HandleEvent(handler, func, event);
+    }
+    catch (const wxSQLite3Exception &e)
+    {
+        wxLogError(e.GetMessage());
+    }
+    catch (const std::exception &e)
+    {
+        wxLogError(wxString::Format(wxT("%s"), e.what()));
+    }
+}
+//----------------------------------------------------------------------------
+
+void mmGUIApp::OnFatalException()
+{
+    reportFatalException(wxDebugReport::Context_Exception);
 }
 //----------------------------------------------------------------------------
 
@@ -228,9 +212,27 @@ bool OnInitImpl(mmGUIApp &app)
     // application would exit immediately.
     return ok;
 }
-//----------------------------------------------------------------------------
-} // namespace
 
+//----------------------------------------------------------------------------
+bool mmGUIApp::OnInit()
+{
+    bool ok = false;
+
+    try
+    {
+        ok = wxApp::OnInit() && OnInitImpl(*this);
+    }
+    catch (const wxSQLite3Exception &e)
+    {
+        wxLogError(e.GetMessage());
+    }
+    catch (const std::exception &e)
+    {
+        wxLogError(wxString::Format(wxT("%s"), e.what()));
+    }
+
+    return ok;
+}
 //----------------------------------------------------------------------------
 
 BEGIN_EVENT_TABLE(mmNewDatabaseWizard, wxWizard)
@@ -238,9 +240,291 @@ BEGIN_EVENT_TABLE(mmNewDatabaseWizard, wxWizard)
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
 
-BEGIN_EVENT_TABLE(wxNewDatabaseWizardPage1, wxWizardPageSimple)
-    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, wxNewDatabaseWizardPage1::OnCurrency)
+mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
+         :wxWizard(frame,wxID_ANY,_("New Database Wizard"),
+                   wxBitmap(addacctwiz_xpm),wxDefaultPosition,
+                   wxDEFAULT_DIALOG_STYLE), m_core(core)
+{
+/****************** Message to be displayed******************
+
+    The next pages will help you create a new database.
+
+    Your database file is stored with an extension of .mmb.
+
+    As this file contains important financial information,
+    we recommended creating daily backups with the Options
+    setting: 'Backup before opening', and store your backups
+    in a separate location.
+
+    The database can later be encrypted if required, by
+    using the option: 'Save database as' and changing the
+    file type before saving.
+*/
+    page1 = new wxWizardPageSimple(this);
+    wxString displayMsg;
+    displayMsg << _("The next pages will help you create a new database.") << wxT("\n\n")
+               << _("Your database file is stored with an extension of .mmb.")<< wxT("\n\n")
+               << _("As this file contains important financial information,\nwe recommended creating daily backups with the Options\nsetting: 'Backup before opening', and store your backups\nin a separate location.")<< wxT("\n\n")
+               << _("The database can later be encrypted if required, by\nusing the option: 'Save database as' and changing the\nfile type before saving.");
+    new wxStaticText(page1, wxID_ANY,displayMsg);
+
+    mmNewDatabaseWizardPage1* page2 = new mmNewDatabaseWizardPage1(this);
+
+    // set the page order using a convenience function - could also use
+    // SetNext/Prev directly as below
+    wxWizardPageSimple::Chain(page1, page2);
+
+    // allow the wizard to size itself around the pages
+    GetPageAreaSizer()->Add(page1);
+}
+//----------------------------------------------------------------------------
+
+void mmNewDatabaseWizard::RunIt(bool modal)
+{
+    if ( modal )
+    {
+        if ( RunWizard(page1) )
+        {
+            // Success
+        }
+
+        Destroy();
+    }
+    else
+    {
+        FinishLayout();
+        ShowPage(page1);
+        Show(true);
+    }
+}
+//----------------------------------------------------------------------------
+
+BEGIN_EVENT_TABLE(mmNewDatabaseWizardPage1, wxWizardPageSimple)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmNewDatabaseWizardPage1::OnCurrency)
 END_EVENT_TABLE()
+//----------------------------------------------------------------------------
+
+mmNewDatabaseWizardPage1::mmNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) :
+    wxWizardPageSimple(parent),
+    parent_(parent),
+    currencyID_(-1)
+{
+    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
+    wxString currName = _("Set Currency");
+    if (currencyID_ != -1)
+        currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
+
+    itemButtonCurrency_ = new wxButton( this, ID_DIALOG_OPTIONS_BUTTON_CURRENCY, currName, wxDefaultPosition, wxSize(130,-1), 0 );
+
+    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+
+    mainSizer->Add( new wxStaticText(this, wxID_ANY, _("Base Currency for account")), 0, wxALL, 5 );
+    mainSizer->Add( itemButtonCurrency_, 0 /* No stretching */, wxALL, 5 /* Border size */ );
+
+    wxString helpMsg;
+/**************************Message to be displayed *************
+    Specify the base (or default) currency to be used for the
+    database. The base currency can later be changed by using
+    the options dialog. New accounts, will use this currency by
+    default, and can be changed when editing account details.
+***************************************************************/
+    helpMsg << _("Specify the base (or default) currency to be used for the\ndatabase. The base currency can later be changed by using\nthe options dialog. New accounts, will use this currency by\ndefault, and can be changed when editing account details.")
+            << wxT("\n");
+    mainSizer->Add( new wxStaticText(this, wxID_ANY, helpMsg), 0, wxALL, 5);
+
+
+    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
+    mainSizer->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxStaticText* itemStaticText6 = new wxStaticText( this, wxID_STATIC, _("User Name"));
+    itemBoxSizer5->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    itemUserName_ = new wxTextCtrl( this, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, _T(""), wxDefaultPosition, wxSize(130,-1), 0 );
+    itemBoxSizer5->Add(itemUserName_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    helpMsg.Empty();
+    helpMsg << _("(Optional) Specify a title or your name.") << wxT("\n")
+            << _("Used as a database title for displayed and printed reports.");
+    mainSizer->Add( new wxStaticText(this, wxID_ANY, helpMsg), 0, wxALL, 5);
+
+    SetSizer(mainSizer);
+    mainSizer->Fit(this);
+}
+//----------------------------------------------------------------------------
+
+bool mmNewDatabaseWizardPage1::TransferDataFromWindow()
+{
+    if ( currencyID_ == -1)
+    {
+        wxMessageBox(_("Base Currency Not Set"), _("New Database"), wxOK|wxICON_WARNING, this);
+
+        return false;
+    }
+    userName = itemUserName_->GetValue().Trim();
+    parent_->m_core->dbInfoSettings_->SetStringSetting(wxT("USERNAME"), userName);
+
+    return true;
+}
+//----------------------------------------------------------------------------
+
+void mmNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
+{
+    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
+
+    if (mmMainCurrencyDialog::Execute(parent_->m_core, this, currencyID_) && currencyID_ != -1)
+    {
+        wxString currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
+        bn->SetLabel(currName);
+        parent_->m_core->currencyList_.setBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get(), currencyID_);
+    }
+}
+//----------------------------------------------------------------------------
+
+mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core) :
+    wxWizard(frame,wxID_ANY,_("Add Account Wizard"),
+    wxBitmap(addacctwiz_xpm),wxDefaultPosition,
+    wxDEFAULT_DIALOG_STYLE), m_core(core), acctID_(-1)
+{
+    // a wizard page may be either an object of predefined class
+    page1 = new wxWizardPageSimple(this);
+
+    wxString noteString = mmex::getProgramName() +
+    _(" models all transactions as belonging to accounts.\n\nThe next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.");
+
+    new wxStaticText(page1, wxID_ANY, noteString);
+
+    mmAddAccountPage1* page2 = new mmAddAccountPage1(this);
+    mmAddAccountPage2* page3 = new mmAddAccountPage2(this);
+
+    // set the page order using a convenience function - could also use
+    // SetNext/Prev directly as below
+    wxWizardPageSimple::Chain(page1, page2);
+    wxWizardPageSimple::Chain(page2, page3);
+
+    // allow the wizard to size itself around the pages
+    GetPageAreaSizer()->Add(page1);
+    this->CentreOnParent();
+}
+//----------------------------------------------------------------------------
+
+void mmAddAccountWizard::RunIt(bool modal)
+{
+    if (modal) {
+        if (RunWizard(page1)) {
+            // Success
+        }
+        Destroy();
+    } else {
+        FinishLayout();
+        ShowPage(page1);
+        Show(true);
+    }
+}
+//----------------------------------------------------------------------------
+
+bool mmAddAccountPage1::TransferDataFromWindow()
+{
+    if ( textAccountName_->GetValue().empty())
+    {
+        wxMessageBox(_("Account Name Invalid"), _("New Account"), wxOK|wxICON_WARNING, this);
+        return false;
+    }
+    parent_->accountName_ = textAccountName_->GetValue().Trim();
+    return true;
+}
+//----------------------------------------------------------------------------
+
+mmAddAccountPage1::mmAddAccountPage1(mmAddAccountWizard* parent) :
+    wxWizardPageSimple(parent), parent_(parent)
+{
+    textAccountName_ = new wxTextCtrl(this, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(130,-1), 0 );
+
+    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+    mainSizer->Add(new wxStaticText(this, wxID_ANY, _("Name of the Account")), 0, wxALL, 5 );
+    mainSizer->Add( textAccountName_, 0 /* No stretching */, wxALL, 5 /* Border Size */);
+
+    wxString helpMsg;
+    helpMsg  << wxT("\n") << _("Specify a descriptive name for the account.") << wxT("\n")
+            << _("This is generally the name of a financial institution\nwhere the account is held. For example: 'ABC Bank'.");
+    mainSizer->Add(new wxStaticText(this, wxID_ANY, helpMsg ), 0, wxALL, 5);
+
+    SetSizer(mainSizer);
+    mainSizer->Fit(this);
+}
+//----------------------------------------------------------------------------
+
+mmAddAccountPage2::mmAddAccountPage2(mmAddAccountWizard *parent) :
+    wxWizardPageSimple(parent),
+    parent_(parent)
+{
+    wxArrayString itemAcctTypeStrings;
+    itemAcctTypeStrings.Add(_("Checking/Savings"));      // ACCOUNT_TYPE_BANK
+    itemAcctTypeStrings.Add(_("Investment"));            // ACCOUNT_TYPE_STOCK
+    itemAcctTypeStrings.Add(_("Term"));                  // ACCOUNT_TYPE_TERM
+
+    itemChoiceType_ = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, itemAcctTypeStrings);
+    itemChoiceType_->SetToolTip(_("Specify the type of account to be created."));
+
+    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+
+    mainSizer->Add( new wxStaticText(this, wxID_ANY, _("Type of Account")), 0, wxALL, 5 );
+    mainSizer->Add( itemChoiceType_, 0 /* No stretching*/, wxALL, 5 /* Border Size */);
+
+    wxString textMsg;
+    textMsg << wxT("\n")
+            << _("Select the type of account you want to create:") << wxT("\n\n")
+            << _("General bank accounts cover a wide variety of account\ntypes like Checking, Savings and Credit card type accounts.");
+    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
+
+    textMsg = wxT("\n");
+    textMsg << _("Investment accounts are specialized accounts that only\nhave stock/mutual fund investments associated with them.");
+    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
+
+    textMsg = wxT("\n");
+    textMsg << _("Term accounts are specialized bank accounts. Intended for asset\ntype accounts such as Term Deposits and Bonds. These accounts\ncan have regular money coming in and out, being outside the\ngeneral income stream.");
+    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
+
+    SetSizer(mainSizer);
+    mainSizer->Fit(this);
+}
+//----------------------------------------------------------------------------
+
+bool mmAddAccountPage2::TransferDataFromWindow()
+{
+    int acctType = itemChoiceType_->GetSelection();
+    wxString acctTypeStr = ACCOUNT_TYPE_BANK;
+    if (acctType == 1)
+        acctTypeStr = ACCOUNT_TYPE_STOCK;
+    else if (acctType == 2)
+        acctTypeStr = ACCOUNT_TYPE_TERM;
+
+    int currencyID = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
+    if (currencyID == -1)
+    {
+        wxString errorMsg;
+        errorMsg << _("Base Account Currency Not set.") << wxT("\n")
+                 << _("Set that first using Tools->Options menu and then add a new account.");
+        wxMessageBox( errorMsg, _("New Account"), wxOK|wxICON_WARNING, this);
+        return false;
+    }
+
+    mmAccount* ptrBase = new mmAccount();
+
+    boost::shared_ptr<mmAccount> pAccount(ptrBase);
+
+    pAccount->favoriteAcct_ = true;
+    pAccount->status_ = mmAccount::MMEX_Open;
+    pAccount->acctType_ = acctTypeStr;
+    pAccount->name_ = parent_->accountName_;
+    pAccount->initialBalance_ = 0;
+    pAccount->currency_ = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID);
+    // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
+    if ( ! parent_->m_core->accountList_.AccountExists(pAccount->name_))
+        parent_->acctID_ = parent_->m_core->accountList_.AddAccount(pAccount);
+
+    return true;
+}
 //----------------------------------------------------------------------------
 
 BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
@@ -331,122 +615,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_RECENT_FILES_CLEAR, mmGUIFrame::OnClearRecentFiles)
 
 END_EVENT_TABLE()
-
-//----------------------------------------------------------------------------
-IMPLEMENT_APP(mmGUIApp)
-//----------------------------------------------------------------------------
-
-mmGUIApp::SQLiteInit::SQLiteInit()
-{
-    wxSQLite3Database::InitializeSQLite();
-}
-//----------------------------------------------------------------------------
-
-mmGUIApp::SQLiteInit::~SQLiteInit()
-{
-    wxSQLite3Database::ShutdownSQLite();
-}
-//----------------------------------------------------------------------------
-
-mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core) :
-    wxWizard(frame,wxID_ANY,_("Add Account Wizard"),
-    wxBitmap(addacctwiz_xpm),wxDefaultPosition,
-    wxDEFAULT_DIALOG_STYLE), m_core(core), acctID_(-1)
-{
-    // a wizard page may be either an object of predefined class
-    page1 = new wxWizardPageSimple(this);
-
-    wxString noteString = mmex::getProgramName() +
-    _(" models all transactions as belonging to accounts.\n\nThe next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.");
-
-    new wxStaticText(page1, wxID_ANY, noteString);
-
-    wxAddAccountPage1* page2 = new wxAddAccountPage1(this);
-    wxAddAccountPage2* page3 = new wxAddAccountPage2(this);
-
-    // set the page order using a convenience function - could also use
-    // SetNext/Prev directly as below
-    wxWizardPageSimple::Chain(page1, page2);
-    wxWizardPageSimple::Chain(page2, page3);
-
-    // allow the wizard to size itself around the pages
-    GetPageAreaSizer()->Add(page1);
-    this->CentreOnParent();
-}
-//----------------------------------------------------------------------------
-
-void mmAddAccountWizard::RunIt(bool modal)
-{
-    if (modal) {
-        if (RunWizard(page1)) {
-            // Success
-        }
-        Destroy();
-    } else {
-        FinishLayout();
-        ShowPage(page1);
-        Show(true);
-    }
-}
-//----------------------------------------------------------------------------
-
-mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
-         :wxWizard(frame,wxID_ANY,_("New Database Wizard"),
-                   wxBitmap(addacctwiz_xpm),wxDefaultPosition,
-                   wxDEFAULT_DIALOG_STYLE), m_core(core)
-{
-/****************** Message to be displayed******************
-
-    The next pages will help you create a new database.
-
-    Your database file is stored with an extension of .mmb.
-
-    As this file contains important financial information,
-    we recommended creating daily backups with the Options
-    setting: 'Backup before opening', and store your backups
-    in a separate location.
-
-    The database can later be encrypted if required, by
-    using the option: 'Save database as' and changing the
-    file type before saving.
-*/
-    page1 = new wxWizardPageSimple(this);
-    wxString displayMsg;
-    displayMsg << _("The next pages will help you create a new database.") << wxT("\n\n")
-               << _("Your database file is stored with an extension of .mmb.")<< wxT("\n\n")
-               << _("As this file contains important financial information,\nwe recommended creating daily backups with the Options\nsetting: 'Backup before opening', and store your backups\nin a separate location.")<< wxT("\n\n")
-               << _("The database can later be encrypted if required, by\nusing the option: 'Save database as' and changing the\nfile type before saving.");
-    new wxStaticText(page1, wxID_ANY,displayMsg);
-
-    wxNewDatabaseWizardPage1* page2 = new wxNewDatabaseWizardPage1(this);
-
-    // set the page order using a convenience function - could also use
-    // SetNext/Prev directly as below
-    wxWizardPageSimple::Chain(page1, page2);
-
-    // allow the wizard to size itself around the pages
-    GetPageAreaSizer()->Add(page1);
-}
-//----------------------------------------------------------------------------
-
-void mmNewDatabaseWizard::RunIt(bool modal)
-{
-    if ( modal )
-    {
-        if ( RunWizard(page1) )
-        {
-            // Success
-        }
-
-        Destroy();
-    }
-    else
-    {
-        FinishLayout();
-        ShowPage(page1);
-        Show(true);
-    }
-}
 //----------------------------------------------------------------------------
 
 mmGUIFrame::mmGUIFrame(const wxString& title,
@@ -562,7 +730,7 @@ mmGUIFrame::~mmGUIFrame()
 void mmGUIFrame::cleanup()
 {
     printer_.reset();
-    recentFiles_->~RecentDatabaseFiles();
+    delete recentFiles_;
     saveSettings();
 
     m_mgr.UnInit();
@@ -1330,6 +1498,7 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
         financialYear.Subtract(wxDateSpan::Day());
     return financialYear;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::CreateCustomReport(int index)
 {
@@ -1355,6 +1524,7 @@ void mmGUIFrame::CreateCustomReport(int index)
     homePageAccountSelect_ = false; // restore Navigation tree code execution.
     wxEndBusyCursor();
 }
+//----------------------------------------------------------------------------
 
 bool mmGUIFrame::IsCustomSQLReportSelected( int& customSqlReportID, mmTreeItemData* iData )
 {
@@ -1370,6 +1540,7 @@ bool mmGUIFrame::IsCustomSQLReportSelected( int& customSqlReportID, mmTreeItemDa
     }
     return result;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnTreeItemExpanded(wxTreeEvent& event)
 {
@@ -1383,6 +1554,7 @@ void mmGUIFrame::OnTreeItemExpanded(wxTreeEvent& event)
     else if (iData->getString() == wxT("Budgeting"))
         expandedBudgetingNavTree_ = true;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnTreeItemCollapsed(wxTreeEvent& event)
 {
@@ -1396,6 +1568,7 @@ void mmGUIFrame::OnTreeItemCollapsed(wxTreeEvent& event)
     else if (iData->getString() == wxT("Budgeting"))
         expandedBudgetingNavTree_ = false;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 {
@@ -2211,6 +2384,7 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
     }
 }
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::OnItemMenu(wxTreeEvent& event)
 {
     wxTreeItemId id = event.GetItem();
@@ -2219,6 +2393,7 @@ void mmGUIFrame::OnItemMenu(wxTreeEvent& event)
     else
         wxMessageBox(_("MMEX has been opened without an active database."),_("MMEX: Menu Popup Error"), wxOK|wxICON_EXCLAMATION);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnItemRightClick(wxTreeEvent& event)
 {
@@ -2383,12 +2558,13 @@ void mmGUIFrame::OnViewOpenAccounts(wxCommandEvent&)
     //Restore settings
     m_inisettings->SetStringSetting(wxT("VIEWACCOUNTS"), vAccts);
 }
-
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::SetBudgetingPageInactive()
 {
     activeBudgetingPage_ = false;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
@@ -2982,6 +3158,7 @@ bool mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxStr
     return true;
 }
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 {
     autoRepeatTransactionsTimer_.Stop();
@@ -3422,6 +3599,7 @@ wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
 
     return accountArray;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnCashFlowSpecificAccounts()
 {
@@ -3549,6 +3727,7 @@ bool mmGUIFrame::IsUpdateAvailable(wxString page)
 
     return isUpdateAvailable;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 {
@@ -3798,8 +3977,8 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& WXUNUSED(event))
 
     homePanel_->Layout();
 }
-
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::createStocksAccountPage(int accountID)
 {
     wxSizer *sizer = cleanupHomePanel();
@@ -3811,19 +3990,20 @@ void mmGUIFrame::createStocksAccountPage(int accountID)
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
     homePanel_->Layout();
 }
-
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::OnGotoStocksAccount(wxCommandEvent& WXUNUSED(event))
 {
     if (gotoAccountID_ != -1)
         createStocksAccountPage(gotoAccountID_);
 }
-
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::SetCheckingAccountPageInactive()
 {
     activeCheckingAccountPage_ = false;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createCheckingAccountPage(int accountID)
 {
@@ -3845,15 +4025,15 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
         homePanel_->Layout();
     }
 }
-
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
 {
     if (gotoAccountID_ != -1)
         createCheckingAccountPage(gotoAccountID_);
 }
-
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 {
     wxSizer *sizer = cleanupHomePanel();
@@ -4024,6 +4204,7 @@ void mmGUIFrame::OnViewTermAccounts(wxCommandEvent &event)
     }
 }
 //----------------------------------------------------------------------------
+
 void mmGUIFrame::OnViewStockAccounts(wxCommandEvent &event)
 {
     m_mgr.GetPane(wxT("Stock Accounts")).Show(event.IsChecked());
@@ -4035,6 +4216,7 @@ void mmGUIFrame::OnViewStockAccounts(wxCommandEvent &event)
         createHomePage();
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnIgnoreFutureTransactions(wxCommandEvent &event)
 {
@@ -4047,6 +4229,7 @@ void mmGUIFrame::OnIgnoreFutureTransactions(wxCommandEvent &event)
         updateNavTreeControl(menuBar_->IsChecked(MENU_VIEW_TERMACCOUNTS));
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
 {
@@ -4081,6 +4264,7 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
     }
     homePanel_->Layout();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
 {
@@ -4112,187 +4296,6 @@ void mmGUIFrame::OnEditCustomSqlReport(wxCommandEvent&)
 {
     RunCustomSqlDialog(customSqlReportSelectedItem_);
 }
-
-//----------------------------------------------------------------------------
-void wxNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
-{
-    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
-
-    if (mmMainCurrencyDialog::Execute(parent_->m_core, this, currencyID_) && currencyID_ != -1)
-    {
-        wxString currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
-        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
-        bn->SetLabel(currName);
-        parent_->m_core->currencyList_.setBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get(), currencyID_);
-    }
-}
-//----------------------------------------------------------------------------
-
-wxNewDatabaseWizardPage1::wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) :
-    wxWizardPageSimple(parent),
-    parent_(parent),
-    currencyID_(-1)
-{
-    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
-    wxString currName = _("Set Currency");
-    if (currencyID_ != -1)
-        currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
-
-    itemButtonCurrency_ = new wxButton( this, ID_DIALOG_OPTIONS_BUTTON_CURRENCY, currName, wxDefaultPosition, wxSize(130,-1), 0 );
-
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-
-    mainSizer->Add( new wxStaticText(this, wxID_ANY, _("Base Currency for account")), 0, wxALL, 5 );
-    mainSizer->Add( itemButtonCurrency_, 0 /* No stretching */, wxALL, 5 /* Border size */ );
-
-    wxString helpMsg;
-/**************************Message to be displayed *************
-    Specify the base (or default) currency to be used for the
-    database. The base currency can later be changed by using
-    the options dialog. New accounts, will use this currency by
-    default, and can be changed when editing account details.
-***************************************************************/
-    helpMsg << _("Specify the base (or default) currency to be used for the\ndatabase. The base currency can later be changed by using\nthe options dialog. New accounts, will use this currency by\ndefault, and can be changed when editing account details.")
-            << wxT("\n");
-    mainSizer->Add( new wxStaticText(this, wxID_ANY, helpMsg), 0, wxALL, 5);
-
-
-    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    mainSizer->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
-
-    wxStaticText* itemStaticText6 = new wxStaticText( this, wxID_STATIC, _("User Name"));
-    itemBoxSizer5->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    itemUserName_ = new wxTextCtrl( this, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, _T(""), wxDefaultPosition, wxSize(130,-1), 0 );
-    itemBoxSizer5->Add(itemUserName_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    helpMsg.Empty();
-    helpMsg << _("(Optional) Specify a title or your name.") << wxT("\n")
-            << _("Used as a database title for displayed and printed reports.");
-    mainSizer->Add( new wxStaticText(this, wxID_ANY, helpMsg), 0, wxALL, 5);
-
-    SetSizer(mainSizer);
-    mainSizer->Fit(this);
-}
-//----------------------------------------------------------------------------
-
-bool wxNewDatabaseWizardPage1::TransferDataFromWindow()
-{
-    if ( currencyID_ == -1)
-    {
-        wxMessageBox(_("Base Currency Not Set"), _("New Database"), wxOK|wxICON_WARNING, this);
-
-        return false;
-    }
-    userName = itemUserName_->GetValue().Trim();
-    parent_->m_core->dbInfoSettings_->SetStringSetting(wxT("USERNAME"), userName);
-
-    return true;
-}
-//----------------------------------------------------------------------------
-
-wxAddAccountPage1::wxAddAccountPage1(mmAddAccountWizard* parent) :
-    wxWizardPageSimple(parent), parent_(parent)
-{
-    textAccountName_ = new wxTextCtrl(this, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(130,-1), 0 );
-
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-    mainSizer->Add(new wxStaticText(this, wxID_ANY, _("Name of the Account")), 0, wxALL, 5 );
-    mainSizer->Add( textAccountName_, 0 /* No stretching */, wxALL, 5 /* Border Size */);
-
-    wxString helpMsg;
-    helpMsg  << wxT("\n") << _("Specify a descriptive name for the account.") << wxT("\n")
-            << _("This is generally the name of a financial institution\nwhere the account is held. For example: 'ABC Bank'.");
-    mainSizer->Add(new wxStaticText(this, wxID_ANY, helpMsg ), 0, wxALL, 5);
-
-    SetSizer(mainSizer);
-    mainSizer->Fit(this);
-}
-//----------------------------------------------------------------------------
-
-bool wxAddAccountPage1::TransferDataFromWindow()
-{
-    if ( textAccountName_->GetValue().empty())
-    {
-        wxMessageBox(_("Account Name Invalid"), _("New Account"), wxOK|wxICON_WARNING, this);
-        return false;
-    }
-    parent_->accountName_ = textAccountName_->GetValue().Trim();
-    return true;
-}
-//----------------------------------------------------------------------------
-
-wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) :
-    wxWizardPageSimple(parent),
-    parent_(parent)
-{
-    wxArrayString itemAcctTypeStrings;
-    itemAcctTypeStrings.Add(_("Checking/Savings"));      // ACCOUNT_TYPE_BANK
-    itemAcctTypeStrings.Add(_("Investment"));            // ACCOUNT_TYPE_STOCK
-    itemAcctTypeStrings.Add(_("Term"));                  // ACCOUNT_TYPE_TERM
-
-    itemChoiceType_ = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, itemAcctTypeStrings);
-    itemChoiceType_->SetToolTip(_("Specify the type of account to be created."));
-
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-
-    mainSizer->Add( new wxStaticText(this, wxID_ANY, _("Type of Account")), 0, wxALL, 5 );
-    mainSizer->Add( itemChoiceType_, 0 /* No stretching*/, wxALL, 5 /* Border Size */);
-
-    wxString textMsg;
-    textMsg << wxT("\n")
-            << _("Select the type of account you want to create:") << wxT("\n\n")
-            << _("General bank accounts cover a wide variety of account\ntypes like Checking, Savings and Credit card type accounts.");
-    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
-
-    textMsg = wxT("\n");
-    textMsg << _("Investment accounts are specialized accounts that only\nhave stock/mutual fund investments associated with them.");
-    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
-
-    textMsg = wxT("\n");
-    textMsg << _("Term accounts are specialized bank accounts. Intended for asset\ntype accounts such as Term Deposits and Bonds. These accounts\ncan have regular money coming in and out, being outside the\ngeneral income stream.");
-    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
-
-    SetSizer(mainSizer);
-    mainSizer->Fit(this);
-}
-//----------------------------------------------------------------------------
-
-bool wxAddAccountPage2::TransferDataFromWindow()
-{
-    int acctType = itemChoiceType_->GetSelection();
-    wxString acctTypeStr = ACCOUNT_TYPE_BANK;
-    if (acctType == 1)
-        acctTypeStr = ACCOUNT_TYPE_STOCK;
-    else if (acctType == 2)
-        acctTypeStr = ACCOUNT_TYPE_TERM;
-
-    int currencyID = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
-    if (currencyID == -1)
-    {
-        wxString errorMsg;
-        errorMsg << _("Base Account Currency Not set.") << wxT("\n")
-                 << _("Set that first using Tools->Options menu and then add a new account.");
-        wxMessageBox( errorMsg, _("New Account"), wxOK|wxICON_WARNING, this);
-        return false;
-    }
-
-    mmAccount* ptrBase = new mmAccount();
-
-    boost::shared_ptr<mmAccount> pAccount(ptrBase);
-
-    pAccount->favoriteAcct_ = true;
-    pAccount->status_ = mmAccount::MMEX_Open;
-    pAccount->acctType_ = acctTypeStr;
-    pAccount->name_ = parent_->accountName_;
-    pAccount->initialBalance_ = 0;
-    pAccount->currency_ = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID);
-    // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
-    if ( ! parent_->m_core->accountList_.AccountExists(pAccount->name_))
-        parent_->acctID_ = parent_->m_core->accountList_.AddAccount(pAccount);
-
-    return true;
-}
 //----------------------------------------------------------------------------
 
 wxSizer* mmGUIFrame::cleanupHomePanel(bool new_sizer)
@@ -4303,68 +4306,6 @@ wxSizer* mmGUIFrame::cleanupHomePanel(bool new_sizer)
     homePanel_->SetSizer(new_sizer ? new wxBoxSizer(wxHORIZONTAL) : 0);
 
     return homePanel_->GetSizer();
-}
-//----------------------------------------------------------------------------
-//----------------------------------------------------------------------------
-
-/*
-    wxHandleFatalExceptions implemented for some compilers\platforms only.
-    MinGW could't find this function, wxWidgets 2.8.10.
-
-    P.S. Try for next versions of wxWidgets.
-*/
-mmGUIApp::mmGUIApp()
-{
-#ifndef __MINGW32__
-    wxHandleFatalExceptions(); // tell the library to call OnFatalException()
-#endif
-}
-//----------------------------------------------------------------------------
-
-/*
-    This method allows catching the exceptions thrown by any event handler.
-*/
-void mmGUIApp::HandleEvent(wxEvtHandler *handler, wxEventFunction func, wxEvent& event) const
-{
-    try
-    {
-        wxApp::HandleEvent(handler, func, event);
-    }
-    catch (const wxSQLite3Exception &e)
-    {
-        wxLogError(e.GetMessage());
-    }
-    catch (const std::exception &e)
-    {
-        wxLogError(wxString::Format(wxT("%s"), e.what()));
-    }
-}
-//----------------------------------------------------------------------------
-
-bool mmGUIApp::OnInit()
-{
-    bool ok = false;
-
-    try
-    {
-        ok = wxApp::OnInit() && OnInitImpl(*this);
-    }
-    catch (const wxSQLite3Exception &e)
-    {
-        wxLogError(e.GetMessage());
-    }
-    catch (const std::exception &e)
-    {
-        wxLogError(wxString::Format(wxT("%s"), e.what()));
-    }
-
-    return ok;
-}
-//----------------------------------------------------------------------------
-
-void mmGUIApp::OnFatalException()
-{
-    reportFatalException(wxDebugReport::Context_Exception);
 }
 //----------------------------------------------------------------------------
 
@@ -4407,6 +4348,7 @@ void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
         progress->Destroy();
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::BackupDatabase(wxString filename, bool updateRequired)
 {
@@ -4449,12 +4391,14 @@ void mmGUIFrame::BackupDatabase(wxString filename, bool updateRequired)
         if (fnLastFile.IsFileWritable()) wxRemoveFile(backupFileArray.Last());
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnRecentFiles(wxCommandEvent& event)
 {
     wxString file_name = recentFiles_->getRecentFile(event.GetId() - wxID_FILE1 +1);
     SetDatabaseFile(file_name);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& /*event*/)
 {

@@ -22,30 +22,26 @@
 //----------------------------------------------------------------------------
 #include <wx/app.h>
 #include <wx/aui/aui.h>
+#include <wx/wizard.h>
+
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include "recentfiles.h"
 #include "guiid.h"
 #include "util.h"
 //----------------------------------------------------------------------------
-class wxWizardEvent;
 class wxSQLite3Database;
-class wxTreeCtrl;
-class wxToolBar;
-class wxHtmlEasyPrinting;
-class wxTreeItemId;
-class wxTreeEvent;
 //----------------------------------------------------------------------------
 class mmCoreDB;
 class MMEX_IniSettings;
 class mmPrintableBase;
 class mmPanelBase;
 class mmTreeItemData;
-class customSQLReportIndex;
 class mmCheckingPanel;
 class mmBudgetingPanel;
+class customSQLReportIndex;
+class RecentDatabaseFiles;
 //----------------------------------------------------------------------------
 
 struct CategInfo
@@ -78,10 +74,85 @@ private:
     void OnFatalException(); // called when a crash occurs in this application
     void HandleEvent(wxEvtHandler *handler, wxEventFunction func, wxEvent& event) const;
 };
+
 //----------------------------------------------------------------------------
 DECLARE_APP(mmGUIApp)
 //----------------------------------------------------------------------------
 
+class mmNewDatabaseWizard : public wxWizard
+{
+public:
+    mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core);
+    void RunIt(bool modal);
+
+    mmCoreDB* m_core;
+
+private:
+    wxWizardPageSimple* page1;
+
+    DECLARE_EVENT_TABLE()
+};
+//----------------------------------------------------------------------------
+
+class mmNewDatabaseWizardPage1 : public wxWizardPageSimple
+{
+public:
+    mmNewDatabaseWizardPage1(mmNewDatabaseWizard* parent);
+
+    void OnCurrency(wxCommandEvent& /*event*/);
+    virtual bool TransferDataFromWindow();
+
+private:
+    mmNewDatabaseWizard* parent_;
+    wxButton* itemButtonCurrency_;
+    wxTextCtrl* itemUserName_;
+    int currencyID_;
+
+    wxString userName;
+
+    DECLARE_EVENT_TABLE()
+};
+//----------------------------------------------------------------------------
+
+class mmAddAccountWizard : public wxWizard
+{
+public:
+    mmAddAccountWizard(wxFrame *frame, mmCoreDB* core);
+    void RunIt(bool modal);
+    wxString accountName_;
+
+    mmCoreDB* m_core;
+    int acctID_;
+
+private:
+    wxWizardPageSimple* page1;
+};
+//----------------------------------------------------------------------------
+
+class mmAddAccountPage1 : public wxWizardPageSimple
+{
+public:
+    mmAddAccountPage1(mmAddAccountWizard* parent);
+    virtual bool TransferDataFromWindow();
+
+private:
+    mmAddAccountWizard* parent_;
+    wxTextCtrl* textAccountName_;
+};
+//----------------------------------------------------------------------------
+
+class mmAddAccountPage2 : public wxWizardPageSimple
+{
+public:
+    mmAddAccountPage2(mmAddAccountWizard *parent);
+    virtual bool TransferDataFromWindow();
+
+private:
+    wxChoice* itemChoiceType_;
+    mmAddAccountWizard* parent_;
+};
+
+//----------------------------------------------------------------------------
 class mmGUIFrame : public wxFrame
 {
 public:
