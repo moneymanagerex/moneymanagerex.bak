@@ -16,11 +16,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *************************************************************************/
-#define _DBWRAPPER_TEST_IS_INCLUDED_IN_BUILD_
 
 #include <UnitTest++.h>
 #include "testing_util.h"
 
+#ifdef DBWRAPPER_TEST_INCLUDED_IN_BUILD
 /**************************************************************************
  The test platform will create and test a new database.
 
@@ -31,6 +31,8 @@ SUITE(dbwrapper)
 
 TEST(wxSQLite3Exception)
 {
+    printf("\ndbwrapper_tests: START");
+    display_STD_IO_separation_line();
     const wxDateTime start_time(wxDateTime::UNow());
     wxSQLite3Database* db = get_pDb().get();
     displayTimeTaken(wxT("wxSQLite3Exception"), start_time);
@@ -1091,4 +1093,5 @@ TEST(New_INFO_DB_TEST_3)
 
 } // SUITE end Inidb_test
 
+#endif // DBWRAPPER_TEST_INCLUDED_IN_BUILD
 //----------------------------------------------------------------------------
