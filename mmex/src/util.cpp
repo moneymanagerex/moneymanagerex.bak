@@ -1081,42 +1081,71 @@ boost::shared_ptr<wxSQLite3Database> static_db_ptr()
 
 bool mmCalculator(wxString sInput, wxString& sOutput)
 {
-    //TODO: Add ( ) support and may be Currencies rates???
-    double dAmount = 0;
+    //TODO: Fix division/multiply by negative and Non standart number format
+    sInput.Replace(wxT(")("), wxT(")*("));
     bool bResult = true;
-    double dTempAmount;
-    wxString sTemp = sInput.Trim();
-    sTemp.Replace(wxT("+"), wxT("|"));
-    sTemp.Replace(wxT("-"), wxT("|-"));
-    
-    wxStringTokenizer token(sTemp, wxT("|"));
-
-    while (token.HasMoreTokens() && bResult)
+    int a = sInput.Replace(wxT("("), wxT("(")); 
+    int b = sInput.Replace(wxT(")"), wxT(")"));
+    if (a != b) return false;
+    if (a > 0)
     {
-        double dSubtotal = 1;
-        wxString sToken = token.GetNextToken();
-        sToken.Replace(wxT("*"), wxT("|*"));
-        sToken.Replace(wxT("/"), wxT("|/"));
-        sToken.Prepend(wxT("*"));
-        wxStringTokenizer token2(sToken, wxT("|"));
-        while (token2.HasMoreTokens() && bResult)
+        for (size_t i = 0; i < sInput.Len(); i++)
         {
-            wxString sElement = token2.GetNextToken();
-            wxString sSign = sElement.Mid(0,1);
-            sElement.Remove(0,1);
-
-            if (sElement.ToDouble(&dTempAmount))
-            {
-                if (sSign == wxT("*")) dSubtotal = dSubtotal*dTempAmount;
-                else if (sSign == wxT("/") && dTempAmount != 0) dSubtotal = dSubtotal/dTempAmount;
-                else bResult = false;
-            }
-            else
-                bResult = false;
+            if (sInput[i] == '(') a += i; 
+            if (sInput[i] == ')') b += i;
+            if (sInput[i] == '(' && i > 0) bResult = bResult && (wxString(wxT("(+-*/")).Contains(sInput[i-1]));
+            if (sInput[i] == ')' && i < sInput.Len()-1) bResult = bResult && (wxString(wxT(")+-*/")).Contains(sInput[i+1]));
         }
-        dAmount += dSubtotal;
+        if (a >= b || !bResult) return false;
     }
 
+    wxString sTemp = sInput.Trim().Prepend(wxT("(")).Append(wxT(")"));
+    wxString midBrackets, sToCalc;
+    double dAmount = 0;
+
+    while (sTemp.Contains(wxT("(")) && bResult)
+    {
+        dAmount = 0;
+        size_t leftPos = sTemp.Find('(', true);
+        size_t rightPos = sTemp.find(wxT(")"), leftPos);
+        midBrackets = sTemp.SubString(leftPos, rightPos);
+        sToCalc = midBrackets.SubString(1, midBrackets.Len()-2);
+        if (sToCalc.IsEmpty()) bResult = false;
+        double dTempAmount;
+
+        sToCalc.Replace(wxT("+"), wxT("|"));
+        sToCalc.Replace(wxT("-"), wxT("|-"));
+         
+        wxStringTokenizer token(sToCalc, wxT("|"));
+    
+        while (token.HasMoreTokens() && bResult)
+        {
+            double dSubtotal = 1;
+            wxString sToken = token.GetNextToken();
+            sToken.Replace(wxT("*"), wxT("|*"));
+            sToken.Replace(wxT("/"), wxT("|/"));
+            sToken.Prepend(wxT("*"));
+            wxStringTokenizer token2(sToken, wxT("|"));
+            while (token2.HasMoreTokens() && bResult)
+            {
+                wxString sElement = token2.GetNextToken();
+                wxString sSign = sElement.Mid(0,1);
+                sElement.Remove(0,1);
+     
+                if (sElement.ToDouble(&dTempAmount))
+                {
+                    if (sSign == wxT("*")) dSubtotal = dSubtotal*dTempAmount;
+                    else if (sSign == wxT("/") && dTempAmount != 0) dSubtotal = dSubtotal/dTempAmount;
+                    else bResult = false;
+                }
+                else
+                    bResult = false;
+            }
+            dAmount += dSubtotal;
+        }
+        sTemp.Replace(midBrackets, wxString()<<dAmount);
+    }
+    if (sTemp.Contains(wxT("("))||sTemp.Contains(wxT(")"))) bResult = false;
     if (bResult) mmex::formatDoubleToCurrencyEdit(dAmount, sOutput);
 
     return bResult;

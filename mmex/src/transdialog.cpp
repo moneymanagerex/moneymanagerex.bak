@@ -1097,11 +1097,13 @@ void mmTransDialog::onTextEntered(wxCommandEvent& event)
     {   
         if (mmCalculator(textAmount_->GetValue(), sAmount))
             textAmount_->SetValue(sAmount);
+        textAmount_->SetInsertionPoint(textAmount_->GetValue().Len());
     }
     else if (oject_in_focus_ == toTextAmount_->GetId()) 
     {
         if (mmCalculator(toTextAmount_->GetValue(), sAmount))
             toTextAmount_->SetValue(sAmount);
+        toTextAmount_->SetInsertionPoint(toTextAmount_->GetValue().Len());
     }
     else if (oject_in_focus_ == textNumber_->GetId())
     {
