@@ -28,16 +28,32 @@
 #include "testing_util.h"
 #include "lua_interface.h"
 
+#ifdef MMEX_LUA_TEST_INCLUDED_IN_BUILD
+
 /*****************************************************************************************
  The tests for testing mmex_settings - in a database.
  *****************************************************************************************/
 SUITE(mmex_lua_test)
 {
 
+// ----------------------------------------------------------------------------
+// The test: init_DB has been duplicated in this suite to ensure that the
+// database is initialised when this module is used on its own.
+// ----------------------------------------------------------------------------
+TEST(init_DB)
+{
+    printf("\nmmex_lua_test: START");
+    display_STD_IO_separation_line();
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    mmCoreDB* pCore = pDb_core().get();
+    CHECK(pCore->displayDatabaseError_ == true);
+
+    displayTimeTaken(wxT("init_DB"), start_time);    
+}
+
 TEST(lua_interface_hello_world)
 {
-    printf("\nLua Tests: START");
-    display_STD_IO_separation_line();
     const wxDateTime start_time(wxDateTime::UNow());
 
     TLuaInterface* lua_core = new TLuaInterface();
@@ -128,10 +144,9 @@ TEST(lua_interface_test_RunLuaFile)
     display_STD_IO_line();
 
     displayTimeTaken(wxT("lua_interface_test_RunLuaFile"), start_time);
-    display_STD_IO_separation_line();
-    printf("Lua Tests: END\n\n");
 }
 
 } // SUITE end Inidb_test
 
 //----------------------------------------------------------------------------
+#endif // MMEX_LUA_TEST_INCLUDED_IN_BUILD

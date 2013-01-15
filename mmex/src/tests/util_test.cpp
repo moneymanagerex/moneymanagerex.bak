@@ -18,11 +18,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //----------------------------------------------------------------------------
 #include <UnitTest++.h>
+#include "testing_util.h"
 #include "util.h"
 //----------------------------------------------------------------------------
 #include <boost/unordered_map.hpp>
 #include <wx/log.h>
 //----------------------------------------------------------------------------
+#ifdef UTIL_TEST_INCLUDED_IN_BUILD
 
 namespace
 {
@@ -54,7 +56,10 @@ using namespace DateTimeProviders;
 
 TEST(CustomDate)
 {
-	typedef CustomDate<2010, wxDateTime::May, 1> Date_20100501;
+    printf("\nutil_test: START");
+    display_STD_IO_separation_line();
+
+    typedef CustomDate<2010, wxDateTime::May, 1> Date_20100501;
 	wxDateTime dateStart = Date_20100501::StartRange();
 	wxDateTime dateEnd = Date_20100501::EndRange();
 	CHECK(2010 == dateStart.GetYear());
@@ -428,3 +433,4 @@ TEST(formatDoubleToCurrency5)
 } // SUITE
 
 //----------------------------------------------------------------------------
+#endif UTIL_TEST_INCLUDED_IN_BUILD
