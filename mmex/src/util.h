@@ -352,7 +352,7 @@ public:
     doubleValidator() : wxTextValidator(wxFILTER_INCLUDE_CHAR_LIST)
     {
         wxArrayString list;
-        wxString valid_chars(wxT("+-12 345,678.90/*"));
+        wxString valid_chars(wxT("(+-12 345,678.90/*)"));
         size_t len = valid_chars.Length();
         for (size_t i=0; i<len; i++) {
             list.Add(wxString(valid_chars.GetChar(i)));
