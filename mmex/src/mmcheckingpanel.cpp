@@ -1390,10 +1390,20 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
 
     int transID = OnMarkTransactionDB(status);
 
-    if (m_cp->transFilterActive_ || (m_cp->m_currentView != VIEW_TRANS_ALL_STR))
-        refreshVisualList(transID, topItemIndex_);
-    else
+    if (m_cp->transFilterActive_
+        || (VIEW_TRANS_ALL_STR
+            + VIEW_TRANS_TODAY_STR
+            + VIEW_TRANS_CURRENT_MONTH_STR
+            + VIEW_TRANS_LAST_30_DAYS_STR
+            + VIEW_TRANS_LAST_90_DAYS_STR
+            + VIEW_TRANS_LAST_MONTH_STR
+            + VIEW_TRANS_LAST_3MONTHS_STR).Contains(m_cp->m_currentView))
+    {
         m_cp->m_listCtrlAccount->RefreshItems(m_selectedIndex, m_selectedIndex);
+        m_cp->setAccountSummary();
+    }
+    else
+        refreshVisualList(transID, topItemIndex_);
 }
 //----------------------------------------------------------------------------
 
