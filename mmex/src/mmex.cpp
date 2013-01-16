@@ -3694,6 +3694,8 @@ bool mmGUIFrame::IsUpdateAvailable(wxString page)
 
     // get current version
     wxString currentV = mmex::getProgramVersion();
+    currentV = currentV.SubString(0, currentV.Find(wxT("DEV"))-1).Trim();
+    
     wxStringTokenizer tkz1(currentV, wxT('.'), wxTOKEN_RET_EMPTY_ALL);
     numTokens = (int)tkz1.CountTokens();
 
@@ -3739,44 +3741,24 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 
     // Access current version details page
     wxString site = wxT("http://www.codelathe.com/mmex/version.html");
-    wxURL url(site);
-
-    unsigned char buf[1024];
-    boost::scoped_ptr<wxInputStream> in_stream(url.GetInputStream());
-    if (!in_stream)
+ 
+    wxString page;
+    int err_code = site_content(site, page);
+    if (err_code != wxURL_NOERR)
     {
-        versionDetails << _("Unable to connect!");
+        versionDetails << page;
         wxMessageBox(versionDetails, _("MMEX System Information Check"));
         return;
     }
-    in_stream->Read(buf, 1024);
-    //size_t bytes_read=in_stream->LastRead();
-    in_stream.reset();
-    buf[53] = '\0';
 
-    wxString page = wxString::FromAscii((const char *)buf);
     /*************************************************************************
         Expected format of the string from the internet. Version: 0.9.8.0
         page = wxT("x.x.x.x - Win: w.w.w.w - Unix: u.u.u.u - Mac: m.m.m.m");
         string length = 53 characters
     **************************************************************************/
-    wxStringTokenizer sysTokens(page,wxT("-"));
-    // Ignored the first token. Added for compatibility for pre 0.9.8.0
-    wxString oldSys  = sysTokens.GetNextToken();
-    wxString winSys  = sysTokens.GetNextToken().Trim(false);
-    wxString unixSys = sysTokens.GetNextToken().Trim(false);
-    wxString macSys  = sysTokens.GetNextToken().Trim(false);
-
-    wxString mySys =  wxPlatformInfo::Get().GetOperatingSystemFamilyName();
-
-    wxStringTokenizer mySysToken;
-    if (mySys == wxT("Windows"))
-        mySysToken.SetString(winSys,wxT(":"));
-    else if (mySys == wxT("Unix"))
-        mySysToken.SetString(unixSys,wxT(":"));
-    else if (mySys == wxT("Macintosh"))
-        mySysToken.SetString(macSys,wxT(":"));
-
+    page = page.SubString(page.find(wxPlatformInfo::Get().GetOperatingSystemFamilyName().substr(0, 3)), 53);
+    page.Replace(wxT("-"), wxT(":"));
+    wxStringTokenizer mySysToken(page, wxT(":"));
     page = mySysToken.GetNextToken();                       // the system
     page = mySysToken.GetNextToken().Trim(false).Trim();    // the version
 
