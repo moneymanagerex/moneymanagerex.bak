@@ -338,7 +338,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
             {
                 dt = getLineData(readLine);
 
-                dtdt = mmParseDisplayStringToDate(db_, dt, date_format);
+                dtdt = mmParseDisplayStringToDate(dt, date_format);
                 convDate = dtdt.FormatISODate();
                 continue;
             }
@@ -360,7 +360,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 {
                     from_account_name = categ.substr(1, categ.Length()-2);
                     to_account_id = -1;
-                    
+
                     categ = wxT("Transfer");
                     type = wxT("Transfer");
                     if (accounts_name.Index(from_account_name) != wxNOT_FOUND)
@@ -369,18 +369,18 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
                 {
                     wxStringTokenizer cattkz(categ, wxT(":"));
-    
+
                     if (cattkz.HasMoreTokens())
                         cat = cattkz.GetNextToken();
                     if (cattkz.HasMoreTokens())
                         subcat = cattkz.GetNextToken();
-    
+
                     categID = core->categoryList_.GetCategoryId(cat);
                     if (categID == -1)
                     {
                         categID =  core->categoryList_.AddCategory(cat);
                     }
-    
+
                     if (!subcat.IsEmpty())
                     {
                         subCategID = core->categoryList_.GetSubCategoryID(categID, subcat);
@@ -391,7 +391,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                     }
                     else
                         subCategID = -1;
-    
+
                     continue;
                 }
             }
@@ -415,7 +415,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 if (to_account_id == -1)
                 {
                     log << _("Account: ") << from_account_name << wxT(" ") << _("Unknown") << endl;
-                    //FIXME: Transfer transaction with sane to and from account id will be created 
+                    //FIXME: Transfer transaction with sane to and from account id will be created
                     to_account_id = fromAccountID;
                 }
 
@@ -534,7 +534,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
     }
 
     if ( !fileName.IsEmpty() )
-    fileviewer(logFile.GetFullPath(), parent_).ShowModal();
+        fileviewer(logFile.GetFullPath(), parent_).ShowModal();
 
     return fromAccountID;
 }

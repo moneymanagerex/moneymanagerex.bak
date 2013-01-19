@@ -486,35 +486,44 @@ wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
     return dt.Format(mmOptions::instance().dateFormat_);
 }
 
-wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString& dtstr, const wxString& date_format)
+wxDateTime mmParseDisplayStringToDate(const wxString& dtstr, const wxString& date_format)
 {
-    //wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     wxString date_mask = date_format;
     if (date_format.IsEmpty())
         wxString date_mask = mmOptions::instance().dateFormat_;
-    wxString date = dtstr;
+    wxString sDate = dtstr, s = wxT("/");
 
     //For correct date parsing, adjust separator format to: %x/%x/%x
-    date_mask.Replace(wxT("`"), wxT("/"));
-    date_mask.Replace(wxT("'"), wxT("/"));
-    date_mask.Replace(wxT("-"), wxT("/"));
-    date_mask.Replace(wxT("."), wxT("/"));
-    date_mask.Replace(wxT(","), wxT("/"));
-    date_mask.Replace(wxT(" "), wxT("/"));
-    date.Replace(wxT("`"), wxT("/"));
-    date.Replace(wxT("'"), wxT("/"));
-    date.Replace(wxT("-"), wxT("/"));
-    date.Replace(wxT("."), wxT("/"));
-    date.Replace(wxT(","), wxT("/"));
-    date.Replace(wxT(" "), wxT("/"));
+    date_mask.Replace(wxT("`"), s);
+    date_mask.Replace(wxT("'"), s);
+    date_mask.Replace(wxT("-"), s);
+    date_mask.Replace(wxT("."), s);
+    date_mask.Replace(wxT(","), s);
 
-    if (date.Len()<9)
+    sDate.Replace(wxT("`"), s);
+    sDate.Replace(wxT("'"), s);
+    sDate.Replace(wxT("-"), s);
+    sDate.Replace(wxT("."), s);
+    sDate.Replace(wxT(","), s);
+
+    if (sDate.Len()<9)
         date_mask.Replace(wxT("%Y"), wxT("%y"));
     else
         date_mask.Replace(wxT("%y"), wxT("%Y"));
 
+    wxStringTokenizer token(sDate, s);
+    double a,b,c;
+    wxString t = token.GetNextToken().Trim();
+    t.ToDouble(&a);
+    t = token.GetNextToken().Trim();
+    t.ToDouble(&b);
+    t = token.GetNextToken().Trim();
+    t.ToDouble(&c);
+
+    sDate = wxString()<<a<<s<<b<<s<<c;
+
     wxDateTime dt;
-    dt.ParseFormat(date, date_mask, wxDateTime::Now());
+    dt.ParseFormat(sDate, date_mask, wxDateTime::Now());
     return dt;
 }
 
@@ -801,16 +810,17 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
 
 wxString DisplayDate2FormatDate(wxString strDate)
 {
-    if (int i = date_format().Index(strDate))
-        return date_format_mask()[i];
-    return date_format_mask()[0];
+    int i = date_format().Index(strDate.Upper());
+    if (i == wxNOT_FOUND)
+        return strDate;
+    return date_format_mask()[i];
 }
 
 wxString FormatDate2DisplayDate(wxString strDate)
 {
-    if (int i = date_format_mask().Index(strDate))
-        return date_format()[i];
-    return date_format()[0];
+    int i = date_format_mask().Index(strDate);
+    if (i == wxNOT_FOUND) i = 0;
+    return date_format()[i];
 }
 
 const wxArrayString date_format_mask()
@@ -830,6 +840,7 @@ const wxArrayString date_format_mask()
     mask.Add(wxT("%m/%d/%Y"));
     mask.Add(wxT("%m-%d-%y"));
     mask.Add(wxT("%m-%d-%Y"));
+    mask.Add(wxT("%m/%d'%y"));
     mask.Add(wxT("%m/%d'%Y"));
     mask.Add(wxT("%y/%m/%d"));
     mask.Add(wxT("%y-%m-%d"));
@@ -858,6 +869,7 @@ const wxArrayString date_format()
     date_format.Add(wxT("MM/DD/YYYY"));
     date_format.Add(wxT("MM-DD-YY"));
     date_format.Add(wxT("MM-DD-YYYY"));
+    date_format.Add(wxT("MM/DD'YY"));
     date_format.Add(wxT("MM/DD'YYYY"));
     date_format.Add(wxT("YY/MM/DD"));
     date_format.Add(wxT("YY-MM-DD"));
@@ -1075,7 +1087,7 @@ void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core)
 boost::shared_ptr<wxSQLite3Database> static_db_ptr()
 {
     static boost::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
-    
+
     return db;
 }
 
@@ -1084,14 +1096,14 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
     //TODO: Fix division/multiply by negative and Non standart number format
     sInput.Replace(wxT(")("), wxT(")*("));
     bool bResult = true;
-    int a = sInput.Replace(wxT("("), wxT("(")); 
+    int a = sInput.Replace(wxT("("), wxT("("));
     int b = sInput.Replace(wxT(")"), wxT(")"));
     if (a != b) return false;
     if (a > 0)
     {
         for (size_t i = 0; i < sInput.Len(); i++)
         {
-            if (sInput[i] == '(') a += i; 
+            if (sInput[i] == '(') a += i;
             if (sInput[i] == ')') b += i;
             if (sInput[i] == '(' && i > 0) bResult = bResult && (wxString(wxT("(+-*/")).Contains(sInput[i-1]));
             if (sInput[i] == ')' && i < sInput.Len()-1) bResult = bResult && (wxString(wxT(")+-*/")).Contains(sInput[i+1]));
@@ -1115,9 +1127,9 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
 
         sToCalc.Replace(wxT("+"), wxT("|"));
         sToCalc.Replace(wxT("-"), wxT("|-"));
-         
+
         wxStringTokenizer token(sToCalc, wxT("|"));
-    
+
         while (token.HasMoreTokens() && bResult)
         {
             double dSubtotal = 1;
@@ -1131,7 +1143,7 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
                 wxString sElement = token2.GetNextToken();
                 wxString sSign = sElement.Mid(0,1);
                 sElement.Remove(0,1);
-     
+
                 if (sElement.ToDouble(&dTempAmount))
                 {
                     if (sSign == wxT("*")) dSubtotal = dSubtotal*dTempAmount;

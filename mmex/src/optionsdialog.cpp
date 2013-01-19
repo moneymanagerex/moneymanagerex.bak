@@ -718,10 +718,10 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 {
-    wxString newFormat = choiceDateFormat_->GetValue();
+    wxString newFormat = choiceDateFormat_->GetValue().Upper();
     if (newFormat == DisplayDate2FormatDate(newFormat)) // Not a predefined format
     {
-        choiceDateFormat_->SetValue(FormatDate2DisplayDate(mmex::DEFDATEFORMAT));
+        //choiceDateFormat_->SetValue(FormatDate2DisplayDate(mmex::DEFDATEFORMAT));
         return;
     }
 
@@ -740,6 +740,7 @@ void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 
     sampleDateText_->SetLabel(wxDateTime::Now().Format(dateFormat_));
     core_->bTransactionList_.ChangeDateFormat();
+    choiceDateFormat_->SetValue(newFormat);
 }
 
 void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& event)
