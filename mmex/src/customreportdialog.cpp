@@ -43,7 +43,7 @@ BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
     EVT_TREE_END_LABEL_EDIT(wxID_ANY, mmCustomSQLDialog::OnLabelChanged)
     EVT_TREE_ITEM_MENU(wxID_ANY, mmCustomSQLDialog::OnItemRightClick)
     //EVT_TREE_ITEM_ACTIVATED(wxID_ANY,  mmCustomSQLDialog::OnDoubleClicked)
-    EVT_MENU_RANGE(wxID_NEW, wxID_DELETE, mmCustomSQLDialog::OnMenuSelected)
+    EVT_MENU(wxID_ANY, mmCustomSQLDialog::OnMenuSelected)
     EVT_TIMER(wxID_ANY, mmCustomSQLDialog::ShowCursorCoordinates)
 END_EVENT_TABLE()
 
@@ -325,11 +325,10 @@ bool mmCustomSQLDialog::SaveCustomReport()
 
     if (reportfileName.IsEmpty())
     {
-        wxMessageBox(_("Please supply the Report Title before saving"),reportIndex_->UserDialogHeading(),wxOK|wxICON_WARNING);
+        wxMessageBox(_("Please supply the Report Title before saving"),
+            reportIndex_->UserDialogHeading(), wxOK|wxICON_WARNING);
         return false;
     }
-
-    navCtrlUpdateRequired_ = false;
 
     reportfileName.Replace(wxT(" "),wxT("_"));          // Replace spaces with underscore character
     reportfileName += sSctiptType() == wxT("SQL") ? wxT(".sql") : wxT(".lua");  // Add the file extenstion
@@ -343,8 +342,6 @@ bool mmCustomSQLDialog::SaveCustomReport()
         loadedFileName_ = reportfileName;
         navCtrlUpdateRequired_ = true;
     }
-
-    button_Save_->Disable();
 
     if ( !edit_ && reportIndex_->ReportListHasItems() )
     {
@@ -397,6 +394,8 @@ bool mmCustomSQLDialog::SaveCustomReport()
         navCtrlUpdateRequired_ = navCtrlUpdateRequired_ || !edit_;
         loadedFileName_ = reportfileName;
     }
+
+    button_Save_->Disable();
     edit_ = true;
     return true;
 }
@@ -472,8 +471,8 @@ void mmCustomSQLDialog::OnItemRightClick(wxTreeEvent& event)
     treeCtrl_ ->SelectItem(id);
 
     wxMenu* customReportMenu = new wxMenu;
-    customReportMenu->Append(wxID_NEW, _("New SQL Custom Report"));
-    customReportMenu->Append(wxID_NEW+1, _("New Lua Custom Report"));
+    customReportMenu->Append(1, _("New SQL Custom Report"));
+    customReportMenu->Append(2, _("New Lua Custom Report"));
     customReportMenu->AppendSeparator();
     customReportMenu->Append(wxID_DELETE, _("Delete Custom Report"));
     PopupMenu(customReportMenu);
@@ -565,7 +564,7 @@ bool mmCustomSQLDialog::DeleteCustomSqlReport()
 void mmCustomSQLDialog::OnMenuSelected(wxCommandEvent& event)
 {
     int id = event.GetId();
-    if (id == wxID_NEW)
+    if (id == 1)
     {
         reportTitleTxtCtrl_->SetValue(_("New SQL Custom Report"));
         tcSourceTxtCtrl_->ChangeValue(wxT("select 'Hello World'"));
@@ -573,7 +572,7 @@ void mmCustomSQLDialog::OnMenuSelected(wxCommandEvent& event)
         m_radio_box_->SetSelection(0);
         navCtrlUpdateRequired_ = SaveCustomReport();
     }
-    if (id == wxID_NEW+1)
+    if (id == 2)
     {
         reportTitleTxtCtrl_->SetValue(_("New Lua Custom Report"));
         tcSourceTxtCtrl_->ChangeValue(wxT("return \"Hello World\""));
