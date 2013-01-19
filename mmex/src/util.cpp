@@ -495,16 +495,22 @@ wxDateTime mmParseDisplayStringToDate(const wxString& dtstr, const wxString& dat
 
     //For correct date parsing, adjust separator format to: %x/%x/%x
     date_mask.Replace(wxT("`"), s);
+    date_mask.Replace(wxT("' "), s);
+    date_mask.Replace(wxT("/ "), s);
     date_mask.Replace(wxT("'"), s);
     date_mask.Replace(wxT("-"), s);
     date_mask.Replace(wxT("."), s);
     date_mask.Replace(wxT(","), s);
+    date_mask.Replace(wxT(" "), s);
 
     sDate.Replace(wxT("`"), s);
+    sDate.Replace(wxT("' "), s);
+    sDate.Replace(wxT("/ "), s);
     sDate.Replace(wxT("'"), s);
     sDate.Replace(wxT("-"), s);
     sDate.Replace(wxT("."), s);
     sDate.Replace(wxT(","), s);
+    sDate.Replace(wxT(" "), s);
 
     if (sDate.Len()<9)
         date_mask.Replace(wxT("%Y"), wxT("%y"));
