@@ -1928,14 +1928,13 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
     //wxString searchString = event.GetString().c_str();
 
     wxSearchCtrl* st = (wxSearchCtrl*)FindWindow(wxID_FIND);
-    wxString search_string = st->GetValue().Lower().Append(wxT("*"));
-
+    wxString search_string = st->GetValue().Lower();
     if (search_string.IsEmpty()) return;
 
     double amount= 0, deposit = 0, withdrawal = 0;
     bool valid_amount = mmex::formatCurrencyToDouble(search_string, amount);
     bool withdrawal_only = false;
-    if (valid_amount && amount <0)
+    if (valid_amount && amount < 0)
     {
         amount = -amount;
         withdrawal_only = true;
@@ -1946,7 +1945,8 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
     if (selectedItem < 0) //nothing selected
         selectedItem = g_asc ? last - 1 : 0;
 
-    while (selectedItem >=0 && selectedItem <= last)
+    search_string.Append(wxT("*"));
+    while (selectedItem >= 0 && selectedItem <= last)
     {
         g_asc ?  selectedItem-- : selectedItem++;
         const wxString t = getItem(selectedItem, COL_NOTES);
