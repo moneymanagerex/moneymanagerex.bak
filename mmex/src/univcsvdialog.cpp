@@ -1063,7 +1063,7 @@ void mmUnivCSVDialog::update_preview()
                             break;
                        else 
                        {
-                           if (col == date_position) text = mmParseDisplayStringToDate(db_, text, date_format).Format(date_format);
+                           if (col == date_position) text = mmParseDisplayStringToDate(text, date_format).Format(date_format);
                            m_list_ctrl_->SetItem(itemIndex, col, text);
                        }
                         
@@ -1228,7 +1228,7 @@ void mmUnivCSVDialog::parseToken(int index, wxString& token)
     switch (index)
     {
         case UNIV_CSV_DATE:
-            dtdt_ = mmParseDisplayStringToDate(db_, token, date_format);
+            dtdt_ = mmParseDisplayStringToDate(token, date_format);
             dt_ = dtdt_.FormatISODate();
             break;
 
