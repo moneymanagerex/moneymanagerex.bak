@@ -26,6 +26,7 @@
 //----------------------------------------------------------------------------
 #include <boost/shared_ptr.hpp>
 #include <vector>
+
 //----------------------------------------------------------------------------
 static const char SELECT_ALL_FROM_ASSETS_V1[] =
     "select a.ASSETNAME as ASSETNAME, "
@@ -39,7 +40,7 @@ static const char SELECT_ALL_FROM_ASSETS_V1[] =
        "a.VALUECHANGE as VALUECHANGE, "
        "a.ASSETID as ASSETID, "
        "a.VALUECHANGERATE as VALUECHANGERATE, "
-	   "a.value as VALUE "
+       "a.value as VALUE "
     "from ASSETS_V1 a ";
 
 static const char SELECT_ROW_FROM_ASSETS_V1[] =
@@ -67,7 +68,7 @@ static const char INSERT_INTO_ASSETS_V1[] =
     ") values (?, ?, ?, ?, ?, ?, ?)";
 
 static const char DELETE_ASSETID_ASSETS_V1[] =
-	"delete from ASSETS_V1 where ASSETID = ?";
+    "delete from ASSETS_V1 where ASSETID = ?";
 
 static const char SELECT_ALL_FROM_ACCOUNTLIST_V1[] =
     "SELECT * "
@@ -413,6 +414,89 @@ static const char CREATE_TABLE_SUBCATEGORY_V1[]=
     "CREATE TABLE SUBCATEGORY_V1(SUBCATEGID integer primary key, "
     "SUBCATEGNAME TEXT NOT NULL, CATEGID integer NOT NULL)";
 
+static const wxString TABLE_NAMES[] =
+{
+    wxT("ASSETS_V1"),
+    wxT("ACCOUNTLIST_V1"),
+    wxT("CHECKINGACCOUNT_V1"),
+    wxT("PAYEE_V1"),
+    wxT("BILLSDEPOSITS_V1"),
+    wxT("STOCK_V1"),
+    wxT("SPLITTRANSACTIONS_V1"),
+    wxT("BUDGETSPLITTRANSACTIONS_V1"),
+    wxT("CATEGORY_V1"),
+    wxT("SUBCATEGORY_V1"),
+    wxT("BUDGETYEAR_V1"),
+    wxT("BUDGETTABLE_V1"),
+    wxT("CURRENCYFORMATS_V1"),
+};
+static const wxString CREATE_TABLE_SQL[] =
+{
+    wxString::FromUTF8(CREATE_TABLE_ASSETS_V1),
+    wxString::FromUTF8(CREATE_TABLE_ACCOUNTLIST_V1),
+    wxString::FromUTF8(CREATE_TABLE_CHECKINGACCOUNT_V1),
+    wxString::FromUTF8(CREATE_TABLE_PAYEE_V1),
+    wxString::FromUTF8(CREATE_TABLE_BILLSDEPOSITS_V1),
+    wxString::FromUTF8(CREATE_TABLE_STOCK_V1),
+    wxString::FromUTF8(CREATE_TABLE_SPLITTRANSACTIONS_V1),
+    wxString::FromUTF8(CREATE_TABLE_BUDGETSPLITTRANSACTIONS_V1),
+    wxString::FromUTF8(CREATE_TABLE_CATEGORY_V1),
+    wxString::FromUTF8(CREATE_TABLE_SUBCATEGORY_V1),
+    wxString::FromUTF8(CREATE_TABLE_BUDGETYEAR_V1),
+    wxString::FromUTF8(CREATE_TABLE_BUDGETTABLE_V1),
+    wxString::FromUTF8(CREATE_TABLE_CURRENCYFORMATS_V1),
+};
+
+static const char CREATE_VIEW_ALLDATA[] =
+    "create  view alldata as "
+    "select \n"
+    "       CANS.TransID as ID, CANS.TransCode as TransactionType, \n"
+    "       date(CANS.TransDate, 'localtime') as Date, \n"
+    "       d.userdate as UserDate \n"
+    "       ,coalesce(CAT.CategName, SCAT.CategName) as Category, \n"
+    "       coalesce(SUBCAT.SUBCategName, SSCAT.SUBCategName, '') as Subcategory, \n"
+    "       ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end)*(case CANS.CATEGID when -1 then st.splittransamount else CANS.TRANSAMOUNT end),2) as Amount, \n"
+    "       cf.currency_symbol as currency, \n"
+    "       CANS.Status as Status, CANS.NOTES as Notes, \n"
+    "       cf.BaseConvRate as BaseConvRate, \n"
+    "       FROMACC.CurrencyID as CurrencyID, \n"
+    "       FROMACC.AccountName as AccountName,  FROMACC.AccountID as AccountID, \n"
+    "       ifnull (TOACC.AccountName,'') as ToAccountName, \n"
+    "       ifnull (TOACC.ACCOUNTId,-1) as ToAccountID, CANS.ToTransAmount ToTransAmount, \n"
+    "       ifnull (TOACC.CURRENCYID, -1) as ToCurrencyID, \n"
+    "       (case ifnull(CANS.CATEGID,-1) when -1 then 1 else 0 end) as Splitted, \n"
+    "       ifnull(CAT.CategId,st.CategId) as CategID, \n"
+    "       ifnull (ifnull(SUBCAT.SubCategID,st.subCategId),-1) as SubCategID, \n"
+    "       ifnull (PAYEE.PayeeName,'') as Payee, \n"
+    "       ifnull (PAYEE.PayeeID,-1) as PayeeID, \n"
+    "            CANS.TRANSACTIONNUMBER as TransactionNumber, \n"
+    "            d.year as Year, \n"
+    "            d.month as Month, \n"
+    "            d.day as Day, \n"
+    "            d.finyear as FinYear \n"
+    "            from  CHECKINGACCOUNT_V1 CANS \n"
+    "            left join CATEGORY_V1 CAT on CAT.CATEGID = CANS.CATEGID \n"
+    "            left join SUBCATEGORY_V1 SUBCAT on SUBCAT.SUBCATEGID = CANS.SUBCATEGID and SUBCAT.CATEGID = CANS.CATEGID \n"
+    "            left join PAYEE_V1 PAYEE on PAYEE.PAYEEID = CANS.PAYEEID \n"
+    "            left join ACCOUNTLIST_V1 FROMACC on FROMACC.ACCOUNTID = CANS.ACCOUNTID \n"
+    "            left join ACCOUNTLIST_V1 TOACC on TOACC.ACCOUNTID = CANS.TOACCOUNTID \n"
+    "            left join splittransactions_v1 st on CANS.transid=st.transid \n"
+    "            left join CATEGORY_V1 SCAT on SCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid \n"
+    "            left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = st.SUBCATEGID and SSCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid \n"
+    "            left join currencyformats_v1 cf on cf.currencyid=FROMACC .currencyid \n"
+    "           left join ( select transid as id , date(transdate, 'localtime') as transdate \n"
+    ",round (strftime('%d', transdate, 'localtime'))  as day \n"
+    ",round (strftime('%m', transdate, 'localtime'))  as month \n"
+    ",round (strftime('%Y', transdate, 'localtime'))  as year \n"
+    ",round(strftime('%Y', transdate, 'localtime' ,'start of month', ((case when fd.infovalue<=round(strftime('%d', transdate , 'localtime')) then 1  else 0 end)-fm.infovalue)||' month')) as finyear \n"
+    ",ifnull (ifnull (strftime(df.infovalue, TransDate, 'localtime'), \n"
+    "       (strftime(replace (df.infovalue, '%y', SubStr (strftime('%Y',TransDate, 'localtime'),3,2)),TransDate, 'localtime')) \n"
+    "       ), date(TransDate, 'localtime')) as UserDate \n"
+    "from  CHECKINGACCOUNT_V1 \n"
+    "left join infotable_v1 df on df.infoname='DATEFORMAT' \n"
+    "left join infotable_v1 fm on fm.infoname='FINANCIAL_YEAR_START_MONTH' \n"
+    "left join infotable_v1 fd on fd.infoname='FINANCIAL_YEAR_START_DAY') d on d.id=CANS.TRANSID \n"
+    "order by CANS.transid";
 
 namespace mmDBWrapper
 {
@@ -423,18 +507,9 @@ bool ViewExists(wxSQLite3Database* db, const char *viewName);
 
 /* Creating new DBs */
 void initDB(wxSQLite3Database* db);
-
-void createCurrencyV1Table(wxSQLite3Database* db);
-void createAccountListV1Table(wxSQLite3Database* db);
-void createCheckingAccountV1Table(wxSQLite3Database* db);
-void createPayeeV1Table(wxSQLite3Database* db);
-void createCategoryV1Table(wxSQLite3Database* db);
-void createBudgetingV1Table(wxSQLite3Database* db);
-void createBillsDepositsV1Table(wxSQLite3Database* db);
-void createStockV1Table(wxSQLite3Database* db);
-void createAssetsV1Table(wxSQLite3Database* db);
-void createSplitTransactionsV1Table(wxSQLite3Database* db);
-void createAllDataView(wxSQLite3Database* db);
+int createTable(wxSQLite3Database* db, const wxString &sTableName, const wxString &sql);
+int createAllDataView(wxSQLite3Database* db);
+bool initCurrencyV1Table(wxSQLite3Database* db);
 
 /* Upgrading to new DBs */
 bool checkDBVersion(wxSQLite3Database* db);
