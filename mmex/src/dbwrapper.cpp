@@ -1570,7 +1570,7 @@ void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
 {
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement("delete from ASSETS_V1 where ASSETID = ?");
+        wxSQLite3Statement st = db->PrepareStatement(DELETE_ASSETID_ASSETS_V1);
         st.Bind(1, assetID);
         st.ExecuteUpdate();
         st.Finalize();
