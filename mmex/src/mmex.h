@@ -40,7 +40,7 @@ class mmPanelBase;
 class mmTreeItemData;
 class mmCheckingPanel;
 class mmBudgetingPanel;
-class customSQLReportIndex;
+class CustomReportIndex;
 class RecentDatabaseFiles;
 //----------------------------------------------------------------------------
 
@@ -255,7 +255,7 @@ private:
     bool setAccountInSection(wxString sectionName, wxString accountName);
 
     /* Custom Reports */
-    customSQLReportIndex* custRepIndex_;
+    CustomReportIndex* custRepIndex_;
     wxString customSqlReportSelectedItem_;
 
     /* printing */

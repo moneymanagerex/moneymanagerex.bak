@@ -21,78 +21,74 @@
 #include "mmcoredb.h"
 
 //===============================================================
-// Class: customSQLReportIndex
+// Class: CustomReportIndex
 //        Handles the text index file for custom reports  
 //===============================================================
-class customSQLReportIndex
+class CustomReportIndex
 {
 public:
-    customSQLReportIndex();
+    CustomReportIndex();
     
-//    virtual ~customSQLReportIndex();
-
-    /** Create the index file if the file does not exist.
-        sets hasActiveSQLReports() to true if successful. */
-    void initIndexFileHeader();
+//    virtual ~CustomReportIndex();
     
     /** Returns true if file is initialised and open */
-    bool hasActiveSQLReports();
+    bool HasActiveReports();
 
     /**  Sets the index file pointer at beginning of file */ 
-    void resetReportsIndex();
+    void ResetReportsIndex();
 
     /** Sets and Returns the report title. Reads one line of the index file.
         Sets: validTitle_ currentReportTitle_ currentReportFileName_ reportIsSubReport_ */
-    wxString nextReportTitle();
+    wxString NextReportTitle();
     
     /** Sets and Returns the filename for the given index.  */
-    wxString reportFileName(int index);
+    wxString ReportFileName(int index);
 
-    /** Valid after calling: nextReportTitle() */
-    bool validTitle();
+    /** Valid after calling: NextReportTitle() */
+    bool ValidTitle();
 
     /** Returns the report title.
-        Valid after calling: : nextReportTitle() or reportFileName() */
-    wxString currentReportTitle();
+        Valid after calling: : NextReportTitle() or ReportFileName() */
+    wxString CurrentReportTitle();
 
     /** Returns true if report is a subreport title.
-        Valid after calling: : nextReportTitle() or reportFileName() */
-    bool reportIsSubReport();
+        Valid after calling: : NextReportTitle() or ReportFileName() */
+    bool ReportIsSubReport();
 
     /** Returns the report filename.
-        Valid after calling: : nextReportTitle() or reportFileName() */
-    wxString currentReportFileName(bool withfilePath = true);
-    wxString currentReportFileExt();
-    wxString currentReportFileType();
+        Valid after calling: : NextReportTitle() or ReportFileName() */
+    wxString CurrentReportFileName(bool withfilePath = true);
+    wxString CurrentReportFileExt();
+    wxString CurrentReportFileType();
 
     /** Return index of user selected report title as ID: Custom_Report_xxx.
         sets: validTitle_ currentReportTitle_ currentReportFileName_ currentReportFileIndex_ */
-    wxString getUserTitleSelection(wxString description = wxT(":"));
+    wxString GetUserTitleSelection(wxString description = wxT(":"));
 
     /** Gets the report title from the given ID: Custom_Report_xxx.
         sets: currentReportTitle_ currentReportFileName_ currentReportFileIndex_  */
-    bool getSelectedTitleSelection(wxString titleIndex);
+    bool GetSelectedTitleSelection(wxString titleIndex);
 
     /** Adds a new listing to the index file at the currentReportFileIndex_
-        call getUserTitleSelection() or getSelectedTitleSelection() first. */
-    void addReportTitle(wxString reportTitle, bool updateIndex, wxString reportFileName = wxT(""), bool isSub = false);
+        call GetUserTitleSelection() or GetSelectedTitleSelection() first. */
+    void AddReportTitle(wxString reportTitle, bool updateIndex, wxString ReportFileName = wxT(""), bool isSub = false);
 
     /** Returns true if the report list is not empty */
     bool ReportListHasItems();
 
     /** Removes the listing from the index file at location: currentReportFileIndex_  */
-    void deleteSelectedReportTitle();
+    void DeleteSelectedReportTitle();
 
     /** Returns the title header string for User Dialog */
     wxString UserDialogHeading(); 
 
-    /** Returns the file contents if the .SQL file */ 
-    bool getSqlFileData(wxString& sqlText);
+    /** Returns the file contents of the report file (.sql or .lua) */ 
+    bool GetReportFileData(wxString& reportText);
     
-    int getCustomReportId() {return currentReportFileIndex_;}
+    int GetCustomReportId() {return currentReportFileIndex_;}
 
 private:
-    bool activeSqlReports_;
+    bool activeReports_;
     bool validTitle_;
     bool reportIsSubReport_;
     int  currentReportFileIndex_;

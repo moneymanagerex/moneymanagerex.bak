@@ -37,7 +37,7 @@ inline const wxChar* getSettingsFileName()
 
 inline const wxChar* getCustomReportIndexFilename()
 {
-    return wxT("CustomSQLReportIndex.txt");
+    return wxT("CustomReportIndex.txt");
 }
 //----------------------------------------------------------------------------
 
