@@ -478,7 +478,7 @@ void completeBDInSeries(wxSQLite3Database* db, int bdID);
 
 /* Operations on the CURRENCY */
 void loadCurrencySettings(wxSQLite3Database* db, int currencyID);
-double getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID);
+//double getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID);
 bool deleteCurrency(wxSQLite3Database* db, int currencyID);
 int addCurrency(wxSQLite3Database* db, std::vector<wxString> data);
 
@@ -487,8 +487,7 @@ wxString getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSettings, const wx
 /* Stocks API */
 void deleteStockInvestment(wxSQLite3Database* db, int stockID);
 bool moveStockInvestment(wxSQLite3Database* db, int stockID, int toAccountID);
-double getStockInvestmentBalance(wxSQLite3Database* db, double& invested);
-double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, bool convertToBase, double& originalVal);
+double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, double& originalVal);
 
 /* Assets API */
 void deleteAsset(wxSQLite3Database* db, int assetID);

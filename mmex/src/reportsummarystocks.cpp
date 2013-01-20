@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -24,7 +24,7 @@
 #include "util.h"
 #include "stockspanel.h"
 
-static const char SELECT_ROW_SYMBOL_FROM_STOCK_V1[] = 
+static const char SELECT_ROW_SYMBOL_FROM_STOCK_V1[] =
     "SELECT "
            "STOCKNAME, "
            "TOTAL(NUMSHARES) AS NUMSHARES, "
@@ -47,6 +47,7 @@ wxString mmReportSummaryStocks::getHTMLText()
     hb.addDateNow();
 
     double gain_loss_sum_total = 0.0;
+    double stockBalance = 0.0;
 
     wxArrayString account_type;
     account_type.Add(ACCOUNT_TYPE_STOCK);
@@ -88,6 +89,7 @@ wxString mmReportSummaryStocks::getHTMLText()
 
             th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
             double base_conv_rate = core_->accountList_.getAccountBaseCurrencyConvRate(accountID);
+            stockBalance += base_conv_rate * th.value_;
             gain_loss_sum += th.gainLoss_;
             gain_loss_sum_total += th.gainLoss_ * base_conv_rate;
 
@@ -111,15 +113,15 @@ wxString mmReportSummaryStocks::getHTMLText()
                 hb.addTableCell(th.gainLossStr_, true, true, true, wxT("RED"));
             else
                 hb.addTableCell(th.gainLossStr_, true, false, true);
-            
+
             hb.addTableCell(th.valueStr_, true);
             hb.endTableRow();
-            
+
         }
         q2.Finalize();
 
         double invested = 0;
-        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, accountID, false, invested);
+        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, accountID, invested);
         wxString stockBalanceStr;
         wxString gain_loss_sum_str;
 
@@ -129,25 +131,20 @@ wxString mmReportSummaryStocks::getHTMLText()
 
         mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
         mmex::formatDoubleToCurrency(gain_loss_sum, gain_loss_sum_str);
-    
+
         hb.addRowSeparator(9);
         hb.addTotalRow(_("Total:"), 8, gain_loss_sum_str);
         hb.addTableCell(stockBalanceStr, true, true, true); //numeric, italic, bold
-
     }
 
     core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
-
-    double invested = 0;
-    double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
-    wxString stockBalanceStr;
-    wxString gain_loss_sum_total_str;
-    mmex::formatDoubleToCurrency(gain_loss_sum_total, gain_loss_sum_total_str);
-    mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+    wxString sStockBalance, sGainLossTotal;
+    mmex::formatDoubleToCurrency(gain_loss_sum_total, sGainLossTotal);
+    mmex::formatDoubleToCurrency(stockBalance, sStockBalance);
 
     hb.addRowSeparator(9);
-    hb.addTotalRow(_("Grand Total:"), 8, gain_loss_sum_total_str);
-    hb.addTableCell(stockBalanceStr, true, true, true); //numeric, italic, bold
+    hb.addTotalRow(_("Grand Total:"), 8, sGainLossTotal);
+    hb.addTableCell(sStockBalance, true, true, true); //numeric, italic, bold
     hb.endTableRow();
     hb.endTable();
 
@@ -157,15 +154,15 @@ wxString mmReportSummaryStocks::getHTMLText()
 }
 
 void mmReportSummaryStocks::display_header(mmHTMLBuilder& hb) {
-	hb.startTableRow();
-	hb.addTableHeaderCell(_("Name"));
-	hb.addTableHeaderCell(_("Symbol"));
-	hb.addTableHeaderCell(_("Purchase Date"));
-	hb.addTableHeaderCell(_("Quantity"), true);
-	hb.addTableHeaderCell(_("Purchase Price"), true);
-	hb.addTableHeaderCell(_("Current Price"), true);
-	hb.addTableHeaderCell(_("Commission"), true);
-	hb.addTableHeaderCell(_("Gain/Loss"), true);
-	hb.addTableHeaderCell(_("Value"), true);
-	hb.endTableRow();
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Name"));
+    hb.addTableHeaderCell(_("Symbol"));
+    hb.addTableHeaderCell(_("Purchase Date"));
+    hb.addTableHeaderCell(_("Quantity"), true);
+    hb.addTableHeaderCell(_("Purchase Price"), true);
+    hb.addTableHeaderCell(_("Current Price"), true);
+    hb.addTableHeaderCell(_("Commission"), true);
+    hb.addTableHeaderCell(_("Gain/Loss"), true);
+    hb.addTableHeaderCell(_("Value"), true);
+    hb.endTableRow();
 }
