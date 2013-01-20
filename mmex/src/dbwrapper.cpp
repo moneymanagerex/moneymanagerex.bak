@@ -1538,15 +1538,7 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
     double balance = 0.0;
     originalVal = 0.0;
 
-    static const char sql[] =
-    "select VALUE, "
-           "NUMSHARES, "
-           "PURCHASEPRICE, "
-           "COMMISSION "
-    "from STOCK_V1 "
-    "where HELDAT = ?";
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
+    wxSQLite3Statement st = db->PrepareStatement(SELECT_ROW_HELDAT_FROM_STOCK_V1);
     st.Bind(1, accountID);
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
