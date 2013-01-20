@@ -66,6 +66,9 @@ static const char INSERT_INTO_ASSETS_V1[] =
       "STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE "
     ") values (?, ?, ?, ?, ?, ?, ?)";
 
+static const char DELETE_ASSETID_ASSETS_V1[] =
+	"delete from ASSETS_V1 where ASSETID = ?";
+
 static const char SELECT_ALL_FROM_ACCOUNTLIST_V1[] =
     "SELECT * "
     "FROM ACCOUNTLIST_V1 "
@@ -257,7 +260,7 @@ static const char SELECT_ROW_FROM_STOCK_V1[] =
     "PURCHASEPRICE, CURRENTPRICE, COMMISSION "
     "FROM STOCK_V1 "
     "WHERE STOCKID = ?";
-
+    
 //UPDATE
 static const char UPDATE_BUDGETYEAR_V1[] =
     "UPDATE BUDGETYEAR_V1 "
