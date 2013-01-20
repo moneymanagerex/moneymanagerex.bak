@@ -33,8 +33,7 @@ CustomReportIndex::CustomReportIndex()
     if (indexFile_->Exists())
     {
         indexFile_ ->Open();
-        if (indexFile_->GetLineCount() >= 4 )
-            activeReports_ = true;
+		activeReports_ = ReportListHasItems();
     }
     else
     {
@@ -277,12 +276,8 @@ void CustomReportIndex::AddReportTitle(wxString reportTitle, bool updateIndex, w
 
 bool CustomReportIndex::ReportListHasItems()
 {
-    bool result = false;
-    int lineCount = indexFile_->GetLineCount();
-    if ( lineCount > 4 )
-        result = true;
-
-    return result;
+    size_t lineCount = indexFile_->GetLineCount();
+    return ( lineCount > 4 );
 }
 
 void CustomReportIndex::DeleteSelectedReportTitle()
