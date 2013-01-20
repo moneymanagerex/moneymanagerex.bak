@@ -288,22 +288,25 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
     {
         wxFileName selectedFileName(sScriptFileName);
         loadedFileName_ = selectedFileName.GetFullName();
-        wxString sqlText;
+        wxString reportText;
 
-        wxTextFile sqlFile(sScriptFileName);
-        if (sqlFile.Open())
+        wxTextFile reportFile(sScriptFileName);
+        if (reportFile.Open())
         {
-            sqlText << sqlFile.GetFirstLine();
-            while (! sqlFile.Eof())
+            reportText << reportFile.GetFirstLine() << wxT("\n");
+            size_t currentline = 1;
+            while (! reportFile.Eof())
             {
-                wxString nextLine = sqlFile.GetNextLine();
-                if (! nextLine.IsEmpty())
-                    sqlText << wxT("\n");
-                sqlText << nextLine;
+                reportText << reportFile.GetNextLine();
+                currentline ++;
+                if (currentline < reportFile.GetLineCount())
+                {
+                    reportText << wxT("\n");
+                }
             }
-            tcSourceTxtCtrl_->SetValue(sqlText);
+            tcSourceTxtCtrl_->SetValue(reportText);
             newFileCreated_ = false;
-            sqlFile.Close();
+            reportFile.Close();
         }
         else
         {
