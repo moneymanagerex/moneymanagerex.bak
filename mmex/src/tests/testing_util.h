@@ -18,13 +18,10 @@
  *************************************************************************/
 
 #pragma once
-/****************************************************************************
- Revision of last commit: $Revision: 3245 $
- Author of last commit:   $Author: stef145g $
- ****************************************************************************/
-#define UTIL_TEST_INCLUDED_IN_BUILD
-#define DBWRAPPER_TEST_INCLUDED_IN_BUILD
-#define MMEX_LUA_TEST_INCLUDED_IN_BUILD
+//#define UTIL_TEST_INCLUDED_IN_BUILD
+//#define DBWRAPPER_TEST_INCLUDED_IN_BUILD
+//#define MMEX_LUA_TEST_INCLUDED_IN_BUILD
+#define NEW_CLASSES_TEST_INCLUDED_IN_BUILD
 
 #include <boost/scoped_ptr.hpp>
 #include <wx/filename.h>

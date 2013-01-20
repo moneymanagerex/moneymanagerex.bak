@@ -63,7 +63,13 @@ wxString getIniDbPpath()
 
 boost::shared_ptr<wxSQLite3Database> get_pInidb()
 {
+// change order for termination case
+#ifdef DBWRAPPER_TEST_INCLUDED_IN_BUILD
     static Cleanup temp_IniDatabase(getIniDbPpath(), true);
+#else
+    static Cleanup temp_IniDatabase(getIniDbPpath());
+#endif
+
     static boost::shared_ptr<wxSQLite3Database> pInidb(new wxSQLite3Database);
 
     if (!pInidb->IsOpen())
@@ -97,7 +103,13 @@ wxString getDbPath()
 
 boost::shared_ptr<wxSQLite3Database> get_pDb()
 {
+#ifdef DBWRAPPER_TEST_INCLUDED_IN_BUILD
     static Cleanup temp_database(getDbPath());
+#else
+    static Cleanup temp_database(getDbPath(), true);
+#endif
+
+
     boost::shared_ptr<wxSQLite3Database> pDb = static_db_ptr();
 
     if (!pDb->IsOpen())

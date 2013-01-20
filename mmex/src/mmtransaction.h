@@ -26,6 +26,99 @@
 
 class mmCoreDB;
 
+/***********************************************************************************
+ SplitTransactions_V1 and BudgetSplitTransactions_V1 tables have the same structure.
+ The classes TSplitTransactionList and TSplitTransEntry can be used for both tables.
+ **********************************************************************************/
+const wxString SPLIT_TRANS_TABLE = wxT("SPLITTRANSACTIONS_V1");
+const wxString BUDGET_SPLIT_TRANS_TABLE = wxT("BUDGETSPLITTRANSACTIONS_V1");
+
+/***********************************************************************************
+ New class TSplitTransEntry
+ This class holds a single split transaction entry
+ **********************************************************************************/
+class TSplitEntry
+{
+private:
+    int id_;
+    int id_trans_;
+
+    void Save(wxSQLite3Database* db, wxString db_table);
+    void Update(wxSQLite3Database* db, wxString db_table);
+    void Delete(wxSQLite3Database* db, wxString db_table);
+
+    /// Used when creating a new entry for TSplitTransactionList
+    TSplitEntry();
+
+public:
+    int id_category_;
+    int id_subcategory_;
+    double amount_;
+
+    /// Used to load an entry from the database. 
+    TSplitEntry(wxSQLite3ResultSet& q1);
+
+    int GetSplitEntryId();
+
+    DECLARE_NO_COPY_CLASS(TSplitEntry);
+    friend class TSplitTransactionList;
+};
+
+/***********************************************************************************
+ Load all split transaction entries into memory for increased performance.
+ **********************************************************************************/
+class TSplitEntriesList
+{
+private:
+    boost::shared_ptr<wxSQLite3Database> db_;
+    wxString db_table_;
+    std::vector< boost::shared_ptr<TSplitEntry> > global_entries_;
+
+    void LoadEntries();
+
+
+public:
+    TSplitEntriesList(boost::shared_ptr<wxSQLite3Database> db, wxString db_table = SPLIT_TRANS_TABLE);
+
+    friend class TSplitTransactionList;
+};
+
+/***********************************************************************************
+ This class holds a list of split transaction entries for a single transaction
+ **********************************************************************************/
+class TSplitTransactionList
+{
+private:
+    int id_transaction_;
+    TSplitEntriesList& entries_List_;
+    double total_;
+    std::vector< boost::shared_ptr<TSplitEntry> > entries_;
+
+    /// Load the transaction split entries from the global list.
+    void LoadEntries();
+    
+    void AddEntry(boost::shared_ptr<TSplitEntry> split_entry);
+    void ReEvaluateTotal();
+    void RemoveGlobalEntry(int entry_id);
+
+public:
+    TSplitTransactionList(int id_transaction, TSplitEntriesList& entries_List);
+
+    double TotalAmount();
+
+    double AddEntry(int cat_id, int subcat_id, double amount);
+    void UpdateEntry(boost::shared_ptr<TSplitEntry> split_entry);
+    void DeleteEntry(boost::shared_ptr<TSplitEntry> split_entry);
+    
+    int GetListSize();
+    boost::shared_ptr<TSplitEntry> GetEntryPtr(int id_split_trans);
+    boost::shared_ptr<TSplitEntry> GetIndexedEntryPtr(int index);
+
+};
+
+/***********************************************************************************
+ Existing code
+ **********************************************************************************/
 class mmTransaction
 {
 public:
