@@ -658,7 +658,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
     restorePrinterValues();
 
-    custRepIndex_ = new customSQLReportIndex();
+    custRepIndex_ = new CustomReportIndex();
 
     // decide if we need to show app start dialog
     bool from_scratch = m_inisettings->GetBoolSetting(wxT("SHOWBEGINAPP"), true);
@@ -731,6 +731,7 @@ void mmGUIFrame::cleanup()
 {
     printer_.reset();
     delete recentFiles_;
+    delete custRepIndex_;
     saveSettings();
 
     m_mgr.UnInit();
@@ -1129,7 +1130,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(reports, new mmTreeItemData(NAVTREECTRL_REPORTS));
 
     /* ================================================================================================= */
-    if (custRepIndex_->hasActiveSQLReports())
+    if (custRepIndex_->HasActiveReports())
     {
         wxTreeItemId customSqlReports = navTreeCtrl_->AppendItem(root, _("Custom Reports"), 8, 8);
         navTreeCtrl_->SetItemBold(customSqlReports, true);
@@ -1138,13 +1139,13 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         int reportNumber = -1;
         wxString reportNumberStr;
         wxTreeItemId customSqlReportRootItem;
-        custRepIndex_->resetReportsIndex();
+        custRepIndex_->ResetReportsIndex();
 
-        wxString reportTitle = custRepIndex_->nextReportTitle();
-        while (custRepIndex_->validTitle())
+        wxString reportTitle = custRepIndex_->NextReportTitle();
+        while (custRepIndex_->ValidTitle())
         {
             wxTreeItemId customSqlReportItem;
-            if (custRepIndex_->reportIsSubReport() && reportNumber >= 0 )
+            if (custRepIndex_->ReportIsSubReport() && reportNumber >= 0 )
             {
                 customSqlReportItem = navTreeCtrl_->AppendItem(customSqlReportRootItem,reportTitle, 8, 8);
             }
@@ -1155,7 +1156,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
             }
             reportNumberStr.Printf(wxT("Custom_Report_%d"), ++reportNumber);
             navTreeCtrl_->SetItemData(customSqlReportItem, new mmTreeItemData(reportNumberStr));
-            reportTitle = custRepIndex_->nextReportTitle();
+            reportTitle = custRepIndex_->NextReportTitle();
         }
 
         if (expandedCustomSqlReportNavTree_)
@@ -1506,15 +1507,15 @@ void mmGUIFrame::CreateCustomReport(int index)
     homePageAccountSelect_ = true; // prevent Navigation tree code execution.
     wxBeginBusyCursor(wxHOURGLASS_CURSOR);
 
-    if (custRepIndex_->reportFileName(index) != wxT(""))
+    if (custRepIndex_->ReportFileName(index) != wxT(""))
     {
         wxString sScript;
-        if (custRepIndex_->getSqlFileData(sScript) )
+        if (custRepIndex_->GetReportFileData(sScript) )
         {
             mmCustomSQLReport* csr = new mmCustomSQLReport(this, m_core.get()
-                , custRepIndex_->currentReportTitle()
+                , custRepIndex_->CurrentReportTitle()
                 , sScript
-                , custRepIndex_->currentReportFileType());
+                , custRepIndex_->CurrentReportFileType());
             menuPrintingEnable(true);
             createReportsPage(csr);
         }

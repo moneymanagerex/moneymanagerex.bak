@@ -39,7 +39,7 @@ public:
     mmCustomSQLDialog( ) {}
     virtual ~mmCustomSQLDialog();
 
-    mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxString customSqlReportSelectedItem, wxWindow* parent,
+    mmCustomSQLDialog(CustomReportIndex* reportIndex, wxString customSqlReportSelectedItem, wxWindow* parent,
         wxWindowID id           = wxID_ANY,
         const wxString& caption = SYMBOL_CUSTOMSQLDIALOG_TITLE,
         const wxPoint& pos      = SYMBOL_CUSTOMSQLDIALOG_POSITION,
@@ -52,7 +52,7 @@ public:
 
 private:
     wxWindow* parent_;
-    customSQLReportIndex* reportIndex_;
+    CustomReportIndex* reportIndex_;
     wxTextCtrl* tcSourceTxtCtrl_;
     wxString sQuery_;
     bool newFileCreated_;
