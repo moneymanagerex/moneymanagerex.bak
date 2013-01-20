@@ -258,7 +258,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     // + Transfered from other accounts - Transfered to other accounts
 
     //Get Stock Investment Account Balance as Init Amount + sum (Value) - sum (Purchase Price)
-    double total = mmDBWrapper::getStockInvestmentBalance(core_->db_.get(), accountID_, false, originalVal);
+    double total = mmDBWrapper::getStockInvestmentBalance(core_->db_.get(), accountID_, originalVal);
     wxString balance;
     mmex::formatDoubleToCurrency(total+initVal, balance);
 

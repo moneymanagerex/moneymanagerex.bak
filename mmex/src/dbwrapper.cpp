@@ -182,7 +182,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
         wxSortedArrayString currencies;
         currencies.Add(wxT("US Dollar  ;$;;.;,;dollar;cents;100;1;USD"));
         // currencies.Add(wxT("EURO;€;;.;,;euro;cent;100;1;EUR"));
-	    // Euro symbol € incorrectly displayed in windows. Correct when using \u20ac equivalent.
+        // Euro symbol € incorrectly displayed in windows. Correct when using \u20ac equivalent.
         // MS-VC++ 2010: Ignore warning C4428: universal-character-name encountered in source
 #pragma warning( push )
 #pragma warning( disable : 4428 )
@@ -949,27 +949,27 @@ int mmDBWrapper::relocateCategory(wxSQLite3Database* db,
     const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID)
 {
     int err = SQLITE_OK;
-	static const char sqlCat[] = "update checkingaccount_v1 set categid= ?, subcategid= ? "
-								 "where categid= ? and subcategid= ?";
-	wxSQLite3Statement stCat = db->PrepareStatement(sqlCat);
-	stCat.Bind(1, destCatID);
-	stCat.Bind(2, destSubCatID);
-	stCat.Bind(3, sourceCatID);
-	stCat.Bind(4, sourceSubCatID);
+    static const char sqlCat[] = "update checkingaccount_v1 set categid= ?, subcategid= ? "
+                                 "where categid= ? and subcategid= ?";
+    wxSQLite3Statement stCat = db->PrepareStatement(sqlCat);
+    stCat.Bind(1, destCatID);
+    stCat.Bind(2, destSubCatID);
+    stCat.Bind(3, sourceCatID);
+    stCat.Bind(4, sourceSubCatID);
 
-	static const char sqlSubCat[] = "update splittransactions_v1 set categid= ?, subcategid= ? "
-									"where categid= ? and subcategid= ?";
-	wxSQLite3Statement stSubCat = db->PrepareStatement(sqlSubCat);
-	stSubCat.Bind(1, destCatID);
-	stSubCat.Bind(2, destSubCatID);
-	stSubCat.Bind(3, sourceCatID);
-	stSubCat.Bind(4, sourceSubCatID);
+    static const char sqlSubCat[] = "update splittransactions_v1 set categid= ?, subcategid= ? "
+                                    "where categid= ? and subcategid= ?";
+    wxSQLite3Statement stSubCat = db->PrepareStatement(sqlSubCat);
+    stSubCat.Bind(1, destCatID);
+    stSubCat.Bind(2, destSubCatID);
+    stSubCat.Bind(3, sourceCatID);
+    stSubCat.Bind(4, sourceSubCatID);
     try
     {
-		stCat.ExecuteUpdate();
-		stSubCat.ExecuteUpdate();
-		stCat.Finalize();
-		stSubCat.Finalize();
+        stCat.ExecuteUpdate();
+        stSubCat.ExecuteUpdate();
+        stCat.Finalize();
+        stSubCat.Finalize();
         //db_.get()->Commit();
     }
     catch(const wxSQLite3Exception& e)
@@ -1020,36 +1020,6 @@ bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
     }
 
     return true;
-}
-
-double mmDBWrapper::getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID)
-{
-    static const char sql[] =
-    "select f.BASECONVRATE "
-    "from ACCOUNTLIST_V1 acl "
-    "join CURRENCYFORMATS_V1 f "
-    "on f.CURRENCYID = acl.CURRENCYID "
-    "where acl.ACCOUNTID = ?";
-
-    double rate = g_defBASECONVRATE;
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, accountID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        rate = q1.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE);
-    }
-    else
-    {
-        /* cannot find accountid */
-        wxASSERT(true);
-    }
-
-    st.Finalize();
-
-    return rate;
 }
 //--------------------------------------------------------------------
 
@@ -1512,26 +1482,8 @@ bool mmDBWrapper::moveStockInvestment(wxSQLite3Database* db, int stockID, int to
     return true;
 }
 
-double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, double& invested)
-{
-    double balance = 0.0;
-    invested = 0.0;
-
-    wxSQLite3ResultSet q1 = db->ExecuteQuery(SELECT_ALL_INVESTMENT_FROM_ACCOUNTLIST_V1);
-    while (q1.NextRow())
-    {
-        double originalVal = 0;
-        balance += getStockInvestmentBalance(db, q1.GetInt(wxT("ACCOUNTID")), true, originalVal);
-        invested += originalVal;
-    }
-
-    q1.Finalize();
-
-    return balance;
-}
-
-double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int accountID,
-                                              bool convertToBase, double& originalVal)
+double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db
+        , int accountID, double& originalVal)
 {
     wxASSERT(accountID != -1);
 
@@ -1557,145 +1509,7 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
 
     st.Finalize();
 
-    double convRate = g_defBASECONVRATE;
-    if (convertToBase)
-    {
-        convRate = getCurrencyBaseConvRate(db, accountID);
-    }
-    originalVal = originalVal * convRate;
-    return balance * convRate;
-}
-
-void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
-{
-    try
-    {
-        wxSQLite3Statement st = db->PrepareStatement(DELETE_ASSETID_ASSETS_V1);
-        st.Bind(1, assetID);
-        st.ExecuteUpdate();
-        st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Function::deleteAsset: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("delete from ASSETS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
-double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
-{
-    double balance = 0.0;
-
-    wxSQLite3ResultSet q1 = db->ExecuteQuery(SELECT_ALL_FROM_ASSETS_V1);
-
-    while (q1.NextRow())
-    {
-        int assetID = q1.GetInt(wxT("ASSETID"));
-        balance += getAssetValue(db, assetID);
-    }
-    q1.Finalize();
-
     return balance;
-}
-
-double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
-{
-    double assetValue = 0.0;
-
-    wxSQLite3Statement st = db->PrepareStatement(SELECT_ROW_FROM_ASSETS_V1);
-    st.Bind(1, assetID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-
-    if (q1.NextRow())
-    {
-        wxString valChange = q1.GetString(wxT("VALUECHANGE"));
-        double value = q1.GetDouble(wxT("VALUE"));
-        double valueChangeRate = q1.GetDouble(wxT("VALUECHANGERATE"));
-        wxString startDateStr = q1.GetString(wxT("STARTDATE"));
-        wxDateTime startDate = mmGetStorageStringAsDate(startDateStr);
-        wxDateTime todayDate = wxDateTime::Now();
-
-        if (valChange == wxT("None"))
-        {
-            assetValue = value;
-        }
-        else if (valChange == wxT("Appreciates"))
-        {
-            if (todayDate > startDate)
-            {
-                int numYears = todayDate.GetYear() - startDate.GetYear();
-
-//              improve the accuracy of number of years calculation
-                int numMonths = todayDate.GetMonth() - startDate.GetMonth();
-                int numDays   = todayDate.GetDay() - startDate.GetDay();
-                if ( (numMonths >= 0 ) && (numDays < 0) )   numMonths --;
-                if ( (numYears > 0 )   && (numMonths < 0 )) numYears -- ;
-
-                if (numYears > 0)
-                {
-//                  double appreciation = numYears * valueChangeRate * value / 100;
-//                  assetValue = value + appreciation;
-
-//                  Calculation changed to compound interest.
-                    while (numYears > 0)
-                    {
-                        double appreciation = valueChangeRate * value / 100;
-                        assetValue = value + appreciation;
-                        value = assetValue;
-                        numYears --;
-                    }
-                }
-                else
-                {
-                    assetValue = value;
-                }
-            }
-            else
-            {
-                assetValue = value;
-            }
-        }
-        else if (valChange == wxT("Depreciates"))
-        {
-            if (todayDate > startDate)
-            {
-                int numYears = todayDate.GetYear() - startDate.GetYear();
-                if (numYears > 0)
-                {
-//                  double depreciation = numYears * valueChangeRate * value / 100;
-//                  assetValue = value - depreciation;
-
-//                  Calculation changed to compound interest.
-                    while (numYears > 0)
-                    {
-                        double depreciation = valueChangeRate * value / 100;
-                        assetValue = value - depreciation;
-                        value = assetValue;
-                        numYears --;
-                    }
-                }
-                else
-                {
-                    assetValue = value;
-                }
-            }
-            else
-            {
-                assetValue = value;
-            }
-        }
-        else
-        {
-            wxASSERT(false);
-        }
-    }
-
-    st.Finalize();
-
-    return assetValue;
 }
 
 wxString mmDBWrapper::getSplitTrxNotes(wxSQLite3Database* db_, int trxID)
@@ -1939,3 +1753,137 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
 //  SQLITE_DONE        101  /* sqlite3_step() has finished executing */
 
 //----------------------------------------------------------------------------
+
+//All assets functions temporary grouped here
+
+double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
+{
+    double assetValue = 0.0;
+
+    wxSQLite3Statement st = db->PrepareStatement(SELECT_ROW_FROM_ASSETS_V1);
+    st.Bind(1, assetID);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+
+    if (q1.NextRow())
+    {
+        wxString valChange = q1.GetString(wxT("VALUECHANGE"));
+        double value = q1.GetDouble(wxT("VALUE"));
+        double valueChangeRate = q1.GetDouble(wxT("VALUECHANGERATE"));
+        wxString startDateStr = q1.GetString(wxT("STARTDATE"));
+        wxDateTime startDate = mmGetStorageStringAsDate(startDateStr);
+        wxDateTime todayDate = wxDateTime::Now();
+
+        if (valChange == wxT("None"))
+        {
+            assetValue = value;
+        }
+        else if (valChange == wxT("Appreciates"))
+        {
+            if (todayDate > startDate)
+            {
+                int numYears = todayDate.GetYear() - startDate.GetYear();
+
+//              improve the accuracy of number of years calculation
+                int numMonths = todayDate.GetMonth() - startDate.GetMonth();
+                int numDays   = todayDate.GetDay() - startDate.GetDay();
+                if ( (numMonths >= 0 ) && (numDays < 0) )   numMonths --;
+                if ( (numYears > 0 )   && (numMonths < 0 )) numYears -- ;
+
+                if (numYears > 0)
+                {
+//                  double appreciation = numYears * valueChangeRate * value / 100;
+//                  assetValue = value + appreciation;
+
+//                  Calculation changed to compound interest.
+                    while (numYears > 0)
+                    {
+                        double appreciation = valueChangeRate * value / 100;
+                        assetValue = value + appreciation;
+                        value = assetValue;
+                        numYears --;
+                    }
+                }
+                else
+                {
+                    assetValue = value;
+                }
+            }
+            else
+            {
+                assetValue = value;
+            }
+        }
+        else if (valChange == wxT("Depreciates"))
+        {
+            if (todayDate > startDate)
+            {
+                int numYears = todayDate.GetYear() - startDate.GetYear();
+                if (numYears > 0)
+                {
+//                  double depreciation = numYears * valueChangeRate * value / 100;
+//                  assetValue = value - depreciation;
+
+//                  Calculation changed to compound interest.
+                    while (numYears > 0)
+                    {
+                        double depreciation = valueChangeRate * value / 100;
+                        assetValue = value - depreciation;
+                        value = assetValue;
+                        numYears --;
+                    }
+                }
+                else
+                {
+                    assetValue = value;
+                }
+            }
+            else
+            {
+                assetValue = value;
+            }
+        }
+        else
+        {
+            wxASSERT(false);
+        }
+    }
+
+    st.Finalize();
+
+    return assetValue;
+}
+
+void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
+{
+    try
+    {
+        wxSQLite3Statement st = db->PrepareStatement(DELETE_ASSETID_ASSETS_V1);
+        st.Bind(1, assetID);
+        st.ExecuteUpdate();
+        st.Finalize();
+        mmOptions::instance().databaseUpdated_ = true;
+
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogDebug(wxT("Function::deleteAsset: Exception"), e.GetMessage().c_str());
+        wxLogError(wxT("delete from ASSETS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+    }
+}
+
+double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
+{
+    double balance = 0.0;
+
+    wxSQLite3ResultSet q1 = db->ExecuteQuery(SELECT_ALL_FROM_ASSETS_V1);
+
+    while (q1.NextRow())
+    {
+        int assetID = q1.GetInt(wxT("ASSETID"));
+        balance += getAssetValue(db, assetID);
+    }
+    q1.Finalize();
+
+    return balance;
+}
