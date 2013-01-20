@@ -171,300 +171,107 @@ void createDefaultCategories(wxSQLite3Database* db)
 
 //----------------------------------------------------------------------------
 
-void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
+int mmDBWrapper::createTable(wxSQLite3Database* db, const wxString &sTableName, const wxString &sql)
 {
-    if (db->TableExists(wxT("CURRENCYFORMATS_V1"))) return;
-
+    int iError = 0;
     try
     {
-        db->ExecuteUpdate(CREATE_TABLE_CURRENCYFORMATS_V1);
-        /* Load Default Currencies */
-        wxSortedArrayString currencies;
-        currencies.Add(wxT("US Dollar  ;$;;.;,;dollar;cents;100;1;USD"));
-        // currencies.Add(wxT("EURO;€;;.;,;euro;cent;100;1;EUR"));
-        // Euro symbol € incorrectly displayed in windows. Correct when using \u20ac equivalent.
-        // MS-VC++ 2010: Ignore warning C4428: universal-character-name encountered in source
-#pragma warning( push )
-#pragma warning( disable : 4428 )
-        currencies.Add(wxT("EURO;\u20ac;;.;,;euro;cent;100;1;EUR"));
-#pragma warning( pop )
-        wxString fileName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
-        wxASSERT(wxFileName::FileExists(fileName));
-
-        if (!fileName.empty())
+        bool valid = db->TableExists(sTableName);
+        if (!valid)
         {
-            wxTextFile tFile(fileName);
-            if (tFile.Open())
-            {
-                wxString str;
+            db->ExecuteUpdate(sql);
+            valid = db->TableExists(sTableName);
+            wxASSERT(valid);
+            if (sTableName == wxT("CURRENCYFORMATS_V1")) initCurrencyV1Table(db);
+            if (sTableName == wxT("SUBCATEGORY_V1")) createDefaultCategories(db);
+        }
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogDebug(wxT("Create table %s Error: %s"), sTableName.c_str(), e.GetMessage().c_str());
+        iError = e.GetErrorCode();
+    }
+    return iError;
+}
+
+bool mmDBWrapper::initCurrencyV1Table(wxSQLite3Database* db)
+{
+    int result = true;
+    /* Load Default Currencies */
+    wxSortedArrayString currencies;
+    currencies.Add(wxT("US Dollar ;$;;.;,;dollar;cents;100;1;USD"));
+    // currencies.Add(wxT("EURO;€;;.;,;euro;cent;100;1;EUR"));
+    // Euro symbol € incorrectly displayed in windows. Correct when using \u20ac equivalent.
+    // MS-VC++ 2010: Ignore warning C4428: universal-character-name encountered in source
+    #pragma warning( push )
+    #pragma warning( disable : 4428 )
+    currencies.Add(wxT("EURO;\u20ac;;.;,;euro;cent;100;1;EUR"));
+    #pragma warning( pop )
+    wxString fileName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
+    wxASSERT(wxFileName::FileExists(fileName));
+
+    if (!fileName.empty())
+    {
+        wxTextFile tFile(fileName);
+        if (tFile.Open())
+        {
+            wxString str;
                 for (str = tFile.GetFirstLine(); !tFile.Eof(); str = tFile.GetNextLine())
                 {
                     currencies.Add(str);
                 }
-            }
-            else
-            {
-                wxMessageBox(_("Unable to open file."), _("Currency Manager"), wxOK|wxICON_WARNING);
-            }
         }
-
-        //wxSQLite3Statement st;
-
-        for (size_t i = 0; i < currencies.Count(); ++i)
+        else
         {
-            wxStringTokenizer tk(currencies[i], wxT(";"));
-
-            std::vector<wxString> data;
-            data.push_back(tk.GetNextToken().Trim());
-            data.push_back(tk.GetNextToken());
-            data.push_back(tk.GetNextToken());
-            data.push_back(tk.GetNextToken());
-            data.push_back(tk.GetNextToken());
-            data.push_back(tk.GetNextToken());
-            data.push_back(tk.GetNextToken());
-            data.push_back(tk.GetNextToken());
-            data.push_back(tk.GetNextToken());
-            data.push_back(tk.GetNextToken());
-
-            addCurrency(db, data);
+            wxMessageBox(_("Unable to open file."), _("Currency Manager"), wxOK|wxICON_WARNING);
         }
     }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createCurrencyV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create CURRENCYFORMATS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
 
+    for (size_t i = 0; i < currencies.Count(); ++i)
+    {
+        wxStringTokenizer tk(currencies[i], wxT(";"));
 
-void mmDBWrapper::createBudgetingV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool valid = db->TableExists(wxT("BUDGETYEAR_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_BUDGETYEAR_V1);
-            valid = db->TableExists(wxT("BUDGETYEAR_V1"));
-            wxASSERT(valid);
-        }
+        std::vector<wxString> data;
+        data.push_back(tk.GetNextToken().Trim());
+        data.push_back(tk.GetNextToken());
+        data.push_back(tk.GetNextToken());
+        data.push_back(tk.GetNextToken());
+        data.push_back(tk.GetNextToken());
+        data.push_back(tk.GetNextToken());
+        data.push_back(tk.GetNextToken());
+        data.push_back(tk.GetNextToken());
+        data.push_back(tk.GetNextToken());
+        data.push_back(tk.GetNextToken());
 
-        valid = db->TableExists(wxT("BUDGETTABLE_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_BUDGETTABLE_V1);
-            valid = db->TableExists(wxT("BUDGETTABLE_V1"));
-            wxASSERT(valid);
-        }
+        int err = addCurrency(db, data);
+        result = (err == 0);
     }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createBudgetingV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table BUDGETTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
-void mmDBWrapper::createStockV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool valid = db->TableExists(wxT("STOCK_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_STOCK_V1);
-            valid = db->TableExists(wxT("STOCK_V1"));
-            wxASSERT(valid);
-        }
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createStockV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table STOCK_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
-void mmDBWrapper::createAssetsV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool valid = db->TableExists(wxT("ASSETS_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_ASSETS_V1);
-            valid = db->TableExists(wxT("ASSETS_V1"));
-            wxASSERT(valid);
-        }
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createAssetsV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table ASSETS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
-void mmDBWrapper::createBillsDepositsV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool valid = db->TableExists(wxT("BILLSDEPOSITS_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_BILLSDEPOSITS_V1);
-            valid = db->TableExists(wxT("BILLSDEPOSITS_V1"));
-            wxASSERT(valid);
-        }
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createBillsDepositsV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table BILLSDEPOSITS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    return result;
 }
 
 bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
 {
     bool result = false;
-    if (db->TableExists(wxT("INFOTABLE_V1")))
+    try
     {
-        wxSQLite3Statement st = db->PrepareStatement(SELECT_INFOVALUE_FROM_INFOTABLE_V1);
-        st.Bind(1, wxT("DATAVERSION"));
-        wxSQLite3ResultSet q1 = st.ExecuteQuery();
-        if (q1.NextRow())
+        if (db->TableExists(wxT("INFOTABLE_V1")))
         {
-            int dataVersion = q1.GetInt(wxT("INFOVALUE"));
-            result = dataVersion >= mmex::MIN_DATAVERSION;
+            wxSQLite3Statement st = db->PrepareStatement(SELECT_INFOVALUE_FROM_INFOTABLE_V1);
+            st.Bind(1, wxT("DATAVERSION"));
+            wxSQLite3ResultSet q1 = st.ExecuteQuery();
+            if (q1.NextRow())
+            {
+                int dataVersion = q1.GetInt(wxT("INFOVALUE"));
+                result = dataVersion >= mmex::MIN_DATAVERSION;
+            }
+            st.Finalize();
         }
-        st.Finalize();
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogDebug(wxT("Database::checkDBVersion: Exception"), e.GetMessage().c_str());
     }
     return result;
-}
-
-void mmDBWrapper::createAccountListV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool exists = db->TableExists(wxT("ACCOUNTLIST_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_ACCOUNTLIST_V1);
-            exists = db->TableExists(wxT("ACCOUNTLIST_V1"));
-            wxASSERT(exists);
-        }
-        else
-        {
-#if 0
-            // if we add new fields, we need to alter table as follows
-            int ret = db->ExecuteUpdate(wxT("alter table ACCOUNTLIST_V1 ADD INFOID TEXT;"));
-#endif
-        }
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createAccountListV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table ACCOUNTLIST_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
-void mmDBWrapper::createCheckingAccountV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool exists = db->TableExists(wxT("CHECKINGACCOUNT_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_CHECKINGACCOUNT_V1);
-            exists = db->TableExists(wxT("CHECKINGACCOUNT_V1"));
-            wxASSERT(exists);
-        }
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createCheckingAccountV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table CHECKINGACCOUNT_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
-void mmDBWrapper::createSplitTransactionsV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool exists = db->TableExists(wxT("SPLITTRANSACTIONS_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_SPLITTRANSACTIONS_V1);
-            exists = db->TableExists(wxT("SPLITTRANSACTIONS_V1"));
-            wxASSERT(exists);
-        }
-
-        exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_BUDGETSPLITTRANSACTIONS_V1);
-            exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
-            wxASSERT(exists);
-        }
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createSplitTransactionsV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table BUDGETSPLITTRANSACTIONS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
-void mmDBWrapper::createPayeeV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool exists = db->TableExists(wxT("PAYEE_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(CREATE_TABLE_PAYEE_V1);
-            exists = db->TableExists(wxT("PAYEE_V1"));
-            wxASSERT(exists);
-        }
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createPayeeV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table PAYEE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
-}
-
-void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
-{
-    try
-    {
-        bool existsCat = db->TableExists(wxT("CATEGORY_V1"));
-        if (!existsCat)
-        {
-            /* Create CATEGORY_V1 Tables */
-            db->ExecuteUpdate(CREATE_TABLE_CATEGORY_V1);
-            {
-                bool ok = db->TableExists(wxT("CATEGORY_V1"));
-                wxASSERT(ok);
-                ok = ok; // removes compiler's warning
-            }
-        }
-
-        bool existsSubCat = db->TableExists(wxT("SUBCATEGORY_V1"));
-        if (!existsSubCat)
-        {
-            /* Create SUBCATEGORY_V1 Tables */
-            db->ExecuteUpdate(CREATE_TABLE_SUBCATEGORY_V1);
-            existsSubCat = db->TableExists(wxT("SUBCATEGORY_V1"));
-            wxASSERT(existsSubCat);
-        }
-
-        if (!existsCat)
-        {
-            createDefaultCategories(db);
-        }
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createCategoryV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table CATEGORY_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
 }
 
 /*
@@ -492,67 +299,16 @@ bool mmDBWrapper::ViewExists(wxSQLite3Database* db, const char *viewName)
     return exists;
 }
 
-void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
+int mmDBWrapper::createAllDataView(wxSQLite3Database* db)
 {
+    int iError = 0;
     try
     {
         static const char view_name[] = "ALLDATA";
-
-        static const char sql[] =
-        "create  view alldata as "
-        "select \n"
-        "       CANS.TransID as ID, CANS.TransCode as TransactionType, \n"
-        "       date(CANS.TransDate, 'localtime') as Date, \n"
-        "       d.userdate as UserDate \n"
-        "       ,coalesce(CAT.CategName, SCAT.CategName) as Category, \n"
-        "       coalesce(SUBCAT.SUBCategName, SSCAT.SUBCategName, '') as Subcategory, \n"
-        "       ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end)*(case CANS.CATEGID when -1 then st.splittransamount else CANS.TRANSAMOUNT end),2) as Amount, \n"
-        "       cf.currency_symbol as currency, \n"
-        "       CANS.Status as Status, CANS.NOTES as Notes, \n"
-        "       cf.BaseConvRate as BaseConvRate, \n"
-        "       FROMACC.CurrencyID as CurrencyID, \n"
-        "       FROMACC.AccountName as AccountName,  FROMACC.AccountID as AccountID, \n"
-        "       ifnull (TOACC.AccountName,'') as ToAccountName, \n"
-        "       ifnull (TOACC.ACCOUNTId,-1) as ToAccountID, CANS.ToTransAmount ToTransAmount, \n"
-        "       ifnull (TOACC.CURRENCYID, -1) as ToCurrencyID, \n"
-        "       (case ifnull(CANS.CATEGID,-1) when -1 then 1 else 0 end) as Splitted, \n"
-        "       ifnull(CAT.CategId,st.CategId) as CategID, \n"
-        "       ifnull (ifnull(SUBCAT.SubCategID,st.subCategId),-1) as SubCategID, \n"
-        "       ifnull (PAYEE.PayeeName,'') as Payee, \n"
-        "       ifnull (PAYEE.PayeeID,-1) as PayeeID, \n"
-        "            CANS.TRANSACTIONNUMBER as TransactionNumber, \n"
-        "            d.year as Year, \n"
-        "            d.month as Month, \n"
-        "            d.day as Day, \n"
-        "            d.finyear as FinYear \n"
-        "            from  CHECKINGACCOUNT_V1 CANS \n"
-        "            left join CATEGORY_V1 CAT on CAT.CATEGID = CANS.CATEGID \n"
-        "            left join SUBCATEGORY_V1 SUBCAT on SUBCAT.SUBCATEGID = CANS.SUBCATEGID and SUBCAT.CATEGID = CANS.CATEGID \n"
-        "            left join PAYEE_V1 PAYEE on PAYEE.PAYEEID = CANS.PAYEEID \n"
-        "            left join ACCOUNTLIST_V1 FROMACC on FROMACC.ACCOUNTID = CANS.ACCOUNTID \n"
-        "            left join ACCOUNTLIST_V1 TOACC on TOACC.ACCOUNTID = CANS.TOACCOUNTID \n"
-        "            left join splittransactions_v1 st on CANS.transid=st.transid \n"
-        "            left join CATEGORY_V1 SCAT on SCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid \n"
-        "            left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = st.SUBCATEGID and SSCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid \n"
-        "            left join currencyformats_v1 cf on cf.currencyid=FROMACC .currencyid \n"
-        "           left join ( select transid as id , date(transdate, 'localtime') as transdate \n"
-        ",round (strftime('%d', transdate, 'localtime'))  as day \n"
-        ",round (strftime('%m', transdate, 'localtime'))  as month \n"
-        ",round (strftime('%Y', transdate, 'localtime'))  as year \n"
-        ",round(strftime('%Y', transdate, 'localtime' ,'start of month', ((case when fd.infovalue<=round(strftime('%d', transdate , 'localtime')) then 1  else 0 end)-fm.infovalue)||' month')) as finyear \n"
-        ",ifnull (ifnull (strftime(df.infovalue, TransDate, 'localtime'), \n"
-        "       (strftime(replace (df.infovalue, '%y', SubStr (strftime('%Y',TransDate, 'localtime'),3,2)),TransDate, 'localtime')) \n"
-        "       ), date(TransDate, 'localtime')) as UserDate \n"
-        "from  CHECKINGACCOUNT_V1 \n"
-        "left join infotable_v1 df on df.infoname='DATEFORMAT' \n"
-        "left join infotable_v1 fm on fm.infoname='FINANCIAL_YEAR_START_MONTH' \n"
-        "left join infotable_v1 fd on fd.infoname='FINANCIAL_YEAR_START_DAY') d on d.id=CANS.TRANSID \n"
-        "order by CANS.transid";
-
         bool exists = ViewExists(db, view_name);
 
         if (!exists) {
-            db->ExecuteUpdate(sql);
+            db->ExecuteUpdate(CREATE_VIEW_ALLDATA);
             exists = ViewExists(db, view_name);
             wxASSERT(exists);
         }
@@ -561,7 +317,9 @@ void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
     {
         wxLogDebug(wxT("Database::createAllDataView: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create AllData view. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        iError = e.GetErrorCode();
     }
+    return iError;
 }
 
 void removeCruft(wxSQLite3Database* db)
@@ -609,35 +367,10 @@ void mmDBWrapper::initDB(wxSQLite3Database* db)
 {
     db->Begin();
 
-    /* Create Currency Settings */
-    createCurrencyV1Table(db);
-
-    /* Create ACCOUNTLIST_V1 Tables */
-    createAccountListV1Table(db);
-
-    /* Create CHECKINGACCOUNT_V1 Tables */
-    createCheckingAccountV1Table(db);
-
-    /* Create PAYEE_V1 Tables */
-    createPayeeV1Table(db);
-
-    /* Create CATEGORY_V1 Tables */
-    createCategoryV1Table(db);
-
-    /* Create Budgeting_V1 Tables */
-    createBudgetingV1Table(db);
-
-    /* Create Bills & Deposits V1 Table */
-    createBillsDepositsV1Table(db);
-
-    /* Create Stock V1 Table */
-    createStockV1Table(db);
-
-    /* Create Asset V1 Table */
-    createAssetsV1Table(db);
-
-    /* Create SplitTransactions V1 Table */
-    createSplitTransactionsV1Table(db);
+    for (size_t i = 0; i < sizeof(TABLE_NAMES)/sizeof(wxString); ++i)
+    {
+        createTable(db, TABLE_NAMES[i], CREATE_TABLE_SQL[i]);
+    }
 
     /* Create AllData view */
     createAllDataView(db);
@@ -1609,7 +1342,7 @@ int mmDBWrapper::addCurrency(wxSQLite3Database* db, std::vector<wxString> data)
         return -1;
     }
 
-    return db->GetLastRowId().ToLong();;
+    return db->GetLastRowId().ToLong();
 }
 //----------------------------------------------------------------------------
 
