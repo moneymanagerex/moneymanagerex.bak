@@ -137,8 +137,6 @@ bool warning_message()
 
 int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountName )
 {
-    wxSQLite3Database* db_ = core->db_.get();
-
     if ( core->accountList_.getNumAccounts() == 0 ) {
         wxMessageBox(_( "No account available for import"), _("QIF Import"), wxOK|wxICON_WARNING );
         return -1;

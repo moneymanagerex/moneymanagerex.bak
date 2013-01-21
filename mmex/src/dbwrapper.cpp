@@ -196,7 +196,7 @@ int mmDBWrapper::createTable(wxSQLite3Database* db, const wxString &sTableName, 
 
 bool mmDBWrapper::initCurrencyV1Table(wxSQLite3Database* db)
 {
-    int result = true;
+    bool result = true;
     /* Load Default Currencies */
     wxSortedArrayString currencies;
     currencies.Add(wxT("US Dollar ;$;;.;,;dollar;cents;100;1;USD"));
