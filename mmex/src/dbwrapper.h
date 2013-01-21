@@ -430,22 +430,7 @@ static const wxString TABLE_NAMES[] =
     wxT("BUDGETTABLE_V1"),
     wxT("CURRENCYFORMATS_V1"),
 };
-static const wxString CREATE_TABLE_SQL[] =
-{
-    wxString::FromUTF8(CREATE_TABLE_ASSETS_V1),
-    wxString::FromUTF8(CREATE_TABLE_ACCOUNTLIST_V1),
-    wxString::FromUTF8(CREATE_TABLE_CHECKINGACCOUNT_V1),
-    wxString::FromUTF8(CREATE_TABLE_PAYEE_V1),
-    wxString::FromUTF8(CREATE_TABLE_BILLSDEPOSITS_V1),
-    wxString::FromUTF8(CREATE_TABLE_STOCK_V1),
-    wxString::FromUTF8(CREATE_TABLE_SPLITTRANSACTIONS_V1),
-    wxString::FromUTF8(CREATE_TABLE_BUDGETSPLITTRANSACTIONS_V1),
-    wxString::FromUTF8(CREATE_TABLE_CATEGORY_V1),
-    wxString::FromUTF8(CREATE_TABLE_SUBCATEGORY_V1),
-    wxString::FromUTF8(CREATE_TABLE_BUDGETYEAR_V1),
-    wxString::FromUTF8(CREATE_TABLE_BUDGETTABLE_V1),
-    wxString::FromUTF8(CREATE_TABLE_CURRENCYFORMATS_V1),
-};
+static const wxArrayString CREATE_TABLE_SQL();
 
 static const char CREATE_VIEW_ALLDATA[] =
     "create  view alldata as "

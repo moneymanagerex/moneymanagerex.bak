@@ -369,7 +369,7 @@ void mmDBWrapper::initDB(wxSQLite3Database* db)
 
     for (size_t i = 0; i < sizeof(TABLE_NAMES)/sizeof(wxString); ++i)
     {
-        createTable(db, TABLE_NAMES[i], CREATE_TABLE_SQL[i]);
+        createTable(db, TABLE_NAMES[i], CREATE_TABLE_SQL()[i]);
     }
 
     /* Create AllData view */
@@ -1620,3 +1620,23 @@ double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
 
     return balance;
 }
+
+static const wxArrayString CREATE_TABLE_SQL()
+{
+    wxArrayString q;
+    q.Add(wxString::FromUTF8(CREATE_TABLE_ASSETS_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_ACCOUNTLIST_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_CHECKINGACCOUNT_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_PAYEE_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_BILLSDEPOSITS_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_STOCK_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_SPLITTRANSACTIONS_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_BUDGETSPLITTRANSACTIONS_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_CATEGORY_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_SUBCATEGORY_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_BUDGETYEAR_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_BUDGETTABLE_V1));
+    q.Add(wxString::FromUTF8(CREATE_TABLE_CURRENCYFORMATS_V1));
+    return q;
+};
+
