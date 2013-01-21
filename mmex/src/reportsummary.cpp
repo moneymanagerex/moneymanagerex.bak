@@ -137,7 +137,6 @@ wxString mmReportSummary::getHTMLText()
     wxArrayInt accounts_id = core_->accountList_.getAccountsID(accounts_type);
 
     double original_val, stockBalance = 0;
-    int accountId = 0;
     for (size_t i = 0; i < accounts_id.Count(); ++i)
     {
         double base_conv_rate = core_->accountList_.getAccountBaseCurrencyConvRate(accounts_id[i]);
