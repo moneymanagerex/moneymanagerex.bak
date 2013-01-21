@@ -49,8 +49,13 @@ END_EVENT_TABLE()
 
 mmCustomSQLDialog::mmCustomSQLDialog(CustomReportIndex* reportIndex, wxString customSqlReportSelectedItem, wxWindow* parent,
                                      wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
-:reportIndex_(reportIndex), tcSourceTxtCtrl_(), customSqlReportSelectedItem_(customSqlReportSelectedItem)
-    , navCtrlUpdateRequired_(false), newFileCreated_(true), parent_(parent)
+: reportIndex_(reportIndex)
+, tcSourceTxtCtrl_()
+, customSqlReportSelectedItem_(customSqlReportSelectedItem)
+, navCtrlUpdateRequired_(false)
+, newFileCreated_(true)
+, parent_(parent)
+, newload_(false)
 {
     Create(parent_, id, caption, pos, size, style);
 }
@@ -307,6 +312,8 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
             tcSourceTxtCtrl_->SetValue(reportText);
             newFileCreated_ = false;
             reportFile.Close();
+            reportTitleTxtCtrl_->SetLabel(selectedFileName.GetName());
+            newload_ = true;
         }
         else
         {
@@ -336,7 +343,7 @@ bool mmCustomSQLDialog::SaveCustomReport()
     reportfileName.Replace(wxT(" "),wxT("_"));          // Replace spaces with underscore character
     reportfileName += sSctiptType() == wxT("SQL") ? wxT(".sql") : wxT(".lua");  // Add the file extenstion
 
-    if (reportfileName == loadedFileName_)
+    if (reportfileName == loadedFileName_ && !newload_)
     {
         edit_ = true;
     }
@@ -396,6 +403,7 @@ bool mmCustomSQLDialog::SaveCustomReport()
         iSelectedId_ = reportIndex_->GetCustomReportId();
         navCtrlUpdateRequired_ = navCtrlUpdateRequired_ || !edit_;
         loadedFileName_ = reportfileName;
+        newload_ = false;
     }
 
     button_Save_->Disable();
@@ -557,6 +565,12 @@ bool mmCustomSQLDialog::DeleteCustomSqlReport()
                 {
                     wxRemoveFile(reportIndex_->CurrentReportFileName());
                     loadedFileName_ = reportIndex_->ReportFileName(iSelectedId_);
+                    if (loadedFileName_ == wxEmptyString)
+                    {
+                        reportTitleTxtCtrl_->SetLabel(wxEmptyString);
+                        wxCommandEvent dummy;   // 
+                        OnClear(dummy);
+                    }
                 }
             }
         }
