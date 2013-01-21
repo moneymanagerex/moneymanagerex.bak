@@ -87,9 +87,9 @@ wxString CustomReportIndex::NextReportTitle()
     if (! indexFile_->Eof() )
     {
         wxString line = indexFile_->GetNextLine().Trim(false);
-        currentReportFileIndex_ ++;
         if (!line.IsEmpty())
         {
+            currentReportFileIndex_ ++;
             wxStringTokenizer tk(line, wxT("|"));
             currentReportTitle_    = tk.GetNextToken();
             currentReportFileName_ = tk.GetNextToken();
@@ -102,8 +102,7 @@ wxString CustomReportIndex::NextReportTitle()
             validTitle_ = true;
         }
     }
-    else
-        currentReportFileIndex_ = 0;
+
     return currentReportTitle_;
 }
 
@@ -140,11 +139,20 @@ wxString CustomReportIndex::ReportFileName(int index)
     ResetReportsIndex();
 
     int currentLine = 0;
-    while (currentLine <= index)
+
+    if (index > 0)
     {
-        NextReportTitle();
-        currentLine ++;
+        while (currentLine <= index)
+        {
+            NextReportTitle();
+            currentLine ++;
+        }
     }
+    else
+    {
+        currentReportFileName_ = wxEmptyString;
+    }
+
     return CurrentReportFileName();
 }
 

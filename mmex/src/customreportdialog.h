@@ -59,6 +59,7 @@ private:
     wxString loadedFileName_;
     wxString customSqlReportSelectedItem_;
     bool edit_;
+    bool newload_;
     bool navCtrlUpdateRequired_;
     wxButton* button_Open_;
     wxButton* button_Save_;
