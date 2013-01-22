@@ -113,9 +113,12 @@ void mmCustomSQLDialog::fillControls()
             loadedFileName_ = reportIndex_->CurrentReportFileName(false);
             subMenuCheckBox_->SetValue(reportIndex_->ReportIsSubReport());
 
-            wxString sSQLData;
-            reportIndex_->GetReportFileData(sSQLData);
-            tcSourceTxtCtrl_->ChangeValue(sSQLData);
+            if (wxFileExists(reportIndex_->CurrentReportFileName()))
+            {
+                wxString sSQLData;
+                reportIndex_->GetReportFileData(sSQLData);
+                tcSourceTxtCtrl_->ChangeValue(sSQLData);
+            }
         }
         button_Open_->Disable();
     }
@@ -549,31 +552,31 @@ bool mmCustomSQLDialog::DeleteCustomSqlReport()
     int iError = wxMessageBox(msg ,reportIndex_->UserDialogHeading(),wxYES_NO|wxICON_QUESTION);
     if ( iError == wxYES )
     {
-        reportIndex_->DeleteSelectedReportTitle();
-        navCtrlUpdateRequired_ = true;
-
-        if (! reportIndex_->CurrentReportFileName(false).IsEmpty())
+        wxString msg = _("Do you want to delete the SQL file as well?");
+        if (reportIndex_->CurrentReportFileType() == wxT("LUA"))
         {
-            if (reportIndex_->CurrentReportFileType() == wxT("LUA"))
-                msg = wxString() << _("Do you want to delete the Lua file as well?");
-            else
-                msg = wxString() << _("Do you want to delete the SQL file as well?");
-            msg << wxT("\n");
-            if ( wxMessageBox(msg, reportIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
-            {
-                if (wxFileExists(reportIndex_->CurrentReportFileName()))
-                {
-                    wxRemoveFile(reportIndex_->CurrentReportFileName());
-                    loadedFileName_ = reportIndex_->ReportFileName(iSelectedId_);
-                    if (loadedFileName_ == wxEmptyString)
-                    {
-                        reportTitleTxtCtrl_->SetLabel(wxEmptyString);
-                        wxCommandEvent dummy;   // 
-                        OnClear(dummy);
-                    }
-                }
-            }
+            msg = _("Do you want to delete the Lua file as well?");
         }
+        msg << wxT("\n");
+
+        bool delete_file = false;
+        if ( wxMessageBox(msg, reportIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
+        {
+            delete_file = true;
+        }
+        reportIndex_->DeleteCurrentReportTitle(delete_file);
+        if (! reportIndex_->ValidTitle())
+        {
+            loadedFileName_ = wxEmptyString;
+            reportTitleTxtCtrl_->SetLabel(wxEmptyString);
+            wxCommandEvent dummy;
+            OnClear(dummy);
+        }
+        else
+        {
+            loadedFileName_ = reportIndex_->ReportFileName(iSelectedId_);
+        }
+        navCtrlUpdateRequired_ = true;
     }
     return (iError == wxYES);
 }
