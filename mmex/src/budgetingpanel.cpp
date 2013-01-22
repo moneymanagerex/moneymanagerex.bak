@@ -54,7 +54,6 @@ bool mmBudgetingPanel::Create( wxWindow *parent,
             wxWindowID winid, const wxPoint& pos,
             const wxSize& size,long style, const wxString& name  )
 {
-    currentView_ = wxT("View All Budget Categories");
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);
 
@@ -97,8 +96,7 @@ void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
     else
         wxASSERT(false);
 
-    wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
-    header->SetLabel(wxGetTranslation(currentView_));
+    core_->dbInfoSettings_->SetStringSetting(wxT("BUDGET_FILTER"), currentView_);
 
     listCtrlBudget_->DeleteAllItems();
     initVirtualListControl();
@@ -149,6 +147,9 @@ void mmBudgetingPanel::UpdateBudgetHeading()
         yearStr = wxString::Format(_("Month: %s"), yearStr.c_str());
     }
     budgetReportHeading_->SetLabel(wxString::Format(_("Budget Setup for %s"), yearStr.c_str()));
+
+    wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
+    header->SetLabel(wxGetTranslation(currentView_));
 }
 
 void mmBudgetingPanel::CreateControls()
@@ -175,8 +176,6 @@ void mmBudgetingPanel::CreateControls()
     budgetReportHeadingSizer->Add(budgetReportHeading_, 1);
     itemBoxSizerVHeader->Add(budgetReportHeadingSizer, 0, wxALL, 1);
 
-    UpdateBudgetHeading();
-
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, 0, wxALL, 1);
 
@@ -189,7 +188,7 @@ void mmBudgetingPanel::CreateControls()
     itemBoxSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
     wxStaticText* itemStaticText18 = new wxStaticText( itemPanel3,
-        ID_PANEL_CHECKING_STATIC_PANELVIEW, _("Viewing All Budget Categories"));
+        ID_PANEL_CHECKING_STATIC_PANELVIEW , wxT(""));
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
 
     wxFlexGridSizer* itemIncomeSizer = new wxFlexGridSizer(0,7,5,10);
@@ -286,6 +285,8 @@ void mmBudgetingPanel::initVirtualListControl()
     {
         evaluateTransfer = true;
     }
+
+    currentView_ = core_->dbInfoSettings_->GetStringSetting(wxT("BUDGET_FILTER"), wxT("View All Budget Categories"));
     wxString budgetYearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
     long year = 0;
     budgetYearStr.ToLong(&year);
@@ -442,6 +443,7 @@ void mmBudgetingPanel::initVirtualListControl()
     expences_estimated_->SetLabel(est_amount);
     expences_actual_->SetLabel(act_amount);
     expences_diff_->SetLabel(diff_amount);
+    UpdateBudgetHeading();
 }
 
 void mmBudgetingPanel::DisplayBudgetingDetails(int budgetYearID)
