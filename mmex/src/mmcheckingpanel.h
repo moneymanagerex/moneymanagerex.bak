@@ -118,7 +118,7 @@ private:
 	wxStaticBitmap* bitmapMainFilter_;
     mmFilterTransactionsDialog* transFilterDlg_;
 
-    wxString m_currentView;
+    wxString currentView_;
     mmGUIFrame* mainFrame_;
     bool transFilterActive_;
     double filteredBalance_;

@@ -847,7 +847,7 @@ void mmCheckingPanel::setAccountSummary()
     mmex::formatDoubleToCurrency(checking_bal - reconciledBal, diffbal);
     mmex::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);
 
-    bool show_displayed_balance_ = (transFilterActive_ || (m_currentView != VIEW_TRANS_ALL_STR));
+    bool show_displayed_balance_ = (transFilterActive_ || (currentView_ != VIEW_TRANS_ALL_STR));
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER1);
     header->SetLabel(balance);
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER2);
@@ -960,10 +960,10 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
 
         bool toAdd = true;
 //      bool getBal = false;
-        if (s_transactionMatchers_Map.count(m_currentView) > 0)
+        if (s_transactionMatchers_Map.count(currentView_) > 0)
         {
             // boost::shared_ptr<TransactionPtr_Matcher> pMatcher;
-            TransactionMatchMap::const_iterator it = s_transactionMatchers_Map.find(m_currentView);
+            TransactionMatchMap::const_iterator it = s_transactionMatchers_Map.find(currentView_);
             TransactionMatchMap::const_iterator end;
             if (it != end)
             {
@@ -1028,9 +1028,9 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     std::vector<mmBankTransaction*> visible_transPtr = account_transPtr;
 
     // Depending on the view - will determine the treatment of balances.
-    if ( m_currentView == VIEW_TRANS_RECONCILED_STR     ||
-         m_currentView == VIEW_TRANS_NOT_RECONCILED_STR ||
-         m_currentView == VIEW_TRANS_UNRECONCILED_STR   )
+    if ( currentView_ == VIEW_TRANS_RECONCILED_STR     ||
+         currentView_ == VIEW_TRANS_NOT_RECONCILED_STR ||
+         currentView_ == VIEW_TRANS_UNRECONCILED_STR   )
     {
         visible_transPtr = m_trans;
     }
@@ -1138,22 +1138,22 @@ void mmCheckingPanel::OnMoveTransaction(wxCommandEvent& event)
 void mmCheckingPanel::initViewTransactionsHeader()
 {
     wxString vTrans = core_->iniSettings_->GetStringSetting(wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
-    m_currentView   = core_->dbInfoSettings_->GetStringSetting(wxString::Format(wxT("CHECK_FILTER_ID_%d"), m_AccountID), vTrans);
+    currentView_   = core_->dbInfoSettings_->GetStringSetting(wxString::Format(wxT("CHECK_FILTER_ID_%d"), m_AccountID), vTrans);
 
-    SetTransactionFilterState(m_currentView == VIEW_TRANS_ALL_STR);
-    stxtMainFilter_->SetLabel(wxGetTranslation(m_currentView));
+    SetTransactionFilterState(currentView_ == VIEW_TRANS_ALL_STR);
+    stxtMainFilter_->SetLabel(wxGetTranslation(currentView_));
 }
 //----------------------------------------------------------------------------
 void mmCheckingPanel::OnFilterResetToViewAll(wxMouseEvent& event) {
 
-    if (m_currentView == VIEW_TRANS_ALL_STR)
+    if (currentView_ == VIEW_TRANS_ALL_STR)
     {
         event.Skip();
         return;
     }
 
     stxtMainFilter_->SetLabel(_("View All transactions"));
-    m_currentView = VIEW_TRANS_ALL_STR;
+    currentView_ = VIEW_TRANS_ALL_STR;
     SetTransactionFilterState(true);
 
     m_listCtrlAccount->m_selectedIndex = -1;
@@ -1176,44 +1176,44 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 
     if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
     {
-        m_currentView = VIEW_TRANS_ALL_STR;
+        currentView_ = VIEW_TRANS_ALL_STR;
         transFilterActive_ = false;
     }
     else if (evt == MENU_VIEW_RECONCILED)
-        m_currentView = VIEW_TRANS_RECONCILED_STR;
+        currentView_ = VIEW_TRANS_RECONCILED_STR;
     else if (evt == MENU_VIEW_NOTRECONCILED)
-        m_currentView = VIEW_TRANS_NOT_RECONCILED_STR;
+        currentView_ = VIEW_TRANS_NOT_RECONCILED_STR;
     else if (evt == MENU_VIEW_UNRECONCILED)
-        m_currentView = VIEW_TRANS_UNRECONCILED_STR;
+        currentView_ = VIEW_TRANS_UNRECONCILED_STR;
     else if (evt == MENU_VIEW_FLAGGED)
-        m_currentView = VIEW_TRANS_FLAGGED;
+        currentView_ = VIEW_TRANS_FLAGGED;
     else if (evt == MENU_VIEW_DUPLICATE)
-        m_currentView = VIEW_TRANS_DUPLICATES;
+        currentView_ = VIEW_TRANS_DUPLICATES;
     else if (evt == MENU_VIEW_VOID)
-        m_currentView = VIEW_TRANS_VOID;
+        currentView_ = VIEW_TRANS_VOID;
     else if (evt == MENU_VIEW_TODAY)
-        m_currentView = VIEW_TRANS_TODAY_STR;
+        currentView_ = VIEW_TRANS_TODAY_STR;
     else if (evt == MENU_VIEW_CURRENTMONTH)
-        m_currentView = VIEW_TRANS_CURRENT_MONTH_STR;
+        currentView_ = VIEW_TRANS_CURRENT_MONTH_STR;
     else if (evt == MENU_VIEW_LAST30)
-        m_currentView = VIEW_TRANS_LAST_30_DAYS_STR;
+        currentView_ = VIEW_TRANS_LAST_30_DAYS_STR;
     else if (evt == MENU_VIEW_LAST90)
-        m_currentView = VIEW_TRANS_LAST_90_DAYS_STR;
+        currentView_ = VIEW_TRANS_LAST_90_DAYS_STR;
     else if (evt == MENU_VIEW_LAST3MONTHS)
-        m_currentView = VIEW_TRANS_LAST_3MONTHS_STR;
+        currentView_ = VIEW_TRANS_LAST_3MONTHS_STR;
     else if (evt == MENU_VIEW_LASTMONTH)
-        m_currentView = VIEW_TRANS_LAST_MONTH_STR;
+        currentView_ = VIEW_TRANS_LAST_MONTH_STR;
     else
         wxASSERT(false);
 
-    stxtMainFilter_->SetLabel(wxGetTranslation(m_currentView));
-    SetTransactionFilterState(m_currentView == VIEW_TRANS_ALL_STR);
+    stxtMainFilter_->SetLabel(wxGetTranslation(currentView_));
+    SetTransactionFilterState(currentView_ == VIEW_TRANS_ALL_STR);
     m_listCtrlAccount->DeleteAllItems();
 
     m_listCtrlAccount->m_selectedIndex = -1;
     m_listCtrlAccount->refreshVisualList();
 
-    core_->dbInfoSettings_->SetStringSetting(wxString::Format(wxT("CHECK_FILTER_ID_%ld"), (long)m_AccountID), m_currentView);
+    core_->dbInfoSettings_->SetStringSetting(wxString::Format(wxT("CHECK_FILTER_ID_%ld"), (long)m_AccountID), currentView_);
 }
 
 void mmCheckingPanel::DeleteViewedTransactions()
@@ -1397,7 +1397,7 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
             + VIEW_TRANS_LAST_30_DAYS_STR
             + VIEW_TRANS_LAST_90_DAYS_STR
             + VIEW_TRANS_LAST_MONTH_STR
-            + VIEW_TRANS_LAST_3MONTHS_STR).Contains(m_cp->m_currentView))
+            + VIEW_TRANS_LAST_3MONTHS_STR).Contains(m_cp->currentView_))
     {
         m_cp->m_listCtrlAccount->RefreshItems(m_selectedIndex, m_selectedIndex);
         m_cp->setAccountSummary();
