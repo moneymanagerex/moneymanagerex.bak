@@ -55,6 +55,7 @@ mmCustomSQLDialog::mmCustomSQLDialog(CustomReportIndex* reportIndex, wxString cu
 , navCtrlUpdateRequired_(false)
 , newFileCreated_(true)
 , parent_(parent)
+, edit_(false)
 , newload_(false)
 {
     Create(parent_, id, caption, pos, size, style);
@@ -86,7 +87,9 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
     SetIcon(mmex::getProgramIcon());
     Centre();
 
-    edit_ = reportIndex_->GetSelectedTitleSelection(customSqlReportSelectedItem_);
+    if (reportIndex_->ValidTitle())
+        edit_ = reportIndex_->GetSelectedTitleSelection(customSqlReportSelectedItem_);
+
     iSelectedId_ = reportIndex_->GetCustomReportId();
     timer_ = new wxTimer(this, wxID_ANY);
     timer_->Start(INTERVAL);
