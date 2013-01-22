@@ -139,23 +139,11 @@ wxString CustomReportIndex::ReportFileName(int index)
     ResetReportsIndex();
 
     int currentLine = 0;
-
-// TODO: Find a solution to allow deleting last file in report manager and prevent crash
-//       without rendering report 0 inoperative in main navigation.
-//       
-//    if (index > 0)
-//    {
-        while (currentLine <= index)
-        {
-            NextReportTitle();
-            currentLine ++;
-        }
-//    }
-//    else
-//    {
-//        currentReportFileName_ = wxEmptyString;
-//    }
-
+    while (currentLine <= index)
+    {
+        NextReportTitle();
+        currentLine ++;
+    }
     return CurrentReportFileName();
 }
 
@@ -291,10 +279,19 @@ bool CustomReportIndex::ReportListHasItems()
     return ( lineCount > 4 );
 }
 
-void CustomReportIndex::DeleteSelectedReportTitle()
+void CustomReportIndex::DeleteCurrentReportTitle(bool including_file)
 {
     indexFile_->RemoveLine(currentReportFileIndex_ + 4);
     indexFile_->Write();
+    indexFile_->Close();
+    indexFile_->Open();
+
+    if (including_file && wxFileExists(CurrentReportFileName()))
+    {
+        wxRemoveFile(CurrentReportFileName());
+        ResetReportsIndex();
+        NextReportTitle();
+    }
 }
 
 bool CustomReportIndex::GetReportFileData(wxString& reportText)
@@ -328,7 +325,8 @@ bool CustomReportIndex::GetReportFileData(wxString& reportText)
     return result;
 }
 
-//CustomReportIndex::~CustomReportIndex()
-//{
+CustomReportIndex::~CustomReportIndex()
+{
+    delete indexFile_;
 //    wxMessageBox(wxT("Testing that CustomReportIndex objects are being destroyed.\nGoodby.."),wxT("CustomReportIndex Dialog Destructor..."));
-//}
+}

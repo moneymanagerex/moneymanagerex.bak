@@ -29,7 +29,7 @@ class CustomReportIndex
 public:
     CustomReportIndex();
     
-//    virtual ~CustomReportIndex();
+    virtual ~CustomReportIndex();
     
     /** Returns true if file is initialised and open */
     bool HasActiveReports();
@@ -77,7 +77,7 @@ public:
     bool ReportListHasItems();
 
     /** Removes the listing from the index file at location: currentReportFileIndex_  */
-    void DeleteSelectedReportTitle();
+    void DeleteCurrentReportTitle(bool including_file);
 
     /** Returns the title header string for User Dialog */
     wxString UserDialogHeading(); 
