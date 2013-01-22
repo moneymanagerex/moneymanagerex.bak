@@ -140,18 +140,21 @@ wxString CustomReportIndex::ReportFileName(int index)
 
     int currentLine = 0;
 
-    if (index > 0)
-    {
+// TODO: Find a solution to allow deleting last file in report manager and prevent crash
+//       without rendering report 0 inoperative in main navigation.
+//       
+//    if (index > 0)
+//    {
         while (currentLine <= index)
         {
             NextReportTitle();
             currentLine ++;
         }
-    }
-    else
-    {
-        currentReportFileName_ = wxEmptyString;
-    }
+//    }
+//    else
+//    {
+//        currentReportFileName_ = wxEmptyString;
+//    }
 
     return CurrentReportFileName();
 }
