@@ -302,12 +302,12 @@ void mmTransDialog::SetTransferControls(bool transfer)
         if (type_num == DEF_WITHDRAWAL)
         {
             cbPayee_->SetToolTip(_("Specify where the transaction is coming from"));
-            payee_label_->SetLabel(_("From"));
+            payee_label_->SetLabel(_("Payee"));
         }
         else
         {
             cbPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
-            payee_label_->SetLabel(_("Payee"));
+            payee_label_->SetLabel(_("From"));
         }
         data = core_->payeeList_.FilterPayees(wxT(""));
         toTextAmount_->Enable(false);
