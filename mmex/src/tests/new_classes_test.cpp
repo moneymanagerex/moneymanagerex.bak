@@ -49,6 +49,83 @@ TEST(init_DB)
     displayTimeTaken(wxT("init_DB"), start_time);    
 }
 //----------------------------------------------------------------------------
+#if 1
+TEST(Category_ID_Test)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    mmCoreDB* pCore = pDb_core().get();
+
+    pCore->categoryList_.entries_.clear();
+    pCore->categoryList_.LoadCategories();
+
+    int cat_id_1 = pCore->categoryList_.AddCategory(wxT("Category_ID_Test_1"));
+    int cat_id_2 = pCore->categoryList_.AddCategory(wxT("Category_ID_Test_2"));
+    int cat_id_3 = pCore->categoryList_.AddCategory(wxT("Category_ID_Test_3"));
+    int cat_id_4 = pCore->categoryList_.AddCategory(wxT("Category_ID_Test_4"));
+    pCore->categoryList_.AddCategory(wxT("Category_ID_Test_5"));
+
+    pCore->categoryList_.DeleteCategory(cat_id_2);
+    pCore->categoryList_.DeleteCategory(cat_id_3);
+    pCore->categoryList_.DeleteCategory(cat_id_4);
+
+    pCore->db_.get()->Vacuum();
+
+    cat_id_2 = pCore->categoryList_.AddSubCategory(cat_id_1, wxT("Category_ID_Test_2"));
+    cat_id_3 = pCore->categoryList_.AddSubCategory(cat_id_1, wxT("Category_ID_Test_3"));
+    cat_id_4 = pCore->categoryList_.AddSubCategory(cat_id_1, wxT("Category_ID_Test_4"));
+
+    int cat_id = pCore->categoryList_.AddCategory(g_CategName);
+    int id = pCore->categoryList_.GetCategoryId(g_CategName);
+    pCore->categoryList_.DeleteCategory(cat_id);
+
+    CHECK(id == cat_id);
+
+    pCore->categoryList_.entries_.clear();
+    pCore->categoryList_.LoadCategories();
+
+    displayTimeTaken(wxT("Category_ID_Test"), start_time);
+}
+
+TEST(New_Category_Test_1)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TCategoryList category_list(get_pDb());
+    category_list.LoadCategoryList();
+    int cat_id = category_list.AddCategory(wxT("New_Cat_Test_1 Category"));
+    CHECK(cat_id > -1);
+
+    int subcat_id = category_list.AddSubCategory(cat_id, wxT("New_Cat_Test_1 - SubCategory"));
+    CHECK(subcat_id > -1);
+
+    displayTimeTaken(wxT("New_Category_Test"), start_time);
+}
+
+TEST(New_Category_Test_2)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TCategoryList category_list(get_pDb());
+    category_list.LoadCategoryList();
+    
+    int cat_id = category_list.GetCategoryId(wxT("Unknown Cat Test Category"));
+
+    CHECK(cat_id == -1);
+    cat_id = category_list.GetCategoryId(wxT("New_Cat_Test_1 Category"));
+    CHECK(cat_id > -1);
+
+    int subcat_id = category_list.GetSubCategoryId(cat_id, wxT("Unknown Cat Test SubCategory"));
+    CHECK(subcat_id == -1);
+    subcat_id = category_list.GetSubCategoryId(cat_id, wxT("New_Cat_Test_1 - SubCategory"));
+    CHECK(subcat_id > -1);
+
+    wxString fullCatName = category_list.GetFullCategoryName(cat_id, subcat_id);
+    CHECK_EQUAL(fullCatName, wxT("New_Cat_Test_1 Category:New_Cat_Test_1 - SubCategory"));
+
+    displayTimeTaken(wxT("New_SubCategory_Test"), start_time);
+}
+#endif
+
 
 TEST(TSplitTransactionList_test_create)
 {
