@@ -151,6 +151,14 @@ static const char INSERT_INTO_CURRENCYFORMATS_V1[] =
     "GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
     " ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
+static const char UPDATE_CURRENCYFORMATS_V1[] = 
+    "update CURRENCYFORMATS_V1 "
+    "set PFX_SYMBOL=?, SFX_SYMBOL=?, DECIMAL_POINT=?,"
+        "GROUP_SEPARATOR=?, UNIT_NAME=?, CENT_NAME=?, "
+        "SCALE=?, BASECONVRATE=?, CURRENCY_SYMBOL=?, "
+        "CURRENCYNAME=? "
+    "where CURRENCYID = ?";
+
 static const char SELECT_INFOVALUE_FROM_INFOTABLE_V1[] =
     "SELECT INFOVALUE FROM INFOTABLE_V1 "
     "where INFONAME = ?";
@@ -540,7 +548,7 @@ void completeBDInSeries(wxSQLite3Database* db, int bdID);
 void loadCurrencySettings(wxSQLite3Database* db, int currencyID);
 //double getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID);
 bool deleteCurrency(wxSQLite3Database* db, int currencyID);
-int addCurrency(wxSQLite3Database* db, std::vector<wxString> data);
+int mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxString> data, const wxString sql, long &lLastRowId);
 
 wxString getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSettings, const wxString &defaultVal = wxGetEmptyString());
 

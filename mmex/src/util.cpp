@@ -458,7 +458,7 @@ wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
 
 void mmShowErrorMessage(wxWindow *parent, const wxString &message, const wxString &messageheader)
 {
-    wxMessageDialog msgDlg(parent, message, messageheader);
+    wxMessageDialog msgDlg(parent, message, messageheader, wxICON_ERROR);
     msgDlg.ShowModal();
 }
 
