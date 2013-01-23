@@ -242,12 +242,17 @@ void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
             boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
             pCurrency->currencyName_ = currText;
             pCurrency->currencySymbol_ = currency_symbol;
-            core_->currencyList_.AddCurrency(pCurrency);
-            currencyID_ = core_->currencyList_.getCurrencyID(currText);
+            currencyID_ = core_->currencyList_.AddCurrency(pCurrency);
 
-            mmCurrencyDialog* dlg = new mmCurrencyDialog(core_, currencyID_, this);
-            dlg->ShowModal();
-
+            if (currencyID_ > 0)
+            {
+                mmCurrencyDialog* dlg = new mmCurrencyDialog(core_, currencyID_, this);
+                dlg->ShowModal();
+            }
+            else
+            {
+                mmShowErrorMessage(this, _("Error"), _("Error"));
+            }
         }
         else
         {
@@ -358,7 +363,7 @@ void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
     core_->dbInfoSettings_->SetIntSetting(wxT("BASECURRENCYID"), currencyID_);
 
     fillControls();
-	event.Skip();
+    event.Skip();
 }
 
 void mmMainCurrencyDialog::OnItemRightClick(wxListEvent& event)
@@ -370,5 +375,5 @@ void mmMainCurrencyDialog::OnItemRightClick(wxListEvent& event)
     mainMenu->Append(new wxMenuItem(mainMenu, 0, _("Set as Base Currency")));
 
     PopupMenu(mainMenu);
-	event.Skip();
+    event.Skip();
 }

@@ -243,7 +243,9 @@ bool mmDBWrapper::initCurrencyV1Table(wxSQLite3Database* db)
         data.push_back(tk.GetNextToken());
         data.push_back(tk.GetNextToken());
 
-        int err = addCurrency(db, data);
+        long lLastRowId;
+        wxString sql = wxString::FromUTF8(INSERT_INTO_CURRENCYFORMATS_V1);
+        int err = mmSQLiteExecuteUpdate(db, data, sql, lLastRowId);
         result = (err == 0);
     }
     return result;
@@ -1316,14 +1318,14 @@ bool mmDBWrapper::deleteCurrency(wxSQLite3Database* db, int currencyID)
     }
     catch(const wxSQLite3Exception& e)
     {
-        wxLogDebug(wxT("Function::deleteCurrency: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Remove currency. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
         return false;
     }
     return true;
 }
-int mmDBWrapper::addCurrency(wxSQLite3Database* db, std::vector<wxString> data)
+int mmDBWrapper::mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxString> data, const wxString sql, long &lLastRowId)
 {
+    int iError = 0;
     try
     {
         wxSQLite3Statement st = db->PrepareStatement(INSERT_INTO_CURRENCYFORMATS_V1);
@@ -1332,17 +1334,18 @@ int mmDBWrapper::addCurrency(wxSQLite3Database* db, std::vector<wxString> data)
             st.Bind(++i, *d);
 
         st.ExecuteUpdate();
-
         st.Finalize();
+        lLastRowId = db->GetLastRowId().ToLong();
+
     }
     catch(const wxSQLite3Exception& e)
     {
         wxLogDebug(wxT("Function::addCurrency: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Add currency. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-        return -1;
+        iError = e.GetErrorCode();
     }
 
-    return db->GetLastRowId().ToLong();
+    return iError;
 }
 //----------------------------------------------------------------------------
 

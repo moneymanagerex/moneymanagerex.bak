@@ -117,34 +117,28 @@ int mmCurrencyList::AddCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     data.push_back(r.dec_);
     data.push_back(r.grp_);
     data.push_back(r.unit_);
-    data.push_back(wxString()<<r.cent_);
+    data.push_back(r.cent_);
     data.push_back(wxString()<<r.scaleDl_);
     data.push_back(wxString()<<r.baseConv_);
     data.push_back(r.currencySymbol_);
 
-    int currencyID = mmDBWrapper::addCurrency(db_.get(), data);
-    if ( currencyID > 0)
+    long currencyID;
+    wxString sql = wxString::FromUTF8(INSERT_INTO_CURRENCYFORMATS_V1);
+    int iError = mmDBWrapper::mmSQLiteExecuteUpdate(db_.get(), data, sql, currencyID);
+    if ( iError == 0 && currencyID > 0)
     {
         pCurrency->currencyID_ = currencyID;
         currencies_.push_back(pCurrency);
     }
     return currencyID;
-
 }
 
 void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 {
-    static const char sql[] = 
-    "update CURRENCYFORMATS_V1 "
-    "set PFX_SYMBOL=?, SFX_SYMBOL=?, DECIMAL_POINT=?,"
-        "GROUP_SEPARATOR=?, UNIT_NAME=?, CENT_NAME=?, "
-        "SCALE=?, BASECONVRATE=?, CURRENCY_SYMBOL=?, "
-        "CURRENCYNAME=? "
-    "where CURRENCYID = ?";
 
     wxASSERT(pCurrency->currencyID_ > 0);
 
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    wxSQLite3Statement st = db_->PrepareStatement(UPDATE_CURRENCYFORMATS_V1);
     const mmCurrency &r = *pCurrency;
 
     int i = 0;
