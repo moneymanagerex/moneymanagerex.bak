@@ -134,6 +134,7 @@ void mmTransDialog::dataToControls()
         payeeID_ = pBankTransaction_->payeeID_;
         if (payeeID_ > -1) // transaction_type != TRANS_TYPE_TRANSFER_STR
             payeeUnknown_ = false;
+        payee_name_ = pBankTransaction_->payeeStr_;
 
         textNotes_->SetValue(pBankTransaction_->notes_);
         textNumber_->SetValue(pBankTransaction_->transNum_);
@@ -176,24 +177,8 @@ void mmTransDialog::dataToControls()
     }
     transaction_type_->SetStringSelection(wxGetTranslation(sTransaction_type_));
 
-    cAdvanced_->SetValue(advancedToTransAmountSet_);
-
     wxString categString = _("Select Category");
 
-    if (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR)
-    {
-        advancedToTransAmountSet_ = (transAmount_ != toTransAmount_);
-        payee_name_ = cbPayee_->GetValue();
-        SetTransferControls();  // hide appropriate fields
-    }
-    else
-    {
-        cAdvanced_->Disable();
-        if (edit_)
-        {
-            payee_name_ = pBankTransaction_->payeeStr_;
-        }
-    }
     updateControlsForTransType();
     if (edit_)
     {
@@ -211,11 +196,15 @@ void mmTransDialog::dataToControls()
 
 void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 {
+    wxString sType = sTransaction_type_;
     sTransaction_type_ = TRANS_TYPE_WITHDRAWAL_STR;
     wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(transaction_type_->GetSelection());
     if (type_obj) sTransaction_type_ = type_obj->GetData();
-    payeeID_ = -1;
-    categID_ = -1;
+    if (sType != TRANS_TYPE_TRANSFER_STR && sTransaction_type_ == TRANS_TYPE_TRANSFER_STR)
+    {
+        payee_name_ = resetPayeeString();
+        categID_ = -1;
+    }
 
     updateControlsForTransType();
 }
@@ -244,13 +233,18 @@ void mmTransDialog::updateControlsForTransType()
         }
         bCategory_->SetLabel(categString);
     }
+    else if (!edit_ && !transfer_transaction)
+    {
+        payee_name_.Clear();
+    }
+
     SetTransferControls(transfer_transaction);
 }
 
 void mmTransDialog::SetTransferControls(bool transfer)
 {
     cbPayee_ -> SetEvtHandlerEnabled(false);
-    cAdvanced_->SetValue(advancedToTransAmountSet_);
+    cAdvanced_->SetValue(transAmount_ != toTransAmount_);
     cAdvanced_->Enable(transfer);
 
     bPayee_->Enable(!transfer);
@@ -598,7 +592,6 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 
     cbPayee_->SetInsertionPoint(value.Length());
 
-//    wxSafeShowMessage(payee_name_ + wxT("--") , payee_name_);
     OnPayeeUpdated(event);
     cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
@@ -724,20 +717,14 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
 wxString mmTransDialog::resetPayeeString(/*bool normal*/) //normal is deposits or withdrawls
 {
     wxString payeeStr = wxT("");
-    if (transaction_type_->GetSelection() != DEF_TRANSFER)
+
+    payeeID_ = -1;
+    wxArrayString filtd = core_->payeeList_.FilterPayees(wxT(""));
+    if (filtd.Count() == 1)
     {
-        payeeID_ = -1;
-        wxArrayString filtd = core_->payeeList_.FilterPayees(wxT(""));
-        if (filtd.Count() == 1)
-        {
-            //only one payee present. Choose it
-            payeeStr = filtd[0];
-            payeeID_ = core_->payeeList_.GetPayeeId(payeeStr);
-        }
-    }
-    else
-    {
-        toID_ = -1;
+        //only one payee present. Choose it
+        payeeStr = filtd[0];
+        payeeID_ = core_->payeeList_.GetPayeeId(payeeStr);
     }
 
     return payeeStr;
@@ -1034,7 +1021,7 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
         if (!cbPayee_->GetValue().IsEmpty()) {
             cbPayee_->SetValue(wxT(""));
             wxCommandEvent evt(wxEVT_COMMAND_TEXT_UPDATED, ID_DIALOG_TRANS_PAYEECOMBO);
-            AddPendingEvent(evt);
+            onTextEntered(evt);
             return;
         }
         else {
@@ -1092,13 +1079,13 @@ void mmTransDialog::onTextEntered(wxCommandEvent& event)
 {
     wxString sAmount = wxT("");
 
-    if (oject_in_focus_ == textAmount_->GetId()) 
-    {   
+    if (oject_in_focus_ == textAmount_->GetId())
+    {
         if (mmCalculator(textAmount_->GetValue(), sAmount))
             textAmount_->SetValue(sAmount);
         textAmount_->SetInsertionPoint(textAmount_->GetValue().Len());
     }
-    else if (oject_in_focus_ == toTextAmount_->GetId()) 
+    else if (oject_in_focus_ == toTextAmount_->GetId())
     {
         if (mmCalculator(toTextAmount_->GetValue(), sAmount))
             toTextAmount_->SetValue(sAmount);
