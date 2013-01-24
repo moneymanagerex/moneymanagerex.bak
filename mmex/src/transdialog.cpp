@@ -1021,7 +1021,7 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
         if (!cbPayee_->GetValue().IsEmpty()) {
             cbPayee_->SetValue(wxT(""));
             wxCommandEvent evt(wxEVT_COMMAND_TEXT_UPDATED, ID_DIALOG_TRANS_PAYEECOMBO);
-            onTextEntered(evt);
+            OnPayeeTextEnter(evt);
             return;
         }
         else {
