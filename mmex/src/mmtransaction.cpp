@@ -882,7 +882,7 @@ int mmBankTransactionList::getTransferCategoryID(const int accountID, int& subca
     return categ_id;
 }
 
-int mmBankTransactionList::getLastUsedPayeeID(const int accountID, int& categID, int& subcategID) const
+int mmBankTransactionList::getLastUsedPayeeID(const int accountID, wxString sType, int& categID, int& subcategID) const
 {
     int payee_id = -1;
     int index = transactions_.size() - 1;
@@ -892,8 +892,8 @@ int mmBankTransactionList::getLastUsedPayeeID(const int accountID, int& categID,
         boost::shared_ptr<const mmBankTransaction> pBankTransaction = transactions_[index];
         if (pBankTransaction)
         {
-            if (pBankTransaction->accountID_ == accountID &&
-                pBankTransaction->transType_ != TRANS_TYPE_TRANSFER_STR)
+            if (pBankTransaction->accountID_ == accountID
+                && pBankTransaction->transType_ == sType)
             {
                 payee_id   = pBankTransaction->payeeID_;
                 categID    = pBankTransaction->categID_;

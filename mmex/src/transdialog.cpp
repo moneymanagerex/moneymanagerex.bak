@@ -193,22 +193,6 @@ void mmTransDialog::dataToControls()
         {
             payee_name_ = pBankTransaction_->payeeStr_;
         }
-        else
-        {
-            //If user does not want payee to be auto filled for the new transaction
-            payee_name_ = resetPayeeString();
-            payeeUnknown_ = true;
-
-            if ( mmIniOptions::instance().transPayeeSelectionNone_ > 0)
-            {
-                if (payeeID_ < 0)
-                {
-                    payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_, categID_, subcategID_);
-                    payee_name_ = core_->payeeList_.GetPayeeName(payeeID_);
-                    payeeUnknown_ = false;
-                }
-            }
-        }
     }
     updateControlsForTransType();
     if (edit_)
@@ -230,6 +214,8 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
     sTransaction_type_ = TRANS_TYPE_WITHDRAWAL_STR;
     wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(transaction_type_->GetSelection());
     if (type_obj) sTransaction_type_ = type_obj->GetData();
+    payeeID_ = -1;
+    categID_ = -1;
 
     updateControlsForTransType();
 }
@@ -237,9 +223,17 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 void mmTransDialog::updateControlsForTransType()
 {
     bool transfer_transaction = sTransaction_type_ == TRANS_TYPE_TRANSFER_STR;
-    SetTransferControls(transfer_transaction);
-    if (!edit_)
+    if (!edit_ && !transfer_transaction)
     {
+        if ( mmIniOptions::instance().transPayeeSelectionNone_ > 0)
+        {
+            if (payeeID_ < 0)
+            {
+                payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_, sTransaction_type_, categID_, subcategID_);
+                payee_name_ = core_->payeeList_.GetPayeeName(payeeID_);
+                payeeUnknown_ = false;
+            }
+        }
         wxString categString = resetCategoryString();
         if (transfer_transaction && mmIniOptions::instance().transCategorySelectionNone_ != 0)
         {
@@ -250,6 +244,7 @@ void mmTransDialog::updateControlsForTransType()
         }
         bCategory_->SetLabel(categString);
     }
+    SetTransferControls(transfer_transaction);
 }
 
 void mmTransDialog::SetTransferControls(bool transfer)
@@ -257,9 +252,12 @@ void mmTransDialog::SetTransferControls(bool transfer)
     cbPayee_ -> SetEvtHandlerEnabled(false);
     cAdvanced_->SetValue(advancedToTransAmountSet_);
     cAdvanced_->Enable(transfer);
+
     bPayee_->Enable(!transfer);
-    wxString dataStr = wxT("");
+    wxString dataStr = payee_name_;
     cbPayee_->Clear();
+    payee_name_.Clear();
+    payeeID_ = -1;
     wxArrayString data;
     int type_num = transaction_type_->GetSelection();
 
@@ -313,7 +311,9 @@ void mmTransDialog::SetTransferControls(bool transfer)
         data = core_->payeeList_.FilterPayees(wxT(""));
         toTextAmount_->Enable(false);
         toTextAmount_->SetValue(wxT(""));
-        dataStr = core_->payeeList_.GetPayeeName(payeeID_);
+        payeeID_ = core_->payeeList_.GetPayeeId(dataStr);
+        payee_name_ = core_->payeeList_.GetPayeeName(payeeID_);
+        dataStr = payee_name_;
     }
 
     for (size_t i = 0; i < data.Count(); ++i)
