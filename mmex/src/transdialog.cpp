@@ -112,6 +112,7 @@ void mmTransDialog::dataToControls()
     //process date change event for set weekday name
     wxDateEvent dateEvent(dpc_, trx_date, wxEVT_DATE_CHANGED);
     GetEventHandler()->ProcessEvent(dateEvent);
+    dpc_->SetFocus();
 
     wxString dispAmount;
     if (edit_)
@@ -530,14 +531,11 @@ void mmTransDialog::CreateControls()
     wxStdDialogButtonSizer*  buttons_sizer = new wxStdDialogButtonSizer;
     buttons_panel->SetSizer(buttons_sizer);
 
-    wxButton* itemButtonOK = new wxButton( buttons_panel, wxID_OK);
-    itemButtonCancel_ = new wxButton( buttons_panel, wxID_CANCEL);
+    wxButton* itemButtonOK = new wxButton( buttons_panel, wxID_OK, _("&OK"));
+    itemButtonCancel_ = new wxButton( buttons_panel, wxID_CANCEL, _("&Cancel"));
 
     buttons_sizer->Add(itemButtonOK, flags.Border(wxBOTTOM|wxRIGHT, 10));
     buttons_sizer->Add(itemButtonCancel_, flags);
-
-    if (edit_)
-        itemButtonCancel_->SetFocus();
 
     buttons_sizer->Realize();
     Center();
