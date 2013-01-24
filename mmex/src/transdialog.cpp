@@ -948,6 +948,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     else
     {
         core_->bTransactionList_.UpdateTransaction(pTransaction);
+        transID_ = pTransaction->transactionID();
     }
 
     EndModal(wxID_OK);
