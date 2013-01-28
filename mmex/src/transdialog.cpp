@@ -211,10 +211,10 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 
 void mmTransDialog::updateControlsForTransType()
 {
-    bool transfer_transaction = sTransaction_type_ == TRANS_TYPE_TRANSFER_STR;
-    if (!edit_ && !transfer_transaction)
+    bool transfer = sTransaction_type_ == TRANS_TYPE_TRANSFER_STR;
+    if (!edit_)
     {
-        if ( mmIniOptions::instance().transPayeeSelectionNone_ > 0)
+        if (mmIniOptions::instance().transPayeeSelectionNone_ > 0)
         {
             if (payeeID_ < 0)
             {
@@ -223,22 +223,19 @@ void mmTransDialog::updateControlsForTransType()
                 payeeUnknown_ = false;
             }
         }
+
         wxString categString = resetCategoryString();
-        if (transfer_transaction && mmIniOptions::instance().transCategorySelectionNone_ != 0)
+        if (mmIniOptions::instance().transCategorySelectionNone_ != 0)
         {
-            categID_ = core_->bTransactionList_.getTransferCategoryID(accountID_, subcategID_);
+            categID_ = core_->bTransactionList_.getLastUsedCategoryID(accountID_, transfer ? -1 : payeeID_, subcategID_);
             categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
             categoryName_    = core_->categoryList_.GetCategoryName(categID_);
             subCategoryName_ = core_->categoryList_.GetSubCategoryName(categID_, subcategID_);
         }
         bCategory_->SetLabel(categString);
     }
-    else if (!edit_ && !transfer_transaction)
-    {
-        payee_name_.Clear();
-    }
 
-    SetTransferControls(transfer_transaction);
+    SetTransferControls(transfer);
 }
 
 void mmTransDialog::SetTransferControls(bool transfer)

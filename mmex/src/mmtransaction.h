@@ -182,7 +182,7 @@ public:
     bool getDailyBalance(const mmCoreDB* core, int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false) const;
     double getReconciledBalance(int accountID, bool ignoreFuture = false) const;
     int countFollowupTransactions() const;
-    int getTransferCategoryID(const int accountID, int& subcategID) const;
+    int getLastUsedCategoryID(const int accountID, const int payeeID, int& subcategID) const;
     int getLastUsedPayeeID(const int accountID, wxString sType, int& categID, int& subcategID) const;
     wxArrayString getTransactionNumber(const int accountID, const wxDateTime transaction_date) const;
     bool IsCategoryUsed(mmCoreDB* core, const int iCatID, const int iSubCatID, bool bIgnor_subcat = true) const;
