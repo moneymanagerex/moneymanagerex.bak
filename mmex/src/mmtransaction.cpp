@@ -1281,33 +1281,33 @@ void mmBankTransactionList::ChangeDateFormat()
 bool mmBankTransactionList::IsCategoryUsed(mmCoreDB* core, const int iCatID, const int iSubCatID, bool bIgnor_subcat) const
 {
     int index = transactions_.size() - 1;
-    bool searching = false;
+
     boost::shared_ptr<mmBankTransaction> pBankTransaction;
-    while (!searching && index >= 0)
+    while (index >= 0)
     {
         pBankTransaction = transactions_[index];
-        if (pBankTransaction && (pBankTransaction->categID_ == iCatID)
-            && (bIgnor_subcat ? true : pBankTransaction->subcategID_== iSubCatID))
+        if (pBankTransaction)
         {
-            searching = true;
+            if ((pBankTransaction->categID_ == iCatID)
+                && (bIgnor_subcat ? true : pBankTransaction->subcategID_== iSubCatID))
+            {
+                return true;
+            }
+
+            mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
+            pBankTransaction->getSplitTransactions(core, splits);
+     
+            for (int i = 0; i < (int)splits->entries_.size(); ++i)
+            {
+                if (splits->entries_[i]->categID_==iCatID && splits->entries_[i]->subCategID_==iSubCatID)
+                {
+                    return true;
+                }
+            }
         }
         index --;
     }
-
-    if (pBankTransaction)
-    {
-        mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
-        pBankTransaction->getSplitTransactions(core, splits);
-
-        for (int i = 0; i < (int)splits->entries_.size(); ++i)
-        {
-            if (splits->entries_[i]->categID_==iCatID && splits->entries_[i]->subCategID_==iSubCatID)
-            {
-                searching = true;
-            }
-        }
-    }
-    return searching;
+    return false;
 }
 
 bool mmBankTransactionList::IsPayeeUsed(const int iPayeeID) const
