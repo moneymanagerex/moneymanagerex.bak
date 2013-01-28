@@ -1296,7 +1296,7 @@ bool mmBankTransactionList::IsCategoryUsed(mmCoreDB* core, const int iCatID, con
 
             mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
             pBankTransaction->getSplitTransactions(core, splits);
-     
+
             for (int i = 0; i < (int)splits->entries_.size(); ++i)
             {
                 if (splits->entries_[i]->categID_==iCatID && splits->entries_[i]->subCategID_==iSubCatID)
