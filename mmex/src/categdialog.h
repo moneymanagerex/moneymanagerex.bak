@@ -95,7 +95,7 @@ private:
     wxButton* selectButton_;
     wxButton* deleteButton_;
     wxBitmapButton* btnCateg_relocate_;
-    wxCheckBox* itemCheckBox_;
+    wxCheckBox* cbExpand_;
     wxCheckBox* cbShowAll_;
 
     void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true); 

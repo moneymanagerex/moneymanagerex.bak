@@ -102,9 +102,6 @@ void mmCategDialog::fillControls()
     bool bResult = core_->iniSettings_->GetBoolSetting(wxT("SHOW_HIDDEN_CATEGS"), true);
     cbShowAll_->SetValue(bResult);
 
-    wxFont italicFont = wxFont(treeCtrl_->GetFont());
-    italicFont.SetStyle(wxFONTSTYLE_ITALIC);
-
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
@@ -116,9 +113,6 @@ void mmCategDialog::fillControls()
             maincat = treeCtrl_->AppendItem(root_, category->categName_);
             treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));
             if (!bShow) treeCtrl_->SetItemTextColour(maincat, wxColour(wxT("GREY")));
-            //If category does not used - change font style to italic
-            if (!core_->bTransactionList_.IsCategoryUsed(core_, category->categID_, -1))
-                treeCtrl_->SetItemFont(maincat, italicFont);
 
             for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
                     cit != category->children_.end();
@@ -131,8 +125,6 @@ void mmCategDialog::fillControls()
                     wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, sub_category->categName_);
                     treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(category->categID_, sub_category->categID_));
                     if (!bShow) treeCtrl_->SetItemTextColour(subcat, wxColour(wxT("GREY")));
-                    if (!core_->bTransactionList_.IsCategoryUsed(core_, category->categID_, sub_category->categID_, false))
-                        treeCtrl_->SetItemFont(subcat, italicFont);
 
                     if (categID_ == category->categID_ && subcategID_ == sub_category->categID_)
                         selectedItemId_ = subcat;
@@ -144,7 +136,7 @@ void mmCategDialog::fillControls()
     treeCtrl_->Expand(root_);
     bResult = core_->iniSettings_->GetBoolSetting(wxT("EXPAND_CATEGS_TREE"), false);
     if (bResult) treeCtrl_->ExpandAll();
-    itemCheckBox_->SetValue(bResult);
+    cbExpand_->SetValue(bResult);
 
     treeCtrl_->SortChildren(root_);
     treeCtrl_->SelectItem(selectedItemId_);
@@ -174,9 +166,9 @@ void mmCategDialog::CreateControls()
         wxCommandEventHandler(mmCategDialog::OnCategoryRelocation), NULL, this);
     btnCateg_relocate_->SetToolTip(_("Reassign all categories to another category"));
 
-    itemCheckBox_ = new wxCheckBox(this, wxID_STATIC, _("Expand"), wxDefaultPosition,
+    cbExpand_ = new wxCheckBox(this, wxID_STATIC, _("Expand"), wxDefaultPosition,
         wxDefaultSize, wxCHK_2STATE);
-    itemCheckBox_->Connect(wxID_STATIC, wxEVT_COMMAND_CHECKBOX_CLICKED,
+    cbExpand_->Connect(wxID_STATIC, wxEVT_COMMAND_CHECKBOX_CLICKED,
         wxCommandEventHandler(mmCategDialog::OnExpandChbClick), NULL, this);
 
     cbShowAll_ = new wxCheckBox(this, wxID_SELECTALL, _("Show All"), wxDefaultPosition,
@@ -187,7 +179,7 @@ void mmCategDialog::CreateControls()
 
     itemBoxSizer33->Add(btnCateg_relocate_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemBoxSizer33->AddSpacer(10);
-    itemBoxSizer33->Add(itemCheckBox_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer33->Add(cbExpand_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemBoxSizer33->AddSpacer(10);
     itemBoxSizer33->Add(cbShowAll_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
@@ -507,7 +499,7 @@ void mmCategDialog::OnCategoryRelocation(wxCommandEvent& /*event*/)
 
 void mmCategDialog::OnExpandChbClick(wxCommandEvent& /*event*/)
 {
-    if (itemCheckBox_->IsChecked())
+    if (cbExpand_->IsChecked())
     {
         treeCtrl_->ExpandAll();
         treeCtrl_->SelectItem(selectedItemId_);
@@ -519,7 +511,7 @@ void mmCategDialog::OnExpandChbClick(wxCommandEvent& /*event*/)
         treeCtrl_->SelectItem(selectedItemId_);
     }
     treeCtrl_->EnsureVisible(selectedItemId_);
-    core_->iniSettings_->SetBoolSetting(wxT("EXPAND_CATEGS_TREE"), itemCheckBox_->IsChecked());
+    core_->iniSettings_->SetBoolSetting(wxT("EXPAND_CATEGS_TREE"), cbExpand_->IsChecked());
     core_->iniSettings_->Save();
 }
 
