@@ -38,8 +38,8 @@ const wxChar * const mmex::DATAVERSION = wxT("2");
 const wxChar *const mmex::DEFDATEFORMAT = wxT("%m/%d/%y");
 const wxChar *const mmex::DEFDELIMTER = wxT(",");
 
-// Using google: To specify the exchange, use exch:code 
-// Using yahoo: To specify the exchange, use code.exch 
+// Using google: To specify the exchange, use exch:code
+// Using yahoo: To specify the exchange, use code.exch
 
 // const wxChar *const mmex::DEFSTOCKURL = wxT("http://www.google.com/finance?q=%s");
 
