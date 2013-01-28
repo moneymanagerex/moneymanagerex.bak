@@ -855,42 +855,28 @@ wxDateTime mmBankTransactionList::getLastDate(int accountID) const
     return dt;
 }
 
-int mmBankTransactionList::getLastUsedCategoryID(const int accountID, const int payeeID, int& subcategID) const
+int mmBankTransactionList::getLastUsedCategoryID(const int accountID
+    , const int payeeID, const wxString sType, int& subcategID) const
 {
     int categ_id = -1;
     subcategID = -1;
     int index = transactions_.size() - 1;
     bool searching = true;
-    bool transfer = (accountID > 0 && payeeID < 0);
+
     while (searching && index >= 0)
     {
         boost::shared_ptr<const mmBankTransaction> pTransaction = transactions_[index];
         if (pTransaction)
         {
-            if (transfer)
+            if ((pTransaction->accountID_ == accountID || pTransaction->toAccountID_ == accountID)
+                && pTransaction->transType_ == sType 
+                && pTransaction->payeeID_ == payeeID)
             {
-                if ((pTransaction->accountID_ == accountID || pTransaction->toAccountID_ == accountID)
-                    && pTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+                categ_id = pTransaction->categID_;
+                if (categ_id > -1)
                 {
-                    categ_id = pTransaction->categID_;
-                    if (categ_id > -1)
-                    {
-                        subcategID = pTransaction->subcategID_;
-                        searching = false;
-                    }
-                }
-            }
-            else
-            {
-                if (pTransaction->payeeID_ == payeeID
-                    && pTransaction->transType_ != TRANS_TYPE_TRANSFER_STR)
-                {
-                    categ_id = pTransaction->categID_;
-                    if (categ_id > -1)
-                    {
-                        subcategID = pTransaction->subcategID_;
-                        searching = false;
-                    }
+                    subcategID = pTransaction->subcategID_;
+                    searching = false;
                 }
             }
         }
