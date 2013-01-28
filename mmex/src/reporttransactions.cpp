@@ -200,7 +200,9 @@ wxString mmReportTransactions::getHTMLText()
 
     //Category
     if ( transDialog_->getCategoryCheckBox())
-        filterDetails << wxT("<b>") << _("Category:") << wxT(" </b>") <<transDialog_->userCategoryStr() << wxT("<br>");
+        filterDetails << wxT("<b>") << _("Category:") << wxT(" </b>") <<transDialog_->userCategoryStr()
+        << (transDialog_->getExpandStatus() ? wxString(wxT(" <b> ")) << _("Subcategory:") << wxT(" </b>") << _("Any"): wxT(""))
+        << wxT("<br>");
 
     //Status
     if ( transDialog_->getStatusCheckBox())

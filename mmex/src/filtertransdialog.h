@@ -74,6 +74,7 @@ public:
     bool getCategoryCheckBox() {return categoryCheckBox_->GetValue();}
     int getCategoryID() {return categID_;}
     int getSubCategoryID() {return subcategID_;}
+    bool getExpandStatus() {return bExpandStaus_;}
 
     /// Returns the payee string, when Payee is selected.
     wxString userPayeeStr() const;
@@ -153,7 +154,8 @@ private:
 
     int categID_;
     int subcategID_;
-    int payeeID_;
+    bool bExpandStaus_;
+	int payeeID_;
     int refAccountID_;
     wxString refAccountStr_;
 };
