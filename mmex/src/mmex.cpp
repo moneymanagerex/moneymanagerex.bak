@@ -3542,7 +3542,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
                     int subcategID = dlg->getSubCategoryID();
                     int categID = dlg->getCategoryID();
                     if (subcategID == -1)
-                        ignoreSubCateg = true;
+                        ignoreSubCateg = dlg->getExpandStatus();
                     if (!pBankTransaction->containsCategory(categID, subcategID, ignoreSubCateg))
                     {
                         pBankTransaction->reportCategAmountStr_ = wxT("");
@@ -3696,7 +3696,7 @@ bool mmGUIFrame::IsUpdateAvailable(wxString page)
     // get current version
     wxString currentV = mmex::getProgramVersion();
     currentV = currentV.SubString(0, currentV.Find(wxT("DEV"))-1).Trim();
-    
+
     wxStringTokenizer tkz1(currentV, wxT('.'), wxTOKEN_RET_EMPTY_ALL);
     numTokens = (int)tkz1.CountTokens();
 
@@ -3742,7 +3742,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 
     // Access current version details page
     wxString site = wxT("http://www.codelathe.com/mmex/version.html");
- 
+
     wxString page;
     int err_code = site_content(site, page);
     if (err_code != wxURL_NOERR)

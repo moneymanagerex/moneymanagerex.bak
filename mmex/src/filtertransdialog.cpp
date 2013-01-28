@@ -113,6 +113,7 @@ void mmFilterTransactionsDialog::dataToControls()
     if (!subcateg_name.IsEmpty())
         subcategID_ = core_->categoryList_.GetSubCategoryID(categID_, subcateg_name);
     btnCategory_ ->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
+    bExpandStaus_ = true;
 
     status = get_next_value(tkz, value);
     statusCheckBox_ ->SetValue(status);
@@ -430,6 +431,7 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
         categID_ = dlg.getCategId();
         subcategID_ = dlg.getSubCategId();
         btnCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
+        bExpandStaus_ = dlg.getExpandStatus();
     }
 
 }
