@@ -1,13 +1,13 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        
-// Purpose:     
+// Name:
+// Purpose:
 // Author:      Madhan Kanagavel
 // Modified by: Stefano Giorgio, Nikolay
 // Mod Date:    Dec 2011
 // Created:     04/24/07 21:15:09
-// RCS-ID:      
-// Copyright:   
-// Licence:     
+// RCS-ID:
+// Copyright:
+// Licence:
 /////////////////////////////////////////////////////////////////////////////
 
 #ifndef _MM_EX_SPLITDETAILSDIALOG_H_
@@ -29,15 +29,12 @@
  */
 
 ////@begin control identifiers
-#define ID_SPLIT_DETAIL_DIALOG 10122
+#define ID_SPLIT_DETAIL_DIALOG 10125
 #define SYMBOL_SPLITDETAILDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_SPLITDETAILDIALOG_TITLE _("Split Detail Dialog")
 #define SYMBOL_SPLITDETAILDIALOG_IDNAME ID_SPLIT_DETAIL_DIALOG
 #define SYMBOL_SPLITDETAILDIALOG_SIZE wxSize(400, 300)
 #define SYMBOL_SPLITDETAILDIALOG_POSITION wxDefaultPosition
-#define ID_BUTTONCATEGORY 10123
-#define ID_TEXTCTRLAMOUNT 10124
-//#define ID_BUTTONOK 10125
 //#define ID_BUTTONCANCEL 10126
 ////@end control identifiers
 
@@ -57,23 +54,23 @@
  */
 
 class SplitDetailDialog: public wxDialog
-{    
+{
     DECLARE_DYNAMIC_CLASS( SplitDetailDialog )
     DECLARE_EVENT_TABLE()
 
 public:
     /// Constructors
     SplitDetailDialog( );
-    SplitDetailDialog( mmCoreDB* core, 
+    SplitDetailDialog( mmCoreDB* core,
                        const wxString categString,
                        int* categID,
                        int* subcategID,
                        double* amount,
                        int transType,
-                       wxWindow* parent, 
-                       wxWindowID id = SYMBOL_SPLITDETAILDIALOG_IDNAME, 
-                       const wxString& caption = SYMBOL_SPLITDETAILDIALOG_TITLE, 
-                       const wxPoint& pos = SYMBOL_SPLITDETAILDIALOG_POSITION, 
+                       wxWindow* parent,
+                       wxWindowID id = SYMBOL_SPLITDETAILDIALOG_IDNAME,
+                       const wxString& caption = SYMBOL_SPLITDETAILDIALOG_TITLE,
+                       const wxPoint& pos = SYMBOL_SPLITDETAILDIALOG_POSITION,
                        const wxSize& size = SYMBOL_SPLITDETAILDIALOG_SIZE, long style = SYMBOL_SPLITDETAILDIALOG_STYLE );
 
     int* m_categID_;
@@ -89,12 +86,11 @@ private:
     void CreateControls();
 
 ////@begin SplitDetailDialog event handler declarations
-     void OnButtonCategoryClick( wxCommandEvent& event );
+    void OnButtonCategoryClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONOK
     void OnButtonOKClick( wxCommandEvent& event );
-
-    void OnChoiceTypeChar(wxKeyEvent& event);
+    void onTextEntered(wxCommandEvent& event);
 
 ////@end SplitDetailDialog event handler declarations
 

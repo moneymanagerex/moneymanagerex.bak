@@ -1105,7 +1105,7 @@ void mmTransDialog::activateSplitTransactionsDlg()
     boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
     if (categID_ > -1)
     {
-        pSplitEntry->splitAmount_  = bDeposit ? transAmount_ : transAmount_;
+        pSplitEntry->splitAmount_  = bDeposit ? transAmount_ : -transAmount_;
         pSplitEntry->categID_      = categID_;
         pSplitEntry->subCategID_   = subcategID_;
         pSplitEntry->category_      = core_->categoryList_.GetCategorySharedPtr(categID_, subcategID_);

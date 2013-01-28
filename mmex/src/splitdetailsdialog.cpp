@@ -1,13 +1,13 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        
-// Purpose:     
+// Name:
+// Purpose:
 // Author:      Madhan Kanagavel
 // Modified by: Stefano Giorgio, Nikolay
 // Mod Date:    Dec 2011
 // Created:     04/24/07 21:52:26
-// RCS-ID:      
-// Copyright:   
-// Licence:     
+// RCS-ID:
+// Copyright:
+// Licence:
 /////////////////////////////////////////////////////////////////////////////
 
 #include "splitdetailsdialog.h"
@@ -17,29 +17,34 @@
 
 IMPLEMENT_DYNAMIC_CLASS( SplitDetailDialog, wxDialog )
 
+enum
+{
+    ID_DIALOG_SPLTTRANS_TYPE = wxID_HIGHEST + 1,
+    ID_BUTTONCATEGORY,
+    ID_TEXTCTRLAMOUNT,
+};
+
 BEGIN_EVENT_TABLE( SplitDetailDialog, wxDialog )
     EVT_BUTTON( ID_BUTTONCATEGORY, SplitDetailDialog::OnButtonCategoryClick )
     EVT_BUTTON( wxID_OK, SplitDetailDialog::OnButtonOKClick )
-    EVT_TEXT_ENTER(ID_TEXTCTRLAMOUNT, SplitDetailDialog::OnButtonOKClick)
+    EVT_TEXT_ENTER( ID_TEXTCTRLAMOUNT, SplitDetailDialog::onTextEntered )
 END_EVENT_TABLE()
-
- enum {ID_DIALOG_SPLTTRANS_TYPE = wxID_HIGHEST + 1};
 
 SplitDetailDialog::SplitDetailDialog( )
 {
 }
 
-SplitDetailDialog::SplitDetailDialog( mmCoreDB* core, 
-                                     const wxString categString, 
+SplitDetailDialog::SplitDetailDialog( mmCoreDB* core,
+                                     const wxString categString,
                                      int* categID,
                                      int* subcategID,
                                      double* amount,
                                      int transType,
-                                     wxWindow* parent, 
-                                     wxWindowID id, 
-                                     const wxString& caption, 
-                                     const wxPoint& pos, 
-                                     const wxSize& size, 
+                                     wxWindow* parent,
+                                     wxWindowID id,
+                                     const wxString& caption,
+                                     const wxPoint& pos,
+                                     const wxSize& size,
                                      long style )
 {
     core_ = core;
@@ -63,10 +68,10 @@ SplitDetailDialog::SplitDetailDialog( mmCoreDB* core,
     Create(parent, id, caption, pos, size, style);
 }
 
-bool SplitDetailDialog::Create( wxWindow* parent, wxWindowID id, 
-                               const wxString& caption, 
-                               const wxPoint& pos, 
-                               const wxSize& size, 
+bool SplitDetailDialog::Create( wxWindow* parent, wxWindowID id,
+                               const wxString& caption,
+                               const wxPoint& pos,
+                               const wxSize& size,
                                long style )
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
@@ -85,7 +90,7 @@ bool SplitDetailDialog::Create( wxWindow* parent, wxWindowID id,
 }
 
 void SplitDetailDialog::CreateControls()
-{    
+{
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
@@ -102,27 +107,26 @@ void SplitDetailDialog::CreateControls()
     wxStaticText* staticTextType = new wxStaticText( itemPanel7, wxID_STATIC, _("Type"));
     controlSizer->Add(staticTextType, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
-    const wxString itemChoiceStrings[] = 
+    const wxString itemChoiceStrings[] =
     {
         _("Withdrawal"),
         _("Deposit"),
-    };  
+    };
     choiceType_ = new wxChoice(itemPanel7,ID_DIALOG_SPLTTRANS_TYPE,wxDefaultPosition,wxDefaultSize,2,itemChoiceStrings,0);
     choiceType_->SetSelection(localTransType_);
     choiceType_->SetToolTip(_("Specify the type of transactions to be created."));
     controlSizer->Add(choiceType_, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
-    choiceType_ -> Connect(ID_DIALOG_SPLTTRANS_TYPE, wxEVT_CHAR, wxKeyEventHandler(SplitDetailDialog::OnChoiceTypeChar), NULL, this);
 
     wxStaticText* staticTextCategory = new wxStaticText( itemPanel7, wxID_STATIC, _("Category"));
     controlSizer->Add(staticTextCategory, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
-    bCategory_ = new wxButton( itemPanel7, ID_BUTTONCATEGORY, m_categString_, 
+    bCategory_ = new wxButton( itemPanel7, ID_BUTTONCATEGORY, m_categString_,
         wxDefaultPosition, wxSize(200, -1), 0 );
     controlSizer->Add(bCategory_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     wxStaticText* staticTextAmount = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount"));
     controlSizer->Add(staticTextAmount, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
-    textAmount_ = new wxTextCtrl( itemPanel7, ID_TEXTCTRLAMOUNT, _T(""), 
+    textAmount_ = new wxTextCtrl( itemPanel7, ID_TEXTCTRLAMOUNT, _T(""),
         wxDefaultPosition, wxSize(110,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator());
     controlSizer->Add(textAmount_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
     textAmount_->SetFocus();
@@ -147,7 +151,7 @@ void SplitDetailDialog::CreateControls()
 void SplitDetailDialog::OnButtonCategoryClick( wxCommandEvent& /*event*/ )
 {
     mmCategDialog dlg(core_, this);
-    dlg.setTreeSelection(core_->categoryList_.GetCategoryString(*m_categID_), 
+    dlg.setTreeSelection(core_->categoryList_.GetCategoryString(*m_categID_),
                          core_->categoryList_.GetSubCategoryString(*m_categID_, *m_subcategID_));
     if ( dlg.ShowModal() == wxID_OK )
     {
@@ -159,9 +163,20 @@ void SplitDetailDialog::OnButtonCategoryClick( wxCommandEvent& /*event*/ )
     }
 }
 
+void SplitDetailDialog::onTextEntered(wxCommandEvent& event)
+{
+    wxString sAmount = wxT("");
+
+    if (mmCalculator(textAmount_->GetValue(), sAmount))
+        textAmount_->SetValue(sAmount);
+    textAmount_->SetInsertionPoint(textAmount_->GetValue().Len());
+
+    event.Skip();
+}
+
 void SplitDetailDialog::OnButtonOKClick( wxCommandEvent& /*event*/ )
 {
-    if (*m_categID_ == -1) 
+    if (*m_categID_ == -1)
     {
         mmShowErrorMessage(this, _("Invalid Category Entered "), _("Error"));
         bCategory_->SetFocus();
@@ -200,18 +215,4 @@ wxBitmap SplitDetailDialog::GetBitmapResource( const wxString& /*name*/ )
 wxIcon SplitDetailDialog::GetIconResource( const wxString& /*name*/ )
 {
     return wxNullIcon;
-}
-
-void SplitDetailDialog::OnChoiceTypeChar(wxKeyEvent& event)
-{
-    wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_SPLTTRANS_TYPE);
-    int i = choice->GetSelection();
-    if (event.GetKeyCode()==WXK_DOWN) {
-        if (i < 1)
-            choice->SetSelection(++i);
-    } else if (event.GetKeyCode()==WXK_UP){
-        if (i > 0)
-            choice->SetSelection(--i);
-    }
-    event.Skip();
 }
