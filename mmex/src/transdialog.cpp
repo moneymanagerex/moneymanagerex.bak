@@ -216,12 +216,9 @@ void mmTransDialog::updateControlsForTransType()
     {
         if (mmIniOptions::instance().transPayeeSelectionNone_ > 0)
         {
-            if (payeeID_ < 0)
-            {
-                payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_, sTransaction_type_, categID_, subcategID_);
-                payee_name_ = core_->payeeList_.GetPayeeName(payeeID_);
-                payeeUnknown_ = false;
-            }
+            payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_, sTransaction_type_, categID_, subcategID_);
+            payee_name_ = core_->payeeList_.GetPayeeName(payeeID_);
+            payeeUnknown_ = false;
         }
 
         wxString categString = resetCategoryString();
