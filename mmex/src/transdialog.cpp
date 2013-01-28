@@ -224,7 +224,7 @@ void mmTransDialog::updateControlsForTransType()
         wxString categString = resetCategoryString();
         if (mmIniOptions::instance().transCategorySelectionNone_ != 0)
         {
-            categID_ = core_->bTransactionList_.getLastUsedCategoryID(accountID_, transfer ? -1 : payeeID_, subcategID_);
+            categID_ = core_->bTransactionList_.getLastUsedCategoryID(accountID_, payeeID_, sTransaction_type_, subcategID_);
             categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
             categoryName_    = core_->categoryList_.GetCategoryName(categID_);
             subCategoryName_ = core_->categoryList_.GetSubCategoryName(categID_, subcategID_);
