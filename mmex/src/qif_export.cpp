@@ -393,7 +393,7 @@ void mmQIFDialog::mmExportQIF()
                     continue;
 
                 wxDateTime dtdt = pBankTransaction->date_;
-                wxString dateString = mmGetDateForDisplay(core_->db_.get(), dtdt);
+                wxString dateString = mmGetDateForDisplay(dtdt);
 
                 wxString payee = core_->payeeList_.GetPayeeName(pBankTransaction->payeeID_);
                 wxString type = pBankTransaction->transType_;

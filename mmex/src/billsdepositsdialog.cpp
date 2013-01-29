@@ -159,7 +159,7 @@ void mmBDDialog::dataToControls()
             textNumRepeats_->SetValue(numRepeatStr);
 
         wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
-        wxString dtnostr = mmGetDateForDisplay(db_, dtno);
+        wxString dtnostr = mmGetDateForDisplay(dtno);
         dpcbd_->SetValue(dtno);
         dpc_->SetValue(dtno);
         calendarCtrl_->SetDate (dtno);

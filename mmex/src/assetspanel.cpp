@@ -339,7 +339,7 @@ wxString mmAssetsPanel::getItem(long item, long column)
     if (column == COL_NAME)  return m_trans[item]->assetName_;
     if (column == COL_TYPE)  return wxGetTranslation(m_trans[item]->assetType_);
     if (column == COL_VALUE) return m_trans[item]->todayValueStr_;
-    if (column == COL_DATE)  return mmGetDateForDisplay(core_->db_.get(), m_trans[item]->assetDate_);
+    if (column == COL_DATE)  return mmGetDateForDisplay(m_trans[item]->assetDate_);
     if (column == COL_NOTES) return m_trans[item]->assetNotes_;
 
     return wxGetEmptyString();

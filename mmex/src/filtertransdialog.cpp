@@ -472,8 +472,8 @@ wxString mmFilterTransactionsDialog::userDateRangeStr() const
     wxString dateStr;
     if (dateRangeCheckBox_->IsChecked())
     {
-        wxString dtBegin = mmGetDateForDisplay(db_, fromDateCtrl_->GetValue());
-        wxString dtEnd = mmGetDateForDisplay(db_, toDateControl_->GetValue());
+        wxString dtBegin = mmGetDateForDisplay(fromDateCtrl_->GetValue());
+        wxString dtEnd = mmGetDateForDisplay(toDateControl_->GetValue());
         dateStr << wxString::Format(_("From %s to %s"), dtBegin.c_str(), dtEnd.c_str());
     }
     return dateStr;

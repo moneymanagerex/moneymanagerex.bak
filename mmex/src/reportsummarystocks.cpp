@@ -85,7 +85,7 @@ wxString mmReportSummaryStocks::getHTMLText()
             double commission   = q2.GetDouble(wxT("COMMISSION"));
             wxString dateString = q2.GetString(wxT("PURCHASEDATE"));
             wxDateTime dtdt     = mmGetStorageStringAsDate(dateString);
-            wxString dt         = mmGetDateForDisplay(db_, dtdt);
+            wxString dt         = mmGetDateForDisplay(dtdt);
 
             th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
             double base_conv_rate = core_->accountList_.getAccountBaseCurrencyConvRate(accountID);

@@ -497,7 +497,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
         th.id_           = q1.GetInt(wxT("BDID"));
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
-        th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
+        th.nextOccurStr_   = mmGetDateForDisplay(th.nextOccurDate_);
         int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
 
         int repeats        = q1.GetInt(wxT("REPEATS"));
