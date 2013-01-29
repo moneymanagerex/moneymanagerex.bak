@@ -344,7 +344,7 @@ wxString mmReportCashFlow::getHTMLText()
 
         wxString dtStr ; 
         //dtStr << mmGetNiceShortMonthName(dtEnd.GetMonth()) << wxT(" ") << dtEnd.GetYear();
-        dtStr << mmGetDateForDisplay(core_->db_.get(), dtEnd); 
+        dtStr << mmGetDateForDisplay(dtEnd); 
 
         hb.startTableRow();
         hb.addTableCell(dtStr, false, true);

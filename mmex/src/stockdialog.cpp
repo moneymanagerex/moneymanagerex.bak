@@ -79,7 +79,7 @@ void mmStockDialog::dataToControls()
 
     wxString dateString = stock_holder_-> stockPDate_;
     wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-    wxString dt = mmGetDateForDisplay(core_->db_.get(), dtdt);
+    wxString dt = mmGetDateForDisplay(dtdt);
     dpc_->SetValue(dtdt);
 
     double numShares = stock_holder_->numShares_;

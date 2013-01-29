@@ -177,7 +177,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     /* Load the Account Currency Settings for Formatting Strings */
     currencyPtr->loadCurrencySettings();
 
-    dateStr_ = mmGetDateForDisplay(db_.get(), date_);
+    dateStr_ = mmGetDateForDisplay(date_);
 
     wxString displayTransAmtString;
     mmex::formatDoubleToCurrencyEdit(amt_, displayTransAmtString);

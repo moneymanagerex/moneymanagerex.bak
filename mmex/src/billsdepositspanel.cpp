@@ -257,10 +257,10 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
 
         th.id_           = q1.GetInt(wxT("BDID"));
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
-        th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
+        th.nextOccurStr_   = mmGetDateForDisplay(th.nextOccurDate_);
         int repeats        = q1.GetInt(wxT("REPEATS"));
         th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
-        th.sStatus_         = q1.GetString(wxT("STATUS"));
+        th.sStatus_        = q1.GetString(wxT("STATUS"));
         th.transType_      = q1.GetString(wxT("TRANSCODE"));
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
         th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));

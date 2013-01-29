@@ -344,7 +344,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
         {
             wxString dateString = q1.GetString(wxT("PURCHASEDATE"));
             wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-            th.stockPDate_ = mmGetDateForDisplay(core_->db_.get(), dtdt);
+            th.stockPDate_ = mmGetDateForDisplay(dtdt);
         }
 
         trans_.push_back(new mmStockTransactionHolder(th));

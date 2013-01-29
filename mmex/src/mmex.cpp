@@ -844,7 +844,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         th.id_             = q1.GetInt(wxT("BDID"));
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
 
-        th.nextOccurStr_   = mmGetDateForDisplay(m_db.get(), th.nextOccurDate_);
+        th.nextOccurStr_   = mmGetDateForDisplay(th.nextOccurDate_);
         th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
         th.transType_      = q1.GetString(wxT("TRANSCODE"));
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));

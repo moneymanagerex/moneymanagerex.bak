@@ -481,7 +481,7 @@ wxString inQuotes(wxString label, wxString& delimiter)
     return label;
 }
 
-wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
+wxString mmGetDateForDisplay(const wxDateTime &dt)
 {
     return dt.Format(mmOptions::instance().dateFormat_);
 }

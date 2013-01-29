@@ -92,7 +92,7 @@ void mmAssetDialog::dataToControls()
     m_notes->SetValue(asset_holder_->assetNotes_);
 
     wxDateTime dtdt = asset_holder_->assetDate_;
-    wxString dt = mmGetDateForDisplay(core_->db_.get(), dtdt);
+    wxString dt = mmGetDateForDisplay(dtdt);
     m_dpc->SetValue(dtdt);
 
     wxString value;
