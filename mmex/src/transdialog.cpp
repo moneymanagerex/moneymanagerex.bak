@@ -1109,10 +1109,13 @@ void mmTransDialog::activateSplitTransactionsDlg()
     boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
     if (categID_ > -1)
     {
-        pSplitEntry->splitAmount_  = bDeposit ? transAmount_ : -transAmount_;
+        wxString sAmount = textAmount_->GetValue();
+        if (!mmex::formatCurrencyToDouble(sAmount, transAmount_))
+            transAmount_ = 0;
+        pSplitEntry->splitAmount_  = bDeposit ? transAmount_ : transAmount_;
         pSplitEntry->categID_      = categID_;
         pSplitEntry->subCategID_   = subcategID_;
-        pSplitEntry->category_      = core_->categoryList_.GetCategorySharedPtr(categID_, subcategID_);
+        pSplitEntry->category_     = core_->categoryList_.GetCategorySharedPtr(categID_, subcategID_);
         wxASSERT(pSplitEntry->category_.lock());
         split_->addSplit(pSplitEntry);
     }
