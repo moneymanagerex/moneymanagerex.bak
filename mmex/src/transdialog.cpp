@@ -132,7 +132,7 @@ void mmTransDialog::dataToControls()
         toID_ = pBankTransaction_->toAccountID_;
 
         payeeID_ = pBankTransaction_->payeeID_;
-        if (payeeID_ > -1) // transaction_type != TRANS_TYPE_TRANSFER_STR
+        if (payeeID_ > -1) // !bTransfer
             payeeUnknown_ = false;
         payee_name_ = pBankTransaction_->payeeStr_;
 
@@ -578,16 +578,13 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 #endif
 
     if (cbPayee_->GetCount() == 1)
-    {
         cbPayee_->SetSelection(0);
-        value = cbPayee_->GetStringSelection();
-    }
     else
         cbPayee_->SetValue(value);
 
     OnPayeeUpdated(event);
 
-    cbPayee_->SetInsertionPoint(value.Length());
+    cbPayee_->SetInsertionPointEnd();
     cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
 }
@@ -735,42 +732,7 @@ wxString mmTransDialog::resetCategoryString()
 
 void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    wxString transaction_type = sTransaction_type_;
-
-    if (payeeID_ == -1 && transaction_type != TRANS_TYPE_TRANSFER_STR)
-    {
-        wxString payee_name = cbPayee_->GetValue();
-        if (payee_name.IsEmpty())
-        {
-            mmShowErrorMessageInvalid(this, _("Payee"));
-            return;
-        }
-        payeeID_ = core_->payeeList_.AddPayee(payee_name);
-    }
-
-    if (toID_ == -1 && transaction_type == TRANS_TYPE_TRANSFER_STR)
-    {
-        mmShowErrorMessageInvalid(this, _("To Account"));
-        bPayee_->SetFocus();
-        return;
-    }
-
-    if (cSplit_->GetValue())
-    {
-        if (split_->numEntries() == 0)
-        {
-            mmShowErrorMessageInvalid(this, _("Category"));
-            return;
-        }
-    }
-    else // if payee just has been created categid still null
-    {
-        if (categID_ < 1)
-        {
-            mmShowErrorMessageInvalid(this, _("Category"));
-            return;
-        }
-    }
+    bool bTransfer = (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR);
 
     double amount;
     if (cSplit_->GetValue())
@@ -778,7 +740,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         amount = split_->getTotalSplits();
         if (amount < 0.0)
         {
-            if (transaction_type == TRANS_TYPE_TRANSFER_STR) {
+            if (bTransfer) {
                 if (amount < 0)
                     amount = - amount;
             } else {
@@ -800,7 +762,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         }
     }
 
-    if (transaction_type == TRANS_TYPE_TRANSFER_STR && advancedToTransAmountSet_)
+    if (bTransfer && advancedToTransAmountSet_)
     {
         wxString amountStr = toTextAmount_->GetValue().Trim();
         if (amountStr.IsEmpty() || !mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
@@ -827,15 +789,62 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     }
     else
     {
-        if (transaction_type == TRANS_TYPE_TRANSFER_STR)
+        if (bTransfer)
         {
             toTransAmount_ = amount;
         }
     }
 
+    if (cSplit_->GetValue())
+    {
+        if (split_->numEntries() == 0)
+        {
+            mmShowErrorMessageInvalid(this, _("Category"));
+            return;
+        }
+    }
+    else // if payee just has been created categid still null
+    {
+        if (categID_ < 1)
+        {
+            mmShowErrorMessageInvalid(this, _("Category"));
+            return;
+        }
+    }
+
+    if (payeeID_ == -1 && !bTransfer)
+    {
+        wxString payee_name = cbPayee_->GetValue();
+        if (payee_name.IsEmpty())
+        {
+            mmShowErrorMessageInvalid(this, _("Payee"));
+            return;
+        }
+        else
+        {
+            wxMessageDialog msgDlg( this
+                , _("Do you want to add new payee?")
+                , _("Confirm to add new payee")
+                , wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+            if (msgDlg.ShowModal() == wxID_YES)
+            {
+                payeeID_ = core_->payeeList_.AddPayee(payee_name);
+            }
+            else
+                return;
+        }
+    }
+
+    if (toID_ == -1 && bTransfer)
+    {
+        mmShowErrorMessageInvalid(this, _("To Account"));
+        bPayee_->SetFocus();
+        return;
+    }
+
     int toAccountID = -1;
     int fromAccountID = accountID_;
-    if (transaction_type == TRANS_TYPE_TRANSFER_STR)
+    if (bTransfer)
     {
         if (toID_ == -1)
         {
@@ -909,7 +918,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     pTransaction->accountID_ = fromAccountID;
     pTransaction->toAccountID_ = toAccountID;
     pTransaction->payee_ = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
-    pTransaction->transType_ = transaction_type;
+    pTransaction->transType_ = sTransaction_type_;
     pTransaction->amt_ = amount;
     pTransaction->status_ = status;
     pTransaction->transNum_ = transNum;
