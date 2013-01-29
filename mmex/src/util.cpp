@@ -1099,7 +1099,7 @@ boost::shared_ptr<wxSQLite3Database> static_db_ptr()
 
 bool mmCalculator(wxString sInput, wxString& sOutput)
 {
-    //TODO: Fix division/multiply by negative and Non standart number format
+    //TODO: Fix Non standart number format
     sInput.Replace(wxT(")("), wxT(")*("));
     bool bResult = true;
     int a = sInput.Replace(wxT("("), wxT("("));
@@ -1127,12 +1127,17 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
         size_t leftPos = sTemp.Find('(', true);
         size_t rightPos = sTemp.find(wxT(")"), leftPos);
         midBrackets = sTemp.SubString(leftPos, rightPos);
+        midBrackets.Replace(wxT("(-"), wxT("(N"));
         sToCalc = midBrackets.SubString(1, midBrackets.Len()-2);
         if (sToCalc.IsEmpty()) bResult = false;
         double dTempAmount;
-
+        sToCalc.Replace(wxT("*-"), wxT("M"));
+        sToCalc.Replace(wxT("/-"), wxT("D"));
+        sToCalc.Replace(wxT("+-"), wxT("-"));
+        sToCalc.Replace(wxT("-+"), wxT("-"));
         sToCalc.Replace(wxT("+"), wxT("|"));
         sToCalc.Replace(wxT("-"), wxT("|-"));
+        midBrackets.Replace(wxT("(N"), wxT("(-"));
 
         wxStringTokenizer token(sToCalc, wxT("|"));
 
@@ -1140,20 +1145,25 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
         {
             double dSubtotal = 1;
             wxString sToken = token.GetNextToken();
+            sToken.Replace(wxT("M"), wxT("|M"));
+            sToken.Replace(wxT("D"), wxT("|D"));
             sToken.Replace(wxT("*"), wxT("|*"));
             sToken.Replace(wxT("/"), wxT("|/"));
+            sToken.Replace(wxT("N"), wxT("-"));
             sToken.Prepend(wxT("*"));
+
             wxStringTokenizer token2(sToken, wxT("|"));
             while (token2.HasMoreTokens() && bResult)
             {
                 wxString sElement = token2.GetNextToken();
                 wxString sSign = sElement.Mid(0,1);
                 sElement.Remove(0,1);
-
                 if (sElement.ToDouble(&dTempAmount))
                 {
                     if (sSign == wxT("*")) dSubtotal = dSubtotal*dTempAmount;
+                    else if (sSign == wxT("M")) dSubtotal = -dSubtotal*dTempAmount;
                     else if (sSign == wxT("/") && dTempAmount != 0) dSubtotal = dSubtotal/dTempAmount;
+                    else if (sSign == wxT("D") && dTempAmount != 0) dSubtotal = -dSubtotal/dTempAmount;
                     else bResult = false;
                 }
                 else
