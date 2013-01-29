@@ -580,13 +580,14 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
     if (cbPayee_->GetCount() == 1)
     {
         cbPayee_->SetSelection(0);
+        value = cbPayee_->GetStringSelection();
     }
     else
         cbPayee_->SetValue(value);
 
-    cbPayee_->SetInsertionPoint(value.Length());
-
     OnPayeeUpdated(event);
+
+    cbPayee_->SetInsertionPoint(value.Length());
     cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
 }
