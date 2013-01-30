@@ -343,7 +343,6 @@ void mmFilterTransactionsDialog::CreateControls()
     buttonPanelSizer->Add(save_button, flags.Border(wxALL, 5));
     buttonPanelSizer->Add(itemButtonOK, flags);
     buttonPanelSizer->Add(itemButtonCancel, flags);
-
 }
 
 /*!
@@ -419,6 +418,15 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 
 void mmFilterTransactionsDialog::OnButtoncancelClick( wxCommandEvent& /*event*/ )
 {
+    wxWindow *w = FindFocus();
+    if (w && w->GetId() == ID_DIALOG_TRANS_PAYEECOMBO && !(cbPayee_->GetValue()).IsEmpty())
+    {
+        cbPayee_->SetValue(wxT(""));
+        prev_value_ = wxT("*");
+        wxCommandEvent evt(wxEVT_COMMAND_TEXT_UPDATED, ID_DIALOG_TRANS_PAYEECOMBO);
+        OnPayeeUpdated(evt);
+        return;
+    }
     EndModal(wxID_CANCEL);
 }
 
@@ -659,20 +667,21 @@ void mmFilterTransactionsDialog::setAccountToolTip(wxString tip) const
 
 void mmFilterTransactionsDialog::OnPayeeUpdated(wxCommandEvent& event)
 {
-    wxString value = cbPayee_->GetValue();
+    wxString value = cbPayee_->GetValue().Lower();
 
-    if (value == prev_value_) return;
+    if (value == prev_value_.Lower()) return;
     //Line above to fix infinite loop for wx-2.9 GTK
     //Line below seems does not working in wx-2.9 GTK
-    cbPayee_ -> SetEvtHandlerEnabled(false);
+    cbPayee_->SetEvtHandlerEnabled(false);
+
     prev_value_ = value;
-    cbPayee_ -> Clear();
+    cbPayee_->Clear();
     wxArrayString data;
 
     data = core_->payeeList_.FilterPayees(wxT(""));
     for (size_t i = 0; i < data.Count(); ++i)
     {
-        if (data[i].Lower().Matches(value.Lower().Append(wxT("*"))))
+        if (data[i].Lower().Matches(wxString(value).Append(wxT("*"))))
             cbPayee_ ->Append(data[i]);
     }
 
@@ -681,14 +690,11 @@ void mmFilterTransactionsDialog::OnPayeeUpdated(wxCommandEvent& event)
 #endif
 
     if (cbPayee_->GetCount() == 1)
-    {
         cbPayee_->SetSelection(0);
-        value = cbPayee_->GetStringSelection();
-	}
     else
         cbPayee_->SetValue(value);
 
-    cbPayee_->SetInsertionPoint(value.Length());
-    cbPayee_ -> SetEvtHandlerEnabled(true);
+    cbPayee_->SetInsertionPointEnd();
+    cbPayee_->SetEvtHandlerEnabled(true);
     event.Skip();
 }
