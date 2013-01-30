@@ -79,13 +79,13 @@ void relocatePayeeDialog::CreateControls()
 
     cbSourcePayee_ = new wxComboBox(this, wxID_ANY, wxT(""),
         wxDefaultPosition, btnSize,
-        core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
+        core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
     cbSourcePayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(relocatePayeeDialog::OnPayeeUpdated), NULL, this);
 
     cbDestPayee_ = new wxComboBox(this, wxID_NEW, wxT(""),
         wxDefaultPosition, btnSize,
-        core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
+        core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
     cbDestPayee_->Connect(wxID_NEW, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(relocatePayeeDialog::OnPayeeUpdated), NULL, this);
 
@@ -158,7 +158,7 @@ void relocatePayeeDialog::OnPayeeUpdated(wxCommandEvent& event)
     if (w && w->GetId() == wxID_NEW)
 	    cbPayeeInFocus = cbDestPayee_;
 
-    wxString value = cbPayeeInFocus->GetValue();
+    wxString value = cbPayeeInFocus->GetValue().Lower();
 
     if (value == prev_value_) return;
     //Line above to fix infinite loop for wx-2.9 GTK
@@ -171,7 +171,7 @@ void relocatePayeeDialog::OnPayeeUpdated(wxCommandEvent& event)
     data = core_->payeeList_.FilterPayees(wxT(""));
     for (size_t i = 0; i < data.Count(); ++i)
     {
-        if (data[i].Lower().Matches(value.Lower().Append(wxT("*"))))
+        if (data[i].Lower().Matches(wxString(value).Append(wxT("*"))))
             cbPayeeInFocus ->Append(data[i]);
     }
 
@@ -183,7 +183,8 @@ void relocatePayeeDialog::OnPayeeUpdated(wxCommandEvent& event)
         cbPayeeInFocus->SetSelection(0);
     else
         cbPayeeInFocus->SetValue(value);
-    cbPayeeInFocus->SetInsertionPoint(value.Length());
+    cbPayeeInFocus->SetInsertionPointEnd();
+
     cbPayeeInFocus -> SetEvtHandlerEnabled(true);
     event.Skip();
 }

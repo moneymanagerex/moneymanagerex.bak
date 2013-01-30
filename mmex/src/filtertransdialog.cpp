@@ -211,7 +211,7 @@ void mmFilterTransactionsDialog::CreateControls()
 
     cbPayee_ = new wxComboBox(itemPanel, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
         wxDefaultPosition, wxDefaultSize,
-        core_->payeeList_.FilterPayees(wxT("")), wxTE_PROCESS_ENTER);
+        core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmFilterTransactionsDialog::OnPayeeUpdated), NULL, this);
 
