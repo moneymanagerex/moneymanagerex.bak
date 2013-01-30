@@ -141,6 +141,7 @@ void mmTransDialog::dataToControls()
 
         transAmount_ = pBankTransaction_->amt_;
         toTransAmount_ = pBankTransaction_->toAmt_;
+        advancedToTransAmountSet_ = (transAmount_ != toTransAmount_);
 
         mmex::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
         textAmount_->SetValue(dispAmount);
@@ -678,7 +679,7 @@ void mmTransDialog::OnDateChanged(wxDateEvent& event)
 
 void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
 {
-    advancedToTransAmountSet_ = cAdvanced_->GetValue();
+    advancedToTransAmountSet_ = cAdvanced_->IsChecked();
     toTextAmount_->SetValue(textAmount_->GetValue());
     SetTransferControls();
 }
@@ -733,8 +734,9 @@ wxString mmTransDialog::resetCategoryString()
 void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
     bool bTransfer = (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR);
-
+    advancedToTransAmountSet_ = cAdvanced_->IsChecked();
     double amount;
+
     if (cSplit_->GetValue())
     {
         amount = split_->getTotalSplits();
