@@ -41,14 +41,14 @@ cd ~/build/mmex-$MMEX_VERSION
 
 sed -e 's/<insert up to 60 chars description>/Simple to use financial management software/g' debian/control > debian/control.tmp
 mv debian/control.tmp debian/control 
-sed -e 's/<insert long description, indented with spaces>/Money  Manager  Ex (MMEX) is a free, open-source,\
+sed -e 's/<insert long description, indented with spaces>/Money Manager Ex (MMEX) is a free, open-source,\
  cross-platform, easy-to-use personal finance software.\
  It primarily helps organize one`s finances and keeps\
- track of where, when and how the money goes.\
- MMEX includes all the basic features that 90% of users\
- would want to see in a personal finance application.\
- The design goals are to concentrate  on  simplicity\
- and  user friendliness - something one can use everyday./g' debian/control > debian/control.tmp
+ track of where, when and how the money goes. \
+  MMEX includes all the basic features that 90% of users\
+ would want to see in a personal finance application. \
+  The design goals are to concentrate on simplicity and\
+ user friendliness - something one can use everyday./g' debian/control > debian/control.tmp
 mv debian/control.tmp debian/control 
 sed -e 's%<insert the upstream URL, if relevant>%https://sourceforge.net/projects/moneymanagerex%g' debian/control > debian/control.tmp
 mv debian/control.tmp debian/control 
