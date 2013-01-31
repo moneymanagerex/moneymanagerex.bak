@@ -13,19 +13,22 @@
 ARCHITECTURE="i386"
 
 # Specify the build version of mmex
-MMEX_VERSION="0.9.9.0"
+MMEX_VERSION="0.9.9.2"
 
 EMAIL="vomikan@mail.ru"
 
+cd ../../..
 PWD=`pwd`
-cd ../../../..
-cp -R mmex ~/build/mmex-$MMEX_VERSION
+rsync -rCh $PWD/ ~/build/mmex-$MMEX_VERSION/
+
 cd ~/build
-rm -Rf `find . -name .svn`
 tar czf mmex_$MMEX_VERSION.orig.tar.gz  mmex-$MMEX_VERSION
 cd  mmex-$MMEX_VERSION
+cp setup/linux/debian/remove_tests.diff patch.diff
+patch -p0 < patch.diff
+rm patch.diff
+
 ./bootstrap
-./configure --prefix=/usr && make
 
 # -s, --single              set package class to single
 # -e, --email <address>     use <address> as the maintainer e-mail address
