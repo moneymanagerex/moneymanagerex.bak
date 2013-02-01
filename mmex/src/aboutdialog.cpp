@@ -16,12 +16,13 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *******************************************************/
 #include "aboutdialog.h"
-#include "fileviewerdialog.h"
+#include "constants.h"
 #include "defs.h"
 #include "dbwrapper.h"
-#include "util.h"
+#include "htmlbuilder.h"
+#include "fileviewerdialog.h"
 #include "paths.h"
-#include "constants.h"
+#include "util.h"
 /*******************************************************/
 
 #include <boost/version.hpp>
@@ -39,6 +40,7 @@ enum
 IMPLEMENT_DYNAMIC_CLASS(mmAboutDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(mmAboutDialog, wxDialog)
+    EVT_HTML_LINK_CLICKED(wxID_ANY, mmAboutDialog::OnLinkClicked)
 END_EVENT_TABLE()
 
 mmAboutDialog::mmAboutDialog( wxWindow* parent) 
@@ -80,12 +82,12 @@ void mmAboutDialog::CreateControls()
     wxBoxSizer* itemBoxSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer);
 
-    wxBitmap itemStaticBitmap3Bitmap(money_xpm);
+    /*wxBitmap itemStaticBitmap3Bitmap(money_xpm);
 
     wxStaticBitmap* itemStaticBitmap3;
     itemStaticBitmap3 = new wxStaticBitmap(this,
         wxID_STATIC, itemStaticBitmap3Bitmap);
-    itemBoxSizer->Add(itemStaticBitmap3, flags);
+    itemBoxSizer->Add(itemStaticBitmap3, flags);*/
 
     wxStaticText* versionStaticText = new wxStaticText( this, wxID_STATIC,
         wxString(_("Version: ")) + mmex::getProgramVersion());
@@ -144,13 +146,24 @@ void mmAboutDialog::CreateControls()
     wxBoxSizer *sponsors_sizer = new wxBoxSizer(wxVERTICAL);
     sponsors_tab->SetSizer(sponsors_sizer);
 
-    wxSize internal_size = wxSize(400, 200); //developers_tab_->GetBestVirtualSize();
+    wxSize internal_size = wxSize(400, 400); //developers_tab_->GetBestVirtualSize();
 
-    wxTextCtrl* about_text = new wxTextCtrl( about_tab,
-        wxID_STATIC, mmex::getProgramDescription(),
-        wxDefaultPosition, internal_size, wxTE_MULTILINE );
-    about_text->SetEditable(false);
-    about_sizer->Add(about_text, flags);
+    wxHtmlWindow* about_text = new wxHtmlWindow( about_tab, wxID_ANY, 
+        wxDefaultPosition, wxDefaultSize, 
+        wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    about_sizer->Add(about_text, 1, wxGROW|wxALL, 1);
+    
+    mmHTMLBuilder hb;
+    wxString html = mmex::getProgramDescription();
+    html.Replace(wxT("\n"), wxT("<br>"));
+    html << wxT("<br>") << wxT("<br>");
+    hb.init();
+    hb.addParaText(html);
+    hb.addTableCellLink( mmex::getProgramFacebookSite()
+        , _("Visit us on Facebook"));
+    hb.end();
+    html = hb.getHTMLText();
+    about_text -> SetPage(html);
 
     wxTextCtrl* developers_text = new wxTextCtrl( developers_tab,
         wxID_STATIC, data[0], wxDefaultPosition, internal_size, wxTE_MULTILINE );
@@ -187,4 +200,11 @@ void mmAboutDialog::CreateControls()
     button_OK->SetDefault();
     button_OK->SetFocus();
     itemBoxSizer->Add(button_OK, flags);
+}
+
+void mmAboutDialog::OnLinkClicked(wxHtmlLinkEvent& event)
+{
+    wxHtmlLinkInfo link_info = event.GetLinkInfo();
+    wxString sURL = link_info.GetHref();
+    wxLaunchDefaultBrowser(sURL);
 }

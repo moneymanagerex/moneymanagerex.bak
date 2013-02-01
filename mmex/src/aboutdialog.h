@@ -21,6 +21,9 @@
 
 #include <wx/dialog.h>
 #include <wx/notebook.h>
+#include "defs.h"
+
+class wxHtmlWindow;
 
 class mmAboutDialog : public wxDialog
 {    
@@ -36,7 +39,7 @@ private:
     void CreateControls();
     void OnVersionHistory(wxCommandEvent& event);
     void OnContributerList(wxCommandEvent& event);
-
+    void OnLinkClicked(wxHtmlLinkEvent& event);
 };
 
 #endif // _MM_EX_ABOUTDIALOG_H_
