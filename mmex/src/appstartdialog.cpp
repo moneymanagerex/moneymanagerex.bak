@@ -214,7 +214,10 @@ void mmAppStartDialog::OnQuit(wxCommandEvent& /*event*/)
 
 void mmAppStartDialog::OnClose(wxCloseEvent& /*event*/)
 {
-    EndModal(wxID_EXIT);
+    if (itemButtonExit_->IsShown())
+        EndModal(wxID_EXIT);
+    else
+        EndModal(wxID_OK);
 }
 
 void mmAppStartDialog::OnButtonAppstartNewDatabaseClick( wxCommandEvent& /*event*/ )
