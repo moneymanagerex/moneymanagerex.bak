@@ -37,9 +37,16 @@ public:
 private:
     bool Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
     void CreateControls();
+    void InitControls();
     void OnVersionHistory(wxCommandEvent& event);
     void OnContributerList(wxCommandEvent& event);
     void OnLinkClicked(wxHtmlLinkEvent& event);
+    
+    wxHtmlWindow* about_text_;
+    wxTextCtrl* developers_text_;
+    wxTextCtrl* translators_text_;
+    wxTextCtrl* artwork_text_;
+    wxTextCtrl* sponsors_text_;
 };
 
 #endif // _MM_EX_ABOUTDIALOG_H_
