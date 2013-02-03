@@ -62,7 +62,7 @@ inline bool sortTransactionsByRemainingDays(const mmBDTransactionHolder &p1, con
 mmBillsDepositsPanel::mmBillsDepositsPanel(mmCoreDB* core,
     wxWindow *parent, wxWindowID winid,
     const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-: mmPanelBase(NULL, core)
+: mmPanelBase(core)
 , m_imageList()
 , listCtrlAccount_()
 {

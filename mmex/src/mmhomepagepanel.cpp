@@ -44,7 +44,7 @@ mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
             const wxSize& size,
             long style,
             const wxString& name )
-: mmPanelBase(NULL, core)
+: mmPanelBase(core)
 , frame_(frame)
 , topCategories_(topCategories)
 {

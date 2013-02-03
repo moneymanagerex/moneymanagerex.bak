@@ -422,7 +422,7 @@ mmCheckingPanel::mmCheckingPanel(
     wxWindow *parent, wxWindowID winid,
     const wxPoint& pos, const wxSize& size, long style, const wxString& name
 )
-: mmPanelBase(NULL, core)
+: mmPanelBase(core)
 , mainFrame_(mainFrame)
 , filteredBalance_(0.0)
 , m_listCtrlAccount()

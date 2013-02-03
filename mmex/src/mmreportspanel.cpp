@@ -30,7 +30,7 @@ mmReportsPanel::mmReportsPanel( mmGUIFrame* frame,
                                wxWindowID winid, const wxPoint& pos, 
                                const wxSize& size, long style,
                                const wxString& name )
-: mmPanelBase(NULL, NULL)
+: mmPanelBase(NULL)
 , frame_(frame)
 , rb_(rb)
 {

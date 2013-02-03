@@ -68,7 +68,7 @@ mmStocksPanel::mmStocksPanel(mmCoreDB* core,
                              wxWindow *parent,
                              wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
                              const wxString& name)
-: mmPanelBase(NULL, core)
+: mmPanelBase(core)
 , m_imageList(0)
 , accountID_(accountID)
 {
