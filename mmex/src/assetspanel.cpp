@@ -62,7 +62,7 @@ END_EVENT_TABLE()
 /*******************************************************/
 
 mmAssetsPanel::mmAssetsPanel(wxWindow *parent, mmCoreDB* core)
-: mmPanelBase(NULL, core)
+: mmPanelBase(core)
 {
     Create(parent, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxPanelNameStr);
 }
