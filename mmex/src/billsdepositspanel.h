@@ -120,7 +120,6 @@ class mmBillsDepositsPanel : public mmPanelBase
 
 public:
     mmBillsDepositsPanel(
-        wxSQLite3Database* db,
         mmCoreDB* core,
         wxWindow *parent,
         wxWindowID winid = wxID_ANY,

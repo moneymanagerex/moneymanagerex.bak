@@ -3953,7 +3953,7 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& WXUNUSED(event))
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmBillsDepositsPanel(m_db.get(), m_core.get(), homePanel_, wxID_STATIC,
+    panelCurrent_ = new mmBillsDepositsPanel(m_core.get(), homePanel_, wxID_STATIC,
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
