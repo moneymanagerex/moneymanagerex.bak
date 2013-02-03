@@ -66,7 +66,6 @@ mmOptionsDialog::mmOptionsDialog(
     wxWindow* parent, wxWindowID id,
     const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
 : core_(core)
-, db_(core->db_.get())
 , restartRequired_(false)
 , changesApplied_(false)
 {
@@ -856,7 +855,7 @@ void mmOptionsDialog::SaveStocksUrl()
     else
     {
         // Clear database record: Allows value to reset to system default.
-        db_->ExecuteUpdate("DELETE FROM INFOTABLE_V1 where INFONAME = \"STOCKURL\";");
+        core_->db_.get()->ExecuteUpdate("DELETE FROM INFOTABLE_V1 where INFONAME = \"STOCKURL\";");
     }
 }
 
@@ -864,7 +863,7 @@ void mmOptionsDialog::SaveStocksUrl()
 void mmOptionsDialog::SaveNewSystemSettings()
 {
     // initialize database saves -------------------------------------------------------------
-    db_->Begin();
+    core_->db_.get()->Begin();
 
     // Save all the details for all the panels
     SaveGeneralPanelSettings();
@@ -874,7 +873,7 @@ void mmOptionsDialog::SaveNewSystemSettings()
     SaveImportExportPanelSettings();
 
     // finalise database saves ---------------------------------------------------------------
-    db_->Commit();
+    core_->db_.get()->Commit();
 }
 
 void mmOptionsDialog::SaveGeneralPanelSettings()
