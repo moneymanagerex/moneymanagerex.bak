@@ -64,10 +64,10 @@ mmBDDialog::mmBDDialog( )
 {
 }
 
-mmBDDialog::mmBDDialog(wxSQLite3Database* db, mmCoreDB* core, int bdID, bool edit, bool enterOccur,
+mmBDDialog::mmBDDialog(mmCoreDB* core, int bdID, bool edit, bool enterOccur,
                        wxWindow* parent, wxWindowID id, const wxString& caption, 
                        const wxPoint& pos, const wxSize& size, long style )
-: db_(db), core_(core), bdID_(bdID), edit_(edit)
+:core_(core), bdID_(bdID), edit_(edit)
     , categID_(-1), subcategID_(-1), payeeID_(-1), accountID_(-1), toID_(-1)
     , toTransAmount_(-1), enterOccur_(enterOccur)
     , advancedToTransAmountSet_(false), payeeUnknown_(true)
@@ -1089,7 +1089,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
             pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
             core_->bTransactionList_.addTransaction(core_, pTransaction);
         }
-        mmDBWrapper::completeBDInSeries(db_, bdID_);
+        mmDBWrapper::completeBDInSeries(core_->db_.get(), bdID_);
     }
     mmOptions::instance().databaseUpdated_ = true;
     EndModal(wxID_OK);
