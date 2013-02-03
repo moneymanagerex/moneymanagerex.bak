@@ -39,9 +39,11 @@ BEGIN_EVENT_TABLE(budgetingListCtrl, wxListCtrl)
 END_EVENT_TABLE()
 /*******************************************************/
 mmBudgetingPanel::mmBudgetingPanel(
-    wxSQLite3Database* db, mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID,
-    wxWindow *parent, wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,const wxString& name)
-: mmPanelBase(db, core)
+    mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID,
+    wxWindow *parent, wxWindowID winid,
+    const wxPoint& pos, const wxSize& size,
+    long style,const wxString& name)
+: mmPanelBase(NULL, core)
 , m_imageList()
 , listCtrlBudget_()
 , budgetYearID_(budgetYearID)
@@ -127,7 +129,7 @@ void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
 
 void mmBudgetingPanel::UpdateBudgetHeading()
 {
-    wxString yearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
+    wxString yearStr = mmDBWrapper::getBudgetYearForID(core_->db_.get(), budgetYearID_);
     if ((yearStr.length() < 5))
     {
         if ( mainFrame_->budgetFinancialYears() )
@@ -287,7 +289,7 @@ void mmBudgetingPanel::initVirtualListControl()
     }
 
     currentView_ = core_->dbInfoSettings_->GetStringSetting(wxT("BUDGET_FILTER"), wxT("View All Budget Categories"));
-    wxString budgetYearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
+    wxString budgetYearStr = mmDBWrapper::getBudgetYearForID(core_->db_.get(), budgetYearID_);
     long year = 0;
     budgetYearStr.ToLong(&year);
     wxDateTime dtBegin(1, wxDateTime::Jan, year);
@@ -318,7 +320,8 @@ void mmBudgetingPanel::initVirtualListControl()
         th.categID_ = category->categID_;
         th.catStr_ = category->categName_;
 
-        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
+        mmDBWrapper::getBudgetEntry(core_->db_.get(),
+            budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
         budgetDetails.setBudgetEstimate(th, monthlyBudget);
         if (th.estimated_ < 0)
             estExpenses += th.estimated_;
@@ -330,8 +333,10 @@ void mmBudgetingPanel::initVirtualListControl()
         {
             transferAsDeposit = false;
         }
-        th.actual_ = core_->bTransactionList_.getAmountForCategory(core_, th.categID_, th.subcategID_, false,
-            dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
+        th.actual_ = core_->bTransactionList_.getAmountForCategory(core_,
+            th.categID_, th.subcategID_, false,
+            dtBegin, dtEnd, evaluateTransfer, transferAsDeposit,
+            mmIniOptions::instance().ignoreFutureTransactions_
         );
         if (th.actual_ < 0)
             actExpenses += th.actual_;
@@ -376,7 +381,7 @@ void mmBudgetingPanel::initVirtualListControl()
             thsub.subcategID_ = sub_category->categID_;
             thsub.subCatStr_   = sub_category->categName_;
 
-            mmDBWrapper::getBudgetEntry(db_, budgetYearID_,
+            mmDBWrapper::getBudgetEntry(core_->db_.get(), budgetYearID_,
                 thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
             budgetDetails.setBudgetEstimate(thsub, monthlyBudget);
             if (thsub.estimated_ < 0)

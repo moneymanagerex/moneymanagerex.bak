@@ -27,7 +27,7 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "dbwrapper.h"
+#include "mmcoredb.h"
 
 class mmBudgetYearDialog : public wxDialog
 {    
@@ -36,7 +36,7 @@ class mmBudgetYearDialog : public wxDialog
 
 public:
     mmBudgetYearDialog();
-    mmBudgetYearDialog(wxSQLite3Database* db, 
+    mmBudgetYearDialog(mmCoreDB* core, 
         wxWindow* parent, wxWindowID id = SYMBOL_BUDGETYEARDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_BUDGETYEARDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_BUDGETYEARDIALOG_POSITION, 
@@ -63,7 +63,7 @@ private:
     void fillControls();
     void OnDoubleClicked(wxCommandEvent& event);
 
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxListBox* listBox_;
 
     int budgetYearID_;

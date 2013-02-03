@@ -18,7 +18,7 @@
 
 #include "billsdepositspanel.h"
 #include "util.h"
-#include "dbwrapper.h"
+//#include "dbwrapper.h"
 #include "billsdepositsdialog.h"
 #include "constants.h"
 
@@ -495,7 +495,7 @@ void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
 void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1) return;
-    if (!cp_->db_) return;
+    if (!cp_->core_->db_.get()) return;
 
     mmBDDialog dlg(cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
@@ -522,7 +522,7 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
 void billsDepositsListCtrl::OnEnterBDTransaction(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1) return;
-    if (!cp_->db_) return;
+    if (!cp_->core_->db_.get()) return;
 
     int id = cp_->trans_[selectedIndex_].id_;
     mmBDDialog dlg(cp_->core_, id, false, true, this );
@@ -542,7 +542,7 @@ void billsDepositsListCtrl::OnSkipBDTransaction(wxCommandEvent& /*event*/)
 void billsDepositsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
     if (selectedIndex_ == -1) return;
-    if (!cp_->db_) return;
+    if (!cp_->core_->db_.get()) return;
 
     mmBDDialog dlg(cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this);
     if ( dlg.ShowModal() == wxID_OK )

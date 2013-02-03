@@ -34,16 +34,16 @@ END_EVENT_TABLE()
 
 mmBudgetYearDialog::mmBudgetYearDialog( )
 {
-    db_ = 0;
+    core_ = 0;
     budgetYearID_ = -1;
 }
 
-mmBudgetYearDialog::mmBudgetYearDialog( wxSQLite3Database* db, 
+mmBudgetYearDialog::mmBudgetYearDialog( mmCoreDB* core, 
                                        wxWindow* parent, 
                                        wxWindowID id, const wxString& caption, 
                                        const wxPoint& pos, const wxSize& size, long style )
 {
-    db_ = db;
+    core_ = core;
     budgetYearID_ = -1;
     Create(parent, id, caption, pos, size, style);
 }
@@ -69,10 +69,10 @@ bool mmBudgetYearDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmBudgetYearDialog::fillControls()
 {
-    if (!db_)
+    if (!core_->db_.get())
        return;
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_BUDGETYEAR_V1);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_BUDGETYEAR_V1);
     int index = 0;
     while (q1.NextRow())
     {
@@ -132,7 +132,7 @@ void mmBudgetYearDialog::CreateControls()
 
 void mmBudgetYearDialog::OnAdd(wxCommandEvent& /*event*/)
 {
-    mmBudgetYearEntryDialog dlg(db_, this); 
+    mmBudgetYearEntryDialog dlg(core_, this); 
     if ( dlg.ShowModal() == wxID_OK )
     {
         listBox_->Clear();
@@ -142,7 +142,7 @@ void mmBudgetYearDialog::OnAdd(wxCommandEvent& /*event*/)
  
 void mmBudgetYearDialog::OnAddMonth(wxCommandEvent& /*event*/)
 {
-    mmBudgetYearEntryDialog dlg(db_, this, true); 
+    mmBudgetYearEntryDialog dlg(core_, this, true); 
     if ( dlg.ShowModal() == wxID_OK )
     {
         listBox_->Clear();
@@ -153,7 +153,7 @@ void mmBudgetYearDialog::OnAddMonth(wxCommandEvent& /*event*/)
 void mmBudgetYearDialog::OnDelete(wxCommandEvent& /*event*/)
 {
     wxString budgetYearString = listBox_->GetStringSelection();
-    mmDBWrapper::deleteBudgetYear(db_, budgetYearString);
+    mmDBWrapper::deleteBudgetYear(core_->db_.get(), budgetYearString);
     listBox_->Clear();
     fillControls();
 }
