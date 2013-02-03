@@ -37,7 +37,7 @@ class mmBudgetEntryDialog : public wxDialog
 
 public:
     mmBudgetEntryDialog();
-    mmBudgetEntryDialog(wxSQLite3Database* db, mmCoreDB* core, 
+    mmBudgetEntryDialog(mmCoreDB* core, 
         int budgetYearID, int categID, int subcategID, 
         wxString categoryEstimate, wxString CategoryActual,
         wxWindow* parent, wxWindowID id = SYMBOL_BUDGETENTRYDIALOG_IDNAME, 
@@ -60,7 +60,6 @@ public:
     void fillControls();
 
 private:
-    wxSQLite3Database* db_;
     mmCoreDB* core_;
     wxChoice* itemChoice_;
     wxTextCtrl* textAmount_;

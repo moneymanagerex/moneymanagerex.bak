@@ -34,20 +34,18 @@ END_EVENT_TABLE()
 
 mmBudgetEntryDialog::mmBudgetEntryDialog( )
 {
-    db_ = 0;
     budgetYearID_ = -1;
     categID_ = -1;
     subcategID_ = -1;
 }
 
-mmBudgetEntryDialog::mmBudgetEntryDialog( wxSQLite3Database* db, mmCoreDB* core,
+mmBudgetEntryDialog::mmBudgetEntryDialog( mmCoreDB* core,
                                          int budgetYearID, int categID, int subcategID,
                                          wxString categoryEstimate, wxString CategoryActual,
                                          wxWindow* parent, 
                                          wxWindowID id, const wxString& caption, 
                                          const wxPoint& pos, const wxSize& size, long style )
 {
-    db_ = db;
     core_ = core;
     budgetYearID_ = budgetYearID;
     categID_ = categID;
@@ -78,12 +76,10 @@ bool mmBudgetEntryDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmBudgetEntryDialog::fillControls()
 {
-    if (!db_)
-       return;
 
     wxString period = wxT("Monthly");
     double amt = 0.0;
-    mmDBWrapper::getBudgetEntry(db_, budgetYearID_, categID_, subcategID_, period, amt);
+    mmDBWrapper::getBudgetEntry(core_->db_.get(), budgetYearID_, categID_, subcategID_, period, amt);
 
     if (period == wxT("None"))
         itemChoice_->SetSelection(DEF_FREQ_NONE);
@@ -269,7 +265,7 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
     if (typeSelection == DEF_TYPE_EXPENSE)
         amt = -amt;
 
-    mmDBWrapper::updateBudgetEntry(db_, budgetYearID_, categID_, subcategID_, period, amt);
+    mmDBWrapper::updateBudgetEntry(core_->db_.get(), budgetYearID_, categID_, subcategID_, period, amt);
 
     EndModal(wxID_OK);
 }

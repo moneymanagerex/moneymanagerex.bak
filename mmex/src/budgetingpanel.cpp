@@ -523,7 +523,7 @@ void mmBudgetingPanel::OnListItemActivated(int selectedIndex)
      ***************************************************************************/
     if (trans_[selectedIndex].id_ < 0) return;
     mmBudgetEntryDialog dlg(
-        db_, core_, GetBudgetYearID(),
+        core_, GetBudgetYearID(),
         trans_[selectedIndex].categID_,
         trans_[selectedIndex].subcategID_,
         trans_[selectedIndex].estimatedStr_,
