@@ -40,8 +40,7 @@ class mmBDDialog : public wxDialog
 
 public:
     mmBDDialog();
-    mmBDDialog(wxSQLite3Database* db, 
-        mmCoreDB* core,
+    mmBDDialog( mmCoreDB* core,
         int bdD, bool edit, bool enterOccur, wxWindow* parent, 
         wxWindowID id = SYMBOL_BDDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_BDDIALOG_TITLE, 
@@ -78,7 +77,6 @@ private:
     void OnCalendarSelChanged(wxCalendarEvent& event);
     int transID_;
 
-    wxSQLite3Database* db_;
     mmCoreDB* core_;
     
     wxTextCtrl *textNumber_;

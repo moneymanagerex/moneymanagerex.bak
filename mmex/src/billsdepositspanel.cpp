@@ -487,7 +487,7 @@ void billsDepositsListCtrl::OnListKeyDown(wxListEvent& event)
 
 void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
 {
-    mmBDDialog dlg(cp_->db_, cp_->core_, 0, false, false, this );
+    mmBDDialog dlg(cp_->core_, 0, false, false, this );
     if ( dlg.ShowModal() == wxID_OK )
         refreshVisualList(cp_->initVirtualListControl(dlg.GetTransID()));
 }
@@ -497,7 +497,7 @@ void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
     if (selectedIndex_ == -1) return;
     if (!cp_->db_) return;
 
-    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
+    mmBDDialog dlg(cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
         refreshVisualList(cp_->initVirtualListControl(dlg.GetTransID()));
 }
@@ -525,7 +525,7 @@ void billsDepositsListCtrl::OnEnterBDTransaction(wxCommandEvent& /*event*/)
     if (!cp_->db_) return;
 
     int id = cp_->trans_[selectedIndex_].id_;
-    mmBDDialog dlg(cp_->db_, cp_->core_, id, false, true, this );
+    mmBDDialog dlg(cp_->core_, id, false, true, this );
     if ( dlg.ShowModal() == wxID_OK )
         refreshVisualList(cp_->initVirtualListControl(id));
 }
@@ -544,7 +544,7 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     if (selectedIndex_ == -1) return;
     if (!cp_->db_) return;
 
-    mmBDDialog dlg(cp_->core_->db_.get(), cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this);
+    mmBDDialog dlg(cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this);
     if ( dlg.ShowModal() == wxID_OK )
         refreshVisualList(cp_->initVirtualListControl(dlg.GetTransID()));
 }
