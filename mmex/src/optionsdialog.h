@@ -58,7 +58,6 @@ public:
 private:
     /// System database access variables
     mmCoreDB* core_;
-    wxSQLite3Database* db_;
 
     /// Dialog specific controls
     wxImageList* m_imageList;
