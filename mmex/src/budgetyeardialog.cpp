@@ -72,12 +72,7 @@ void mmBudgetYearDialog::fillControls()
     if (!db_)
        return;
 
-    static const char sql[] = 
-        "select BUDGETYEARNAME, BUDGETYEARID "
-        "from BUDGETYEAR_V1 "
-        "order by BUDGETYEARNAME";
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_BUDGETYEAR_V1);
     int index = 0;
     while (q1.NextRow())
     {

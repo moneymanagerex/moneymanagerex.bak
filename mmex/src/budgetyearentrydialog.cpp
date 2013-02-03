@@ -106,13 +106,8 @@ void mmBudgetYearEntryDialog::CreateControls()
         wxDefaultPosition, wxSize(textYear_->GetSize()), itemYearStrings );
     itemGridSizer2->Add(itemChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemChoice_->SetToolTip(_("Specify year to base budget on."));
-    
-    static const char sql[] =
-    "select BUDGETYEARNAME "
-    "from BUDGETYEAR_V1 "
-    "order by BUDGETYEARNAME";
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_BUDGETYEAR_V1);
     int index = 1;
     while (q1.NextRow())
     {

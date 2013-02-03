@@ -43,6 +43,7 @@ public:
         const wxSize& size = SYMBOL_BUDGETYEARDIALOG_SIZE, 
         long style = SYMBOL_BUDGETYEARDIALOG_STYLE );
 
+private:
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_BUDGETYEARDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_BUDGETYEARDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_BUDGETYEARDIALOG_POSITION, 
@@ -62,11 +63,9 @@ public:
     void fillControls();
     void OnDoubleClicked(wxCommandEvent& event);
 
-private:
     wxSQLite3Database* db_;
     wxListBox* listBox_;
-  
-public:
+
     int budgetYearID_;
 };
 
