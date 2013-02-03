@@ -25,7 +25,6 @@
 #include "wx/wxprec.h"
 #include "util.h"
 
-#include "dbwrapper.h"
 #include "mmcoredb.h"
 
 class wxListCtrl;
@@ -96,7 +95,7 @@ class mmBudgetingPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmBudgetingPanel( wxSQLite3Database* db, mmCoreDB* core,
+    mmBudgetingPanel( mmCoreDB* core,
             mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
             wxWindowID winid = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,
