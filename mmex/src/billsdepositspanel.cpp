@@ -513,7 +513,7 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
                                         wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        mmDBWrapper::deleteBDSeries(cp_->db_, cp_->trans_[selectedIndex_].id_);
+        mmDBWrapper::deleteBDSeries(cp_->core_->db_.get(), cp_->trans_[selectedIndex_].id_);
         cp_->initVirtualListControl();
         refreshVisualList(selectedIndex_);
     }

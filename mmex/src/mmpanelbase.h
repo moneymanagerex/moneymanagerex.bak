@@ -37,7 +37,7 @@ class mmPanelBase : public wxPanel
 {
 public: 
     mmPanelBase() {}
-    mmPanelBase(wxSQLite3Database* db, mmCoreDB* core = 0)
+    mmPanelBase(wxSQLite3Database* db, mmCoreDB* core)
     : db_(db)
     , core_(core)
     {}
