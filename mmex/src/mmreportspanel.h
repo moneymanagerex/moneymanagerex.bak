@@ -32,8 +32,9 @@ class mmReportsPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmReportsPanel( mmGUIFrame* frame, wxSQLite3Database* db_, 
-        mmPrintableBase* rb, wxWindow *parent,
+    mmReportsPanel( mmGUIFrame* frame,
+        mmPrintableBase* rb,
+        wxWindow *parent,
         wxWindowID winid = wxID_ANY,
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize,

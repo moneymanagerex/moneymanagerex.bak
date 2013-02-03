@@ -2619,7 +2619,7 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmReportsPanel(this, m_db.get(), rs, homePanel_, wxID_STATIC,
+    panelCurrent_ = new mmReportsPanel(this, rs, homePanel_, wxID_STATIC,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);

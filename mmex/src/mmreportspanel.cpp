@@ -25,12 +25,12 @@ BEGIN_EVENT_TABLE(mmReportsPanel, wxPanel)
 	EVT_HTML_LINK_CLICKED(wxID_ANY, mmReportsPanel::OnLinkClicked)
 END_EVENT_TABLE()
 
-mmReportsPanel::mmReportsPanel( mmGUIFrame* frame, wxSQLite3Database* db,  
+mmReportsPanel::mmReportsPanel( mmGUIFrame* frame, 
                                mmPrintableBase* rb, wxWindow *parent,
                                wxWindowID winid, const wxPoint& pos, 
                                const wxSize& size, long style,
                                const wxString& name )
-: mmPanelBase(db, NULL)
+: mmPanelBase(NULL, NULL)
 , frame_(frame)
 , rb_(rb)
 {
