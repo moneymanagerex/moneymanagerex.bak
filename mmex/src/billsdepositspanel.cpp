@@ -59,10 +59,10 @@ inline bool sortTransactionsByRemainingDays(const mmBDTransactionHolder &p1, con
 
 } // namespace
 
-mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, mmCoreDB* core,
+mmBillsDepositsPanel::mmBillsDepositsPanel(mmCoreDB* core,
     wxWindow *parent, wxWindowID winid,
     const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-: mmPanelBase(db, core)
+: mmPanelBase(NULL, core)
 , m_imageList()
 , listCtrlAccount_()
 {
