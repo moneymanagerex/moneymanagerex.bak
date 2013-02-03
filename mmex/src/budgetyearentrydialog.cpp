@@ -30,13 +30,16 @@ BEGIN_EVENT_TABLE( mmBudgetYearEntryDialog, wxDialog )
     EVT_BUTTON(wxID_OK, mmBudgetYearEntryDialog::OnOk)
 END_EVENT_TABLE()
 
-mmBudgetYearEntryDialog::mmBudgetYearEntryDialog() : db_()
+mmBudgetYearEntryDialog::mmBudgetYearEntryDialog() 
+: core_()
 {
 }
 
-mmBudgetYearEntryDialog::mmBudgetYearEntryDialog( wxSQLite3Database* db, wxWindow* parent,
-                                       bool withMonth, wxWindowID id, const wxString& caption, 
-                                       const wxPoint& pos, const wxSize& size, long style ) : db_(db)
+mmBudgetYearEntryDialog::mmBudgetYearEntryDialog(
+    mmCoreDB* core, wxWindow* parent,
+	bool withMonth, wxWindowID id, const wxString& caption, 
+	const wxPoint& pos, const wxSize& size, long style ) 
+: core_(core)
 {
     withMonth_ = withMonth;
     Create(parent, id, caption, pos, size, style);
@@ -107,7 +110,7 @@ void mmBudgetYearEntryDialog::CreateControls()
     itemGridSizer2->Add(itemChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemChoice_->SetToolTip(_("Specify year to base budget on."));
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_BUDGETYEAR_V1);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_BUDGETYEAR_V1);
     int index = 1;
     while (q1.NextRow())
     {
@@ -144,20 +147,20 @@ void mmBudgetYearEntryDialog::OnOk(wxCommandEvent& /*event*/)
         currYearText << wxT("-") << currMonthText;
     }
 
-    if (mmDBWrapper::getBudgetYearID(db_, currYearText) != -1)
+    if (mmDBWrapper::getBudgetYearID(core_->db_.get(), currYearText) != -1)
     {   
         wxMessageBox(_("Budget Year already exists"), SYMBOL_BUDGETYEARENTRYDIALOG_TITLE, wxICON_WARNING);
         return;
     }
     else
     {
-        mmDBWrapper::addBudgetYear(db_, currYearText);
+        mmDBWrapper::addBudgetYear(core_->db_.get(), currYearText);
         if (baseYear != wxT("None"))
         {
-            int baseYearID = mmDBWrapper::getBudgetYearID(db_, baseYear);
-            int newYearID  = mmDBWrapper::getBudgetYearID(db_, currYearText);
+            int baseYearID = mmDBWrapper::getBudgetYearID(core_->db_.get(), baseYear);
+            int newYearID  = mmDBWrapper::getBudgetYearID(core_->db_.get(), currYearText);
 
-            mmDBWrapper::copyBudgetYear(db_, newYearID, baseYearID);
+            mmDBWrapper::copyBudgetYear(core_->db_.get(), newYearID, baseYearID);
         }
     }
 
