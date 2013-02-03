@@ -50,7 +50,6 @@ mmMainCurrencyDialog::mmMainCurrencyDialog(
     const wxSize& size,
     long style
 ) : currencyID_(-1),
-    db_ (core->db_.get()),
     core_(core),
     currencyListBox_(),
     bEnableSelect_(bEnableSelect)

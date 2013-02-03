@@ -55,7 +55,6 @@ class mmHomePagePanel : public mmPanelBase
 
 public:
     mmHomePagePanel( mmGUIFrame* frame, 
-        wxSQLite3Database* db_,
         mmCoreDB* core_,
         const wxString& topCategories,
         wxWindow *parent,
@@ -66,10 +65,10 @@ public:
         const wxString& name = wxPanelNameStr );
 
     bool Create( wxWindow *parent, wxWindowID winid,
-                const wxPoint& pos = wxDefaultPosition,
-                const wxSize& size = wxDefaultSize,
-                long style = wxTAB_TRAVERSAL | wxNO_BORDER,
-                const wxString& name = wxPanelNameStr);
+        const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxDefaultSize,
+        long style = wxTAB_TRAVERSAL | wxNO_BORDER,
+        const wxString& name = wxPanelNameStr);
       
     ~mmHomePagePanel();
 private:

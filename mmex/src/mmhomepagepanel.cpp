@@ -24,7 +24,6 @@
 #include "transdialog.h"
 #include "newacctdialog.h"
 #include "htmlbuilder.h"
-#include "dbwrapper.h"
 #include "billsdepositspanel.h"
 #include "mmgraphincexpensesmonth.h"
 
@@ -37,7 +36,6 @@ END_EVENT_TABLE()
 
 
 mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
-            wxSQLite3Database* db, 
             mmCoreDB* core, 
             const wxString& topCategories,
             wxWindow *parent,
@@ -46,7 +44,7 @@ mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
             const wxSize& size,
             long style,
             const wxString& name )
-: mmPanelBase(db, core)
+: mmPanelBase(NULL, core)
 , frame_(frame)
 , topCategories_(topCategories)
 {
@@ -276,7 +274,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
     "and a.status='Open' "
     "group by st.heldat "; 
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql);
     while(q1.NextRow())
     {
         int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
@@ -321,7 +319,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
 //* Assets *//
 void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
 {
-    double assetBalance = mmDBWrapper::getAssetBalance(db_);
+    double assetBalance = mmDBWrapper::getAssetBalance(core_->db_.get());
     wxString assetBalanceStr;
     core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
     mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
@@ -374,8 +372,8 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
         "where a.status='Open' and balance<>0 "
         "group by c.currencyid) order by CURRENCYNAME ";
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql2);
-    q1 = db_->ExecuteQuery(sql2);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql2);
+    q1 = core_->db_.get()->ExecuteQuery(sql2);
         
     //Determine how many currencies used
     int curnumber = 0;
@@ -488,7 +486,7 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
 void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 {
     std::vector<mmBDTransactionHolder> trans_;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select BDID, NEXTOCCURRENCEDATE, NUMOCCURRENCES, REPEATS, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery("select BDID, NEXTOCCURRENCEDATE, NUMOCCURRENCES, REPEATS, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
 
     bool visibleEntries = false;
     while (q1.NextRow())
@@ -651,7 +649,7 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
         ") where AMOUNT < 0 " 
         "limit 7 ";
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql3);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql3);
 
     std::vector<CategInfo> categList;
 
@@ -735,7 +733,7 @@ void mmHomePagePanel::displayGrandTotals(mmHTMLBuilder& hb, double& tBalance)
 
 void mmHomePagePanel::updateAccounts()
 {
-    if (!db_)
+    if (!core_->db_.get())
         return;
 
     mmHTMLBuilder hb;

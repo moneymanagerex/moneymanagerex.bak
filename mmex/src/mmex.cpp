@@ -2599,7 +2599,6 @@ void mmGUIFrame::createHomePage()
         panelCurrent_  = 0;
     }
     panelCurrent_ = new mmHomePagePanel(this,
-        m_db.get(),
         m_core.get(),
         m_topCategories,
         homePanel_,

@@ -66,7 +66,6 @@ public:
     static bool Execute(mmCoreDB* core, wxWindow* parent, int& currencyID);
 
 private:
-    wxSQLite3Database* db_;
     mmCoreDB* core_;
     wxListCtrl* currencyListBox_;
     bool bEnableSelect_;

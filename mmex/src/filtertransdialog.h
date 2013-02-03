@@ -149,7 +149,6 @@ private:
     wxCheckBox* transNumberCheckBox_;
     wxTextCtrl* transNumberEdit_;
     std::vector< boost::shared_ptr<mmBankTransaction> >* trans_;
-    wxSQLite3Database* db_;
     mmCoreDB* core_;
 
     int categID_;
