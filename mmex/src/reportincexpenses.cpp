@@ -25,8 +25,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-    wxDateTime tBegin = dtBegin_;    // date needs to be adjusted
-    dateDisplay.DisplayDateHeading(hb, tBegin.Add(wxDateSpan::Day()), dtEnd_, !ignoreDate_);
+    dateDisplay.DisplayDateHeading(hb, dtBegin_, dtEnd_, !ignoreDate_);
 
     hb.addLineBreak();
 
