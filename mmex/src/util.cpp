@@ -1178,3 +1178,105 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
 
     return bResult;
 }
+
+wxDateTime getUserDefinedFinancialYear(bool prevDayRequired)
+{
+    long monthNum;
+    mmOptions::instance().financialYearStartMonthString_.ToLong(&monthNum);
+
+    if (monthNum > 0) //Test required for compatability with previous version
+        monthNum --;
+
+    wxDateTime today = wxDateTime::Now();
+    int year = today.GetYear();
+    if (today.GetMonth() < monthNum) year -- ;
+
+    long dayNum;
+    wxString dayNumStr = mmOptions::instance().financialYearStartDayString_;
+    dayNumStr.ToLong(&dayNum);
+    if ((dayNum < 1) || (dayNum > 31 )) {
+        dayNum = 1;
+    } else if (((monthNum == wxDateTime::Feb) && (dayNum > 28)) ||
+        (((monthNum == wxDateTime::Sep) || (monthNum == wxDateTime::Apr) ||
+           (monthNum == wxDateTime::Jun) || (monthNum == wxDateTime::Nov)) && (dayNum > 29)))
+    {
+        dayNum = 1;
+    }
+
+    wxDateTime financialYear = wxDateTime(today);
+    financialYear.SetDay(dayNum);
+    financialYear.SetMonth((wxDateTime::Month)monthNum);
+    financialYear.SetYear(year);
+    if (prevDayRequired)
+        financialYear.Subtract(wxDateSpan::Day());
+    return financialYear;
+}
+
+void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData)
+{
+    wxDateTime today = wxDateTime::Now();
+
+    if (sData == wxT("Last Calendar Month"))
+    {
+        wxDateTime::Month cm = today.GetMonth();
+        int numDays = 0;
+        if (cm == wxDateTime::Jan)
+            numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
+        else
+            numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
+
+        wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
+        dtEnd = prevMonthEnd;
+        dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
+    }
+    else if (sData == wxT("30 Days"))
+    {
+        wxDateTime prevMonthEnd = today;
+        dtEnd = today;
+        dtBegin = today.Subtract(wxDateSpan::Month());
+    }
+    else if (sData == wxT("Current Month"))
+    {
+        wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
+        dtBegin = prevMonthEnd;
+        dtEnd = wxDateTime::Now().GetLastMonthDay();
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
+        {
+            dtEnd = wxDateTime::Now();
+        }
+    }
+    else if (sData == wxT("Last Year"))
+    {
+        int year = today.GetYear() - 1;
+        wxDateTime prevYearEnd = wxDateTime(today);
+        prevYearEnd.SetYear(year);
+        prevYearEnd.SetMonth(wxDateTime::Dec);
+        prevYearEnd.SetDay(31);
+        dtEnd = prevYearEnd;
+        dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
+    }
+    else if (sData == wxT("Current Year"))
+    {
+        int year = today.GetYear() - 1;
+        wxDateTime yearBegin = wxDateTime(today);
+        yearBegin.SetYear(year);
+        yearBegin.SetMonth(wxDateTime::Dec);
+        yearBegin.SetDay(31);
+        dtEnd = today;
+        dtBegin = yearBegin;
+    }
+    else if (sData == wxT("Last Financial Year"))
+    {
+        wxDateTime refDate = wxDateTime(getUserDefinedFinancialYear(true));
+        dtEnd = refDate;
+        dtBegin = refDate.Subtract(wxDateSpan::Year());
+
+    }
+    else if (sData == wxT("Current Financial Year"))
+    {
+        dtBegin = wxDateTime(getUserDefinedFinancialYear(true));
+        dtEnd   = wxDateTime::Now();
+    }
+    else
+        wxASSERT(false);
+}

@@ -49,7 +49,7 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     wxString yearStr = wxString::Format(wxT("%d"), year_);
     wxString finYearStr = yearStr + wxT(" - ") + wxString::Format(wxT("%d"), (year_ + 1));
 
-    wxDateTime sofy = wxDateTime( frame_->getUserDefinedFinancialYear() );
+    wxDateTime sofy = wxDateTime( getUserDefinedFinancialYear() );
     int startDay = sofy.GetDay();
 
     wxDateTime yearBegin(sofy.GetDay(), sofy.GetMonth(), year_);

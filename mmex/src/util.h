@@ -345,6 +345,10 @@ wxString getTransformedTrxStatus(int in);
 wxString Tips(wxString type);
 int site_content(const wxString& site, wxString& output);
 bool mmCalculator(wxString sInput, wxString& sOutput);
+
+wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false);
+void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData);
+
 // Validators -----------------------------------------------------
 
 class doubleValidator : public wxTextValidator {

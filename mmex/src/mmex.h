@@ -210,8 +210,6 @@ public:
         return helpFileIndex_;
     }
 
-    wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false) const;
-
     void setAccountNavTreeSection(wxString accountName);
     bool setNavTreeSection( wxString sectionName);
     void SetCheckingAccountPageInactive();

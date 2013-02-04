@@ -62,9 +62,10 @@
 #include "reportsummarystocks.h"
 #include "reporttransactions.h"
 #include "reporttransstats.h"
+#include "recentfiles.h"
 #include "stockspanel.h"
 #include "univcsvdialog.h"
-#include "recentfiles.h"
+#include "util.h"
 
 //----------------------------------------------------------------------------
 #include <boost/version.hpp>
@@ -1181,7 +1182,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(categsOverTime, new mmTreeItemData(wxT("Where the Money Goes")));
 
     wxTreeItemId categsOverTimeCalMonth = navTreeCtrl_->AppendItem(categsOverTime, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCalMonth, new mmTreeItemData(wxT("Where the Money Goes - Month")));
+    navTreeCtrl_->SetItemData(categsOverTimeCalMonth, new mmTreeItemData(wxT("Where the Money Goes - Last Calendar Month")));
 
     wxString currentMonthMsg = _("Current Month");
     if (mmIniOptions::instance().ignoreFutureTransactions_) currentMonthMsg = _("Current Month to Date");
@@ -1240,7 +1241,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(categs, new mmTreeItemData(wxT("Categories - Over Time")));
 
     wxTreeItemId categsCalMonth = navTreeCtrl_->AppendItem(categs, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(categsCalMonth, new mmTreeItemData(wxT("Categories - Month")));
+    navTreeCtrl_->SetItemData(categsCalMonth, new mmTreeItemData(wxT("Categories - Last Calendar Month")));
 
     wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs, currentMonthMsg, 4, 4);
     navTreeCtrl_->SetItemData(categsCurrentMonth, new mmTreeItemData(wxT("Categories - Current Month")));
@@ -1268,27 +1269,27 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(payeesOverTime, new mmTreeItemData(wxT("Payee Report")));
 
     wxTreeItemId payeesOverTimeCalMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxT("Payee Report - Month")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxT("Payees - Last Calendar Month")));
 
     wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxT("Payee Report - Current Month")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxT("Payees - Current Month")));
 
     wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime, _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLast30, new mmTreeItemData(wxT("Payee Report - 30 Days")));
+    navTreeCtrl_->SetItemData(payeesOverTimeLast30, new mmTreeItemData(wxT("Payees - Last 30 Days")));
 
     wxTreeItemId payeesOverTimeLastYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, new mmTreeItemData(wxT("Payee Report - Last Year")));
+    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, new mmTreeItemData(wxT("Payees - Last Year")));
 
     wxTreeItemId payeesOverTimeCurrentYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, new mmTreeItemData(wxT("Payee Report - Current Year")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, new mmTreeItemData(wxT("Payees - Current Year")));
 
     if (financialYearIsDifferent())
     {
         wxTreeItemId payeesOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, new mmTreeItemData(wxT("Payee Report - Last Financial Year")));
+        navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, new mmTreeItemData(wxT("Payees - Last Financial Year")));
 
         wxTreeItemId payeesOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, new mmTreeItemData(wxT("Payee Report - Current Financial Year")));
+        navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, new mmTreeItemData(wxT("Payees - Current Financial Year")));
     }
     ///////////////////////////////////////////////////////////////////
 
@@ -1296,7 +1297,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData(wxT("Income vs Expenses")));
 
     wxTreeItemId incexpOverTimeCalMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCalMonth, new mmTreeItemData(wxT("Income vs Expenses - Month")));
+    navTreeCtrl_->SetItemData(incexpOverTimeCalMonth, new mmTreeItemData(wxT("Income vs Expenses - Last Calendar Month")));
 
     wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime, currentMonthMsg, 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth, new mmTreeItemData(wxT("Income vs Expenses - Current Month")));
@@ -1464,40 +1465,6 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Enable(false);
 
     navTreeCtrl_->SetEvtHandlerEnabled(true);
-}
-//----------------------------------------------------------------------------
-
-wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
-{
-    long monthNum;
-    mmOptions::instance().financialYearStartMonthString_.ToLong(&monthNum);
-
-    if (monthNum > 0) //Test required for compatability with previous version
-        monthNum --;
-
-    wxDateTime today = wxDateTime::Now();
-    int year = today.GetYear();
-    if (today.GetMonth() < monthNum) year -- ;
-
-    long dayNum;
-    wxString dayNumStr = mmOptions::instance().financialYearStartDayString_;
-    dayNumStr.ToLong(&dayNum);
-    if ((dayNum < 1) || (dayNum > 31 )) {
-        dayNum = 1;
-    } else if (((monthNum == wxDateTime::Feb) && (dayNum > 28)) ||
-        (((monthNum == wxDateTime::Sep) || (monthNum == wxDateTime::Apr) ||
-           (monthNum == wxDateTime::Jun) || (monthNum == wxDateTime::Nov)) && (dayNum > 29)))
-    {
-        dayNum = 1;
-    }
-
-    wxDateTime financialYear = wxDateTime(today);
-    financialYear.SetDay(dayNum);
-    financialYear.SetMonth((wxDateTime::Month)monthNum);
-    financialYear.SetYear(year);
-    if (prevDayRequired)
-        financialYear.Subtract(wxDateSpan::Day());
-    return financialYear;
 }
 //----------------------------------------------------------------------------
 
@@ -1726,80 +1693,21 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
             proDlg.Update(95);
         }
-        else if (sData == wxT("Categories - Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime::Month cm = today.GetMonth();
-            int numDays = 0;
-            if (cm == wxDateTime::Jan)
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
-            else
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
-
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtEnd = prevMonthEnd;
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            wxString title = _("Categories - Last Calendar Month");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 0);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
         else if (sData.StartsWith(wxT("Categories - ")))
         {
+            wxString sDateDescription = sData;
+            sDateDescription.Replace(wxT("Categories - "), wxT(""));
+
             wxString title = wxGetTranslation(sData);
-            wxDateTime today = wxDateTime::Now();
+            if (mmIniOptions::instance().ignoreFutureTransactions_
+                && sData == wxT("Categories - Current Month"))
+            {
+                title = _("Current Month to Date");
+            }
 
             wxDateTime dtBegin;
             wxDateTime dtEnd;
-            if (sData == wxT("Categories - 30 Days"))
-            {
-                wxDateTime prevMonthEnd = today;
-                dtEnd = today;
-                dtBegin = today.Subtract(wxDateSpan::Month());
-            }
-            else if (sData == wxT("Categories - Current Month"))
-            {
-                wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-                dtBegin = prevMonthEnd;
-                dtEnd = wxDateTime::Now().GetLastMonthDay();
-                if (mmIniOptions::instance().ignoreFutureTransactions_)
-                {
-                    title = _("Categories - Current Month to Date");
-                    dtEnd = wxDateTime::Now();
-                }
-            }
-            else if (sData == wxT("Categories - Last Year"))
-            {
-                int year = today.GetYear() - 1;
-                wxDateTime prevYearEnd = wxDateTime(today);
-                prevYearEnd.SetYear(year);
-                prevYearEnd.SetMonth(wxDateTime::Dec);
-                prevYearEnd.SetDay(31);
-                dtEnd = prevYearEnd;
-                dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            }
-            else if (sData == wxT("Categories - Current Year"))
-            {
-                int year = today.GetYear() - 1;
-                wxDateTime yearBegin = wxDateTime(today);
-                yearBegin.SetYear(year);
-                yearBegin.SetMonth(wxDateTime::Dec);
-                yearBegin.SetDay(31);
-                dtEnd = today;
-                dtBegin = yearBegin;
-            }
-            else if (sData == wxT("Categories - Last Financial Year"))
-            {
-                wxDateTime refDate = wxDateTime(getUserDefinedFinancialYear(true));
-                dtEnd = refDate;
-                dtBegin = refDate.Subtract(wxDateSpan::Year());
-
-            }
-            else if (sData == wxT("Categories - Current Financial Year"))
-            {
-                dtBegin = wxDateTime(getUserDefinedFinancialYear(true));
-                dtEnd   = wxDateTime::Now();
-            }
+            GetDateRange(dtBegin, dtEnd, sDateDescription);
 
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 0);
             menuPrintingEnable(true);
@@ -1917,7 +1825,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Where the Money Goes - Month"))
+        else if (sData == wxT("Where the Money Goes - Last Calendar Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -2026,7 +1934,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Income vs Expenses - Month"))
+        else if (sData == wxT("Income vs Expenses - Last Calendar Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -2122,7 +2030,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Payee Report - Month"))
+        else if (sData == wxT("Payees - Last Calendar Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -2142,7 +2050,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Payee Report - 30 Days"))
+        else if (sData == wxT("Payees - Last 30 Days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
@@ -2154,7 +2062,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Payee Report - Current Month"))
+        else if (sData == wxT("Payees - Current Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
@@ -2172,7 +2080,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Payee Report - Last Year"))
+        else if (sData == wxT("Payees - Last Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -2189,7 +2097,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Payee Report - Current Year"))
+        else if (sData == wxT("Payees - Current Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -2206,7 +2114,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Payee Report - Last Financial Year"))
+        else if (sData == wxT("Payees - Last Financial Year"))
         {
             wxDateTime refDate = wxDateTime(getUserDefinedFinancialYear());
             refDate.Subtract(wxDateSpan::Day());
@@ -2219,7 +2127,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Payee Report - Current Financial Year"))
+        else if (sData == wxT("Payees - Current Financial Year"))
         {
             wxDateTime dtEnd   = wxDateTime::Now();
             wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear());
