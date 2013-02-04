@@ -1661,6 +1661,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         int customSqlReportID;      // Define before all the if...else statements
         //========================================================================
 
+        wxDateTime dtBegin;
+        wxDateTime dtEnd;
         wxString sData = iData->getString();
         if (sData == wxT("Summary of Accounts"))
         {
@@ -1681,35 +1683,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         else if (sData == wxT("Summary of Assets"))
         {
             mmPrintableBase* rs = new mmReportSummaryAssets(m_core.get(), m_db.get());
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Categories - Over Time"))
-        {
-            wxProgressDialog proDlg(_("Category Report"), _("Category Report being generated... Please wait."), 100, this);
-            mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(m_core.get());
-            proDlg.Update(70);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-            proDlg.Update(95);
-        }
-        else if (sData.StartsWith(wxT("Categories - ")))
-        {
-            wxString sDateDescription = sData;
-            sDateDescription.Replace(wxT("Categories - "), wxT(""));
-
-            wxString title = wxGetTranslation(sData);
-            if (mmIniOptions::instance().ignoreFutureTransactions_
-                && sData == wxT("Categories - Current Month"))
-            {
-                title = _("Current Month to Date");
-            }
-
-            wxDateTime dtBegin;
-            wxDateTime dtEnd;
-            GetDateRange(dtBegin, dtEnd, sDateDescription);
-
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -2023,6 +1996,33 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
+        else if (sData == wxT("Categories - Over Time"))
+        {
+            wxProgressDialog proDlg(_("Category Report"), _("Category Report being generated... Please wait."), 100, this);
+            mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(m_core.get());
+            proDlg.Update(70);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+            proDlg.Update(95);
+        }
+        else if (sData.StartsWith(wxT("Categories - ")))
+        {
+            wxString sDateDescription = sData;
+            sDateDescription.Replace(wxT("Categories - "), wxT(""));
+
+            wxString title = wxGetTranslation(sData);
+            if (mmIniOptions::instance().ignoreFutureTransactions_
+                && sData == wxT("Categories - Current Month"))
+            {
+                title = _("Current Month to Date");
+            }
+
+            GetDateRange(dtBegin, dtEnd, sDateDescription);
+
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 0);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
         else if (sData == wxT("Payee Report"))
         {
             wxString title = _("Payee Report");
@@ -2030,112 +2030,24 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Payees - Last Calendar Month"))
+        else if (sData.StartsWith(wxT("Payees - ")))
         {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime::Month cm = today.GetMonth();
-            int numDays = 0;
-            if (cm == wxDateTime::Jan)
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
-            else
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
+            wxString sDateDescription = sData;
+            sDateDescription.Replace(wxT("Payees - "), wxT(""));
 
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtEnd = prevMonthEnd;
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            dtBegin.Add(wxDateSpan::Day());
+            wxString title = wxGetTranslation(sData);
 
-            wxString title = _("Payees - Last Calendar Month");
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Payees - Last 30 Days"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today;
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = today.Subtract(wxDateSpan::Days(30));
-
-            wxString title = _("Payees - Last 30 Days");
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Payees - Current Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
-            dtBegin.Add(wxDateSpan::Day());
-
-            wxString title = _("Payees - Current Month");
-            if (mmIniOptions::instance().ignoreFutureTransactions_)
+            if (mmIniOptions::instance().ignoreFutureTransactions_ && wxT("Payees - Current Month"))
             {
                 title = _("Payees - Current Month to Date");
-                dtEnd  = wxDateTime::Now();
             }
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Payees - Last Year"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear() - 1;
-            wxDateTime prevYearEnd = wxDateTime(today);
-            prevYearEnd.SetYear(year);
-            prevYearEnd.SetMonth(wxDateTime::Dec);
-            prevYearEnd.SetDay(31);
-            wxDateTime dtEnd = prevYearEnd;
-            wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            dtBegin.Add(wxDateSpan::Day());
 
-            wxString title = _("Payees - Last Year");
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Payees - Current Year"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear() - 1;
-            wxDateTime yearBegin = wxDateTime(today);
-            yearBegin.SetYear(year);
-            yearBegin.SetMonth(wxDateTime::Dec);
-            yearBegin.SetDay(31);
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = yearBegin;
-            dtBegin.Add(wxDateSpan::Day());
+            GetDateRange(dtBegin, dtEnd, sDateDescription);
 
-            wxString title = _("Payees - Current Year");
             mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
-        }
-        else if (sData == wxT("Payees - Last Financial Year"))
-        {
-            wxDateTime refDate = wxDateTime(getUserDefinedFinancialYear());
-            refDate.Subtract(wxDateSpan::Day());
-            wxDateTime dtEnd = refDate;
-            wxDateTime dtBegin = refDate.Subtract(wxDateSpan::Year());
-            dtBegin.Add(wxDateSpan::Day());
 
-            wxString title = _("Payees - Last Financial Year");
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Payees - Current Financial Year"))
-        {
-            wxDateTime dtEnd   = wxDateTime::Now();
-            wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear());
-
-            wxString title = _("Payees - Current Financial Year");
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
         }
         else if (sData == wxT("Cash Flow"))
         {
