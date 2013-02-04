@@ -24,9 +24,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, dtBegin_, dtEnd_, !ignoreDate_);
-    // Start date needs to be set to one day before, to get correct date period.
-    dtBegin_.Subtract(wxDateSpan::Day());   
+    dateDisplay.DisplayDateHeading(hb, dtBegin_, dtEnd_, !ignoreDate_);   
 
 	hb.startCenter();
 
