@@ -323,12 +323,12 @@ wxString mmReportCashFlow::getHTMLText()
 
         if (frame_->budgetFinancialYears())
         {
-            if (initialMonths && (dtEnd.GetMonth() == frame_->getUserDefinedFinancialYear().GetMonth()))
+            if (initialMonths && (dtEnd.GetMonth() == getUserDefinedFinancialYear().GetMonth()))
             {
                 addSeparator  = true;
                 initialMonths = false;
             }
-            else if ((dtEnd.GetMonth() == frame_->getUserDefinedFinancialYear().GetMonth()) && (displayYear != dtEnd.GetYear()))
+            else if ((dtEnd.GetMonth() == getUserDefinedFinancialYear().GetMonth()) && (displayYear != dtEnd.GetYear()))
             {
                 addSeparator = true;
                 displayYear  = dtEnd.GetYear();
