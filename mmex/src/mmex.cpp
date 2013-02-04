@@ -1213,7 +1213,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(posCategs, new mmTreeItemData(wxT("Where the Money Comes From")));
 
     wxTreeItemId posCategsCalMonth = navTreeCtrl_->AppendItem(posCategs, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsCalMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Month")));
+    navTreeCtrl_->SetItemData(posCategsCalMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Last Calendar Month")));
 
     wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs, currentMonthMsg, 4, 4);
     navTreeCtrl_->SetItemData(posCategsCurrentMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Month")));
@@ -1664,6 +1664,9 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         wxDateTime dtBegin;
         wxDateTime dtEnd;
         wxString sData = iData->getString();
+        wxString title = wxGetTranslation(sData);
+        bool bIgnoreFuture = mmIniOptions::instance().ignoreFutureTransactions_;
+
         if (sData == wxT("Summary of Accounts"))
         {
             mmPrintableBase* rs = new mmReportSummary(m_core.get(), this);
@@ -1691,308 +1694,62 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd =  wxDateTime::Now();
             wxDateTime dtBegin =  wxDateTime::Now();
             wxString title = _("Where the Money Comes From");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), true, dtBegin, dtEnd, title, 1);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
+                , bIgnoreFuture, dtBegin, dtEnd, title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Where the Money Comes From - Month"))
+        else if (sData.StartsWith(wxT("Where the Money Comes From - ")))
         {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime::Month cm = today.GetMonth();
-            int numDays = 0;
-            if (cm == wxDateTime::Jan)
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
-            else
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtEnd = prevMonthEnd;
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            wxString title = _("Where the Money Comes From - Last Calendar Month");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Comes From - 30 Days"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today;
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            wxString title = _("Where the Money Comes From - Last 30 days");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Comes From - Current Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
-            wxString title = _("Where the Money Comes From - Current Month");
-            if (mmIniOptions::instance().ignoreFutureTransactions_)
-            {
+            GetDateRange(dtBegin, dtEnd, sData);
+
+            if (bIgnoreFuture && sData == wxT("Where the Money Comes From - Current Month"))
                 title = _("Where the Money Comes From - Current Month to Date");
-                dtEnd  = wxDateTime::Now();
-            }
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Comes From - Last Year"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear() - 1;
-            wxDateTime prevYearEnd = wxDateTime(today);
-            prevYearEnd.SetYear(year);
-            prevYearEnd.SetMonth(wxDateTime::Dec);
-            prevYearEnd.SetDay(31);
-            wxDateTime dtEnd = prevYearEnd;
-            wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            wxString title = _("Where the Money Comes From - Last year");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Comes From - Current Year"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear() - 1;
-            wxDateTime yearBegin = wxDateTime(today);
-            yearBegin.SetYear(year);
-            yearBegin.SetMonth(wxDateTime::Dec);
-            yearBegin.SetDay(31);
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = yearBegin;
-            wxString title = _("Where the Money Comes From - Current Year");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Comes From - Last Financial Year"))
-        {
-            wxDateTime refDate = wxDateTime(getUserDefinedFinancialYear(true));
-            wxDateTime dtEnd = refDate;
-            wxDateTime dtBegin = refDate.Subtract(wxDateSpan::Year());
-            wxString title = _("Where the Money Comes From - Last Financial Year");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Comes From - Current Financial Year"))
-        {
-            wxDateTime dtEnd   = wxDateTime::Now();
-            wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear(true));
 
-            wxString title = _("Where the Money Comes From - Current Financial Year");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 1);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
+                , false, dtBegin, dtEnd, title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Where the Money Goes"))
+        else if (sData.StartsWith(wxT("Where the Money Goes -")))
         {
-            wxDateTime dtEnd = wxDateTime::Now();
-            wxDateTime dtBegin = wxDateTime::Now();
-            wxString title = _("Where the Money Goes");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), true, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Goes - Last Calendar Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime::Month cm = today.GetMonth();
-            int numDays = 0;
-            if (cm == wxDateTime::Jan)
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
-            else
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtEnd = prevMonthEnd;
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            wxString title = _("Where the Money Goes - Last Calendar Month");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Goes - 30 Days"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today;
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            wxString title = _("Where the Money Goes - Last 30 Days");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Goes - Current Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
-            wxString title = _("Where the Money Goes - Current Month");
-            if (mmIniOptions::instance().ignoreFutureTransactions_)
-            {
+            GetDateRange(dtBegin, dtEnd, sData);
+
+            if (bIgnoreFuture && sData == wxT("Where the Money Goes - Current Month"))
                 title = _("Where the Money Goes - Current Month to Date");
-                dtEnd  = wxDateTime::Now();
-            }
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Goes - Last Year"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear() - 1;
-            wxDateTime prevYearEnd = wxDateTime(today);
-            prevYearEnd.SetYear(year);
-            prevYearEnd.SetMonth(wxDateTime::Dec);
-            prevYearEnd.SetDay(31);
-            wxDateTime dtEnd = prevYearEnd;
-            wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            wxString title = _("Where the Money Goes - Last Year");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Goes - Current Year"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear() - 1;
-            wxDateTime yearBegin = wxDateTime(today);
-            yearBegin.SetYear(year);
-            yearBegin.SetMonth(wxDateTime::Dec);
-            yearBegin.SetDay(31);
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = yearBegin;
-            wxString title = _("Where the Money Goes - Current Year");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Goes - Last Financial Year"))
-        {
-            wxDateTime refDate = (getUserDefinedFinancialYear(true));
-            wxDateTime dtEnd = refDate;
-            wxDateTime dtBegin = refDate.Subtract(wxDateSpan::Year());
-            wxString title = _("Where the Money Goes - Last Financial Year");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Where the Money Goes - Current Financial Year"))
-        {
-            wxDateTime dtEnd   = wxDateTime::Now();
-            wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear(true));
-            wxString title = _("Where the Money Goes - Current Financial Year");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Transaction Statistics"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear()-1;
-            mmPrintableBase* rs = new mmReportTransactionStats(m_core.get(), year);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get(), year);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses - Last Calendar Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime::Month cm = today.GetMonth();
-            int numDays = 0;
-            if (cm == wxDateTime::Jan)
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
-            else
-                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtEnd = prevMonthEnd;
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            wxString title = _("Income vs Expenses - Last Calendar Month");
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses - 30 Days"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today;
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            wxString title = _("Income vs Expenses - Last 30 Days");
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses - Current Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
-            wxString title = _("Income vs Expenses - Current Month");
-            if (mmIniOptions::instance().ignoreFutureTransactions_)
-            {
-                title = _("Income vs Expenses - Current Month to Date");
-                dtEnd  = wxDateTime::Now();
-            }
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses - Last Year"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear()-1;
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get(), year);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses - Current Year"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get(), year);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses - Last Financial Year"))
-        {
-            wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear());
 
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear()-1;
-            if (today.GetMonth() < dtBegin.GetMonth()) year -- ;
-            mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses - Current Financial Year"))
-        {
-            wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear());
-
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear();
-            if (today.GetMonth() < dtBegin.GetMonth()) year --;
-            mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
+                , false, dtBegin, dtEnd, title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Income vs Expenses - All Time"))
         {
             wxString title = _("Income vs Expenses - All Time");
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), true, wxDateTime::Now(), wxDateTime::Now(), title);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
+                , false, wxDateTime::Now(), wxDateTime::Now(), title);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }        
+        else if (sData.StartsWith(wxT("Income vs Expenses - ")))
+        {
+            GetDateRange(dtBegin, dtEnd, sData);
+
+            if (bIgnoreFuture && sData == wxT("Income vs Expenses - Current Month"))
+                title = _("Income vs Expenses - Current Month to Date");
+
+            //int year = today.GetYear();
+            //mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
+                , bIgnoreFuture, dtBegin, dtEnd, title);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+        else if (sData == wxT("Income vs Expenses - All Time"))
+        {
+            wxString title = _("Income vs Expenses - All Time");
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
+                , false, wxDateTime::Now(), wxDateTime::Now(), title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -2007,44 +1764,33 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData.StartsWith(wxT("Categories - ")))
         {
-            wxString sDateDescription = sData;
-            sDateDescription.Replace(wxT("Categories - "), wxT(""));
+            GetDateRange(dtBegin, dtEnd, sData);
 
-            wxString title = wxGetTranslation(sData);
-            if (mmIniOptions::instance().ignoreFutureTransactions_
-                && sData == wxT("Categories - Current Month"))
-            {
+            if (bIgnoreFuture && sData == wxT("Categories - Current Month"))
                 title = _("Current Month to Date");
-            }
 
-            GetDateRange(dtBegin, dtEnd, sDateDescription);
-
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 0);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
+                , false, dtBegin, dtEnd, title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Payee Report"))
         {
             wxString title = _("Payee Report");
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), true, wxDateTime::Now(), wxDateTime::Now(), title);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get()
+                , bIgnoreFuture, wxDateTime::Now(), wxDateTime::Now(), title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData.StartsWith(wxT("Payees - ")))
         {
-            wxString sDateDescription = sData;
-            sDateDescription.Replace(wxT("Payees - "), wxT(""));
+            GetDateRange(dtBegin, dtEnd, sData);
 
-            wxString title = wxGetTranslation(sData);
-
-            if (mmIniOptions::instance().ignoreFutureTransactions_ && wxT("Payees - Current Month"))
-            {
+            if (bIgnoreFuture && wxT("Payees - Current Month"))
                 title = _("Payees - Current Month to Date");
-            }
 
-            GetDateRange(dtBegin, dtEnd, sDateDescription);
-
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get()
+                , false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
 
@@ -2096,6 +1842,22 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
             AddPendingEvent(evt);
+        }
+        else if (sData == wxT("Transaction Statistics"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear()-1;
+            mmPrintableBase* rs = new mmReportTransactionStats(m_core.get(), year);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+        else if (sData == wxT("Income vs Expenses"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get(), year);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
         }
     }
 }
