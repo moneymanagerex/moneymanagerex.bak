@@ -977,12 +977,13 @@ double mmBankTransactionList::getAmountForCategory(
         }
         if (ignoreFuture)
         {
-            if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+            if ( pBankTransaction->date_.GetDateOnly() > wxDateTime::Now().GetDateOnly())
                 continue; //skip future dated transactions
         }
         if (!ignoreDate)
         {
-            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+            if ((pBankTransaction->date_.GetDateOnly() < dtBegin.GetDateOnly()) 
+                ||  (pBankTransaction->date_.GetDateOnly() > dtEnd.GetDateOnly()))
             {
                 continue; //skip
             }

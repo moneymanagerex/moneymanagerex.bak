@@ -1320,7 +1320,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         navTreeCtrl_->SetItemData(incexpOverTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Financial Year")));
     }
 
-    wxTreeItemId incexpmonthly = navTreeCtrl_->AppendItem(incexpOverTime, _("Income vs Expenses - All Time"), 4, 4);
+    wxTreeItemId incexpmonthly = navTreeCtrl_->AppendItem(incexpOverTime, _("All Time"), 4, 4);
     navTreeCtrl_->SetItemData(incexpmonthly, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - All Time")));
 
     //////////////////////////////////////////////////////////////////
@@ -1689,25 +1689,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Where the Money Comes From"))
+        else if (sData == wxT("Where the Money Goes"))
         {
             wxDateTime dtEnd =  wxDateTime::Now();
             wxDateTime dtBegin =  wxDateTime::Now();
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Goes");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
-                , bIgnoreFuture, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData.StartsWith(wxT("Where the Money Comes From - ")))
-        {
-            GetDateRange(dtBegin, dtEnd, sData);
-
-            if (bIgnoreFuture && sData == wxT("Where the Money Comes From - Current Month"))
-                title = _("Where the Money Comes From - Current Month to Date");
-
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
-                , false, dtBegin, dtEnd, title, 1);
+                , true, dtBegin, dtEnd, title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1723,33 +1711,25 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Income vs Expenses - All Time"))
+        else if (sData == wxT("Where the Money Comes From"))
         {
-            wxString title = _("Income vs Expenses - All Time");
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
-                , false, wxDateTime::Now(), wxDateTime::Now(), title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }        
-        else if (sData.StartsWith(wxT("Income vs Expenses - ")))
-        {
-            GetDateRange(dtBegin, dtEnd, sData);
-
-            if (bIgnoreFuture && sData == wxT("Income vs Expenses - Current Month"))
-                title = _("Income vs Expenses - Current Month to Date");
-
-            //int year = today.GetYear();
-            //mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
-                , bIgnoreFuture, dtBegin, dtEnd, title);
+            wxDateTime dtEnd =  wxDateTime::Now();
+            wxDateTime dtBegin =  wxDateTime::Now();
+            wxString title = _("Where the Money Comes From");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
+                , true, dtBegin, dtEnd, title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Income vs Expenses - All Time"))
+        else if (sData.StartsWith(wxT("Where the Money Comes From - ")))
         {
-            wxString title = _("Income vs Expenses - All Time");
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
-                , false, wxDateTime::Now(), wxDateTime::Now(), title);
+            GetDateRange(dtBegin, dtEnd, sData);
+
+            if (bIgnoreFuture && sData == wxT("Where the Money Comes From - Current Month"))
+                title = _("Where the Money Comes From - Current Month to Date");
+
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
+                , false, dtBegin, dtEnd, title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1778,7 +1758,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxString title = _("Payee Report");
             mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get()
-                , bIgnoreFuture, wxDateTime::Now(), wxDateTime::Now(), title);
+                , true, wxDateTime::Now(), wxDateTime::Now(), title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1794,6 +1774,36 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
 
+        }
+        else if (sData == wxT("Income vs Expenses - All Time"))
+        {
+            wxString title = _("Income vs Expenses - All Time");
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
+                , true, wxDateTime::Now(), wxDateTime::Now(), title);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }        
+        else if (sData.StartsWith(wxT("Income vs Expenses - ")))
+        {
+            GetDateRange(dtBegin, dtEnd, sData);
+
+            if (bIgnoreFuture && sData == wxT("Income vs Expenses - Current Month"))
+                title = _("Income vs Expenses - Current Month to Date");
+
+            //int year = today.GetYear();
+            //mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
+                , false, dtBegin, dtEnd, title);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+        else if (sData == wxT("Income vs Expenses - All Time"))
+        {
+            wxString title = _("Income vs Expenses - All Time");
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
+                , false, wxDateTime::Now(), wxDateTime::Now(), title);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
         }
         else if (sData == wxT("Cash Flow"))
         {
