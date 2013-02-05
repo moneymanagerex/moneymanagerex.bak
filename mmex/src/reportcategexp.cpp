@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -27,13 +27,13 @@
 #include "dbwrapper.h"
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(
-    mmCoreDB* core, 
-    bool ignoreDate, 
-    const wxDateTime& dtBegin, 
+    mmCoreDB* core,
+    bool ignoreDate,
+    const wxDateTime& dtBegin,
     const wxDateTime& dtEnd,
     const wxString& title,
     int type
-) : 
+) :
     mmPrintableBase(core),
     db_(core_->db_.get()),
     dtBegin_(dtBegin),
@@ -69,110 +69,94 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
     std::vector<ValuePair> valueList;
 
-    wxSQLite3Statement st = db_->PrepareStatement(SELECT_SUBCATEGS_FROM_SUBCATEGORY_V1);
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_CATEGORY_V1);
-
     double grandtotal = 0.0;
-    bool grandtotalseparator = true;
-    while (q1.NextRow())
+
+    wxString sBalance = wxT("?");
+    std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
+    for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
         int categs = 0;
-        //grandtotalseparator = true;
+        bool grandtotalseparator = true;
         double categtotal = 0.0;
-        int categID          = q1.GetInt(wxT("CATEGID"));
-        wxString categString = q1.GetString(wxT("CATEGNAME"));
-        wxString balance;
+        const boost::shared_ptr<mmCategory> category = *it;
+        int categID = category->categID_;
+        const wxString sCategName = category->categName_;
         double amt = core_->bTransactionList_.getAmountForCategory(core_, categID, -1, ignoreDate_,
-            dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_
-        );
-        mmex::formatDoubleToCurrency(amt, balance);
-
-        if ((type_ == 0) || ((type_ == 1 && amt > 0.0) ||
-            (type_ == 2 && amt < 0.0)))
+            dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_);
+        if ((type_ == 0) || ((type_ == 1 && amt > 0.0) || (type_ == 2 && amt < 0.0)))
         {
-            if (amt != 0.0)
+            categtotal += amt;
+            grandtotal += amt;
+            if (amt != 0)
             {
                 ValuePair vp;
-                vp.label = categString;
+                vp.label = sCategName;
                 vp.amount = amt;
-                grandtotal += amt;
-                categtotal += amt;
-                categs++;
                 valueList.push_back(vp);
-
-                hb.startTableRow();
-                hb.addTableCell(categString, false, true);
-                hb.addTableCell(balance, true, false, true);
-                hb.endTableRow();
             }
         }
 
-        st.Bind(1, categID);
-        wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
-           
-        while(q2.NextRow())
+        mmex::formatDoubleToCurrency(amt, sBalance);
+        hb.startTableRow();
+        hb.addTableCell(sCategName, false, true);
+        hb.addTableCell(sBalance, true, false, true);
+        hb.endTableRow();
+
+        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin()
+            ; cit != category->children_.end()
+            ; ++ cit)
         {
-            int subcategID = q2.GetInt(wxT("SUBCATEGID"));
-            wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
+            const boost::shared_ptr<mmCategory> sub_category = *cit;
+            int subcategID = sub_category->categID_;
 
             amt = core_->bTransactionList_.getAmountForCategory(core_, categID, subcategID, ignoreDate_,
-                dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_
-            );
-            mmex::formatDoubleToCurrency(amt, balance);
-
-            // if we want only income
-            if (type_ == 1 && amt < 0.0)
-                continue;
-
-            // if we want only expenses
-            if (type_ == 2 && amt > 0.0)
-                continue;
-
-            if (amt != 0.0)
+                dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_);
+            if ((type_ == 0) || ((type_ == 1 && amt > 0.0) || (type_ == 2 && amt < 0.0)))
+            {
+                categtotal += amt;
+                grandtotal += amt;
+            }
+            wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);
+            mmex::formatDoubleToCurrency(amt, sBalance);
+            hb.startTableRow();
+            hb.addTableCell(sFullCategName, false, true);
+            hb.addTableCell(sBalance, true, false, true);
+            hb.endTableRow();
+            categs++;
+            if (amt != 0)
             {
                 ValuePair vp;
-                vp.label = categString + wxT(" : ") + subcategString;
+                vp.label = sFullCategName;
                 vp.amount = amt;
-                grandtotal += amt;
-                categtotal += amt;
-                categs++;
                 valueList.push_back(vp);
-
-                hb.startTableRow();
-                hb.addTableCell(categString + wxT(" : ") + subcategString, false, true);
-                hb.addTableCell(balance, true, false, true);
-                hb.endTableRow();
             }
         }
+
         if (categs>1)
         {
             wxString categtotalStr;
             mmex::formatDoubleToCurrency(categtotal, categtotalStr);
+            hb.addRowSeparator(2);
             hb.startTableRow();
             hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
             hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
+            hb.endTableRow();
         }
+
         if (categs>0)
         {
-        grandtotalseparator = false;
-        hb.addRowSeparator(2);
+            grandtotalseparator = false;
+            hb.addRowSeparator(2);
         }
-
-        st.Reset();
     }
-        
-    q1.Finalize();
-    st.Finalize();
 
-    if (grandtotalseparator)
-    hb.addRowSeparator(2);
     wxString grandtotalStr;
     mmex::formatDoubleToCurrency(grandtotal, grandtotalStr);
     hb.startTableRow();
     hb.addTableCell(_("Grand Total: "),false, true, true);
     hb.addTableCell(grandtotalStr, true, false, true);
     hb.endTableRow();
-        
+
     hb.endTable();
     hb.endCenter();
 
