@@ -101,6 +101,8 @@ public:
     /// Refresh account screen with new details
     void DisplayAccountDetails(int accountID); 
 
+    void SetSelectedTransaction(int transID);
+
 private:
     DECLARE_EVENT_TABLE()
     friend class TransactionListCtrl; // needs access to m_core, initdb_, ...

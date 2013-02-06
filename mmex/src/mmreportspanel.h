@@ -33,6 +33,7 @@ class mmReportsPanel : public mmPanelBase
 
 public:
     mmReportsPanel( mmGUIFrame* frame,
+        mmCoreDB* core,
         mmPrintableBase* rb,
         wxWindow *parent,
         wxWindowID winid = wxID_ANY,

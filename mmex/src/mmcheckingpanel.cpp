@@ -2007,3 +2007,10 @@ void mmCheckingPanel::SetTransactionFilterState(bool active)
     bitmapMainFilter_->Enable(!transFilterActive_);
     stxtMainFilter_->Enable(!transFilterActive_);
 }
+
+void mmCheckingPanel::SetSelectedTransaction(int transID)
+{
+    m_listCtrlAccount->refreshVisualList(transID);
+    m_listCtrlAccount->SetFocus();
+}
+
