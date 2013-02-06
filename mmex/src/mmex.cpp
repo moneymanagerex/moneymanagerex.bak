@@ -625,6 +625,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 : wxFrame(0, -1, title, pos, size)
 , m_inisettings(pIniSettings)
 , gotoAccountID_(-1)
+, gotoTransID_(-1)
 , homePageAccountSelect_(false)
 , checkingAccountPage_(0)
 , activeCheckingAccountPage_(false)
@@ -1782,7 +1783,27 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 , true, wxDateTime::Now(), wxDateTime::Now(), title);
             menuPrintingEnable(true);
             createReportsPage(rs);
-        }        
+        }
+        else if (sData.StartsWith(wxT("Income vs Expenses - ")) && sData.Contains(wxT("Year")))
+        {
+            mmPrintableBase* rs;
+            GetDateRange(dtBegin, dtEnd, sData);
+
+            int year = wxDateTime::Now().GetYear();
+            if (sData.Contains(wxT("Last"))) year --;
+
+            if (sData.Contains(wxT("Financial")))
+            {
+                if (wxDateTime::Now().GetMonth() < dtBegin.GetMonth()) year -- ;
+                rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
+            }
+            else
+            {
+                rs = new mmReportIncExpensesOverTime(m_core.get(), year);
+            }
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
         else if (sData.StartsWith(wxT("Income vs Expenses - ")))
         {
             GetDateRange(dtBegin, dtEnd, sData);
@@ -1790,18 +1811,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             if (bIgnoreFuture && sData == wxT("Income vs Expenses - Current Month"))
                 title = _("Income vs Expenses - Current Month to Date");
 
-            //int year = today.GetYear();
-            //mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
             mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
                 , false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
-        else if (sData == wxT("Income vs Expenses - All Time"))
-        {
-            wxString title = _("Income vs Expenses - All Time");
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
-                , false, wxDateTime::Now(), wxDateTime::Now(), title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -2196,7 +2207,7 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmReportsPanel(this, rs, homePanel_, wxID_STATIC,
+    panelCurrent_ = new mmReportsPanel(this, m_core.get(), rs, homePanel_, wxID_STATIC,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
@@ -3580,6 +3591,10 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
                                    wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
         panelCurrent_ = checkingAccountPage_;
         activeCheckingAccountPage_ = true;
+        if (gotoTransID_ > 0)
+        {
+            checkingAccountPage_->SetSelectedTransaction(gotoTransID_);
+        }
 
         sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
         homePanel_->Layout();
@@ -3590,7 +3605,9 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
 void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
 {
     if (gotoAccountID_ != -1)
+    {
         createCheckingAccountPage(gotoAccountID_);
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -3963,4 +3980,10 @@ void mmGUIFrame::OnRecentFiles(wxCommandEvent& event)
 void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& /*event*/)
 {
      recentFiles_->clearRecentList();
+}
+
+void mmGUIFrame::setGotoAccountID(int account_id, long transID)
+{
+    gotoAccountID_ = account_id;
+    gotoTransID_   = transID;
 }

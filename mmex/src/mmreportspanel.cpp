@@ -17,20 +17,23 @@
  ********************************************************/
 
 #include "mmreportspanel.h"
+#include "mmcheckingpanel.h"
 #include "util.h"
 #include "htmlbuilder.h"
 #include "reportbase.h"
+#include "mmex.h"
 
 BEGIN_EVENT_TABLE(mmReportsPanel, wxPanel)
-	EVT_HTML_LINK_CLICKED(wxID_ANY, mmReportsPanel::OnLinkClicked)
+    EVT_HTML_LINK_CLICKED(wxID_ANY, mmReportsPanel::OnLinkClicked)
 END_EVENT_TABLE()
 
-mmReportsPanel::mmReportsPanel( mmGUIFrame* frame, 
-                               mmPrintableBase* rb, wxWindow *parent,
-                               wxWindowID winid, const wxPoint& pos, 
-                               const wxSize& size, long style,
-                               const wxString& name )
-: mmPanelBase(NULL)
+mmReportsPanel::mmReportsPanel( mmGUIFrame* frame,
+        mmCoreDB* core,
+        mmPrintableBase* rb, wxWindow *parent,
+        wxWindowID winid, const wxPoint& pos, 
+        const wxSize& size, long style,
+        const wxString& name )
+: mmPanelBase(core)
 , frame_(frame)
 , rb_(rb)
 {
@@ -75,7 +78,7 @@ void mmReportsPanel::CreateControls()
 
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, wxID_ANY, 
         _("REPORTS"));
-	int font_size = this->GetFont().GetPointSize() + 2;
+    int font_size = this->GetFont().GetPointSize() + 2;
     itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
@@ -89,9 +92,25 @@ void mmReportsPanel::CreateControls()
 
 void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
 {
-	wxHtmlLinkInfo link_info = event.GetLinkInfo();
-	wxString sInfo = link_info.GetHref();
-	sInfo;
-	//wxSafeShowMessage(sInfo, sInfo);
-	event.Skip();
+    wxHtmlLinkInfo link_info = event.GetLinkInfo();
+    wxString sInfo = link_info.GetHref();
+    wxString sNumber;
+    bool bIsTrxId = sInfo.StartsWith(wxT("TRXID:"), &sNumber);
+
+    if (bIsTrxId)
+    {
+        long transID = -1;
+        sNumber.ToLong(&transID);
+		if (transID > 0)
+		{
+            int account_id = core_->bTransactionList_.getBankTransactionPtr(transID)->accountID_;
+            frame_->setGotoAccountID(account_id, transID);
+        //m_listCtrlAccount->m_selectedIndex = transID;
+            frame_->setAccountNavTreeSection(core_->accountList_.GetAccountName(account_id));
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+            frame_->GetEventHandler()->AddPendingEvent(evt);
+		}
+        return;
+    }
+    event.Skip();
 }
