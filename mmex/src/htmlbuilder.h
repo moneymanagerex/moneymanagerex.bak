@@ -29,73 +29,75 @@ public:
     ~mmHTMLBuilder() {}
 
 public:
-	/** Starts a new HMTL report */
-	void init();
-	
-	/** Closes the HMTL report */
-	void end();
+    /** Starts a new HMTL report */
+    void init();
     
-	/** Clears the current HTML document */
-	void clear() { html_ = wxGetEmptyString(); }
-	
-	/** Create an HTML header and returns as a wxString */
+    /** Closes the HMTL report */
+    void end();
+    
+    /** Clears the current HTML document */
+    void clear() { html_ = wxGetEmptyString(); }
+    
+    /** Create an HTML header and returns as a wxString */
     void addHeader(int level, const wxString& header);
     void addHeaderItalic(int level, const wxString& header);
     void addDateNow();
-	
-	/** Create an HTML paragrapth */
+    
+    /** Create an HTML paragrapth */
     void addParaText(const wxString& text);
-	
-	/** Create an HTML line break */
+    
+    /** Create an HTML line break */
     void addLineBreak();
-	
-	/** Create an HTML HorizontalLine */
+    
+    /** Create an HTML HorizontalLine */
     void addHorizontalLine(int size = 0);
-	
-	/** Create an HTML Image tag */
-	void addImage(const wxString& src);
-	
-	/** Centers the content from this point on */
-	void startCenter();
-	
-	/** Stops the centering of content */
-	void endCenter();
+    
+    /** Create an HTML Image tag */
+    void addImage(const wxString& src);
+    
+    /** Centers the content from this point on */
+    void startCenter();
+    
+    /** Stops the centering of content */
+    void endCenter();
 
-	/** Start a table element */
+    /** Start a table element */
     void startTable(const wxString& width = wxGetEmptyString(), const wxString& valign = wxGetEmptyString());
-	
-	/** Starts a table row */
+    
+    /** Starts a table row */
     void startTableRow(const wxString& custom_color = wxGetEmptyString());
-	
-	/** Starts a table cell (use only if want to nest other elements inside */
-	void startTableCell(const wxString& width = wxGetEmptyString());
-	
-	/** Add a special row that is a separator, cols is the number of columns the row has to spread along */
+    
+    /** Starts a table cell (use only if want to nest other elements inside */
+    void startTableCell(const wxString& width = wxGetEmptyString());
+    
+    /** Add a special row that is a separator, cols is the number of columns the row has to spread along */
     void addRowSeparator(int cols);
-	
-	/** Add a special row that will format total values */
+    
+    /** Add a special row that will format total values */
     void addTotalRow(const wxString& caption, int cols, const wxString& value);
-	
-	/** Add a special row that will format total values */
+    
+    /** Add a special row that will format total values */
     void addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data);
 
-	/** Add a Table header cell */
+    /** Add a Table header cell */
     void addTableHeaderCell(const wxString& value, const bool numeric = false);
-	
-	/** Add a Table header cell link */
+    
+    /** Add a Table header cell link */
     void addTableHeaderCellLink(const wxString& href, const wxString& value);
 
-	/** Add a Table header row */
+    /** Add a Table header row */
     void addTableHeaderRow(const wxString& value, int cols);
 
-	/** Add a Table header row with link */
+    /** Add a Table header row with link */
     void addTableHeaderRowLink(const wxString& href, const wxString& value, int cols);
 
-	/** Add a Cell value */
+    /** Add a Cell value */
     void addTableCell(const wxString& value, bool numeric = false, bool italic = false, bool bold = false, const wxString& fontColor = wxGetEmptyString());
-	
-	/** Add a Cell value */
-    void addTableCellLink(const wxString& href, const wxString& value, bool numeric = false, bool italic = false, bool bold = false, const wxString& fontColor = wxGetEmptyString());
+    
+    /** Add a Cell value */
+    void addTableCellLink(const wxString& href, const wxString& value
+        , bool numeric = false, bool italic = false, bool bold = false
+        , const wxString& fontColor = wxGetEmptyString());
 
     void endTable();
     void endTableRow();
@@ -107,10 +109,10 @@ public:
     
 private:
     wxString html_;
-	bool bgswitch_;
-	wxString color0_;
-	wxString color1_;
-	int font_size_;
+    bool bgswitch_;
+    wxString color0_;
+    wxString color1_;
+    int font_size_;
 };
 
 #endif

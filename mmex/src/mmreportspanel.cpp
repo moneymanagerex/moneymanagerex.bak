@@ -96,21 +96,49 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
     wxString sInfo = link_info.GetHref();
     wxString sNumber;
     bool bIsTrxId = sInfo.StartsWith(wxT("TRXID:"), &sNumber);
-
-    if (bIsTrxId)
+    bool isAcct = sInfo.StartsWith(wxT("ACCT:"), &sNumber);
+    bool isStock = sInfo.StartsWith(wxT("STOCK:"), &sNumber);
+    if (sInfo == wxT("billsdeposits"))
+    {
+        frame_->setNavTreeSection(_("Repeating Transactions"));
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
+    }
+    else if (sInfo == wxT("Assets"))
+    {
+        frame_->setNavTreeSection(_("Assets"));
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
+    }
+    else if (isAcct)
+    {
+        long id = -1;
+        sNumber.ToLong(&id);
+        frame_->setGotoAccountID(id);
+        frame_->setAccountNavTreeSection(core_->accountList_.GetAccountName(id));
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
+    }
+    else if (isStock)
+    {
+        long id = -1;
+        sNumber.ToLong(&id);
+        frame_->setGotoAccountID(id);
+        frame_->setAccountNavTreeSection(core_->accountList_.GetAccountName(id));
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
+        frame_->GetEventHandler()->AddPendingEvent(evt); 
+    }
+    else if (bIsTrxId)
     {
         long transID = -1;
         sNumber.ToLong(&transID);
-		if (transID > 0)
-		{
+        if (transID > 0)
+        {
             int account_id = core_->bTransactionList_.getBankTransactionPtr(transID)->accountID_;
             frame_->setGotoAccountID(account_id, transID);
-        //m_listCtrlAccount->m_selectedIndex = transID;
             frame_->setAccountNavTreeSection(core_->accountList_.GetAccountName(account_id));
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
             frame_->GetEventHandler()->AddPendingEvent(evt);
-		}
-        return;
+        }
     }
-    event.Skip();
 }

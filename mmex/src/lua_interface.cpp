@@ -308,7 +308,7 @@ int TLuaInterface::cpp2lua_GetTableColumns(lua_State* lua)
             lua_rawseti(lua, -2, key + 1);  // set the table Key
         }
     }
-	else // incase of an error, ensure stack has 2 values.
+    else // incase of an error, ensure stack has 2 values.
     {
         lua_pushnil(lua);
     }
@@ -441,6 +441,12 @@ int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
 {
+    wxString value_6;
+    if (lua_gettop(lua) > 6 ) value_6 = GetLuaString(lua);
+
+    wxString value_5;
+    if (lua_gettop(lua) > 5 ) value_5 = GetLuaString(lua);
+
     wxString value_4;
     if (lua_gettop(lua) > 4 ) value_4 = GetLuaString(lua);
 
@@ -469,6 +475,9 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
         else if (fn_name == wxT("AddTableHeaderCell")) hb.addTableHeaderCell(value_1, value_2 == wxT("") ? false: true);
         else if (fn_name == wxT("AddTableHeaderRow")) hb.addTableHeaderRow(value_1, wxAtoi(value_2.c_str()));
         else if (fn_name == wxT("AddTableCell")) hb.addTableCell(value_1, value_2 == wxEmptyString ? false: true, value_3 == wxEmptyString ? false: true, value_4 == wxEmptyString ? false: true);
+        else if (fn_name == wxT("AddTableCellLink")) hb.addTableCellLink(value_1, value_2
+            , value_3 == wxT("") ? false: true, value_4 == wxT("") ? false: true
+            , value_5 == wxT("") ? false: true, value_6);
         else if (fn_name == wxT("AddRowSeparator")) hb.addRowSeparator(wxAtoi(value_1.c_str()));
         else if (fn_name == wxT("AddTotalRow")) hb.addTotalRow(value_1, wxAtoi(value_2.c_str()), value_3);
         else if (fn_name == wxT("AddDateNow")) hb.addDateNow();
