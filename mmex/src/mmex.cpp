@@ -707,12 +707,14 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     }
 
     if (from_scratch) dbpath  = wxGetEmptyString();
-    if (from_scratch || !dbpath.IsOk()) {
+    if (from_scratch || !dbpath.IsOk())
+    {
         menuEnableItems(false);
-        createHomePage();
         updateNavTreeControl();
         showBeginAppDialog(dbpath.GetFullName().IsEmpty());
-    } else {
+    }
+    else
+    {
         if (!openFile(dbpath.GetFullPath(), false))
             showBeginAppDialog(true);
     }
