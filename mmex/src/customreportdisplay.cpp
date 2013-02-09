@@ -39,24 +39,10 @@ bool mmCustomReport::DisplaySQL_Results(mmHTMLBuilder& hb)
 {
     hb.startCenter();
     hb.startTable();
-//  hb.startTable(wxT("90%"));
 
     int rows = 0;
-    wxString sql_script_exception;
-    wxString sql_modify;
-    try
-    {
-        rows = core_->db_->ExecuteScalar(wxT("select count (*) from (\n") + sScript_ + wxT("\n)"));
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        sql_script_exception = e.GetMessage();
-    }
-    
-    sql_modify = sql_script_exception.Lower();
-    if (sql_modify.Contains(wxT("update")) ||
-        sql_modify.Contains(wxT("delete")) ||
-        sql_modify.Contains(wxT("insert")))
+    bool bSelect = mmDBWrapper::IsSelect(core_->db_.get(), sScript_, rows);
+    if (!bSelect)
     {
         wxMessageDialog msgDlg(parent_, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO|wxICON_WARNING);
         if (msgDlg.ShowModal() != wxID_YES)
@@ -116,14 +102,9 @@ bool mmCustomReport::DisplaySQL_Results(mmHTMLBuilder& hb)
     delete [] alignRight;
     sqlQueryResult.Finalize();
 
-    if (sql_modify.Contains(wxT("update")))
-         hb.addHeader(2, _("Dababase updated succesfully"));
 
-    if (sql_modify.Contains(wxT("delete")))
-         hb.addHeader(2, _("Deletion completed"));
-    
-    if (sql_modify.Contains(wxT("insert")))
-             hb.addHeader(2, _("Data Insertion completed"));
+    if (!bSelect)
+         hb.addHeader(2, _("Dababase updated succesfully"));
 
     hb.endCenter();
     hb.endTable();

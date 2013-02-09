@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -22,6 +22,7 @@
 #include "htmlbuilder.h"
 #include "reportbase.h"
 #include "mmex.h"
+#include "lua_interface.h"
 
 BEGIN_EVENT_TABLE(mmReportsPanel, wxPanel)
     EVT_HTML_LINK_CLICKED(wxID_ANY, mmReportsPanel::OnLinkClicked)
@@ -30,7 +31,7 @@ END_EVENT_TABLE()
 mmReportsPanel::mmReportsPanel( mmGUIFrame* frame,
         mmCoreDB* core,
         mmPrintableBase* rb, wxWindow *parent,
-        wxWindowID winid, const wxPoint& pos, 
+        wxWindowID winid, const wxPoint& pos,
         const wxSize& size, long style,
         const wxString& name )
 : mmPanelBase(core)
@@ -65,25 +66,25 @@ wxString mmReportsPanel::getReportText()
 }
 
 void mmReportsPanel::CreateControls()
-{    
+{
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxPanel* itemPanel3 = new wxPanel( this, wxID_ANY, 
+    wxPanel* itemPanel3 = new wxPanel( this, wxID_ANY,
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer2->Add(itemPanel3, 0, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     itemPanel3->SetSizer(itemBoxSizerVHeader);
 
-    wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, wxID_ANY, 
+    wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, wxID_ANY,
         _("REPORTS"));
     int font_size = this->GetFont().GetPointSize() + 2;
     itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
-    htmlWindow_ = new wxHtmlWindow( this, wxID_ANY, 
-        wxDefaultPosition, wxDefaultSize, 
+    htmlWindow_ = new wxHtmlWindow( this, wxID_ANY,
+        wxDefaultPosition, wxDefaultSize,
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 1);
 
@@ -94,10 +95,11 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
 {
     wxHtmlLinkInfo link_info = event.GetLinkInfo();
     wxString sInfo = link_info.GetHref();
-    wxString sNumber;
-    bool bIsTrxId = sInfo.StartsWith(wxT("TRXID:"), &sNumber);
-    bool isAcct = sInfo.StartsWith(wxT("ACCT:"), &sNumber);
-    bool isStock = sInfo.StartsWith(wxT("STOCK:"), &sNumber);
+    wxString sData;
+    bool bIsTrxId = sInfo.StartsWith(wxT("TRXID:"), &sData);
+    bool isAcct = sInfo.StartsWith(wxT("ACCT:"), &sData);
+    bool isStock = sInfo.StartsWith(wxT("STOCK:"), &sData);
+    bool bIsLusScript = sInfo.StartsWith(wxT("LUA:"), &sData);
     if (sInfo == wxT("billsdeposits"))
     {
         frame_->setNavTreeSection(_("Repeating Transactions"));
@@ -113,7 +115,7 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
     else if (isAcct)
     {
         long id = -1;
-        sNumber.ToLong(&id);
+        sData.ToLong(&id);
         frame_->setGotoAccountID(id);
         frame_->setAccountNavTreeSection(core_->accountList_.GetAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
@@ -122,16 +124,16 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
     else if (isStock)
     {
         long id = -1;
-        sNumber.ToLong(&id);
+        sData.ToLong(&id);
         frame_->setGotoAccountID(id);
         frame_->setAccountNavTreeSection(core_->accountList_.GetAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
-        frame_->GetEventHandler()->AddPendingEvent(evt); 
+        frame_->GetEventHandler()->AddPendingEvent(evt);
     }
     else if (bIsTrxId)
     {
         long transID = -1;
-        sNumber.ToLong(&transID);
+        sData.ToLong(&transID);
         if (transID > 0)
         {
             int account_id = core_->bTransactionList_.getBankTransactionPtr(transID)->accountID_;
@@ -140,5 +142,10 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
             frame_->GetEventHandler()->AddPendingEvent(evt);
         }
+    }
+    else if (bIsLusScript)
+    {
+        wxSafeShowMessage(wxT("Lua Script"), sData);
+
     }
 }
