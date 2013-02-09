@@ -28,7 +28,6 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
         yearBegin.Subtract(wxDateSpan::Months(shift_));
         yearEnd.Subtract(wxDateSpan::Months(shift_));
     }
-wxSafeShowMessage(yearBegin.FormatISODate(), wxString()<< yearEnd.FormatISODate());
 
     mmHTMLBuilder hb;
     hb.init();
