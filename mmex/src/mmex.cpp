@@ -1482,7 +1482,7 @@ void mmGUIFrame::CreateCustomReport(int index)
         wxString sScript;
         if (custRepIndex_->GetReportFileData(sScript) )
         {
-            mmCustomSQLReport* csr = new mmCustomSQLReport(this, m_core.get()
+            mmCustomReport* csr = new mmCustomReport(this, m_core.get()
                 , custRepIndex_->CurrentReportTitle()
                 , sScript
                 , custRepIndex_->CurrentReportFileType());
@@ -1497,7 +1497,7 @@ void mmGUIFrame::CreateCustomReport(int index)
 }
 //----------------------------------------------------------------------------
 
-bool mmGUIFrame::IsCustomSQLReportSelected( int& customSqlReportID, mmTreeItemData* iData )
+bool mmGUIFrame::IsCustomReportSelected( int& customSqlReportID, mmTreeItemData* iData )
 {
     customSqlReportID = 0;
     bool result = false;
@@ -1522,7 +1522,7 @@ void mmGUIFrame::OnTreeItemExpanded(wxTreeEvent& event)
         expandedReportNavTree_ = true;
     else if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
         expandedCustomSqlReportNavTree_ = true;
-    else if (iData->getString() == wxT("Budgeting"))
+    else if (iData->getString() == NAVTREECTRL_BUDGET)
         expandedBudgetingNavTree_ = true;
 }
 //----------------------------------------------------------------------------
@@ -1536,7 +1536,7 @@ void mmGUIFrame::OnTreeItemCollapsed(wxTreeEvent& event)
         expandedReportNavTree_ = false;
     else if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
         expandedCustomSqlReportNavTree_ = false;
-    else if (iData->getString() == wxT("Budgeting"))
+    else if (iData->getString() == NAVTREECTRL_BUDGET)
         expandedBudgetingNavTree_ = false;
 }
 //----------------------------------------------------------------------------
@@ -1661,7 +1661,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             return;
 
         //========================================================================
-        int customSqlReportID;      // Define before all the if...else statements
+        int customReportID;      // Define before all the if...else statements
         //========================================================================
 
         wxDateTime dtBegin;
@@ -1670,7 +1670,11 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         wxString title = wxGetTranslation(sData);
         bool bIgnoreFuture = mmIniOptions::instance().ignoreFutureTransactions_;
 
-        if (sData == wxT("Summary of Accounts"))
+        if ( IsCustomReportSelected(customReportID, iData) )
+        {
+            CreateCustomReport(customReportID);
+        }
+        else if (sData == wxT("Summary of Accounts"))
         {
             mmPrintableBase* rs = new mmReportSummary(m_core.get(), this);
             menuPrintingEnable(true);
@@ -1681,10 +1685,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             mmPrintableBase* rs = new mmReportSummaryStocks(m_core.get(), m_db.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
-        }
-        else if ( IsCustomSQLReportSelected(customSqlReportID, iData) )
-        {
-            CreateCustomReport(customSqlReportID);
         }
         else if (sData == wxT("Summary of Assets"))
         {
@@ -3857,7 +3857,7 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
         if (dlg->sScript() != wxT(""))
         {
             wxBeginBusyCursor(wxHOURGLASS_CURSOR);
-            mmCustomSQLReport* csr = new mmCustomSQLReport(this,
+            mmCustomReport* csr = new mmCustomReport(this,
                 m_core.get(), dlg->sReportTitle(), dlg->sScript(), dlg->sSctiptType());
             menuPrintingEnable(true);
             createReportsPage(csr);

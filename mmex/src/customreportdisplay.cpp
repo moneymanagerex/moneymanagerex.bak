@@ -20,7 +20,7 @@
 #include "lua_interface.h"
 #include "util.h"
 
-mmCustomSQLReport::mmCustomSQLReport(wxWindow* parent, mmCoreDB* core
+mmCustomReport::mmCustomReport(wxWindow* parent, mmCoreDB* core
 , const wxString& reportTitle, const wxString& sScript, const wxString& sScriptType)
 : mmPrintableBase(core)
 , parent_(parent)
@@ -29,13 +29,13 @@ mmCustomSQLReport::mmCustomSQLReport(wxWindow* parent, mmCoreDB* core
 , sScriptType_(sScriptType)
 {}
 
-void mmCustomSQLReport::DisplayReportHeader(mmHTMLBuilder& hb, const wxString reportTitle)
+void mmCustomReport::DisplayReportHeader(mmHTMLBuilder& hb, const wxString reportTitle)
 {
     hb.addHeader(2, reportTitle);
     hb.addDateNow();
 }
 
-bool mmCustomSQLReport::DisplaySQL_Results(mmHTMLBuilder& hb)
+bool mmCustomReport::DisplaySQL_Results(mmHTMLBuilder& hb)
 {
     hb.startCenter();
     hb.startTable();
@@ -130,14 +130,14 @@ bool mmCustomSQLReport::DisplaySQL_Results(mmHTMLBuilder& hb)
     return true;
 }
 
-void mmCustomSQLReport::DisplayLua_Results(mmHTMLBuilder& hb)
+void mmCustomReport::DisplayLua_Results(mmHTMLBuilder& hb)
 {
     TLuaInterface lua_core;
     wxString lua_result = lua_core.RunLuaCode(sScript_);
     hb.addParaText(lua_result);
 }
 
-wxString mmCustomSQLReport::getHTMLText()
+wxString mmCustomReport::getHTMLText()
 {
     mmHTMLBuilder hb;
     hb.init();
