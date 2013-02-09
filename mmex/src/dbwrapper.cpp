@@ -1323,6 +1323,29 @@ bool mmDBWrapper::deleteCurrency(wxSQLite3Database* db, int currencyID)
     }
     return true;
 }
+
+bool mmDBWrapper::IsSelect(wxSQLite3Database* db, wxString sScript, int &rows)
+{
+    wxString sql_script_exception;
+    wxString sql_modify;
+    try
+    {
+        rows =db->ExecuteScalar(wxT("select count (*) from (\n") + sScript + wxT("\n)"));
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        sql_script_exception = e.GetMessage();
+    }
+
+    sql_modify = sql_script_exception.Lower();
+    if (sql_modify.Contains(wxT("update")) ||
+        sql_modify.Contains(wxT("delete")) ||
+        sql_modify.Contains(wxT("insert")))
+    {
+        return false;
+    }
+    return true;
+}
 int mmDBWrapper::mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxString> data, const wxString sql, long &lLastRowId)
 {
     int iError = 0;

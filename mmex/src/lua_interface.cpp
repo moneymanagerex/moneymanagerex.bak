@@ -198,20 +198,12 @@ int TLuaInterface::cpp2lua_MessageBox(lua_State* lua)
  *****************************************************************************/
 int TLuaInterface::SetSqlScriptRowCount(const wxString& sScript, int& iRowsCount, int& iError, wxString& sOutput)
 {
-    try
+    if (!mmDBWrapper::IsSelect(static_db_ptr().get(), sScript, iRowsCount))
     {
-        iRowsCount = static_db_ptr().get()->ExecuteScalar(wxT("select count (*) from (\n") + sScript + wxT("\n)"));
+        iError = 3; //SQLITE_PERM;
+        sOutput = _("Please, use read only access to DB in this function");
     }
-    catch (const wxSQLite3Exception& e)
-    {
-        iError = e.GetErrorCode();
-        sOutput = e.GetMessage();
-        if (sOutput.Contains(wxT("update")) || sOutput.Contains(wxT("delete")) || sOutput.Contains(wxT("insert")))
-        {
-            iError = 3; //SQLITE_PERM;
-            sOutput = _("Please, use read only access to DB in this function");
-        }
-    }
+
     return iError;
 }
 
@@ -290,7 +282,7 @@ int TLuaInterface::cpp2lua_GetSQLResultSet(lua_State *lua)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_GetTableColumns(lua_State* lua)
 {
-    int iError = 0; 
+    int iError = 0;
     wxString sError = wxT("");
     int iColumCount = -1;
 

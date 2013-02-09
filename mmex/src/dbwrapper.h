@@ -151,7 +151,7 @@ static const char INSERT_INTO_CURRENCYFORMATS_V1[] =
     "GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
     " ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-static const char UPDATE_CURRENCYFORMATS_V1[] = 
+static const char UPDATE_CURRENCYFORMATS_V1[] =
     "update CURRENCYFORMATS_V1 "
     "set PFX_SYMBOL=?, SFX_SYMBOL=?, DECIMAL_POINT=?,"
         "GROUP_SEPARATOR=?, UNIT_NAME=?, CENT_NAME=?, "
@@ -269,7 +269,7 @@ static const char SELECT_ROW_FROM_STOCK_V1[] =
     "PURCHASEPRICE, CURRENTPRICE, COMMISSION "
     "FROM STOCK_V1 "
     "WHERE STOCKID = ?";
-    
+
 //UPDATE
 static const char UPDATE_BUDGETYEAR_V1[] =
     "UPDATE BUDGETYEAR_V1 "
@@ -497,6 +497,7 @@ namespace mmDBWrapper
 boost::shared_ptr<wxSQLite3Database> Open(const wxString &dbpath, const wxString &key = wxGetEmptyString());
 
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
+bool IsSelect(wxSQLite3Database* db, wxString sScript, int &rows);
 
 /* Creating new DBs */
 void initDB(wxSQLite3Database* db);
