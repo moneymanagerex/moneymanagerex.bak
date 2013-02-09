@@ -21,10 +21,10 @@
 #include "reportbase.h"
 #include "htmlbuilder.h"
 
-class mmCustomSQLReport : public mmPrintableBase
+class mmCustomReport : public mmPrintableBase
 {
 public:
-    mmCustomSQLReport(wxWindow* parent, mmCoreDB* core
+    mmCustomReport(wxWindow* parent, mmCoreDB* core
         , const wxString& reportTitle, const wxString& sScript, const wxString& sScriptType);
 
     wxString getHTMLText();

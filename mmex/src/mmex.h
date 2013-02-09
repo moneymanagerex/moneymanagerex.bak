@@ -369,7 +369,7 @@ private:
     void OnViewOpenAccounts(wxCommandEvent& event);
 
     /* Custom Report*/
-    bool IsCustomSQLReportSelected(int& customSqlReportID, mmTreeItemData* iData );
+    bool IsCustomReportSelected(int& customSqlReportID, mmTreeItemData* iData );
     void CreateCustomReport(int index);
     void RunCustomSqlDialog(wxString customSqlReportSelectedItem = wxT(""));
     bool expandedCustomSqlReportNavTree_;
