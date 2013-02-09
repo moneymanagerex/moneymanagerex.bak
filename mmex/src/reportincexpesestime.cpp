@@ -24,7 +24,7 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
     wxString yearStr = wxString::Format(_("Income vs Expenses for Year: %d"), year_);
     if (shift_ > 0)
     {
-        yearStr = _("Income vs Expenses - Last 12 monthes");
+        yearStr = _("Income vs Expenses - Last 12 months");
         yearBegin.Subtract(wxDateSpan::Months(shift_));
         yearEnd.Subtract(wxDateSpan::Months(shift_));
     }

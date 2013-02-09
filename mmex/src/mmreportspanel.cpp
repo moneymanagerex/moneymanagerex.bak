@@ -57,6 +57,7 @@ bool mmReportsPanel::Create( wxWindow *parent, wxWindowID winid,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
+    htmlWindow_ -> SetPage(getReportText());
     return TRUE;
 }
 
@@ -87,8 +88,6 @@ void mmReportsPanel::CreateControls()
         wxDefaultPosition, wxDefaultSize,
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 1);
-
-    htmlWindow_ -> SetPage(getReportText());
 }
 
 void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
