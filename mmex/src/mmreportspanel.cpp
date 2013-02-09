@@ -145,7 +145,15 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
     }
     else if (bIsLusScript)
     {
-        wxSafeShowMessage(wxT("Lua Script"), sData);
-
+        wxString lua_result;
+        wxFileName LuaFile = sData;
+        if (LuaFile.FileExists())
+        {
+            TLuaInterface lua_core;
+            lua_result = lua_core.RunLuaFile(sData);
+            htmlWindow_->SetPage(lua_result);
+        }
+        else
+            wxMessageBox(wxString::Format(_("File %s not found"), sData), wxT("Lua Script"), wxOK|wxICON_ERROR);
     }
 }
