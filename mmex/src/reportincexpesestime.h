@@ -24,12 +24,13 @@
 class mmReportIncExpensesOverTime : public mmPrintableBase 
 {
 public:
-    mmReportIncExpensesOverTime(mmCoreDB* core, int year);
+    mmReportIncExpensesOverTime(mmCoreDB* core, int year, int shift = 0);
 
     wxString getHTMLText();
 
 private:
     int year_;
+    int shift_;
 };
 
 #endif //_MM_EX_REPORTINCEXPENSESTIME_H_

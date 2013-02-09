@@ -33,12 +33,11 @@
 class mmReportIncExpensesOverFinancialPeriod : public mmPrintableBase 
 {
 public:
-	mmReportIncExpensesOverFinancialPeriod(mmGUIFrame* frame, mmCoreDB* core, int year);
+    mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year);
 
     wxString getHTMLText();
 
 private:
-    mmGUIFrame* frame_;
     int year_;
     int printYear_;
 };
