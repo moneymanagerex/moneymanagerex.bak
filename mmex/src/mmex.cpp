@@ -1882,14 +1882,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (sData == wxT("Income vs Expenses"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get(), year);
-            menuPrintingEnable(true);
-            createReportsPage(rs);
-        }
     }
 }
 //----------------------------------------------------------------------------
