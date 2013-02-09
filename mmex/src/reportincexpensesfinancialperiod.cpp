@@ -1,6 +1,6 @@
 /*************************************************************************
  Copyright (C) 2006 Madhan Kanagavel
- Modified: Copyright (C) 2010 Stefano Giorgio      
+ Modified: Copyright (C) 2010 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -30,13 +30,11 @@
 #include "htmlbuilder.h"
 #include "reportbase.h"
 #include "util.h"
-#include "dbwrapper.h"
 #include "budgetingpanel.h"
 #include "reportbudget.h"
 
-mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmGUIFrame* frame, mmCoreDB* core, int year):
+mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year):
     mmPrintableBase(core),
-    frame_(frame),
     year_(year),
     printYear_(year)
 {
@@ -79,9 +77,9 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     double balance = 0.0;
 
     int yidx = sofy.GetMonth() -1 ;
-    int monthCorrection = 1;    
+    int monthCorrection = 1;
     if ( sofy.GetDay() != 1)    // allow to display 13 months - first and last are part months
-        monthCorrection ++;     
+        monthCorrection ++;
 
     int dayStart = 1;           // correct day for when not first of month
     for (int yearIndex = wxDateTime::Jan; yearIndex < wxDateTime::Dec + monthCorrection; yearIndex++)
@@ -127,9 +125,9 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
         wxString actualBalStr;
         mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
-		hb.addTableCell(actualIncStr, true, true, true);
-		hb.addTableCell(actualExpStr, true, true, true);
-		hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? wxT("RED") : wxT("")));
+        hb.addTableCell(actualIncStr, true, true, true);
+        hb.addTableCell(actualExpStr, true, true, true);
+        hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? wxT("RED") : wxT("")));
 
         hb.endTableRow();
     }

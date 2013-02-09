@@ -7,9 +7,10 @@
 #include "dbwrapper.h"
 #include "budgetingpanel.h"
 
-mmReportIncExpensesOverTime::mmReportIncExpensesOverTime(mmCoreDB* core, int year) : 
+mmReportIncExpensesOverTime::mmReportIncExpensesOverTime(mmCoreDB* core, int year, int shift) : 
     mmPrintableBase(core),
-    year_(year)
+    year_(year),
+    shift_(shift)
 {
 }
 
@@ -17,15 +18,22 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
 {
     core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
 
-    wxString yearStr = wxString::Format(wxT("%d"), year_);
+    wxDateTime yearBegin(1, wxDateTime::Jan, year_);
+    wxDateTime yearEnd(31, wxDateTime::Dec, year_);
+
+    wxString yearStr = wxString::Format(_("Income vs Expenses for Year: %d"), year_);
+    if (shift_ > 0)
+    {
+        yearStr = _("Income vs Expenses - Last 12 monthes");
+        yearBegin.Subtract(wxDateSpan::Months(shift_));
+        yearEnd.Subtract(wxDateSpan::Months(shift_));
+    }
+wxSafeShowMessage(yearBegin.FormatISODate(), wxString()<< yearEnd.FormatISODate());
 
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(2, _("Income vs Expenses for Year: ") + yearStr );
+    hb.addHeader(2, yearStr );
     hb.addDateNow();
-
-    wxDateTime yearBegin(1, wxDateTime::Jan, year_);
-    wxDateTime yearEnd(31, wxDateTime::Dec, year_);
 
     hb.startCenter();
 
@@ -44,10 +52,11 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
         
     for (int yidx = 0; yidx < 12; yidx++)
     {
-        wxString monName = mmGetNiceMonthName(yidx);
+        wxDateTime dtBegin = wxDateTime(yearBegin).Add(wxDateSpan::Months(yidx));
+        wxDateTime dtEnd = dtBegin.GetLastMonthDay();
 
-        wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year_);
-        wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);
+        yearStr = wxString()<< dtBegin.GetYear();
+        wxString monName = mmGetNiceMonthName(dtBegin.GetMonth());
             
         bool ignoreDate = false;
         income = 0.0;

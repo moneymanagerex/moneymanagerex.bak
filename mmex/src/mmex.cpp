@@ -1786,6 +1786,14 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
+        else if (sData == wxT("Income vs Expenses"))
+        {
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get()
+                , wxDateTime::Now().GetYear(), 10);
+
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
         else if (sData.StartsWith(wxT("Income vs Expenses - ")) && sData.Contains(wxT("Year")))
         {
             mmPrintableBase* rs;
@@ -1797,7 +1805,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             if (sData.Contains(wxT("Financial")))
             {
                 if (wxDateTime::Now().GetMonth() < dtBegin.GetMonth()) year -- ;
-                rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
+                rs = new mmReportIncExpensesOverFinancialPeriod(m_core.get(), year);
             }
             else
             {
