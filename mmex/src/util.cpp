@@ -1099,7 +1099,6 @@ boost::shared_ptr<wxSQLite3Database> static_db_ptr()
 
 bool mmCalculator(wxString sInput, wxString& sOutput)
 {
-    //TODO: Fix Non standart number format
     sInput.Replace(wxT(")("), wxT(")*("));
     bool bResult = true;
     int a = sInput.Replace(wxT("("), wxT("("));
@@ -1158,7 +1157,8 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
                 wxString sElement = token2.GetNextToken();
                 wxString sSign = sElement.Mid(0,1);
                 sElement.Remove(0,1);
-                if (sElement.ToDouble(&dTempAmount))
+
+                if (sElement.ToDouble(&dTempAmount) || mmex::formatCurrencyToDouble(sElement, dTempAmount))
                 {
                     if (sSign == wxT("*")) dSubtotal = dSubtotal*dTempAmount;
                     else if (sSign == wxT("M")) dSubtotal = -dSubtotal*dTempAmount;
