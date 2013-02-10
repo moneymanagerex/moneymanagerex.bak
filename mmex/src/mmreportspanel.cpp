@@ -155,4 +155,6 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
         else
             wxMessageBox(wxString::Format(_("File %s not found"), sData.c_str()), wxT("Lua Script"), wxOK|wxICON_ERROR);
     }
+    else
+        wxLaunchDefaultBrowser(sInfo);
 }
