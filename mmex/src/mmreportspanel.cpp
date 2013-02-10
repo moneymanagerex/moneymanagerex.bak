@@ -98,7 +98,7 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
     bool bIsTrxId = sInfo.StartsWith(wxT("TRXID:"), &sData);
     bool isAcct = sInfo.StartsWith(wxT("ACCT:"), &sData);
     bool isStock = sInfo.StartsWith(wxT("STOCK:"), &sData);
-    bool bIsLusScript = sInfo.StartsWith(wxT("LUA:"), &sData);
+    bool bIsLuaScript = sInfo.StartsWith(wxT("LUA:"), &sData);
     if (sInfo == wxT("billsdeposits"))
     {
         frame_->setNavTreeSection(_("Repeating Transactions"));
@@ -142,7 +142,7 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
             frame_->GetEventHandler()->AddPendingEvent(evt);
         }
     }
-    else if (bIsLusScript)
+    else if (bIsLuaScript)
     {
         wxString lua_result;
         wxFileName LuaFile = sData;
