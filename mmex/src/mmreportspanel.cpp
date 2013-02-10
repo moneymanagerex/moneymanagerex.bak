@@ -153,6 +153,6 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
             htmlWindow_->SetPage(lua_result);
         }
         else
-            wxMessageBox(wxString::Format(_("File %s not found"), sData), wxT("Lua Script"), wxOK|wxICON_ERROR);
+            wxMessageBox(wxString::Format(_("File %s not found"), sData.c_str()), wxT("Lua Script"), wxOK|wxICON_ERROR);
     }
 }
