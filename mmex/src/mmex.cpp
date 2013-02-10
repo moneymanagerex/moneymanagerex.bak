@@ -680,8 +680,9 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
     // add the toolbars to the manager
     m_mgr.AddPane(toolBar_, wxAuiPaneInfo().
-        Name(wxT("toolbar")).Caption(wxT("Toolbar")).ToolbarPane().Top().
-        LeftDockable(false).RightDockable(false).MinSize(1000,-1));
+        Name(wxT("toolbar")).Caption(_("Toolbar")).ToolbarPane().Top()
+        .LeftDockable(false).RightDockable(false).MinSize(1000,-1)
+        .Show(m_inisettings->GetBoolSetting(wxT("SHOWTOOLBAR"), true)));
 
     // change look and feel of wxAuiManager
     m_mgr.GetArtProvider()->SetMetric(16, 0);
@@ -3729,6 +3730,7 @@ void mmGUIFrame::OnViewToolbar(wxCommandEvent &event)
 {
     m_mgr.GetPane(wxT("toolbar")).Show(event.IsChecked());
     m_mgr.Update();
+    m_inisettings->SetBoolSetting(wxT("SHOWTOOLBAR"), event.IsChecked());
 }
 //----------------------------------------------------------------------------
 
