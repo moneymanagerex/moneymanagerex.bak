@@ -950,8 +950,10 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
     {
         boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
-        if ((pBankTransaction->accountID_ != m_AccountID) && (pBankTransaction->toAccountID_ != m_AccountID))
-           continue;
+        if (pBankTransaction->accountID_ != m_AccountID
+            && (pBankTransaction->toAccountID_ != m_AccountID 
+            || pBankTransaction->transType_ != wxT("Transfer")))
+            continue;
 
         pBankTransaction->updateAllData(core_, m_AccountID, pCurrency);
 
