@@ -698,26 +698,33 @@ void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
     advancedToTransAmountSet_ = cAdvanced_->IsChecked();
 
     wxString amountStr = textAmount_->GetValue().Trim();
-    if (advancedToTransAmountSet_ && amountStr.IsEmpty())
+    if (advancedToTransAmountSet_)
     {
-        amountStr = wxT("1");
-        transAmount_ = 1;
-        textAmount_->SetValue(amountStr);
+        if (amountStr.IsEmpty())
+        {
+            amountStr = wxT("1");
+            transAmount_ = 1;
+            toTransAmount_ = transAmount_;
+            textAmount_->SetValue(amountStr);
+        }
 
         mmex::formatCurrencyToDouble(amountStr, transAmount_);
 
-        if(toID_ > 0) {
+        if (toID_ > 0) {
             double rateFrom = core_->accountList_.getAccountBaseCurrencyConvRate(accountID_);
             double rateTo = core_->accountList_.getAccountBaseCurrencyConvRate(toID_);
             double convToBaseFrom = rateFrom * transAmount_;
             toTransAmount_ = convToBaseFrom / rateTo;
         }
+        else
+        {
+            toTextAmount_->SetValue(wxT(""));
+        }
     }
-    else 
+    else
     {
         toTransAmount_ = transAmount_;
     }
-
 
     mmex::formatDoubleToCurrencyEdit(toTransAmount_, amountStr);
     toTextAmount_->SetValue(amountStr);
@@ -778,7 +785,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     advancedToTransAmountSet_ = cAdvanced_->IsChecked();
     double amount;
 
-    if (cSplit_->GetValue())
+    if (cSplit_->IsChecked())
     {
         amount = split_->getTotalSplits();
         if (amount < 0.0)
@@ -790,6 +797,12 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
                 mmShowErrorMessageInvalid(parent_, _("Amount"));
                 return;
             }
+        }
+
+        if (split_->numEntries() == 0)
+        {
+            mmShowErrorMessageInvalid(this, _("Category"));
+            return;
         }
     }
     else
@@ -803,55 +816,26 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
             textAmount_->SetFocus();
             return;
         }
-    }
-
-    if (bTransfer && advancedToTransAmountSet_)
-    {
-        wxString amountStr = toTextAmount_->GetValue().Trim();
-        if (amountStr.IsEmpty() || !mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
-        {
-            //toTextAmount_->Enable(!advancedToTransAmountSet_);
-            toTextAmount_->SetBackgroundColour(wxT("RED"));
-            mmShowErrorMessageInvalid(parent_, _("Advanced Amount"));
-            toTextAmount_->SetBackgroundColour(wxNullColour);
-            //toTextAmount_->Enable(advancedToTransAmountSet_);
-            toTextAmount_->SetFocus();
-            return;
-        }
-        if (!advancedToTransAmountSet_)
-        {
-            if (accountID_ == referenceAccountID_)
-                toTransAmount_ = amount;
-            else
-            {
-                transAmount_ = toTransAmount_;
-                amount = toTransAmount_;
-            }
-            toTextAmount_->SetValue(wxString()<<amount);
-        }
-    }
-    else
-    {
-        if (bTransfer)
-        {
-            toTransAmount_ = amount;
-        }
-    }
-
-    if (cSplit_->GetValue())
-    {
-        if (split_->numEntries() == 0)
-        {
-            mmShowErrorMessageInvalid(this, _("Category"));
-            return;
-        }
-    }
-    else // if payee just has been created categid still null
-    {
         if (categID_ < 1)
         {
             mmShowErrorMessageInvalid(this, _("Category"));
             return;
+        }
+    }
+
+    if (bTransfer)
+    {
+        if (advancedToTransAmountSet_)
+        {
+            wxString amountStr = toTextAmount_->GetValue().Trim();
+            if (amountStr.IsEmpty() || !mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
+            {
+                toTextAmount_->SetBackgroundColour(wxT("RED"));
+                mmShowErrorMessageInvalid(parent_, _("Advanced Amount"));
+                toTextAmount_->SetBackgroundColour(wxNullColour);
+                toTextAmount_->SetFocus();
+                return;
+            }
         }
     }
 
@@ -866,7 +850,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         else
         {
             wxMessageDialog msgDlg( this
-                , _("Do you want to add new payee?")
+                , wxString::Format(_("Do you want to add new payee: \n%s?"), payee_name.c_str())
                 , _("Confirm to add new payee")
                 , wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
             if (msgDlg.ShowModal() == wxID_YES)
@@ -878,26 +862,19 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         }
     }
 
-    if (toID_ == -1 && bTransfer)
-    {
-        mmShowErrorMessageInvalid(this, _("To Account"));
-        bPayee_->SetFocus();
-        return;
-    }
-
     int toAccountID = -1;
     int fromAccountID = accountID_;
     if (bTransfer)
     {
         if (toID_ == -1)
         {
-            mmShowErrorMessageInvalid(parent_, _("To Account"));
+            mmShowErrorMessageInvalid(this, _("To Account"));
+            bPayee_->SetFocus();
             return;
         }
 
         toAccountID = toID_;
         payeeID_ = -1;
-
     }
     else
     {
