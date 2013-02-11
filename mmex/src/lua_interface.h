@@ -28,6 +28,11 @@ extern "C" {
 #include "lauxlib.h"
 }
 
+class MMEX_IniSettings;
+
+static MMEX_IniSettings* info_settings_;
+static mmCurrencyList* currency_list_;
+
 class TLuaInterface
 {
 public:
@@ -66,6 +71,7 @@ private:
     static int cpp2lua_GetTextFromUser(lua_State* lua);
     static int cpp2lua_GetTranslation(lua_State* lua);
 	static int cpp2lua_GetSiteContent(lua_State* lua);
+    static int cpp2Lua_BaseCurrencyFormat(lua_State* lua);
 
     static int cpp2lua_HTMLBuilder(lua_State* lua);
 };

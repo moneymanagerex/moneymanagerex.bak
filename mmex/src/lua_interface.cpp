@@ -23,6 +23,9 @@
 // Constructor: Initialises Lua when an instant is created.
 TLuaInterface::TLuaInterface()
 {
+    info_settings_ = new MMEX_IniSettings(static_db_ptr(), true);
+    currency_list_ = new mmCurrencyList(static_db_ptr());
+
     lua_ = luaL_newstate();
     wxASSERT(lua_);
 
@@ -34,6 +37,8 @@ TLuaInterface::TLuaInterface()
 // Destructor: Shuts down Lua on completion
 TLuaInterface::~TLuaInterface()
 {
+    delete info_settings_;
+    delete currency_list_;
     lua_close(lua_);
 }
 
@@ -124,6 +129,7 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmGetColumnChoice",  cpp2lua_GetColumnChoice);
     lua_register(lua_, "mmGetTextFromUser",  cpp2lua_GetTextFromUser);
     lua_register(lua_, "mmGetSiteContent",   cpp2lua_GetSiteContent);
+    lua_register(lua_, "mmBaseCurrencyFormat", cpp2Lua_BaseCurrencyFormat);
 
     lua_register(lua_, "mmHTMLBuilder",      cpp2lua_HTMLBuilder);
 }
@@ -426,6 +432,23 @@ int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
     lua_pushinteger(lua, error);
 
     return 2;
+}
+
+/******************************************************************************
+ formatted_currency = mmBaseCurrencyFormat(value)
+ *****************************************************************************/
+int TLuaInterface::cpp2Lua_BaseCurrencyFormat(lua_State* lua)
+{
+    double number = lua_tonumber(lua, -1);
+    lua_pop(lua, 1);  // remove the value from the stack
+
+    currency_list_->LoadBaseCurrencySettings(info_settings_);
+    wxString number_string;
+    mmex::formatDoubleToCurrencyEdit(number, number_string);
+
+    lua_pushstring(lua, number_string.ToUTF8());
+
+    return 1;
 }
 
 /******************************************************************************
