@@ -109,6 +109,7 @@ private:
     wxButton* bAuto_;
     bool payeeUnknown_;
     bool categUpdated_;
+	bool bBestChoice_;
     wxButton* itemButtonCancel_;
 
     wxString categoryName_;

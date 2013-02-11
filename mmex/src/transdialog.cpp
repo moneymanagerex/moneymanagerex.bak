@@ -72,7 +72,8 @@ mmTransDialog::mmTransDialog(
     payeeID_(-1),
     toID_(-1),
     toTransAmount_(-1),
-    transAmount_(-1)
+    transAmount_(-1),
+    bBestChoice_(true)
 
 {
     Create(parent, id, caption, pos, size, style);
@@ -561,6 +562,7 @@ void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
 void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
 {
     wxString value = cbPayee_->GetValue();
+    if (value.IsEmpty()) bBestChoice_ = true;
 
     cbPayee_ -> SetEvtHandlerEnabled(false);
     cbPayee_ -> Clear();
@@ -583,13 +585,17 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
         {
             cbPayee_ ->Append(data[i]);
         }
+        bBestChoice_ = true;
     }
 #if wxCHECK_VERSION(2,9,0)
         cbPayee_->AutoComplete(data);
 #endif
 
-    if (cbPayee_->GetCount() == 1)
+    if (cbPayee_->GetCount() == 1 && bBestChoice_)
+    {
         cbPayee_->SetSelection(0);
+        bBestChoice_ = false;
+    }
     else
         cbPayee_->SetValue(value);
 
