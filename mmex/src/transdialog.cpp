@@ -239,10 +239,11 @@ void mmTransDialog::updateControlsForTransType()
 void mmTransDialog::SetTransferControls(bool transfer)
 {
     cbPayee_ -> SetEvtHandlerEnabled(false);
-    cAdvanced_->SetValue(transAmount_ != toTransAmount_);
+    bPayee_->Enable(!transfer);
+
+    cAdvanced_->SetValue(advancedToTransAmountSet_);
     cAdvanced_->Enable(transfer);
 
-    bPayee_->Enable(!transfer);
     wxString dataStr = payee_name_;
     cbPayee_->Clear();
     payee_name_.Clear();
@@ -300,6 +301,8 @@ void mmTransDialog::SetTransferControls(bool transfer)
         data = core_->payeeList_.FilterPayees(wxT(""));
         toTextAmount_->Enable(false);
         toTextAmount_->SetValue(wxT(""));
+        advancedToTransAmountSet_ = false;
+        cAdvanced_->Enable(false);
         payeeID_ = core_->payeeList_.GetPayeeId(dataStr);
         payee_name_ = core_->payeeList_.GetPayeeName(payeeID_);
         dataStr = payee_name_;
@@ -421,8 +424,8 @@ void mmTransDialog::CreateControls()
       you have to add the wxTE_PROCESS_ENTER window style flag.
       If you create a wxComboBox with the flag wxTE_PROCESS_ENTER, the tab key won't jump to the next control anymore.*/
     cbPayee_ = new wxComboBox(this, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
-        wxDefaultPosition, wxSize(190, -1),
-        core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
+        wxDefaultPosition, wxSize(190, -1)/*,
+        core_->payeeList_.FilterPayees(wxT(""))*/ /*, wxTE_PROCESS_ENTER*/);
 
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmTransDialog::OnPayeeUpdated), NULL, this);
@@ -569,10 +572,17 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
     else
         data = core_->accountList_.getAccountsName(accountID_);
 
-    for (size_t i=0; i< data.Count(); ++i)
+    for (size_t i = 0; i < data.Count(); ++i)
     {
         if (data[i].Lower().Matches(value.Lower().Append(wxT("*"))))
             cbPayee_ ->Append(data[i]);
+    }
+    if (cbPayee_ ->GetCount() < 1)
+    {
+        for (size_t i = 0; i < data.Count(); ++i)
+        {
+            cbPayee_ ->Append(data[i]);
+        }
     }
 #if wxCHECK_VERSION(2,9,0)
         cbPayee_->AutoComplete(data);
@@ -680,7 +690,32 @@ void mmTransDialog::OnDateChanged(wxDateEvent& event)
 void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
 {
     advancedToTransAmountSet_ = cAdvanced_->IsChecked();
-    toTextAmount_->SetValue(textAmount_->GetValue());
+
+    wxString amountStr = textAmount_->GetValue().Trim();
+    if (advancedToTransAmountSet_ && amountStr.IsEmpty())
+    {
+        amountStr = wxT("1");
+        transAmount_ = 1;
+        textAmount_->SetValue(amountStr);
+
+        mmex::formatCurrencyToDouble(amountStr, transAmount_);
+
+        if(toID_ > 0) {
+            double rateFrom = core_->accountList_.getAccountBaseCurrencyConvRate(accountID_);
+            double rateTo = core_->accountList_.getAccountBaseCurrencyConvRate(toID_);
+            double convToBaseFrom = rateFrom * transAmount_;
+            toTransAmount_ = convToBaseFrom / rateTo;
+        }
+    }
+    else 
+    {
+        toTransAmount_ = transAmount_;
+    }
+
+
+    mmex::formatDoubleToCurrencyEdit(toTransAmount_, amountStr);
+    toTextAmount_->SetValue(amountStr);
+
     SetTransferControls();
 }
 
@@ -857,11 +892,6 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         toAccountID = toID_;
         payeeID_ = -1;
 
-        //if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
-        //{
-        //    fromAccountID = toID_;
-        //    toAccountID = referenceAccountID_;
-        //}
     }
     else
     {
@@ -870,25 +900,6 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         pPayee->categoryId_ = categID_;
         pPayee->subcategoryId_ = subcategID_;
         pPayee->UpdateDb(core_->db_.get());
-    }
-
-    if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
-    {
-        // if we are adding a new record and the user did not touch advanced dialog
-        // we are going to use the transfer amount by calculating conversion rate.
-        // subsequent edits will not allow automatic update of the amount
-        if (!edit_)
-        {
-            if(toAccountID != -1) {
-                double rateFrom = core_->accountList_.getAccountBaseCurrencyConvRate(fromAccountID);
-                double rateTo = core_->accountList_.getAccountBaseCurrencyConvRate(toAccountID);
-
-                double convToBaseFrom = rateFrom * amount;
-                toTransAmount_ = convToBaseFrom / rateTo;
-            } else {
-                toTransAmount_ = amount;
-            }
-        }
     }
 
     wxString transNum = textNumber_->GetValue();
