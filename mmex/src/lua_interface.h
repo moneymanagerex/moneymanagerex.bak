@@ -52,7 +52,11 @@ private:
 
     static void ReportLuaError(lua_State* lua, wxString& error_str);
     static int GetLuaInteger(lua_State* lua);
+    static double GetLuaDouble(lua_State* lua);
     static wxString GetLuaString(lua_State* lua);
+    static bool OptionalParameter(lua_State* lua, int parameter_possition);
+    static void SetCurrencyFormat(lua_State* lua, double number, bool for_edit);
+
     /**************************************************************************
     Lua function extensions provided by c++ code:
 
@@ -71,8 +75,9 @@ private:
     static int cpp2lua_GetTextFromUser(lua_State* lua);
     static int cpp2lua_GetTranslation(lua_State* lua);
 	static int cpp2lua_GetSiteContent(lua_State* lua);
-    static int cpp2Lua_BaseCurrencyFormat(lua_State* lua);
 
+    static int cpp2Lua_BaseCurrencyFormat(lua_State* lua);
+    static int cpp2Lua_CurrencyFormat(lua_State* lua);
     static int cpp2lua_HTMLBuilder(lua_State* lua);
 };
 

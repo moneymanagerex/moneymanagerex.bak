@@ -59,13 +59,13 @@ public:
     int AddCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     void deleteCurrency(int currencyID);
     void updateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
-    //bool currencyExists(const wxString& currencyName);
-    int getCurrencyID(const wxString& currencyName) const;
+    int getCurrencyID(const wxString& currencyName, bool symbol = false) const;
     wxString getCurrencyName(int currencyID) const;
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
-    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName) const;
+    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName, bool symbol = false) const;
 
     void LoadBaseCurrencySettings(MMEX_IniSettings* info_table) const;
+    void LoadCurrencySettings(const wxString& currencySymbol) const;
     int getBaseCurrencySettings(MMEX_IniSettings* info_table) const;
     void setBaseCurrencySettings(MMEX_IniSettings* info_table, int currencyID);
 
@@ -79,6 +79,8 @@ public:
    
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
+
+    void SetCurrencySetting(boost::shared_ptr<mmCurrency> pCurrency) const;
 };
 
 #endif
