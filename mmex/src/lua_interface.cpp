@@ -25,6 +25,7 @@ TLuaInterface::TLuaInterface()
 {
     info_settings_ = new MMEX_IniSettings(static_db_ptr(), true);
     currency_list_ = new mmCurrencyList(static_db_ptr());
+    currency_list_->LoadCurrencies();
 
     lua_ = luaL_newstate();
     wxASSERT(lua_);
@@ -104,12 +105,31 @@ int TLuaInterface::GetLuaInteger(lua_State* lua)
     return iValue;
 }
 
+double TLuaInterface::GetLuaDouble(lua_State* lua)
+{
+    double number = lua_tonumber(lua, -1);
+    lua_pop(lua, 1);  // remove the value from the stack
+
+    return number;
+}
+
 wxString TLuaInterface::GetLuaString(lua_State* lua)
 {
     wxString sValue = wxString::FromUTF8(lua_tostring(lua, -1));
     lua_pop(lua, 1);  // remove the value from the stack
 
     return sValue;
+}
+
+bool TLuaInterface::OptionalParameter(lua_State* lua, int parameter_possition)
+{
+    bool has_option = lua_gettop(lua) > parameter_possition - 1;
+    if (has_option)
+    {
+        lua_pop(lua, 1);    // remove arbitary value from the stack.
+    }
+
+    return has_option;
 }
 
 /******************************************************************************
@@ -120,18 +140,20 @@ wxString TLuaInterface::GetLuaString(lua_State* lua)
  *****************************************************************************/
 void TLuaInterface::Open_MMEX_Library()
 {
-    lua_register(lua_, "_",                  cpp2lua_GetTranslation);
-    lua_register(lua_, "mmBell",             cpp2lua_Bell);
-    lua_register(lua_, "mmMessageBox",       cpp2lua_MessageBox);
-    lua_register(lua_, "mmGetSQLResultSet",  cpp2lua_GetSQLResultSet);
-    lua_register(lua_, "mmGetTableColumns",  cpp2lua_GetTableColumns);
-    lua_register(lua_, "mmGetSingleChoice",  cpp2lua_GetSingleChoice);
-    lua_register(lua_, "mmGetColumnChoice",  cpp2lua_GetColumnChoice);
-    lua_register(lua_, "mmGetTextFromUser",  cpp2lua_GetTextFromUser);
-    lua_register(lua_, "mmGetSiteContent",   cpp2lua_GetSiteContent);
-    lua_register(lua_, "mmBaseCurrencyFormat", cpp2Lua_BaseCurrencyFormat);
+    lua_register(lua_, "_",                 cpp2lua_GetTranslation);
+    lua_register(lua_, "mmBell",            cpp2lua_Bell);
+    lua_register(lua_, "mmMessageBox",      cpp2lua_MessageBox);
+    lua_register(lua_, "mmGetSQLResultSet", cpp2lua_GetSQLResultSet);
+    lua_register(lua_, "mmGetTableColumns", cpp2lua_GetTableColumns);
+    lua_register(lua_, "mmGetSingleChoice", cpp2lua_GetSingleChoice);
+    lua_register(lua_, "mmGetColumnChoice", cpp2lua_GetColumnChoice);
+    lua_register(lua_, "mmGetTextFromUser", cpp2lua_GetTextFromUser);
+    lua_register(lua_, "mmGetSiteContent",  cpp2lua_GetSiteContent);
 
-    lua_register(lua_, "mmHTMLBuilder",      cpp2lua_HTMLBuilder);
+    lua_register(lua_, "mmHTMLBuilder",     cpp2lua_HTMLBuilder);
+
+    lua_register(lua_, "mmCurrencyFormat",     cpp2Lua_CurrencyFormat);
+    lua_register(lua_, "mmBaseCurrencyFormat", cpp2Lua_BaseCurrencyFormat);
 }
 
 /******************************************************************************
@@ -435,18 +457,61 @@ int TLuaInterface::cpp2lua_GetSiteContent(lua_State* lua)
 }
 
 /******************************************************************************
- formatted_currency = mmBaseCurrencyFormat(value)
+ Private Helper functions set the currency options
+ *****************************************************************************/
+void TLuaInterface::SetCurrencyFormat(lua_State* lua, double number, bool for_edit)
+{
+    wxString number_string;
+
+    if (for_edit)
+    {
+        mmex::formatDoubleToCurrencyEdit(number, number_string);
+    }
+    else
+    {
+        mmex::formatDoubleToCurrency(number, number_string);
+    }
+  
+    lua_pushstring(lua, number_string.ToUTF8());
+}
+
+/******************************************************************************
+ formatted_currency = mmBaseCurrencyFormat(value[, for_edit])
  *****************************************************************************/
 int TLuaInterface::cpp2Lua_BaseCurrencyFormat(lua_State* lua)
 {
-    double number = lua_tonumber(lua, -1);
-    lua_pop(lua, 1);  // remove the value from the stack
+    bool for_edit = OptionalParameter(lua, 2);
+    double number = GetLuaDouble(lua);
 
     currency_list_->LoadBaseCurrencySettings(info_settings_);
-    wxString number_string;
-    mmex::formatDoubleToCurrencyEdit(number, number_string);
+    SetCurrencyFormat(lua, number, for_edit);
 
-    lua_pushstring(lua, number_string.ToUTF8());
+    return 1;
+}
+
+/******************************************************************************
+ formatted_currency = mmCurrencyFormat(currency_symbol, value[, for_edit])
+ *****************************************************************************/
+int TLuaInterface::cpp2Lua_CurrencyFormat(lua_State* lua)
+{
+    bool for_edit = OptionalParameter(lua, 3);
+    double number = GetLuaDouble(lua);
+
+    wxString currency_symbol = GetLuaString(lua).MakeUpper();
+    currency_list_->LoadCurrencySettings(currency_symbol);
+
+    boost::shared_ptr<mmCurrency> pCurrency = currency_list_->getCurrencySharedPtr(currency_symbol, true);
+    if (pCurrency)
+    {
+        number = number * pCurrency->baseConv_;
+    }
+    else
+    {
+        wxString lua_error = wxString::Format(_("Base conversion for currency symbol: %s has not been set."), currency_symbol.c_str());
+        ReportLuaError(lua, lua_error);
+    }
+
+    SetCurrencyFormat(lua, number, for_edit);
 
     return 1;
 }
