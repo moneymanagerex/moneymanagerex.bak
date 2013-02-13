@@ -173,7 +173,8 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
     logFile.SetExt(wxT("log"));
 
     fileviewer file_dlg(wxT(""), parent_);
-    bool canceledbyuser = file_dlg.Show() == wxID_CANCEL;
+    file_dlg.Show();
+    bool canceledbyuser = false; 
 
     if ( !fileName.IsEmpty() )
     {
