@@ -951,7 +951,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     {
         boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
         if (pBankTransaction->accountID_ != m_AccountID
-            && (pBankTransaction->toAccountID_ != m_AccountID 
+            && (pBankTransaction->toAccountID_ != m_AccountID
             || pBankTransaction->transType_ != wxT("Transfer")))
             continue;
 
@@ -1383,29 +1383,19 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
 {
     int evt = event.GetId();
     wxString status = wxT("");
-    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED)         status = wxT("R");
-    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED)   status = wxT("");
-    else if (evt == MENU_TREEPOPUP_MARKVOID)           status = wxT("V");
+    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED)             status = wxT("R");
+    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED)       status = wxT("");
+    else if (evt == MENU_TREEPOPUP_MARKVOID)               status = wxT("V");
     else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP) status = wxT("F");
-    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE)         status = wxT("D");
+    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE)          status = wxT("D");
     else wxASSERT(false);
 
     int transID = OnMarkTransactionDB(status);
 
-    if (m_cp->transFilterActive_
-        || (VIEW_TRANS_ALL_STR
-            + VIEW_TRANS_TODAY_STR
-            + VIEW_TRANS_CURRENT_MONTH_STR
-            + VIEW_TRANS_LAST_30_DAYS_STR
-            + VIEW_TRANS_LAST_90_DAYS_STR
-            + VIEW_TRANS_LAST_MONTH_STR
-            + VIEW_TRANS_LAST_3MONTHS_STR).Contains(m_cp->currentView_))
-    {
-        m_cp->m_listCtrlAccount->RefreshItems(m_selectedIndex, m_selectedIndex);
-        m_cp->setAccountSummary();
-    }
-    else
-        refreshVisualList(transID, topItemIndex_);
+    refreshVisualList(transID, topItemIndex_);
+    //TODO: blinkings may be avoided
+    //m_cp->m_listCtrlAccount->RefreshItems(m_selectedIndex, m_selectedIndex);
+    //m_cp->setAccountSummary();
 }
 //----------------------------------------------------------------------------
 
