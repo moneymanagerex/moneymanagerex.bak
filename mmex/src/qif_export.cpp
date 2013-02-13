@@ -435,7 +435,7 @@ void mmQIFDialog::mmExportQIF()
                         categ = wxString::Format(wxT("[%s]"), toAccount.c_str());
                         amount.Prepend(wxT('-'));
                     }
-                    payee = wxString::Format(wxT("TRXID:%ld"), pBankTransaction->transactionID());
+                    payee = wxString::Format(wxT("TRXID:%ld"), trans_id);
                 }
                 else if (type == wxT("Withdrawal"))
                     amount.Prepend(wxT('-'));
