@@ -160,9 +160,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
     int fromAccountID = core->accountList_.GetAccountId(acctName);
 
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
-    wxASSERT(pCurrencyPtr);
-
     wxString chooseExt;
     chooseExt << _("QIF Files ") << wxT("(*.qif)|*.qif;*.QIF|")
               << _("All Files ") << wxT("(*.*)|*.*");
@@ -174,7 +171,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
     fileviewer file_dlg(wxT(""), parent_);
     file_dlg.Show();
-    bool canceledbyuser = false; 
+    bool canceledbyuser = false;
 
     if ( !fileName.IsEmpty() )
     {
@@ -196,8 +193,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         int payeeID = -1, categID = -1, subCategID = -1, to_account_id = -1;
         double val = 0.0;
 
-        std::vector<int> QIF_transID;
-        core->db_.get()->Begin();
+        std::vector< boost::shared_ptr<mmBankTransaction> > vQIF_trxs;
 
         while(!input.Eof() && !canceledbyuser)
         {
@@ -463,8 +459,8 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 pTransaction->accountID_ = fromAccountID;
                 pTransaction->toAccountID_ = to_account_id;
                 pTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(payeeID);
-				//payee will be used for determin unique id of transfer transactions
-				pTransaction->payeeStr_ = payee;
+                //payee will be used for determin unique id of transfer transactions
+                pTransaction->payeeStr_ = payee;
                 pTransaction->transType_ = type;
                 pTransaction->amt_ = val;
                 pTransaction->status_ = status;
@@ -473,11 +469,8 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 pTransaction->category_ = core->categoryList_.GetCategorySharedPtr(categID, subCategID);
                 pTransaction->date_ = dtdt;
                 pTransaction->toAmt_ = val;
-                pTransaction->updateAllData(core, fromAccountID, pCurrencyPtr);
 
-                //TODO: it's should be moved from here
-                int transID = core->bTransactionList_.addTransaction(core, pTransaction);
-                QIF_transID.push_back(transID);
+                vQIF_trxs.push_back(pTransaction);
 
                 numImported++;
                 payee.clear();
@@ -490,7 +483,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 val = 0.0;
                 transNum.clear();
                 convDate = wxDateTime::Now().FormatISODate();
-                //continue;
             }
         }
 
@@ -506,30 +498,37 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         // Since all database transactions are only in memory,
         if (!canceledbyuser)
         {
-            // we need to save them to the database.
+            core->db_.get()->Begin();
+
+            std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = vQIF_trxs;
+
+            //TODO: Update transfer transactions toAmount
+
+            for (unsigned int index = 0; index < vQIF_trxs.size(); index++)
+            {
+                fromAccountID = refTrans[index]->accountID_;
+                boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+                wxASSERT(pCurrencyPtr);
+                //wxSafeShowMessage(refTrans[index]->payeeStr_, refTrans[index]->transType_);
+                refTrans[index]->updateAllData(core, fromAccountID, pCurrencyPtr);
+                int transID = core->bTransactionList_.addTransaction(core, refTrans[index]);
+            }
+
             core->db_.get()->Commit();
-            sMsg = wxString()<<  _("Transactions saved to database in account: ") << acctName;
+            sMsg = wxString::Format(_("Transactions saved to database in account: %s"), acctName.c_str());
             log << endl << sMsg << endl;
         }
         else
         {
-            // we need to remove the transactions from the transaction list
-            while (numImported > 0)
-            {
-                numImported --;
-                int transID = QIF_transID[numImported];
-                core->bTransactionList_.removeTransaction(fromAccountID,transID);
-            }
-            // and discard the database changes.
-            core->db_.get()->Rollback();
-            sMsg = wxString()<< _("Imported transactions discarded by user!");
-            log  << endl << sMsg << endl;
+            core->db_.get()->Commit();
+            sMsg = wxString::Format(_("Transactions saved to database in account: %s"), acctName.c_str());
+            log << endl << sMsg << endl;
         }
 
-		wxMessageDialog(parent_, sMsg, _("QIF Import"), wxOK|wxICON_WARNING).ShowModal();
+        wxMessageDialog(parent_, sMsg, _("QIF Import"), wxOK|wxICON_WARNING).ShowModal();
         outputLog.Close();
         //clear the vector to avoid memory leak - done at same level created.
-        QIF_transID.clear();
+        vQIF_trxs.clear();
     }
 
     return fromAccountID;
