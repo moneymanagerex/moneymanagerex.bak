@@ -380,7 +380,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                     }
                     else
                     {
-                        sMsg = wxString::Format(_("Account %s not found\n"), to_account_name.c_str());
+                        sMsg = wxString::Format(_("Account %s not found"), to_account_name.c_str());
                         log << sMsg << endl;
                         file_dlg.textCtrl_->AppendText(wxString()<< sMsg << wxT("\n"));
                         payee = to_account_name;
@@ -463,6 +463,8 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 pTransaction->accountID_ = fromAccountID;
                 pTransaction->toAccountID_ = to_account_id;
                 pTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(payeeID);
+				//payee will be used for determin unique id of transfer transactions
+				pTransaction->payeeStr_ = payee;
                 pTransaction->transType_ = type;
                 pTransaction->amt_ = val;
                 pTransaction->status_ = status;
@@ -492,16 +494,15 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
             }
         }
 
-        sMsg = wxString() << _("Transactions imported from QIF: ") << numImported;
+        sMsg = wxString() << wxString::Format(_("Transactions imported from QIF: %ld"), numImported);
         log << sMsg << endl;
-        file_dlg.textCtrl_->AppendText(wxString()<< sMsg << wxT("\n"));
+        file_dlg.textCtrl_->AppendText(sMsg << wxT("\n"));
 
-        sMsg  = wxString() << _("Log file written to : ") << logFile.GetFullPath() << wxT ("\n\n")
+        sMsg  = wxString() << wxString::Format(_("Log file written to : %s \n"), logFile.GetFullPath().c_str())
               << _("Please confirm saving...");
         file_dlg.textCtrl_->AppendText(wxString()<< sMsg << wxT("\n"));
 
-        canceledbyuser = wxMessageDialog(parent_, _("Please confirm saving...")
-            , _("QIF Import"), wxYES_NO|wxYES_DEFAULT|wxICON_QUESTION).ShowModal() == wxID_NO;
+        canceledbyuser = file_dlg.ShowModal() == wxID_CANCEL;
         // Since all database transactions are only in memory,
         if (!canceledbyuser)
         {
@@ -509,7 +510,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
             core->db_.get()->Commit();
             sMsg = wxString()<<  _("Transactions saved to database in account: ") << acctName;
             log << endl << sMsg << endl;
-            file_dlg.textCtrl_->AppendText(wxString()<< sMsg << wxT("\n"));
         }
         else
         {
@@ -524,13 +524,12 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
             core->db_.get()->Rollback();
             sMsg = wxString()<< _("Imported transactions discarded by user!");
             log  << endl << sMsg << endl;
-            file_dlg.textCtrl_->AppendText(wxString()<< sMsg << wxT("\n"));
         }
 
+		wxMessageDialog(parent_, sMsg, _("QIF Import"), wxOK|wxICON_WARNING).ShowModal();
         outputLog.Close();
         //clear the vector to avoid memory leak - done at same level created.
         QIF_transID.clear();
-        file_dlg.ShowModal();
     }
 
     return fromAccountID;
