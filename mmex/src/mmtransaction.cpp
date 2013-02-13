@@ -299,29 +299,24 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
 
 double mmBankTransaction::value(int accountID) const
 {
-   double balance = 0.0;
-   if (transType_ == TRANS_TYPE_DEPOSIT_STR)
-   {
-      balance = amt_;
-   }
-   else if (transType_== TRANS_TYPE_WITHDRAWAL_STR)
-   {
-      balance -= amt_;
-   }
-   else if (transType_ == TRANS_TYPE_TRANSFER_STR)
-   {
+    double balance = 0.0;
+    if (transType_ == TRANS_TYPE_DEPOSIT_STR)
+       balance = amt_;
+    else if (transType_== TRANS_TYPE_WITHDRAWAL_STR)
+       balance -= amt_;
+    else if (transType_ == TRANS_TYPE_TRANSFER_STR)
+    {
+      //Bug fix for brocken transactions (as result of wrong import) if account and to account the same
+        if (accountID_ != toAccountID_)
+        {
+            if (accountID_ == accountID)
+                 balance -= amt_;
+            else if (toAccountID_ == accountID)
+                 balance += toAmt_;
+        }
+    }
 
-      if (accountID_ == accountID)
-      {
-         balance -= amt_;
-      }
-      else if (toAccountID_ == accountID)
-      {
-         balance += toAmt_;
-      }
-   }
-
-   return balance;
+    return balance;
 }
 void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits) const
 {
