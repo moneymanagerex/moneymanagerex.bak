@@ -3466,11 +3466,14 @@ void mmGUIFrame::OnPrintPageReport(wxCommandEvent& WXUNUSED(event))
 {
     if (!printer_) return;
 
-    mmReportsPanel* rp = dynamic_cast<mmReportsPanel*>(panelCurrent_);
-    mmHelpPanel* hp = dynamic_cast<mmHelpPanel*>(panelCurrent_);
-    if (rp)
-        printer_ ->PrintText(rp->getReportText());
-    else if (hp)
+    mmReportsPanel* report_panel = dynamic_cast<mmReportsPanel*>(panelCurrent_);
+    mmHomePagePanel* home_page = dynamic_cast<mmHomePagePanel*>(panelCurrent_);
+    mmHelpPanel* help_page = dynamic_cast<mmHelpPanel*>(panelCurrent_);
+    if (report_panel)
+        printer_ ->PrintText(report_panel->getReportText());
+    else if (home_page && activeHomePage_)
+        printer_ ->PrintText(home_page->GetHomePageText());
+    else if (help_page)
         printer_ ->PrintFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
 }
 //----------------------------------------------------------------------------
@@ -3479,11 +3482,14 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 {
     if (!printer_) return;
 
-    mmReportsPanel* rp = dynamic_cast<mmReportsPanel*>(panelCurrent_);
-    mmHelpPanel* hp = dynamic_cast<mmHelpPanel*>(panelCurrent_);
-    if (rp)
-        printer_ ->PreviewText(rp->getReportText());
-    else if (hp)
+    mmReportsPanel* report_panel = dynamic_cast<mmReportsPanel*>(panelCurrent_);
+    mmHomePagePanel* home_page = dynamic_cast<mmHomePagePanel*>(panelCurrent_);
+    mmHelpPanel* help_page = dynamic_cast<mmHelpPanel*>(panelCurrent_);
+    if (report_panel)
+        printer_ ->PreviewText(report_panel->getReportText());
+    else if (home_page && activeHomePage_)
+        printer_ ->PreviewText(home_page->GetHomePageText());
+    else if (help_page)
         printer_ ->PreviewFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
 }
 //----------------------------------------------------------------------------

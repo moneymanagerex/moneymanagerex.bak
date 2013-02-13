@@ -48,13 +48,20 @@ mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
 , frame_(frame)
 , topCategories_(topCategories)
 {
-    frame_->setHomePageActive();
     Create(parent, winid, pos, size, style, name);
+    frame_->setHomePageActive();
+    frame_->menuPrintingEnable(true);
 }
 
 mmHomePagePanel::~mmHomePagePanel()
 {
     frame_->setHomePageActive(false);
+    frame_->menuPrintingEnable(false);
+}
+
+wxString mmHomePagePanel::GetHomePageText()
+{
+    return html_text_;
 }
 
 bool mmHomePagePanel::Create( wxWindow *parent,
@@ -779,8 +786,8 @@ void mmHomePagePanel::updateAccounts()
     hb.endTable();
     hb.end();
 
-    wxString htmlText = hb.getHTMLText();
-    htmlWindow_->SetPage(htmlText);
+    html_text_ = hb.getHTMLText();
+    htmlWindow_->SetPage(html_text_);
 }
 
 void mmHomePagePanel::CreateControls()

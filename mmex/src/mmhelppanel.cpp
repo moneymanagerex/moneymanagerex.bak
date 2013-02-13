@@ -32,28 +32,17 @@ BEGIN_EVENT_TABLE(mmHelpPanel, wxPanel)
     EVT_BUTTON(wxID_FORWARD, mmHelpPanel::OnHelpPageForward)
 END_EVENT_TABLE()
 
-mmHelpPanel::mmHelpPanel( mmGUIFrame* frame, wxSQLite3Database* db, wxWindow *parent,
-            wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
-            const wxString& name )
+mmHelpPanel::mmHelpPanel(mmGUIFrame* frame, wxSQLite3Database* db,
+    wxWindow *parent, wxWindowID winid,
+    const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+: db_(db)
+, frame_(frame)
 {
-    db_ = db;
-    frame_ = frame;
     Create(parent, winid, pos, size, style, name);
 }
 
-wxString mmHelpPanel::getReportText()
-{
-    return htmlWindow_->ToText();
-}
-
-mmHelpPanel::~mmHelpPanel()
-{
-
-}
-
 bool mmHelpPanel::Create( wxWindow *parent, wxWindowID winid,
-            const wxPoint& pos, const wxSize& size, long style,
-            const wxString& name  )
+    const wxPoint& pos, const wxSize& size, long style, const wxString& name)
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);

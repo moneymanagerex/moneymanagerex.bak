@@ -41,7 +41,6 @@ public:
     : core_(core)
     {}
 
-    wxSQLite3Database* db_; //TODO remove
     mmCoreDB* core_;
 };
 //----------------------------------------------------------------------------
