@@ -410,7 +410,7 @@ void mmQIFDialog::mmExportQIF()
                 wxString toamount;
 
                 wxString transNum = pBankTransaction->transNum_;
-                const wxString categ = pBankTransaction->fullCatStr_;
+                wxString categ = pBankTransaction->fullCatStr_;
                 wxString notes = (pBankTransaction->notes_);
                 notes.Replace(wxT("''"), wxT("'"));
                 notes.Replace(wxT("\n"), wxT(" "));
@@ -427,14 +427,15 @@ void mmQIFDialog::mmExportQIF()
                     wxString amount_temp = amount;
 
                     if (tAccountID == fromAccountID) {
-                        payee = wxString::Format(wxT("[%s]"), fromAccount.c_str());
+                        categ = wxString::Format(wxT("[%s]"), fromAccount.c_str());
                         amount = toamount;
                         toamount = amount_temp;
                         toamount.Prepend(wxT('-'));
                     } else if (fAccountID == fromAccountID) {
-                        payee = wxString::Format(wxT("[%s]"), toAccount.c_str());
+                        categ = wxString::Format(wxT("[%s]"), toAccount.c_str());
                         amount.Prepend(wxT('-'));
                     }
+                    payee = wxString::Format(wxT("TRXID:%ld"), pBankTransaction->transactionID());
                 }
                 else if (type == wxT("Withdrawal"))
                     amount.Prepend(wxT('-'));
@@ -443,14 +444,11 @@ void mmQIFDialog::mmExportQIF()
                 {
                     buffer_qif << wxT('D') << dateString << wxT("\n");
                     buffer_qif << wxT('T') << amount << wxT("\n");
-                    if (type != wxT("Transfer"))
-                        buffer_qif << wxT('P') << payee << wxT("\n");
+					buffer_qif << wxT('P') << payee << wxT("\n");
                     if (!transNum.IsEmpty())
                         buffer_qif << wxT('N') << transNum << wxT("\n");
-                    //Category or Transfer
-                    wxString l = (type == wxT("Transfer") ? payee : categ);
-                    if (!l.IsEmpty())
-                        buffer_qif << wxT('L') << l << wxT("\n");
+                    if (!categ.IsEmpty())
+                        buffer_qif << wxT('L') << categ << wxT("\n");
                     if (!notes.IsEmpty())
                         buffer_qif << wxT('M') << notes << wxT("\n");
                 }
