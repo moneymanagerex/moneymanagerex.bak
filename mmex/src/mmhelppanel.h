@@ -33,21 +33,18 @@ class mmHelpPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmHelpPanel( mmGUIFrame* frame, wxSQLite3Database* db_, 
+    mmHelpPanel( mmGUIFrame* frame, wxSQLite3Database* db, 
             wxWindow *parent,
             wxWindowID winid = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,
             const wxSize& size = wxDefaultSize,
             long style = wxTAB_TRAVERSAL | wxNO_BORDER,
             const wxString& name = wxPanelNameStr );
-    ~mmHelpPanel();
-
-    /// Overrides the base class method to return a report from a predefined file.
-    wxString getReportText();
-
+    
 private:
     wxHtmlWindow* htmlWindow_;
     mmGUIFrame* frame_;
+    wxSQLite3Database* db_;
 
     bool Create( wxWindow *parent, wxWindowID winid,
                 const wxPoint& pos = wxDefaultPosition,

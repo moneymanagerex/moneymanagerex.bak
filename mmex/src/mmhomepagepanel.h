@@ -71,12 +71,16 @@ public:
         const wxString& name = wxPanelNameStr);
       
     ~mmHomePagePanel();
+
+    wxString GetHomePageText();
+
 private:
     void CreateControls();   
     void updateAccounts();
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;
     wxString topCategories_;
+    wxString html_text_;
 
     void displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTitle );
     void displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle );

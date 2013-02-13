@@ -214,6 +214,7 @@ public:
     bool setNavTreeSection( wxString sectionName);
     void SetCheckingAccountPageInactive();
     void SetBudgetingPageInactive();
+    void menuPrintingEnable(bool enable);
 
 private:
     /* handles to the DB Abstraction */
@@ -295,7 +296,6 @@ private:
     void createControls();
     void saveSettings();
     void menuEnableItems(bool enable);
-    void menuPrintingEnable(bool enable);
     void updateNavTreeControl(bool expandTermAccounts = false);
     void showTreePopupMenu(wxTreeItemId id, const wxPoint& pt);
     void showBeginAppDialog(bool fromScratch = false);
