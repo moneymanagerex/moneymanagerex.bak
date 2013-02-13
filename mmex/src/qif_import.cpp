@@ -144,7 +144,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
     if (!warning_message()) return -1;
 
-    wxString acctName, sMsg;
+    wxString sUserProvidedName, acctName, sMsg;
     wxArrayString accounts_name = core->accountList_.getAccountsName();
 
     if (destinationAccountName == wxEmptyString)
@@ -153,11 +153,12 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         if (scd.ShowModal() != wxID_OK)
             return -1;
 
-        acctName = scd.GetStringSelection();
+        sUserProvidedName = scd.GetStringSelection();
     }
     else
-        acctName = destinationAccountName;
+        sUserProvidedName = destinationAccountName;
 
+    acctName = sUserProvidedName;
     int fromAccountID = core->accountList_.GetAccountId(acctName);
 
     wxString chooseExt;
@@ -232,8 +233,15 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                         int i = accountInfoType(readLine);
                         if (i == Name)
                         {
+                            if (core->accountList_.GetAccountId(getLineData(readLine)) > -1)
+                                acctName = getLineData(readLine);
+                            else
+                                acctName = sUserProvidedName;
+
+                            fromAccountID = core->accountList_.GetAccountId(acctName);
+
                             sMsg = wxString::Format(_("Line: %ld"), numLines) << wxT(" : ")
-                                << wxString::Format(_("Account name: %s"), getLineData(readLine).c_str());
+                                << wxString::Format(_("Account name: %s"), acctName.c_str());
                             log << sMsg << endl;
                             file_dlg.textCtrl_->AppendText(wxString()<< sMsg << wxT("\n"));
                             continue;
@@ -438,19 +446,21 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 }
 
                 if (!bValid) sValid = wxT("NO"); else sValid = wxT("OK");
-                file_dlg.textCtrl_->AppendText(wxString::Format(
+                sMsg = wxString::Format(
                     wxT("Line:%ld Trx:%ld %s D:%s Acc:%s Payee:%s%s Type:%s Amt:%s Cat:%s \n")
                     , trxNumLines
                     , numImported + 1
                     , sValid.c_str()
                     , dtdt.FormatISODate().c_str()
-                    , core->accountList_.GetAccountName(fromAccountID).c_str()
+                    , acctName.c_str()
                     , core->accountList_.GetAccountName(to_account_id).c_str()
                     , core->payeeList_.GetPayeeName(payeeID).c_str()
                     , type.Left(1).c_str()
                     , (wxString()<<val).c_str()
                     , (core->categoryList_.GetFullCategoryString(categID, subCategID)).c_str()
-                    ));
+                    );
+                file_dlg.textCtrl_->AppendText(sMsg);
+                log << sMsg << endl;
 
                 trxNumLines = numLines - 1;
                 if (!bValid) continue;
@@ -459,7 +469,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 pTransaction->accountID_ = fromAccountID;
                 pTransaction->toAccountID_ = to_account_id;
                 pTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(payeeID);
-                //payee will be used for determin unique id of transfer transactions
+                //payee will be used for determine unique id of transfer transactions
                 pTransaction->payeeStr_ = payee;
                 pTransaction->transType_ = type;
                 pTransaction->amt_ = val;
@@ -470,9 +480,30 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 pTransaction->date_ = dtdt;
                 pTransaction->toAmt_ = val;
 
-                vQIF_trxs.push_back(pTransaction);
+                //For any transfer transaction always mirrored transaction present
+                //Just take alternate amount and skip it
+                if (type == TRANS_TYPE_TRANSFER_STR)
+                {
+                    std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = vQIF_trxs;
+                    for (unsigned int index = 0; index < vQIF_trxs.size(); index++)
+                    {
+                        if (refTrans[index]->transType_ != TRANS_TYPE_TRANSFER_STR) continue;
+                        if (refTrans[index]->date_!= dtdt) continue;
+                        if (refTrans[index]->payeeStr_!= payee) continue;
+                        if (refTrans[index]->accountID_!= to_account_id) continue;
+                        sMsg = wxString::Format(wxT("%f -> %f \n"),refTrans[index]->toAmt_ ,val);
+                        refTrans[index]->toAmt_ = val;
+                        bValid = false;
+                        file_dlg.textCtrl_->AppendText(sMsg);
+                        log << sMsg << endl;
+                    }
+                }
 
-                numImported++;
+                if (bValid)
+                {
+                    vQIF_trxs.push_back(pTransaction);
+                    numImported++;
+                }
                 payee.clear();
                 type.clear();
                 amount.clear();
@@ -520,8 +551,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         }
         else
         {
-            core->db_.get()->Commit();
-            sMsg = wxString::Format(_("Transactions saved to database in account: %s"), acctName.c_str());
+            sMsg = _("Imported transactions discarded by user!");
             log << endl << sMsg << endl;
         }
 
