@@ -186,6 +186,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
         wxString readLine;
         int numLines = 0;
+        int trxNumLines = 1;
         int numImported = 0;
 
         wxString dt = wxDateTime::Now().FormatISODate();
@@ -200,7 +201,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
         while(!input.Eof() && !canceledbyuser)
         {
-
             readLine = getFileLine(text, numLines);
             if (readLine.Length() == 0)
                 continue;
@@ -365,7 +365,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                     bValid = false;
                 }
 
-
                 to_account_id = -1;
 
                 if (categ.Left(1).Contains(wxT("[")) && categ.Right(1).Contains(wxT("]")))
@@ -413,8 +412,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                         subCategID = -1;
                 }
 
-
-
+                //TODO: Is it possible now?
                 if (to_account_id == -1 && type == TRANS_TYPE_TRANSFER_STR)
                 {
                     sMsg = wxString(_("Account: ")) << to_account_name << wxT(" ") << _("Unknown");
@@ -422,6 +420,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                     file_dlg.textCtrl_->AppendText(sMsg << wxT("\n"));
                     //FIXME: Transfer transaction with sane to and from account id will be created
                     to_account_id = fromAccountID;
+                    status = wxT("V");
                 }
 
                 if (type != TRANS_TYPE_TRANSFER_STR)
@@ -444,7 +443,8 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
                 if (!bValid) sValid = wxT("NO"); else sValid = wxT("OK");
                 file_dlg.textCtrl_->AppendText(wxString::Format(
-                    wxT("Trx:%ld %s D:%s Acc:%s Payee:%s%s Type:%s Amt:%s Cat:%s \n")
+                    wxT("Line:%ld Trx:%ld %s D:%s Acc:%s Payee:%s%s Type:%s Amt:%s Cat:%s \n")
+                    , trxNumLines
                     , numImported + 1
                     , sValid.c_str()
                     , dtdt.FormatISODate().c_str()
@@ -456,6 +456,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                     , (core->categoryList_.GetFullCategoryString(categID, subCategID)).c_str()
                     ));
 
+                trxNumLines = numLines - 1;
                 if (!bValid) continue;
 
                 boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
