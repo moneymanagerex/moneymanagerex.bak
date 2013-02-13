@@ -18,7 +18,6 @@
 #include "constants.h"
 #include "univcsvdialog.h"
 #include "util.h"
-#include "fileviewerdialog.h"
 #include "paths.h"
 #include "platfdep.h"
 
@@ -711,9 +710,6 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
             msg << wxT ("\n\n");
             msg << wxString::Format(_("Log file written to : %s"), logFile.GetFullPath().c_str());
             msg << wxT ("\n\n");
-
-            // Display results to the user so user can decide weather to save or abort the loading
-            //fileviewer(logFile.GetFullPath(), this).ShowModal();
 
             wxString confirmMsg = msg + _("Please confirm saving...");
             if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing CSV"), wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)

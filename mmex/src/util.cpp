@@ -19,7 +19,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "guiid.h"
-#include "fileviewerdialog.h"
 #include "mmex.h"
 #include "univcsvdialog.h"
 #include "paths.h"
