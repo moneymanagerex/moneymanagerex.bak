@@ -38,13 +38,6 @@ namespace
 } // namespace
 
 /*******************************************************/
-BEGIN_EVENT_TABLE(mmAssetsPanel, wxPanel)
-    EVT_BUTTON(wxID_NEW, mmAssetsPanel::OnNewAsset)
-    EVT_BUTTON(wxID_EDIT, mmAssetsPanel::OnEditAsset)
-    EVT_BUTTON(wxID_DELETE, mmAssetsPanel::OnDeleteAsset)
-    EVT_MENU(wxID_ANY, mmAssetsPanel::OnViewPopupSelected)
-END_EVENT_TABLE()
-/*******************************************************/
 BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
     EVT_LIST_ITEM_ACTIVATED(IDC_PANEL_STOCKS_LISTCTRL,   assetsListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(IDC_PANEL_STOCKS_LISTCTRL, assetsListCtrl::OnItemRightClick)
@@ -58,6 +51,180 @@ BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
     EVT_MENU(MENU_TREEPOPUP_DELETE, assetsListCtrl::OnDeleteAsset)
 
     EVT_LIST_KEY_DOWN(wxID_ANY, assetsListCtrl::OnListKeyDown)
+END_EVENT_TABLE()
+/*******************************************************/
+
+void assetsListCtrl::OnItemResize(wxListEvent& event)
+{
+    int i = event.GetColumn();
+    int width = cp_->GetListCtrlWidth(i);
+    cp_->core_->iniSettings_->SetIntSetting(wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), width);
+}
+
+void assetsListCtrl::InitVariables()
+{
+    m_selected_col = 0;
+    m_asc = true;
+    cp_->SetFilter(wxT(" 'Property','Automobile','Household Object','Art','Jewellery','Cash','Other' "));
+}
+
+void assetsListCtrl::OnItemRightClick(wxListEvent& event)
+{
+    selectedIndex_ = event.GetIndex();
+
+    wxMenu menu;
+    menu.Append(MENU_TREEPOPUP_NEW, _("&New Asset"));
+    menu.AppendSeparator();
+    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Asset"));
+    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Asset"));
+    PopupMenu(&menu, event.GetPoint());
+}
+
+wxString assetsListCtrl::OnGetItemText(long item, long column) const
+{
+    return cp_->getItem(item, column);
+}
+
+void assetsListCtrl::OnListItemSelected(wxListEvent& event)
+{
+    selectedIndex_ = event.GetIndex();
+    cp_->updateExtraAssetData(selectedIndex_);
+}
+
+void assetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
+{
+    selectedIndex_ = -1;
+    cp_->updateExtraAssetData(selectedIndex_);
+}
+
+int assetsListCtrl::OnGetItemImage(long item) const
+{
+    int image_id = 0;
+    size_t size = sizeof(ASSET_TYPE)/sizeof(wxString);
+    for(size_t i = 0; i < size; ++i)
+    {
+        if (ASSET_TYPE[i] == OnGetItemText(item, COL_TYPE))
+            image_id = i;
+    }
+
+    return item;
+}
+
+wxListItemAttr* assetsListCtrl::OnGetItemAttr(long item) const
+{
+    /* Returns the alternating background pattern */
+    return item % 2 ? (wxListItemAttr *)&m_attr2 : (wxListItemAttr *)&m_attr1;
+}
+
+void assetsListCtrl::OnListKeyDown(wxListEvent& event)
+{
+    if (event.GetKeyCode() == WXK_DELETE)
+    {
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
+        OnDeleteAsset(evt);
+    }
+    else
+    {
+        event.Skip();
+    }
+}
+
+void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
+{
+    mmAssetDialog dlg(this, cp_->core_, NULL, false);
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        doRefreshItems(dlg.GetAssetID());
+    }
+}
+
+void assetsListCtrl::doRefreshItems(int trx_id)
+{
+    int selectedIndex = cp_->initVirtualListControl(trx_id, m_selected_col, m_asc);
+
+    long cnt = static_cast<long>(cp_->getTrans().size());
+
+    if (selectedIndex >= cnt || selectedIndex < 0)
+        selectedIndex = m_asc ? cnt - 1 : 0;
+
+    if (cnt>0)
+        RefreshItems(0, cnt > 0 ? --cnt : 0);
+    else
+        selectedIndex = -1;
+
+    if (selectedIndex >= 0 && cnt>0)
+    {
+        SetItemState(selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        SetItemState(selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        EnsureVisible(selectedIndex);
+    }
+    selectedIndex_ = selectedIndex;
+}
+
+void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ == -1)    return;
+    if (cp_->getTrans().empty()) return;
+
+    wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"),
+        _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+    if (msgDlg.ShowModal() == wxID_YES)
+    {
+        mmDBWrapper::deleteAsset(cp_->core_->db_.get(), cp_->getTrans()[selectedIndex_]->id_);
+        DeleteItem(selectedIndex_);
+        cp_->initVirtualListControl(selectedIndex_, m_selected_col, m_asc);
+        selectedIndex_ = -1;
+        cp_->updateExtraAssetData(selectedIndex_);
+    }
+}
+
+void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ < 0)     return;
+
+    wxListEvent evt(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, IDC_PANEL_STOCKS_LISTCTRL);
+    AddPendingEvent(evt);
+}
+
+void assetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
+{
+    //selectedIndex_ = event.GetIndex();
+    mmAssetDialog dlg(this, cp_->core_, cp_->getTrans()[selectedIndex_], true);
+
+    if (dlg.ShowModal() == wxID_OK)
+        doRefreshItems(dlg.GetAssetID());
+
+    cp_->updateExtraAssetData(selectedIndex_);
+}
+
+void assetsListCtrl::OnColClick(wxListEvent& event)
+{
+    if(0 > event.GetColumn() || event.GetColumn() >= COL_MAX) return;
+
+    if (m_selected_col == event.GetColumn()) m_asc = !m_asc;
+
+    wxListItem item;
+    item.SetMask(wxLIST_MASK_IMAGE);
+    item.SetImage(-1);
+    cp_->SetListCtrlColumn(m_selected_col, item);
+
+    m_selected_col = event.GetColumn();
+
+    item.SetImage(m_asc ? 8 : 7);
+    SetColumn(m_selected_col, item);
+
+    int trx_id = -1;
+    if (selectedIndex_>=0) trx_id = cp_->getTrans()[selectedIndex_]->id_;
+
+    doRefreshItems(trx_id);
+}
+
+/*******************************************************/
+BEGIN_EVENT_TABLE(mmAssetsPanel, wxPanel)
+    EVT_BUTTON(wxID_NEW, mmAssetsPanel::OnNewAsset)
+    EVT_BUTTON(wxID_EDIT, mmAssetsPanel::OnEditAsset)
+    EVT_BUTTON(wxID_DELETE, mmAssetsPanel::OnDeleteAsset)
+    EVT_MENU(wxID_ANY, mmAssetsPanel::OnViewPopupSelected)
 END_EVENT_TABLE()
 /*******************************************************/
 
@@ -91,20 +258,6 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
 
 mmAssetsPanel::~mmAssetsPanel()
 {
-}
-
-void assetsListCtrl::OnItemResize(wxListEvent& event)
-{
-    int i = event.GetColumn();
-    int width = cp_->GetListCtrlWidth(i);
-    cp_->core_->iniSettings_->SetIntSetting(wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), width);
-}
-
-void assetsListCtrl::InitVariables()
-{
-    m_selected_col = 0;
-    m_asc = true;
-    cp_->SetFilter(wxT(" 'Property','Automobile','Household Object','Art','Jewellery','Cash','Other' "));
 }
 
 void mmAssetsPanel::CreateControls()
@@ -320,20 +473,6 @@ void mmAssetsPanel::OnEditAsset(wxCommandEvent& event)
     m_listCtrlAssets->OnEditAsset(event);
 }
 
-/*******************************************************/
-
-void assetsListCtrl::OnItemRightClick(wxListEvent& event)
-{
-    selectedIndex_ = event.GetIndex();
-
-    wxMenu menu;
-    menu.Append(MENU_TREEPOPUP_NEW, _("&New Asset"));
-    menu.AppendSeparator();
-    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Asset"));
-    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Asset"));
-    PopupMenu(&menu, event.GetPoint());
-}
-
 wxString mmAssetsPanel::getItem(long item, long column)
 {
     if (column == COL_NAME)  return m_trans[item]->assetName_;
@@ -344,24 +483,6 @@ wxString mmAssetsPanel::getItem(long item, long column)
 
     return wxGetEmptyString();
 }
-
-wxString assetsListCtrl::OnGetItemText(long item, long column) const
-{
-    return cp_->getItem(item, column);
-}
-
-void assetsListCtrl::OnListItemSelected(wxListEvent& event)
-{
-    selectedIndex_ = event.GetIndex();
-    cp_->updateExtraAssetData(selectedIndex_);
-}
-
-void assetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
-{
-    selectedIndex_ = -1;
-    cp_->updateExtraAssetData(selectedIndex_);
-}
-//----------------------------------------------------------------------------
 
 void mmAssetsPanel::updateExtraAssetData(int selIndex)
 {
@@ -396,128 +517,6 @@ void mmAssetsPanel::enableEditDeleteButtons(bool enable)
     btn = static_cast<wxButton*>(FindWindow(wxID_DELETE));
     wxASSERT(btn);
     btn->Enable(enable);
-}
-
-int assetsListCtrl::OnGetItemImage(long item) const
-{
-    int image_id = 0;
-    size_t size = sizeof(ASSET_TYPE)/sizeof(wxString);
-    for(size_t i = 0; i < size; ++i)
-    {
-        if (ASSET_TYPE[i] == OnGetItemText(item, COL_TYPE))
-            image_id = i;
-    }
-
-    return item;
-}
-
-wxListItemAttr* assetsListCtrl::OnGetItemAttr(long item) const
-{
-    /* Returns the alternating background pattern */
-    return item % 2 ? (wxListItemAttr *)&m_attr2 : (wxListItemAttr *)&m_attr1;
-}
-
-void assetsListCtrl::OnListKeyDown(wxListEvent& event)
-{
-    if (event.GetKeyCode() == WXK_DELETE)
-    {
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
-        OnDeleteAsset(evt);
-    }
-    else
-    {
-        event.Skip();
-    }
-}
-
-void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
-{
-    mmAssetDialog dlg(this, cp_->core_, NULL, false);
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        doRefreshItems(dlg.GetAssetID());
-    }
-}
-
-void assetsListCtrl::doRefreshItems(int trx_id)
-{
-    int selectedIndex = cp_->initVirtualListControl(trx_id, m_selected_col, m_asc);
-
-    long cnt = static_cast<long>(cp_->getTrans().size());
-
-    if (selectedIndex >= cnt || selectedIndex < 0)
-        selectedIndex = m_asc ? cnt - 1 : 0;
-
-    if (cnt>0)
-        RefreshItems(0, cnt > 0 ? --cnt : 0);
-    else
-        selectedIndex = -1;
-
-    if (selectedIndex >= 0 && cnt>0)
-    {
-        SetItemState(selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-        SetItemState(selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        EnsureVisible(selectedIndex);
-    }
-    selectedIndex_ = selectedIndex;
-}
-
-void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
-{
-    if (selectedIndex_ == -1)    return;
-    if (cp_->getTrans().empty()) return;
-
-    wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"),
-        _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
-    if (msgDlg.ShowModal() == wxID_YES)
-    {
-        mmDBWrapper::deleteAsset(cp_->core_->db_.get(), cp_->getTrans()[selectedIndex_]->id_);
-        DeleteItem(selectedIndex_);
-        cp_->initVirtualListControl(selectedIndex_, m_selected_col, m_asc);
-        selectedIndex_ = -1;
-        cp_->updateExtraAssetData(selectedIndex_);
-    }
-}
-
-void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
-{
-    if (selectedIndex_ < 0)     return;
-
-    wxListEvent evt(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, IDC_PANEL_STOCKS_LISTCTRL);
-    AddPendingEvent(evt);
-}
-
-void assetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
-{
-    //selectedIndex_ = event.GetIndex();
-    mmAssetDialog dlg(this, cp_->core_, cp_->getTrans()[selectedIndex_], true);
-
-    if (dlg.ShowModal() == wxID_OK)
-        doRefreshItems(dlg.GetAssetID());
-
-    cp_->updateExtraAssetData(selectedIndex_);
-}
-
-void assetsListCtrl::OnColClick(wxListEvent& event)
-{
-    if(0 > event.GetColumn() || event.GetColumn() >= COL_MAX) return;
-
-    if (m_selected_col == event.GetColumn()) m_asc = !m_asc;
-
-    wxListItem item;
-    item.SetMask(wxLIST_MASK_IMAGE);
-    item.SetImage(-1);
-    cp_->SetListCtrlColumn(m_selected_col, item);
-
-    m_selected_col = event.GetColumn();
-
-    item.SetImage(m_asc ? 8 : 7);
-    SetColumn(m_selected_col, item);
-
-    int trx_id = -1;
-    if (selectedIndex_>=0) trx_id = cp_->getTrans()[selectedIndex_]->id_;
-
-    doRefreshItems(trx_id);
 }
 
 void mmAssetsPanel::OnMouseLeftDown ( wxMouseEvent& event )
@@ -562,10 +561,4 @@ void mmAssetsPanel::OnViewPopupSelected(wxCommandEvent& event)
     int trx_id = -1;
     m_listCtrlAssets->doRefreshItems(trx_id);
     updateExtraAssetData(trx_id);
-
-/*    core_->db_.get()->Begin();
-    mmDBWrapper::setInfoSettingValue(core_->db_.get(),
-         wxString::Format(wxT("ASSET_FILTER_ID_%ld"), (long)m_AccountID), m_currentView);
-    core_->db_.get()->Commit();
-*/
 }
