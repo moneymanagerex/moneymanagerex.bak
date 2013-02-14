@@ -23,15 +23,6 @@
 #include "payeedialog.h"
 #include "paths.h"
 
-#include <algorithm>
-#include <vector>
-
-bool sortTransactionsByDate1( boost::shared_ptr<mmBankTransaction> elem1,
-                             boost::shared_ptr<mmBankTransaction> elem2 )
-{
-   return elem1->date_ < elem2->date_;
-}
-
 IMPLEMENT_DYNAMIC_CLASS( mmFilterTransactionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmFilterTransactionsDialog, wxDialog )
