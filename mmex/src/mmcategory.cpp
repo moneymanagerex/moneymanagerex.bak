@@ -6,12 +6,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -93,6 +93,7 @@ wxString mmCategoryList::GetCategoryName(int categ_id) const
 
 int mmCategoryList::AddCategory(const wxString& category)
 {
+    if (category.IsEmpty()) return -1;
     int cID = -1;
 
     mmDBWrapper::addCategory(db_.get(), category);
@@ -117,7 +118,7 @@ wxString mmCategoryList::GetSubCategoryName(int categID, int subCategID) const
                 ++ cit)
             {
                 const boost::shared_ptr<mmCategory> sub_category = *cit;
-    
+
                 if (subCategID == sub_category->categID_)
                     return sub_category->categName_;
             }
@@ -139,7 +140,7 @@ int mmCategoryList::GetSubCategoryID(int parentID, const wxString& subCategoryNa
                 ++ cit)
             {
                 const boost::shared_ptr<mmCategory> sub_category = *cit;
-    
+
                 if (subCategoryName == sub_category->categName_)
                     return sub_category->categID_;
             }
@@ -148,19 +149,38 @@ int mmCategoryList::GetSubCategoryID(int parentID, const wxString& subCategoryNa
     return -1;
 }
 
+void mmCategoryList::parseCategoryString(wxString categ, wxString& cat, int& categID, wxString& subcat, int& subCategID)
+{
+    wxStringTokenizer cattkz(categ, wxT(":"));
+
+    cat = cattkz.GetNextToken();
+    if (cattkz.HasMoreTokens())
+        subcat = cattkz.GetNextToken();
+    else
+        subcat = wxT("");
+
+    categID = GetCategoryId(cat);
+
+    if (!subcat.IsEmpty() && categID != -1)
+        subCategID = GetSubCategoryID(categID, subcat);
+    else
+        subCategID = -1;
+}
+
 int mmCategoryList::AddSubCategory(int parentID, const wxString& text)
 {
+    if (text.IsEmpty() || parentID < 0) return -1;
     int cID = -1;
 
     mmDBWrapper::addSubCategory(db_.get(), parentID, text);
     cID = (db_->GetLastRowId()).ToLong();
 
     boost::shared_ptr<mmCategory> categ = GetCategorySharedPtr(parentID, -1);
-    
+
     boost::shared_ptr<mmCategory> subCateg(new mmCategory(cID, text));
     subCateg->parent_ = categ;
     categ->children_.push_back(subCateg);
-    
+
     return cID;
 }
 

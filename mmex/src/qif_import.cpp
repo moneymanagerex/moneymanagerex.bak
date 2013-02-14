@@ -270,7 +270,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 else if ( accountType == wxT("Type:Cat") )
                 {
                     bool reading = true;
-                    while( reading )
+                    while(!input.Eof() && reading )
                     {
                         readLine = getFileLine(text, numLines);
                         if (/*readLine.Contains(wxT("!Account")) ||*/ readLine.Contains(wxT("!Type:")) || input.Eof())
@@ -292,7 +292,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 break;
             }
 
-            wxString cat, subcat, sValid;
+            wxString cat, subcat, sSplitCategs, sValid;
             to_account_id = -1;
             bool bValid = true;
 
@@ -341,7 +341,19 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
             else if (lineType(readLine) == Category)
             {
                 categ = getLineData(readLine);
+                continue;
             }
+            else if (lineType(readLine) == CategorySplit) //'S'
+            {
+                sSplitCategs = getFileLine(text, numLines);
+                continue;
+            }
+            else if (lineType(readLine) == AmountSplit) //'$'
+            {
+                sSplitCategs = getFileLine(text, numLines);
+                continue;
+            }
+            //MemoSplit
             else if (lineType(readLine) == Address)
             {
                 continue;
@@ -390,31 +402,13 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                         payee = to_account_name;
                     }
                 }
+                wxString cat, subcat;
+                core->categoryList_.parseCategoryString(categ, cat, categID, subcat, subCategID);
 
-                {
-                    wxStringTokenizer cattkz(categ, wxT(":"));
-
-                    cat = cattkz.GetNextToken();
-                    if (cattkz.HasMoreTokens())
-                        subcat = cattkz.GetNextToken();
-
-                    categID = core->categoryList_.GetCategoryId(cat);
-                    if (categID == -1)
-                    {
-                        categID =  core->categoryList_.AddCategory(cat);
-                    }
-
-                    if (!subcat.IsEmpty())
-                    {
-                        subCategID = core->categoryList_.GetSubCategoryID(categID, subcat);
-                        if (subCategID == -1)
-                        {
-                            subCategID = core->categoryList_.AddSubCategory(categID, subcat);
-                        }
-                    }
-                    else
-                        subCategID = -1;
-                }
+                if (categID == -1)
+                    categID =  core->categoryList_.AddCategory(cat);
+                if (subCategID == -1 && categID != -1)
+                    subCategID = core->categoryList_.AddSubCategory(categID, subcat);
 
                 //TODO: Is it possible now?
                 if (to_account_id == -1 && type == TRANS_TYPE_TRANSFER_STR)
