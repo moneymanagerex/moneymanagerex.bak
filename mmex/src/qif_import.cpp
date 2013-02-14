@@ -540,9 +540,8 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 fromAccountID = refTrans[index]->accountID_;
                 boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
                 wxASSERT(pCurrencyPtr);
-                //wxSafeShowMessage(refTrans[index]->payeeStr_, refTrans[index]->transType_);
                 refTrans[index]->updateAllData(core, fromAccountID, pCurrencyPtr);
-                int transID = core->bTransactionList_.addTransaction(core, refTrans[index]);
+                core->bTransactionList_.addTransaction(core, refTrans[index]);
             }
 
             core->db_.get()->Commit();
