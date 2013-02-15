@@ -80,7 +80,7 @@ void mmQIFDialog::CreateControls()
     wxBoxSizer *tab2_sizer = new wxBoxSizer(wxVERTICAL);
     log_tab->SetSizer(tab2_sizer);
 
-	box_sizer1->Add(export_notebook, flags);
+    box_sizer1->Add(export_notebook, flags);
 
     //
     wxString choices[] = { _("QIF"), _("CSV")};
@@ -100,9 +100,10 @@ void mmQIFDialog::CreateControls()
     flex_sizer->AddSpacer(1);
 
     // Accounts --------------------------------------------
-    accountsCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("Accounts"),
-                                        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    bSelectedAccounts_ = new wxButton(main_tab, wxID_STATIC, _("Select accounts"), wxDefaultPosition, wxSize(fieldWidth,-1));
+    accountsCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("Accounts")
+        , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    bSelectedAccounts_ = new wxButton(main_tab, wxID_STATIC, _("Select accounts")
+        , wxDefaultPosition, wxSize(fieldWidth,-1));
     bSelectedAccounts_ -> Connect(wxID_ANY,
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFDialog::OnAccountsButton), NULL, this);
     accountsCheckBox_->SetValue(true);
@@ -110,19 +111,19 @@ void mmQIFDialog::CreateControls()
     flex_sizer->Add(bSelectedAccounts_, flags);
 
     // From Date --------------------------------------------
-    dateFromCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("From Date"),
-                                        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    fromDateCtrl_ = new wxDatePickerCtrl( main_tab, wxID_STATIC, wxDefaultDateTime,
-                                         wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
+    dateFromCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("From Date")
+        , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    fromDateCtrl_ = new wxDatePickerCtrl( main_tab, wxID_STATIC, wxDefaultDateTime
+        , wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
     fromDateCtrl_->Enable(false);
     flex_sizer->Add(dateFromCheckBox_, flags);
     flex_sizer->Add(fromDateCtrl_, flags);
 
     // To Date --------------------------------------------
-    dateToCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("To Date"),
-                                        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    toDateCtrl_ = new wxDatePickerCtrl( main_tab, wxID_STATIC, wxDefaultDateTime,
-                                         wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
+    dateToCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("To Date")
+        , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    toDateCtrl_ = new wxDatePickerCtrl( main_tab, wxID_STATIC, wxDefaultDateTime
+        , wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
     toDateCtrl_->Enable(false);
     flex_sizer->Add(dateToCheckBox_, flags);
     flex_sizer->Add(toDateCtrl_, flags);
@@ -130,17 +131,20 @@ void mmQIFDialog::CreateControls()
     // Encoding --------------------------------------------
 
     // File Name --------------------------------------------
-    toFileCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("Write to File"),
-                                        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    toFileCheckBox_ = new wxCheckBox( main_tab, wxID_STATIC, _("Write to File")
+        , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     toFileCheckBox_->SetValue(true);
     file_name_label_ = new wxStaticText(main_tab, wxID_STATIC, _("File Name:"));
     button_search_ = new wxButton(main_tab, wxID_OPEN, _("&Search"));
-    button_search_->Connect(wxID_OPEN, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFDialog::OnSearch), NULL, this);
+    button_search_->Connect(wxID_OPEN, wxEVT_COMMAND_BUTTON_CLICKED
+        , wxCommandEventHandler(mmQIFDialog::OnSearch), NULL, this);
 
     m_text_ctrl_ = new wxTextCtrl(main_tab, wxID_FILE, wxEmptyString,
         wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER );
-    m_text_ctrl_->Connect(wxID_FILE, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(mmQIFDialog::OnFileNameChanged), NULL, this);
-    m_text_ctrl_->Connect(wxID_FILE, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmQIFDialog::OnFileNameEntered), NULL, this);
+    m_text_ctrl_->Connect(wxID_FILE, wxEVT_COMMAND_TEXT_UPDATED
+        , wxCommandEventHandler(mmQIFDialog::OnFileNameChanged), NULL, this);
+    m_text_ctrl_->Connect(wxID_FILE, wxEVT_COMMAND_TEXT_ENTER
+        , wxCommandEventHandler(mmQIFDialog::OnFileNameEntered), NULL, this);
 
     flex_sizer->Add(toFileCheckBox_, flags);
     flex_sizer->AddSpacer(1);
@@ -149,12 +153,14 @@ void mmQIFDialog::CreateControls()
     tab1_sizer->Add(m_text_ctrl_, 1, wxALL|wxGROW, 5);
 
     //Log viewer
-    log_field_ = new wxTextCtrl( log_tab, wxID_STATIC, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
+    log_field_ = new wxTextCtrl( log_tab, wxID_STATIC, wxT("")
+        , wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
     tab2_sizer->Add(log_field_, 1, wxGROW|wxALL, border);
 
     wxButton* itemClearButton = new wxButton(log_tab, wxID_CLEAR);
     tab2_sizer->Add(itemClearButton, flags);
-    itemClearButton->Connect(wxID_CLEAR, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFDialog::OnButtonClear), NULL, this);
+    itemClearButton->Connect(wxID_CLEAR, wxEVT_COMMAND_BUTTON_CLICKED
+        , wxCommandEventHandler(mmQIFDialog::OnButtonClear), NULL, this);
 
     /**********************************************************************************************
      Button Panel with OK and Cancel Buttons
@@ -167,7 +173,8 @@ void mmQIFDialog::CreateControls()
 
     wxButton* itemButtonOK = new wxButton( buttons_panel, wxID_OK);
     wxButton* itemButtonCancel_ = new wxButton( buttons_panel, wxID_CANCEL);
-    itemButtonOK->Connect(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFDialog::OnOk), NULL, this);
+    itemButtonOK->Connect(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED
+        , wxCommandEventHandler(mmQIFDialog::OnOk), NULL, this);
 
     buttons_sizer->Add(itemButtonOK, flags.Border(wxBOTTOM|wxRIGHT, 10));
     buttons_sizer->Add(itemButtonCancel_, flags);
@@ -215,7 +222,7 @@ void mmQIFDialog::OnSearch(wxCommandEvent& /*event*/)
     const bool qif_csv = m_radio_box_->GetSelection() == 0;
 
     const wxString choose_ext = qif_csv ? _("CSV Files") : _("QIF Files");
-    fileName = wxFileSelector(qif_csv ? 
+    fileName = wxFileSelector(qif_csv ?
         _("Choose QIF data file to Export")
         : _("Choose CSV data file to Export"),
         wxEmptyString, fileName, wxEmptyString,
@@ -229,32 +236,31 @@ void mmQIFDialog::OnSearch(wxCommandEvent& /*event*/)
 
 void mmQIFDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    bool error = false;
-    wxString error_msg = wxT("");
+    bool bCorrect = false;
+    wxString sErrorMsg = wxT("");
     if (core_->accountList_.getNumAccounts() == 0)
     {
-        error_msg =_("No Account available for export");
+        sErrorMsg =_("No Account available for export");
     }
     else if (toFileCheckBox_->GetValue() && m_text_ctrl_->GetValue().IsEmpty())
     {
-        error_msg =_("File name is empty");
+        sErrorMsg =_("File name is empty");
     }
     else if (dateToCheckBox_->GetValue() && dateFromCheckBox_->GetValue() && fromDateCtrl_->GetValue() > toDateCtrl_->GetValue())
     {
-        error_msg =_("To Date less than From Date");
+        sErrorMsg =_("To Date less than From Date");
     }
     else if (items_index_.Count()<1 && accountsCheckBox_->GetValue())
     {
-        error_msg =_("No Accounts selected for export");
+        sErrorMsg =_("No Accounts selected for export");
     }
     else
-        error = true;
+        bCorrect = true;
 
-    if (error)
+    if (bCorrect)
         mmExportQIF();
     else
-        wxMessageBox(error_msg, _("QIF Export"), wxOK|wxICON_WARNING);
-
+        wxMessageBox(sErrorMsg, _("QIF Export"), wxOK|wxICON_WARNING);
 }
 
 void mmQIFDialog::OnCancel(wxCommandEvent& /*event*/)
@@ -310,54 +316,73 @@ void mmQIFDialog::OnFileNameEntered(wxCommandEvent& event)
     this->GetEventHandler()->AddPendingEvent(evt);
 }
 
+wxString mmQIFDialog::writeAccHeader(wxString& acctName, bool qif)
+{
+    wxString buffer = wxT("");
+    if (qif)
+    {
+        buffer = wxString(wxT("!Account")) << wxT("\n")
+             << wxT("N") << acctName <<  wxT("\n")
+             << wxT("TChecking") << wxT("\n")
+             << wxT("^") <<  wxT("\n")
+             << wxT("!Type:Cash") << wxT("\n");
+    }
+    return buffer;
+}
+
+wxString mmQIFDialog::exportCategories(bool qif)
+{
+    wxString buffer_qif, buffer_csv;
+
+    buffer_qif << wxT("!Type:Cat") << wxT("\n");
+    std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
+    for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
+    {
+        const boost::shared_ptr<mmCategory> category = *it;
+        const wxString categ_name = category->categName_;
+        buffer_qif << wxT("N") << categ_name <<  wxT("\n")
+            << wxT("E") << wxT("\n")
+            << wxT("^") << wxT("\n");
+        buffer_csv << categ_name <<  delimit_ << wxT("\n");
+
+        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
+                cit != category->children_.end();
+                ++ cit)
+        {
+            const boost::shared_ptr<mmCategory> sub_category = *cit;
+            wxString full_categ_name = wxString()
+                << categ_name << (qif ? wxT(":") : delimit_)
+                << sub_category->categName_ << wxT("\n");
+            buffer_qif << wxT("N") << full_categ_name
+                << wxT("E") << wxT("\n")
+                << wxT("^") << wxT("\n");
+            buffer_csv << full_categ_name;
+        }
+    }
+    return qif ? buffer_qif : buffer_csv;;
+}
+
 void mmQIFDialog::mmExportQIF()
 {
     const bool qif_csv = m_radio_box_->GetSelection() == 0;
     const bool exp_categ = cCategs_->GetValue();
     const bool exp_transactions = (accountsCheckBox_->GetValue() && items_index_.GetCount()>0);
     const bool write_to_file = toFileCheckBox_->GetValue();
-    wxString error_msg;
-    wxString buffer_qif, buffer_csv;
+    wxString sErrorMsg;
+    wxString buffer;
     delimit_ = core_->dbInfoSettings_->GetStringSetting(wxT("DELIMITER"), mmex::DEFDELIMTER);
     long numRecords = 0;
 
     //Export categories
     if (exp_categ)
     {
-        buffer_qif << wxT("!Type:Cat") << wxT("\n");
-        std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
-        for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
-        {
-            const boost::shared_ptr<mmCategory> category = *it;
-            const wxString categ_name = category->categName_;
-            buffer_qif << wxT("N") << categ_name <<  wxT("\n")
-                << wxT("E") << wxT("\n")
-                << wxT("^") << wxT("\n");
-            buffer_csv << categ_name <<  delimit_ << wxT("\n");
-            numRecords++;
-
-            for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
-                    cit != category->children_.end();
-                    ++ cit)
-            {
-                const boost::shared_ptr<mmCategory> sub_category = *cit;
-                wxString full_categ_name = wxString()
-                    << categ_name << (qif_csv ? wxT(":") : delimit_)
-                    << sub_category->categName_ << wxT("\n");
-                buffer_qif << wxT("N") << full_categ_name
-                     << wxT("E") << wxT("\n")
-                     << wxT("^") << wxT("\n");
-                buffer_csv << full_categ_name;
-                numRecords++;
-            }
-        }
-
-    error_msg << wxString::Format(_("Categories exported: %ld"), numRecords);
-    error_msg << wxT("\n");
+        buffer << exportCategories(qif_csv);
+        sErrorMsg << _("Categories exported") << wxT("\n");
     }
 
     //Export transactions
     numRecords = 0;
+    wxArrayInt transferTrxId;
 
     if (exp_transactions)
     {
@@ -369,17 +394,11 @@ void mmQIFDialog::mmExportQIF()
 
         for (size_t a = 0; a < selected_accounts_id.Count(); ++a)
         {
-
             const int fromAccountID = selected_accounts_id[a];
-            const wxString acctName = core_->accountList_.GetAccountName(fromAccountID);
+            wxString acctName = core_->accountList_.GetAccountName(fromAccountID);
             const wxString amtSeparator = core_->accountList_.getAccountCurrencyDecimalChar(fromAccountID);
 
-            buffer_qif << wxT("!Account") << wxT("\n")
-                 << wxT("N") << acctName <<  wxT("\n")
-                 << wxT("TChecking") << wxT("\n")
-                 << wxT("^") <<  wxT("\n")
-                 << wxT("!Type:Cash") << wxT("\n");
-
+            buffer << writeAccHeader(acctName, qif_csv);
 
             for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
             {
@@ -400,6 +419,7 @@ void mmQIFDialog::mmExportQIF()
 
                 const int trans_id = pBankTransaction->transactionID();
                 const int fAccountID = pBankTransaction->accountID_;
+                const wxString fromAccount = core_->accountList_.GetAccountName(fAccountID);
                 const int tAccountID = pBankTransaction->toAccountID_;
 
                 wxString amount = adjustedExportAmount(amtSeparator, wxString()<<pBankTransaction->amt_);
@@ -417,10 +437,8 @@ void mmQIFDialog::mmExportQIF()
 
                 if (type == wxT("Transfer"))
                 {
-                    const wxString fromAccount = core_->accountList_.GetAccountName(fAccountID);
                     const wxString toAccount = core_->accountList_.GetAccountName(tAccountID);
-
-                    toamount = adjustedExportAmount(amtSeparator,wxString()<<pBankTransaction->toAmt_);
+                    toamount = adjustedExportAmount(amtSeparator, wxString()<<pBankTransaction->toAmt_);
                     double tovalue = 0.0;
                     mmex::formatCurrencyToDouble(toamount, tovalue);
                     mmex::formatDoubleToCurrencyEdit(tovalue, toamount);
@@ -435,22 +453,27 @@ void mmQIFDialog::mmExportQIF()
                         categ = wxString::Format(wxT("[%s]"), toAccount.c_str());
                         amount.Prepend(wxT('-'));
                     }
-                    payee = wxString::Format(wxT("TRXID:%ld"), trans_id);
+                    //TODO: That trick here. Payee used to make transaction unique
+                    // to proper merge transfer records
+                    payee = wxString::Format(wxT("_ID_:%ld"), trans_id);
+                    //If transfer to not selected account just remenber that transaction
+                    if (selected_accounts_id.Index(tAccountID) == wxNOT_FOUND)
+                        transferTrxId.Add(trans_id);
                 }
                 else if (type == wxT("Withdrawal"))
                     amount.Prepend(wxT('-'));
 
                 if (qif_csv)
                 {
-                    buffer_qif << wxT('D') << dateString << wxT("\n");
-                    buffer_qif << wxT('T') << amount << wxT("\n");
-					buffer_qif << wxT('P') << payee << wxT("\n");
+                    buffer << wxT('D') << dateString << wxT("\n");
+                    buffer << wxT('T') << amount << wxT("\n");
+                    buffer << wxT('P') << payee << wxT("\n");
                     if (!transNum.IsEmpty())
-                        buffer_qif << wxT('N') << transNum << wxT("\n");
+                        buffer << wxT('N') << transNum << wxT("\n");
                     if (!categ.IsEmpty())
-                        buffer_qif << wxT('L') << categ << wxT("\n");
+                        buffer << wxT('L') << categ << wxT("\n");
                     if (!notes.IsEmpty())
-                        buffer_qif << wxT('M') << notes << wxT("\n");
+                        buffer << wxT('M') << notes << wxT("\n");
                 }
 
                 //if categ id is empty that mean this is split transaction
@@ -473,29 +496,31 @@ void mmQIFDialog::mmExportQIF()
                         if (!split_subcateg.IsEmpty()) split_categ += wxT(":") + split_subcateg;
                         if (qif_csv)
                         {
-                        buffer_qif << wxT('S') << split_categ << wxT("\n")
+                        buffer << wxT('S') << split_categ << wxT("\n")
                             << wxT('$') << split_amount << wxT("\n")
                             << wxT('E') << split_categ << wxT(" ")
                             << split_amount << wxT("\n");
-                        } else {
-                        buffer_csv << trans_id << delimit_
-                            << inQuotes(acctName, delimit_) << delimit_
-                            << inQuotes(dateString, delimit_) << delimit_
-                            << inQuotes(payee, delimit_) << delimit_
-                            << pBankTransaction->status_ << delimit_
-                            << type << delimit_
-                            << inQuotes(split_categ, delimit_) << delimit_
-                            << inQuotes(split_amount, delimit_) << delimit_
-                            << wxT("") << delimit_
-                            << inQuotes(notes, delimit_)
-                            << wxT("\n");
+                        }
+                        else
+                        {
+                            buffer << trans_id << delimit_
+                                << inQuotes(acctName, delimit_) << delimit_
+                                << inQuotes(dateString, delimit_) << delimit_
+                                << inQuotes(payee, delimit_) << delimit_
+                                << pBankTransaction->status_ << delimit_
+                                << type << delimit_
+                                << inQuotes(split_categ, delimit_) << delimit_
+                                << inQuotes(split_amount, delimit_) << delimit_
+                                << wxT("") << delimit_
+                                << inQuotes(notes, delimit_)
+                                << wxT("\n");
                         }
                     }
                 }
                 else
                 {
                     if (!qif_csv)
-                        buffer_csv << trans_id << delimit_
+                        buffer << trans_id << delimit_
                         << inQuotes(acctName, delimit_) << delimit_
                         << inQuotes(dateString, delimit_) << delimit_
                         << inQuotes(payee, delimit_) << delimit_
@@ -507,22 +532,22 @@ void mmQIFDialog::mmExportQIF()
                         << inQuotes(notes, delimit_)
                         << wxT("\n");
                 }
-
-                buffer_qif << wxT('^') << wxT("\n");
+                buffer << wxT('^') << wxT("\n");
                 numRecords++;
             }
         }
     }
-    if (write_to_file) {
+
+    if (write_to_file)
+    {
         wxString fileName = m_text_ctrl_->GetValue();
         wxFileOutputStream output(fileName);
         wxTextOutputStream text(output);
-        if (qif_csv) text << buffer_qif;
-        else text << buffer_csv;
+        text << buffer;
     }
 
-    *log_field_ << (qif_csv ? buffer_qif : buffer_csv);
-    error_msg << wxTRANSLATE("Transactions exported: %ld");
-    const wxString msg = wxString::Format(error_msg, numRecords);
+    *log_field_ << buffer;
+    sErrorMsg << wxTRANSLATE("Number of transactions exported: %ld");
+    const wxString msg = wxString::Format(sErrorMsg, numRecords);
     mmShowErrorMessage(parent_, wxGetTranslation(msg), _("Export to QIF"));
 }

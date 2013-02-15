@@ -70,7 +70,8 @@ private:
     wxTextCtrl* log_field_;
     wxRadioBox* m_radio_box_;
     wxString delimit_;
+
+    void mmExportQIF(wxWindow* parent_, mmCoreDB* core);
+    wxString writeAccHeader(wxString& acctName, bool qif);
+	wxString exportCategories(bool qif);
 };
-
-void mmExportQIF(wxWindow* parent_, mmCoreDB* core);
-
