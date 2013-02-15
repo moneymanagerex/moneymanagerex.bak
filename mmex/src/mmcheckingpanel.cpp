@@ -738,12 +738,14 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
 
     double amount = m_trans[selIndex]->amt_;
     wxString amountStr;
-    double convrate = core_->accountList_.getAccountBaseCurrencyConvRate(accountId);
 
     boost::shared_ptr<mmCurrency> pCurrency = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
     int currencyid = pCurrency->currencyID_;
+    //TODO: FIXME: If base currency does not set bug may happens
+    if (basecurrencyid = -1) basecurrencyid = currencyid;
     wxString curpfxStr = pCurrency->pfxSymbol_;
     wxString cursfxStr = pCurrency->sfxSymbol_;
+    double convrate = core_->accountList_.getAccountBaseCurrencyConvRate(accountId);
 
     wxString infoStr = wxT("");
     if (transcodeStr == TRANS_TYPE_TRANSFER_STR)
