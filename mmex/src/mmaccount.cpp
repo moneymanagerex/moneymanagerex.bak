@@ -59,7 +59,7 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
    if (pCurrency)
       return pCurrency->baseConv_;
 
-   return 0.0;
+   return 1.0;
 }
 
 boost::shared_ptr<mmAccount> mmAccountList::GetAccountSharedPtr(int accountID) const
