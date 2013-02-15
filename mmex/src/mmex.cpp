@@ -1486,7 +1486,6 @@ void mmGUIFrame::CreateCustomReport(int index)
                 , custRepIndex_->CurrentReportTitle()
                 , sScript
                 , custRepIndex_->CurrentReportFileType());
-            menuPrintingEnable(true);
             createReportsPage(csr);
         }
     }
@@ -1571,7 +1570,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 //wxProgressDialog proDlg(_("Budget Performance"), reportWaitingMsg, 100, this);
                 mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), this, data);
                 //proDlg.Update(70);
-                menuPrintingEnable(true);
                 createReportsPage(rs);
                 //proDlg.Update(95);
             }
@@ -1580,7 +1578,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 //wxProgressDialog proDlg(_("Budget Category Summary"), reportWaitingMsg, 100, this);
                 mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, data);
                 //proDlg.Update(70);
-                menuPrintingEnable(true);
                 createReportsPage(rs);
                 //proDlg.Update(95);
             }
@@ -1631,28 +1628,24 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         else if (iData->getString() == NAVTREECTRL_HELP)
         {
             helpFileIndex_ = mmex::HTML_INDEX;
-            menuPrintingEnable(true);
             createHelpPage();
             return;
         }
         else if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
         {
             helpFileIndex_ = mmex::HTML_CUSTOM_SQL;
-            menuPrintingEnable(true);
             createHelpPage();
             return;
         }
         else if (iData->getString() == NAVTREECTRL_INVESTMENT)
         {
             helpFileIndex_ = mmex::HTML_INVESTMENT;
-            menuPrintingEnable(true);
             createHelpPage();
             return;
         }
         else if (iData->getString() == NAVTREECTRL_BUDGET)
         {
             helpFileIndex_ = mmex::HTML_BUDGET;
-            menuPrintingEnable(true);
             createHelpPage();
             return;
         }
@@ -1677,19 +1670,16 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         else if (sData == wxT("Summary of Accounts"))
         {
             mmPrintableBase* rs = new mmReportSummary(m_core.get(), this);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Summary of Stocks"))
         {
             mmPrintableBase* rs = new mmReportSummaryStocks(m_core.get(), m_db.get());
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Summary of Assets"))
         {
             mmPrintableBase* rs = new mmReportSummaryAssets(m_core.get(), m_db.get());
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Where the Money Goes"))
@@ -1699,7 +1689,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxString title = _("Where the Money Goes");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
                 , true, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData.StartsWith(wxT("Where the Money Goes -")))
@@ -1711,7 +1700,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
                 , false, dtBegin, dtEnd, title, 2);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Where the Money Comes From"))
@@ -1721,7 +1709,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxString title = _("Where the Money Comes From");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
                 , true, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData.StartsWith(wxT("Where the Money Comes From - ")))
@@ -1733,7 +1720,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
                 , false, dtBegin, dtEnd, title, 1);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Categories - Over Time"))
@@ -1741,7 +1727,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxProgressDialog proDlg(_("Category Report"), _("Category Report being generated... Please wait."), 100, this);
             mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(m_core.get());
             proDlg.Update(70);
-            menuPrintingEnable(true);
             createReportsPage(rs);
             proDlg.Update(95);
         }
@@ -1754,7 +1739,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
                 , false, dtBegin, dtEnd, title, 0);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Payee Report"))
@@ -1762,7 +1746,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxString title = _("Payee Report");
             mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get()
                 , true, wxDateTime::Now(), wxDateTime::Now(), title);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData.StartsWith(wxT("Payees - ")))
@@ -1774,7 +1757,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
             mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get()
                 , false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
             createReportsPage(rs);
 
         }
@@ -1783,7 +1765,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxString title = _("Income vs Expenses - All Time");
             mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
                 , true, wxDateTime::Now(), wxDateTime::Now(), title);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Income vs Expenses"))
@@ -1791,7 +1772,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get()
                 , wxDateTime::Now().GetYear(), 10);
 
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData.StartsWith(wxT("Income vs Expenses - ")) && sData.Contains(wxT("Year")))
@@ -1811,7 +1791,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             {
                 rs = new mmReportIncExpensesOverTime(m_core.get(), year);
             }
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData.StartsWith(wxT("Income vs Expenses - ")))
@@ -1823,7 +1802,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
             mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
                 , false, dtBegin, dtEnd, title);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
         else if (sData == wxT("Cash Flow"))
@@ -1833,26 +1811,19 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             report->activateBankAccounts();
             if (hasActiveTermAccounts())  report->activateTermAccounts();
 
-            menuPrintingEnable(true);
             createReportsPage(report);
         }
         else if (sData == wxT("Cash Flow - With Bank Accounts"))
         {
             mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this);
-
             report->activateBankAccounts();
-
-            menuPrintingEnable(true);
             createReportsPage(report);
         }
 
         else if (sData == wxT("Cash Flow - With Term Accounts"))
         {
             mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this);
-
             report->activateTermAccounts();
-
-            menuPrintingEnable(true);
             createReportsPage(report);
         }
         else if (sData == wxT("Cash Flow - Specific Accounts"))
@@ -1879,7 +1850,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear()-1;
             mmPrintableBase* rs = new mmReportTransactionStats(m_core.get(), year);
-            menuPrintingEnable(true);
             createReportsPage(rs);
         }
     }
@@ -2215,6 +2185,7 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
     homePanel_->Layout();
+    menuPrintingEnable(true);
 }
 //----------------------------------------------------------------------------
 
@@ -2228,6 +2199,7 @@ void mmGUIFrame::createHelpPage()
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
     homePanel_->Layout();
+    menuPrintingEnable(true);
 }
 //----------------------------------------------------------------------------
 
@@ -3051,7 +3023,6 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
     mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
-
         std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
         for (i = m_core.get()->bTransactionList_.transactions_.begin(); i != m_core.get()->bTransactionList_.transactions_.end(); i++ )
         {
@@ -3148,15 +3119,14 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
                     }
                 }
 
-            (*trans).push_back(pBankTransaction);
+                (*trans).push_back(pBankTransaction);
+            }
         }
-    }
-    //}
-    //FIXME: TODO:
-    //std::sort((*trans).begin(), (*trans).end(), sortTransactionsByDate1);
+
+        //FIXME: TODO:
+        //std::sort((*trans).begin(), (*trans).end(), sortTransactionsByDate1);
 
         mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getAccountID(), dlg);
-        menuPrintingEnable(true);
         createReportsPage(rs);
     }
     else
@@ -3210,7 +3180,6 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
         report->activateBankAccounts();
         if (this->hasActiveTermAccounts()) report->activateTermAccounts();
 
-        menuPrintingEnable(true);
         createReportsPage(report);
     }
 }
@@ -3256,7 +3225,6 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnHelp(wxCommandEvent& /*event*/)
 {
     helpFileIndex_ = mmex::HTML_INDEX;
-    menuPrintingEnable(true);
     createHelpPage();
 }
 //----------------------------------------------------------------------------
@@ -3860,7 +3828,6 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
             wxBeginBusyCursor(wxHOURGLASS_CURSOR);
             mmCustomReport* csr = new mmCustomReport(this,
                 m_core.get(), dlg->sReportTitle(), dlg->sScript(), dlg->sSctiptType());
-            menuPrintingEnable(true);
             createReportsPage(csr);
             wxEndBusyCursor();
         }
