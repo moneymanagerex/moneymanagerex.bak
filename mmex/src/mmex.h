@@ -281,7 +281,6 @@ private:
     void createHomePage();
     void createReportsPage(mmPrintableBase* rb);
     void createHelpPage();
-    wxPanel* createMainFrame(wxPanel* mainpanel);
 
     mmCheckingPanel* checkingAccountPage_;
     bool activeCheckingAccountPage_;

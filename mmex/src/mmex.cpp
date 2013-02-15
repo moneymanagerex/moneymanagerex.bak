@@ -711,7 +711,6 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     if (from_scratch || !dbpath.IsOk())
     {
         menuEnableItems(false);
-        updateNavTreeControl();
         showBeginAppDialog(dbpath.GetFullName().IsEmpty());
     }
     else
@@ -2718,12 +2717,6 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
 }
 //----------------------------------------------------------------------------
 
-wxPanel* mmGUIFrame::createMainFrame(wxPanel* /*parent*/)
-{
-    return 0;
-}
-//----------------------------------------------------------------------------
-
 bool mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxString &password)
 {
     if (createDataStore(fileName, password, openingNew))
@@ -3909,7 +3902,7 @@ void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
     }
 
     // Ensure database is in a steady state first
-    if (!activeHomePage_)
+    if (m_db && !activeHomePage_)
     {
         refreshRequested_ = true;
         createHomePage();

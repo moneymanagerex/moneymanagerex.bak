@@ -248,7 +248,6 @@ boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(const wxStrin
         }
     }
 
-    wxASSERT(false);
     return boost::shared_ptr<mmCurrency>();
 }
   
