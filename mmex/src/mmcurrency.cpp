@@ -17,6 +17,7 @@
 #include "mmcurrency.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include <map>
 
 mmCurrency::mmCurrency(wxSQLite3ResultSet& q1)
 {
@@ -262,4 +263,96 @@ void mmCurrencyList::LoadCurrencies()
     }
 
     q1.Finalize();
+}
+
+bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
+{
+    //const int currencyID = getBaseCurrencySettings(core_->dbInfoSettings_.get());
+    //TODO: Fix raw sql
+    int currencyID = -1; 
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(wxT("select INFOVALUE from infotable_v1 where infoname='BASECURRENCYID'"));
+    while (q1.NextRow())
+        currencyID = q1.GetDouble(wxT("INFOVALUE"));
+
+    if(currencyID == -1)
+    {
+        sError = _("Could not find base currency symbol!");
+        return false;
+    }
+    wxString base_symbol = getCurrencySharedPtr(currencyID)->currencySymbol_;
+
+    wxString site;
+    for (int idx = 0; idx < (int)currencies_.size(); idx++)
+    {
+        const wxString symbol = currencies_[idx]->currencySymbol_.Upper();
+
+        site << symbol << base_symbol << wxT("=X+");
+    }
+    if (site.Right(1).Contains(wxT("+"))) site.RemoveLast(1);
+    site = wxString::Format(wxT("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv"), site.c_str());
+
+    wxString sOutput;
+    int err_code = site_content(site, sOutput);
+    if (err_code != wxURL_NOERR)
+    {
+        sError = sOutput;
+        return false;
+    }
+
+    wxString CurrencySymbol, dName;
+    double dRate = 1;
+
+    std::map<wxString, std::pair<double, wxString> > currency_data;
+
+    // Break it up into lines
+    wxStringTokenizer tkz(sOutput, wxT("\r\n"));
+
+    while (tkz.HasMoreTokens())
+    {
+        wxString csvline = tkz.GetNextToken();
+
+        wxStringTokenizer csvsimple(csvline, wxT("\","),wxTOKEN_STRTOK);
+        if (csvsimple.HasMoreTokens())
+        {
+            CurrencySymbol = csvsimple.GetNextToken();
+            if (csvsimple.HasMoreTokens())
+            {
+                csvsimple.GetNextToken().ToDouble(&dRate);
+                if (csvsimple.HasMoreTokens())
+                    dName = csvsimple.GetNextToken();
+            }
+        }
+        currency_data.insert(std::make_pair(CurrencySymbol, std::make_pair(dRate, dName)));
+    }
+
+    wxString msg = _("Currency rate updated");
+    msg << wxT("\n\n");
+
+    db_->Begin();
+
+    for (int idx = 0; idx < (int)currencies_.size(); idx++)
+    {
+        const wxString currency_symbol = currencies_[idx]->currencySymbol_.Upper();
+        if (!currency_symbol.IsEmpty())
+        {
+            wxString currency_symbols_pair = currency_symbol + base_symbol + wxT("=X");
+            std::pair<double, wxString> data = currency_data[currency_symbols_pair];
+
+            wxString valueStr, newValueStr;
+            double new_rate = data.first;
+            if (base_symbol == currency_symbol) new_rate = 1;
+
+            double old_rate = currencies_[idx]->baseConv_;
+            mmex::formatDoubleToCurrencyEdit(old_rate, valueStr);
+            mmex::formatDoubleToCurrencyEdit(new_rate, newValueStr);
+            msg << wxString::Format(_("%s\t: %s -> %s\n"),
+                currency_symbol.c_str(), valueStr.c_str(), newValueStr.c_str());
+            currencies_[idx]->baseConv_ = new_rate;
+            updateCurrency(currencies_[idx]);
+        }
+    }
+
+    db_->Commit();
+    sError = msg;
+    return true;
 }

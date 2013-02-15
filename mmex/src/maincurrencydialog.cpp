@@ -346,20 +346,31 @@ void mmMainCurrencyDialog::OnListItemActivated(wxListEvent& event)
 
 void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 {
-    OnlineUpdateCurRate(this, core_);
-    fillControls();
+    wxString sMsg = wxT("");
+    if (core_->currencyList_.OnlineUpdateCurRate(sMsg))
+    {
+        wxMessageDialog msgDlg(this, sMsg, _("Currency rate updated"));
+        msgDlg.ShowModal();
+        fillControls();
+    }
+    else
+    {
+        wxMessageDialog msgDlg(this, sMsg, _("Error"), wxICON_ERROR);
+        msgDlg.ShowModal();
+    }
 }
 
 void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
 {
     currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
 //    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
-    int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting(wxT("BASECURRENCYID"), 1);
+    int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting(wxT("BASECURRENCYID"), -1);
 
     if (baseCurrencyID == currencyID_) return;
 
 //    core_->currencyList_.setBaseCurrencySettings(currencyID_);
     core_->dbInfoSettings_->SetIntSetting(wxT("BASECURRENCYID"), currencyID_);
+    core_->dbInfoSettings_->Save();
 
     fillControls();
     event.Skip();

@@ -68,6 +68,7 @@ public:
     void LoadCurrencySettings(const wxString& currencySymbol) const;
     int getBaseCurrencySettings(MMEX_IniSettings* info_table) const;
     void setBaseCurrencySettings(MMEX_IniSettings* info_table, int currencyID);
+	bool OnlineUpdateCurRate(wxString& sError);
 
     std::vector< boost::shared_ptr<mmCurrency> > currencies_;
 

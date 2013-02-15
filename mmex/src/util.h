@@ -364,7 +364,6 @@ wxImageList* navtree_images_list_();
 
 /// Located here as a function to allow removal in GTK
 void windowsFreezeThaw(wxWindow* pWindow);
-void OnlineUpdateCurRate(wxWindow *parent, mmCoreDB* core);
 
 boost::shared_ptr<wxSQLite3Database> static_db_ptr();
 
