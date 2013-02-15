@@ -3337,7 +3337,17 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 {
-    OnlineUpdateCurRate(this, m_core.get());
+    wxString sMsg = wxT("");
+    if (m_core.get()->currencyList_.OnlineUpdateCurRate(sMsg))
+    {
+        wxMessageDialog msgDlg(this, sMsg, _("Currency rate updated"));
+        msgDlg.ShowModal();
+    }
+    else
+    {
+        wxMessageDialog msgDlg(this, sMsg, _("Error"), wxICON_ERROR);
+        msgDlg.ShowModal();
+    }
 }
 //----------------------------------------------------------------------------
 
