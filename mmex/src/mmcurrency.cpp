@@ -118,12 +118,12 @@ void mmCurrencyList::SetCurrencySetting(boost::shared_ptr<mmCurrency> pCurrency)
 
 int mmCurrencyList::getBaseCurrencySettings(MMEX_IniSettings* info_table) const
 {
-   return info_table->GetIntSetting(wxT("BASECURRENCYID"), 1);
+    return info_table->GetIntSetting(wxT("BASECURRENCYID"), -1);
 }
 
 void mmCurrencyList::setBaseCurrencySettings(MMEX_IniSettings* info_table, int currencyID)
 {
-   info_table->SetIntSetting(wxT("BASECURRENCYID"), currencyID);
+    info_table->SetIntSetting(wxT("BASECURRENCYID"), currencyID);
 }
 
 int mmCurrencyList::AddCurrency(boost::shared_ptr<mmCurrency> pCurrency)
