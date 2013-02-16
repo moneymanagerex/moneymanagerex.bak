@@ -27,105 +27,275 @@
 #include "testing_util.h"
 
 #ifdef NEW_CLASSES_TEST_INCLUDED_IN_BUILD
+//----------------------------------------------------------------------------
+#include "db_payee.h"
+#include "db_category.h"
+#include "db_subcategory.h"
+#include "db_transaction.h"
+#include "db_splittransaction.h"
+#include "db_assets.h"
+
+//----------------------------------------------------------------------------
+
 /*****************************************************************************************
  The tests for the new classes
  *****************************************************************************************/
 SUITE(new_classes_test)
 {
 
-// ----------------------------------------------------------------------------
-// The test: init_DB has been duplicated in this suite to ensure that the
-// database is initialised when this module is used on its own.
-// ----------------------------------------------------------------------------
-TEST(init_DB)
+TEST(TCategoryList_Test)
 {
     printf("\nnew_classes_test: START");
     display_STD_IO_separation_line();
+
     const wxDateTime start_time(wxDateTime::UNow());
 
-    mmCoreDB* pCore = pDb_core().get();
-    CHECK(pCore->displayDatabaseError_ == true);
+    TCategoryList cat_list(get_pDb());
 
-    displayTimeTaken(wxT("init_DB"), start_time);    
-}
-//----------------------------------------------------------------------------
-#if 1
-TEST(Category_ID_Test)
-{
-    const wxDateTime start_time(wxDateTime::UNow());
-    mmCoreDB* pCore = pDb_core().get();
+    int cat_id; 
+    get_pDb()->Begin();
 
-    pCore->categoryList_.entries_.clear();
-    pCore->categoryList_.LoadCategories();
-
-    int cat_id_1 = pCore->categoryList_.AddCategory(wxT("Category_ID_Test_1"));
-    int cat_id_2 = pCore->categoryList_.AddCategory(wxT("Category_ID_Test_2"));
-    int cat_id_3 = pCore->categoryList_.AddCategory(wxT("Category_ID_Test_3"));
-    int cat_id_4 = pCore->categoryList_.AddCategory(wxT("Category_ID_Test_4"));
-    pCore->categoryList_.AddCategory(wxT("Category_ID_Test_5"));
-
-    pCore->categoryList_.DeleteCategory(cat_id_2);
-    pCore->categoryList_.DeleteCategory(cat_id_3);
-    pCore->categoryList_.DeleteCategory(cat_id_4);
-
-    pCore->db_.get()->Vacuum();
-
-    cat_id_2 = pCore->categoryList_.AddSubCategory(cat_id_1, wxT("Category_ID_Test_2"));
-    cat_id_3 = pCore->categoryList_.AddSubCategory(cat_id_1, wxT("Category_ID_Test_3"));
-    cat_id_4 = pCore->categoryList_.AddSubCategory(cat_id_1, wxT("Category_ID_Test_4"));
-
-    int cat_id = pCore->categoryList_.AddCategory(g_CategName);
-    int id = pCore->categoryList_.GetCategoryId(g_CategName);
-    pCore->categoryList_.DeleteCategory(cat_id);
-
-    CHECK(id == cat_id);
-
-    pCore->categoryList_.entries_.clear();
-    pCore->categoryList_.LoadCategories();
-
-    displayTimeTaken(wxT("Category_ID_Test"), start_time);
-}
-
-TEST(New_Category_Test_1)
-{
-    const wxDateTime start_time(wxDateTime::UNow());
-
-    TCategoryList category_list(get_pDb());
-    category_list.LoadCategoryList();
-    int cat_id = category_list.AddCategory(wxT("New_Cat_Test_1 Category"));
-    CHECK(cat_id > -1);
-
-    int subcat_id = category_list.AddSubCategory(cat_id, wxT("New_Cat_Test_1 - SubCategory"));
-    CHECK(subcat_id > -1);
-
-    displayTimeTaken(wxT("New_Category_Test"), start_time);
-}
-
-TEST(New_Category_Test_2)
-{
-    const wxDateTime start_time(wxDateTime::UNow());
-
-    TCategoryList category_list(get_pDb());
-    category_list.LoadCategoryList();
+    cat_id = cat_list.AddEntry(wxT("Food"));
+    CHECK(cat_id > 0);
+ 
+    cat_id = cat_list.AddEntry(wxT("Income"));
+    CHECK(cat_id > 0);
     
-    int cat_id = category_list.GetCategoryId(wxT("Unknown Cat Test Category"));
+    cat_id = cat_list.AddEntry(wxT("Auto"));
+    CHECK(cat_id > 0);
 
-    CHECK(cat_id == -1);
-    cat_id = category_list.GetCategoryId(wxT("New_Cat_Test_1 Category"));
-    CHECK(cat_id > -1);
+    cat_list.UpdateEntry(cat_id, wxT("Automobile"));
+    CHECK_EQUAL(wxT("Automobile"), cat_list.GetCategoryName(cat_id));
 
-    int subcat_id = category_list.GetSubCategoryId(cat_id, wxT("Unknown Cat Test SubCategory"));
-    CHECK(subcat_id == -1);
-    subcat_id = category_list.GetSubCategoryId(cat_id, wxT("New_Cat_Test_1 - SubCategory"));
-    CHECK(subcat_id > -1);
+    cat_id = cat_list.AddEntry(wxT("Healthcare"));
+    CHECK(cat_id > 0);
+    
+    get_pDb()->Commit();
 
-    wxString fullCatName = category_list.GetFullCategoryName(cat_id, subcat_id);
-    CHECK_EQUAL(fullCatName, wxT("New_Cat_Test_1 Category:New_Cat_Test_1 - SubCategory"));
+    boost::shared_ptr<TCategoryEntry> pCatEntry = cat_list.GetEntryPtr(2);
+    if (pCatEntry)
+    {
+        CHECK(true);
+        CHECK_EQUAL(wxT("Income"), pCatEntry->name_);
+        cat_list.DeleteEntry(pCatEntry->GetId());
+    }
+    else
+    {
+        CHECK(false);
+    }
 
-    displayTimeTaken(wxT("New_SubCategory_Test"), start_time);
+    displayTimeTaken(wxT("TCategoryList_Test"), start_time);
 }
-#endif
 
+TEST(TSubCategoryList_Test)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TCategoryList cat_list(get_pDb());
+    TSubCategoryList subcat_list(get_pDb());
+
+    get_pDb()->Begin();
+    int cat_id = -1;
+
+    cat_id = cat_list.GetCategoryId(wxT("Food"));
+    CHECK(cat_id > 0);
+    if (cat_id > 0)
+    {
+        subcat_list.AddEntry(cat_id, wxT("Groceries"));
+        subcat_list.AddEntry(cat_id, wxT("Dining Out"));
+        subcat_list.AddEntry(cat_id, wxT("Miscellaneous"));
+    }
+
+    cat_id = cat_list.GetCategoryId(wxT("Income"));
+    CHECK(cat_id <= 0);
+
+    cat_id = cat_list.GetCategoryId(wxT("Automobile"));
+    CHECK(cat_id > 0);
+    if (cat_id > 0)
+    {
+        subcat_list.AddEntry(cat_id, wxT("Fuel"));
+        subcat_list.AddEntry(cat_id, wxT("Maintenance"));
+        subcat_list.AddEntry(cat_id, wxT("Registration"));
+        subcat_list.AddEntry(cat_id, wxT("Insurance"));
+        subcat_list.AddEntry(cat_id, wxT("Miscellaneous"));
+    }
+
+    cat_id = cat_list.GetCategoryId(wxT("Healthcare"));
+    CHECK(cat_id > 0);
+    if (cat_id > 0)
+    {
+        subcat_list.AddEntry(cat_id, wxT("Doctor"));
+        subcat_list.AddEntry(cat_id, wxT("Dentist"));
+        subcat_list.AddEntry(cat_id, wxT("Chemist"));
+        subcat_list.AddEntry(cat_id, wxT("Eyecare"));
+        subcat_list.AddEntry(cat_id, wxT("Insurance"));
+        subcat_list.AddEntry(cat_id, wxT("Miscellaneous"));
+    }
+    get_pDb()->Commit();
+
+    boost::shared_ptr<TSubCategoryEntry> pSubCatEntry = subcat_list.GetEntryPtr(cat_id, wxT("Insurance"));
+
+    if (pSubCatEntry)
+    {
+        CHECK(true);
+        pSubCatEntry->name_ = wxT("Health Insurance");
+        pSubCatEntry->UpdateSubcat(get_pDb().get());                // Test direct update;
+    }
+    else CHECK(false);
+
+    CHECK(! subcat_list.SubCategoryExists(cat_id, wxT("Insurance")));
+    CHECK(subcat_list.SubCategoryExists(cat_id, wxT("Health Insurance")));
+
+    int subcat_id = subcat_list.GetSubCategoryId(cat_id, wxT("Health Insurance"));
+    subcat_list.UpdateEntry(cat_id, subcat_id, wxT("Insurance"));
+    CHECK(subcat_list.SubCategoryExists(cat_id, wxT("Insurance")));
+
+    subcat_list.DeleteEntry(cat_id, subcat_id);
+    CHECK(! subcat_list.SubCategoryExists(cat_id, wxT("Insurance")));
+
+    displayTimeTaken(wxT("TSubCategoryList_Test"), start_time);
+}
+
+TEST(TCategoryList_SubList_Test)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TCategoryList cat_list(get_pDb());
+
+    int cat_id = cat_list.GetCategoryId(wxT("Automobile"));
+    TSubCategoryList subcat_sublist(get_pDb(), cat_id);
+
+    int subcat_id = subcat_sublist.GetSubCategoryId(cat_id, wxT("Registration"));
+
+    wxString sub_name = subcat_sublist.GetSubCategoryName(cat_id, subcat_id);
+    CHECK_EQUAL(wxT("Registration"), sub_name);
+
+    cat_id = cat_list.GetCategoryId(wxT("Food"));
+    CHECK(! subcat_sublist.SubCategoryExists(cat_id, wxT("Miscellaneous")));
+
+    displayTimeTaken(wxT("TCategoryList_SubList_Test"), start_time);
+}
+
+TEST(TPayeeList_test_1)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TPayeeList payee_list(get_pDb());
+    int payee_id;
+
+    payee_id = payee_list.AddEntry(wxT("Coles"));
+    CHECK(payee_id > 0);
+
+    payee_id = payee_list.AddEntry(wxT("Woolworths"));
+    CHECK(payee_id > 0);
+
+    payee_id = payee_list.AddEntry(wxT("ACTEW"));
+    CHECK(payee_id > 0);
+
+    payee_id = payee_list.GetPayeeId(wxT("Woolworths"));
+    CHECK_EQUAL(wxT("Woolworths"), payee_list.GetPayeeName(payee_id));
+
+    payee_list.UpdateEntry(payee_id, wxT("Big W"));
+    CHECK_EQUAL(wxT("Big W"), payee_list.GetPayeeName(payee_id));
+
+    payee_list.UpdateEntry(wxT("Coles"), 1, 1);
+
+    boost::shared_ptr<TPayeeEntry> pEntry = payee_list.GetEntryPtr(wxT("Coles"));
+    CHECK_EQUAL(wxT("Coles"), pEntry->name_);
+    CHECK_EQUAL(1, pEntry->subcat_id_);
+    CHECK_EQUAL(1, pEntry->cat_id_);
+
+    payee_list.DeleteEntry(wxT("Big W"));
+    CHECK(! payee_list.PayeeExists(wxT("Big W")));
+
+    displayTimeTaken(wxT("TPayeeList_test_1"), start_time);
+}
+
+TEST(TPayeeList_test_2)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TPayeeList payee_list(get_pDb());
+    int payee_id;
+
+    payee_id = payee_list.AddEntry(wxT("Woolworths"));
+    CHECK(payee_id > 0);
+
+    payee_id = payee_list.AddEntry(wxT("ACTEW"));
+    CHECK(payee_id > 0);
+
+    displayTimeTaken(wxT("TPayeeList_test_2"), start_time);
+}
+
+TEST(TAssetList_test_1)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TAssetList asset_list(get_pDb());
+    int asset_id;
+
+    asset_id = asset_list.AddEntry();
+    CHECK(asset_id > 0);
+
+    boost::shared_ptr<TAssetEntry> asset_entry = asset_list.GetEntryPtr(asset_id);
+	
+	wxDateTime dt = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
+	wxString date = dt.FormatISODate();
+
+	asset_entry->date_ = date;
+    asset_entry->name_ = wxT("Automobile");
+    asset_entry->value_ = 2000;
+    asset_entry->rate_type_ = ASSET_RATE_DEF[ASSET_RATE_DEPRECIATE];
+    asset_entry->rate_value_ = 50;
+    asset_list.UpdateEntry(asset_id);
+
+    displayTimeTaken(wxT("TAssetList_test_1"), start_time);
+}
+
+TEST(TAssetList_test_2)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+	wxDateTime dt = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
+	wxString date = dt.FormatISODate();
+
+    TAssetList asset_list(get_pDb());
+
+    CHECK_EQUAL(1, asset_list.CurrentListSize());
+
+    boost::shared_ptr<TAssetEntry> asset_entry = asset_list.GetListIndexEntryPtr(0);
+    if (asset_entry)
+    {
+        CHECK(true);
+        CHECK_EQUAL(date, asset_entry->date_);
+        CHECK_EQUAL(wxT("Automobile"), asset_entry->name_);
+        CHECK_EQUAL(2000, asset_entry->value_);
+
+        double depreciation_value = asset_entry->GetAssetValue();
+        CHECK_EQUAL(500, depreciation_value);
+ 
+        asset_entry->rate_type_ = ASSET_RATE_DEF[ASSET_RATE_APPRECIATE];
+        double appreciation_value = asset_entry->GetAssetValue();
+        CHECK_EQUAL(4500, appreciation_value);
+        
+  //      wxString str_value;
+		//str_value << wxT("\n\nAsset Value: ") << asset_entry->value_;
+  //      str_value << wxT("     Rate: ") << asset_entry->rate_value_;
+  //      str_value << wxT("\nDepreciate: ") << depreciation_value;
+		//str_value << wxT("     Apreciate: ") << appreciation_value << wxT("\n\n");
+  //      printf(str_value.char_str());
+    }
+    else
+    {
+        CHECK(false);
+    }
+
+    int asset_id = asset_entry->GetId();
+    asset_list.DeleteEntry(asset_id);
+
+    CHECK_EQUAL(0, asset_list.CurrentListSize());
+
+    displayTimeTaken(wxT("TAssetList_test_2"), start_time);
+}
 
 TEST(TSplitTransactionList_test_create)
 {
@@ -208,7 +378,7 @@ TEST(TSplitTransactionList_test_delete)
 
     pEntry = split_list.GetIndexedEntryPtr(2);
 
-    int entry_id = pEntry->GetSplitEntryId();
+    int entry_id = pEntry->GetId();
 
     pEntry = split_list.GetEntryPtr(entry_id);
     if (pEntry)

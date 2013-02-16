@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "../platfdep.h" // GetAppName
 #include <UnitTest++.h>
 #include <wx/app.h>
+#include "testing_util.h"
 //----------------------------------------------------------------------------
 
 /*
@@ -27,11 +28,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 int main(int /*argc*/, char const* /*argv*/[])
 {
-        wxAppInitializerFunction f = wxAppConsole::GetInitializerFunction();
-        f(); // creates instance of application
+// Take out main app when testing new classes for now
+#ifndef NEW_CLASSES_TEST_INCLUDED_IN_BUILD
+    wxAppInitializerFunction f = wxAppConsole::GetInitializerFunction();
+    f(); // creates instance of application
 
-	wxApp::GetInstance()->SetAppName(mmex::GetAppName());
+    wxApp::GetInstance()->SetAppName(mmex::GetAppName());
+#endif
 
-        return UnitTest::RunAllTests();
+    return UnitTest::RunAllTests();
 }
 //----------------------------------------------------------------------------
