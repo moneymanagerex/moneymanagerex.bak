@@ -1,6 +1,6 @@
 /*************************************************************************
  Copyright (C) 2009 VaDiM
- Copyright (C) 2011 Stefano Giorgio
+ Copyright (C) 2013 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -31,10 +31,7 @@
 #include "mmex_settings.h"
 #include <iostream>
 //----------------------------------------------------------------------------
-//#include "db_category.h"
-//#include "db_transaction.h"
 
-//----------------------------------------------------------------------------
 const wxString g_BudgetYear   = wxT("2009");
 const wxString g_CategName    = wxT("new category");
 const wxString g_SubCategName = wxT("new subcategory");
