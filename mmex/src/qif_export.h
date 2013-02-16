@@ -38,8 +38,6 @@ public:
         const wxSize& size = SYMBOL_QIFDIALOG_SIZE,
         long style = SYMBOL_QIFDIALOG_STYLE );
 
-    void CreateControls();
-
 private:
     void OnQuit(wxCloseEvent& event);
     void OnCancel(wxCommandEvent& event);
@@ -49,8 +47,11 @@ private:
     void OnCheckboxClick(wxCommandEvent& /*event*/);
     void OnFileNameEntered(wxCommandEvent& event);
     void OnFileNameChanged(wxCommandEvent& event);
-    void OnSearch(wxCommandEvent& event);
+    void OnFileSearch(wxCommandEvent& event);
     void OnButtonClear(wxCommandEvent& /*event*/);
+    void CreateControls();
+    void fillControls();
+
     mmCoreDB* core_;
     wxWindow* parent_;
     wxArrayInt accounts_id_;
@@ -70,8 +71,9 @@ private:
     wxTextCtrl* log_field_;
     wxRadioBox* m_radio_box_;
     wxString delimit_;
+    wxArrayString accounts_name_;
 
     void mmExportQIF(wxWindow* parent_, mmCoreDB* core);
     wxString writeAccHeader(wxString& acctName, bool qif);
-	wxString exportCategories(bool qif);
+    wxString exportCategories(bool qif);
 };

@@ -641,16 +641,16 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    bNew_ = new wxButton(itemPanel12, wxID_NEW);
+    bNew_ = new wxButton(itemPanel12, wxID_NEW, _("&New"));
     bNew_->SetToolTip(_("New Transaction"));
     itemBoxSizer5->Add(bNew_, 0, wxRIGHT, 5);
 
-    bEdit_ = new wxButton(itemPanel12, wxID_EDIT);
+    bEdit_ = new wxButton(itemPanel12, wxID_EDIT, _("&Edit"));
     bEdit_->SetToolTip(_("Edit selected transaction"));
     itemBoxSizer5->Add(bEdit_, 0, wxRIGHT, 5);
     bEdit_->Enable(false);
 
-    bDelete_ = new wxButton(itemPanel12, wxID_DELETE);
+    bDelete_ = new wxButton(itemPanel12, wxID_DELETE, _("&Delete"));
     bDelete_->SetToolTip(_("Delete selected transaction"));
     itemBoxSizer5->Add(bDelete_, 0, wxRIGHT, 5);
     bDelete_->Enable(false);
@@ -660,8 +660,9 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizer5->Add(bMove_, 0, wxRIGHT, 5);
     bMove_->Enable(false);
 
-    wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12,
-        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB, wxDefaultValidator, _("Search"));
+    wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12
+        , wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1)
+        , wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB, wxDefaultValidator, _("Search"));
     itemBoxSizer5->Add(searchCtrl, 0, wxTOP, 1);
     searchCtrl->SetToolTip(_("Enter any string to find it in the nearest transaction notes"));
 
@@ -778,7 +779,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         infoStr << amountStr << wxT(" ");
         if (amount!=toamount || tocurrencyid != currencyid)
             infoStr << wxT("-> ")  << toamountStr << wxT(" ");
-        infoStr << _("From") << wxT(" ") << fromaccStr << wxT(" ") << _("to ") << intoaccStr;
+        infoStr << wxString::Format(_("From %s to %s"), fromaccStr.c_str(), intoaccStr.c_str());
 
         if (tocurrencyid != currencyid)
         {
