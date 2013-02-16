@@ -149,7 +149,7 @@ void mmQIFDialog::CreateControls()
         , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     toFileCheckBox_->SetValue(true);
     file_name_label_ = new wxStaticText(main_tab, wxID_ANY, _("File Name:"));
-    button_search_ = new wxButton(main_tab, wxID_SAVE, _("&Save"));
+    button_search_ = new wxButton(main_tab, wxID_SAVE, _("Choose &file"));
     button_search_->Connect(wxID_SAVE, wxEVT_COMMAND_BUTTON_CLICKED
         , wxCommandEventHandler(mmQIFDialog::OnFileSearch), NULL, this);
 
@@ -185,8 +185,8 @@ void mmQIFDialog::CreateControls()
     wxStdDialogButtonSizer*  buttons_sizer = new wxStdDialogButtonSizer;
     buttons_panel->SetSizer(buttons_sizer);
 
-    wxButton* itemButtonOK = new wxButton( buttons_panel, wxID_OK);
-    wxButton* itemButtonCancel_ = new wxButton( buttons_panel, wxID_CANCEL);
+    wxButton* itemButtonOK = new wxButton( buttons_panel, wxID_OK, _("&OK"));
+    wxButton* itemButtonCancel_ = new wxButton( buttons_panel, wxID_CANCEL, _("&Cancel"));
     itemButtonOK->Connect(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED
         , wxCommandEventHandler(mmQIFDialog::OnOk), NULL, this);
 
@@ -331,7 +331,7 @@ wxString mmQIFDialog::writeAccHeader(wxString& acctName, bool qif)
     {
         buffer = wxString(wxT("!Account")) << wxT("\n")
             << wxT("N") << acctName <<  wxT("\n")
-            << wxT("TChecking") << wxT("\n")
+            << wxT("TBank") << wxT("\n")
             << wxT("^") <<  wxT("\n")
             << wxT("!Type:Cash") << wxT("\n");
     }
