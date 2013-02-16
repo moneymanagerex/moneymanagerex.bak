@@ -422,26 +422,23 @@ void mmQIFDialog::mmExportQIF()
                 const wxString fromAccount = core_->accountList_.GetAccountName(fAccountID);
                 const int tAccountID = pBankTransaction->toAccountID_;
 
-                wxString amount = adjustedExportAmount(amtSeparator, wxString()<<pBankTransaction->amt_);
-                double value = 0.0;
-                mmex::formatCurrencyToDouble(amount, value);
-                mmex::formatDoubleToCurrencyEdit(value, amount);
-
-                wxString toamount;
-
                 wxString transNum = pBankTransaction->transNum_;
-                wxString categ = pBankTransaction->fullCatStr_;
+                wxString categ = wxT("");
+                if (pBankTransaction->categID_ != -1)
+                    categ = pBankTransaction->fullCatStr_;
                 wxString notes = (pBankTransaction->notes_);
                 notes.Replace(wxT("''"), wxT("'"));
                 notes.Replace(wxT("\n"), wxT(" "));
 
+                double value = pBankTransaction->amt_;
+                wxString amount = /*adjustedExportAmount(amtSeparator,*/ wxString()<<value/*)*/;
+                wxString toamount;
+
                 if (type == wxT("Transfer"))
                 {
                     const wxString toAccount = core_->accountList_.GetAccountName(tAccountID);
-                    toamount = adjustedExportAmount(amtSeparator, wxString()<<pBankTransaction->toAmt_);
-                    double tovalue = 0.0;
-                    mmex::formatCurrencyToDouble(toamount, tovalue);
-                    mmex::formatDoubleToCurrencyEdit(tovalue, toamount);
+                    double tovalue = pBankTransaction->toAmt_;
+                    toamount = /*adjustedExportAmount(amtSeparator,*/ wxString()<<tovalue/*)*/;
                     wxString amount_temp = amount;
 
                     if (tAccountID == fromAccountID) {
@@ -484,11 +481,10 @@ void mmQIFDialog::mmExportQIF()
 
                     for (int i = 0; i < (int)splits->entries_.size(); ++i)
                     {
-                        wxString split_amount;
                         value = splits->entries_[i]->splitAmount_;
+                        wxString split_amount = wxString()<<value;
                         if (type == wxT("Withdrawal"))
-                            value = -value;
-                        mmex::formatDoubleToCurrencyEdit(value, split_amount);
+                            split_amount.Prepend(wxT("-"));
 
                         wxString split_categ = core_->categoryList_.GetCategoryName(splits->entries_[i]->categID_);
                         const wxString split_subcateg = core_->categoryList_.GetSubCategoryName(
@@ -496,10 +492,10 @@ void mmQIFDialog::mmExportQIF()
                         if (!split_subcateg.IsEmpty()) split_categ += wxT(":") + split_subcateg;
                         if (qif_csv)
                         {
-                        buffer << wxT('S') << split_categ << wxT("\n")
-                            << wxT('$') << split_amount << wxT("\n")
-                            << wxT('E') << split_categ << wxT(" ")
-                            << split_amount << wxT("\n");
+                            buffer << wxT('S') << split_categ << wxT("\n")
+                                << wxT('$') << split_amount << wxT("\n")
+                                << wxT('E') << split_categ << wxT(" ")
+                                << split_amount << wxT("\n");
                         }
                         else
                         {
@@ -533,7 +529,8 @@ void mmQIFDialog::mmExportQIF()
                         << wxT("\n");
                 }
                 buffer << wxT('^') << wxT("\n");
-                numRecords++;
+                if (transferTrxId.Index(trans_id) == wxNOT_FOUND)
+                    numRecords++;
             }
         }
     }
