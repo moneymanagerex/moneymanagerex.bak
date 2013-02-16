@@ -194,7 +194,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
     wxString sFullCateg, sCateg, sSubCateg, sSplitCategs, sSplitAmount, sValid;
 
     wxDateTime dtdt = wxDateTime::Now();
-    int payeeID = -1, categID = -1, subCategID = -1, to_account_id = -1;
+    int payeeID = -1, categID = -1, subCategID = -1, to_account_id = -1, from_account_id = -1;
     double val = 0.0, dSplitAmount = 0.0;
     bool bTrxComplited = true;
 
@@ -207,7 +207,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         if (bTrxComplited)
         {
             sSplitAmount.clear();
-            sSplitCategs.clear();                
+            sSplitCategs.clear();
             mmSplit->entries_.clear();
 
             sPayee.clear();
@@ -323,6 +323,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         }
 
         to_account_id = -1;
+        from_account_id = fromAccountID;
         bool bValid = true;
 
         if (lineType(readLine) == Date) // 'D'
@@ -336,6 +337,10 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         else if (lineType(readLine) == Amount) // 'T'
         {
             sAmount = getLineData(readLine);
+            // Until the value has been received, we don't know transaction type
+            // At the same time we don't know it transfer or no
+            // Therefore the type of transaction defined as withdrawal
+            type = TRANS_TYPE_WITHDRAWAL_STR;
 
             if (!sAmount.ToDouble(&val) && !mmex::formatCurrencyToDouble(sAmount, val))
             {
@@ -344,12 +349,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 logWindow->AppendText(sMsg << wxT("\n"));
                 continue;
             }
-
-            if (val <= 0.0)
-                type = TRANS_TYPE_WITHDRAWAL_STR;
-            else
-                type = TRANS_TYPE_DEPOSIT_STR;
-            val = fabs(val);
             continue;
         }
         else if (lineType(readLine) == Payee) // 'P'
@@ -414,14 +413,14 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
             else if (type.Trim().IsEmpty())
             {
                 sMsg = _("Transaction Type is missing");
-				log << sMsg << endl;
+                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
                 bValid = false;
             }
             else if (sAmount.Trim().IsEmpty())
             {
                 sMsg = _("Amount is missing");
-				log << sMsg << endl;
+                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
                 bValid = false;
             }
@@ -437,6 +436,12 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 if (accounts_name.Index(sToAccountName) != wxNOT_FOUND)
                 {
                     to_account_id = core->accountList_.GetAccountId(sToAccountName);
+                    if (val > 0.0)
+                    {
+                        from_account_id = to_account_id;
+                        to_account_id = fromAccountID;
+                    }
+
                     type = TRANS_TYPE_TRANSFER_STR;
                 }
                 else
@@ -447,7 +452,10 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                     sPayee = sToAccountName;
                 }
             }
-            //wxString cat, subcat;
+
+            if (val > 0.0 && type != TRANS_TYPE_TRANSFER_STR)
+                type = TRANS_TYPE_DEPOSIT_STR;
+
             core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
 
             if (categID == -1)
@@ -466,7 +474,11 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 status = wxT("V");
             }
 
-            if (type != TRANS_TYPE_TRANSFER_STR)
+            if (type == TRANS_TYPE_TRANSFER_STR)
+            {
+                 payeeID = -1;
+            }
+            else
             {
                 to_account_id = -1;
                 if (!core->payeeList_.PayeeExists(sPayee))
@@ -479,10 +491,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 else
                     payeeID = core->payeeList_.GetPayeeId(sPayee);
             }
-            else
-            {
-                 payeeID = -1;
-            }
 
             if (!bValid) sValid = wxT("NO"); else sValid = wxT("OK");
             sMsg = wxString::Format(
@@ -491,7 +499,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 , numImported + 1
                 , sValid.c_str()
                 , dtdt.FormatISODate().c_str()
-                , acctName.c_str()
+                , core->accountList_.GetAccountName(from_account_id).c_str()
                 , core->accountList_.GetAccountName(to_account_id).c_str()
                 , core->payeeList_.GetPayeeName(payeeID).c_str()
                 , type.Left(1).c_str()
@@ -517,17 +525,17 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
             boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
             pTransaction->date_ = dtdt;
-            pTransaction->accountID_ = fromAccountID;
+            pTransaction->accountID_ = from_account_id;
             pTransaction->toAccountID_ = to_account_id;
             pTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(payeeID);
             //payee will be used for determine unique id of transfer transactions
             pTransaction->payeeStr_ = sPayee;
             pTransaction->transType_ = type;
-            pTransaction->amt_ = val;
+            pTransaction->amt_ = fabs(val);
             pTransaction->status_ = status;
             pTransaction->transNum_ = transNum;
             pTransaction->notes_ = notes;
-            pTransaction->toAmt_ = val;
+            pTransaction->toAmt_ = fabs(val);
             if (mmSplit->numEntries()) categID = -1;
             pTransaction->category_ = core->categoryList_.GetCategorySharedPtr(categID, subCategID);
             *pTransaction->splitEntries_ = *mmSplit;
@@ -541,11 +549,14 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                 {
                     if (refTrans[index]->transType_ != TRANS_TYPE_TRANSFER_STR) continue;
                     if (refTrans[index]->date_!= dtdt) continue;
-                    if (refTrans[index]->payeeStr_!= sPayee) continue;
-                    if (refTrans[index]->accountID_!= to_account_id) continue;
+                    if (refTrans[index]->accountID_!= from_account_id) continue;
                     if (refTrans[index]->transNum_ != transNum) continue;
                     sMsg = wxString::Format(wxT("%f -> %f \n"),refTrans[index]->toAmt_ ,val);
-                    refTrans[index]->toAmt_ = val;
+                    if (val > 0.0)
+                        refTrans[index]->toAmt_ = fabs(val);
+                    else
+                        refTrans[index]->amt_ = fabs(val);
+
                     bValid = false;
                     logWindow->AppendText(sMsg);
                     log << sMsg << endl;
