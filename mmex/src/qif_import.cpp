@@ -124,6 +124,18 @@ wxString getFileLine(wxTextInputStream& textFile, int& lineNumber)
     return textLine;
 }
 
+wxString getFinancistoProject(wxString& sSubCateg)
+{
+    //Additional parsint for Financisto
+    wxString sProject = wxT("");
+    wxStringTokenizer cattkz(sSubCateg, wxT("/"));
+
+    sSubCateg = cattkz.GetNextToken();
+    if (cattkz.HasMoreTokens())
+        sProject = cattkz.GetNextToken();
+    return sProject;
+}
+
 bool warning_message()
 {
     wxString msgStr;
@@ -386,6 +398,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             sSplitAmount = getLineData(readLine);
             //Parse split category
             core->categoryList_.parseCategoryString(sSplitCategs, sCateg, categID, sSubCateg, subCategID);
+
             //get amount
             if (!sSplitAmount.ToDouble(&dSplitAmount) && !mmex::formatCurrencyToDouble(sSplitAmount, dSplitAmount))
                 dSplitAmount = 0; //wrong amount //TODO: write it to log
@@ -471,6 +484,8 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 type = TRANS_TYPE_DEPOSIT_STR;
 
             core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
+            if (sSubCateg.Contains(wxT("/")))
+                transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sSubCateg).c_str()));
 
             if (categID == -1)
                 categID =  core->categoryList_.AddCategory(sCateg);
