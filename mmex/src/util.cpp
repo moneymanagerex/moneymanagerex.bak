@@ -452,15 +452,16 @@ wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
     return dateFmt;
 }
 
-void mmShowErrorMessage(wxWindow *parent, const wxString &message, const wxString &messageheader)
+void mmShowErrorMessage(wxWindow *parent
+    , const wxString &message, const wxString &messageheader)
 {
-    wxMessageDialog msgDlg(parent, message, messageheader, wxICON_ERROR);
+    wxMessageDialog msgDlg(parent, message, messageheader, wxOK|wxICON_ERROR);
     msgDlg.ShowModal();
 }
 
 void mmShowErrorMessageInvalid(wxWindow *parent, const wxString &message)
 {
-    wxString msg = _("Entry ") + message + _(" is invalid.");
+    wxString msg = wxString::Format(_("Entry %s is invalid"), message.c_str());
     mmShowErrorMessage(parent, msg, _("Invalid Entry"));
 }
 
