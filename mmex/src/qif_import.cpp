@@ -160,6 +160,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
     acctName = sUserProvidedName;
     int fromAccountID = core->accountList_.GetAccountId(acctName);
+    wxString sDefCurrencyName = core->accountList_.GetAccountCurrencyName(fromAccountID);
 
     wxString chooseExt;
     chooseExt << _("QIF Files ") << wxT("(*.qif)|*.qif;*.QIF|")
@@ -265,7 +266,24 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                         if (core->accountList_.GetAccountId(getLineData(readLine)) > -1)
                             acctName = getLineData(readLine);
                         else
-                            acctName = sUserProvidedName;
+                        {
+                            //TODO: Repeated code
+                            mmAccount* ptrBase = new mmAccount();
+                            boost::shared_ptr<mmAccount> pAccount(ptrBase);
+
+                            pAccount->favoriteAcct_ = true;
+                            pAccount->status_ = mmAccount::MMEX_Open;
+                            pAccount->acctType_ = ACCOUNT_TYPE_BANK;
+                            pAccount->name_ = getLineData(readLine);
+                            pAccount->initialBalance_ = 0;
+                            pAccount->currency_ = core->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
+                            // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
+                            if ( ! core->accountList_.AccountExists(pAccount->name_))
+                                from_account_id = core->accountList_.AddAccount(pAccount);
+                            accounts_name.Add(pAccount->name_);
+
+                            acctName = pAccount->name_;
+                        }
 
                         fromAccountID = core->accountList_.GetAccountId(acctName);
 
@@ -433,24 +451,33 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
                 sFullCateg = _("Transfer");
 
-                if (accounts_name.Index(sToAccountName) != wxNOT_FOUND)
+                if (accounts_name.Index(sToAccountName) == wxNOT_FOUND)
                 {
-                    to_account_id = core->accountList_.GetAccountId(sToAccountName);
-                    if (val > 0.0)
-                    {
-                        from_account_id = to_account_id;
-                        to_account_id = fromAccountID;
-                    }
+                    mmAccount* ptrBase = new mmAccount();
+                    boost::shared_ptr<mmAccount> pAccount(ptrBase);
 
-                    type = TRANS_TYPE_TRANSFER_STR;
-                }
-                else
-                {
-                    sMsg = wxString::Format(_("Account %s not found"), sToAccountName.c_str());
+                    pAccount->favoriteAcct_ = true;
+                    pAccount->status_ = mmAccount::MMEX_Open;
+                    pAccount->acctType_ = ACCOUNT_TYPE_BANK;
+                    pAccount->name_ = sToAccountName;
+                    pAccount->initialBalance_ = 0;
+                    pAccount->currency_ = core->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
+                    // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
+                    if ( ! core->accountList_.AccountExists(pAccount->name_))
+                        to_account_id = core->accountList_.AddAccount(pAccount);
+                    accounts_name.Add(sToAccountName);
+
+                    sMsg = wxString::Format(_("Account %s added"), sToAccountName.c_str());
                     log << sMsg << endl;
                     logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
-                    sPayee = sToAccountName;
                 }
+                to_account_id = core->accountList_.GetAccountId(sToAccountName);
+                if (val > 0.0)
+                {
+                    from_account_id = to_account_id;
+                    to_account_id = fromAccountID;
+                }
+                type = TRANS_TYPE_TRANSFER_STR;
             }
 
             if (val > 0.0 && type != TRANS_TYPE_TRANSFER_STR)
@@ -528,7 +555,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
             pTransaction->accountID_ = from_account_id;
             pTransaction->toAccountID_ = to_account_id;
             pTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(payeeID);
-            //payee will be used for determine unique id of transfer transactions
             pTransaction->payeeStr_ = sPayee;
             pTransaction->transType_ = type;
             pTransaction->amt_ = fabs(val);

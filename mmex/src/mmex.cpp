@@ -1892,6 +1892,8 @@ void mmGUIFrame::OnPopupImportQIFile(wxCommandEvent& /*event*/)
             }
         }
     }
+    refreshRequested_ = true;
+    updateNavTreeControl();
 }
 //----------------------------------------------------------------------------
 
@@ -2899,6 +2901,8 @@ void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
         setAccountNavTreeSection(m_core.get()->accountList_.GetAccountName(accountID));
         createCheckingAccountPage(accountID);
     }
+    refreshRequested_ = true;
+    updateNavTreeControl();
 }
 //----------------------------------------------------------------------------
 

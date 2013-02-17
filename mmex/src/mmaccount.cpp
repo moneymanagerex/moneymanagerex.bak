@@ -268,7 +268,7 @@ boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) con
 }
 
 std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> 
-mmAccountList::range() const
+    mmAccountList::range() const
 {
     return std::make_pair(accounts_.begin(), accounts_.end());
 }
