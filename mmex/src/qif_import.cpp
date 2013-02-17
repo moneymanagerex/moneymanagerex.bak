@@ -212,16 +212,16 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
 
             sPayee.clear();
             type.clear();
-            sAmount.clear();
             sFullCateg.clear();
             sCateg.clear();
             sSubCateg.clear();
-            notes.clear();
             subCategID = -1;
             categID = -1;
+            sAmount.clear();
             val = 0.0;
             dSplitAmount = 0.0;
-            transNum.clear();
+            transNum = wxT("");
+            notes = wxT("");
             convDate = wxDateTime::Now().FormatISODate();
 
             bTrxComplited = false;
@@ -551,6 +551,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                     if (refTrans[index]->date_!= dtdt) continue;
                     if (refTrans[index]->accountID_!= from_account_id) continue;
                     if (refTrans[index]->transNum_ != transNum) continue;
+                    if (refTrans[index]->notes_ != notes) continue;
                     sMsg = wxString::Format(wxT("%f -> %f \n"),refTrans[index]->toAmt_ ,val);
                     if (val > 0.0)
                         refTrans[index]->toAmt_ = fabs(val);
