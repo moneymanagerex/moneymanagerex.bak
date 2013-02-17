@@ -178,7 +178,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
     wxString sPayee, type, sAmount, transNum, notes, convDate, sToAccountName;
     wxString sFullCateg, sCateg, sSubCateg, sSplitCategs, sSplitAmount, sValid;
 
-    wxDateTime dtdt = wxDateTime::Now();
+    wxDateTime dtdt = wxDateTime::Now().GetDateOnly();
     int payeeID = -1, categID = -1, subCategID = -1, to_account_id = -1, from_account_id = -1;
     double val = 0.0, dSplitAmount = 0.0;
     bool bTrxComplited = true;
@@ -335,7 +335,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
         {
             dt = getLineData(readLine);
 
-            dtdt = mmParseDisplayStringToDate(dt, date_format);
+            dtdt = mmParseDisplayStringToDate(dt, date_format).GetDateOnly();
             convDate = dtdt.FormatISODate();
             continue;
         }
@@ -512,7 +512,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 , trxNumLines
                 , numImported + 1
                 , sValid.c_str()
-                , dtdt.FormatISODate().c_str()
+                , convDate.c_str()
                 , core->accountList_.GetAccountName(from_account_id).c_str()
                 , core->accountList_.GetAccountName(to_account_id).c_str()
                 , core->payeeList_.GetPayeeName(payeeID).c_str()
@@ -544,11 +544,11 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             pTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(payeeID);
             pTransaction->payeeStr_ = sPayee;
             pTransaction->transType_ = type;
-            pTransaction->amt_ = fabs(val);
+            pTransaction->amt_ = val;
             pTransaction->status_ = status;
             pTransaction->transNum_ = transNum;
             pTransaction->notes_ = notes;
-            pTransaction->toAmt_ = fabs(val);
+            pTransaction->toAmt_ = val;
             if (mmSplit->numEntries()) categID = -1;
             pTransaction->category_ = core->categoryList_.GetCategorySharedPtr(categID, subCategID);
             *pTransaction->splitEntries_ = *mmSplit;
@@ -562,14 +562,16 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 {
                     if (refTrans[index]->transType_ != TRANS_TYPE_TRANSFER_STR) continue;
                     if (refTrans[index]->date_!= dtdt) continue;
+                    if (refTrans[index]->amt_ < 0 && val < 0 || refTrans[index]->amt_ > 0 && val >0 ) continue;
                     if (refTrans[index]->accountID_!= from_account_id) continue;
                     if (refTrans[index]->transNum_ != transNum) continue;
                     if (refTrans[index]->notes_ != notes) continue;
+
                     sMsg = wxString::Format(wxT("%f -> %f \n"),refTrans[index]->toAmt_ ,val);
                     if (val > 0.0)
-                        refTrans[index]->toAmt_ = fabs(val);
+                        refTrans[index]->toAmt_ = val;
                     else
-                        refTrans[index]->amt_ = fabs(val);
+                        refTrans[index]->amt_ = val;
 
                     bValid = false;
                     logWindow->AppendText(sMsg);
@@ -607,9 +609,11 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
 
         for (unsigned int index = 0; index < vQIF_trxs.size(); index++)
         {
-            fromAccountID = refTrans[index]->accountID_;
+            //fromAccountID = refTrans[index]->accountID_;
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
             wxASSERT(pCurrencyPtr);
+            refTrans[index]->amt_ = fabs(refTrans[index]->amt_);
+            refTrans[index]->toAmt_ = fabs(refTrans[index]->toAmt_);
             refTrans[index]->updateAllData(core, fromAccountID, pCurrencyPtr);
             core->bTransactionList_.addTransaction(core, refTrans[index]);
         }
