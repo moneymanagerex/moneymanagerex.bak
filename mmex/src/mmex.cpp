@@ -580,7 +580,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_UPDATE_UI(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinksUpdateUI)
     EVT_MENU(MENU_TREEPOPUP_EDIT, mmGUIFrame::OnPopupEditAccount)
     EVT_MENU(MENU_TREEPOPUP_DELETE, mmGUIFrame::OnPopupDeleteAccount)
-    EVT_MENU(MENU_TREEPOPUP_IMPORT_QIF, mmGUIFrame::OnPopupImportQIFile)
 
     EVT_TREE_ITEM_MENU(wxID_ANY, mmGUIFrame::OnItemMenu)
     //EVT_TREE_ITEM_RIGHT_CLICK(ID_NAVTREECTRL, mmGUIFrame::OnItemRightClick)
@@ -599,7 +598,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_LIST, mmGUIFrame::OnAccountList)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, mmGUIFrame::OnExportToCSV)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, mmGUIFrame::OnExportToQIF)
-    EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, mmGUIFrame::OnImportQIF)
+    //EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, mmGUIFrame::OnImportQIF)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, mmGUIFrame::OnImportUniversalCSV)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWALL, mmGUIFrame::OnViewAllAccounts)
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, mmGUIFrame::OnViewFavoriteAccounts)
@@ -1872,31 +1871,6 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::OnPopupImportQIFile(wxCommandEvent& /*event*/)
-{
-    if (selectedItemData_)
-    {
-        int data = selectedItemData_->getData();
-        boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
-        if (pAccount)
-        {
-            wxString acctType = pAccount->acctType_;
-            if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_TERM)
-            {
-                int accountID = mmImportQIF(this, m_core.get(), pAccount->name_);
-                if (accountID != -1)
-                {
-                    setAccountNavTreeSection(m_core.get()->accountList_.GetAccountName(accountID));
-                    createCheckingAccountPage(accountID);
-                }
-            }
-        }
-    }
-    refreshRequested_ = true;
-    updateNavTreeControl();
-}
-//----------------------------------------------------------------------------
-
 void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
 {
     if (selectedItemData_)
@@ -1986,12 +1960,6 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 //                  menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
                     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
                     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
-                    // Don't allow QIF importing to Investment type accounts
-                    if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_TERM )
-                    {
-                        menu.AppendSeparator();
-                        menu.Append(MENU_TREEPOPUP_IMPORT_QIF, _("Import &QIF File"));
-                    }
                     menu.AppendSeparator();
                     menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
                     // Enable menu item only if a website exists for the account.

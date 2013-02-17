@@ -135,32 +135,16 @@ bool warning_message()
     return true;
 }
 
-int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountName )
+int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
 {
-    if ( core->accountList_.getNumAccounts() == 0 ) {
-        wxMessageBox(_( "No account available for import"), _("QIF Import"), wxOK|wxICON_WARNING );
-        return -1;
-    }
-
     if (!warning_message()) return -1;
 
-    wxString sUserProvidedName, acctName, sMsg;
+    wxString acctName, sMsg;
     wxArrayString accounts_name = core->accountList_.getAccountsName();
 
-    if (destinationAccountName == wxEmptyString)
-    {
-        wxSingleChoiceDialog scd(parent_, _("Choose Account to import to:"), _("QIF Import"), accounts_name);
-        if (scd.ShowModal() != wxID_OK)
-            return -1;
-
-        sUserProvidedName = scd.GetStringSelection();
-    }
-    else
-        sUserProvidedName = destinationAccountName;
-
-    acctName = sUserProvidedName;
     int fromAccountID = core->accountList_.GetAccountId(acctName);
-    wxString sDefCurrencyName = core->accountList_.GetAccountCurrencyName(fromAccountID);
+
+    wxString sDefCurrencyName = core->currencyList_.getCurrencyName(core->currencyList_.GetBaseCurrencySettings());
 
     wxString chooseExt;
     chooseExt << _("QIF Files ") << wxT("(*.qif)|*.qif;*.QIF|")
@@ -281,8 +265,11 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                             if ( ! core->accountList_.AccountExists(pAccount->name_))
                                 from_account_id = core->accountList_.AddAccount(pAccount);
                             accounts_name.Add(pAccount->name_);
-
                             acctName = pAccount->name_;
+                            sMsg = wxString::Format(_("Added account '%s'"), acctName.c_str());
+                            log << sMsg << endl;
+                            logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+
                         }
 
                         fromAccountID = core->accountList_.GetAccountId(acctName);
@@ -467,7 +454,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                         to_account_id = core->accountList_.AddAccount(pAccount);
                     accounts_name.Add(sToAccountName);
 
-                    sMsg = wxString::Format(_("Account %s added"), sToAccountName.c_str());
+                    sMsg = wxString::Format(_("Added account '%s'"), sToAccountName.c_str());
                     log << sMsg << endl;
                     logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
                 }
@@ -587,6 +574,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
                     bValid = false;
                     logWindow->AppendText(sMsg);
                     log << sMsg << endl;
+                    break;
                 }
             }
 
@@ -599,13 +587,13 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         }
     }
 
-    sMsg = wxString() << wxString::Format(_("Transactions imported from QIF: %ld"), numImported);
+    sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), numImported+1);
     log << sMsg << endl;
     logWindow->AppendText(sMsg << wxT("\n"));
 
-    sMsg  = wxString() << wxString::Format(_("Log file written to : %s \n"), logFile.GetFullPath().c_str())
+    sMsg  = wxString::Format(_("Log file written to : %s \n"), logFile.GetFullPath().c_str())
           << _("Please confirm saving...");
-    logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+    logWindow->AppendText(sMsg << wxT("\n"));
 
     canceledbyuser = file_dlg.ShowModal() == wxID_CANCEL;
     // Since all database transactions are only in memory,
@@ -627,7 +615,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core, wxString destinationAccountNa
         }
 
         core->db_.get()->Commit();
-        sMsg = wxString::Format(_("Transactions saved to database in account: %s"), acctName.c_str());
+        sMsg = _("Import finished successfully");
         log << endl << sMsg << endl;
     }
     else
