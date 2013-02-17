@@ -1,2 +1,2 @@
-int mmImportQIF(wxWindow* parent_, mmCoreDB* core, wxString destinationAccountName = wxEmptyString );
+int mmImportQIF(wxWindow* parent_, mmCoreDB* core);
 
