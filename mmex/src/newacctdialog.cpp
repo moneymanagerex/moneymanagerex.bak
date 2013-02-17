@@ -192,7 +192,7 @@ void mmNewAcctDialog::CreateControls()
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Currency:")), flags);
 
-    currencyID_ = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
+    currencyID_ = core_->currencyList_.GetBaseCurrencySettings();
     wxString currName = _("Select Currency");
     if (currencyID_ != -1)
     {

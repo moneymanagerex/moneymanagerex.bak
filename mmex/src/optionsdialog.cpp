@@ -79,7 +79,7 @@ bool mmOptionsDialog::Create(
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
-    currencyId_ = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
+    currencyId_ = core_->currencyList_.GetBaseCurrencySettings();
     dateFormat_ = core_->dbInfoSettings_->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
 
     CreateControls();
@@ -701,7 +701,7 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 {
-    int currencyID = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
+    int currencyID = core_->currencyList_.GetBaseCurrencySettings();
 
     if (mmMainCurrencyDialog::Execute(core_, this, currencyID) && currencyID != -1)
     {
@@ -886,7 +886,7 @@ void mmOptionsDialog::SaveGeneralPanelSettings()
     core_->iniSettings_->SetStringSetting(LANGUAGE_PARAMETER, languageButton->GetLabel().Lower());
     mmSelectLanguage(this, core_->iniSettings_, false);
 
-    core_->currencyList_.setBaseCurrencySettings(core_->dbInfoSettings_.get(), currencyId_);
+    core_->currencyList_.SetBaseCurrencySettings(currencyId_);
     core_->dbInfoSettings_->SetStringSetting(wxT("DATEFORMAT"), dateFormat_);
     SaveFinancialYearStart();
 }

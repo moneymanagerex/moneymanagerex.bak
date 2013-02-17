@@ -53,21 +53,24 @@ class mmCurrencyList
 {
 public:
     mmCurrencyList(boost::shared_ptr<wxSQLite3Database> db);
+
+    /// Must be called after currency list object is created.
+    void SetInfoTable(boost::shared_ptr<MMEX_IniSettings> info_table);
     void LoadCurrencies();
 
     /* Currency Functions */
     int AddCurrency(boost::shared_ptr<mmCurrency> pCurrency);
-    void deleteCurrency(int currencyID);
-    void updateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
+    void DeleteCurrency(int currencyID);
+    void UpdateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     int getCurrencyID(const wxString& currencyName, bool symbol = false) const;
     wxString getCurrencyName(int currencyID) const;
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName, bool symbol = false) const;
 
-    void LoadBaseCurrencySettings(MMEX_IniSettings* info_table) const;
-    void LoadCurrencySettings(const wxString& currencySymbol) const;
-    int getBaseCurrencySettings(MMEX_IniSettings* info_table) const;
-    void setBaseCurrencySettings(MMEX_IniSettings* info_table, int currencyID);
+    void LoadBaseCurrencySettings() const;
+    void LoadCurrencySetting(const wxString& currencySymbol);
+    int GetBaseCurrencySettings() const;
+    void SetBaseCurrencySettings(int currencyID);
 	bool OnlineUpdateCurRate(wxString& sError);
 
     std::vector< boost::shared_ptr<mmCurrency> > currencies_;
@@ -80,6 +83,7 @@ public:
    
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
+    boost::shared_ptr<MMEX_IniSettings> info_table_;
 
     void SetCurrencySetting(boost::shared_ptr<mmCurrency> pCurrency) const;
 };

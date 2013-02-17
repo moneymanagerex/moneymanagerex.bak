@@ -109,7 +109,7 @@ void mmHomePagePanel::displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTit
 void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double tRecBalance, double& tBalance, bool showSeparator)
 {
     // format the totals for display
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
 
     wxString tRecBalanceStr;
     mmex::formatDoubleToCurrency(tRecBalance, tRecBalanceStr);
@@ -328,7 +328,7 @@ void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
 {
     double assetBalance = mmDBWrapper::getAssetBalance(core_->db_.get());
     wxString assetBalanceStr;
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
     mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
     if (mmIniOptions::instance().enableAssets_)
@@ -625,7 +625,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 {
     mmex::CurrencyFormatter::instance().loadDefaultSettings();
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
     
     static const char sql3[] = 
         "select NUMBER, "
@@ -674,7 +674,7 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     {
         double category_total = q1.GetDouble(wxT("AMOUNT"));
         wxString category_total_str = wxEmptyString;
-        core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+        core_->currencyList_.LoadBaseCurrencySettings();
         mmex::formatDoubleToCurrency(category_total, category_total_str);
 
         hb.startTableRow();
@@ -727,7 +727,7 @@ void mmHomePagePanel::displayGrandTotals(mmHTMLBuilder& hb, double& tBalance)
 {
 //  Display the grand total from all sections
     wxString tBalanceStr;
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     hb.startTable(wxT("95%"));

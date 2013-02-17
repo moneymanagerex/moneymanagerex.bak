@@ -734,7 +734,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     int toaccountId = m_trans[selIndex]->toAccountID_;
     wxString intoaccStr = core_->accountList_.GetAccountName(toaccountId);
     wxString fromaccStr = core_->accountList_.GetAccountName(accountId);
-    int basecurrencyid = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
+    int basecurrencyid = core_->currencyList_.GetBaseCurrencySettings();
     wxString transcodeStr = m_trans[selIndex]->transType_;
 
     double amount = m_trans[selIndex]->amt_;

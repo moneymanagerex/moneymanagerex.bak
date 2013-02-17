@@ -82,11 +82,18 @@ void mmCurrency::loadCurrencySettings()
 //-----------------------------------------------------------------------------//
 mmCurrencyList::mmCurrencyList(boost::shared_ptr<wxSQLite3Database> db)
 : db_(db)
+, info_table_()
 {}
 
-void mmCurrencyList::LoadBaseCurrencySettings(MMEX_IniSettings* info_table) const
+void mmCurrencyList::SetInfoTable(boost::shared_ptr<MMEX_IniSettings> info_table)
 {
-    int currencyID = info_table->GetIntSetting(wxT("BASECURRENCYID"), -1);
+    info_table_ = info_table;
+}
+
+void mmCurrencyList::LoadBaseCurrencySettings() const
+{
+    wxASSERT(info_table_);
+    int currencyID = info_table_->GetIntSetting(wxT("BASECURRENCYID"), -1);
 
     if (currencyID != -1)
     {
@@ -98,7 +105,7 @@ void mmCurrencyList::LoadBaseCurrencySettings(MMEX_IniSettings* info_table) cons
     }
 }
 
-void mmCurrencyList::LoadCurrencySettings(const wxString& currencySymbol) const
+void mmCurrencyList::LoadCurrencySetting(const wxString& currencySymbol)
 {
     SetCurrencySetting(getCurrencySharedPtr(currencySymbol, true));
 }
@@ -117,14 +124,16 @@ void mmCurrencyList::SetCurrencySetting(boost::shared_ptr<mmCurrency> pCurrency)
     }
 }
 
-int mmCurrencyList::getBaseCurrencySettings(MMEX_IniSettings* info_table) const
+int mmCurrencyList::GetBaseCurrencySettings() const
 {
-    return info_table->GetIntSetting(wxT("BASECURRENCYID"), -1);
+    wxASSERT(info_table_);
+    return info_table_->GetIntSetting(wxT("BASECURRENCYID"), -1);
 }
 
-void mmCurrencyList::setBaseCurrencySettings(MMEX_IniSettings* info_table, int currencyID)
+void mmCurrencyList::SetBaseCurrencySettings(int currencyID)
 {
-    info_table->SetIntSetting(wxT("BASECURRENCYID"), currencyID);
+    wxASSERT(info_table_);
+    info_table_->SetIntSetting(wxT("BASECURRENCYID"), currencyID);
 }
 
 int mmCurrencyList::AddCurrency(boost::shared_ptr<mmCurrency> pCurrency)
@@ -153,9 +162,8 @@ int mmCurrencyList::AddCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     return currencyID;
 }
 
-void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
+void mmCurrencyList::UpdateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 {
-
     wxASSERT(pCurrency->currencyID_ > 0);
 
     wxSQLite3Statement st = db_->PrepareStatement(UPDATE_CURRENCYFORMATS_V1);
@@ -180,7 +188,7 @@ void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     st.Finalize();
 }
 
-void mmCurrencyList::deleteCurrency(int currencyID)
+void mmCurrencyList::DeleteCurrency(int currencyID)
 {
     wxASSERT(currencyID > 0);
 
@@ -267,12 +275,7 @@ void mmCurrencyList::LoadCurrencies()
 
 bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
 {
-    //const int currencyID = getBaseCurrencySettings(core_->dbInfoSettings_.get());
-    //TODO: Fix raw sql
-    int currencyID = -1; 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(wxT("select INFOVALUE from infotable_v1 where infoname='BASECURRENCYID'"));
-    while (q1.NextRow())
-        currencyID = q1.GetDouble(wxT("INFOVALUE"));
+    int currencyID = GetBaseCurrencySettings();
 
     if(currencyID == -1)
     {
@@ -348,7 +351,7 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
             msg << wxString::Format(_("%s\t: %s -> %s\n"),
                 currency_symbol.c_str(), valueStr.c_str(), newValueStr.c_str());
             currencies_[idx]->baseConv_ = new_rate;
-            updateCurrency(currencies_[idx]);
+            UpdateCurrency(currencies_[idx]);
         }
     }
 

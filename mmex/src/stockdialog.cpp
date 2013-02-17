@@ -47,7 +47,7 @@ mmStockDialog::mmStockDialog(mmCoreDB* core, mmStockTransactionHolder* stock_hol
     edit_ = edit;
     accountID_ = accountID;
     Create(parent, id, caption, pos, size, style);
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
 }
 
 bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,

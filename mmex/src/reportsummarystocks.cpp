@@ -137,7 +137,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         hb.addTableCell(stockBalanceStr, true, true, true); //numeric, italic, bold
     }
 
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
     wxString sStockBalance, sGainLossTotal;
     mmex::formatDoubleToCurrency(gain_loss_sum_total, sGainLossTotal);
     mmex::formatDoubleToCurrency(stockBalance, sStockBalance);

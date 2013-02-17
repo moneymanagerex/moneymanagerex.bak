@@ -39,6 +39,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db, boost::shared_ptr<MM
     
     // Create a global listing for info settings.
     dbInfoSettings_.reset(new MMEX_IniSettings(db, true));
+    currencyList_.SetInfoTable(dbInfoSettings_);
 
     // Initialize the database if creating a new one.
     if (!dbInfoSettings_->Exists(wxT("MMEXVERSION")))

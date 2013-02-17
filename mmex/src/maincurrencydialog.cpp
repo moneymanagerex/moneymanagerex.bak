@@ -85,7 +85,7 @@ void mmMainCurrencyDialog::fillControls()
     if (!core_) return;
 
     currencyListBox_->DeleteAllItems();
-    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings(core_->dbInfoSettings_.get());
+    int baseCurrencyID = core_->currencyList_.GetBaseCurrencySettings();
 
     std::pair<mmCurrencyList::const_iterator, mmCurrencyList::const_iterator> range = core_->currencyList_.range();
     int idx = 0;
@@ -293,7 +293,7 @@ void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
         if (wxMessageBox(_("Do you really want to delete the selected Currency?"),
                          _("Currency Dialog"),wxICON_QUESTION|wxYES|wxNO) == wxYES)
         {
-            core_->currencyList_.deleteCurrency(currencyID_);
+            core_->currencyList_.DeleteCurrency(currencyID_);
             fillControls();
         }
     }

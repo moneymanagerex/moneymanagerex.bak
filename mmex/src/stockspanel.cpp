@@ -246,7 +246,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     wxString str = core_->accountList_.GetAccountName(accountID_);
     header_text_->SetLabel(wxString::Format(_("Stock Investments: %s"), str.c_str()));
 
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
     double originalVal = 0.0;
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountID_).lock();

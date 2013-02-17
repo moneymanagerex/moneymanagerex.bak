@@ -23,9 +23,12 @@
 // Constructor: Initialises Lua when an instant is created.
 TLuaInterface::TLuaInterface()
 {
-    info_settings_ = new MMEX_IniSettings(static_db_ptr(), true);
-    currency_list_ = new mmCurrencyList(static_db_ptr());
-    currency_list_->LoadCurrencies();
+    boost::shared_ptr<MMEX_IniSettings> info_table;
+    info_table.reset(new MMEX_IniSettings(static_db_ptr(), true));
+    
+    g_static_currency_list = new mmCurrencyList(static_db_ptr());
+    g_static_currency_list->SetInfoTable(info_table);
+    g_static_currency_list->LoadCurrencies();
 
     lua_ = luaL_newstate();
     wxASSERT(lua_);
@@ -38,8 +41,7 @@ TLuaInterface::TLuaInterface()
 // Destructor: Shuts down Lua on completion
 TLuaInterface::~TLuaInterface()
 {
-    delete info_settings_;
-    delete currency_list_;
+    delete g_static_currency_list;
     lua_close(lua_);
 }
 
@@ -483,7 +485,7 @@ int TLuaInterface::cpp2Lua_BaseCurrencyFormat(lua_State* lua)
     bool for_edit = OptionalParameter(lua, 2);
     double number = GetLuaDouble(lua);
 
-    currency_list_->LoadBaseCurrencySettings(info_settings_);
+    g_static_currency_list->LoadBaseCurrencySettings();
     SetCurrencyFormat(lua, number, for_edit);
 
     return 1;
@@ -498,9 +500,9 @@ int TLuaInterface::cpp2Lua_CurrencyFormat(lua_State* lua)
     double number = GetLuaDouble(lua);
 
     wxString currency_symbol = GetLuaString(lua).MakeUpper();
-    currency_list_->LoadCurrencySettings(currency_symbol);
+    g_static_currency_list->LoadCurrencySetting(currency_symbol);
 
-    boost::shared_ptr<mmCurrency> pCurrency = currency_list_->getCurrencySharedPtr(currency_symbol, true);
+    boost::shared_ptr<mmCurrency> pCurrency = g_static_currency_list->getCurrencySharedPtr(currency_symbol, true);
     if (pCurrency)
     {
         number = number * pCurrency->baseConv_;

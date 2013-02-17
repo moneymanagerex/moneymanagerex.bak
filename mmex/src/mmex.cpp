@@ -310,7 +310,7 @@ mmNewDatabaseWizardPage1::mmNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) 
     parent_(parent),
     currencyID_(-1)
 {
-    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
+    currencyID_ = parent_->m_core->currencyList_.GetBaseCurrencySettings();
     wxString currName = _("Set Currency");
     if (currencyID_ != -1)
         currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
@@ -370,14 +370,14 @@ bool mmNewDatabaseWizardPage1::TransferDataFromWindow()
 
 void mmNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
 {
-    currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
+    currencyID_ = parent_->m_core->currencyList_.GetBaseCurrencySettings();
 
     if (mmMainCurrencyDialog::Execute(parent_->m_core, this, currencyID_) && currencyID_ != -1)
     {
         wxString currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
         wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
         bn->SetLabel(currName);
-        parent_->m_core->currencyList_.setBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get(), currencyID_);
+        parent_->m_core->currencyList_.SetBaseCurrencySettings(currencyID_);
     }
 }
 //----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ bool mmAddAccountPage2::TransferDataFromWindow()
     else if (acctType == 2)
         acctTypeStr = ACCOUNT_TYPE_TERM;
 
-    int currencyID = parent_->m_core->currencyList_.getBaseCurrencySettings(parent_->m_core->dbInfoSettings_.get());
+    int currencyID = parent_->m_core->currencyList_.GetBaseCurrencySettings();
     if (currencyID == -1)
     {
         wxString errorMsg;
@@ -840,7 +840,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
     bool autoExecuteSilent;
     bool requireExecution;
 
-    m_core->currencyList_.LoadBaseCurrencySettings(m_core->dbInfoSettings_.get());
+    m_core->currencyList_.LoadBaseCurrencySettings();
     wxSQLite3ResultSet q1 = m_db.get()->ExecuteQuery(SELECT_ALL_FROM_BILLSDEPOSITS_V1);
     while (q1.NextRow())
     {
@@ -2636,7 +2636,7 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
            wizard->CenterOnParent();
            wizard->RunIt(true);
 
-           m_core->currencyList_.LoadBaseCurrencySettings(m_core->dbInfoSettings_.get());
+           m_core->currencyList_.LoadBaseCurrencySettings();
 
            /* Load User Name and Other Settings */
            mmOptions::instance().loadOptions(m_core->dbInfoSettings_.get());

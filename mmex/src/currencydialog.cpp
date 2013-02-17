@@ -130,7 +130,7 @@ void mmCurrencyDialog::updateControls()
     wxString dispAmount2;
     double amount = 1000;
 
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
     mmex::formatDoubleToCurrency(amount, dispAmount);
     dispAmount2 = wxString() << dispAmount << wxT(" ") << _("Converted to:") << wxT(" ");
 
@@ -302,7 +302,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
     pCurrency->currencySymbol_ = currencySymbolCombo_->GetValue();
     pCurrency->currencyName_ = currencyName;
 
-    core_->currencyList_.updateCurrency(pCurrency);
+    core_->currencyList_.UpdateCurrency(pCurrency);
 
     fillControls();
 }
