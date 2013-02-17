@@ -65,7 +65,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.addTableHeaderCell(_("Amount"), true);
     hb.endTableRow();
 
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
 
     std::vector<ValuePair> valueList;
 

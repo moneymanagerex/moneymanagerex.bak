@@ -308,7 +308,7 @@ void mmBudgetingPanel::initVirtualListControl()
         budgetDetails.AdjustDateForEndFinancialYear(dtEnd);
     }
 
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
 
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)

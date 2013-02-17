@@ -31,7 +31,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
 	hb.startCenter();
 
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
 
     double expenses = 0.0;
     double income = 0.0;

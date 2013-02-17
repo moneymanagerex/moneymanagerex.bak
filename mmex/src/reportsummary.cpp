@@ -75,7 +75,7 @@ wxString mmReportSummary::getHTMLText()
     }
 
     // all sums below will be in base currency!
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
 
     wxString tBalanceStr;
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
@@ -115,7 +115,7 @@ wxString mmReportSummary::getHTMLText()
     }
 
     // all sums below will be in base currency!
-    core_->currencyList_.LoadBaseCurrencySettings(core_->dbInfoSettings_.get());
+    core_->currencyList_.LoadBaseCurrencySettings();
 
     wxString tTBalanceStr;
     mmex::formatDoubleToCurrency(tTBalance, tTBalanceStr);

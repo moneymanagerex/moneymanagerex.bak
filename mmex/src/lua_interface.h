@@ -28,10 +28,7 @@ extern "C" {
 #include "lauxlib.h"
 }
 
-class MMEX_IniSettings;
-
-static MMEX_IniSettings* info_settings_;
-static mmCurrencyList* currency_list_;
+static mmCurrencyList* g_static_currency_list;
 
 class TLuaInterface
 {
