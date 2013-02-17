@@ -555,6 +555,7 @@ void mmQIFDialog::mmExportQIF()
     *log_field_ << buffer;
     sErrorMsg << wxTRANSLATE("Number of transactions exported: %ld");
     const wxString msg = wxString::Format(sErrorMsg, numRecords);
-    wxMessageDialog msgDlg(parent_, wxGetTranslation(msg), _("Export to QIF"), wxOK|wxICON_EXCLAMATION);
+    wxMessageDialog msgDlg(parent_, wxGetTranslation(msg)
+        , _("Export to QIF"), wxOK|wxICON_INFORMATION);
     msgDlg.ShowModal();
 }
