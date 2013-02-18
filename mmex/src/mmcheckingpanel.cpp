@@ -938,7 +938,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     wxASSERT(pCurrency);
     pCurrency->loadCurrencySettings();
 
-    header_text_->SetLabel(wxString(_("Account View : %s"), pAccount->name_.c_str()));
+    header_text_->SetLabel(wxString::Format(_("Account View : %s"), pAccount->name_.c_str()));
 
     filteredBalance_ = 0.0;
 
