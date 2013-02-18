@@ -1173,9 +1173,9 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     if (evt != MENU_VIEW_ALLTRANSACTIONS  && transFilterActive_)
     {
         wxString messageStr;
-        messageStr << _("Transaction Filter")<< _("  will interfere with this filtering.") << wxT("\n\n");
-        messageStr << _("Please deactivate: ") << _("Transaction Filter");
-        wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
+        messageStr << _("Transaction Filter will interfere with this filtering.") << wxT("\n\n");
+        messageStr << _("Please deactivate Transaction Filter");
+        wxMessageBox(messageStr, _("Transaction Filter"), wxOK|wxICON_WARNING);
         return;
     }
 
