@@ -415,6 +415,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
         //MemoSplit
         else if (lineType(readLine) == Address) // 'A'
         {
+            notes << getLineData(readLine) << wxT("\n");
             continue;
         }
         else if (lineType(readLine) == EOTLT) // ^
@@ -484,6 +485,11 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 type = TRANS_TYPE_DEPOSIT_STR;
 
             core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
+            /* //Trick  for cut non standart qif category usage in Financisto application
+            //Category field may contains additional information like Project
+            //Format Category[:Subcategory][/Project] //*/
+            if (sCateg.Contains(wxT("/")))
+                transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sCateg).c_str()));
             if (sSubCateg.Contains(wxT("/")))
                 transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sSubCateg).c_str()));
 
