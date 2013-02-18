@@ -529,15 +529,15 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
 
             if (!bValid) sValid = wxT("NO"); else sValid = wxT("OK");
             sMsg = wxString::Format(
-                wxT("Line:%ld Trx:%ld %s D:%s Acc:%s Payee:%s%s Type:%s Amt:%s Cat:%s \n")
+                wxT("Line:%ld Trx:%ld %s D:%s Acc:'%s' %s P:'%s%s' Amt:%s C:'%s' \n")
                 , trxNumLines
                 , numImported + 1
                 , sValid.c_str()
                 , convDate.c_str()
                 , core->accountList_.GetAccountName(from_account_id).c_str()
+                , wxString((type == TRANS_TYPE_TRANSFER_STR ? wxT("<->") : wxT(""))).c_str()
                 , core->accountList_.GetAccountName(to_account_id).c_str()
                 , core->payeeList_.GetPayeeName(payeeID).c_str()
-                , type.Left(1).c_str()
                 , (wxString()<<val).c_str()
                 , (core->categoryList_.GetFullCategoryString(categID, subCategID)).c_str()
                 );
