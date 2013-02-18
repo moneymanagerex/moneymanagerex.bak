@@ -938,7 +938,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     wxASSERT(pCurrency);
     pCurrency->loadCurrencySettings();
 
-    header_text_->SetLabel(_("Account View : ") + pAccount->name_);
+    header_text_->SetLabel(wxString(_("Account View : %s"), pAccount->name_.c_str()));
 
     filteredBalance_ = 0.0;
 
@@ -955,7 +955,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
         boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
         if (pBankTransaction->accountID_ != m_AccountID
             && (pBankTransaction->toAccountID_ != m_AccountID
-            || pBankTransaction->transType_ != wxT("Transfer")))
+            || pBankTransaction->transType_ != TRANS_TYPE_TRANSFER_STR))
             continue;
 
         pBankTransaction->updateAllData(core_, m_AccountID, pCurrency);
@@ -1581,7 +1581,7 @@ wxListItemAttr* TransactionListCtrl::OnGetItemAttr(long item) const
     bool ok = m_cp && idx < m_cp->m_trans.size();
 
     mmBankTransaction *tr = ok ? m_cp->m_trans[idx] : 0;
-    bool in_the_future = tr && tr->date_ > wxDateTime::Now();
+    bool in_the_future = tr && tr->date_ > wxDateTime::Now().GetDateOnly();
 
     TransactionListCtrl &self = *const_cast<TransactionListCtrl*>(this);
 
