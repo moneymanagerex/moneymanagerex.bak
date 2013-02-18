@@ -719,6 +719,7 @@ void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
         else
         {
             toTextAmount_->SetValue(wxT(""));
+            toTransAmount_ = transAmount_;
         }
     }
     else
@@ -836,6 +837,10 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
                 toTextAmount_->SetFocus();
                 return;
             }
+        }
+        else
+        {
+            toTransAmount_ = transAmount_;
         }
     }
 
