@@ -151,7 +151,8 @@ void mmAppStartDialog::CreateControls()
     if (pIniSettings_)
     {
         wxString val = mmDBWrapper::getLastDbPath(pIniSettings_);
-        if (val.IsEmpty())
+        wxFileName lastfile(val);
+        if (!lastfile.FileExists())
         {
             itemButton61->Disable();
         }
