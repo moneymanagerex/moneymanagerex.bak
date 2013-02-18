@@ -484,14 +484,12 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (val > 0.0 && type != TRANS_TYPE_TRANSFER_STR)
                 type = TRANS_TYPE_DEPOSIT_STR;
 
-            core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
             /* //Trick  for cut non standart qif category usage in Financisto application
             //Category field may contains additional information like Project
             //Format Category[:Subcategory][/Project] //*/
-            if (sCateg.Contains(wxT("/")))
-                transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sCateg).c_str()));
-            if (sSubCateg.Contains(wxT("/")))
-                transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sSubCateg).c_str()));
+            if (sFullCateg.Contains(wxT("/")))
+                transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sFullCateg).c_str()));
+            core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
 
             if (categID == -1)
                 categID =  core->categoryList_.AddCategory(sCateg);
