@@ -183,6 +183,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     mmex::formatDoubleToCurrencyEdit(amt_, displayTransAmtString);
     transAmtString_ = displayTransAmtString;
 
+    if (toAmt_ < 0) toAmt_ = amt_;
     wxString displayToTransAmtString;
     mmex::formatDoubleToCurrencyEdit(toAmt_, displayToTransAmtString);
     transToAmtString_ = displayToTransAmtString;
