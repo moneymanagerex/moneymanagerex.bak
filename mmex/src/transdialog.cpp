@@ -784,16 +784,15 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
     bool bTransfer = (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR);
     advancedToTransAmountSet_ = cAdvanced_->IsChecked();
-    double amount;
 
     if (cSplit_->IsChecked())
     {
-        amount = split_->getTotalSplits();
-        if (amount < 0.0)
+        transAmount_ = split_->getTotalSplits();
+        if (transAmount_ < 0.0)
         {
             if (bTransfer) {
-                if (amount < 0)
-                    amount = - amount;
+                if (transAmount_ < 0)
+                    transAmount_ = - transAmount_;
             } else {
                 mmShowErrorMessageInvalid(parent_, _("Amount"));
                 return;
@@ -809,7 +808,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     else
     {
         wxString amountStr = textAmount_->GetValue().Trim();
-        if (!mmex::formatCurrencyToDouble(amountStr, amount) || (amount < 0.0))
+        if (!mmex::formatCurrencyToDouble(amountStr, transAmount_) || (transAmount_ < 0.0))
         {
             textAmount_->SetBackgroundColour(wxT("RED"));
             mmShowErrorMessageInvalid(parent_, _("Amount"));
@@ -824,6 +823,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         }
     }
 
+    toTransAmount_ = transAmount_;
     if (bTransfer)
     {
         if (advancedToTransAmountSet_)
@@ -837,10 +837,6 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
                 toTextAmount_->SetFocus();
                 return;
             }
-        }
-        else
-        {
-            toTransAmount_ = transAmount_;
         }
     }
 
@@ -920,7 +916,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     pTransaction->toAccountID_ = toAccountID;
     pTransaction->payee_ = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
     pTransaction->transType_ = sTransaction_type_;
-    pTransaction->amt_ = amount;
+    pTransaction->amt_ = transAmount_;
     pTransaction->status_ = status;
     pTransaction->transNum_ = transNum;
     pTransaction->notes_ = notes.c_str();
