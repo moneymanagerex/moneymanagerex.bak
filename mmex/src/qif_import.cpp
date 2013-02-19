@@ -224,6 +224,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             bTrxComplited = false;
         }
         readLine = getFileLine(text, numLines);
+
         if (readLine.Length() == 0)
             continue;
 
@@ -249,7 +250,21 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 continue;
             }
 
-            if (accountType == wxT("Account"))
+            if ( accountType == wxT("Type:Cat") )
+            {
+                bool reading = true;
+                while(!input.Eof() && reading )
+                {
+                    readLine = getFileLine(text, numLines);
+                    if (lineType(readLine) == AcctType  || input.Eof())
+                    {
+                        reading = false;
+                        accountType = getLineData(readLine);
+                    }
+                }
+            }
+
+            if ( accountType == wxT("Account"))
             {
                 // account information
                 // Need to read till we get to end of account information
@@ -313,18 +328,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             {
                 continue;
             }
-            else if ( accountType == wxT("Type:Cat") )
-            {
-                bool reading = true;
-                while(!input.Eof() && reading )
-                {
-                    readLine = getFileLine(text, numLines);
-                    if (readLine.Contains(wxT("!Type:")) || input.Eof())
-                        reading = false;
-                }
-                continue;
-            }
-
             // we do not know how to process this type yet
             wxString errMsgStr = _("Cannot process these QIF Account Types yet.");
             wxString errLineMsgStr = wxString::Format(_("Line: %ld"), numLines)
