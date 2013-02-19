@@ -1581,7 +1581,7 @@ wxListItemAttr* TransactionListCtrl::OnGetItemAttr(long item) const
     bool ok = m_cp && idx < m_cp->m_trans.size();
 
     mmBankTransaction *tr = ok ? m_cp->m_trans[idx] : 0;
-    bool in_the_future = tr && tr->date_ > wxDateTime::Now().GetDateOnly();
+    bool in_the_future = tr && tr->date_.GetDateOnly() > wxDateTime::Now().GetDateOnly();
 
     TransactionListCtrl &self = *const_cast<TransactionListCtrl*>(this);
 
