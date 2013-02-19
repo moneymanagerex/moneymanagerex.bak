@@ -499,25 +499,28 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (subCategID == -1 && categID != -1)
                 subCategID = core->categoryList_.AddSubCategory(categID, sSubCateg);
 
-            //TODO: Is it possible now?
-            if (to_account_id == -1 && type == TRANS_TYPE_TRANSFER_STR)
-            {
-                sMsg = wxString::Format(_("Unknown account: %s"), sToAccountName.c_str());
-                log << sMsg << endl;
-                logWindow->AppendText(sMsg << wxT("\n"));
-                //FIXME: Transfer transaction with sane to and from account id will be created
-                to_account_id = fromAccountID;
-                status = wxT("V");
-            }
-
             if (type == TRANS_TYPE_TRANSFER_STR)
             {
-                 payeeID = -1;
+                payeeID = -1;
+                if (to_account_id == -1)
+                {
+                    sMsg = _("To account missing");
+                    log << sMsg << endl;
+                    logWindow->AppendText(sMsg << wxT("\n"));
+                    bValid = false;
+                }
             }
             else
             {
                 to_account_id = -1;
-                if (!core->payeeList_.PayeeExists(sPayee))
+                if (sPayee.IsEmpty())
+                {
+                    sMsg = _("Payee missing");
+                    log << sMsg << endl;
+                    logWindow->AppendText(sMsg << wxT("\n"));
+                    bValid = false;
+                }
+                else if (!core->payeeList_.PayeeExists(sPayee))
                 {
                     sMsg = wxString::Format(_("Payee Added: %s"), sPayee.c_str());
                     log << sMsg << endl;
