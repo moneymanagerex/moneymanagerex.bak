@@ -182,7 +182,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
 
     wxString readLine;
     int numLines = 0;
-    int trxNumLines = 1;
+    int trxNumLine = 1;
     int numImported = 0;
 
     wxString dt = wxDateTime::Now().FormatISODate();
@@ -222,6 +222,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             convDate = wxDateTime::Now().FormatISODate();
 
             bTrxComplited = false;
+            trxNumLine = numLines - 1;
         }
         readLine = getFileLine(text, numLines);
 
@@ -271,6 +272,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 while( (readLine = getFileLine(text, numLines) ) != wxT("^"))
                 {
                     numLines++;
+                    bTrxComplited = true;
                     int i = accountInfoType(readLine);
                     if (i == Name)
                     {
@@ -502,9 +504,9 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (type == TRANS_TYPE_TRANSFER_STR)
             {
                 payeeID = -1;
-                if (to_account_id == -1)
+                if (to_account_id == -1 || from_account_id == -1)
                 {
-                    sMsg = _("To account missing");
+                    sMsg = _("Account missing");
                     log << sMsg << endl;
                     logWindow->AppendText(sMsg << wxT("\n"));
                     bValid = false;
@@ -522,10 +524,10 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 }
                 else if (!core->payeeList_.PayeeExists(sPayee))
                 {
+                    payeeID = core->payeeList_.AddPayee(sPayee);
                     sMsg = wxString::Format(_("Payee Added: %s"), sPayee.c_str());
                     log << sMsg << endl;
                     logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
-                    payeeID = core->payeeList_.AddPayee(sPayee);
                 }
                 else
                     payeeID = core->payeeList_.GetPayeeId(sPayee);
@@ -534,7 +536,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (!bValid) sValid = wxT("NO"); else sValid = wxT("OK");
             sMsg = wxString::Format(
                 wxT("Line:%ld Trx:%ld %s D:%s Acc:'%s' %s P:'%s%s' Amt:%s C:'%s' \n")
-                , trxNumLines
+                , trxNumLine
                 , numImported + 1
                 , sValid.c_str()
                 , convDate.c_str()
@@ -558,8 +560,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 double v = mmSplit->entries_[i]->splitAmount_;
             wxSafeShowMessage(cn + wxT(":") + sn , wxString()<< v);
             }*/
-
-            trxNumLines = numLines - 1;
+            bTrxComplited = true;
             if (!bValid) continue;
 
             boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
@@ -610,7 +611,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 vQIF_trxs.push_back(pTransaction);
                 numImported++;
             }
-            bTrxComplited = true;
         }
     }
 
@@ -660,3 +660,4 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
 
     return fromAccountID;
 }
+
