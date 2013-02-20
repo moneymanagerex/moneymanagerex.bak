@@ -368,7 +368,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_BUTTON(wxID_NEW,         mmCheckingPanel::OnNewTransaction)
     EVT_BUTTON(wxID_EDIT,        mmCheckingPanel::OnEditTransaction)
     EVT_BUTTON(wxID_DELETE,      mmCheckingPanel::OnDeleteTransaction)
-    EVT_BUTTON(wxID_MOVE_FRAME,        mmCheckingPanel::OnMoveTransaction)
+    EVT_BUTTON(wxID_DUPLICATE,    mmCheckingPanel::OnDuplicateTransaction)
     EVT_MENU(wxID_ANY, mmCheckingPanel::OnViewPopupSelected)
     EVT_SEARCHCTRL_SEARCH_BTN(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
     EVT_TEXT_ENTER(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
@@ -641,24 +641,24 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    bNew_ = new wxButton(itemPanel12, wxID_NEW, _("&New"));
-    bNew_->SetToolTip(_("New Transaction"));
-    itemBoxSizer5->Add(bNew_, 0, wxRIGHT, 5);
+    btnNew_ = new wxButton(itemPanel12, wxID_NEW, _("&New"));
+    btnNew_->SetToolTip(_("New Transaction"));
+    itemBoxSizer5->Add(btnNew_, 0, wxRIGHT, 5);
 
-    bEdit_ = new wxButton(itemPanel12, wxID_EDIT, _("&Edit"));
-    bEdit_->SetToolTip(_("Edit selected transaction"));
-    itemBoxSizer5->Add(bEdit_, 0, wxRIGHT, 5);
-    bEdit_->Enable(false);
+    btnEdit_ = new wxButton(itemPanel12, wxID_EDIT, _("&Edit"));
+    btnEdit_->SetToolTip(_("Edit selected transaction"));
+    itemBoxSizer5->Add(btnEdit_, 0, wxRIGHT, 5);
+    btnEdit_->Enable(false);
 
-    bDelete_ = new wxButton(itemPanel12, wxID_DELETE, _("&Delete"));
-    bDelete_->SetToolTip(_("Delete selected transaction"));
-    itemBoxSizer5->Add(bDelete_, 0, wxRIGHT, 5);
-    bDelete_->Enable(false);
+    btnDelete_ = new wxButton(itemPanel12, wxID_DELETE, _("&Delete"));
+    btnDelete_->SetToolTip(_("Delete selected transaction"));
+    itemBoxSizer5->Add(btnDelete_, 0, wxRIGHT, 5);
+    btnDelete_->Enable(false);
 
-    bMove_ = new wxButton(itemPanel12, wxID_MOVE_FRAME, _("&Move"));
-    bMove_->SetToolTip(_("Move selected transaction to another account"));
-    itemBoxSizer5->Add(bMove_, 0, wxRIGHT, 5);
-    bMove_->Enable(false);
+    btnDuplicate_ = new wxButton(itemPanel12, wxID_DUPLICATE, _("D&uplicate"));
+    btnDuplicate_->SetToolTip(_("Duplicate selected transaction"));
+    itemBoxSizer5->Add(btnDuplicate_, 0, wxRIGHT, 5);
+    btnDuplicate_->Enable(false);
 
     wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12
         , wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1)
@@ -683,17 +683,15 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 {
     if (m_listCtrlAccount->GetSelectedItemCount()>1)
     {
-        bEdit_->Enable(false);
-        bDelete_->Enable(true);
-        if (core_->accountList_.getNumBankAccounts() > 1)
-            bMove_->Enable(true);
+        btnEdit_->Enable(false);
+        btnDelete_->Enable(true);
+        btnDuplicate_->Enable(false);
     }
     else
     {
-        bEdit_->Enable(en);
-        bDelete_->Enable(en);
-        if (core_->accountList_.getNumBankAccounts() > 1)
-            bMove_->Enable(en);
+        btnEdit_->Enable(en);
+        btnDelete_->Enable(en);
+        btnDuplicate_->Enable(en);
     }
 }
 //----------------------------------------------------------------------------
@@ -1288,7 +1286,7 @@ void TransactionListCtrl::OnListItemSelected(wxListEvent& event)
     m_cp->updateExtraTransactionData(m_selectedIndex);
 
     if (m_cp->m_listCtrlAccount->GetSelectedItemCount()>1)
-        m_cp->bEdit_->Enable(false);
+        m_cp->btnEdit_->Enable(false);
 
 }
 //----------------------------------------------------------------------------
@@ -1320,7 +1318,7 @@ void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
     if (m_selectedIndex < 0) menu.Enable(MENU_TREEPOPUP_EDIT, false);
     menu.Append(MENU_ON_COPY_TRANSACTION, _("&Copy Transaction"));
     if (m_selectedIndex <0) menu.Enable(MENU_ON_COPY_TRANSACTION, false);
-    menu.Append(MENU_ON_DUPLICATE_TRANSACTION, _("&Duplicate Transaction"));
+    menu.Append(MENU_ON_DUPLICATE_TRANSACTION, _("D&uplicate Transaction"));
     if (m_selectedIndex <0) menu.Enable(MENU_ON_DUPLICATE_TRANSACTION, false);
     menu.Append(MENU_TREEPOPUP_MOVE, _("&Move Transaction"));
     if (m_selectedIndex <0 || (m_cp->core_->accountList_.getNumBankAccounts() < 2))

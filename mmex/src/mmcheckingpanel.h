@@ -107,10 +107,10 @@ private:
     DECLARE_EVENT_TABLE()
     friend class TransactionListCtrl; // needs access to m_core, initdb_, ...
 
-    wxButton* bNew_;
-    wxButton* bEdit_;
-    wxButton* bMove_;
-    wxButton* bDelete_;
+    wxButton* btnNew_;
+    wxButton* btnEdit_;
+    wxButton* btnDuplicate_;
+    wxButton* btnDelete_;
     wxStaticText* header_text_;
     wxStaticText* info_panel_;
     wxStaticText* info_panel_mini_;
