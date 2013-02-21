@@ -543,7 +543,7 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
 
     wxString fn_name = GetLuaString(lua);
 
-    wxString html_error = _("HTML_BUILDER: Syntax error function: ");
+    wxString html_error = _("HTML_BUILDER: Syntax error function: %s");
     mmHTMLBuilder hb;
     try
     {
@@ -554,12 +554,13 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
         else if (fn_name == wxT("EndTableRow")) hb.endTableRow();
         else if (fn_name == wxT("StartTableCell")) hb.startTableCell(value_1);
         else if (fn_name == wxT("EndTableCell")) hb.endTableCell();
-        else if (fn_name == wxT("AddTableHeaderCell")) hb.addTableHeaderCell(value_1, value_2 == wxT("") ? false: true);
+        else if (fn_name == wxT("AddTableHeaderCell")) hb.addTableHeaderCell(value_1, !value_2.IsEmpty());
         else if (fn_name == wxT("AddTableHeaderRow")) hb.addTableHeaderRow(value_1, wxAtoi(value_2.c_str()));
-        else if (fn_name == wxT("AddTableCell")) hb.addTableCell(value_1, value_2 == wxEmptyString ? false: true, value_3 == wxEmptyString ? false: true, value_4 == wxEmptyString ? false: true);
+        else if (fn_name == wxT("AddTableCell")) hb.addTableCell(value_1, !value_2.IsEmpty()
+            , !value_3.IsEmpty(), !value_4.IsEmpty());
         else if (fn_name == wxT("AddTableCellLink")) hb.addTableCellLink(value_1, value_2
-            , value_3 == wxT("") ? false: true, value_4 == wxT("") ? false: true
-            , value_5 == wxT("") ? false: true, value_6);
+            , !value_3.IsEmpty(), !value_4.IsEmpty()
+            , !value_5.IsEmpty(), value_6);
         else if (fn_name == wxT("AddRowSeparator")) hb.addRowSeparator(wxAtoi(value_1.c_str()));
         else if (fn_name == wxT("AddTotalRow")) hb.addTotalRow(value_1, wxAtoi(value_2.c_str()), value_3);
         else if (fn_name == wxT("AddDateNow")) hb.addDateNow();
@@ -571,12 +572,12 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
         else if (fn_name == wxT("End")) hb.end();
         else
         {
-            hb.addParaText(html_error + fn_name);
+            hb.addParaText(wxString::Format(html_error, fn_name.c_str()));
         }
     }
     catch (...)
     {
-        hb.addParaText(html_error + fn_name);
+        hb.addParaText(wxString::Format(html_error, fn_name.c_str()));
     }
 
     lua_pushstring(lua, hb.getHTMLText().ToUTF8());
