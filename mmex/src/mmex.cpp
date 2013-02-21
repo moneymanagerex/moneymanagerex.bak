@@ -2828,8 +2828,9 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 
     if (m_db) // database must be closed before copying its file
     {
-      m_db->Close();
-      m_db.reset();
+        m_core.reset();
+        m_db->Close();
+        m_db.reset();
     }
 
     if (!wxCopyFile(oldFileName.GetFullPath(), newFileName.GetFullPath(), true))  // true -> overwrite if file exists
