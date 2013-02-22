@@ -399,10 +399,20 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sFullCateg).c_str()));
             core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
 
-            if (categID == -1)
+            if (categID == -1 && !sCateg.IsEmpty())
+            {
                 categID =  core->categoryList_.AddCategory(sCateg);
-            if (subCategID == -1 && categID != -1)
+                sMsg = wxString::Format(_("Added category %s"), sCateg);
+                log << sMsg << endl;
+                logWindow->AppendText(sMsg << wxT("\n"));
+            }
+            if (subCategID == -1 && categID != -1 && !sSubCateg.IsEmpty())
+            {
                 subCategID = core->categoryList_.AddSubCategory(categID, sSubCateg);
+                sMsg = wxString::Format(_("Added subcategory %s"), sSubCateg);
+                log << sMsg << endl;
+                logWindow->AppendText(sMsg << wxT("\n"));
+            }
 
             continue;
         }
@@ -416,12 +426,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             //
             if (type == TRANS_TYPE_WITHDRAWAL_STR)
                 dSplitAmount = -dSplitAmount;
-            //Log
-            sMsg = wxString(_("Split")) << wxT(" ")
-                << core->categoryList_.GetFullCategoryString(categID, subCategID)
-                << wxT(" ") << dSplitAmount;
-            log << sMsg << endl;
-            logWindow->AppendText(sMsg << wxT("\n"));
             //Add split entry
             boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
             pSplitEntry->splitAmount_  = dSplitAmount;
@@ -504,8 +508,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (val > 0.0 && type != TRANS_TYPE_TRANSFER_STR)
                 type = TRANS_TYPE_DEPOSIT_STR;
 
-            if (mmSplit->numEntries() > 0) categID = -1;
-
             if (type == TRANS_TYPE_TRANSFER_STR)
             {
                 payeeID = -1;
@@ -537,6 +539,15 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 else
                     payeeID = core->payeeList_.GetPayeeId(sPayee);
             }
+            if (mmSplit->entries_.size() > 0)
+            {
+                categID = -1;
+                sFullCateg = _("Split Category");
+            }
+            else
+            {
+                sFullCateg = core->categoryList_.GetFullCategoryString(categID, subCategID);
+            }
 
             if (!bValid) sValid = wxT("NO"); else sValid = wxT("OK");
             sMsg = wxString::Format(
@@ -550,21 +561,22 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 , core->accountList_.GetAccountName(to_account_id).c_str()
                 , core->payeeList_.GetPayeeName(payeeID).c_str()
                 , (wxString()<<val).c_str()
-                , (core->categoryList_.GetFullCategoryString(categID, subCategID)).c_str()
+                , sFullCateg.c_str()
                 );
             logWindow->AppendText(sMsg);
             log << sMsg << endl;
 
-            //Debug code
-            /*for (size_t i = 0; i < mmSplit->entries_.size(); ++i)
+            for (size_t i = 0; i < mmSplit->entries_.size(); ++i)
             {
                 int c = mmSplit->entries_[i]->categID_;
                 int s = mmSplit->entries_[i]->subCategID_;
                 wxString cn = core->categoryList_.GetCategoryName(c);
                 wxString sn = core->categoryList_.GetSubCategoryName(c, s);
                 double v = mmSplit->entries_[i]->splitAmount_;
-            wxSafeShowMessage(cn + wxT(":") + sn , wxString()<< v);
-            }*/
+                sMsg = (cn << wxT(":") << sn << wxT(" ") << v << wxT("\n"));
+                logWindow->AppendText(sMsg);
+                log << sMsg << endl;
+            }
             bTrxComplited = true;
             if (!bValid) continue;
 
@@ -619,7 +631,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
         }
     }
 
-    sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), numImported+1);
+    sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), numImported);
     log << sMsg << endl;
     logWindow->AppendText(sMsg << wxT("\n"));
 
