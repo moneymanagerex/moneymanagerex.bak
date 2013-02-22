@@ -388,25 +388,40 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             notes << getLineData(readLine) << wxT("\n");
             continue;
         }
-        else if (lineType(readLine) == Category) // 'L'
+        else if (lineType(readLine) == Category || lineType(readLine) == CategorySplit) // 'S' // 'L'
         {
             sFullCateg = getLineData(readLine);
-            continue;
-        }
-        else if (lineType(readLine) == CategorySplit) // 'S'
-        {
-            sSplitCategs = getLineData(readLine);
+
+            /* //Trick  for cut non standart qif category usage in Financisto application
+            //Category field may contains additional information like Project
+            //Format Category[:Subcategory][/Project] //*/
+            if (sFullCateg.Contains(wxT("/")))
+                transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sFullCateg).c_str()));
+            core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
+
+            if (categID == -1)
+                categID =  core->categoryList_.AddCategory(sCateg);
+            if (subCategID == -1 && categID != -1)
+                subCategID = core->categoryList_.AddSubCategory(categID, sSubCateg);
+
             continue;
         }
         else if (lineType(readLine) == AmountSplit) // '$'
         {
             sSplitAmount = getLineData(readLine);
-            //Parse split category
-            core->categoryList_.parseCategoryString(sSplitCategs, sCateg, categID, sSubCateg, subCategID);
 
             //get amount
             if (!sSplitAmount.ToDouble(&dSplitAmount) && !mmex::formatCurrencyToDouble(sSplitAmount, dSplitAmount))
-                dSplitAmount = 0; //wrong amount //TODO: write it to log
+                dSplitAmount = 0; //wrong amount
+            //
+            if (type == TRANS_TYPE_WITHDRAWAL_STR)
+                dSplitAmount = -dSplitAmount;
+            //Log
+            sMsg = wxString(_("Split")) << wxT(" ")
+                << core->categoryList_.GetFullCategoryString(categID, subCategID)
+                << wxT(" ") << dSplitAmount;
+            log << sMsg << endl;
+            logWindow->AppendText(sMsg << wxT("\n"));
             //Add split entry
             boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
             pSplitEntry->splitAmount_  = dSplitAmount;
@@ -489,17 +504,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (val > 0.0 && type != TRANS_TYPE_TRANSFER_STR)
                 type = TRANS_TYPE_DEPOSIT_STR;
 
-            /* //Trick  for cut non standart qif category usage in Financisto application
-            //Category field may contains additional information like Project
-            //Format Category[:Subcategory][/Project] //*/
-            if (sFullCateg.Contains(wxT("/")))
-                transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sFullCateg).c_str()));
-            core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
-
-            if (categID == -1)
-                categID =  core->categoryList_.AddCategory(sCateg);
-            if (subCategID == -1 && categID != -1)
-                subCategID = core->categoryList_.AddSubCategory(categID, sSubCateg);
+            if (mmSplit->numEntries() > 0) categID = -1;
 
             if (type == TRANS_TYPE_TRANSFER_STR)
             {
@@ -520,9 +525,9 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                     sMsg = _("Payee missing");
                     log << sMsg << endl;
                     logWindow->AppendText(sMsg << wxT("\n"));
-                    bValid = false;
+                    sPayee = _("Unknown");
                 }
-                else if (!core->payeeList_.PayeeExists(sPayee))
+                if (!core->payeeList_.PayeeExists(sPayee))
                 {
                     payeeID = core->payeeList_.AddPayee(sPayee);
                     sMsg = wxString::Format(_("Payee Added: %s"), sPayee.c_str());
