@@ -75,6 +75,7 @@ private:
 
     static int cpp2Lua_BaseCurrencyFormat(lua_State* lua);
     static int cpp2Lua_CurrencyFormat(lua_State* lua);
+    static int cpp2Lua_DateFormat(lua_State* lua);
     static int cpp2lua_HTMLBuilder(lua_State* lua);
 };
 
