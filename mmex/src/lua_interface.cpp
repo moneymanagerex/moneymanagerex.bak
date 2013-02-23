@@ -156,6 +156,7 @@ void TLuaInterface::Open_MMEX_Library()
 
     lua_register(lua_, "mmCurrencyFormat",     cpp2Lua_CurrencyFormat);
     lua_register(lua_, "mmBaseCurrencyFormat", cpp2Lua_BaseCurrencyFormat);
+    lua_register(lua_, "mmDateFormat",         cpp2Lua_DateFormat);
 }
 
 /******************************************************************************
@@ -515,6 +516,19 @@ int TLuaInterface::cpp2Lua_CurrencyFormat(lua_State* lua)
 
     SetCurrencyFormat(lua, number, for_edit);
 
+    return 1;
+}
+
+/******************************************************************************
+ formatted_date = mmDateFormat(date_string)
+ *****************************************************************************/
+int TLuaInterface::cpp2Lua_DateFormat(lua_State* lua)
+{
+    wxString sDate = GetLuaString(lua);
+    wxDateTime dt = wxDateTime::Now();
+    if (!sDate.IsEmpty()) dt.ParseDate(sDate.GetData());
+    sDate = dt.Format(mmOptions::instance().dateFormat_);
+    lua_pushstring(lua, sDate.ToUTF8());
     return 1;
 }
 
