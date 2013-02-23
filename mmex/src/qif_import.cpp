@@ -402,14 +402,14 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (categID == -1 && !sCateg.IsEmpty())
             {
                 categID =  core->categoryList_.AddCategory(sCateg);
-                sMsg = wxString::Format(_("Added category %s"), sCateg);
+                sMsg = wxString::Format(_("Added category %s"), sCateg.c_str());
                 log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
             }
             if (subCategID == -1 && categID != -1 && !sSubCateg.IsEmpty())
             {
                 subCategID = core->categoryList_.AddSubCategory(categID, sSubCateg);
-                sMsg = wxString::Format(_("Added subcategory %s"), sSubCateg);
+                sMsg = wxString::Format(_("Added subcategory %s"), sSubCateg.c_str());
                 log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
             }
