@@ -183,7 +183,8 @@ void mmNewAcctDialog::CreateControls()
     grid_sizer->Add(itemChoice6, flagsExpand);
     itemChoice6->SetSelection(ACCT_STATUS_OPEN);
 
-    grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Initial Balance:")), flags);
+    grid_sizer->Add(new wxStaticText( this, wxID_STATIC
+        , wxString::Format(_("Initial Balance: %s"), wxString(wxT("")).c_str())), flags);
 
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this,
         ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE,
@@ -398,7 +399,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     {
         if (!mmex::formatCurrencyToDouble(bal, pAccount->initialBalance_))
         {
-            mmShowErrorMessageInvalid(this, _("Init Balance "));
+            mmShowErrorMessageInvalid(this, wxString::Format(_("Initial Balance: %s"), bal.c_str()));
             return;
         }
     }
