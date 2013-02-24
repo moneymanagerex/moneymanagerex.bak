@@ -223,6 +223,9 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
 
             bTrxComplited = false;
             trxNumLine = numLines - 1;
+            sMsg = wxT("---------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            logWindow->AppendText(sMsg);
+            log << sMsg << endl;
         }
         readLine = getFileLine(text, numLines);
 
@@ -248,6 +251,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 sMsg = wxString::Format(_("Importing account type: %s"), accountType.c_str());
                 log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
+                bTrxComplited = true;
                 continue;
             }
 
@@ -272,7 +276,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 while( (readLine = getFileLine(text, numLines) ) != wxT("^"))
                 {
                     numLines++;
-                    bTrxComplited = true;
+
                     int i = accountInfoType(readLine);
                     if (i == Name)
                     {
@@ -392,24 +396,31 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
         {
             sFullCateg = getLineData(readLine);
 
+            if (sFullCateg.Left(1).Contains(wxT("[")) && sFullCateg.Right(1).Contains(wxT("]")))
+            {
+                sToAccountName = sFullCateg.substr(1, sFullCateg.Length()-2);
+                sFullCateg = _("Transfer");
+            }
+
             /* //Trick  for cut non standart qif category usage in Financisto application
             //Category field may contains additional information like Project
             //Format Category[:Subcategory][/Project] //*/
             if (sFullCateg.Contains(wxT("/")))
                 transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sFullCateg).c_str()));
+
             core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
 
             if (categID == -1 && !sCateg.IsEmpty())
             {
                 categID =  core->categoryList_.AddCategory(sCateg);
-                sMsg = wxString::Format(_("Added category %s"), sCateg.c_str());
+                sMsg = wxString::Format(_("Added category: %s"), sCateg.c_str());
                 log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
             }
             if (subCategID == -1 && categID != -1 && !sSubCateg.IsEmpty())
             {
                 subCategID = core->categoryList_.AddSubCategory(categID, sSubCateg);
-                sMsg = wxString::Format(_("Added subcategory %s"), sSubCateg.c_str());
+                sMsg = wxString::Format(_("Added subcategory: %s"), sSubCateg.c_str());
                 log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
             }
@@ -468,14 +479,26 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 bValid = false;
             }
 
-            to_account_id = -1;
-
-            if (sFullCateg.Left(1).Contains(wxT("[")) && sFullCateg.Right(1).Contains(wxT("]")))
+            if (sFullCateg.Trim().IsEmpty() && type != TRANS_TYPE_TRANSFER_STR)
             {
-                sToAccountName = sFullCateg.substr(1, sFullCateg.Length()-2);
+                sMsg = _("Category is missing");
+                log << sMsg << endl;
+                logWindow->AppendText(sMsg << wxT("\n"));
+                sFullCateg = _("Unknown");
 
-                sFullCateg = _("Transfer");
+                core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
+                if (categID == -1 && !sCateg.IsEmpty())
+                {
+                    categID =  core->categoryList_.AddCategory(sCateg);
+                    sMsg = wxString::Format(_("Added category: %s"), sCateg.c_str());
+                    log << sMsg << endl;
+                    logWindow->AppendText(sMsg << wxT("\n"));
+                }
+            }
 
+            to_account_id = -1;
+            if (sFullCateg == _("Transfer"))
+            {
                 if (accounts_name.Index(sToAccountName) == wxNOT_FOUND)
                 {
                     mmAccount* ptrBase = new mmAccount();
@@ -610,15 +633,20 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                     if (refTrans[index]->transNum_ != transNum) continue;
                     if (refTrans[index]->notes_ != notes) continue;
 
-                    sMsg = wxString::Format(wxT("%f -> %f \n"),refTrans[index]->toAmt_ ,val);
                     if (val > 0.0)
                         refTrans[index]->toAmt_ = val;
                     else
                         refTrans[index]->amt_ = val;
 
-                    bValid = false;
+                    sMsg = wxString::Format(wxT("%f -> %f (%f)\n"), refTrans[index]->amt_
+                        , refTrans[index]->toAmt_
+                        , (fabs(refTrans[index]->amt_)/fabs(refTrans[index]->toAmt_)<1)
+                            ? fabs(refTrans[index]->toAmt_)/fabs(refTrans[index]->amt_)
+                            : fabs(refTrans[index]->amt_)/fabs(refTrans[index]->toAmt_));
                     logWindow->AppendText(sMsg);
                     log << sMsg << endl;
+
+                    bValid = false;
                     break;
                 }
             }
