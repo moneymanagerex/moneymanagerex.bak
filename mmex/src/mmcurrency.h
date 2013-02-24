@@ -63,7 +63,7 @@ public:
     void DeleteCurrency(int currencyID);
     void UpdateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     int getCurrencyID(const wxString& currencyName, bool symbol = false) const;
-    wxString getCurrencyName(int currencyID) const;
+    wxString getCurrencyName(int currencyID, bool symbol = false) const;
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName, bool symbol = false) const;
 

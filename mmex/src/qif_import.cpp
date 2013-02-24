@@ -273,6 +273,8 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
 
             if ( accountType == wxT("Account"))
             {
+                wxString sDescription = wxT("");
+                wxString sBalance = wxT("");
                 // account information
                 // Need to read till we get to end of account information
                 while( (readLine = getFileLine(text, numLines) ) != wxT("^"))
@@ -282,44 +284,58 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                     int i = accountInfoType(readLine);
                     if (i == Name)
                     {
-                        if (core->accountList_.GetAccountId(getLineData(readLine)) > -1)
-                            acctName = getLineData(readLine);
-                        else
-                        {
-                            //TODO: Repeated code
-                            mmAccount* ptrBase = new mmAccount();
-                            boost::shared_ptr<mmAccount> pAccount(ptrBase);
-
-                            pAccount->favoriteAcct_ = true;
-                            pAccount->status_ = mmAccount::MMEX_Open;
-                            pAccount->acctType_ = ACCOUNT_TYPE_BANK;
-                            pAccount->name_ = getLineData(readLine);
-                            pAccount->initialBalance_ = 0;
-                            pAccount->currency_ = core->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
-                            // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
-                            if ( ! core->accountList_.AccountExists(pAccount->name_))
-                                from_account_id = core->accountList_.AddAccount(pAccount);
-                            accounts_name.Add(pAccount->name_);
-                            acctName = pAccount->name_;
-                            sMsg = wxString::Format(_("Added account '%s'"), acctName.c_str());
-                            log << sMsg << endl;
-                            logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
-
-                        }
-
-                        fromAccountID = core->accountList_.GetAccountId(acctName);
-
-                        sMsg = wxString::Format(_("Line: %ld"), numLines) << wxT(" : ")
-                            << wxString::Format(_("Account name: %s"), acctName.c_str());
-                        log << sMsg << endl;
-                        logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+                        acctName = getLineData(readLine);
                         continue;
                     }
-                    else if (i == AccountType || i == Description || i == CreditLimit || i  == BalanceDate || i == Balance)
+                    else if (i == Description)
+                    {
+                        //TODO: Get currency symbol if provided (huck)
+                        sDescription = getLineData(readLine);
+                        continue;
+                    }
+                    else if (i == Balance)
+                    {
+                        sBalance = getLineData(readLine);
+                        if (!sBalance.ToDouble(&val) && !mmex::formatCurrencyToDouble(sBalance, val))
+                            val = 0;
+                        continue;
+                    }
+                    else if (i == AccountType || i == CreditLimit || i  == BalanceDate)
                     {
                         continue;
                     }
                 }
+
+                if (core->accountList_.GetAccountId(acctName) < 0)
+                {
+                    //TODO: Repeated code
+                    mmAccount* ptrBase = new mmAccount();
+                    boost::shared_ptr<mmAccount> pAccount(ptrBase);
+
+                    pAccount->favoriteAcct_ = true;
+                    pAccount->status_ = mmAccount::MMEX_Open;
+                    pAccount->acctType_ = ACCOUNT_TYPE_BANK;
+                    pAccount->name_ = acctName;
+                    pAccount->initialBalance_ = val;
+                    pAccount->currency_ = core->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
+                    // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
+                    if ( ! core->accountList_.AccountExists(pAccount->name_))
+                        from_account_id = core->accountList_.AddAccount(pAccount);
+                    accounts_name.Add(pAccount->name_);
+                    acctName = pAccount->name_;
+                    sMsg = wxString::Format(_("Added account '%s'"), acctName.c_str())
+                        << wxT("\n") << wxString::Format(_("Initial Balance: %s"), (wxString()<<val).c_str());
+                    log << sMsg << endl;
+                    logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+                }
+
+                fromAccountID = core->accountList_.GetAccountId(acctName);
+
+                sMsg = wxString::Format(_("Line: %ld"), numLines) << wxT(" : ")
+                    << wxString::Format(_("Account name: %s"), acctName.c_str());
+                log << sMsg << endl;
+                logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+
                 continue;
             }
 

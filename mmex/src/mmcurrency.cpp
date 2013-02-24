@@ -219,11 +219,14 @@ int mmCurrencyList::getCurrencyID(const wxString& currencyName, bool symbol) con
    return currencyID;
 }
 
-wxString mmCurrencyList::getCurrencyName(int currencyID) const
+wxString mmCurrencyList::getCurrencyName(int currencyID, bool symbol) const
 {
     for(const_iterator it = currencies_.begin(); it != currencies_.end(); ++ it)
     {
-        if ((*it)->currencyID_ == currencyID) return (*it)->currencyName_;
+        if ((*it)->currencyID_ == currencyID)
+        {
+            return symbol ? (*it)->currencySymbol_ : (*it)->currencyName_;
+        }
     }
 
     return wxEmptyString;
