@@ -244,9 +244,11 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
         if (lineType(readLine) == AcctType)
         {
             wxString accountType = getLineData(readLine);
-            if ((!accountType.CmpNoCase(wxT("Type:Bank"))) ||
-                (!accountType.CmpNoCase(wxT("Type:Cash"))) ||
-                (!accountType.CmpNoCase(wxT("Type:CCard"))))
+            if  ((!accountType.CmpNoCase(wxT("Type:Bank")))
+                    || (!accountType.CmpNoCase(wxT("Type:Cash")))
+                    || (!accountType.CmpNoCase(wxT("Type:CCard")))
+                    || (!accountType.CmpNoCase(wxT("Type:Oth L")))
+                )
             {
                 sMsg = wxString::Format(_("Importing account type: %s"), accountType.c_str());
                 log << sMsg << endl;
