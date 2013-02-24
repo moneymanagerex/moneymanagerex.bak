@@ -324,14 +324,26 @@ void mmQIFDialog::OnFileNameEntered(wxCommandEvent& event)
     this->GetEventHandler()->AddPendingEvent(evt);
 }
 
-wxString mmQIFDialog::writeAccHeader(wxString& acctName, bool qif)
+wxString mmQIFDialog::writeAccHeader(int accountID, bool qif)
 {
     wxString buffer = wxT("");
     if (qif)
     {
+        boost::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(accountID);
+        wxASSERT(pAccount);
+        boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+        wxASSERT(pCurrency);
+
+        const wxString sAccName = core_->accountList_.GetAccountName(accountID);
+        double dInitBalance = pAccount->initialBalance_;
+        const wxString sInitBalance = wxString::Format(wxT("%f"), dInitBalance);
+        const wxString sCurrencyCode = wxT("[") + pCurrency->currencySymbol_ + wxT("]");
+
         buffer = wxString(wxT("!Account")) << wxT("\n")
-            << wxT("N") << acctName <<  wxT("\n")
+            << wxT("N") << sAccName <<  wxT("\n")
             << wxT("TBank") << wxT("\n")
+            << wxT("D") << sCurrencyCode << wxT("\n")
+            << (dInitBalance != 0 ? wxString(wxT("$")) << sInitBalance << wxT("\n") : wxT(""))
             << wxT("^") <<  wxT("\n")
             << wxT("!Type:Cash") << wxT("\n");
     }
@@ -349,7 +361,6 @@ wxString mmQIFDialog::exportCategories(bool qif)
         const boost::shared_ptr<mmCategory> category = *it;
         const wxString categ_name = category->categName_;
         buffer_qif << wxT("N") << categ_name <<  wxT("\n")
-            << wxT("E") << wxT("\n")
             << wxT("^") << wxT("\n");
         buffer_csv << categ_name <<  delimit_ << wxT("\n");
 
@@ -362,12 +373,11 @@ wxString mmQIFDialog::exportCategories(bool qif)
                 << categ_name << (qif ? wxT(":") : delimit_)
                 << sub_category->categName_ << wxT("\n");
             buffer_qif << wxT("N") << full_categ_name
-                << wxT("E") << wxT("\n")
                 << wxT("^") << wxT("\n");
             buffer_csv << full_categ_name;
         }
     }
-    return qif ? buffer_qif : buffer_csv;;
+    return qif ? buffer_qif : buffer_csv;
 }
 
 void mmQIFDialog::mmExportQIF()
@@ -404,9 +414,8 @@ void mmQIFDialog::mmExportQIF()
         {
             const int fromAccountID = selected_accounts_id[a];
             wxString acctName = core_->accountList_.GetAccountName(fromAccountID);
-            const wxString amtSeparator = core_->accountList_.getAccountCurrencyDecimalChar(fromAccountID);
 
-            buffer << writeAccHeader(acctName, qif_csv);
+            buffer << writeAccHeader(fromAccountID, qif_csv);
 
             for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
             {
