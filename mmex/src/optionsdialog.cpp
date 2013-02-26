@@ -414,70 +414,111 @@ void mmOptionsDialog::CreateControls()
     colourPanel->Connect(wxID_ANY, wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(mmOptionsDialog::OnNavTreeColorChanged), NULL, this);
 
-    wxStaticBox* colourSettingStaticBox = new wxStaticBox(colourPanel, wxID_STATIC, _("Colour Settings"));
+    wxStaticBox* colourSettingStaticBox = new wxStaticBox(colourPanel, wxID_ANY, _("Colour Settings"));
     colourSettingStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* colourSettingStaticBoxSizer = new wxStaticBoxSizer(colourSettingStaticBox, wxVERTICAL);
     colourPanelSizer->Add(colourSettingStaticBoxSizer, flagsExpand);
 
-    wxFlexGridSizer* colourPanelSizerGrid = new wxFlexGridSizer(0, 2, 10, 10);
+    wxFlexGridSizer* colourPanelSizerGrid = new wxFlexGridSizer(0, 2, 5, 5);
     colourSettingStaticBoxSizer->Add(colourPanelSizerGrid, flags);
 
-    navTreeButton_ = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE,
+    navTreeButton_ = new wxButton( colourPanel, wxID_HIGHEST-7,
         _("Nav Tree"), wxDefaultPosition, wxSize(150,-1), 0);
     navTreeButton_->SetToolTip(_("Specify the color for the nav tree"));
     navTreeButton_->SetBackgroundColour(mmColors::navTreeBkColor);
     colourPanelSizerGrid->Add(new wxStaticText(colourPanel, wxID_STATIC, _("Nav Tree")), flags);
     colourPanelSizerGrid->Add(navTreeButton_, flags);
 
-    listBackgroundButton_ = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK,
+    listBackgroundButton_ = new wxButton(colourPanel, wxID_HIGHEST-6,
         _("List Background"), wxDefaultPosition, navTreeButton_->GetSize(), 0 );
     listBackgroundButton_->SetToolTip(_("Specify the color for the list background"));
     listBackgroundButton_->SetBackgroundColour(mmColors::listBackColor);
     colourPanelSizerGrid->Add(new wxStaticText( colourPanel, wxID_STATIC, _("List Background")), flags);
     colourPanelSizerGrid->Add(listBackgroundButton_, flags);
 
-    listRowZeroButton_ = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0,
+    listRowZeroButton_ = new wxButton(colourPanel, wxID_HIGHEST-5,
         _("List Row 0"), wxDefaultPosition, navTreeButton_->GetSize(), 0);
     listRowZeroButton_->SetToolTip(_("Specify the color for the list row 0"));
     listRowZeroButton_->SetBackgroundColour(mmColors::listAlternativeColor0);
     colourPanelSizerGrid->Add(new wxStaticText(colourPanel, wxID_STATIC, _("List Row 0")), flags);
     colourPanelSizerGrid->Add(listRowZeroButton_, flags);
 
-    listRowOneButton_ = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1,
+    listRowOneButton_ = new wxButton(colourPanel, wxID_HIGHEST-4,
         _("List Row 1"), wxDefaultPosition, navTreeButton_->GetSize(), 0);
     listRowOneButton_->SetToolTip(_("Specify the color for the list row 1"));
     listRowOneButton_->SetBackgroundColour(mmColors::listAlternativeColor1);
     colourPanelSizerGrid->Add(new wxStaticText( colourPanel, wxID_STATIC, _("List Row 1")), flags);
     colourPanelSizerGrid->Add(listRowOneButton_, flags);
 
-    listBorderButton_ = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER,
+    listBorderButton_ = new wxButton(colourPanel, wxID_HIGHEST-3,
         _("List Border"), wxDefaultPosition, navTreeButton_->GetSize(), 0);
     listBorderButton_->SetToolTip(_("Specify the color for the list Border"));
     listBorderButton_->SetBackgroundColour(mmColors::listBorderColor);
     colourPanelSizerGrid->Add(new wxStaticText( colourPanel, wxID_STATIC, _("List Border")), flags);
     colourPanelSizerGrid->Add(listBorderButton_, flags);
 
-    listDetailsButton_ = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS,
+    listDetailsButton_ = new wxButton( colourPanel, wxID_HIGHEST-2,
         _("List Details"), wxDefaultPosition, navTreeButton_->GetSize(), 0);
     listDetailsButton_->SetToolTip(_("Specify the color for the list details"));
     listDetailsButton_->SetBackgroundColour(mmColors::listDetailsPanelColor);
     colourPanelSizerGrid->Add(new wxStaticText( colourPanel, wxID_STATIC, _("List Details")), flags);
     colourPanelSizerGrid->Add(listDetailsButton_, flags);
 
-    futureTransButton_ = new wxButton( colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES,
+    futureTransButton_ = new wxButton( colourPanel, wxID_HIGHEST-1,
         _("Future Transactions"), wxDefaultPosition, navTreeButton_->GetSize(), 0);
     futureTransButton_->SetToolTip(_("Specify the color for future transactions"));
     futureTransButton_->SetBackgroundColour(mmColors::listFutureDateColor);
-    colourPanelSizerGrid->Add(new wxStaticText(colourPanel, wxID_STATIC,
+    colourPanelSizerGrid->Add(new wxStaticText(colourPanel, wxID_ANY,
         _("Future Transactions")), flags);
     colourPanelSizerGrid->Add(futureTransButton_, flags);
 
-    restoreDefaultButton_ = new wxButton(colourPanel, ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT,
+    restoreDefaultButton_ = new wxButton(colourPanel, wxID_HIGHEST,
         _("Restore Defaults"));
     restoreDefaultButton_->SetToolTip(_("Restore Default Colors"));
     colourPanelSizer->Add(restoreDefaultButton_, flags);
 
-    /*********************************************************************************************
+    wxStaticBox* userColourSettingStBox = new wxStaticBox(colourPanel, wxID_ANY, _("User Colors"));
+    userColourSettingStBox->SetFont(staticBoxFontSetting);
+    wxStaticBoxSizer* userColourSettingStBoxSizer = new wxStaticBoxSizer(userColourSettingStBox, wxHORIZONTAL);
+    colourPanelSizer->Add(userColourSettingStBoxSizer, 0, wxALL|wxCENTER, 0);
+
+    int size_x = restoreDefaultButton_->GetSize().GetY();
+    UDFCB1_ = new wxButton( colourPanel, wxID_HIGHEST+11,
+        _("1"), wxDefaultPosition, wxSize(size_x, -1), 0);
+    UDFCB1_->SetBackgroundColour(mmColors::userDefColor1);
+    userColourSettingStBoxSizer->Add(UDFCB1_, flags);
+
+    UDFCB2_ = new wxButton( colourPanel, wxID_HIGHEST+22,
+        _("2"), wxDefaultPosition, wxSize(size_x, -1), 0);
+    UDFCB2_->SetBackgroundColour(mmColors::userDefColor2);
+    userColourSettingStBoxSizer->Add(UDFCB2_, flags);
+
+    UDFCB3_ = new wxButton( colourPanel, wxID_HIGHEST+33,
+        _("3"), wxDefaultPosition, wxSize(size_x, -1), 0);
+    UDFCB3_->SetBackgroundColour(mmColors::userDefColor3);
+    userColourSettingStBoxSizer->Add(UDFCB3_, flags);
+
+    UDFCB4_ = new wxButton( colourPanel, wxID_HIGHEST+44,
+        _("4"), wxDefaultPosition, wxSize(size_x, -1), 0);
+    UDFCB4_->SetBackgroundColour(mmColors::userDefColor4);
+    userColourSettingStBoxSizer->Add(UDFCB4_, flags);
+
+    UDFCB5_ = new wxButton( colourPanel, wxID_HIGHEST+55,
+        _("5"), wxDefaultPosition, wxSize(size_x, -1), 0);
+    UDFCB5_->SetBackgroundColour(mmColors::userDefColor5);
+    userColourSettingStBoxSizer->Add(UDFCB5_, flags);
+
+    UDFCB6_ = new wxButton( colourPanel, wxID_HIGHEST+66,
+        _("6"), wxDefaultPosition, wxSize(size_x, -1), 0);
+    UDFCB6_->SetBackgroundColour(mmColors::userDefColor6);
+    userColourSettingStBoxSizer->Add(UDFCB6_, flags);
+
+    UDFCB7_ = new wxButton( colourPanel, wxID_HIGHEST+77,
+        _("7"), wxDefaultPosition, wxSize(size_x, -1), 0);
+    UDFCB7_->SetBackgroundColour(mmColors::userDefColor7);
+    userColourSettingStBoxSizer->Add(UDFCB7_, flags);
+
+/*********************************************************************************************
      Others Panel
     **********************************************************************************************/
     wxPanel* othersPanel = new wxPanel(newBook, ID_BOOK_PANELMISC, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -746,7 +787,7 @@ void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& event)
 {
     int buttonId = event.GetId();
     wxButton* button = (wxButton*)FindWindow(buttonId);
-    if (buttonId == ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT)
+    if (buttonId == wxID_HIGHEST)
     {
         OnRestoreDefaultColors(event);
         return;
@@ -953,6 +994,23 @@ void mmOptionsDialog::SaveColourPanelSettings()
     core_->iniSettings_->SetStringSetting(wxT("LISTBORDER"), mmGetStringFromColour(mmColors::listBorderColor));
     core_->iniSettings_->SetStringSetting(wxT("LISTDETAILSPANEL"), mmGetStringFromColour(mmColors::listDetailsPanelColor));
     core_->iniSettings_->SetStringSetting(wxT("LISTFUTUREDATES"), mmGetStringFromColour(mmColors::listFutureDateColor));
+
+    mmColors::userDefColor1 = UDFCB1_->GetBackgroundColour();
+    mmColors::userDefColor2 = UDFCB2_->GetBackgroundColour();
+    mmColors::userDefColor3 = UDFCB3_->GetBackgroundColour();
+    mmColors::userDefColor4 = UDFCB4_->GetBackgroundColour();
+    mmColors::userDefColor5 = UDFCB5_->GetBackgroundColour();
+    mmColors::userDefColor6 = UDFCB6_->GetBackgroundColour();
+    mmColors::userDefColor7 = UDFCB7_->GetBackgroundColour();
+
+    core_->iniSettings_->SetStringSetting(wxT("USER_COLOR1"), mmGetStringFromColour(mmColors::userDefColor1));
+    core_->iniSettings_->SetStringSetting(wxT("USER_COLOR2"), mmGetStringFromColour(mmColors::userDefColor2));
+    core_->iniSettings_->SetStringSetting(wxT("USER_COLOR3"), mmGetStringFromColour(mmColors::userDefColor3));
+    core_->iniSettings_->SetStringSetting(wxT("USER_COLOR4"),  mmGetStringFromColour(mmColors::userDefColor4));
+    core_->iniSettings_->SetStringSetting(wxT("USER_COLOR5"), mmGetStringFromColour(mmColors::userDefColor5));
+    core_->iniSettings_->SetStringSetting(wxT("USER_COLOR6"), mmGetStringFromColour(mmColors::userDefColor6));
+    core_->iniSettings_->SetStringSetting(wxT("USER_COLOR7"), mmGetStringFromColour(mmColors::userDefColor7));
+
 }
 
 void mmOptionsDialog::SaveOthersPanelSettings()

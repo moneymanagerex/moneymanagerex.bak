@@ -2857,7 +2857,7 @@ void mmGUIFrame::OnExportToCSV(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnExportToQIF(wxCommandEvent& /*event*/)
 {
-    mmQIFDialog* dlg = new mmQIFDialog(m_core.get(), this);
+    mmQIFExportDialog* dlg = new mmQIFExportDialog(m_core.get(), this);
     dlg->ShowModal();
 }
 //----------------------------------------------------------------------------
