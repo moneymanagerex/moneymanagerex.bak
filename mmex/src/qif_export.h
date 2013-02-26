@@ -15,15 +15,15 @@
 
 class wxDatePickerCtrl;
 
-class mmQIFDialog : public wxDialog
+class mmQIFExportDialog : public wxDialog
 {
-    DECLARE_DYNAMIC_CLASS( mQIFDialog )
+    DECLARE_DYNAMIC_CLASS( mmQIFExportDialog )
     DECLARE_EVENT_TABLE()
 
 public:
-    mmQIFDialog() {}
+    mmQIFExportDialog() {}
 
-    mmQIFDialog(
+    mmQIFExportDialog(
         mmCoreDB* core,
         wxWindow* parent,
         wxWindowID id = SYMBOL_QIFDIALOG_IDNAME,

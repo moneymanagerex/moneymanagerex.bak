@@ -16,16 +16,16 @@
 // Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
 
-IMPLEMENT_DYNAMIC_CLASS( mmQIFDialog, wxDialog )
+IMPLEMENT_DYNAMIC_CLASS( mmQIFExportDialog, wxDialog )
 
-BEGIN_EVENT_TABLE( mmQIFDialog, wxDialog )
-    EVT_CHECKBOX(wxID_ANY, mmQIFDialog::OnCheckboxClick )
-    EVT_BUTTON(wxID_OK, mmQIFDialog::OnOk)
-    EVT_BUTTON(wxID_CANCEL, mmQIFDialog::OnCancel)
-    EVT_CLOSE(mmQIFDialog::OnQuit)
+BEGIN_EVENT_TABLE( mmQIFExportDialog, wxDialog )
+    EVT_CHECKBOX(wxID_ANY, mmQIFExportDialog::OnCheckboxClick )
+    EVT_BUTTON(wxID_OK, mmQIFExportDialog::OnOk)
+    EVT_BUTTON(wxID_CANCEL, mmQIFExportDialog::OnCancel)
+    EVT_CLOSE(mmQIFExportDialog::OnQuit)
 END_EVENT_TABLE()
 
-mmQIFDialog::mmQIFDialog(
+mmQIFExportDialog::mmQIFExportDialog(
     mmCoreDB* core,
     wxWindow* parent, wxWindowID id,
     const wxString& caption, const wxPoint& pos,
@@ -37,7 +37,7 @@ mmQIFDialog::mmQIFDialog(
     Create(parent, id, caption, pos, size, style);
 }
 
-bool mmQIFDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
+bool mmQIFExportDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
                            const wxPoint& pos, const wxSize& size, long style )
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
@@ -55,7 +55,7 @@ bool mmQIFDialog::Create( wxWindow* parent, wxWindowID id, const wxString& capti
     return TRUE;
 }
 
-void mmQIFDialog::fillControls()
+void mmQIFExportDialog::fillControls()
 {
     wxArrayString accounts_type;
     accounts_type.Add(ACCOUNT_TYPE_BANK);
@@ -69,7 +69,7 @@ void mmQIFDialog::fillControls()
     }
 }
 
-void mmQIFDialog::CreateControls()
+void mmQIFExportDialog::CreateControls()
 {
     const int border = 5;
     const int fieldWidth = 180;
@@ -119,7 +119,7 @@ void mmQIFDialog::CreateControls()
     bSelectedAccounts_ = new wxButton(main_tab, wxID_STATIC, _("All")
         , wxDefaultPosition, wxSize(fieldWidth,-1));
     bSelectedAccounts_ -> Connect(wxID_ANY,
-        wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFDialog::OnAccountsButton), NULL, this);
+        wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmQIFExportDialog::OnAccountsButton), NULL, this);
     accountsCheckBox_->SetValue(true);
     flex_sizer->Add(accountsCheckBox_, flags);
     flex_sizer->Add(bSelectedAccounts_, flags);
@@ -151,14 +151,14 @@ void mmQIFDialog::CreateControls()
     file_name_label_ = new wxStaticText(main_tab, wxID_ANY, _("File Name:"));
     button_search_ = new wxButton(main_tab, wxID_SAVE, _("Choose &file"));
     button_search_->Connect(wxID_SAVE, wxEVT_COMMAND_BUTTON_CLICKED
-        , wxCommandEventHandler(mmQIFDialog::OnFileSearch), NULL, this);
+        , wxCommandEventHandler(mmQIFExportDialog::OnFileSearch), NULL, this);
 
     m_text_ctrl_ = new wxTextCtrl(main_tab, wxID_FILE, wxEmptyString,
         wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER );
     m_text_ctrl_->Connect(wxID_FILE, wxEVT_COMMAND_TEXT_UPDATED
-        , wxCommandEventHandler(mmQIFDialog::OnFileNameChanged), NULL, this);
+        , wxCommandEventHandler(mmQIFExportDialog::OnFileNameChanged), NULL, this);
     m_text_ctrl_->Connect(wxID_FILE, wxEVT_COMMAND_TEXT_ENTER
-        , wxCommandEventHandler(mmQIFDialog::OnFileNameEntered), NULL, this);
+        , wxCommandEventHandler(mmQIFExportDialog::OnFileNameEntered), NULL, this);
 
     flex_sizer->Add(toFileCheckBox_, flags);
     flex_sizer->AddSpacer(1);
@@ -174,7 +174,7 @@ void mmQIFDialog::CreateControls()
     wxButton* itemClearButton = new wxButton(log_tab, wxID_CLEAR);
     tab2_sizer->Add(itemClearButton, flags);
     itemClearButton->Connect(wxID_CLEAR, wxEVT_COMMAND_BUTTON_CLICKED
-        , wxCommandEventHandler(mmQIFDialog::OnButtonClear), NULL, this);
+        , wxCommandEventHandler(mmQIFExportDialog::OnButtonClear), NULL, this);
 
     /**********************************************************************************************
      Button Panel with OK and Cancel Buttons
@@ -188,7 +188,7 @@ void mmQIFDialog::CreateControls()
     wxButton* itemButtonOK = new wxButton( buttons_panel, wxID_OK, _("&OK"));
     wxButton* itemButtonCancel_ = new wxButton( buttons_panel, wxID_CANCEL, _("&Cancel"));
     itemButtonOK->Connect(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED
-        , wxCommandEventHandler(mmQIFDialog::OnOk), NULL, this);
+        , wxCommandEventHandler(mmQIFExportDialog::OnOk), NULL, this);
 
     buttons_sizer->Add(itemButtonOK, flags.Border(wxBOTTOM|wxRIGHT, 10));
     buttons_sizer->Add(itemButtonCancel_, flags);
@@ -197,12 +197,12 @@ void mmQIFDialog::CreateControls()
 
 }
 
-void mmQIFDialog::OnButtonClear(wxCommandEvent& /*event*/)
+void mmQIFExportDialog::OnButtonClear(wxCommandEvent& /*event*/)
 {
     log_field_->Clear();
 }
 
-void mmQIFDialog::OnAccountsButton(wxCommandEvent& /*event*/)
+void mmQIFExportDialog::OnAccountsButton(wxCommandEvent& /*event*/)
 {
     items_index_.clear();
     wxMultiChoiceDialog s_acc(this, _("Choose Account to Export from:")
@@ -224,7 +224,7 @@ void mmQIFDialog::OnAccountsButton(wxCommandEvent& /*event*/)
     }
 }
 
-void mmQIFDialog::OnFileSearch(wxCommandEvent& /*event*/)
+void mmQIFExportDialog::OnFileSearch(wxCommandEvent& /*event*/)
 {
     wxString fileName = m_text_ctrl_->GetValue();
     const bool qif_csv = m_radio_box_->GetSelection() == 0;
@@ -242,7 +242,7 @@ void mmQIFDialog::OnFileSearch(wxCommandEvent& /*event*/)
     m_text_ctrl_->SetValue(fileName);
 }
 
-void mmQIFDialog::OnOk(wxCommandEvent& /*event*/)
+void mmQIFExportDialog::OnOk(wxCommandEvent& /*event*/)
 {
     bool bCorrect = false;
     wxString sErrorMsg = wxT("");
@@ -271,17 +271,17 @@ void mmQIFDialog::OnOk(wxCommandEvent& /*event*/)
         wxMessageBox(sErrorMsg, _("QIF Export"), wxOK|wxICON_WARNING);
 }
 
-void mmQIFDialog::OnCancel(wxCommandEvent& /*event*/)
+void mmQIFExportDialog::OnCancel(wxCommandEvent& /*event*/)
 {
 
     EndModal(wxID_CANCEL);
 }
 
-void mmQIFDialog::OnQuit(wxCloseEvent& /*event*/)
+void mmQIFExportDialog::OnQuit(wxCloseEvent& /*event*/)
 {
         EndModal(wxID_CANCEL);
 }
-void mmQIFDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
+void mmQIFExportDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
 {
     bSelectedAccounts_->Enable(accountsCheckBox_->GetValue());
     if (dateFromCheckBox_->GetValue()) dateFromCheckBox_->SetValue(accountsCheckBox_->GetValue());
@@ -294,7 +294,7 @@ void mmQIFDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
 
 }
 
-void mmQIFDialog::OnFileNameChanged(wxCommandEvent& event)
+void mmQIFExportDialog::OnFileNameChanged(wxCommandEvent& event)
 {
     wxString file_name = m_text_ctrl_->GetValue();
     if (file_name.Contains(wxT("\n")) || file_name.Contains(wxT("file://")))
@@ -314,7 +314,7 @@ void mmQIFDialog::OnFileNameChanged(wxCommandEvent& event)
     wxFileName csv_file(file_name);
 
 }
-void mmQIFDialog::OnFileNameEntered(wxCommandEvent& event)
+void mmQIFExportDialog::OnFileNameEntered(wxCommandEvent& event)
 {
     wxString file_name = m_text_ctrl_->GetValue();
     file_name.Trim();
@@ -324,7 +324,7 @@ void mmQIFDialog::OnFileNameEntered(wxCommandEvent& event)
     this->GetEventHandler()->AddPendingEvent(evt);
 }
 
-wxString mmQIFDialog::writeAccHeader(int accountID, bool qif)
+wxString mmQIFExportDialog::writeAccHeader(int accountID, bool qif)
 {
     wxString buffer = wxT("");
     if (qif)
@@ -350,7 +350,7 @@ wxString mmQIFDialog::writeAccHeader(int accountID, bool qif)
     return buffer;
 }
 
-wxString mmQIFDialog::exportCategories(bool qif)
+wxString mmQIFExportDialog::exportCategories(bool qif)
 {
     wxString buffer_qif, buffer_csv;
 
@@ -380,7 +380,7 @@ wxString mmQIFDialog::exportCategories(bool qif)
     return qif ? buffer_qif : buffer_csv;
 }
 
-void mmQIFDialog::mmExportQIF()
+void mmQIFExportDialog::mmExportQIF()
 {
     const bool qif_csv = m_radio_box_->GetSelection() == 0;
     const bool exp_categ = cCategs_->GetValue();
