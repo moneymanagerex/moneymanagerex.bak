@@ -180,6 +180,13 @@ public:
     static wxColour navTreeBkColor;
     static wxColour listDetailsPanelColor;
     static wxColour listFutureDateColor;
+    static wxColour userDefColor1;
+    static wxColour userDefColor2;
+    static wxColour userDefColor3;
+    static wxColour userDefColor4;
+    static wxColour userDefColor5;
+    static wxColour userDefColor6;
+    static wxColour userDefColor7;
 };
 //----------------------------------------------------------------------------
 

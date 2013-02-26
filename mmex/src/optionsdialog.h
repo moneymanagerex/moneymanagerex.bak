@@ -76,6 +76,13 @@ private:
     wxButton* listDetailsButton_;
     wxButton* futureTransButton_;
     wxButton* restoreDefaultButton_;
+    wxButton* UDFCB1_;
+    wxButton* UDFCB2_;
+    wxButton* UDFCB3_;
+    wxButton* UDFCB4_;
+    wxButton* UDFCB5_;
+    wxButton* UDFCB6_;
+    wxButton* UDFCB7_;
 
     wxCheckBox* cbUseOrgDateCopyPaste_;
     wxCheckBox* cbUseSound_;

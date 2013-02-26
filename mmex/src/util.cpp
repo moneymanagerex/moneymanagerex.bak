@@ -586,6 +586,13 @@ void mmLoadColorsFromDatabase(boost::shared_ptr<MMEX_IniSettings> pIniSettings)
     mmColors::listBorderColor       = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTBORDER"), wxT("0,0,0")));
     mmColors::listDetailsPanelColor = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTDETAILSPANEL"), wxT("244,247,251")));
     mmColors::listFutureDateColor   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTFUTUREDATES"), wxT("116,134,168")));
+    mmColors::userDefColor1   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR1"), wxT("255,0,0")));
+    mmColors::userDefColor2   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR2"), wxT("255,165,0")));
+    mmColors::userDefColor3   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR3"), wxT("255,255,0")));
+    mmColors::userDefColor4   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR4"), wxT("0,255,0")));
+    mmColors::userDefColor5   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR5"), wxT("0,255,255")));
+    mmColors::userDefColor6   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR6"), wxT("0,0,255")));
+    mmColors::userDefColor7   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR7"), wxT("0,0,128")));
 }
 
 
@@ -597,6 +604,14 @@ wxColour mmColors::navTreeBkColor = wxColour(255, 255, 255);
 wxColour mmColors::listBorderColor = wxColour(0, 0, 0);
 wxColour mmColors::listDetailsPanelColor = wxColour(244, 247, 251);
 wxColour mmColors::listFutureDateColor = wxColour(116, 134, 168);
+
+wxColour mmColors::userDefColor1 = wxColour(255,0,0);
+wxColour mmColors::userDefColor2 = wxColour(255,165,0);
+wxColour mmColors::userDefColor3 = wxColour(255,255,0);
+wxColour mmColors::userDefColor4 = wxColour(0,255,0);
+wxColour mmColors::userDefColor5 = wxColour(0,255,255);
+wxColour mmColors::userDefColor6 = wxColour(0,0,255);
+wxColour mmColors::userDefColor7 = wxColour(0,0,128);
 
 //----------------------------------------------------------------------------
 
