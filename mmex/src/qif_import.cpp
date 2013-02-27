@@ -196,7 +196,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
     bool bTrxComplited = true;
 
     std::vector< boost::shared_ptr<mmBankTransaction> > vQIF_trxs;
-    boost::shared_ptr<mmSplitTransactionEntries> mmSplit(new mmSplitTransactionEntries());
+    boost::shared_ptr< mmSplitTransactionEntries > mmSplit(new mmSplitTransactionEntries());
 
     while(!input.Eof() && !canceledbyuser)
     {
@@ -460,8 +460,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             pSplitEntry->splitAmount_  = dSplitAmount;
             pSplitEntry->categID_      = categID;
             pSplitEntry->subCategID_   = subCategID;
-            pSplitEntry->category_     = core->categoryList_.GetCategorySharedPtr(categID, subCategID);
-            wxASSERT(pSplitEntry->category_.lock());
+
             mmSplit->addSplit(pSplitEntry);
             continue;
         }
@@ -611,6 +610,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             {
                 int c = mmSplit->entries_[i]->categID_;
                 int s = mmSplit->entries_[i]->subCategID_;
+
                 wxString cn = core->categoryList_.GetCategoryName(c);
                 wxString sn = core->categoryList_.GetSubCategoryName(c, s);
                 double v = mmSplit->entries_[i]->splitAmount_;

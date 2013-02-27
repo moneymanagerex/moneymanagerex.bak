@@ -497,7 +497,7 @@ void mmQIFExportDialog::mmExportQIF()
                 if (pBankTransaction->categID_ == -1)
                 {
                     mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
-                    pBankTransaction->getSplitTransactions(core_, splits);
+                    pBankTransaction->getSplitTransactions(splits);
 
                     for (int i = 0; i < (int)splits->entries_.size(); ++i)
                     {

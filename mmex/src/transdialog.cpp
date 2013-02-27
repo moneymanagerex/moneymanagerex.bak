@@ -1112,8 +1112,6 @@ void mmTransDialog::activateSplitTransactionsDlg()
         pSplitEntry->splitAmount_  = bDeposit ? transAmount_ : transAmount_;
         pSplitEntry->categID_      = categID_;
         pSplitEntry->subCategID_   = subcategID_;
-        pSplitEntry->category_     = core_->categoryList_.GetCategorySharedPtr(categID_, subcategID_);
-        wxASSERT(pSplitEntry->category_.lock());
         split_->addSplit(pSplitEntry);
     }
     categID_ = -1;
@@ -1190,7 +1188,7 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
 
     // we need to create a new pointer for Split transactions.
     boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
-    core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID())->getSplitTransactions(core_, splitTransEntries.get());
+    core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID())->getSplitTransactions(splitTransEntries.get());
     split_.get()->entries_ = splitTransEntries->entries_;
 }
 
