@@ -190,8 +190,6 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& /*event*/ )
         pSplitEntry->splitAmount_  = *sdd.m_amount_;
         pSplitEntry->categID_      = categID;
         pSplitEntry->subCategID_   = subcategID;
-        pSplitEntry->category_      = core_->categoryList_.GetCategorySharedPtr(categID, subcategID);
-        wxASSERT(pSplitEntry->category_.lock());
         split_->addSplit(pSplitEntry);
         
         UpdateSplitTotal();

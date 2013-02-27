@@ -1644,7 +1644,7 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
     bool useOriginalDate = m_cp->core_->iniSettings_->GetBoolSetting(INIDB_USE_ORG_DATE_COPYPASTE, false);
 
     boost::shared_ptr<mmBankTransaction> pCopiedTrans =
-        m_cp->core_->bTransactionList_.copyTransaction(m_cp->core_, m_selectedForCopy, m_cp->accountID(), useOriginalDate);
+        m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, m_cp->accountID(), useOriginalDate);
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(m_cp->accountID()).lock();
     pCopiedTrans->updateAllData(m_cp->core_, m_cp->accountID(), pCurrencyPtr, true);

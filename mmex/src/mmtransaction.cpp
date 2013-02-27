@@ -121,9 +121,6 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core, int bdID)
       pSplitEntry->categID_ = catID;
       pSplitEntry->subCategID_ = subID;
 
-      pSplitEntry->category_ = core->categoryList_.GetCategorySharedPtr(catID, subID);
-      wxASSERT(pSplitEntry->category_.lock());
-
       addSplit(pSplitEntry);
    }
 
@@ -161,7 +158,7 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
     wxASSERT(pCurrencyPtr);
 
     splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
-    getSplitTransactions(core, splitEntries_.get());
+    getSplitTransactions(splitEntries_.get());
 
     updateAllData(core, accountID_, pCurrencyPtr);
 }
@@ -321,7 +318,7 @@ double mmBankTransaction::value(int accountID) const
 
     return balance;
 }
-void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits) const
+void mmBankTransaction::getSplitTransactions(mmSplitTransactionEntries* splits) const
 {
     splits->entries_.clear();
     splits->total_ = 0.0;
@@ -352,9 +349,6 @@ void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionE
         pSplitEntry->categID_ = catID;
         pSplitEntry->subCategID_ = subID;
 
-        boost::shared_ptr<mmCategory> p_cat = core->categoryList_.GetCategorySharedPtr(catID, subID);
-        wxASSERT(p_cat);
-        pSplitEntry->category_ = p_cat;
 
         splits->addSplit(pSplitEntry);
     }
@@ -508,7 +502,7 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
     return found;
 }
 
-boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(mmCoreDB* pCore,
+boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
    const long transactionID, const long accountID, const bool useOriginalDate)
 {
     boost::shared_ptr<mmBankTransaction> pBankTransaction = getBankTransactionPtr(transactionID);
@@ -542,7 +536,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(mmCo
 
     // we need to create a new pointer for Split transactions.
     boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
-    pBankTransaction->getSplitTransactions(pCore, splitTransEntries.get());
+    pBankTransaction->getSplitTransactions(splitTransEntries.get());
     pCopyTransaction->splitEntries_.get()->entries_ = splitTransEntries->entries_;
 
     static const char sql[] =
@@ -1250,7 +1244,7 @@ int mmBankTransactionList::RelocateCategory(mmCoreDB* core,
             else if (pBankTransaction && (pBankTransaction->categID_ == -1))
             {
                 mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
-                pBankTransaction->getSplitTransactions(core, splits);
+                pBankTransaction->getSplitTransactions(splits);
 
                 for (int i = 0; i < (int)splits->entries_.size(); ++i)
                 {
@@ -1279,8 +1273,8 @@ void mmBankTransactionList::ChangeDateFormat()
         }
     }
 }
-
-bool mmBankTransactionList::IsCategoryUsed(mmCoreDB* core, const int iCatID, const int iSubCatID, bool bIgnor_subcat) const
+ 
+bool mmBankTransactionList::IsCategoryUsed(/*mmCoreDB* core,*/ const int iCatID, const int iSubCatID, bool bIgnor_subcat) const
 {
     int index = transactions_.size() - 1;
 
@@ -1297,7 +1291,7 @@ bool mmBankTransactionList::IsCategoryUsed(mmCoreDB* core, const int iCatID, con
             }
 
             mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
-            pBankTransaction->getSplitTransactions(core, splits);
+            pBankTransaction->getSplitTransactions(splits);
 
             for (int i = 0; i < (int)splits->entries_.size(); ++i)
             {

@@ -48,8 +48,8 @@ public:
     int splitEntryID_;
     int categID_;
     int subCategID_;
+    wxString sFullCategoryName_;
 
-    boost::weak_ptr<mmCategory> category_;
     double splitAmount_;
 };
 
@@ -90,7 +90,7 @@ public:
         boost::shared_ptr<mmCurrency> currencyPtr,
         bool forceUpdate=false);
 
-    void getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits) const;
+    void getSplitTransactions(mmSplitTransactionEntries* splits) const;
     boost::shared_ptr<wxSQLite3Database> db_;
 
     /* Core Data */
@@ -149,7 +149,7 @@ public:
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID) const;
     int addTransaction(mmCoreDB* core, boost::shared_ptr<mmBankTransaction> pTransaction);
     bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
-    boost::shared_ptr<mmBankTransaction> copyTransaction(mmCoreDB* pCore,
+    boost::shared_ptr<mmBankTransaction> copyTransaction(/*mmCoreDB* pCore,*/
        const long transactionID, const long accountID, const bool useOriginalDate);
 
     /// Loads database primary Transactions into memory.
@@ -185,7 +185,7 @@ public:
     int getLastUsedCategoryID(const int accountID, const int payeeID, const wxString sType, int& subcategID) const;
     int getLastUsedPayeeID(const int accountID, wxString sType, int& categID, int& subcategID) const;
     wxArrayString getTransactionNumber(const int accountID, const wxDateTime transaction_date) const;
-    bool IsCategoryUsed(mmCoreDB* core, const int iCatID, const int iSubCatID, bool bIgnor_subcat = true) const;
+    bool IsCategoryUsed(/*mmCoreDB* core,*/ const int iCatID, const int iSubCatID, bool bIgnor_subcat = true) const;
     bool IsPayeeUsed(const int iPayeeID) const;
 
     /* Data */

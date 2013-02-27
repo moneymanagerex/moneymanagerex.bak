@@ -328,7 +328,7 @@ bool TransFilterDialog::bySplitCategory(mmBankTransaction* trans)
             {
                 result = false;
                 mmSplitTransactionEntries* splits = trans->splitEntries_.get();
-                trans->getSplitTransactions(core_, splits);
+                trans->getSplitTransactions(splits);
 
                 for (int i = 0; i < (int)splits->entries_.size(); ++i)
                 {
