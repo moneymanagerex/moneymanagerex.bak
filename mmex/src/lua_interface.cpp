@@ -562,7 +562,7 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
     try
     {
         if (fn_name == wxT("Init")) hb.init();
-        else if (fn_name == wxT("StartTable")) hb.startTable(value_1, value_2);
+        else if (fn_name == wxT("StartTable")) hb.startTable(value_1, value_2, value_3);
         else if (fn_name == wxT("EndTable")) hb.endTable();
         else if (fn_name == wxT("StartTableRow")) hb.startTableRow(value_1);
         else if (fn_name == wxT("EndTableRow")) hb.endTableRow();

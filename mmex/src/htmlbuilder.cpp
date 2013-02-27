@@ -121,7 +121,7 @@ void mmHTMLBuilder::endCenter()
     html_+= wxT("</center>");
 }
 
-void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign)
+void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign, const wxString& border)
 {
     html_+= wxT("<table cellspacing=\"1\"");
     //Comment line above then uncomment line below for debug homepage 
@@ -130,6 +130,8 @@ void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign)
         html_+= wxString::Format(wxT(" width=\"%s\""),width.c_str());
     if(!valign.empty()) 
         html_+= wxString::Format(wxT(" valign=\"%s\""), valign.c_str());
+    if(!border.empty()) 
+        html_+= wxString::Format(wxT(" border=\"%s\""), valign.c_str());
     html_+= wxT(">\n");
     bgswitch_ = true;
 }
