@@ -208,7 +208,6 @@ bool mmDBWrapper::initCurrencyV1Table(wxSQLite3Database* db)
     currencies.Add(wxT("EURO;\u20ac;;.;,;euro;cent;100;1;EUR"));
     #pragma warning( pop )
     wxString fileName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
-    wxASSERT(wxFileName::FileExists(fileName));
 
     if (!fileName.empty())
     {
