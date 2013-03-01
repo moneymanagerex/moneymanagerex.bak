@@ -92,6 +92,11 @@ void mmHTMLBuilder::addParaText(const wxString& text)
     html_+= wxString::Format(wxT("<p><font size=\"%d\">%s</font></p>\n"), font_size_, text.c_str());
 }
 
+void mmHTMLBuilder::addText(const wxString& text)
+{
+    html_+= text;
+}
+
 void mmHTMLBuilder::addLineBreak()
 {
     html_+= wxT("<br>\n");
@@ -123,7 +128,7 @@ void mmHTMLBuilder::endCenter()
 
 void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign, const wxString& border)
 {
-    html_+= wxT("<table cellspacing=\"1\"");
+    html_+= wxT("<table cellspacing=\"1\" ");
     //Comment line above then uncomment line below for debug homepage 
     //html_+= wxT("<table border=\"2\" cellspacing=\"1\"");
     if(!width.empty())
@@ -131,7 +136,7 @@ void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign, co
     if(!valign.empty()) 
         html_+= wxString::Format(wxT(" valign=\"%s\""), valign.c_str());
     if(!border.empty()) 
-        html_+= wxString::Format(wxT(" border=\"%s\""), valign.c_str());
+        html_+= wxString::Format(wxT(" border=\"%s\""), border.c_str());
     html_+= wxT(">\n");
     bgswitch_ = true;
 }
