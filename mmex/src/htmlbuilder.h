@@ -45,6 +45,7 @@ public:
 
     /** Create an HTML paragrapth */
     void addParaText(const wxString& text);
+    void addText(const wxString& text);
 
     /** Create an HTML line break */
     void addLineBreak();
