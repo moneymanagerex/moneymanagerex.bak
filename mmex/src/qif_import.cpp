@@ -238,7 +238,7 @@ void mmQIFImportDialog::CreateControls()
 void mmQIFImportDialog::fillControls()
 {
     dateFormat_ = core_->dbInfoSettings_->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
-    choiceDateFormat_->SetValue(FormatDate2DisplayDate(dateFormat_));
+    choiceDateFormat_->SetStringSelection(FormatDate2DisplayDate(dateFormat_));
 
     wxArrayString accounts_type;
     accounts_type.Add(ACCOUNT_TYPE_BANK);
@@ -256,7 +256,7 @@ void mmQIFImportDialog::fillControls()
     bbAccounts_->SetBitmapLabel(wxBitmap(empty_xpm));
     bbAccounts_->Enable(false);
     newAccounts_->Enable(false);
-    btnOK_->Enable(true);
+    btnOK_->Enable(false);
 }
 
 bool mmQIFImportDialog::isLineOK(const wxString& line)
@@ -305,8 +305,18 @@ bool mmQIFImportDialog::warning_message()
 int mmQIFImportDialog::mmImportQIF()
 {
     wxString acctName, sMsg;
+
+    //Check date restrictions
+    wxDateTime fromDate = wxDateTime::Now(), toDate = wxDateTime::Now();
+    bool bFromDate = dateFromCheckBox_->IsChecked();
+    bool bToDate = dateToCheckBox_->IsChecked();
+    if (bFromDate)
+        fromDate = fromDateCtrl_->GetValue().GetDateOnly();
+    if (bToDate)
+        toDate = toDateCtrl_->GetValue().GetDateOnly();
+
     wxArrayString accounts_name = core_->accountList_.getAccountsName();
-    int fromAccountID;
+    int fromAccountID = -1;
 
     wxString sDefCurrencyName = core_->currencyList_.getCurrencyName(core_->currencyList_.GetBaseCurrencySettings());
 
@@ -324,7 +334,6 @@ int mmQIFImportDialog::mmImportQIF()
     int numImported = 0;
 
     wxString dt = wxDateTime::Now().FormatISODate();
-    wxString date_format = mmOptions::instance().dateFormat_;
     wxString sPayee, type, sAmount, transNum, notes, convDate, sToAccountName;
     wxString sFullCateg, sCateg, sSubCateg, sSplitCategs, sSplitAmount, sValid;
 
@@ -361,7 +370,7 @@ int mmQIFImportDialog::mmImportQIF()
 
             bTrxComplited = false;
             trxNumLine = numLines - 1;
-            sMsg = wxT("---------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            sMsg = wxT("-------------------------------------------------------------------------------------------------------------------------\n");
             logWindow->AppendText(sMsg);
         }
         readLine = getFileLine(text, numLines);
@@ -505,7 +514,7 @@ int mmQIFImportDialog::mmImportQIF()
         {
             dt = getLineData(readLine);
 
-            dtdt = mmParseDisplayStringToDate(dt, date_format).GetDateOnly();
+            dtdt = mmParseDisplayStringToDate(dt, dateFormat_).GetDateOnly();
             convDate = dtdt.FormatISODate();
             continue;
         }
@@ -708,7 +717,16 @@ int mmQIFImportDialog::mmImportQIF()
                 sFullCateg = core_->categoryList_.GetFullCategoryString(categID, subCategID);
             }
 
-            if (!bValid) sValid = wxT("NO"); else sValid = wxT("OK");
+            if (bValid)
+                sValid = wxT("OK");
+            else
+                sValid = wxT("NO");
+
+            if (bFromDate && dtdt < fromDate || bToDate && dtdt > toDate)
+            {
+                sValid = wxT("SKIP");
+                bValid = false;
+            }
             sMsg = wxString::Format(
                 wxT("Line:%ld Trx:%ld %s D:%s Acc:'%s' %s P:'%s%s' Amt:%s C:'%s' \n")
                 , trxNumLine
@@ -865,7 +883,6 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
 
     wxString readLine;
 
-    wxString date_format = choiceDateFormat_->GetValue();
     wxString sAccountName;
     bool dateFormatIsOK = true;
     int numLines = 0;
@@ -905,7 +922,7 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
         {
             wxDateTime dtdt;
             wxString sDate = getLineData(readLine);
-            if (!dtdt.ParseFormat(sDate, DisplayDate2FormatDate(date_format), wxDateTime::Now()))
+            if (!dtdt.ParseFormat(sDate, dateFormat_, wxDateTime::Now()))
                 dateFormatIsOK = false;
             continue;
         }
@@ -934,6 +951,7 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
 
 void mmQIFImportDialog::OnDateMaskChange(wxCommandEvent& /*event*/)
 {
+    dateFormat_ = DisplayDate2FormatDate(choiceDateFormat_->GetValue());
     checkQIFFile(sFileName_);
 }
 
