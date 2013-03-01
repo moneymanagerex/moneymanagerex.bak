@@ -2864,12 +2864,9 @@ void mmGUIFrame::OnExportToQIF(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
 {
-    int accountID = mmImportQIF(this, m_core.get());
-    if (accountID != -1)
-    {
-        setAccountNavTreeSection(m_core.get()->accountList_.GetAccountName(accountID));
-        createCheckingAccountPage(accountID);
-    }
+
+    mmQIFImportDialog* dlg = new mmQIFImportDialog(m_core.get(), this);
+    dlg->ShowModal();
     refreshRequested_ = true;
     updateNavTreeControl();
 }

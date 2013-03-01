@@ -6,7 +6,8 @@
 #include "mmex.h"
 #include "mmcoredb.h"
 #include "platfdep.h"
-#include "qif_export.h"
+#include "qif_import.h"
+#include "paths.h"
 
 enum qifAccountInfoType
 {
@@ -104,18 +105,172 @@ qifLineType lineType(const wxString& line)
     }
 }
 
-bool isLineOK(const wxString& line)
+IMPLEMENT_DYNAMIC_CLASS( mmQIFImportDialog, wxDialog )
+
+BEGIN_EVENT_TABLE( mmQIFImportDialog, wxDialog )
+    EVT_CHECKBOX(wxID_ANY, mmQIFImportDialog::OnCheckboxClick )
+    EVT_BUTTON(wxID_OK, mmQIFImportDialog::OnOk)
+    EVT_BUTTON(wxID_CANCEL, mmQIFImportDialog::OnCancel)
+    EVT_CLOSE(mmQIFImportDialog::OnQuit)
+END_EVENT_TABLE()
+
+mmQIFImportDialog::mmQIFImportDialog(
+    mmCoreDB* core,
+    wxWindow* parent, wxWindowID id,
+    const wxString& caption, const wxPoint& pos,
+    const wxSize& size, long style
+) :
+    core_(core),
+    parent_(parent)
 {
-    return wxString(wxT("!DNPAT^MLSE$C/U")).Contains(line.Left(1));
+    Create(parent, id, caption, pos, size, style);
 }
 
-wxString getLineData(const wxString& line)
+bool mmQIFImportDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
+                           const wxPoint& pos, const wxSize& size, long style )
+{
+    SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
+    wxDialog::Create( parent, id, caption, pos, size, style );
+
+    CreateControls();
+    GetSizer()->Fit(this);
+    GetSizer()->SetSizeHints(this);
+    SetIcon(mmex::getProgramIcon());
+    Centre();
+    Fit();
+
+    fillControls();
+
+    return TRUE;
+}
+
+void mmQIFImportDialog::CreateControls()
+{
+    const int border = 5;
+    const int fieldWidth = 180;
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();
+
+    wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(main_sizer);
+    wxBoxSizer* box_sizer1 = new wxBoxSizer(wxVERTICAL);
+    main_sizer->Add(box_sizer1, 1, wxGROW|wxALL, 10);
+
+    wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 3, 0, 0);
+
+    // File Name --------------------------------------------
+    wxStaticText* file_name_label = new wxStaticText(this, wxID_STATIC, _("File Name:"));
+    button_search_ = new wxButton(this, wxID_OPEN, _("Choose &file"));
+    button_search_->Connect(wxID_OPEN, wxEVT_COMMAND_BUTTON_CLICKED
+        , wxCommandEventHandler(mmQIFImportDialog::OnFileSearch), NULL, this);
+
+    file_name_ctrl_ = new wxTextCtrl(this, wxID_FILE, wxEmptyString,
+        wxDefaultPosition, wxDefaultSize, wxTE_READONLY);
+
+    bbFile_ = new wxBitmapButton(this, wxID_ANY, wxBitmap(flag_xpm));
+    flex_sizer->Add(file_name_label, flags);
+    flex_sizer->Add(button_search_, flags);
+    flex_sizer->Add(bbFile_, flags);
+    main_sizer->Add(file_name_ctrl_, 1, wxALL|wxGROW, 5);
+    main_sizer->Add(flex_sizer, flags.Left());
+
+    // Date Format Settings
+    wxStaticText* dateFormat = new wxStaticText(this, wxID_STATIC, _("Date Format"));
+    choiceDateFormat_ = new wxComboBox(this, wxID_ANY, wxT(""),
+        wxDefaultPosition, wxDefaultSize, date_format());
+    choiceDateFormat_->Connect(wxID_ANY, wxEVT_COMMAND_COMBOBOX_SELECTED,
+        wxCommandEventHandler(mmQIFImportDialog::OnDateMaskChange), NULL, this);
+
+    bbFormat_ = new wxBitmapButton(this, wxID_ANY, wxBitmap(flag_xpm));
+    flex_sizer->Add(dateFormat, flags);
+    flex_sizer->Add(choiceDateFormat_, flags);
+    flex_sizer->Add(bbFormat_, flags);
+
+    // Accounts
+    wxStaticText* newAccountsText = new wxStaticText(this, wxID_STATIC, _("Missing Accounts"));
+    newAccounts_ = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxSize(150,-1));
+    bbAccounts_ = new wxBitmapButton(this, wxID_ANY, wxBitmap(flag_xpm));
+    flex_sizer->Add(newAccountsText, flags);
+    flex_sizer->Add(newAccounts_, flags);
+    flex_sizer->Add(bbAccounts_, flags);
+
+    // From Date --------------------------------------------
+    dateFromCheckBox_ = new wxCheckBox( this, wxID_ANY, _("From Date")
+        , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    fromDateCtrl_ = new wxDatePickerCtrl( this, wxID_STATIC, wxDefaultDateTime
+        , wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
+    fromDateCtrl_->Enable(false);
+    flex_sizer->Add(dateFromCheckBox_, flags);
+    flex_sizer->Add(fromDateCtrl_, flags);
+    flex_sizer->AddSpacer(1);
+
+    // To Date --------------------------------------------
+    dateToCheckBox_ = new wxCheckBox( this, wxID_ANY, _("To Date")
+        , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    toDateCtrl_ = new wxDatePickerCtrl( this, wxID_STATIC, wxDefaultDateTime
+        , wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
+    toDateCtrl_->Enable(false);
+    flex_sizer->Add(dateToCheckBox_, flags);
+    flex_sizer->Add(toDateCtrl_, flags);
+    flex_sizer->AddSpacer(1);
+
+    /**********************************************************************************************
+     Button Panel with OK and Cancel Buttons
+    ***********************************************************************************************/
+    wxPanel* buttons_panel = new wxPanel(this, wxID_ANY);
+    main_sizer->Add(buttons_panel, flags.Center().Border(wxALL, 10));
+
+    wxStdDialogButtonSizer*  buttons_sizer = new wxStdDialogButtonSizer;
+    buttons_panel->SetSizer(buttons_sizer);
+
+    btnOK_ = new wxButton( buttons_panel, wxID_OK, _("&OK"));
+    wxButton* itemButtonCancel_ = new wxButton( buttons_panel, wxID_CANCEL, _("&Cancel"));
+    btnOK_->Connect(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED
+        , wxCommandEventHandler(mmQIFImportDialog::OnOk), NULL, this);
+
+    buttons_sizer->Add(btnOK_, flags);
+    buttons_sizer->Add(itemButtonCancel_, flags);
+
+    buttons_sizer->Realize();
+}
+
+void mmQIFImportDialog::fillControls()
+{
+    dateFormat_ = core_->dbInfoSettings_->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    choiceDateFormat_->SetValue(FormatDate2DisplayDate(dateFormat_));
+
+    wxArrayString accounts_type;
+    accounts_type.Add(ACCOUNT_TYPE_BANK);
+    accounts_type.Add(ACCOUNT_TYPE_TERM);
+    accounts_id_ = core_->accountList_.getAccountsID(accounts_type);
+
+    for (size_t i = 0; i < accounts_id_.Count(); ++i)
+    {
+        accounts_name_.Add(core_->accountList_.GetAccountName(accounts_id_[i]));
+    }
+    bbFile_ ->SetBitmapLabel(wxBitmap(empty_xpm));
+    bbFile_ ->Enable(false);
+    bbFormat_->SetBitmapLabel(wxBitmap(empty_xpm));
+    bbFormat_->Enable(false);
+    bbAccounts_->SetBitmapLabel(wxBitmap(empty_xpm));
+    bbAccounts_->Enable(false);
+    newAccounts_->Enable(false);
+    btnOK_->Enable(true);
+}
+
+bool mmQIFImportDialog::isLineOK(const wxString& line)
+{
+    return wxString(wxT("!DNPAT^MLSE$C/UI")).Contains(line.Left(1));
+}
+
+wxString mmQIFImportDialog::getLineData(const wxString& line)
 {
     wxString dataString = line.substr(1, line.Length()-1);
     return dataString;
 }
 
-wxString getFileLine(wxTextInputStream& textFile, int& lineNumber)
+wxString mmQIFImportDialog::getFileLine(wxTextInputStream& textFile, int& lineNumber)
 {
     wxString textLine = textFile.ReadLine();
     lineNumber ++;
@@ -124,7 +279,7 @@ wxString getFileLine(wxTextInputStream& textFile, int& lineNumber)
     return textLine;
 }
 
-wxString getFinancistoProject(wxString& sSubCateg)
+wxString mmQIFImportDialog::getFinancistoProject(wxString& sSubCateg)
 {
     //Additional parsint for Financisto
     wxString sProject = wxT("");
@@ -136,7 +291,7 @@ wxString getFinancistoProject(wxString& sSubCateg)
     return sProject;
 }
 
-bool warning_message()
+bool mmQIFImportDialog::warning_message()
 {
     wxString msgStr;
     msgStr << _("To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX.") << wxT("\n\n")
@@ -147,38 +302,21 @@ bool warning_message()
     return true;
 }
 
-int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
+int mmQIFImportDialog::mmImportQIF()
 {
-    if (!warning_message()) return -1;
-
     wxString acctName, sMsg;
-    wxArrayString accounts_name = core->accountList_.getAccountsName();
+    wxArrayString accounts_name = core_->accountList_.getAccountsName();
+    int fromAccountID;
 
-    int fromAccountID = core->accountList_.GetAccountId(acctName);
-
-    wxString sDefCurrencyName = core->currencyList_.getCurrencyName(core->currencyList_.GetBaseCurrencySettings());
-
-    wxString chooseExt;
-    chooseExt << _("QIF Files ") << wxT("(*.qif)|*.qif;*.QIF|")
-              << _("All Files ") << wxT("(*.*)|*.*");
-    wxString fileName = wxFileSelector(_("Choose QIF data file to import"),
-        wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
-    wxFileName logFile = mmex::GetLogDir(true);
-    logFile.SetFullName(fileName);
-    logFile.SetExt(wxT("log"));
+    wxString sDefCurrencyName = core_->currencyList_.getCurrencyName(core_->currencyList_.GetBaseCurrencySettings());
 
     fileviewer file_dlg(wxT(""), parent_);
     file_dlg.Show();
     wxTextCtrl*& logWindow = file_dlg.textCtrl_;
     bool canceledbyuser = false;
 
-    if (fileName.IsEmpty()) return -1;
-
-    wxFileInputStream input(fileName);
+    wxFileInputStream input(sFileName_);
     wxTextInputStream text(input);
-
-    wxFileOutputStream outputLog(logFile.GetFullPath());
-    wxTextOutputStream log(outputLog);
 
     wxString readLine;
     int numLines = 0;
@@ -225,7 +363,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             trxNumLine = numLines - 1;
             sMsg = wxT("---------------------------------------------------------------------------------------------------------------------------------------------------\n");
             logWindow->AppendText(sMsg);
-            log << sMsg << endl;
         }
         readLine = getFileLine(text, numLines);
 
@@ -236,7 +373,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
         if (!isOK)
         {
             sMsg = wxString()<< _("Line: ") << numLines << wxT("  ") << _(" Unknown QIF line: ") << readLine;
-            log  << sMsg << endl;
             logWindow->AppendText(wxString() << sMsg << wxT("\n"));
             continue;
         }
@@ -251,7 +387,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 )
             {
                 sMsg = wxString::Format(_("Importing account type: %s"), accountType.c_str());
-                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
                 bTrxComplited = true;
                 continue;
@@ -306,7 +441,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                     }
                 }
 
-                if (core->accountList_.GetAccountId(acctName) < 0)
+                if (core_->accountList_.GetAccountId(acctName) < 0)
                 {
                     //TODO: Repeated code
                     mmAccount* ptrBase = new mmAccount();
@@ -317,23 +452,21 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                     pAccount->acctType_ = ACCOUNT_TYPE_BANK;
                     pAccount->name_ = acctName;
                     pAccount->initialBalance_ = val;
-                    pAccount->currency_ = core->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
+                    pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
                     // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
-                    if ( ! core->accountList_.AccountExists(pAccount->name_))
-                        from_account_id = core->accountList_.AddAccount(pAccount);
+                    if ( ! core_->accountList_.AccountExists(pAccount->name_))
+                        from_account_id = core_->accountList_.AddAccount(pAccount);
                     accounts_name.Add(pAccount->name_);
                     acctName = pAccount->name_;
                     sMsg = wxString::Format(_("Added account '%s'"), acctName.c_str())
                         << wxT("\n") << wxString::Format(_("Initial Balance: %s"), (wxString()<<val).c_str());
-                    log << sMsg << endl;
                     logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
                 }
 
-                fromAccountID = core->accountList_.GetAccountId(acctName);
+                fromAccountID = core_->accountList_.GetAccountId(acctName);
 
                 sMsg = wxString::Format(_("Line: %ld"), numLines) << wxT(" : ")
                     << wxString::Format(_("Account name: %s"), acctName.c_str());
-                log << sMsg << endl;
                 logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
 
                 continue;
@@ -357,8 +490,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             wxString errLineMsgStr = wxString::Format(_("Line: %ld"), numLines)
                 << wxT("\n") << readLine;
 
-            log << errLineMsgStr << endl;
-            log << errMsgStr << endl;
             logWindow->AppendText(wxString()<< errLineMsgStr << wxT("\n") << errMsgStr << wxT("\n"));
             wxMessageBox( errLineMsgStr + wxT("\n\n") + errMsgStr, _("QIF Import"), wxICON_ERROR);
 
@@ -389,7 +520,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (!sAmount.ToDouble(&val) && !mmex::formatCurrencyToDouble(sAmount, val))
             {
                 sMsg = wxString::Format(_("Line: %ld invalid amount, skipping."), numLines);
-                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
                 continue;
             }
@@ -426,20 +556,18 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (sFullCateg.Contains(wxT("/")))
                 transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sFullCateg).c_str()));
 
-            core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
+            core_->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
 
             if (categID == -1 && !sCateg.IsEmpty())
             {
-                categID =  core->categoryList_.AddCategory(sCateg);
+                categID =  core_->categoryList_.AddCategory(sCateg);
                 sMsg = wxString::Format(_("Added category: %s"), sCateg.c_str());
-                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
             }
             if (subCategID == -1 && categID != -1 && !sSubCateg.IsEmpty())
             {
-                subCategID = core->categoryList_.AddSubCategory(categID, sSubCateg);
+                subCategID = core_->categoryList_.AddSubCategory(categID, sSubCateg);
                 sMsg = wxString::Format(_("Added subcategory: %s"), sSubCateg.c_str());
-                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
             }
 
@@ -477,21 +605,18 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (dt.Trim().IsEmpty())
             {
                 sMsg = _("Date is missing");
-                log << sMsg << endl;
                 logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
                 bValid = false;
             }
             else if (type.Trim().IsEmpty())
             {
                 sMsg = _("Transaction Type is missing");
-                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
                 bValid = false;
             }
             else if (sAmount.Trim().IsEmpty())
             {
                 sMsg = _("Amount is missing");
-                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
                 bValid = false;
             }
@@ -499,16 +624,14 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             if (sFullCateg.Trim().IsEmpty() && type != TRANS_TYPE_TRANSFER_STR)
             {
                 sMsg = _("Category is missing");
-                log << sMsg << endl;
                 logWindow->AppendText(sMsg << wxT("\n"));
                 sFullCateg = _("Unknown");
 
-                core->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
+                core_->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
                 if (categID == -1 && !sCateg.IsEmpty())
                 {
-                    categID =  core->categoryList_.AddCategory(sCateg);
+                    categID =  core_->categoryList_.AddCategory(sCateg);
                     sMsg = wxString::Format(_("Added category: %s"), sCateg.c_str());
-                    log << sMsg << endl;
                     logWindow->AppendText(sMsg << wxT("\n"));
                 }
             }
@@ -526,17 +649,16 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                     pAccount->acctType_ = ACCOUNT_TYPE_BANK;
                     pAccount->name_ = sToAccountName;
                     pAccount->initialBalance_ = 0;
-                    pAccount->currency_ = core->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
+                    pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
                     // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
-                    if ( ! core->accountList_.AccountExists(pAccount->name_))
-                        to_account_id = core->accountList_.AddAccount(pAccount);
+                    if ( ! core_->accountList_.AccountExists(pAccount->name_))
+                        to_account_id = core_->accountList_.AddAccount(pAccount);
                     accounts_name.Add(sToAccountName);
 
                     sMsg = wxString::Format(_("Added account '%s'"), sToAccountName.c_str());
-                    log << sMsg << endl;
                     logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
                 }
-                to_account_id = core->accountList_.GetAccountId(sToAccountName);
+                to_account_id = core_->accountList_.GetAccountId(sToAccountName);
                 if (val > 0.0)
                 {
                     from_account_id = to_account_id;
@@ -554,7 +676,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 if (to_account_id == -1 || from_account_id == -1)
                 {
                     sMsg = _("Account missing");
-                    log << sMsg << endl;
                     logWindow->AppendText(sMsg << wxT("\n"));
                     bValid = false;
                 }
@@ -565,19 +686,17 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 if (sPayee.IsEmpty())
                 {
                     sMsg = _("Payee missing");
-                    log << sMsg << endl;
                     logWindow->AppendText(sMsg << wxT("\n"));
                     sPayee = _("Unknown");
                 }
-                if (!core->payeeList_.PayeeExists(sPayee))
+                if (!core_->payeeList_.PayeeExists(sPayee))
                 {
-                    payeeID = core->payeeList_.AddPayee(sPayee);
+                    payeeID = core_->payeeList_.AddPayee(sPayee);
                     sMsg = wxString::Format(_("Payee Added: %s"), sPayee.c_str());
-                    log << sMsg << endl;
                     logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
                 }
                 else
-                    payeeID = core->payeeList_.GetPayeeId(sPayee);
+                    payeeID = core_->payeeList_.GetPayeeId(sPayee);
             }
             if (mmSplit->entries_.size() > 0)
             {
@@ -586,7 +705,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             }
             else
             {
-                sFullCateg = core->categoryList_.GetFullCategoryString(categID, subCategID);
+                sFullCateg = core_->categoryList_.GetFullCategoryString(categID, subCategID);
             }
 
             if (!bValid) sValid = wxT("NO"); else sValid = wxT("OK");
@@ -596,36 +715,34 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                 , numImported + 1
                 , sValid.c_str()
                 , convDate.c_str()
-                , core->accountList_.GetAccountName(from_account_id).c_str()
+                , core_->accountList_.GetAccountName(from_account_id).c_str()
                 , wxString((type == TRANS_TYPE_TRANSFER_STR ? wxT("<->") : wxT(""))).c_str()
-                , core->accountList_.GetAccountName(to_account_id).c_str()
-                , core->payeeList_.GetPayeeName(payeeID).c_str()
+                , core_->accountList_.GetAccountName(to_account_id).c_str()
+                , core_->payeeList_.GetPayeeName(payeeID).c_str()
                 , (wxString()<<val).c_str()
                 , sFullCateg.c_str()
                 );
             logWindow->AppendText(sMsg);
-            log << sMsg << endl;
 
             for (size_t i = 0; i < mmSplit->entries_.size(); ++i)
             {
                 int c = mmSplit->entries_[i]->categID_;
                 int s = mmSplit->entries_[i]->subCategID_;
 
-                wxString cn = core->categoryList_.GetCategoryName(c);
-                wxString sn = core->categoryList_.GetSubCategoryName(c, s);
+                wxString cn = core_->categoryList_.GetCategoryName(c);
+                wxString sn = core_->categoryList_.GetSubCategoryName(c, s);
                 double v = mmSplit->entries_[i]->splitAmount_;
                 sMsg = (cn << wxT(":") << sn << wxT(" ") << v << wxT("\n"));
                 logWindow->AppendText(sMsg);
-                log << sMsg << endl;
             }
             bTrxComplited = true;
             if (!bValid) continue;
 
-            boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
+            boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core_->db_));
             pTransaction->date_ = dtdt;
             pTransaction->accountID_ = from_account_id;
             pTransaction->toAccountID_ = to_account_id;
-            pTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(payeeID);
+            pTransaction->payee_ = core_->payeeList_.GetPayeeSharedPtr(payeeID);
             pTransaction->payeeStr_ = sPayee;
             pTransaction->transType_ = type;
             pTransaction->amt_ = val;
@@ -634,7 +751,7 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
             pTransaction->notes_ = notes;
             pTransaction->toAmt_ = val;
             if (mmSplit->numEntries()) categID = -1;
-            pTransaction->category_ = core->categoryList_.GetCategorySharedPtr(categID, subCategID);
+            pTransaction->category_ = core_->categoryList_.GetCategorySharedPtr(categID, subCategID);
             *pTransaction->splitEntries_ = *mmSplit;
 
             //For any transfer transaction always mirrored transaction present
@@ -662,7 +779,6 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
                             ? fabs(refTrans[index]->toAmt_)/fabs(refTrans[index]->amt_)
                             : fabs(refTrans[index]->amt_)/fabs(refTrans[index]->toAmt_));
                     logWindow->AppendText(sMsg);
-                    log << sMsg << endl;
 
                     bValid = false;
                     break;
@@ -678,18 +794,13 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
     }
 
     sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), numImported);
-    log << sMsg << endl;
-    logWindow->AppendText(sMsg << wxT("\n"));
-
-    sMsg  = wxString::Format(_("Log file written to : %s \n"), logFile.GetFullPath().c_str())
-          << _("Please confirm saving...");
     logWindow->AppendText(sMsg << wxT("\n"));
 
     canceledbyuser = file_dlg.ShowModal() == wxID_CANCEL;
     // Since all database transactions are only in memory,
     if (!canceledbyuser)
     {
-        core->db_.get()->Begin();
+        core_->db_.get()->Begin();
 
         std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = vQIF_trxs;
 
@@ -698,29 +809,153 @@ int mmImportQIF(wxWindow *parent_, mmCoreDB* core )
         for (unsigned int index = 0; index < vQIF_trxs.size(); index++)
         {
             //fromAccountID = refTrans[index]->accountID_;
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
             wxASSERT(pCurrencyPtr);
             refTrans[index]->amt_ = fabs(refTrans[index]->amt_);
             refTrans[index]->toAmt_ = fabs(refTrans[index]->toAmt_);
-            refTrans[index]->updateAllData(core, fromAccountID, pCurrencyPtr);
-            core->bTransactionList_.addTransaction(core, refTrans[index]);
+            refTrans[index]->updateAllData(core_, fromAccountID, pCurrencyPtr);
+            core_->bTransactionList_.addTransaction(core_, refTrans[index]);
         }
 
-        core->db_.get()->Commit();
+        core_->db_.get()->Commit();
         sMsg = _("Import finished successfully");
-        log << endl << sMsg << endl;
     }
     else
     {
         sMsg = _("Imported transactions discarded by user!");
-        log << endl << sMsg << endl;
     }
 
     wxMessageDialog(parent_, sMsg, _("QIF Import"), wxOK|wxICON_WARNING).ShowModal();
-    outputLog.Close();
     //clear the vector to avoid memory leak - done at same level created.
     vQIF_trxs.clear();
 
     return fromAccountID;
+}
+
+void mmQIFImportDialog::OnFileSearch(wxCommandEvent& /*event*/)
+{
+    sFileName_ = file_name_ctrl_->GetValue();
+
+    const wxString choose_ext = _("QIF Files");
+    sFileName_ = wxFileSelector(_("Choose QIF data file to Import"),
+        wxEmptyString, sFileName_, wxEmptyString,
+        choose_ext + wxT(" (*.qif)|*.qif;*.QIF")
+            , wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
+
+    if (!sFileName_.IsEmpty())
+        correctEmptyFileExt( wxT("qif"), sFileName_);
+    file_name_ctrl_->SetValue(sFileName_);
+    checkQIFFile(sFileName_);
+}
+
+bool mmQIFImportDialog::checkQIFFile(wxString fileName)
+{
+    if (fileName.IsEmpty()) return false;
+
+    bbFile_->Enable(false);
+    bbFile_->SetBitmapLabel(wxBitmap(empty_xpm));
+    bbFormat_->Enable(false);
+    bbFormat_->SetBitmapLabel(wxBitmap(empty_xpm));
+    newAccounts_->Clear();
+    bbAccounts_->SetBitmapLabel(wxBitmap(empty_xpm));
+    btnOK_->Enable(false);
+
+    wxFileInputStream input(sFileName_);
+    wxTextInputStream text(input);
+
+    wxString readLine;
+
+    wxString date_format = choiceDateFormat_->GetValue();
+    wxString sAccountName;
+    bool dateFormatIsOK = true;
+    int numLines = 0;
+
+    while(!input.Eof())
+    {
+        readLine = getFileLine(text, numLines);
+
+        if (readLine.Length() == 0)
+            continue;
+
+        if (!isLineOK(readLine))
+        {
+            return false;
+        }
+
+        if ( lineType(readLine) == AcctType && getLineData(readLine) == wxT("Account"))
+        {
+            bool reading = true;
+            while(!input.Eof() && reading )
+            {
+                readLine = getFileLine(text, numLines);
+                if (accountInfoType(readLine) == Name)
+                {
+                    sAccountName = getLineData(readLine);
+                    if (accounts_name_.Index(sAccountName) == wxNOT_FOUND)
+                    {
+                        newAccounts_->Append(sAccountName);
+                    }
+                }
+                reading = (accountInfoType(readLine) != EOT);
+            }
+            continue;
+        }
+
+        if (lineType(readLine) == Date)
+        {
+            wxDateTime dtdt;
+            wxString sDate = getLineData(readLine);
+            if (!dtdt.ParseFormat(sDate, DisplayDate2FormatDate(date_format), wxDateTime::Now()))
+                dateFormatIsOK = false;
+            continue;
+        }
+    }
+
+    bbFile_->Enable(true);
+    bbFile_->SetBitmapLabel(wxBitmap(flag_xpm));
+    bbFormat_->Enable(dateFormatIsOK);
+    if (dateFormatIsOK)
+        bbFormat_->SetBitmapLabel(wxBitmap(flag_xpm));
+    if (newAccounts_->GetCount() != 0)
+    {
+        newAccounts_->Enable(true);
+        newAccounts_->SetSelection(0);
+    }
+    else
+    {
+        bbAccounts_->SetBitmapLabel(wxBitmap(flag_xpm));
+    }
+    if (dateFormatIsOK)
+    {
+        btnOK_->Enable(true);
+    }
+    return true;
+}
+
+void mmQIFImportDialog::OnDateMaskChange(wxCommandEvent& /*event*/)
+{
+    checkQIFFile(sFileName_);
+}
+
+void mmQIFImportDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
+{
+    fromDateCtrl_->Enable(dateFromCheckBox_->GetValue());
+    toDateCtrl_->Enable(dateToCheckBox_->GetValue());
+
+}
+
+void mmQIFImportDialog::OnOk(wxCommandEvent& /*event*/)
+{
+    mmImportQIF();
+}
+
+void mmQIFImportDialog::OnCancel(wxCommandEvent& /*event*/)
+{
+    EndModal(wxID_CANCEL);
+}
+
+void mmQIFImportDialog::OnQuit(wxCloseEvent& /*event*/)
+{
+    EndModal(wxID_CANCEL);
 }
 
