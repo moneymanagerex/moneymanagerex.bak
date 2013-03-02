@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -54,7 +54,7 @@ class mmHomePagePanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmHomePagePanel( mmGUIFrame* frame, 
+    mmHomePagePanel( mmGUIFrame* frame,
         mmCoreDB* core_,
         const wxString& topCategories,
         wxWindow *parent,
@@ -69,33 +69,33 @@ public:
         const wxSize& size = wxDefaultSize,
         long style = wxTAB_TRAVERSAL | wxNO_BORDER,
         const wxString& name = wxPanelNameStr);
-      
+
     ~mmHomePagePanel();
 
     wxString GetHomePageText();
 
 private:
-    void CreateControls();   
-    void updateAccounts();
+    void CreateControls();
+    void createFrames();
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;
     wxString topCategories_;
     wxString html_text_;
 
-    void displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTitle );
-    void displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle );
-    void displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double tRecBalance, double& tBalance, bool showSeparator = true );
+    wxString displaySummaryHeader(wxString summaryTitle );
+    wxString displaySectionTotal(wxString totalsTitle, double tRecBalance, double& tBalance);
 
-    void displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
-    void displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
-    void displayStocks(mmHTMLBuilder& hb, double& tBalance /*, double& tIncome, double& tExpenses */);
-    void displayAssets(mmHTMLBuilder& hb, double& tBalance);
-    void displayCurrencies(mmHTMLBuilder& hb);
-    void displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome, double& texpenses);
-    void displayBillsAndDeposits(mmHTMLBuilder& hb);
-    void displayTopTransactions(mmHTMLBuilder& hb);
-    void displayStatistics(mmHTMLBuilder& hb);
-    void displayGrandTotals(mmHTMLBuilder& hb, double& tBalance);
+    wxString displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
+    wxString displayTermAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
+    wxString displayStocks(double& tBalance /*, double& tIncome, double& tExpenses */);
+    wxString displayAssets(double& tBalance);
+    wxString displayCurrencies();
+    wxString displayIncomeVsExpenses(double& tincome, double& texpenses);
+    wxString displayBillsAndDeposits();
+    wxString displayTopTransactions();
+    wxString getStatWidget();
+    wxString getCalendarWidget();
+    wxString displayGrandTotals(double& tBalance);
 };
 
 #endif

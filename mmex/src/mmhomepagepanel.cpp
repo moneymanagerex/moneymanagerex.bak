@@ -1,16 +1,16 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
- 
+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -35,8 +35,8 @@ BEGIN_EVENT_TABLE(mmHtmlWindow, wxHtmlWindow)
 END_EVENT_TABLE()
 
 
-mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
-            mmCoreDB* core, 
+mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
+            mmCoreDB* core,
             const wxString& topCategories,
             wxWindow *parent,
             wxWindowID winid,
@@ -78,36 +78,85 @@ bool mmHomePagePanel::Create( wxWindow *parent,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    updateAccounts();
+    createFrames();
 
     return TRUE;
 }
 
-bool sortTransactionsByRemainingDaysHP(const mmBDTransactionHolder& elem1, 
+void mmHomePagePanel::createFrames()
+{
+    if (!core_->db_.get())
+        return;
+
+    mmHTMLBuilder hb;
+    hb.init();
+    wxDateTime today = wxDateTime::Now();
+    wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
+    wxDateTime dtBegin = prevMonthEnd;
+    wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
+
+    double tBalance = 0.0;
+    double tIncome = 0.0;
+    double tExpenses = 0.0;
+
+    hb.startCenter();
+    hb.startTable(wxT("100%"), wxT("top"));
+    hb.startTableRow();
+
+    hb.startTableCell(wxT("50%\" align=\"center"));
+
+    hb.addText(getCalendarWidget());
+
+    hb.addText(displayCheckingAccounts(tBalance, tIncome, tExpenses, dtBegin, dtEnd));
+
+    if ( frame_->hasActiveTermAccounts())
+         hb.addText(displayTermAccounts(tBalance,tIncome,tExpenses, dtBegin, dtEnd));
+
+    if (core_->accountList_.has_stock_account())
+         hb.addText(displayStocks(tBalance /*,tIncome,tExpenses */));
+
+    hb.addText(displayAssets(tBalance));
+
+    hb.addText(displayGrandTotals(tBalance));
+
+    hb.addParaText(displayCurrencies()); // Will display Currency summary when more than one currency is used.
+
+    hb.addText(displayTopTransactions());
+    hb.endTableCell();
+
+    hb.startTableCell(wxT("50%\" align=\"center"));
+    hb.addText(displayIncomeVsExpenses(tIncome, tExpenses)); //Also displays the Income vs Expenses graph.
+    hb.addText(displayBillsAndDeposits());
+    hb.addText(getStatWidget());
+    hb.endTableCell();
+    hb.endTableRow();
+    hb.endTable();
+    hb.end();
+
+    html_text_ = hb.getHTMLText();
+    htmlWindow_->SetPage(html_text_);
+}
+
+bool sortTransactionsByRemainingDaysHP(const mmBDTransactionHolder& elem1,
                                        const mmBDTransactionHolder& elem2)
 {
     return elem1.daysRemaining_ < elem2.daysRemaining_;
 }
 
-void mmHomePagePanel::displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTitle)
+wxString mmHomePagePanel::displaySummaryHeader(wxString summaryTitle)
 {
+    mmHTMLBuilder hb;
     hb.startTableRow();
     hb.addTableHeaderCell(summaryTitle, false);
     hb.addTableHeaderCell(_("Reconciled"), true);
     hb.addTableHeaderCell(_("Balance"), true);
     hb.endTableRow();
-}
-void mmHomePagePanel::displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle)
-{
-    hb.startTableRow();
-    hb.addTableHeaderCell(summaryTitle, false);
-    hb.addTableHeaderCell(_("Gain/Loss"), true);
-    hb.addTableHeaderCell(_("Total"), true);
-    hb.endTableRow();
+    return hb.getHTMLText();
 }
 
-void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double tRecBalance, double& tBalance, bool showSeparator)
+wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecBalance, double& tBalance)
 {
+    mmHTMLBuilder hb;
     // format the totals for display
     core_->currencyList_.LoadBaseCurrencySettings();
 
@@ -123,25 +172,28 @@ void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitl
     data.push_back(tRecBalanceStr);
     data.push_back(tBalanceStr);
 
-    // Show account totals with top and bottom separators
-    if (showSeparator)
-        hb.addRowSeparator(3);
     hb.startTableRow();
     hb.addTotalRow(totalsTitle, 3, data);
     hb.endTableRow();
-    hb.addRowSeparator(3);
+    return hb.getHTMLText();
 }
 
 /* Checking Accounts */
-void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
+wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
 {
+    mmHTMLBuilder hb;
+    hb.startTable(wxT("98%"), wxT("top"), wxT("1"));
+    hb.startTableRow();
+    hb.startTableCell();
+
+    hb.startTable(wxT("100%"));
     // Only Show the account titles if we want to display Bank accounts.
-    if ( frame_->expandedBankAccounts() ) 
-        displaySummaryHeader(hb, _("Bank Account"));
+    if ( frame_->expandedBankAccounts() )
+        hb.addText(displaySummaryHeader(_("Bank Account")));
 
     double tRecBalance = 0.0;
 
-    // Get account balances and display accounts if we want them displayed 
+    // Get account balances and display accounts if we want them displayed
     wxString vAccts = core_->iniSettings_->GetStringSetting(wxT("VIEWACCOUNTS"), wxT("ALL"));
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->accountList_.range();
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
@@ -161,7 +213,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
         tRecBalance += reconciledBal * rate;
 
         // Display the individual Checking account links if we want to display them
-        if ( frame_->expandedBankAccounts() ) 
+        if ( frame_->expandedBankAccounts() )
         {
             double income = 0.0;
             double expenses = 0.0;
@@ -189,20 +241,33 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
             tExpenses += expenses;
         }
     }
-    displaySectionTotal(hb, _("Bank Accounts Total:"), tRecBalance, tBalance);
+    hb.addText(displaySectionTotal(_("Bank Accounts Total:"), tRecBalance, tBalance));
+    hb.endTable();
+
+    hb.endTableCell();
+    hb.endTableRow();
+    hb.endTable();
+
+    return hb.getHTMLText();
 }
 
 /* Term Accounts */
-void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
+wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
 {
+    mmHTMLBuilder hb;
     double tTermBalance = 0.0;
     double tRecBalance  = 0.0;
 
+    hb.startTable(wxT("98%"), wxT("top"), wxT("1"));
+    hb.startTableRow();
+    hb.startTableCell();
+
+    hb.startTable(wxT("100%"));
     // Only Show the account titles if Term accounts are active and we want them displayed.
     if ( frame_->expandedTermAccounts() )
-        displaySummaryHeader(hb, _("Term Account"));
+        hb.addText(displaySummaryHeader(_("Term Account")));
 
-    // Get account balances and add to totals, and display accounts if we want them displayed 
+    // Get account balances and add to totals, and display accounts if we want them displayed
     wxString vAccts = core_->iniSettings_->GetStringSetting(wxT("VIEWACCOUNTS"), wxT("ALL"));
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->accountList_.range();
     for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
@@ -251,23 +316,42 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
         }
     }
 
-    displaySectionTotal(hb, _("Term Accounts Total:"), tRecBalance, tTermBalance, frame_->expandedTermAccounts());
+    hb.addText(displaySectionTotal(_("Term Accounts Total:"), tRecBalance, tTermBalance));
 
     // Add Term balance to Grand Total balance
     tBalance += tTermBalance;
+    hb.endTable();
+
+    hb.endTableCell();
+    hb.endTableRow();
+    hb.endTable();
+
+    return hb.getHTMLText();
 }
 
 //* Stocks *//
-void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, double& tIncome, double& tExpenses */)
+wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, double& tExpenses */)
 {
+    mmHTMLBuilder hb;
     double stTotalBalance = 0.0;
     wxString tBalanceStr;
     wxString tGainStr;
 
-    if (frame_->expandedStockAccounts())
-        displayStocksHeader(hb,_("Stocks"));
+    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTableRow();
+    hb.startTableCell();
 
-    static const char sql[] = 
+    hb.startTable(wxT("100%"));
+    if (frame_->expandedStockAccounts())
+    {
+        hb.startTableRow();
+        hb.addTableHeaderCell(_("Stocks"), false);
+        hb.addTableHeaderCell(_("Gain/Loss"), true);
+        hb.addTableHeaderCell(_("Total"), true);
+        hb.endTableRow();
+    }
+
+    static const char sql[] =
     "select "
     "c.BASECONVRATE, "
     "st.heldat as ACCOUNTID, a.accountname as ACCOUNTNAME, "
@@ -279,7 +363,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
     "left join currencyformats_v1 c on c.currencyid=a.currencyid "
     "    where st.purchasedate<=date ('now','localtime') "
     "and a.status='Open' "
-    "group by st.heldat "; 
+    "group by st.heldat ";
 
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql);
     while(q1.NextRow())
@@ -298,11 +382,11 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
 
         mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
         mmex::formatDoubleToCurrency(stockGain, tGainStr);
-        
+
         // if Stock accounts being displayed, include income/expense totals on home page.
         //tIncome += income * baseconvrate;
         //tExpenses += expenses * baseconvrate;
-        stTotalBalance += stockBalance * baseconvrate; 
+        stTotalBalance += stockBalance * baseconvrate;
         //We can hide or show Stocks on Home Page
         if (frame_->expandedStockAccounts())
         {
@@ -317,15 +401,22 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
     }
     q1.Finalize();
 
-    displaySectionTotal(hb, _("Stocks Total:"), 0.0, stTotalBalance, frame_->expandedStockAccounts());
+    hb.addText(displaySectionTotal(_("Stocks Total:"), 0.0, stTotalBalance));
+    hb.endTable();
+
+    hb.endTableCell();
+    hb.endTableRow();
+    hb.endTable();
 
     // Add Stock balance to Grand Total balance
     tBalance += stTotalBalance;
+    return hb.getHTMLText();
 }
 
 //* Assets *//
-void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
+wxString mmHomePagePanel::displayAssets(double& tBalance)
 {
+    mmHTMLBuilder hb;
     double assetBalance = mmDBWrapper::getAssetBalance(core_->db_.get());
     wxString assetBalanceStr;
     core_->currencyList_.LoadBaseCurrencySettings();
@@ -333,21 +424,32 @@ void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
 
     if (mmIniOptions::instance().enableAssets_)
     {
+        hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+        hb.startTableRow();
+        hb.startTableCell();
+
+        hb.startTable(wxT("100%"));
         hb.startTableRow();
         hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
         hb.addTableCell(wxT (""), true);
-        hb.addTableCell(assetBalanceStr, true);
+        hb.addTableCell(assetBalanceStr, true, true, true);
         hb.endTableRow();
-        hb.addRowSeparator(3);
-    }
+        hb.endTable();
 
+        hb.endTableCell();
+        hb.endTableRow();
+        hb.endTable();
+    }
     tBalance += assetBalance;
+    return hb.getHTMLText();
 }
 
 //* Currencies *//
-void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
+wxString mmHomePagePanel::displayCurrencies()
 {
-    static const char sql2[] = 
+    mmHTMLBuilder hb;
+
+    static const char sql2[] =
         "select ACCOUNTID, CURRENCYNAME, BALANCE, BASECONVRATE from ( "
         "select t.accountid as ACCOUNTID, c.currencyname as CURRENCYNAME, "
         "total (t.BALANCE) as BALANCE, "
@@ -381,16 +483,21 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
 
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql2);
     q1 = core_->db_.get()->ExecuteQuery(sql2);
-        
+
     //Determine how many currencies used
     int curnumber = 0;
     while(q1.NextRow())
-        curnumber+=1;   
+        curnumber+=1;
 
     if (curnumber > 1 )
     {
+
+        hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+        hb.startTableRow();
+        hb.startTableCell();
+
         // display the currency header
-        hb.startTable(wxT("95%"));
+        hb.startTable(wxT("100%"));
         hb.startTableRow();
         hb.addTableHeaderCell(_("Currency"), false);
         hb.addTableHeaderCell(_("Base Rate"), true);
@@ -408,28 +515,38 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
 
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
             wxASSERT(pCurrencyPtr);
-        
+
             wxString tBalanceStr;
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
             mmex::formatDoubleToCurrencyEdit(convRate, convRateStr);
-       
+
             hb.startTableRow();
             hb.addTableCell(currencyStr);
             hb.addTableCell(convRateStr, true);
             hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
         }
-        hb.addRowSeparator(3);
         hb.endTable();
         q1.Finalize();
+
+        hb.endTableCell();
+        hb.endTableRow();
+        hb.endTable();
     }
+
+    if (!hb.getHTMLText().IsEmpty())
+    {
+        hb.addLineBreak();
+        hb.addLineBreak();
+    }
+    return hb.getHTMLText();
 }
 
 //* Income vs Expenses *//
-void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome, double& texpenses)
+wxString mmHomePagePanel::displayIncomeVsExpenses(double& tincome, double& texpenses)
 {
-    hb.startTable(wxT("95%"));
+    mmHTMLBuilder hb;
 
     wxString incStr, expStr, difStr;
     mmex::formatDoubleToCurrency(tincome, incStr); // must use LoadBaseCurrencySettings (called above)
@@ -440,60 +557,64 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     gg.init(tincome, texpenses);
     gg.Generate(wxT(""));
 
-    wxString monthHeading = _("Current Month");
-    if (mmIniOptions::instance().ignoreFutureTransactions_) monthHeading = _("Current Month to Date");
-
-    hb.addTableHeaderRow(wxString() << _("Income vs Expenses: ") << monthHeading, 2);
-    
+    hb.startTable(wxT("98%"), wxT("top"), wxT("1"));
     hb.startTableRow();
-    //hb.startTableCell(wxT("50%\" align=\"center"));
     hb.startTableCell();
-    hb.addImage(gg.getOutputFileName());
+
+        hb.startTable(wxT("100%"));
+        
+            wxString monthHeading = _("Current Month");
+            if (mmIniOptions::instance().ignoreFutureTransactions_) monthHeading = _("Current Month to Date");
+        
+            hb.addTableHeaderRow(wxString::Format(_("Income vs Expenses: %s"), monthHeading.c_str()), 2);
+        
+            hb.startTableRow();
+            hb.startTableCell();
+            hb.addImage(gg.getOutputFileName());
+            hb.endTableCell();
+        
+            hb.startTableCell();
+        
+            hb.startTable();
+            hb.startTableRow();
+            hb.addTableHeaderCell(_("Type"));
+            hb.addTableHeaderCell(_("Amount"), true);
+            hb.endTableRow();
+        
+            hb.startTableRow();
+            hb.addTableCell(_("Income:"), false, true);
+            hb.addTableCell(incStr, true);
+            hb.endTableRow();
+        
+            hb.startTableRow();
+            hb.addTableCell(_("Expenses:"), false, true);
+            hb.addTableCell(expStr, true);
+            hb.endTableRow();
+        
+            hb.startTableRow();
+            hb.addTableCell(_("Difference:"), false, true, true);
+            hb.addTableCell(difStr, true, true, true, (tincome-texpenses < 0.0 ? wxT("RED"):wxT("")));
+            hb.endTableRow();
+        
+            hb.endTable();
+
+        hb.endTableCell();
+        hb.endTableRow();
+        hb.endTable();
+
     hb.endTableCell();
-
-    //hb.startTableCell(wxT("50%\" align=\"center"));
-    hb.startTableCell();
-    //start table in table
-    hb.startTable();
-
-    hb.startTableRow();
-    hb.addTableHeaderCell(_("Type"));
-    hb.addTableHeaderCell(_("Amount"), true);
     hb.endTableRow();
-
-    hb.startTableRow();
-    hb.addTableCell(_("Income:"), false, true);
-    hb.addTableCell(incStr, true);
-    hb.endTableRow();
-
-    hb.startTableRow();
-    hb.addTableCell(_("Expenses:"), false, true);
-    hb.addTableCell(expStr, true);
-    hb.endTableRow();
-
-    hb.addRowSeparator(2);
-    hb.startTableRow();
-    hb.addTableCell(_("Difference:"), false, true, true);
-    hb.addTableCell(difStr, true, true, true, (tincome-texpenses < 0.0 ? wxT("RED"):wxT("")));
-
-    hb.endTableRow();
-
     hb.endTable();
-    hb.endTableCell();
-    //end table in table
-
-    hb.endTableRow();
-
-    hb.addRowSeparator(2);
-    hb.endTable();
-
+    return hb.getHTMLText();
 }
 
 //* bills & deposits *//
-void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
+wxString mmHomePagePanel::displayBillsAndDeposits()
 {
+    mmHTMLBuilder hb;
     std::vector<mmBDTransactionHolder> trans_;
-    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery("select BDID, NEXTOCCURRENCEDATE, NUMOCCURRENCES, REPEATS, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(
+        "select BDID, NEXTOCCURRENCEDATE, NUMOCCURRENCES, REPEATS, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
 
     bool visibleEntries = false;
     while (q1.NextRow())
@@ -579,7 +700,12 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
         hb.addLineBreak();
         hb.addLineBreak();
-        hb.startTable(wxT("95%"));
+
+        hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+        hb.startTableRow();
+        hb.startTableCell();
+
+        hb.startTable(wxT("100%"));
         hb.addTableHeaderRowLink(wxT("billsdeposits"), _("Upcoming Transactions"), 3);
 
         std::vector<wxString> data4;
@@ -608,7 +734,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
                 wxString displayBDAmtString;
                 mmex::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
-           
+
                 hb.startTableRow();
                 hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
                 hb.addTableCell(displayBDAmtString, true);
@@ -617,17 +743,22 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
                 hb.endTableRow();
             }
         }
-        hb.addRowSeparator(3);
+        hb.endTable();
+
+        hb.endTableCell();
+        hb.endTableRow();
         hb.endTable();
     }
+    return hb.getHTMLText();
 }
 
-void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
+wxString mmHomePagePanel::displayTopTransactions()
 {
+    mmHTMLBuilder hb;
     mmex::CurrencyFormatter::instance().loadDefaultSettings();
     core_->currencyList_.LoadBaseCurrencySettings();
-    
-    static const char sql3[] = 
+
+    static const char sql3[] =
         "select NUMBER, "
         "CATEG|| (Case SUBCATEG when '' then '' else ':'||  SUBCATEG end ) as SUBCATEGORY "
         ", AMOUNT "
@@ -653,7 +784,7 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
         "and CANS.STATUS <> 'V' "
         "group by CATEG, SUBCATEG "
         "order by ABS (AMOUNT) DESC, CATEG, SUBCATEG "
-        ") where AMOUNT < 0 " 
+        ") where AMOUNT < 0 "
         "limit 7 ";
 
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql3);
@@ -662,7 +793,10 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 
     wxString headerMsg = wxString() << _("Top Withdrawals: ") << _("Last 30 Days");
 
-    hb.startTable(wxT("95%"));
+    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTableRow();
+    hb.startTableCell();
+    hb.startTable(wxT("100%"));
     hb.addTableHeaderRow(headerMsg, 3);
     hb.startTableRow();
     hb.addTableCell(_("Category"), false, false, true);
@@ -684,10 +818,13 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
         hb.endTableRow();
     }
     q1.Finalize();
-    hb.addRowSeparator(3);
     hb.endTable();
 
-    hb.getHTMLText();
+    hb.endTableCell();
+    hb.endTableRow();
+    hb.endTable();
+
+    return hb.getHTMLText();
 /*
     // Commented because there is not enough vertical space to show main page
     // without vertical scrollbar on 19-20" monitors.
@@ -698,12 +835,37 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 */
 }
 
-void mmHomePagePanel::displayStatistics(mmHTMLBuilder& hb) 
+wxString mmHomePagePanel::getCalendarWidget()
 {
+    mmHTMLBuilder hb;
+    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTableRow();
+    hb.startTableCell();
+
+    wxString sDate = mmGetNiceDateString(wxDateTime::Now());    
+    sDate = wxString::Format(_("Today's Date: %s"), sDate.c_str());
+    hb.addHeaderItalic(1, sDate);
+    
+    hb.endTableCell();
+    hb.endTableRow();
+    hb.endTable();
+    hb.addLineBreak();
+    hb.addLineBreak();
+    return hb.getHTMLText();
+}
+
+wxString mmHomePagePanel::getStatWidget()
+{
+    mmHTMLBuilder hb;
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
     hb.addLineBreak();
     hb.addLineBreak();
-    hb.startTable(wxT("95%"));
+
+    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTableRow();
+    hb.startTableCell();
+
+    hb.startTable(wxT("100%"));
 
     hb.addTableHeaderRow(_("Transaction Statistics"), 2);
 
@@ -716,88 +878,47 @@ void mmHomePagePanel::displayStatistics(mmHTMLBuilder& hb)
     }
 
     hb.startTableRow();
-    hb.addTableCell( _("Total Transactions: "));  
+    hb.addTableCell( _("Total Transactions: "));
     hb.addTableCell(wxString::Format(wxT("%ld"), core_->bTransactionList_.transactions_.size()), true, true, true);
     hb.endTableRow();
-    hb.addRowSeparator(2);
     hb.endTable();
+
+    hb.endTableCell();
+    hb.endTableRow();
+    hb.endTable();
+    return hb.getHTMLText();
 }
 
-void mmHomePagePanel::displayGrandTotals(mmHTMLBuilder& hb, double& tBalance)
+wxString mmHomePagePanel::displayGrandTotals(double& tBalance)
 {
-//  Display the grand total from all sections
+    mmHTMLBuilder hb;
+    //  Display the grand total from all sections
     wxString tBalanceStr;
     core_->currencyList_.LoadBaseCurrencySettings();
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
-    hb.startTable(wxT("95%"));
-    hb.addTotalRow(_("Grand Total:"), 2, tBalanceStr);
-    //hb.addRowSeparator(2);
-    hb.endTable();
-    hb.addLineBreak();
-    hb.addLineBreak();
-}
-
-void mmHomePagePanel::updateAccounts()
-{
-    if (!core_->db_.get())
-        return;
-
-    mmHTMLBuilder hb;
-    hb.init();
-    wxDateTime today = wxDateTime::Now();
-    wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-    wxDateTime dtBegin = prevMonthEnd;
-    wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
-
-    hb.addDateNow();
-
-    hb.startCenter();
-    hb.startTable(wxT("98%"), wxT("top")); 
+    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
     hb.startTableRow();
+    hb.startTableCell();
 
-    double tBalance = 0.0;
-    double tIncome = 0.0;
-    double tExpenses = 0.0;
+    hb.startTable(wxT("100%"));
+    hb.addTotalRow(_("Grand Total:"), 2, tBalanceStr);
+    hb.endTable();
 
-    hb.startTableCell(wxT("50%\" align=\"center")); 
-
-    hb.startTable(wxT("95%")); 
-    displayCheckingAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
-    if ( frame_->hasActiveTermAccounts() )
-        displayTermAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
-    if (core_->accountList_.has_stock_account()) displayStocks(hb,tBalance /*,tIncome,tExpenses */);
-    displayAssets(hb, tBalance);
-    hb.endTable(); 
- 
-    displayCurrencies(hb); // Will display Currency summary when more than one currency is used.
-
-    displayGrandTotals(hb, tBalance);
- 
-    displayTopTransactions(hb); 
-    hb.endTableCell();
-
-    hb.startTableCell(wxT("50%\" align=\"center")); 
-    displayIncomeVsExpenses(hb, tIncome, tExpenses); //Also displays the Income vs Expenses graph.
-    displayBillsAndDeposits(hb); 
-    displayStatistics(hb);
     hb.endTableCell();
     hb.endTableRow();
     hb.endTable();
-    hb.end();
-
-    html_text_ = hb.getHTMLText();
-    htmlWindow_->SetPage(html_text_);
+    return hb.getHTMLText();
 }
 
 void mmHomePagePanel::CreateControls()
-{    
+{
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    htmlWindow_ = new mmHtmlWindow( this, frame_, core_, 
-        ID_PANEL_HOMEPAGE_HTMLWINDOW, 
-        wxDefaultPosition, wxDefaultSize, 
+    htmlWindow_ = new mmHtmlWindow( this, frame_, core_,
+        ID_PANEL_HOMEPAGE_HTMLWINDOW,
+        wxDefaultPosition, wxDefaultSize,
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 0);
 }
@@ -836,7 +957,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         frame_->setGotoAccountID(id);
         frame_->setAccountNavTreeSection(core_->accountList_.GetAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
-        frame_->GetEventHandler()->AddPendingEvent(evt); 
+        frame_->GetEventHandler()->AddPendingEvent(evt);
     }
 }
 
