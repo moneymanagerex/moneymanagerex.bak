@@ -146,18 +146,16 @@ bool mmQIFImportDialog::Create( wxWindow* parent, wxWindowID id, const wxString&
 
 void mmQIFImportDialog::CreateControls()
 {
-    const int border = 5;
-    const int fieldWidth = 180;
-    wxSizerFlags flags, flagsExpand;
-    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
-    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();
+	wxSizerFlags flags, flagsExpand;
+	flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
+    flagsExpand.Align(wxALIGN_CENTER).Border(wxALL, 5).Expand().Proportion(1);
 
     wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(main_sizer);
     wxBoxSizer* box_sizer1 = new wxBoxSizer(wxVERTICAL);
-    main_sizer->Add(box_sizer1, 1, wxGROW|wxALL, 10);
 
     wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 3, 0, 0);
+	//flex_sizer->AddGrowableCol(1);
 
     // File Name --------------------------------------------
     wxStaticText* file_name_label = new wxStaticText(this, wxID_STATIC, _("File Name:"));
@@ -172,8 +170,8 @@ void mmQIFImportDialog::CreateControls()
     flex_sizer->Add(file_name_label, flags);
     flex_sizer->Add(button_search_, flags);
     flex_sizer->Add(bbFile_, flags);
-    main_sizer->Add(file_name_ctrl_, 1, wxALL|wxGROW, 5);
-    main_sizer->Add(flex_sizer, flags.Left());
+    main_sizer->Add(file_name_ctrl_, 0, wxALL|wxGROW, 5);
+    box_sizer1->Add(flex_sizer, flagsExpand);
 
     // Date Format Settings
     wxStaticText* dateFormat = new wxStaticText(this, wxID_STATIC, _("Date Format"));
@@ -199,7 +197,7 @@ void mmQIFImportDialog::CreateControls()
     dateFromCheckBox_ = new wxCheckBox( this, wxID_ANY, _("From Date")
         , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     fromDateCtrl_ = new wxDatePickerCtrl( this, wxID_STATIC, wxDefaultDateTime
-        , wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
+        , wxDefaultPosition, wxSize(150, -1), wxDP_DROPDOWN);
     fromDateCtrl_->Enable(false);
     flex_sizer->Add(dateFromCheckBox_, flags);
     flex_sizer->Add(fromDateCtrl_, flags);
@@ -209,17 +207,19 @@ void mmQIFImportDialog::CreateControls()
     dateToCheckBox_ = new wxCheckBox( this, wxID_ANY, _("To Date")
         , wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     toDateCtrl_ = new wxDatePickerCtrl( this, wxID_STATIC, wxDefaultDateTime
-        , wxDefaultPosition, wxSize(fieldWidth,-1), wxDP_DROPDOWN);
+        , wxDefaultPosition, wxSize(150, -1), wxDP_DROPDOWN);
     toDateCtrl_->Enable(false);
     flex_sizer->Add(dateToCheckBox_, flags);
     flex_sizer->Add(toDateCtrl_, flags);
     flex_sizer->AddSpacer(1);
 
-    /**********************************************************************************************
+    main_sizer->Add(box_sizer1, flagsExpand);
+
+	/**********************************************************************************************
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
     wxPanel* buttons_panel = new wxPanel(this, wxID_ANY);
-    main_sizer->Add(buttons_panel, flags.Center().Border(wxALL, 10));
+    main_sizer->Add(buttons_panel, flags.Center());
 
     wxStdDialogButtonSizer*  buttons_sizer = new wxStdDialogButtonSizer;
     buttons_panel->SetSizer(buttons_sizer);
@@ -233,6 +233,7 @@ void mmQIFImportDialog::CreateControls()
     buttons_sizer->Add(itemButtonCancel_, flags);
 
     buttons_sizer->Realize();
+	Fit();
 }
 
 void mmQIFImportDialog::fillControls()
