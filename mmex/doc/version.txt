@@ -1,6 +1,7 @@
 Version History of Money Manager Ex
 
 0.9.9.2 (TBA)
+- QIF Export/Import updated;
 - Lua scripting language interface added;
 - Transaction Dialogue updated;
   - Simple line calculator added for amount fields;
