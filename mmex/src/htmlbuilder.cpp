@@ -77,7 +77,7 @@ void mmHTMLBuilder::addHeaderItalic(const int level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
-    html_+= wxString::Format(wxT("<font size=\"%i\"><i>%s</i></font><br>\n"), header_font_size, header.c_str());
+    html_+= wxString::Format(wxT("<font size=\"%i\"><i>%s</i></font>\n"), header_font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addDateNow()
