@@ -75,12 +75,12 @@ void mmQIFExportDialog::CreateControls()
     const int fieldWidth = 180;
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
-    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL|wxGROW, border).Expand().Proportion(1);
 
     wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(main_sizer);
     wxBoxSizer* box_sizer1 = new wxBoxSizer(wxVERTICAL);
-    main_sizer->Add(box_sizer1, 1, wxGROW);
+    main_sizer->Add(box_sizer1, flagsExpand);
 
     wxNotebook* export_notebook = new wxNotebook(this,
         wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_MULTILINE );
@@ -94,7 +94,7 @@ void mmQIFExportDialog::CreateControls()
     wxBoxSizer *tab2_sizer = new wxBoxSizer(wxVERTICAL);
     log_tab->SetSizer(tab2_sizer);
 
-    box_sizer1->Add(export_notebook, flags);
+    box_sizer1->Add(export_notebook, flagsExpand);
 
     //
     wxString choices[] = { _("QIF"), _("CSV")};
@@ -164,7 +164,7 @@ void mmQIFExportDialog::CreateControls()
     flex_sizer->AddSpacer(1);
     flex_sizer->Add(file_name_label_, flags);
     flex_sizer->Add(button_search_, flags);
-    tab1_sizer->Add(m_text_ctrl_, 1, wxALL|wxGROW, 5);
+    tab1_sizer->Add(m_text_ctrl_, 0, wxALL|wxGROW, border);
 
     //Log viewer
     log_field_ = new wxTextCtrl( log_tab, wxID_ANY, wxT("")

@@ -3,7 +3,7 @@
  ********************************************************/
 
 
-#define SYMBOL_QIFDIALOG_STYLE wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX
+#define SYMBOL_QIFDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_QIFDIALOG_TITLE _("QIF Export")
 #define SYMBOL_QIFDIALOG_IDNAME wxID_HIGHEST+1
 #define SYMBOL_QIFDIALOG_SIZE wxSize(500, 300)
