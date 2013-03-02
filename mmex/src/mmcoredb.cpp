@@ -46,7 +46,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db, boost::shared_ptr<MM
     {
         dbInfoSettings_->SetStringSetting(wxT("MMEXVERSION"), mmex::getProgramVersion());
         dbInfoSettings_->SetStringSetting(wxT("DATAVERSION"), mmex::DATAVERSION);
-		dbInfoSettings_->SetStringSetting(wxT("CREATEDATE"), wxDateTime::Now().Format());
+		dbInfoSettings_->SetStringSetting(wxT("CREATEDATE"), wxDateTime::Now().FormatISODate());
         dbInfoSettings_->SetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
         dbInfoSettings_->Save();
     }

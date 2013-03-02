@@ -881,14 +881,7 @@ wxString mmHomePagePanel::getStatWidget()
     hb.addTableCell( _("Total Transactions: "));
     hb.addTableCell(wxString::Format(wxT("%ld"), core_->bTransactionList_.transactions_.size()), true, true, true);
     hb.endTableRow();
-
-	wxString sNow = wxDateTime::Now().Format();
-    hb.startTableRow();
-    hb.addTableCell( _("Last Update: "));
-    hb.addTableCell( core_->dbInfoSettings_->GetStringSetting(wxT("CREATEDATE"), sNow), true, true, true);
-    hb.endTableRow();
-	
-	hb.endTable();
+    hb.endTable();
 
     hb.endTableCell();
     hb.endTableRow();
