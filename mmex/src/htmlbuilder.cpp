@@ -219,7 +219,7 @@ void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool itali
     html_<< (numeric ? wxT("<td nowrap align=\"right\" >") : wxT("<td>"));
 
     if(!fontColor.empty())
-        html_+= wxT("<font color=") + fontColor + wxT(">");
+        html_+= wxT("<font color=\"") + fontColor + wxT("\">");
 
     if (!bold && !italic)    html_+= value;
     else if (bold && italic) html_+= wxT("<b><i>") + value + wxT("</i></b>");
