@@ -146,8 +146,8 @@ bool mmQIFImportDialog::Create( wxWindow* parent, wxWindowID id, const wxString&
 
 void mmQIFImportDialog::CreateControls()
 {
-	wxSizerFlags flags, flagsExpand;
-	flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
+    wxSizerFlags flags, flagsExpand;
+    flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, 5);
     flagsExpand.Align(wxALIGN_CENTER).Border(wxALL, 5).Expand().Proportion(1);
 
     wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
@@ -155,7 +155,7 @@ void mmQIFImportDialog::CreateControls()
     wxBoxSizer* box_sizer1 = new wxBoxSizer(wxVERTICAL);
 
     wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 3, 0, 0);
-	//flex_sizer->AddGrowableCol(1);
+    //flex_sizer->AddGrowableCol(1);
 
     // File Name --------------------------------------------
     wxStaticText* file_name_label = new wxStaticText(this, wxID_STATIC, _("File Name:"));
@@ -215,7 +215,7 @@ void mmQIFImportDialog::CreateControls()
 
     main_sizer->Add(box_sizer1, flagsExpand);
 
-	/**********************************************************************************************
+    /**********************************************************************************************
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
     wxPanel* buttons_panel = new wxPanel(this, wxID_ANY);
@@ -233,7 +233,7 @@ void mmQIFImportDialog::CreateControls()
     buttons_sizer->Add(itemButtonCancel_, flags);
 
     buttons_sizer->Realize();
-	Fit();
+    Fit();
 }
 
 void mmQIFImportDialog::fillControls()
@@ -781,6 +781,7 @@ int mmQIFImportDialog::mmImportQIF()
                 for (unsigned int index = 0; index < vQIF_trxs.size(); index++)
                 {
                     if (refTrans[index]->transType_ != TRANS_TYPE_TRANSFER_STR) continue;
+                    if (refTrans[index]->status_ == wxT("D")) continue;
                     if (refTrans[index]->date_!= dtdt) continue;
                     if (refTrans[index]->amt_ < 0 && val < 0 || refTrans[index]->amt_ > 0 && val >0 ) continue;
                     if (refTrans[index]->accountID_!= from_account_id) continue;
@@ -791,6 +792,7 @@ int mmQIFImportDialog::mmImportQIF()
                         refTrans[index]->toAmt_ = val;
                     else
                         refTrans[index]->amt_ = val;
+                    refTrans[index]->status_ = wxT("D");
 
                     sMsg = wxString::Format(wxT("%f -> %f (%f)\n"), refTrans[index]->amt_
                         , refTrans[index]->toAmt_
@@ -832,6 +834,7 @@ int mmQIFImportDialog::mmImportQIF()
             wxASSERT(pCurrencyPtr);
             refTrans[index]->amt_ = fabs(refTrans[index]->amt_);
             refTrans[index]->toAmt_ = fabs(refTrans[index]->toAmt_);
+            refTrans[index]->status_ = wxT("F");
             refTrans[index]->updateAllData(core_, fromAccountID, pCurrencyPtr);
             core_->bTransactionList_.addTransaction(core_, refTrans[index]);
         }
