@@ -571,7 +571,7 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
         else if (fn_name == wxT("AddTableHeaderCell")) hb.addTableHeaderCell(value_1, !value_2.IsEmpty());
         else if (fn_name == wxT("AddTableHeaderRow")) hb.addTableHeaderRow(value_1, wxAtoi(value_2.c_str()));
         else if (fn_name == wxT("AddTableCell")) hb.addTableCell(value_1, !value_2.IsEmpty()
-            , !value_3.IsEmpty(), !value_4.IsEmpty());
+            , !value_3.IsEmpty(), !value_4.IsEmpty(), value_5);
         else if (fn_name == wxT("AddTableCellLink")) hb.addTableCellLink(value_1, value_2
             , !value_3.IsEmpty(), !value_4.IsEmpty()
             , !value_5.IsEmpty(), value_6);
