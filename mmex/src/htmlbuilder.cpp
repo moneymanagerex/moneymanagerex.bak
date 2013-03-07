@@ -165,14 +165,13 @@ void mmHTMLBuilder::addRowSeparator(int cols)
     if (cols > 0)
     {
         startTableRow();
-        startTableCell(wxString::Format(wxT("\" colspan=\"%d"), cols));
+        html_+= wxString::Format(wxT("<td colspan=\"%d\" >"), cols);
         startTable(wxT("100%"), wxT("top"), wxT("1"));
         endTable();
         endTableCell();
         endTableRow();
+        bgswitch_ = true;
     }
-
-    bgswitch_ = true;
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxString& value)
