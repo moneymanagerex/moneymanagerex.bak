@@ -19,6 +19,7 @@
 #include "lua_interface.h"
 #include "util.h"
 #include "htmlbuilder.h"
+#include <wx/stdpaths.h>
 
 // Constructor: Initialises Lua when an instant is created.
 TLuaInterface::TLuaInterface()
@@ -157,6 +158,9 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmCurrencyFormat",     cpp2Lua_CurrencyFormat);
     lua_register(lua_, "mmBaseCurrencyFormat", cpp2Lua_BaseCurrencyFormat);
     lua_register(lua_, "mmDateFormat",         cpp2Lua_DateFormat);
+    lua_register(lua_, "mmGetDocDir",          cpp2lua_GetDocDir);
+    lua_register(lua_, "mmGetExeDir",          cpp2lua_GetExeDir);
+    lua_register(lua_, "mmGetLuaDir",          cpp2lua_GetLuaDir);
 }
 
 /******************************************************************************
@@ -529,6 +533,59 @@ int TLuaInterface::cpp2Lua_DateFormat(lua_State* lua)
     if (!sDate.IsEmpty()) dt.ParseDate(sDate.GetData());
     sDate = dt.Format(mmOptions::instance().dateFormat_);
     lua_pushstring(lua, sDate.ToUTF8());
+    return 1;
+}
+
+/******************************************************************************
+ Private Helper function to set the directory settings on the return stack
+ *****************************************************************************/
+void TLuaInterface::SetDirSetting(lua_State* lua, wxString dir_setting)
+{
+    bool add_slash = ! OptionalParameter(lua, 1);
+    dir_setting.Replace(wxT("\\"),wxT("/"));
+    if (add_slash)
+    {
+        dir_setting << wxT("/");
+    }
+    lua_pushstring(lua, dir_setting.ToUTF8());
+}
+
+/******************************************************************************
+ current_working_dir = mmGetDocDir([without_end_slash]])
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_GetDocDir(lua_State* lua)
+{
+    static wxStandardPaths stdpath = wxStandardPaths();
+
+    SetDirSetting(lua, stdpath.GetDocumentsDir());
+    return 1;
+}
+
+/******************************************************************************
+ exe_dir = mmGetExeDir([without_end_slash])
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_GetExeDir(lua_State* lua)
+{
+    static wxStandardPaths stdpath = wxStandardPaths();
+    wxFileName fn(stdpath.GetExecutablePath());
+
+    SetDirSetting(lua, fn.GetPath());
+    return 1;
+}
+
+/******************************************************************************
+ lua_dir = mmGetLuaDir([without_end_slash])
+ *****************************************************************************/
+int TLuaInterface::cpp2lua_GetLuaDir(lua_State* lua)
+{
+    static wxStandardPaths stdpath = wxStandardPaths();
+    wxFileName fn(stdpath.GetExecutablePath());
+
+    const wxArrayString &dirs = fn.GetDirs();
+    if (dirs.Last().Upper() == wxT("BIN")) // bin\mmex.exe
+        fn.RemoveLastDir();
+
+    SetDirSetting(lua, fn.GetPath() + wxT("/lua"));
     return 1;
 }
 

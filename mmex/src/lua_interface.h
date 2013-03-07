@@ -53,6 +53,7 @@ private:
     static wxString GetLuaString(lua_State* lua);
     static bool OptionalParameter(lua_State* lua, int parameter_possition);
     static void SetCurrencyFormat(lua_State* lua, double number, bool for_edit);
+    static void SetDirSetting(lua_State* lua, wxString dir_setting);
 
     /**************************************************************************
     Lua function extensions provided by c++ code:
@@ -76,6 +77,9 @@ private:
     static int cpp2Lua_BaseCurrencyFormat(lua_State* lua);
     static int cpp2Lua_CurrencyFormat(lua_State* lua);
     static int cpp2Lua_DateFormat(lua_State* lua);
+    static int cpp2lua_GetDocDir(lua_State* lua);
+    static int cpp2lua_GetExeDir(lua_State* lua);
+    static int cpp2lua_GetLuaDir(lua_State* lua);
     static int cpp2lua_HTMLBuilder(lua_State* lua);
 };
 
