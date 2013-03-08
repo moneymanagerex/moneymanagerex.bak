@@ -68,7 +68,7 @@ wxString mmReportSummary::getHTMLText()
             mmex::formatDoubleToCurrency(bal, balance);
 
             hb.startTableRow();
-            hb.addTableCell(pCA->name_, false, true);
+            hb.addTableCellLink(wxString::Format(wxT("ACCT:%d"), pCA->id_),pCA->name_, false, true);
             hb.addTableCell(balance, true);
             hb.endTableRow();
         }
@@ -108,7 +108,7 @@ wxString mmReportSummary::getHTMLText()
             mmex::formatDoubleToCurrency(bal, balance);
 
             hb.startTableRow();
-            hb.addTableCell(pTA->name_, false, true);
+            hb.addTableCellLink(wxString::Format(wxT("ACCT:%d"), pTA->id_),pTA->name_, false, true);
             hb.addTableCell(balance, true);
             hb.endTableRow();
         }
@@ -148,9 +148,10 @@ wxString mmReportSummary::getHTMLText()
     mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
     hb.startTableRow();
-    hb.addTableCell(_("Stock Investments"));
+    hb.addTableCell(_("Stocks Total:"));
     hb.addTableCell(stockBalanceStr, true);
     hb.endTableRow();
+    hb.addRowSeparator(2);
 
     /* Assets */
     double assetBalance = mmDBWrapper::getAssetBalance(db_);
@@ -158,7 +159,7 @@ wxString mmReportSummary::getHTMLText()
     mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
     hb.startTableRow();
-    hb.addTableCell(_("Assets"));
+    hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
     hb.addTableCell(assetBalanceStr, true);
     hb.endTableRow();
 
