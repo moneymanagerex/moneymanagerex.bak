@@ -32,6 +32,7 @@ public:
         const wxPoint& pos = SYMBOL_QIFIMPORT_POSITION,
         const wxSize& size = SYMBOL_QIFIMPORT_SIZE,
         long style = SYMBOL_QIFIMPORT_STYLE );
+    int get_last_imported_acc() {return last_imported_acc_id_;}
 
 private:
     int mmImportQIF();
@@ -74,6 +75,6 @@ private:
     wxBitmapButton* bbFile_;
     wxBitmapButton* bbFormat_;
     wxBitmapButton* bbAccounts_;
-
+    int last_imported_acc_id_;
 };
 

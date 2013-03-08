@@ -121,7 +121,8 @@ mmQIFImportDialog::mmQIFImportDialog(
     const wxSize& size, long style
 ) :
     core_(core),
-    parent_(parent)
+    parent_(parent),
+    last_imported_acc_id_(-1)
 {
     Create(parent, id, caption, pos, size, style);
 }
@@ -522,16 +523,11 @@ int mmQIFImportDialog::mmImportQIF()
         else if (lineType(readLine) == Amount) // 'T'
         {
             sAmount = getLineData(readLine);
-            // Until the value has been received, we don't know transaction type
-            // At the same time we don't know it transfer or no
-            // Therefore the type of transaction defined as withdrawal
-            type = TRANS_TYPE_WITHDRAWAL_STR;
 
             if (!sAmount.ToDouble(&val) && !mmex::formatCurrencyToDouble(sAmount, val))
             {
                 sMsg = wxString::Format(_("Line: %ld invalid amount, skipping."), numLines);
                 logWindow->AppendText(sMsg << wxT("\n"));
-                continue;
             }
             continue;
         }
@@ -558,6 +554,7 @@ int mmQIFImportDialog::mmImportQIF()
             {
                 sToAccountName = sFullCateg.substr(1, sFullCateg.Length()-2);
                 sFullCateg = _("Transfer");
+                type = TRANS_TYPE_TRANSFER_STR;
             }
 
             /* //Trick  for cut non standart qif category usage in Financisto application
@@ -618,13 +615,7 @@ int mmQIFImportDialog::mmImportQIF()
                 logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
                 bValid = false;
             }
-            else if (type.Trim().IsEmpty())
-            {
-                sMsg = _("Transaction Type is missing");
-                logWindow->AppendText(sMsg << wxT("\n"));
-                bValid = false;
-            }
-            else if (sAmount.Trim().IsEmpty())
+            if (sAmount.Trim().IsEmpty())
             {
                 sMsg = _("Amount is missing");
                 logWindow->AppendText(sMsg << wxT("\n"));
@@ -647,7 +638,7 @@ int mmQIFImportDialog::mmImportQIF()
             }
 
             to_account_id = -1;
-            if (sFullCateg == _("Transfer"))
+            if (type == TRANS_TYPE_TRANSFER_STR)
             {
                 if (accounts_name.Index(sToAccountName) == wxNOT_FOUND)
                 {
@@ -674,14 +665,6 @@ int mmQIFImportDialog::mmImportQIF()
                     from_account_id = to_account_id;
                     to_account_id = fromAccountID;
                 }
-                type = TRANS_TYPE_TRANSFER_STR;
-            }
-
-            if (val > 0.0 && type != TRANS_TYPE_TRANSFER_STR)
-                type = TRANS_TYPE_DEPOSIT_STR;
-
-            if (type == TRANS_TYPE_TRANSFER_STR)
-            {
                 payeeID = -1;
                 if (to_account_id == -1 || from_account_id == -1)
                 {
@@ -692,6 +675,11 @@ int mmQIFImportDialog::mmImportQIF()
             }
             else
             {
+                if (val > 0.0)
+                    type = TRANS_TYPE_DEPOSIT_STR;
+                else
+                    type = TRANS_TYPE_WITHDRAWAL_STR;
+
                 to_account_id = -1;
                 if (sPayee.IsEmpty())
                 {
@@ -699,6 +687,7 @@ int mmQIFImportDialog::mmImportQIF()
                     logWindow->AppendText(sMsg << wxT("\n"));
                     sPayee = _("Unknown");
                 }
+
                 if (!core_->payeeList_.PayeeExists(sPayee))
                 {
                     payeeID = core_->payeeList_.AddPayee(sPayee);
@@ -723,7 +712,7 @@ int mmQIFImportDialog::mmImportQIF()
             else
                 sValid = wxT("NO");
 
-            if (bFromDate && dtdt < fromDate || bToDate && dtdt > toDate)
+            if (bValid && (bFromDate && dtdt < fromDate || bToDate && dtdt > toDate))
             {
                 sValid = wxT("SKIP");
                 bValid = false;
@@ -968,7 +957,8 @@ void mmQIFImportDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
 
 void mmQIFImportDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    mmImportQIF();
+    last_imported_acc_id_ = mmImportQIF();
+    btnOK_->Enable(false);
 }
 
 void mmQIFImportDialog::OnCancel(wxCommandEvent& /*event*/)
