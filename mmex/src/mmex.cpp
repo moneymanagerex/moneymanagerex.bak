@@ -1902,22 +1902,17 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
         boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
         if (pAccount)
         {
-           wxMessageDialog msgDlg(this,
-              _("Do you really want to delete the account?"),
-              _("Confirm Account Deletion"),
-              wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
-           if (msgDlg.ShowModal() == wxID_YES)
-           {
-              m_core->bTransactionList_.deleteTransactions(pAccount->id_);
-              m_core->accountList_.RemoveAccount(pAccount->id_);
-              updateNavTreeControl();
-              if (!refreshRequested_)
-              {
-                  refreshRequested_ = true;
-                  wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-                  GetEventHandler()->AddPendingEvent(ev);
-              }
-           }
+            wxMessageDialog msgDlg(this,
+                _("Do you really want to delete the account?"),
+                _("Confirm Account Deletion"),
+                wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+            if (msgDlg.ShowModal() == wxID_YES)
+            {
+                m_core->bTransactionList_.deleteTransactions(pAccount->id_);
+                m_core->accountList_.RemoveAccount(pAccount->id_);
+                updateNavTreeControl();
+                createHomePage();
+            }
         }
     }
 }
@@ -2859,6 +2854,7 @@ void mmGUIFrame::OnExportToQIF(wxCommandEvent& /*event*/)
 {
     mmQIFExportDialog* dlg = new mmQIFExportDialog(m_core.get(), this);
     dlg->ShowModal();
+    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -2867,8 +2863,17 @@ void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
 
     mmQIFImportDialog* dlg = new mmQIFImportDialog(m_core.get(), this);
     dlg->ShowModal();
+    int account_id = dlg->get_last_imported_acc();
     refreshRequested_ = true;
     updateNavTreeControl();
+    if (account_id > 0)
+    {
+        setGotoAccountID(account_id, -1);
+        setAccountNavTreeSection(m_core->accountList_.GetAccountName(account_id));
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+        this->GetEventHandler()->AddPendingEvent(evt);
+    }
+    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -3661,15 +3666,11 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
             m_core->bTransactionList_.deleteTransactions(acctID);
 
             updateNavTreeControl();
-            if (!refreshRequested_)
-            {
-                refreshRequested_ = true;
-                wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-                GetEventHandler()->AddPendingEvent(ev);
-            }
         }
     }
     delete[] arrAcctID;
+    updateNavTreeControl();
+    createHomePage();
 }
 //----------------------------------------------------------------------------
 
