@@ -1388,6 +1388,10 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - Specific Accounts"), 4, 4);
     navTreeCtrl_->SetItemData(cashflowSpecificAccounts, new mmTreeItemData(wxT("Cash Flow - Specific Accounts")));
 
+    
+    wxTreeItemId cashflowSpecificAccountsDaily = navTreeCtrl_->AppendItem(cashFlow, _("Daily Cash Flow - Specific Accounts"), 4, 4);
+    navTreeCtrl_->SetItemData(cashflowSpecificAccountsDaily, new mmTreeItemData(wxT("Daily Cash Flow - Specific Accounts")));
+    
     ///////////////////////////////////////////////////////
     wxTreeItemId transactionStats = navTreeCtrl_->AppendItem(reports, _("Transaction Statistics"), 4, 4);
     navTreeCtrl_->SetItemData(transactionStats, new mmTreeItemData(wxT("Transaction Statistics")));
@@ -1805,7 +1809,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == wxT("Cash Flow"))
         {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this);
+            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, 0);
 
             report->activateBankAccounts();
             if (hasActiveTermAccounts())  report->activateTermAccounts();
@@ -1814,20 +1818,24 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == wxT("Cash Flow - With Bank Accounts"))
         {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this);
+            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, 0);
             report->activateBankAccounts();
             createReportsPage(report);
         }
 
         else if (sData == wxT("Cash Flow - With Term Accounts"))
         {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this);
+            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, 0);
             report->activateTermAccounts();
             createReportsPage(report);
         }
         else if (sData == wxT("Cash Flow - Specific Accounts"))
         {
-            OnCashFlowSpecificAccounts();
+            OnCashFlowSpecificAccounts(0);
+        }
+        else if (sData == wxT("Daily Cash Flow - Specific Accounts"))
+        {
+            OnCashFlowSpecificAccounts(1);
         }
         else if (sData == wxT("Transaction Report"))
         {
@@ -3131,7 +3139,7 @@ wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::OnCashFlowSpecificAccounts()
+void mmGUIFrame::OnCashFlowSpecificAccounts(int cashflowreporttype)
 {
     if (!m_db.get()) return;
     if (m_core.get()->accountList_.getNumAccounts() == 0) return;
@@ -3150,7 +3158,7 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
         }
 
         // mmReportCashFlow is a mmPrintableBase
-        mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, selections);
+        mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, cashflowreporttype, selections);
 
         report->activateBankAccounts();
         if (this->hasActiveTermAccounts()) report->activateTermAccounts();
