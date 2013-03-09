@@ -52,14 +52,17 @@ mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
 
 double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
 {
-   boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
-   boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
-   wxASSERT(pCurrency);
+    if (accountID > 0)
+    {
+        boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
+        boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+        wxASSERT(pCurrency);
 
-   if (pCurrency)
-      return pCurrency->baseConv_;
+        if (pCurrency)
+        return pCurrency->baseConv_;
+    }
 
-   return 1.0;
+    return 1.0;
 }
 
 boost::shared_ptr<mmAccount> mmAccountList::GetAccountSharedPtr(int accountID) const
