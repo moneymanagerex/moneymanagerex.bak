@@ -473,7 +473,7 @@ void mmQIFExportDialog::mmExportQIF()
                         transferTrxId.Add(trans_id);
                     //Transaction number used to make transaction unique
                     // to proper merge transfer records
-                    if (transNum.IsEmpty())
+                    if (transNum.IsEmpty() && notes.IsEmpty())
                         transNum = wxString::Format(wxT("#%ld"), trans_id);
                 }
                 else if (type == wxT("Withdrawal"))
@@ -502,14 +502,12 @@ void mmQIFExportDialog::mmExportQIF()
                     for (int i = 0; i < (int)splits->entries_.size(); ++i)
                     {
                         value = splits->entries_[i]->splitAmount_;
-                        wxString split_amount = wxString()<<value;
                         if (type == wxT("Withdrawal"))
-                            split_amount.Prepend(wxT("-"));
+                            value = -value;
+                        wxString split_amount = wxString()<<value;
 
-                        wxString split_categ = core_->categoryList_.GetCategoryName(splits->entries_[i]->categID_);
-                        const wxString split_subcateg = core_->categoryList_.GetSubCategoryName(
+                        wxString split_categ = core_->categoryList_.GetFullCategoryString(
                             splits->entries_[i]->categID_, splits->entries_[i]->subCategID_);
-                        if (!split_subcateg.IsEmpty()) split_categ += wxT(":") + split_subcateg;
                         if (qif_csv)
                         {
                             buffer << wxT('S') << split_categ << wxT("\n")
