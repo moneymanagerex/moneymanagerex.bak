@@ -513,9 +513,7 @@ void mmQIFExportDialog::mmExportQIF()
                         if (qif_csv)
                         {
                             buffer << wxT('S') << split_categ << wxT("\n")
-                                << wxT('$') << split_amount << wxT("\n")
-                                << wxT('E') << split_categ << wxT(" ")
-                                << split_amount << wxT("\n");
+                                << wxT('$') << split_amount << wxT("\n");
                         }
                         else
                         {
