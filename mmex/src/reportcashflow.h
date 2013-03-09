@@ -12,7 +12,7 @@ class wxArrayString;
 class mmReportCashFlow : public mmPrintableBase 
 {
 public:
-    mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, const wxArrayString* accountArray = 0);
+    mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray = 0);
 
     wxString getHTMLText();
 	
@@ -34,6 +34,7 @@ private:
    const wxArrayString* accountArray_;
    bool activeTermAccounts_;
    bool activeBankAccounts_;
+   int cashflowreporttype_;
 };
 
 #endif // _MM_EX_REPORTCASHFLOW_H_

@@ -346,7 +346,7 @@ private:
     void OnBudgetSetupDialog(wxCommandEvent& event);
     void OnCurrency(wxCommandEvent& event);
     void OnTransactionReport(wxCommandEvent& event);
-    void OnCashFlowSpecificAccounts();
+    void OnCashFlowSpecificAccounts(int cashflowreporttype);
 
     void OnHelp(wxCommandEvent& event);
     void OnShowAppStartDialog(wxCommandEvent& WXUNUSED(event));
