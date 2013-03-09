@@ -541,7 +541,6 @@ bool updateTransactionWithStatus(wxSQLite3Database &db, int transID, const wxStr
 bool deleteTransaction(wxSQLite3Database* db, int transID);
 int relocatePayee(wxSQLite3Database* db, const int destPayeeID, const int sourcePayeeID);
 int relocateCategory(wxSQLite3Database* db, const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID);
-wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID);
 
 /* Bills & Deposits API */
 void deleteBDSeries(wxSQLite3Database* db, int bdID);
