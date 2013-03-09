@@ -805,8 +805,22 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     {
         //if (split_)
         {
-            infoStr =  mmDBWrapper::getSplitTrxNotes(core_->db_.get(), m_trans[selIndex]->transactionID());
-            //infoStr.RemoveLast(1);
+            mmSplitTransactionEntries* splits = m_trans[selIndex]->splitEntries_.get();
+            m_trans[selIndex]->getSplitTransactions(splits);
+
+            for (int i = 0; i < (int)splits->entries_.size(); ++i)
+            {
+                amount = splits->entries_[i]->splitAmount_;
+                if (m_trans[selIndex]->transType_ != TRANS_TYPE_DEPOSIT_STR)
+                    amount = -amount;
+                mmex::formatDoubleToCurrency(amount , amountStr);
+                infoStr << core_->categoryList_.GetFullCategoryString(
+                    splits->entries_[i]->categID_, splits->entries_[i]->subCategID_
+                    )
+                    << wxT(" = ")
+                    << amountStr
+                    << wxT("\n");
+            }
         }
 
         if (currencyid != basecurrencyid) //Show nothing if account currency is base
