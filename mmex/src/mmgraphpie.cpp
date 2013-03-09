@@ -22,13 +22,19 @@ mmGraphPie::~mmGraphPie()
 void mmGraphPie::init(std::vector<ValuePair>& valueList)
 {
     std::sort(valueList.begin(), valueList.end(), sortValueList);
-    size_t cnt = std::min(valueList.size(), size_t(15));
-
+    size_t cnt = std::min(valueList.size(), size_t(14));
+	int othersum=0;
     std::vector<ChartData> pieData;
     pieData.reserve(cnt);
 
     for (size_t i = 0; i < cnt; ++i) 
         pieData.push_back(ChartData(valueList[i].label, valueList[i].amount));
+	if (valueList.size()>14)
+	{
+		for (size_t j=14; j<valueList.size(); j++)
+			 othersum = othersum+valueList[j].amount;
+		pieData.push_back(ChartData(_("All Others"), othersum));
+	}
 
     chart->SetData(pieData);
     chart->Init(240, CHART_LEGEND_FIXED, PIE_CHART_ABSOLUT);
