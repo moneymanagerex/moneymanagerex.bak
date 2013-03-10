@@ -3089,11 +3089,11 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
                     if (pBankTransaction->splitEntries_->numEntries() > 0)
                     {
-                        pBankTransaction->reportCategAmount_ = fabs(pBankTransaction->getAmountForSplit(categID, subcategID));
+                        pBankTransaction->reportCategAmount_ = (pBankTransaction->getAmountForSplit(categID, subcategID));
 
                         boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
                         wxASSERT(pCurrencyPtr);
-                        mmex::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
+                        mmex::formatDoubleToCurrency(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
                     }
                     else
                     {
