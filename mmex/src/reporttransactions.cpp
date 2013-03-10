@@ -132,6 +132,18 @@ wxString mmReportTransactions::getHTMLText()
                 negativeTransAmount = true;
         }
 
+        // Get the exchange rate for the selected account
+        double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
+        double transAmount = refTrans[index]->amt_ * dbRate;
+        if (refTrans[index]->reportCategAmountStr_ != wxT(""))
+        {
+            transAmount = refTrans[index]->reportCategAmount_ * dbRate;
+            if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR && transAmount < 0)
+                negativeTransAmount = false;
+            else if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR && transAmount < 0)
+                negativeTransAmount = true;
+        }
+
         wxString amtColour = negativeTransAmount ? wxT("RED") : wxT("BLACK");
 
         if (refTrans[index]->reportCategAmountStr_ == wxT(""))
@@ -141,14 +153,6 @@ wxString mmReportTransactions::getHTMLText()
         hb.addTableCell(refTrans[index]->transNum_);
         hb.addTableCell(refTrans[index]->notes_, false, true);
         hb.endTableRow();
-
-        // Get the exchange rate for the selected account
-        double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
-        double transAmount = refTrans[index]->amt_ * dbRate;
-        if (refTrans[index]->reportCategAmountStr_ != wxT(""))
-        {
-            transAmount = refTrans[index]->reportCategAmount_ * dbRate;
-        }
 
         if (refTrans[index]->status_ != wxT("V"))
         {
