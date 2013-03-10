@@ -473,7 +473,7 @@ wxString mmFilterTransactionsDialog::userDateRangeStr() const
     {
         wxString dtBegin = mmGetDateForDisplay(fromDateCtrl_->GetValue());
         wxString dtEnd = mmGetDateForDisplay(toDateControl_->GetValue());
-        dateStr << wxString::Format(_("From %s to %s"), dtBegin.c_str(), dtEnd.c_str());
+        dateStr << wxString::Format(_("From %s till %s"), dtBegin.c_str(), dtEnd.c_str());
     }
     return dateStr;
 }
