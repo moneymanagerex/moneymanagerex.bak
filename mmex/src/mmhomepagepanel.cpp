@@ -103,7 +103,7 @@ void mmHomePagePanel::createFrames()
     hb.startTable(wxT("100%"), wxT("top"));
     hb.startTableRow();
 
-    hb.startTableCell(wxT("50%\" align=\"center"));
+    hb.startTableCell(wxT("50%\" valign=\"top\" align=\"center"));
 
     hb.addText(getCalendarWidget());
 
@@ -124,10 +124,11 @@ void mmHomePagePanel::createFrames()
     hb.addText(displayTopTransactions());
     hb.endTableCell();
 
-    hb.startTableCell(wxT("50%\" align=\"center"));
+    hb.startTableCell(wxT("50%\" valign=\"top\" align=\"center"));
     hb.addText(displayIncomeVsExpenses(tIncome, tExpenses)); //Also displays the Income vs Expenses graph.
     hb.addText(displayBillsAndDeposits());
     hb.addText(getStatWidget());
+
     hb.endTableCell();
     hb.endTableRow();
     hb.endTable();
@@ -212,11 +213,12 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
         tBalance += bal * rate; // actual amount in that account in the original rate
         tRecBalance += reconciledBal * rate;
 
+        double income = 0.0;
+        double expenses = 0.0;
         // Display the individual Checking account links if we want to display them
-        if ( frame_->expandedBankAccounts() )
+        if ( frame_->expandedBankAccounts() 
+            || (!frame_->expandedBankAccounts() && !frame_->expandedTermAccounts()) )
         {
-            double income = 0.0;
-            double expenses = 0.0;
             core_->bTransactionList_.getExpensesIncome(core_, pCA->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
             // show the actual amount in that account
@@ -225,9 +227,10 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
             mmex::formatDoubleToCurrency(bal, balanceStr);
             mmex::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
 
-            if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
+            if (((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
                 (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
+                && frame_->expandedBankAccounts())
             {
                 hb.startTableRow();
                 hb.addTableCellLink(wxString::Format(wxT("ACCT:%d"), pCA->id_), pCA->name_, false, true);
@@ -235,8 +238,7 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
                 hb.addTableCell(balanceStr, true);
                 hb.endTableRow();
             }
-
-            // if bank accounts being displayed, include income/expense totals on home page.
+            // if bank accounts being displayed or no accounts displayed, include income/expense totals on home page.
             tIncome += income;
             tExpenses += expenses;
         }
