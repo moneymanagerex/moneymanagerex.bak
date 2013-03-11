@@ -512,6 +512,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
     st.Bind(++i, r.categID_);
     st.Bind(++i, r.subcategID_);
     st.Bind(++i, pCopyTransaction->date_.FormatISODate());
+    st.Bind(++i, r.followupID_ );
     st.Bind(++i, r.toAmt_ );
 
     wxASSERT(st.GetParamCount() == i);
@@ -597,6 +598,7 @@ void mmBankTransactionList::UpdateTransaction(boost::shared_ptr<mmBankTransactio
     st.Bind(++i, r.categID_);
     st.Bind(++i, r.subcategID_);
     st.Bind(++i, r.date_.FormatISODate());
+    st.Bind(++i, r.followupID_);
     st.Bind(++i, r.toAmt_);
     st.Bind(++i, r.transactionID());
 
