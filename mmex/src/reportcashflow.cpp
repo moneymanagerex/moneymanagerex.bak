@@ -358,6 +358,7 @@ wxString mmReportCashFlow::getHTMLText()
         mmex::formatDoubleToCurrency(diff, diffStr);
 
         bool addSeparator = false;
+        bool addSeparatorAfter = false;
 
         if (frame_->budgetFinancialYears())
         {
@@ -389,6 +390,17 @@ wxString mmReportCashFlow::getHTMLText()
         hb.addTableCell(balanceStr, true, true, true, ((balance < 0) ? wxT("RED") : wxT("BLACK")));
         hb.addTableCell((idx==0 ? wxT ("") : diffStr), true, true, true, (diff < 0 ? wxT("RED") : wxT("BLACK"))) ;
         hb.endTableRow();
+        
+        // Add a separator for each month in daily cash flow report
+        if (cashflowreporttype_ == 1)
+        {
+            wxDateTime dtLMD;// Last day of the month
+            dtLMD = dtLMD.SetToLastMonthDay(dtEnd.GetMonth(),dtEnd.GetYear());
+            
+            if (dtEnd.IsSameDate(dtLMD))
+                addSeparatorAfter = true;
+        }
+        if (addSeparatorAfter) hb.addRowSeparator(3);
     }
 
    	hb.addRowSeparator(3);
