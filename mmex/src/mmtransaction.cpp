@@ -453,7 +453,31 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
     wxASSERT(st.GetParamCount() == i);
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    found = q1.NextRow(); // TODO: Need to check split entries
+    while (q1.NextRow() && !found)
+    {
+        int transactionID = q1.GetInt(wxT("TRANSID"));
+        if (pBankTransaction->categID_ == -1)
+        {
+            mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
+
+            boost::shared_ptr<mmBankTransaction> pTempTransaction = getBankTransactionPtr(transactionID);
+            mmSplitTransactionEntries* temp_splits = pTempTransaction->splitEntries_.get();
+
+            if (splits->entries_.size() != temp_splits->entries_.size())
+                continue;
+
+            for (int i = 0; i < (int)splits->entries_.size(); ++i)
+            {
+                if (splits->entries_[i]->splitAmount_ != temp_splits->entries_[i]->splitAmount_)
+                    continue;
+                if (splits->entries_[i]->categID_ != temp_splits->entries_[i]->categID_)
+                    continue;
+                if (splits->entries_[i]->subCategID_ != temp_splits->entries_[i]->subCategID_)
+                    continue;
+            }
+        }
+    found = true;
+    }
     st.Finalize();
 
     return found;
@@ -483,7 +507,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
     pCopyTransaction->payee_       = pBankTransaction->payee_;
     pCopyTransaction->payeeID_     = pBankTransaction->payeeID_;
     pCopyTransaction->transType_   = pBankTransaction->transType_;
-    pCopyTransaction->status_      = (useOriginalDate ? wxT("D") : pBankTransaction->status_);
+    pCopyTransaction->status_      = pBankTransaction->status_;
     pCopyTransaction->transNum_    = pBankTransaction->transNum_;
     pCopyTransaction->notes_       = pBankTransaction->notes_;
     pCopyTransaction->categID_     = pBankTransaction->categID_;
@@ -496,6 +520,8 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
     boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
     pBankTransaction->getSplitTransactions(splitTransEntries.get());
     pCopyTransaction->splitEntries_.get()->entries_ = splitTransEntries->entries_;
+
+    if (checkForExistingTransaction(pCopyTransaction)) pCopyTransaction->status_ = wxT("D");
 
     wxSQLite3Statement st = db_->PrepareStatement(INSERT_INTO_CHECKINGACCOUNT_V1);
     const mmBankTransaction &r = *pBankTransaction;
@@ -807,7 +833,7 @@ int mmBankTransactionList::getLastUsedCategoryID(const int accountID
         if (pTransaction)
         {
             if ((pTransaction->accountID_ == accountID || pTransaction->toAccountID_ == accountID)
-                && pTransaction->transType_ == sType 
+                && pTransaction->transType_ == sType
                 && pTransaction->payeeID_ == payeeID)
             {
                 categ_id = pTransaction->categID_;
@@ -920,7 +946,7 @@ double mmBankTransactionList::getAmountForCategory(
         }
         if (!ignoreDate)
         {
-            if ((pBankTransaction->date_.GetDateOnly() < dtBegin.GetDateOnly()) 
+            if ((pBankTransaction->date_.GetDateOnly() < dtBegin.GetDateOnly())
                 ||  (pBankTransaction->date_.GetDateOnly() > dtEnd.GetDateOnly()))
             {
                 continue; //skip
@@ -1219,7 +1245,7 @@ void mmBankTransactionList::ChangeDateFormat()
         }
     }
 }
- 
+
 bool mmBankTransactionList::IsCategoryUsed(/*mmCoreDB* core,*/ const int iCatID, const int iSubCatID, bool bIgnor_subcat) const
 {
     int index = transactions_.size() - 1;
