@@ -31,7 +31,7 @@ wxString mmReportCashFlow::getHTMLText()
 
     mmHTMLBuilder hb;
     hb.init();
-    int years;
+    int years = -1;
     if (cashflowreporttype_ == 0) // Monthly for 10 years
     {
         years =10; 
@@ -40,6 +40,9 @@ wxString mmReportCashFlow::getHTMLText()
     {
         years = 1;
     }
+    
+    wxASSERT(years != -1);
+    
     wxString headerMsg = wxString::Format (_("Cash Flow Forecast for %d Years Ahead"), years);
         hb.addHeader(2, headerMsg );
     headerMsg = _("Accounts: ");
@@ -286,7 +289,7 @@ wxString mmReportCashFlow::getHTMLText()
     q1.Finalize();
 
     // Now we have a vector of dates and amounts over next year
-    int fcstsz;
+    int fcstsz = -1;
     std::vector<double> forecastOver12Months;
     if (cashflowreporttype_ == 0)
     {
@@ -296,7 +299,7 @@ wxString mmReportCashFlow::getHTMLText()
     {
         fcstsz = years * 366;
     }
-    
+    wxASSERT(fcstsz != -1);
     forecastOver12Months.resize(fcstsz, 0.0);;
 
     for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
