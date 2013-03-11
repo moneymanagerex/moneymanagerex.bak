@@ -283,6 +283,16 @@ wxString mmReportCashFlow::getHTMLText()
                 }
                 else break;
             }
+            else if ((repeats == 15) || (repeats == 16))
+            {
+                nextOccurDate = nextOccurDate.Add(wxDateSpan::Month());
+                nextOccurDate = nextOccurDate.SetToLastMonthDay(nextOccurDate.GetMonth(),nextOccurDate.GetYear());
+                if (repeats == 16) // last weekday of month
+                {
+                    if (nextOccurDate.GetWeekDay() == wxDateTime::Sun || nextOccurDate.GetWeekDay() == wxDateTime::Sat)
+                        nextOccurDate.SetToPrevWeekDay(wxDateTime::Fri);
+                }
+            }
             else break;
         } // end while
     } //end query
