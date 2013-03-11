@@ -60,19 +60,13 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
 {
     if (edit)
     {
-        static const char sql[] = "delete from SPLITTRANSACTIONS_V1 where TRANSID = ?";
-
-        wxSQLite3Statement st = db->PrepareStatement(sql);
+        wxSQLite3Statement st = db->PrepareStatement(DELETE_TRANSID_SPLITTRANSACTIONS_V1);
         st.Bind(1, transID);
         st.ExecuteUpdate();
         st.Finalize();
     }
 
-    static const char sql[] =
-    "insert into SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
-    "values (?, ?, ?, ?)";
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
+    wxSQLite3Statement st = db->PrepareStatement(INSERT_INTO_SPLITTRANSACTIONS_V1);
 
     for (size_t i = 0; i < entries_.size(); ++i)
     {
@@ -94,18 +88,10 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
 
 void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core, int bdID)
 {
-   entries_.clear();
-   total_ = 0.0;
+    entries_.clear();
+    total_ = 0.0;
 
-    static const char sql[] =
-    "select SPLITTRANSID, "
-           "SPLITTRANSAMOUNT, "
-           "CATEGID, "
-           "SUBCATEGID "
-    "from BUDGETSPLITTRANSACTIONS_V1 "
-    "where TRANSID = ?";
-
-   wxSQLite3Statement st = core->db_->PrepareStatement(sql);
+    wxSQLite3Statement st = core->db_->PrepareStatement(SELECT_ROW_FROM_BUDGETSPLITTRANSACTIONS_V1);
    st.Bind(1, bdID);
 
    wxSQLite3ResultSet q1 = st.ExecuteQuery();
@@ -142,17 +128,18 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
                 isInited_(false),
                 updateRequired_(false)
 {
-    date_ = mmGetStorageStringAsDate(q1.GetString(wxT("TRANSDATE")));
+    date_        = mmGetStorageStringAsDate(q1.GetString(wxT("TRANSDATE")));
     transNum_    = q1.GetString(wxT("TRANSACTIONNUMBER"));
     status_      = q1.GetString(wxT("STATUS"));
     notes_       = q1.GetString(wxT("NOTES"));
     transType_   = q1.GetString(wxT("TRANSCODE"));
     accountID_   = q1.GetInt(wxT("ACCOUNTID"));
     toAccountID_ = q1.GetInt(wxT("TOACCOUNTID"));
-    payee_ = core->payeeList_.GetPayeeSharedPtr(q1.GetInt(wxT("PAYEEID")));
+    payee_       = core->payeeList_.GetPayeeSharedPtr(q1.GetInt(wxT("PAYEEID")));
     amt_         = q1.GetDouble(wxT("TRANSAMOUNT"));
     toAmt_       = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-    category_ = core->categoryList_.GetCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
+    followupID_  = q1.GetInt(wxT("FOLLOWUPID"));
+    category_    = core->categoryList_.GetCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(accountID_).lock();
     wxASSERT(pCurrencyPtr);
@@ -323,15 +310,7 @@ void mmBankTransaction::getSplitTransactions(mmSplitTransactionEntries* splits) 
     splits->entries_.clear();
     splits->total_ = 0.0;
 
-    static const char sql[] =
-    "select SPLITTRANSID, "
-           "SPLITTRANSAMOUNT, "
-           "CATEGID, "
-           "SUBCATEGID "
-    "from SPLITTRANSACTIONS_V1 "
-    "where TRANSID = ?";
-
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    wxSQLite3Statement st = db_->PrepareStatement(SELECT_ROW_FROM_SPLITTRANSACTIONS_V1);
     st.Bind(1, transactionID());
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
@@ -420,14 +399,7 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
        pBankTransaction->payeeID_ = -1;
     }
 
-    static const char sql[] =
-       "insert into CHECKINGACCOUNT_V1 ( "
-       "ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, "
-       "TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, "
-       "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT "
-       ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ?)";
-
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    wxSQLite3Statement st = db_->PrepareStatement(INSERT_INTO_CHECKINGACCOUNT_V1);
     mmBankTransaction &r = *pBankTransaction;
 
     int i = 0;
@@ -442,6 +414,7 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
     st.Bind(++i, r.categID_);
     st.Bind(++i, r.subcategID_);
     st.Bind(++i, r.date_.FormatISODate());
+    st.Bind(++i, r.followupID_);
     st.Bind(++i, r.toAmt_);
 
     wxASSERT(st.GetParamCount() == i);
@@ -459,25 +432,9 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
 
 bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
-    static const char sql[] =
-    "select 1 "
-    "from CHECKINGACCOUNT_V1 "
-    "where ACCOUNTID = ? and "
-          "TOACCOUNTID = ? and "
-          "PAYEEID = ? and "
-          "TRANSCODE = ? and "
-          "TRANSAMOUNT = ? and "
-          "TRANSACTIONNUMBER = ? and "
-          "NOTES = ? and "
-          "CATEGID = ? and "
-          "SUBCATEGID = ? and "
-          "TRANSDATE = ? and "
-          "TOTRANSAMOUNT = ? and "
-          "TRANSID > 0"; // is not null
-
     bool found = false;
 
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    wxSQLite3Statement st = db_->PrepareStatement(IS_TRX_IN_CHECKINGACCOUNT_V1);
     const mmBankTransaction &r = *pBankTransaction;
 
     int i = 0;
@@ -533,20 +490,14 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
     pCopyTransaction->subcategID_  = pBankTransaction->subcategID_;
     pCopyTransaction->date_        = (useOriginalDate ? pBankTransaction->date_ : wxDateTime::Now());
     pCopyTransaction->category_    = pBankTransaction->category_;
+    pCopyTransaction->followupID_  = pBankTransaction->followupID_;
 
     // we need to create a new pointer for Split transactions.
     boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
     pBankTransaction->getSplitTransactions(splitTransEntries.get());
     pCopyTransaction->splitEntries_.get()->entries_ = splitTransEntries->entries_;
 
-    static const char sql[] =
-    "insert into CHECKINGACCOUNT_V1 ( "
-     "ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, "
-     "TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, "
-     "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT "
-    ") values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ? )";
-
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    wxSQLite3Statement st = db_->PrepareStatement(INSERT_INTO_CHECKINGACCOUNT_V1);
     const mmBankTransaction &r = *pBankTransaction;
 
     int i = 0;
@@ -631,14 +582,7 @@ void mmBankTransactionList::UpdateTransaction(boost::shared_ptr<mmBankTransactio
     if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
         pBankTransaction->payeeID_ = -1;
 
-    static const char sql[] =
-    "update CHECKINGACCOUNT_V1 "
-    "SET ACCOUNTID=?, TOACCOUNTID=?, PAYEEID=?, TRANSCODE=?, "
-        "TRANSAMOUNT=?, STATUS=?, TRANSACTIONNUMBER=?, NOTES=?, "
-        "CATEGID=?, SUBCATEGID=?, TRANSDATE=?, TOTRANSAMOUNT=? "
-    "WHERE TRANSID = ?";
-
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    wxSQLite3Statement st = db_->PrepareStatement(UPDATE_CHECKINGACCOUNT_V1);
     mmBankTransaction &r = *pBankTransaction;
 
     int i = 0;

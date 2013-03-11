@@ -101,6 +101,14 @@ static const char SELECT_ALL_FROM_BILLSDEPOSITS_V1[] =
     "NUMOCCURRENCES "
     "FROM BILLSDEPOSITS_V1";
 
+static const char SELECT_ROW_FROM_BUDGETSPLITTRANSACTIONS_V1[] =
+    "select SPLITTRANSID, "
+           "SPLITTRANSAMOUNT, "
+           "CATEGID, "
+           "SUBCATEGID "
+    "from BUDGETSPLITTRANSACTIONS_V1 "
+    "where TRANSID = ?";
+
 static const char SELECT_ROW_FROM_BUDGETTABLE_V1[] =
     "SELECT PERIOD, "
            "AMOUNT "
@@ -121,6 +129,22 @@ static const char SELECT_ALL_FROM_CATEGORY_V1[] =
 
 static const char SELECT_ALL_FROM_CHECKINGACCOUNT_V1[] =
     "SELECT * FROM CHECKINGACCOUNT_V1";
+
+static const char IS_TRX_IN_CHECKINGACCOUNT_V1[] =
+    "select 1 "
+    "from CHECKINGACCOUNT_V1 "
+    "where ACCOUNTID = ? and "
+          "TOACCOUNTID = ? and "
+          "PAYEEID = ? and "
+          "TRANSCODE = ? and "
+          "TRANSAMOUNT = ? and "
+          "TRANSACTIONNUMBER = ? and "
+          "NOTES = ? and "
+          "CATEGID = ? and "
+          "SUBCATEGID = ? and "
+          "TRANSDATE = ? and "
+          "TOTRANSAMOUNT = ? and "
+          "TRANSID > 0"; // is not null
 
 static const char SELECT_ROW_FROM_CURRENCYFORMATS_V1[] =
     "SELECT CURRENCYNAME, "
@@ -173,6 +197,14 @@ static const char SELECT_ROW_FROM_SETTING_V1[] =
     "FROM SETTING_V1 "
     "WHERE SETTINGNAME = ?";
 
+static const char SELECT_ROW_FROM_SPLITTRANSACTIONS_V1[] =
+    "select SPLITTRANSID, "
+           "SPLITTRANSAMOUNT, "
+           "CATEGID, "
+           "SUBCATEGID "
+    "from SPLITTRANSACTIONS_V1 "
+    "where TRANSID = ?";
+
 static const char SELECT_SUBCATEGNAME_FROM_SUBCATEGORY_V1[] =
     "SELECT SUBCATEGNAME, "
     "SUBCATEGID "
@@ -218,6 +250,9 @@ static const char DELETE_FROM_SPLITTRANSACTIONS_V1[] =
     "where TRANSID in( SELECT TRANSID "
     "from CHECKINGACCOUNT_V1 "
     "where ACCOUNTID = ? OR TOACCOUNTID = ? )";
+
+static const char DELETE_TRANSID_SPLITTRANSACTIONS_V1[] = 
+    "DELETE FROM SPLITTRANSACTIONS_V1 where TRANSID = ?";
 
 static const char DELETE_FROM_BUDGETSPLITTRANSACTIONS_V1[] =
     "DELETE FROM BUDGETSPLITTRANSACTIONS_V1 "
@@ -286,6 +321,12 @@ static const char SET_STATUS_CHECKINGACCOUNT_V1[] =
 static const char SET_PAYEEID_CHECKINGACCOUNT_V1[] =
     "UPDATE CHECKINGACCOUNT_V1 SET PAYEEID = ? WHERE PAYEEID = ? ";
 
+static const char UPDATE_CHECKINGACCOUNT_V1[] =
+    "update CHECKINGACCOUNT_V1 "
+    "SET ACCOUNTID=?, TOACCOUNTID=?, PAYEEID=?, TRANSCODE=?, "
+        "TRANSAMOUNT=?, STATUS=?, TRANSACTIONNUMBER=?, NOTES=?, "
+        "CATEGID=?, SUBCATEGID=?, TRANSDATE=?, TOTRANSAMOUNT=? "
+    "WHERE TRANSID = ?";
 
 static const char UPDATE_INFOTABLE_V1[] =
     "UPDATE INFOTABLE_V1 SET INFOVALUE=? WHERE INFONAME=?";
@@ -332,8 +373,19 @@ static const char INSERT_INTO_BUDGETYEARNAME_V1[] =
 static const char INSERT_INTO_CATEGORY_V1[] =
     "INSERT INTO CATEGORY_V1 (CATEGNAME) VALUES(?)";
 
+static const char INSERT_INTO_CHECKINGACCOUNT_V1[] =
+    "INSERT INTO CHECKINGACCOUNT_V1 ( "
+     "ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, "
+     "TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, "
+     "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT "
+    ") values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+
 static const char INSERT_INTO_INFOTABLE_V1[] =
     "INSERT INTO INFOTABLE_V1 (INFONAME, INFOVALUE) VALUES (?, ?)";
+
+static const char INSERT_INTO_SPLITTRANSACTIONS_V1[] =
+    "INSERT INTO SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
+    "VALUES (?, ?, ?, ?)";
 
 static const char INSERT_ROW_INTO_STOCK_V1[]  =
     "INSERT INTO STOCK_V1 ( "

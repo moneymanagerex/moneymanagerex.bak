@@ -130,10 +130,12 @@ public:
     int subcategID_;
 
     bool updateRequired_;
+    int followupID_;
 
     // used for transaction reports
     double reportCategAmount_;
     wxString reportCategAmountStr_;
+
 private:
     bool isInited_;
 };
