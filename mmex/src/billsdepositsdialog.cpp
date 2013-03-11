@@ -348,7 +348,7 @@ void mmBDDialog::CreateControls()
         wxDefaultPosition, wxSize(110, -1));
     size_t size = sizeof(BILLSDEPOSITS_REPEATS)/sizeof(wxString);
     for(size_t i = 0; i < size; ++i)
-    if ( i <=10)
+    if ( i <=10 || i>14)
         itemRepeats_->Append(wxGetTranslation(BILLSDEPOSITS_REPEATS[i]));
     else
         itemRepeats_->Append(wxString::Format( wxGetTranslation(BILLSDEPOSITS_REPEATS[i]), wxT("(x)")));
@@ -1064,7 +1064,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     else if (enterOccur_)
     {
         // repeats now hold extra info. Need to get repeats from dialog selection
-        if ( (itemRepeats_->GetSelection() < 11) || (numRepeats > 0) )
+        if ( (itemRepeats_->GetSelection() < 11) || (itemRepeats_->GetSelection() > 14) || (numRepeats > 0) )
         {
             boost::shared_ptr<mmBankTransaction> pTransaction;
             boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
