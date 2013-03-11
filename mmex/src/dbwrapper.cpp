@@ -1087,7 +1087,7 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
             numRepeats = q1.GetInt(wxT("NUMOCCURRENCES"));
             if (numRepeats != -1)
             {
-                if (repeats < 11) --numRepeats;
+                if ((repeats < 11) || (repeats > 14)) --numRepeats;
             }
 
             if (repeats == 0)
@@ -1145,6 +1145,16 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
             else if (repeats == 14)
             {
                 if (numRepeats > 0) updateOccur = dtno.Add(wxDateSpan::Months(numRepeats));
+            }
+            else if ((repeats == 15) || (repeats == 16))
+            {
+                updateOccur = dtno.Add(wxDateSpan::Month());
+                updateOccur = updateOccur.SetToLastMonthDay(updateOccur.GetMonth(),updateOccur.GetYear());
+                if (repeats == 16) // last weekday of month
+                {
+                    if (updateOccur.GetWeekDay() == wxDateTime::Sun || updateOccur.GetWeekDay() == wxDateTime::Sat)
+                        updateOccur.SetToPrevWeekDay(wxDateTime::Fri);
+                }
             }
         }
 

@@ -121,7 +121,10 @@ const wxString BILLSDEPOSITS_REPEATS[] = {
     wxTRANSLATE("In %s Days"),
     wxTRANSLATE("In %s Months"),
     wxTRANSLATE("Every %s Days"),
-    wxTRANSLATE("Every %s Months")
+    wxTRANSLATE("Every %s Months"),
+    wxTRANSLATE("Monthly (last day)"),
+    wxTRANSLATE("Monthly (last business day)")
+    
 };
 
 static const wxString TRANSACTION_STATUS[] =
