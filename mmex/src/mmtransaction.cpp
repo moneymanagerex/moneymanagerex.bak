@@ -439,8 +439,8 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
 
     int i = 0;
     st.Bind(++i, r.accountID_);
-    st.Bind(++i, r.toAccountID_);
-    st.Bind(++i, r.payeeID_);
+    st.Bind(++i, (r.transType_ == TRANS_TYPE_TRANSFER_STR ? r.toAccountID_ : -1));
+    st.Bind(++i, (r.transType_ == TRANS_TYPE_TRANSFER_STR ? -1 : r.payeeID_));
     st.Bind(++i, r.transType_);
     st.Bind(++i, r.amt_);
     st.Bind(++i, r.transNum_);
