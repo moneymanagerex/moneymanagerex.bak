@@ -823,8 +823,11 @@ int mmQIFImportDialog::mmImportQIF()
             wxASSERT(pCurrencyPtr);
             refTrans[index]->amt_ = fabs(refTrans[index]->amt_);
             refTrans[index]->toAmt_ = fabs(refTrans[index]->toAmt_);
-            refTrans[index]->status_ = wxT("F");
             refTrans[index]->updateAllData(core_, fromAccountID, pCurrencyPtr);
+            if (!core_->bTransactionList_.checkForExistingTransaction(refTrans[index]))
+                refTrans[index]->status_ = wxT("F");
+            else
+                refTrans[index]->status_ = wxT("D");
             core_->bTransactionList_.addTransaction(core_, refTrans[index]);
         }
 
