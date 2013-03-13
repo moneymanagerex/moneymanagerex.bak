@@ -75,7 +75,7 @@ void mmQIFExportDialog::CreateControls()
     const int fieldWidth = 180;
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
-    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL|wxGROW, border).Expand().Proportion(1);
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand().Proportion(1);
 
     wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(main_sizer);
@@ -171,8 +171,8 @@ void mmQIFExportDialog::CreateControls()
         , wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
     tab2_sizer->Add(log_field_, 1, wxGROW|wxALL, border);
 
-    wxButton* itemClearButton = new wxButton(log_tab, wxID_CLEAR);
-    tab2_sizer->Add(itemClearButton, flags);
+    wxButton* itemClearButton = new wxButton(log_tab, wxID_CLEAR, _("Clear"));
+    tab2_sizer->Add(itemClearButton, flags.Center());
     itemClearButton->Connect(wxID_CLEAR, wxEVT_COMMAND_BUTTON_CLICKED
         , wxCommandEventHandler(mmQIFExportDialog::OnButtonClear), NULL, this);
 
