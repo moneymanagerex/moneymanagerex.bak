@@ -186,7 +186,7 @@ public:
     int getLastUsedCategoryID(const int accountID, const int payeeID, const wxString sType, int& subcategID) const;
     int getLastUsedPayeeID(const int accountID, wxString sType, int& categID, int& subcategID) const;
     wxArrayString getTransactionNumber(const int accountID, const wxDateTime transaction_date) const;
-    bool IsCategoryUsed(/*mmCoreDB* core,*/ const int iCatID, const int iSubCatID, bool bIgnor_subcat = true) const;
+    bool IsCategoryUsed(const int iCatID, const int iSubCatID, bool& bIncome, bool bIgnor_subcat = true) const;
     bool IsPayeeUsed(const int iPayeeID) const;
 
     /* Data */

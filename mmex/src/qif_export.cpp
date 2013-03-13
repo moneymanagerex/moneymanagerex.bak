@@ -360,7 +360,11 @@ wxString mmQIFExportDialog::exportCategories(bool qif)
     {
         const boost::shared_ptr<mmCategory> category = *it;
         const wxString categ_name = category->categName_;
+        bool bIncome = false;
+        core_->bTransactionList_.IsCategoryUsed(category->categID_
+                , -1, bIncome, true);
         buffer_qif << wxT("N") << categ_name <<  wxT("\n")
+            << (bIncome ? wxT("I") : wxT("E")) << wxT("\n")
             << wxT("^") << wxT("\n");
         buffer_csv << categ_name <<  delimit_ << wxT("\n");
 
@@ -369,12 +373,17 @@ wxString mmQIFExportDialog::exportCategories(bool qif)
                 ++ cit)
         {
             const boost::shared_ptr<mmCategory> sub_category = *cit;
+            bIncome = false;
+            bool bSubcateg = sub_category->categID_ != -1;
+            core_->bTransactionList_.IsCategoryUsed(category->categID_
+                , sub_category->categID_, bIncome, false);
             wxString full_categ_name = wxString()
-                << categ_name << (qif ? wxT(":") : delimit_)
-                << sub_category->categName_ << wxT("\n");
-            buffer_qif << wxT("N") << full_categ_name
+                << categ_name << (qif ? (bSubcateg ? wxString()<<wxT(":") : wxString()<<wxT("")) : delimit_)
+                << sub_category->categName_;
+            buffer_qif << wxT("N") << full_categ_name << wxT("\n")
+                << (bIncome ? wxT("I") : wxT("E")) << wxT("\n")
                 << wxT("^") << wxT("\n");
-            buffer_csv << full_categ_name;
+            buffer_csv << full_categ_name << wxT("\n");
         }
     }
     return qif ? buffer_qif : buffer_csv;

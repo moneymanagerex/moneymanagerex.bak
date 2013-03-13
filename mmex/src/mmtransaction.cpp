@@ -1246,7 +1246,7 @@ void mmBankTransactionList::ChangeDateFormat()
     }
 }
 
-bool mmBankTransactionList::IsCategoryUsed(/*mmCoreDB* core,*/ const int iCatID, const int iSubCatID, bool bIgnor_subcat) const
+bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID, bool& bIncome, bool bIgnor_subcat) const
 {
     int index = transactions_.size() - 1;
 
@@ -1259,16 +1259,18 @@ bool mmBankTransactionList::IsCategoryUsed(/*mmCoreDB* core,*/ const int iCatID,
             if ((pBankTransaction->categID_ == iCatID)
                 && (bIgnor_subcat ? true : pBankTransaction->subcategID_== iSubCatID))
             {
+                bIncome = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR;
                 return true;
             }
 
             mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
-            pBankTransaction->getSplitTransactions(splits);
 
             for (int i = 0; i < (int)splits->entries_.size(); ++i)
             {
                 if (splits->entries_[i]->categID_==iCatID && splits->entries_[i]->subCategID_==iSubCatID)
                 {
+                    bIncome = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR && pBankTransaction->amt_ > 0
+                        || pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR && pBankTransaction->amt_ < 0;
                     return true;
                 }
             }
