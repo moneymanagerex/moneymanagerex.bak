@@ -1269,8 +1269,8 @@ bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID
             {
                 if (splits->entries_[i]->categID_==iCatID && splits->entries_[i]->subCategID_==iSubCatID)
                 {
-                    bIncome = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR && pBankTransaction->amt_ > 0
-                        || pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR && pBankTransaction->amt_ < 0;
+                    bIncome = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR && splits->entries_[i]->splitAmount_ > 0
+                        || pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR && splits->entries_[i]->splitAmount_ < 0;
                     return true;
                 }
             }
