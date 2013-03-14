@@ -362,7 +362,7 @@ wxString mmQIFExportDialog::exportCategories(bool qif)
         const wxString categ_name = category->categName_;
         bool bIncome = false;
         core_->bTransactionList_.IsCategoryUsed(category->categID_
-                , -1, bIncome, true);
+                , -1, bIncome, false);
         buffer_qif << wxT("N") << categ_name <<  wxT("\n")
             << (bIncome ? wxT("I") : wxT("E")) << wxT("\n")
             << wxT("^") << wxT("\n");

@@ -1249,6 +1249,8 @@ void mmBankTransactionList::ChangeDateFormat()
 bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID, bool& bIncome, bool bIgnor_subcat) const
 {
     int index = transactions_.size() - 1;
+    double sum = 0;
+    bool bTrxUsed = false;
 
     boost::shared_ptr<mmBankTransaction> pBankTransaction;
     while (index >= 0)
@@ -1259,8 +1261,11 @@ bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID
             if ((pBankTransaction->categID_ == iCatID)
                 && (bIgnor_subcat ? true : pBankTransaction->subcategID_== iSubCatID))
             {
-                bIncome = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR;
-                return true;
+                bTrxUsed = true;
+                if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
+                    sum += pBankTransaction->amt_;
+                else
+                    sum -= pBankTransaction->amt_;
             }
 
             mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
@@ -1269,15 +1274,19 @@ bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID
             {
                 if (splits->entries_[i]->categID_==iCatID && splits->entries_[i]->subCategID_==iSubCatID)
                 {
-                    bIncome = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR && splits->entries_[i]->splitAmount_ > 0
-                        || pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR && splits->entries_[i]->splitAmount_ < 0;
-                    return true;
+                    bTrxUsed = true;
+                    if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR && splits->entries_[i]->splitAmount_ > 0
+                        || pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR && splits->entries_[i]->splitAmount_ < 0)
+                        sum += fabs(splits->entries_[i]->splitAmount_);
+                    else
+                        sum -= fabs(splits->entries_[i]->splitAmount_);
                 }
             }
         }
         index --;
     }
-    return false;
+    bIncome = sum > 0;
+    return bTrxUsed;
 }
 
 bool mmBankTransactionList::IsPayeeUsed(const int iPayeeID) const

@@ -105,4 +105,3 @@ wxString mmex::getProgramDescription()
                 << wxT("Lua 5.2.1");
     return description;
 }
-
