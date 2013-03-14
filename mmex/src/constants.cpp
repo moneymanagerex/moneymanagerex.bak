@@ -101,7 +101,7 @@ wxString mmex::getProgramDescription()
                 << (BOOST_VERSION / 100 % 1000) << wxT('.')
                 << (BOOST_VERSION % 100) << wxT("\n")
                 << wxT("SQLite3 ") << wxSQLite3Database::GetVersion() << wxT("\n")
-                << wxT("wxSQLite 3.0.1")<< wxT("\n")
+                << wxT("wxSQLite 3.0.2")<< wxT("\n")
                 << wxT("Lua 5.2.1");
     return description;
 }
