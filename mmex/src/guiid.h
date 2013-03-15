@@ -69,6 +69,7 @@
 #include "../resources/new_custom_sql.xpm"
 #include "../resources/new.xpm"
 #include "../resources/newacct.xpm"
+#include "../resources/new_transaction.xpm"
 #include "../resources/notify.xpm"
 #include "../resources/open.xpm"
 #include "../resources/preferences-color.xpm"

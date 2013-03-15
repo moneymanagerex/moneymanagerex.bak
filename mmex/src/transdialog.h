@@ -59,6 +59,8 @@ public:
 
     void SetDialogToDuplicateTransaction();
     int getTransID() {return transID_;}
+    int getAccountID() {return newAccountID_;}
+    int getToAccountID() {return toID_;}
 
 private:
 

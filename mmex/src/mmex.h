@@ -341,6 +341,7 @@ private:
     void OnOrgPayees(wxCommandEvent& event);
     void OnCategoryRelocation(wxCommandEvent& event);
     void OnPayeeRelocation(wxCommandEvent& event);
+    void OnNewTransaction(wxCommandEvent& event);
 
     void OnOptions(wxCommandEvent& event);
     void OnBudgetSetupDialog(wxCommandEvent& event);

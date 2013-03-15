@@ -64,6 +64,7 @@
 #include "reporttransstats.h"
 #include "recentfiles.h"
 #include "stockspanel.h"
+#include "transdialog.h"
 #include "univcsvdialog.h"
 #include "util.h"
 
@@ -545,6 +546,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_ORGCATEGS,  mmGUIFrame::OnOrgCategories)
     EVT_MENU(MENU_ORGPAYEE,  mmGUIFrame::OnOrgPayees)
     EVT_MENU(wxID_PREFERENCES,  mmGUIFrame::OnOptions)
+    EVT_MENU(wxID_NEW,  mmGUIFrame::OnNewTransaction)
     EVT_MENU(MENU_BUDGETSETUPDIALOG, mmGUIFrame::OnBudgetSetupDialog)
     EVT_MENU(wxID_HELP,  mmGUIFrame::OnHelp)
     EVT_MENU(MENU_CHECKUPDATE,  mmGUIFrame::OnCheckUpdate)
@@ -1388,10 +1390,10 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - Specific Accounts"), 4, 4);
     navTreeCtrl_->SetItemData(cashflowSpecificAccounts, new mmTreeItemData(wxT("Cash Flow - Specific Accounts")));
 
-    
+
     wxTreeItemId cashflowSpecificAccountsDaily = navTreeCtrl_->AppendItem(cashFlow, _("Daily Cash Flow - Specific Accounts"), 4, 4);
     navTreeCtrl_->SetItemData(cashflowSpecificAccountsDaily, new mmTreeItemData(wxT("Daily Cash Flow - Specific Accounts")));
-    
+
     ///////////////////////////////////////////////////////
     wxTreeItemId transactionStats = navTreeCtrl_->AppendItem(reports, _("Transaction Statistics"), 4, 4);
     navTreeCtrl_->SetItemData(transactionStats, new mmTreeItemData(wxT("Transaction Statistics")));
@@ -2490,7 +2492,7 @@ void mmGUIFrame::createMenu()
 void mmGUIFrame::createToolBar()
 {
     toolBar_ = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT | wxTB_NODIVIDER);
-    wxBitmap toolBarBitmaps[11];
+    wxBitmap toolBarBitmaps[12];
     toolBarBitmaps[0] = wxBitmap(new_xpm);
     toolBarBitmaps[1] = wxBitmap(open_xpm);
     toolBarBitmaps[2] = wxBitmap(save_xpm);
@@ -2502,6 +2504,7 @@ void mmGUIFrame::createToolBar()
     toolBarBitmaps[8] = wxBitmap(filter_xpm);
     toolBarBitmaps[9] = wxBitmap(customsql_xpm);
     toolBarBitmaps[10] = wxBitmap(wrench_xpm);
+    toolBarBitmaps[11] = wxBitmap(new_transaction_xpm);
 
     toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], _("New Database"));
     toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Database"));
@@ -2519,6 +2522,8 @@ void mmGUIFrame::createToolBar()
     toolBar_->AddTool(wxID_EDIT, _("Custom Reports Manager"), toolBarBitmaps[9], _("Create new Custom Reports"));
     toolBar_->AddSeparator();
     toolBar_->AddTool(wxID_PREFERENCES, _("&Options..."), toolBarBitmaps[10], _("Show the Options Dialog"));
+    toolBar_->AddSeparator();
+    toolBar_->AddTool(wxID_NEW, _("New"), toolBarBitmaps[11], _("New Transaction"));
 
     // after adding the buttons to the toolbar, must call Realize() to reflect changes
     toolBar_->Realize();
@@ -2979,6 +2984,25 @@ void mmGUIFrame::OnOrgCategories(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnOrgPayees(wxCommandEvent& /*event*/)
 {
     mmPayeeDialog(this, m_core.get(), false).ShowModal();
+}
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::OnNewTransaction(wxCommandEvent& /*event*/)
+{
+    mmTransDialog dlg(m_core.get(), gotoAccountID_, NULL, false, this);
+
+    if ( dlg.ShowModal() == wxID_OK )
+    {
+        if (activeCheckingAccountPage_)
+        {
+            int accountID = gotoAccountID_;
+            if (gotoAccountID_ == dlg.getToAccountID() || gotoAccountID_ == dlg.getAccountID())
+            {
+                refreshRequested_ = true;
+                createCheckingAccountPage(gotoAccountID_);
+            }
+        }
+    }
 }
 //----------------------------------------------------------------------------
 
