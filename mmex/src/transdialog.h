@@ -67,6 +67,7 @@ private:
     mmBankTransaction* pBankTransaction_;
     wxWindow* parent_;
     int accountID_;
+    int newAccountID_;
     int referenceAccountID_;    // used for transfer transactions
 
     void CreateControls();
@@ -79,6 +80,7 @@ private:
     void OnCategs(wxCommandEvent& event);
     void OnPayee(wxCommandEvent& event);
     void OnPayeeUpdated(wxCommandEvent& event);
+    void OnAccountUpdated(wxCommandEvent& event);
     void OnPayeeTextEnter(wxCommandEvent& event);
     void OnAutoTransNum(wxCommandEvent& event);
     void OnTransTypeChanged(wxCommandEvent& event);
@@ -103,18 +105,19 @@ private:
     wxTextCtrl* textCategory_;
     wxButton* bCategory_;
     wxBitmapButton* bPayee_;
+    wxComboBox* cbAccount_;
     wxComboBox* cbPayee_;
     wxCheckBox* cSplit_;
     wxCheckBox* cAdvanced_;
     wxButton* bAuto_;
     bool payeeUnknown_;
     bool categUpdated_;
-	bool bBestChoice_;
+    bool bBestChoice_;
     wxButton* itemButtonCancel_;
 
     wxString categoryName_;
     wxString subCategoryName_;
-	wxString sTransaction_type_;
+    wxString sTransaction_type_;
 
     wxChoice* choiceStatus_;
     wxChoice* transaction_type_;
