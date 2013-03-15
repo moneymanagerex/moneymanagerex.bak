@@ -164,15 +164,7 @@ void mmTransDialog::dataToControls()
     if (transAmount_ > 0.0)
         edit_currency_rate = toTransAmount_ / transAmount_;
 
-    size_t begin = 0, size = sizeof(TRANSACTION_TYPE)/sizeof(wxString);
-    if (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR)
-    {
-        begin = size-1;
-        transaction_type_->Disable();
-    }
-    else if (core_->accountList_.getNumBankAccounts() < 2 || edit_) size--;
-
-    for(size_t i = begin; i < size; ++i)
+    for(size_t i = 0; i < sizeof(TRANSACTION_TYPE)/sizeof(wxString); ++i)
     {
         transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
         new wxStringClientData(TRANSACTION_TYPE[i]));
@@ -252,6 +244,18 @@ void mmTransDialog::SetTransferControls(bool transfer)
     wxArrayString data;
     int type_num = transaction_type_->GetSelection();
 
+    newAccountID_ = accountID_;
+    cbAccount_->Clear();
+    data = core_->accountList_.getAccountsName();
+    for (size_t i = 0; i < data.Count(); ++i)
+    {
+        cbAccount_ ->Append(data[i]);
+    }
+    cbAccount_->SetStringSelection(core_->accountList_.GetAccountName(accountID_));
+#if wxCHECK_VERSION(2,9,0)
+    cbAccount_->AutoComplete(data);
+#endif
+
     if (transfer)
     {
         textAmount_->SetToolTip(amountTransferTip_);
@@ -261,34 +265,19 @@ void mmTransDialog::SetTransferControls(bool transfer)
             cSplit_->SetValue(false);
             split_->entries_.clear();
         }
+
+        toTextAmount_->Enable(cAdvanced_->GetValue());
+
+        if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
+        payee_label_->SetLabel(_("To"));
+        data = core_->accountList_.getAccountsName();
+        cbPayee_->SetToolTip(_("Specify which account the transfer is going to"));
     }
     else
     {
         textAmount_->SetToolTip(amountNormalTip_);
         toTextAmount_->UnsetToolTip();
-    }
 
-    if ((accountID_ == referenceAccountID_) && transfer)
-    {
-        //textAmount_->Enable(true);
-        toTextAmount_->Enable(cAdvanced_->GetValue());
-
-        if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
-        payee_label_->SetLabel(_("To"));
-        data = core_->accountList_.getAccountsName(accountID_);
-        cbPayee_->SetToolTip(_("Specify which account the transfer is going to"));
-    }
-    else if ((accountID_ != referenceAccountID_) && transfer)
-    {
-        //textAmount_->Enable(cAdvanced_->GetValue());
-        toTextAmount_->Enable(cAdvanced_->GetValue());
-        if (accountID_ > 0) dataStr = (core_->accountList_.GetAccountName(accountID_));
-        payee_label_->SetLabel(_("From"));
-        data = core_->accountList_.getAccountsName(toID_);
-        cbPayee_->SetToolTip(_("Specify which account the transfer is comming from"));
-    }
-    else
-    {
         if (type_num == DEF_WITHDRAWAL)
         {
             cbPayee_->SetToolTip(_("Specify where the transaction is coming from"));
@@ -417,6 +406,15 @@ void mmTransDialog::CreateControls()
     flex_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Amount")), flags);
     flex_sizer->Add(amountSizer);
 
+    // Account ---------------------------------------------
+    cbAccount_ = new wxComboBox(this, wxID_ANY, wxT(""),
+        wxDefaultPosition, wxSize(190, -1));
+    cbAccount_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_UPDATED,
+        wxCommandEventHandler(mmTransDialog::OnAccountUpdated), NULL, this);
+
+    flex_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Account")), flags);
+    flex_sizer->Add(cbAccount_, flags);
+
     // Payee ---------------------------------------------
     wxBoxSizer* payeeSizer = new wxBoxSizer(wxHORIZONTAL);
     payee_label_ = new wxStaticText(this, wxID_STATIC, _("Payee"));
@@ -535,6 +533,12 @@ void mmTransDialog::CreateControls()
     this->SetSizer(box_sizer1);
 }
 
+void mmTransDialog::OnAccountUpdated(wxCommandEvent& event)
+{
+    wxString sAccountName = cbAccount_->GetValue();
+    newAccountID_ = core_->accountList_.GetAccountId(sAccountName);
+}
+
 void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
 {
     wxString prev_payee_name = payee_name_;
@@ -572,7 +576,7 @@ void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
     if (!transfer_transaction)
         data = core_->payeeList_.FilterPayees(wxT(""));
     else
-        data = core_->accountList_.getAccountsName(accountID_);
+        data = core_->accountList_.getAccountsName();
 
     for (size_t i = 0; i < data.Count(); ++i)
     {
@@ -782,6 +786,12 @@ wxString mmTransDialog::resetCategoryString()
 
 void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
+    if (newAccountID_ < 1)
+    {
+        mmShowErrorMessageInvalid(this, _("Account"));
+        return;
+    }
+
     bool bTransfer = (sTransaction_type_ == TRANS_TYPE_TRANSFER_STR);
     advancedToTransAmountSet_ = cAdvanced_->IsChecked();
 
@@ -864,10 +874,10 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     }
 
     int toAccountID = -1;
-    int fromAccountID = accountID_;
+
     if (bTransfer)
     {
-        if (toID_ == -1)
+        if (toID_ < 1 || toID_ == newAccountID_)
         {
             mmShowErrorMessageInvalid(this, _("To Account"));
             bPayee_->SetFocus();
@@ -909,10 +919,10 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID());
     }
 
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountID_).lock();
     wxASSERT(pCurrencyPtr);
 
-    pTransaction->accountID_ = fromAccountID;
+    pTransaction->accountID_ = newAccountID_;
     pTransaction->toAccountID_ = toAccountID;
     pTransaction->payee_ = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
     pTransaction->transType_ = sTransaction_type_;
@@ -925,7 +935,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     pTransaction->toAmt_ = toTransAmount_;
 
     *pTransaction->splitEntries_.get() = *split_.get();
-    pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr, true);
+    pTransaction->updateAllData(core_, newAccountID_, pCurrencyPtr, true);
 
     if (!edit_)
     {
