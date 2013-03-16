@@ -912,7 +912,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
         if (autoExecuteManual && requireExecution )
         {
-            if ( (repeats < 11) || (numRepeats > 0) )
+            if ( (repeats < 11) || (numRepeats > 0) || (repeats > 14) )
             {
                 mmBDDialog repeatTransactionsDlg(m_core.get(), th.id_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
                 if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
@@ -927,7 +927,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
         if (autoExecuteSilent && requireExecution)
         {
-            if ( (repeats < 11) || (numRepeats > 0) )
+            if ( (repeats < 11) || (numRepeats > 0) || (repeats > 14))
             {
                 boost::shared_ptr<mmBankTransaction> pTransaction;
                 boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
