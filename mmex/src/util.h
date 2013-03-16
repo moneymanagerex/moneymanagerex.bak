@@ -293,6 +293,18 @@ struct Today
     }
 };
 
+struct CurrentYear
+{
+    inline static wxDateTime StartRange()
+    {
+        return wxDateTime::Now().SetMonth(wxDateTime::Jan).SetDay(1).GetDateOnly();
+    }
+    inline static wxDateTime EndRange()
+    {
+        return wxDateTime::Now().GetDateOnly() + wxTimeSpan(23, 59, 59, 999);
+    }
+};
+
 template <int year, wxDateTime::Month month, int day>
 struct CustomDate
 {
@@ -311,7 +323,7 @@ struct LastDays
 {
     inline static wxDateTime StartRange()
     {
-        wxDateTime today = CurrentData::StartRange();
+        wxDateTime today = CurrentData::StartRange().GetDateOnly();
         return today.Subtract((Period - 1) * wxDateSpan::Day());;
     }
     inline static wxDateTime EndRange()
@@ -327,13 +339,13 @@ struct LastMonths
 
     inline static wxDateTime StartRange()
     {
-        wxDateTime datePast = CurrentData::StartRange().Subtract(MonthsAgoStart * wxDateSpan::Month());
+        wxDateTime datePast = CurrentData::StartRange().GetDateOnly().Subtract(MonthsAgoStart * wxDateSpan::Month());
         wxDateTime result(1, datePast.GetMonth(), datePast.GetYear());
             return result;
     }
     inline static wxDateTime EndRange()
     {
-        return StartRange().Add((MonthsAgoStart-MonthsAgoEnd+1) * wxDateSpan::Month()).Subtract(wxTimeSpan(0,0,0,1));
+        return StartRange().GetDateOnly().Add((MonthsAgoStart-MonthsAgoEnd+1) * wxDateSpan::Month()).Subtract(wxTimeSpan(0,0,0,1));
     }
 };
 

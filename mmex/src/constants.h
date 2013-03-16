@@ -70,6 +70,8 @@ const wxString VIEW_TRANS_LAST_30_DAYS_STR   = wxTRANSLATE("View Last 30 days");
 const wxString VIEW_TRANS_LAST_90_DAYS_STR   = wxTRANSLATE("View Last 90 days");
 const wxString VIEW_TRANS_LAST_MONTH_STR     = wxTRANSLATE("View Last Month");
 const wxString VIEW_TRANS_LAST_3MONTHS_STR   = wxTRANSLATE("View Last 3 Months");
+const wxString VIEW_TRANS_LAST_365_DAYS      = wxTRANSLATE("View Last 365 days");
+const wxString VIEW_TRANS_CURRENT_YEAR_STR   = wxTRANSLATE("View Current Year");
 
 const wxString NAVTREECTRL_REPORTS = wxT("Reports");
 const wxString NAVTREECTRL_HELP = wxT("Help");

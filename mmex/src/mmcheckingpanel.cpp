@@ -505,6 +505,8 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_LAST90, wxGetTranslation(VIEW_TRANS_LAST_90_DAYS_STR));
             menu.Append(MENU_VIEW_LASTMONTH, wxGetTranslation(VIEW_TRANS_LAST_MONTH_STR));
             menu.Append(MENU_VIEW_LAST3MONTHS, wxGetTranslation(VIEW_TRANS_LAST_3MONTHS_STR));
+            menu.Append(MENU_VIEW_CURRENTYEAR, wxGetTranslation(VIEW_TRANS_CURRENT_YEAR_STR));
+            menu.Append(MENU_VIEW_LAST365, wxGetTranslation(VIEW_TRANS_LAST_365_DAYS));
 
             PopupMenu(&menu, event.GetPosition());
 
@@ -921,19 +923,35 @@ const TransactionMatchMap& initTransactionMatchMap()
 {
     static TransactionMatchMap map;
 
-    map[VIEW_TRANS_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("R"))), false);
-    map[VIEW_TRANS_UNRECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT(""))), false);
-    map[VIEW_TRANS_NOT_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status< std::not_equal_to<wxString> >(wxT("R"))), false);
-    map[VIEW_TRANS_VOID] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("V"))), false);
-    map[VIEW_TRANS_FLAGGED] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("F"))), false);
-    map[VIEW_TRANS_DUPLICATES] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("D"))), false);
+    map[VIEW_TRANS_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_Status<>(wxT("R"))), false);
+    map[VIEW_TRANS_UNRECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_Status<>(wxT(""))), false);
+    map[VIEW_TRANS_NOT_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_Status< std::not_equal_to<wxString> >(wxT("R"))), false);
+    map[VIEW_TRANS_VOID] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_Status<>(wxT("V"))), false);
+    map[VIEW_TRANS_FLAGGED] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_Status<>(wxT("F"))), false);
+    map[VIEW_TRANS_DUPLICATES] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_Status<>(wxT("D"))), false);
 
-    map[VIEW_TRANS_TODAY_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
-    map[VIEW_TRANS_LAST_30_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
-    map[VIEW_TRANS_LAST_90_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
-    map[VIEW_TRANS_LAST_MONTH_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 1> >()), true);
-    map[VIEW_TRANS_CURRENT_MONTH_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth<> >()), true);
-    map[VIEW_TRANS_LAST_3MONTHS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<2> >()), true);
+    map[VIEW_TRANS_TODAY_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
+    map[VIEW_TRANS_LAST_30_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
+    map[VIEW_TRANS_LAST_90_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
+    map[VIEW_TRANS_LAST_MONTH_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 1> >()), true);
+    map[VIEW_TRANS_CURRENT_MONTH_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth<> >()), true);
+    map[VIEW_TRANS_LAST_3MONTHS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_DateTime<DateTimeProviders::LastMonths<2> >()), true);
+    map[VIEW_TRANS_LAST_365_DAYS] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_DateTime<DateTimeProviders::LastDays<365> >()), true);
+    map[VIEW_TRANS_CURRENT_YEAR_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
+        new MatchTransaction_DateTime<DateTimeProviders::CurrentYear >()), true);
 
     return map;
 }
@@ -1220,6 +1238,10 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         currentView_ = VIEW_TRANS_LAST_3MONTHS_STR;
     else if (evt == MENU_VIEW_LASTMONTH)
         currentView_ = VIEW_TRANS_LAST_MONTH_STR;
+    else if (evt == MENU_VIEW_CURRENTYEAR)
+        currentView_ = VIEW_TRANS_CURRENT_YEAR_STR;
+    else if (evt == MENU_VIEW_LAST365)
+        currentView_ = VIEW_TRANS_LAST_365_DAYS;
     else
         wxASSERT(false);
 
