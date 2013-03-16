@@ -278,6 +278,7 @@ void mmCurrencyList::LoadCurrencies()
 
 bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
 {
+    LoadBaseCurrencySettings();
     int currencyID = GetBaseCurrencySettings();
 
     if(currencyID == -1)
@@ -349,8 +350,10 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
             if (base_symbol == currency_symbol) new_rate = 1;
 
             double old_rate = currencies_[idx]->baseConv_;
-            mmex::formatDoubleToCurrencyEdit(old_rate, valueStr);
-            mmex::formatDoubleToCurrencyEdit(new_rate, newValueStr);
+            //mmex::formatDoubleToCurrencyEdit(old_rate, valueStr);
+            //mmex::formatDoubleToCurrencyEdit(new_rate, newValueStr);
+            valueStr = wxString::Format(wxT("%0.4f"), old_rate);
+            newValueStr = wxString::Format(wxT("%0.4f"), new_rate);
             msg << wxString::Format(_("%s\t: %s -> %s\n"),
                 currency_symbol.c_str(), valueStr.c_str(), newValueStr.c_str());
             currencies_[idx]->baseConv_ = new_rate;
