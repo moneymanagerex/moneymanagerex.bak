@@ -47,7 +47,8 @@ mmStockDialog::mmStockDialog(mmCoreDB* core, mmStockTransactionHolder* stock_hol
     edit_ = edit;
     accountID_ = accountID;
     Create(parent, id, caption, pos, size, style);
-    core_->currencyList_.LoadBaseCurrencySettings();
+    //core_->currencyList_.LoadBaseCurrencySettings();
+    mmDBWrapper::loadCurrencySettings(core_->db_.get(), accountID_);
 }
 
 bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
@@ -86,7 +87,10 @@ void mmStockDialog::dataToControls()
     wxString numSharesString;
     //I wish see integer if it integer else double
     if ((numShares - static_cast<long>(numShares)) != 0.0 )
-        numSharesString=wxString::Format(wxT("%0.4f"),numShares);
+    {
+        mmex::formatDoubleToCurrencyEdit(numShares, numSharesString);
+        //numSharesString=wxString::Format(wxT("%0.4f"),numShares);
+	}
     else
         numSharesString <<  static_cast<long>(numShares);
 
