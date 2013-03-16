@@ -648,14 +648,14 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
 
         if (th.daysRemaining_ == 0)
         {
-            if ((repeats > 10) && (numRepeats < 0) )
+            if ( ((repeats > 10) && (repeats < 15)) && (numRepeats < 0) )
                 th.daysRemainingStr_ = _("Inactive");
         }
 
         if (th.daysRemaining_ < 0)
         {
             th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
-            if ((repeats > 10) && (numRepeats < 0) )
+            if ( ((repeats > 10) && (repeats < 15)) && (numRepeats < 0) )
                 th.daysRemainingStr_ = _("Inactive");
         }
 
