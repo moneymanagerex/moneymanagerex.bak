@@ -2995,7 +2995,6 @@ void mmGUIFrame::OnNewTransaction(wxCommandEvent& /*event*/)
     {
         if (activeCheckingAccountPage_)
         {
-            int accountID = gotoAccountID_;
             if (gotoAccountID_ == dlg.getToAccountID() || gotoAccountID_ == dlg.getAccountID())
             {
                 refreshRequested_ = true;

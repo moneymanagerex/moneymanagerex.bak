@@ -533,7 +533,7 @@ void mmTransDialog::CreateControls()
     this->SetSizer(box_sizer1);
 }
 
-void mmTransDialog::OnAccountUpdated(wxCommandEvent& event)
+void mmTransDialog::OnAccountUpdated(wxCommandEvent& /*event*/)
 {
     wxString sAccountName = cbAccount_->GetValue();
     newAccountID_ = core_->accountList_.GetAccountId(sAccountName);

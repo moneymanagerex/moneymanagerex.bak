@@ -531,6 +531,7 @@ void mmAssetsPanel::OnMouseLeftDown ( wxMouseEvent& event )
         menu->Append(menuItem);
     }
     PopupMenu(menu);
+    delete menu;
 
     event.Skip();
 }
