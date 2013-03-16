@@ -1,6 +1,7 @@
-		*** Build instructions for MS Windows platform ***
-                            using
-        *** Microsoft Visual C++ 2010 Express compiler ***
+Build instructions for MS Windows platform
+===============================================================================
+Microsoft Visual C++ 2010 Express compiler
+-------------------------------------------------------------------------------
 
 
 NOTE:   The directory msw-vc-2010e has the project files for:
@@ -9,7 +10,8 @@ NOTE:   The directory msw-vc-2010e has the project files for:
         readme file in the mmex/build/msw directory.
 
 
-                     *** Prerequisites ***
+Prerequisites
+-------------------------------------------------------------------------------
 
 1. Installation of the following:
    MS-VC 2010e  http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express
@@ -17,7 +19,6 @@ NOTE:   The directory msw-vc-2010e has the project files for:
    Boost        http://www.boost.org/
 
    Optional:
-   =========
    Doxygen      http://www.stack.nl/~dimitri/doxygen/download.html
                 Allows documentation to be obtained fromthe source code.
    PoEdit       http://www.poedit.net/
@@ -45,9 +46,8 @@ NOTE:   The directory msw-vc-2010e has the project files for:
    of installed software (something like a "C:\Program Files\Inno Setup 5")
    to PATH environment variable.
 
-   =============================================================
-   *** Compiling using Microsoft Visual C++ 2010 Express IDE ***
-   =============================================================
+Compiling using Microsoft Visual C++ 2010 Express IDE
+-------------------------------------------------------------------------------
 
 1. Ensure Prerequisites are complete with a build of wxWidgets 2.8.11 or greater
    using "Unicode Release" and/or "Unicode Debug" depending on preferences below.
@@ -71,38 +71,35 @@ NOTE:   The directory msw-vc-2010e has the project files for:
 
    This will allow MS VC++ 2010e IDE to run mmex.exe successfully.
 
-===============================================================================
 Allowing Configuration Switching
 --------------------------------
 New configurations to allow multiple wxWidgets builds.
 -------------------------------------------------------------------------------
-Variable    wxWidgets Build     Configurations
--------------------------------------------------------------------------------
-WXWIN       wxWidgets 2.x.xx    set for generic Windows configurations.
-WXWIN_28    wxWidgets 2.8.xx    wx28 Debug Unicode Multilib WX_PYTHON_0
-                                wx28 Release Unicode Multilib WX_PYTHON_0
-WXWIN_29    wxWidgets 2.9.xx    wx29 Debug Unicode Multilib WX_PYTHON_0
-                                wx29 Release Unicode Multilib WX_PYTHON_0
--------------------------------------------------------------------------------
+Variable  | wxWidgets Build  |  Configurations
+----------|------------------|--------------------------------------------
+WXWIN     | wxWidgets 2.x.xx |  set for generic Windows configurations.
+WXWIN_28  | wxWidgets 2.8.xx |  wx28 Debug Unicode Multilib WX_PYTHON_0
+          |                  |  wx28 Release Unicode Multilib WX_PYTHON_0
+WXWIN_29  | wxWidgets 2.9.xx |  wx29 Debug Unicode Multilib WX_PYTHON_0
+          |                  |  wx29 Release Unicode Multilib WX_PYTHON_0
 
 Environment variables need to access the different builds on Windows.
-===============================================================================
-Variable    Value                           Comment
--------------------------------------------------------------------------------
-WXWIN       C:\CPP\wxWidgets-2.8.12         Location of wxWidgets 2.8.xx
-BOOSTDIR    C:\CPP\boost_1_53_0             Location of Boost source files
 
-WXWIN_28    C:\CPP\wxWidgets-2.8.12         Location of wxWidgets 2.8.xx
-WXWIN_29    C:\CPP\wxWidgets-2.9.4          Location of wxWidgets 2.9.x
+Variable  | Value                    | Comment
+----------|--------------------------|-------------------------------
+WXWIN     | C:\CPP\wxWidgets-2.8.12  | Location of wxWidgets 2.8.xx
+BOOSTDIR  | C:\CPP\boost_1_53_0      | Location of Boost source files
+WXWIN_28  | C:\CPP\wxWidgets-2.8.12  | Location of wxWidgets 2.8.xx
+WXWIN_29  | C:\CPP\wxWidgets-2.9.4   | Location of wxWidgets 2.9.x
 
 
 Setting up Environment variables using Windows 7
-===============================================================================
+-------------------------------------------------------------------------------
 Control Panel ---> System and Security ---> System
-Advanced system settings        [Located on left navigation panel]
+Advanced system settings        (Located on left navigation panel)
 
-System Properties       [Dialog] ---> Advanced  [Tab]
-Environment Variables   [Button]
+System Properties       (Dialog) ---> Advanced  (Tab)
+Environment Variables   (Button)
 
-===============================================================================
 End of File.
+
