@@ -298,6 +298,8 @@ void mmOptionsDialog::CreateControls()
     view_strings.Add(VIEW_TRANS_LAST_90_DAYS_STR);
     view_strings.Add(VIEW_TRANS_LAST_MONTH_STR);
     view_strings.Add(VIEW_TRANS_LAST_3MONTHS_STR);
+    view_strings.Add(VIEW_TRANS_CURRENT_YEAR_STR);
+    view_strings.Add(VIEW_TRANS_LAST_365_DAYS);
 
     choiceTransVisible_ = new wxChoice(viewsPanel, wxID_STATIC,
         wxDefaultPosition, wxDefaultSize);
