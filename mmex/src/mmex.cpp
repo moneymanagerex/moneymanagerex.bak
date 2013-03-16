@@ -3141,7 +3141,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
     }
 
 //  The transaction filter dialog will be destroyed by the report object when completed.
-//  dlg->Destroy();
+    //dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -3354,6 +3354,9 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
         wxMessageDialog msgDlg(this, sMsg, _("Error"), wxICON_ERROR);
         msgDlg.ShowModal();
     }
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_ACCOUNT_LIST);
+    //AddPendingEvent(evt);
+    OnAccountList(evt);
 }
 //----------------------------------------------------------------------------
 
@@ -3609,7 +3612,8 @@ void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnCurrency(wxCommandEvent& /*event*/)
 {
     mmMainCurrencyDialog(m_core.get(),this, false).ShowModal();
-    createHomePage();
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_ACCOUNT_LIST);
+    OnAccountList(evt);
 }
 //----------------------------------------------------------------------------
 
