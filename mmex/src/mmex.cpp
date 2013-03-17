@@ -837,11 +837,13 @@ void mmGUIFrame::setHomePageActive(bool active)
 //----------------------------------------------------------------------------
 void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 {
-    bool autoExecuteManual; // Used when decoding: REPEATS
-    bool autoExecuteSilent;
-    bool requireExecution;
+    bool autoExecuteManual = false; // Used when decoding: REPEATS
+    bool autoExecuteSilent = false;
+    bool requireExecution  = false;
+    bool continueExecution = false;
 
     m_core->currencyList_.LoadBaseCurrencySettings();
+    m_db.get()->Begin();
     wxSQLite3ResultSet q1 = m_db.get()->ExecuteQuery(SELECT_ALL_FROM_BILLSDEPOSITS_V1);
     while (q1.NextRow())
     {
@@ -910,10 +912,11 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
             th.payeeStr_ = toAccount;
         }
 
-        if (autoExecuteManual && requireExecution )
+        if (autoExecuteManual && requireExecution)
         {
             if ( (repeats < 11) || (numRepeats > 0) || (repeats > 14) )
             {
+                continueExecution = true;
                 mmBDDialog repeatTransactionsDlg(m_core.get(), th.id_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
                 if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
                 {
@@ -922,6 +925,10 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                         createHomePage(); // Update home page details only if it is being displayed
                     }
                 }
+                else // stop repeat executions from occuring
+                {
+                    continueExecution = false;
+                }
             }
         }
 
@@ -929,6 +936,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         {
             if ( (repeats < 11) || (numRepeats > 0) || (repeats > 14))
             {
+                continueExecution = true;
                 boost::shared_ptr<mmBankTransaction> pTransaction;
                 boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
                 pTransaction = pTemp;
@@ -964,6 +972,12 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         }
     }
     q1.Finalize();
+    m_db.get()->Commit();
+
+    if (continueExecution)
+    {
+        autoRepeatTransactionsTimer_.Start(5, wxTIMER_ONE_SHOT);
+    }
 }
 //----------------------------------------------------------------------------
 
