@@ -100,12 +100,20 @@ void mmHomePagePanel::createFrames()
     double tExpenses = 0.0;
 
     hb.startCenter();
+
     hb.startTable(wxT("100%"), wxT("top"));
     hb.startTableRow();
+    hb.startTableCell(wxT("100%\" colspan=\"2\" valign=\"top\" align=\"center"));
+    hb.addText(getCalendarWidget());
+    hb.endTableCell();
+    hb.endTableRow();
+
+    hb.startTableRow();
+    hb.endTableRow();
+    hb.startTableRow();
+
 
     hb.startTableCell(wxT("50%\" valign=\"top\" align=\"center"));
-
-    hb.addText(getCalendarWidget());
 
     hb.addText(displayCheckingAccounts(tBalance, tIncome, tExpenses, dtBegin, dtEnd));
 
@@ -183,7 +191,7 @@ wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecB
 wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
 {
     mmHTMLBuilder hb;
-    hb.startTable(wxT("98%"), wxT("top"), wxT("1"));
+    hb.startTable(wxT("100%"), wxT("top"), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
 
@@ -216,7 +224,7 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
         double income = 0.0;
         double expenses = 0.0;
         // Display the individual Checking account links if we want to display them
-        if ( frame_->expandedBankAccounts() 
+        if ( frame_->expandedBankAccounts()
             || (!frame_->expandedBankAccounts() && !frame_->expandedTermAccounts()) )
         {
             core_->bTransactionList_.getExpensesIncome(core_, pCA->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
@@ -260,7 +268,7 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
     double tTermBalance = 0.0;
     double tRecBalance  = 0.0;
 
-    hb.startTable(wxT("98%"), wxT("top"), wxT("1"));
+    hb.startTable(wxT("100%"), wxT("top"), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
 
@@ -339,7 +347,7 @@ wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, do
     wxString tBalanceStr;
     wxString tGainStr;
 
-    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTable(wxT("100%"), wxT(""), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
 
@@ -426,7 +434,7 @@ wxString mmHomePagePanel::displayAssets(double& tBalance)
 
     if (mmIniOptions::instance().enableAssets_)
     {
-        hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+        hb.startTable(wxT("100%"), wxT(""), wxT("1"));
         hb.startTableRow();
         hb.startTableCell();
 
@@ -494,7 +502,7 @@ wxString mmHomePagePanel::displayCurrencies()
     if (curnumber > 1 )
     {
 
-        hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+        hb.startTable(wxT("100%"), wxT(""), wxT("1"));
         hb.startTableRow();
         hb.startTableCell();
 
@@ -559,45 +567,45 @@ wxString mmHomePagePanel::displayIncomeVsExpenses(double& tincome, double& texpe
     gg.init(tincome, texpenses);
     gg.Generate(wxT(""));
 
-    hb.startTable(wxT("98%"), wxT("top"), wxT("1"));
+    hb.startTable(wxT("100%"), wxT("top"), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
 
         hb.startTable(wxT("100%"));
-        
+
             wxString monthHeading = _("Current Month");
             if (mmIniOptions::instance().ignoreFutureTransactions_) monthHeading = _("Current Month to Date");
-        
+
             hb.addTableHeaderRow(wxString::Format(_("Income vs Expenses: %s"), monthHeading.c_str()), 2);
-        
+
             hb.startTableRow();
             hb.startTableCell();
             hb.addImage(gg.getOutputFileName());
             hb.endTableCell();
-        
+
             hb.startTableCell();
-        
+
             hb.startTable();
             hb.startTableRow();
             hb.addTableHeaderCell(_("Type"));
             hb.addTableHeaderCell(_("Amount"), true);
             hb.endTableRow();
-        
+
             hb.startTableRow();
             hb.addTableCell(_("Income:"), false, true);
             hb.addTableCell(incStr, true);
             hb.endTableRow();
-        
+
             hb.startTableRow();
             hb.addTableCell(_("Expenses:"), false, true);
             hb.addTableCell(expStr, true);
             hb.endTableRow();
-        
+
             hb.startTableRow();
             hb.addTableCell(_("Difference:"), false, true, true);
             hb.addTableCell(difStr, true, true, true, (tincome-texpenses < 0.0 ? wxT("RED"):wxT("")));
             hb.endTableRow();
-        
+
             hb.endTable();
 
         hb.endTableCell();
@@ -703,7 +711,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
         hb.addLineBreak();
         hb.addLineBreak();
 
-        hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+        hb.startTable(wxT("100%"), wxT(""), wxT("1"));
         hb.startTableRow();
         hb.startTableCell();
 
@@ -795,7 +803,7 @@ wxString mmHomePagePanel::displayTopTransactions()
 
     wxString headerMsg = wxString() << _("Top Withdrawals: ") << _("Last 30 Days");
 
-    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTable(wxT("100%"), wxT(""), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
     hb.startTable(wxT("100%"));
@@ -840,19 +848,35 @@ wxString mmHomePagePanel::displayTopTransactions()
 wxString mmHomePagePanel::getCalendarWidget()
 {
     mmHTMLBuilder hb;
-    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTable(wxT("100%"), wxT(""), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
 
-    wxString sDate = mmGetNiceDateString(wxDateTime::Now());    
-    sDate = wxString::Format(_("Today's Date: %s"), sDate.c_str());
-    hb.addHeaderItalic(1, sDate);
-    
+    hb.startTable(wxT("100%"), wxT(""), wxT("0"));
+    hb.startTableRow();
+    //hb.addTableCell(wxString()<<wxDateTime::Now().GetYear());
+    hb.addTableCell(wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Now().GetMonth())), false, false, true);
+    wxDateTime thisMonth = wxDateTime::Now().SetDay(1);
+    for (int d = 1; d <= wxDateTime::Now().GetLastMonthDay().GetDay(); d++)
+    {
+        thisMonth.SetDay(d);
+        wxString sColor = wxT(""), sBgColor = wxT("");
+        if (d == wxDateTime::Now().GetDay()) sBgColor = wxT("YELLOW");
+        hb.startTableCell(wxString::Format(wxT("1\" bgcolor=\"%s"), sBgColor.c_str()));
+        int day_of_week = wxDateTime::Now().GetWeekDay();
+        if (wxDateTime::GetWeekDayName(thisMonth.GetWeekDay())==wxT("Sunday")) sColor = wxT("#FF0000");
+        else if (wxDateTime::GetWeekDayName(thisMonth.GetWeekDay())==wxT("Saturday")) sColor = wxT("#FF0000");
+        hb.addText(wxString::Format(wxT("<font color=\"%s\"> %d </font>"), sColor.c_str(), d));
+        hb.endTableCell();
+    }
+    hb.addTableCell(wxString::Format(_("Week&nbsp;#%d"), wxDateTime::Now().GetWeekOfYear()), false, true);
+
+    hb.endTableRow();
+    hb.endTable();
+
     hb.endTableCell();
     hb.endTableRow();
     hb.endTable();
-    hb.addLineBreak();
-    hb.addLineBreak();
     return hb.getHTMLText();
 }
 
@@ -863,7 +887,7 @@ wxString mmHomePagePanel::getStatWidget()
     hb.addLineBreak();
     hb.addLineBreak();
 
-    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTable(wxT("100%"), wxT(""), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
 
@@ -899,7 +923,7 @@ wxString mmHomePagePanel::displayGrandTotals(double& tBalance)
     core_->currencyList_.LoadBaseCurrencySettings();
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
-    hb.startTable(wxT("98%"), wxT(""), wxT("1"));
+    hb.startTable(wxT("100%"), wxT(""), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
 
