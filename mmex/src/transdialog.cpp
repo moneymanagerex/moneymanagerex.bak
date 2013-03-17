@@ -786,6 +786,9 @@ wxString mmTransDialog::resetCategoryString()
 
 void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
+    wxString sAccountName = cbAccount_->GetValue();
+    newAccountID_ = core_->accountList_.GetAccountId(sAccountName);
+    
     if (newAccountID_ < 1)
     {
         mmShowErrorMessageInvalid(this, _("Account"));
