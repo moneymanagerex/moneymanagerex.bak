@@ -847,15 +847,19 @@ wxString mmHomePagePanel::displayTopTransactions()
 
 wxString mmHomePagePanel::getCalendarWidget()
 {
+    int font_size = mmIniOptions::instance().html_font_size_ -1;
     mmHTMLBuilder hb;
     hb.startTable(wxT("100%"), wxT(""), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
-
-    hb.startTable(wxT("100%"), wxT(""), wxT("0"));
+    hb.addText(wxString::Format(wxT("<font size=\"%i\">"), font_size));
+    hb.startTable(wxT("100%"), wxT("left\" cellspacing=\"0"), wxT("0"));
     hb.startTableRow();
     //hb.addTableCell(wxString()<<wxDateTime::Now().GetYear());
-    hb.addTableCell(wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Now().GetMonth())), false, false, true);
+    //hb.addTableCell(wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Now().GetMonth())), false, false, true);
+    hb.startTableCell(wxString::Format(wxT("1")));
+    hb.addText( wxString() << wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Now().GetMonth())));
+    hb.endTableCell();
     wxDateTime thisMonth = wxDateTime::Now().SetDay(1);
     for (int d = 1; d <= wxDateTime::Now().GetLastMonthDay().GetDay(); d++)
     {
@@ -863,17 +867,20 @@ wxString mmHomePagePanel::getCalendarWidget()
         wxString sColor = wxT(""), sBgColor = wxT("");
         if (d == wxDateTime::Now().GetDay()) sBgColor = wxT("YELLOW");
         hb.startTableCell(wxString::Format(wxT("1\" bgcolor=\"%s"), sBgColor.c_str()));
-        int day_of_week = wxDateTime::Now().GetWeekDay();
         if (wxDateTime::GetWeekDayName(thisMonth.GetWeekDay())==wxT("Sunday")) sColor = wxT("#FF0000");
         else if (wxDateTime::GetWeekDayName(thisMonth.GetWeekDay())==wxT("Saturday")) sColor = wxT("#FF0000");
-        hb.addText(wxString::Format(wxT("<font color=\"%s\"> %d </font>"), sColor.c_str(), d));
+        hb.addText(wxString::Format(wxT("<font color=\"%s\" > %d </font>")
+            , sColor.c_str(), d));
         hb.endTableCell();
     }
-    hb.addTableCell(wxString::Format(_("Week&nbsp;#%d"), wxDateTime::Now().GetWeekOfYear()), false, true);
+    hb.addTableCell(wxString::Format(_("Week&nbsp;#%d")
+        , wxDateTime::Now().GetWeekOfYear())
+        , false, true, false);
 
     hb.endTableRow();
     hb.endTable();
 
+    hb.addText(wxT("</font>"));
     hb.endTableCell();
     hb.endTableRow();
     hb.endTable();
