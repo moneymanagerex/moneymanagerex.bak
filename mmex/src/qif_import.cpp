@@ -892,6 +892,11 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
 
         if (!isLineOK(readLine))
         {
+            wxString sError = wxString()
+                << wxString::Format(_("Line %i"), numLines)
+                << wxT("\n")
+                << readLine;
+            mmShowErrorMessageInvalid(this, sError);
             return false;
         }
 
