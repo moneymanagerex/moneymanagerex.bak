@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -23,9 +23,10 @@
 #include <boost/shared_ptr.hpp>
 
 #include "defs.h"
-#include "dbwrapper.h"
 #include "mmcurrency.h"
 #include "mmtransaction.h"
+
+class mmCoreDB;
 
 class mmAccount
 {
@@ -62,14 +63,14 @@ class mmAccountList
 {
 private:
     typedef std::vector< boost::shared_ptr<mmAccount> > account_v;
-    boost::shared_ptr<wxSQLite3Database> db_;
+    mmCoreDB* core_;
 
 public:
-    mmAccountList(boost::shared_ptr<wxSQLite3Database> db);
+    mmAccountList(mmCoreDB* core);
 
     /* Account Functions */
     boost::shared_ptr<mmAccount> GetAccountSharedPtr(int accountID) const;
-    
+
     int AddAccount(boost::shared_ptr<mmAccount> pAccount);
     /// returns the ACCOUNT_TYPE_xxxx String
     wxString getAccountType(int accountID) const;
@@ -83,7 +84,7 @@ public:
     int getNumBankAccounts() const;
     int GetAccountId(const wxString& accountName) const;
     bool RemoveAccount(int accountID);
-    void UpdateAccount(boost::shared_ptr<mmAccount> pAccount);
+    int UpdateAccount(boost::shared_ptr<mmAccount> pAccount);
     bool AccountExists(const wxString& accountName) const;
     bool has_term_account() const;
     bool has_stock_account() const;
@@ -98,8 +99,8 @@ public:
     bool currencyInUse(int currencyID) const;
     account_v accounts_;
     typedef std::vector<boost::shared_ptr<mmAccount> >::const_iterator const_iterator;
-    std::pair<const_iterator, const_iterator> range() const; 
-    
+    std::pair<const_iterator, const_iterator> range() const;
+
     /// Loads database Accounts list into memory
     void LoadAccounts(const mmCurrencyList& currencyList);
 };

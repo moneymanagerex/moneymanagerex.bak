@@ -416,11 +416,12 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
         pAccount->accessInfo_ = textCtrlAccess->GetValue();
 
     if (edit_)
-        core_->accountList_.UpdateAccount(pAccount);
+        if (core_->accountList_.UpdateAccount(pAccount) == 0)
+            EndModal(wxID_OK);
     else
-        core_->accountList_.AddAccount(pAccount);
+        if (core_->accountList_.AddAccount(pAccount) > 0)
+            EndModal(wxID_OK);
 
-    EndModal(wxID_OK);
 }
 
 void mmNewAcctDialog::OnImageButton(wxCommandEvent& /*event*/)

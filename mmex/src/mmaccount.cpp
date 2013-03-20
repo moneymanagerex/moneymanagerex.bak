@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -19,6 +19,8 @@
 #include "mmaccount.h"
 #include "util.h"
 #include "constants.h"
+#include "mmcoredb.h"
+#include "dbwrapper.h"
 
 mmAccount::mmAccount(wxSQLite3ResultSet& q1)
 {
@@ -29,7 +31,7 @@ mmAccount::mmAccount(wxSQLite3ResultSet& q1)
     website_ = q1.GetString(wxT("WEBSITE"));
     contactInfo_ = q1.GetString(wxT("CONTACTINFO"));
     accessInfo_ = q1.GetString(wxT("ACCESSINFO"));
-    notes_ = q1.GetString(wxT("NOTES"));  
+    notes_ = q1.GetString(wxT("NOTES"));
     acctType_ = q1.GetString(wxT("ACCOUNTTYPE"));
 
     status_ =  mmAccount::MMEX_Open;
@@ -46,8 +48,8 @@ mmAccount::mmAccount(wxSQLite3ResultSet& q1)
     currencyID_ = q1.GetDouble(wxT("CURRENCYID"));
 }
 
-mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
-: db_(db)
+mmAccountList::mmAccountList(mmCoreDB* core)
+: core_(core)
 {}
 
 double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
@@ -81,7 +83,7 @@ boost::shared_ptr<mmAccount> mmAccountList::GetAccountSharedPtr(int accountID) c
 
     return res;
 }
-    
+
 bool mmAccountList::AccountExists(const wxString& accountName) const
 {
     for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
@@ -117,7 +119,7 @@ int mmAccountList::getNumBankAccounts() const
     int num = 0;
     for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
     {
-        if ((*it)->acctType_ != ACCOUNT_TYPE_STOCK) ++ num; 
+        if ((*it)->acctType_ != ACCOUNT_TYPE_STOCK) ++ num;
     }
 
     return num;
@@ -151,7 +153,7 @@ wxArrayInt mmAccountList::getAccountsID(const wxArrayString accounts_type, const
         const mmAccount* account = it->get();
         for (size_t i = 0; i < accounts_type.Count(); ++i)
         {
-            if ((account->acctType_ == accounts_type[i]) 
+            if ((account->acctType_ == accounts_type[i])
                 && account->status_ != mmAccount::MMEX_Closed && account->id_ != except_id)
             {
                 accounts_id.Add(account->id_);
@@ -168,7 +170,7 @@ wxArrayString mmAccountList::getAccountsName(const int except_id) const
     for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
     {
         const mmAccount* account = it->get();
-        if ((account->acctType_ == ACCOUNT_TYPE_TERM || account->acctType_ == ACCOUNT_TYPE_BANK) 
+        if ((account->acctType_ == ACCOUNT_TYPE_TERM || account->acctType_ == ACCOUNT_TYPE_BANK)
             && account->status_ != mmAccount::MMEX_Closed && account->id_ != except_id)
         {
             as.Add(account->name_);
@@ -270,56 +272,46 @@ boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) con
     return boost::weak_ptr<mmCurrency>();
 }
 
-std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> 
+std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator>
     mmAccountList::range() const
 {
     return std::make_pair(accounts_.begin(), accounts_.end());
 }
 
-void mmAccountList::UpdateAccount(boost::shared_ptr<mmAccount> pAccount)
+int mmAccountList::UpdateAccount(boost::shared_ptr<mmAccount> pAccount)
 {
-   wxString statusStr = wxT("Open");
-   if (pAccount->status_ == mmAccount::MMEX_Closed)
-      statusStr = wxT("Closed");
+    wxString statusStr = pAccount->status_ == mmAccount::MMEX_Closed ? wxT("Closed") : wxT("Open");
+    wxString favStr = pAccount->favoriteAcct_ ? wxT("TRUE") : wxT("FALSE");
 
-   wxString favStr = wxT("TRUE");
-   if (!pAccount->favoriteAcct_)
-      favStr = wxT("FALSE");
+    boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+    wxASSERT(pCurrency);
+    int currencyID = pCurrency->currencyID_;
 
-   boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
-   wxASSERT(pCurrency);
-   int currencyID = pCurrency->currencyID_;
+    wxSQLite3Statement st = core_->db_.get()->PrepareStatement(UPDATE_ACCOUNTLIST_V1);
+    const mmAccount &r = *pAccount;
 
-    static const char sql[] = 
-    "update ACCOUNTLIST_V1 "
-    "SET ACCOUNTNAME=?, ACCOUNTTYPE=?, ACCOUNTNUM=?,"
-        "STATUS=?, NOTES=?, HELDAT=?, WEBSITE=?, CONTACTINFO=?,  ACCESSINFO=?,"
-        "INITIALBAL=?, FAVORITEACCT=?, CURRENCYID=? "
-    "where ACCOUNTID = ?";
+    std::vector<wxString> data;
+    data.push_back(r.name_);
+    data.push_back(r.acctType_);
+    data.push_back(r.accountNum_);
+    data.push_back(statusStr);
+    data.push_back(r.notes_);
+    data.push_back(r.heldAt_);
+    data.push_back(r.website_);
+    data.push_back(r.contactInfo_);
+    data.push_back(r.accessInfo_);
+    data.push_back(wxString()<<r.initialBalance_);
+    data.push_back(favStr);
+    data.push_back(wxString()<<currencyID);
+    data.push_back(wxString()<<r.id_);
 
-   wxSQLite3Statement st = db_->PrepareStatement(sql);
-   const mmAccount &r = *pAccount;
+    long accountId = -1;
+    wxString sql = wxString::FromUTF8(UPDATE_ACCOUNTLIST_V1);
+    int iError = mmDBWrapper::mmSQLiteExecuteUpdate(core_->db_.get(), data, sql, accountId);
+    if (iError == 0)
+        mmOptions::instance().databaseUpdated_ = true;
 
-   int i = 0;
-   st.Bind(++i, r.name_);
-   st.Bind(++i, r.acctType_);
-   st.Bind(++i, r.accountNum_);
-   st.Bind(++i, statusStr);
-   st.Bind(++i, r.notes_);
-   st.Bind(++i, r.heldAt_);
-   st.Bind(++i, r.website_);
-   st.Bind(++i, r.contactInfo_);
-   st.Bind(++i, r.accessInfo_);
-   st.Bind(++i, r.initialBalance_);
-   st.Bind(++i, favStr);
-   st.Bind(++i, currencyID);
-   st.Bind(++i, r.id_);
-
-   wxASSERT(st.GetParamCount() == i);
-
-   st.ExecuteUpdate();
-   st.Finalize();
-   mmOptions::instance().databaseUpdated_ = true;
+    return iError;
 }
 
 int mmAccountList::AddAccount(boost::shared_ptr<mmAccount> pAccount)
@@ -335,15 +327,8 @@ int mmAccountList::AddAccount(boost::shared_ptr<mmAccount> pAccount)
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
     wxASSERT(pCurrency);
     int currencyID = pCurrency->currencyID_;
-      
-    static const char sql[] =       
-    "insert into ACCOUNTLIST_V1 ( "
-      "ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, "
-      "STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO, "
-      "INITIALBAL, FAVORITEACCT, CURRENCYID "
-    " ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    wxSQLite3Statement st = core_->db_.get()->PrepareStatement(INSERT_INTO_ACCOUNTLIST_V1);
     const mmAccount &r = *pAccount;
 
     int i = 0;
@@ -363,7 +348,7 @@ int mmAccountList::AddAccount(boost::shared_ptr<mmAccount> pAccount)
     wxASSERT(st.GetParamCount() == i);
     st.ExecuteUpdate();
 
-    pAccount->id_ = db_->GetLastRowId().ToLong();
+    pAccount->id_ = core_->db_.get()->GetLastRowId().ToLong();
     accounts_.push_back(pAccount);
 
     st.Finalize();
@@ -375,21 +360,21 @@ int mmAccountList::AddAccount(boost::shared_ptr<mmAccount> pAccount)
 bool mmAccountList::RemoveAccount(int accountID)
 {
     wxString acctType = getAccountType(accountID);
-    db_.get()->Begin();
+    core_->db_.get()->Begin();
     wxSQLite3Statement st;
 
     if (acctType != ACCOUNT_TYPE_STOCK)
     {
-        mmDBWrapper::removeSplitsForAccount(db_.get(), accountID);
+        mmDBWrapper::removeSplitsForAccount(core_->db_.get(), accountID);
 
-        st = db_->PrepareStatement("DELETE FROM CHECKINGACCOUNT_V1 WHERE ACCOUNTID = ? OR TOACCOUNTID = ?");
+        st = core_->db_.get()->PrepareStatement("DELETE FROM CHECKINGACCOUNT_V1 WHERE ACCOUNTID = ? OR TOACCOUNTID = ?");
         st.Bind(1, accountID);
         st.Bind(2, accountID);
         st.ExecuteUpdate();
         st.Finalize();
 
         // --
-        st = db_->PrepareStatement("DELETE FROM BILLSDEPOSITS_V1 WHERE ACCOUNTID=? OR TOACCOUNTID = ?");
+        st = core_->db_.get()->PrepareStatement("DELETE FROM BILLSDEPOSITS_V1 WHERE ACCOUNTID=? OR TOACCOUNTID = ?");
         st.Bind(1, accountID);
         st.Bind(2, accountID);
         st.ExecuteUpdate();
@@ -397,24 +382,24 @@ bool mmAccountList::RemoveAccount(int accountID)
     }
     else
     {
-        st = db_->PrepareStatement("DELETE FROM STOCK_V1 WHERE HELDAT = ?");
+        st = core_->db_.get()->PrepareStatement("DELETE FROM STOCK_V1 WHERE HELDAT = ?");
         st.Bind(1, accountID);
         st.ExecuteUpdate();
         st.Finalize();
     }
 
-    st = db_->PrepareStatement("DELETE FROM INFOTABLE_V1 WHERE INFONAME = ?");
+    st = core_->db_.get()->PrepareStatement("DELETE FROM INFOTABLE_V1 WHERE INFONAME = ?");
     st.Bind(1, wxString::Format(wxT("ACC_IMAGE_ID_%d"), accountID));
     st.ExecuteUpdate();
     st.Finalize();
 
-    st = db_->PrepareStatement("DELETE FROM ACCOUNTLIST_V1 WHERE ACCOUNTID = ?");
+    st = core_->db_.get()->PrepareStatement("DELETE FROM ACCOUNTLIST_V1 WHERE ACCOUNTID = ?");
     st.Bind(1, accountID);
 
     st.ExecuteUpdate();
     st.Finalize();
 
-    db_.get()->Commit();
+    core_->db_.get()->Commit();
 
     mmOptions::instance().databaseUpdated_ = true;
 
@@ -436,7 +421,7 @@ bool mmAccountList::RemoveAccount(int accountID)
 
 void mmAccountList::LoadAccounts(const mmCurrencyList& currencyList)
 {
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_ACCOUNTLIST_V1);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_ACCOUNTLIST_V1);
 
     while (q1.NextRow())
     {
