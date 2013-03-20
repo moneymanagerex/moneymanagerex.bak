@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -83,29 +83,17 @@ bool mmPayeeList::PayeeExists(const int payeeid) const
 
 int mmPayeeList::AddPayee(const wxString &payeeName)
 {
-    int payeeID = -1;
-
-    try {
-	    char sql[] =
-	    "insert into PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) values (?, ?, ?)";
-	    wxSQLite3Statement st = db_->PrepareStatement(sql);
-	    st.Bind(1, payeeName);
-	    st.Bind(2, -1);
-	    st.Bind(3, -1);
-	
-	    st.ExecuteUpdate();
-	    payeeID = (int)db_->GetLastRowId().ToLong();
-	    st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-
-    } catch(const wxSQLite3Exception& e) 
-    { 
-        wxLogDebug(wxT("Database::addPayee: Exception"), e.GetMessage().c_str());
-        wxLogError(wxString::Format(_("Add Payee. Error: %s"), e.GetMessage().c_str()));
-        return payeeID;
-    }
-
-    wxASSERT(payeeID > 0);
+    std::vector<wxString> data;
+    data.push_back(payeeName);
+    data.push_back(wxT("-1"));
+    data.push_back(wxT("-1"));
+    static const char INSERT_INTO_PAYEE_V1[] =
+        "INSERT INTO PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) VALUES (?, ?, ?)";
+    long payeeID = -1;
+    wxString sql = wxString::FromUTF8(INSERT_INTO_PAYEE_V1);
+    int iError = mmDBWrapper::mmSQLiteExecuteUpdate(db_.get(), data, sql, payeeID);
+    if (iError != 0)
+        return -1;
 
     boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, payeeName));
     entries_.push_back(pPayee);
@@ -120,7 +108,7 @@ int mmPayeeList::GetPayeeId(const wxString& payeeName) const
         if (! (*it)->name_.CmpNoCase(payeeName)) return (*it)->id_;
     }
 
-	return -1;
+    return -1;
 }
 
 wxString mmPayeeList::GetPayeeName(int id) const
