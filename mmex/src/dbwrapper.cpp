@@ -1329,7 +1329,7 @@ int mmDBWrapper::mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxStri
     int iError = 0;
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(INSERT_INTO_CURRENCYFORMATS_V1);
+        wxSQLite3Statement st = db->PrepareStatement(sql);
         int i = 0;
         for (std::vector<wxString>::const_iterator d = data.begin(); d != data.end(); ++d)
             st.Bind(++i, *d);
