@@ -27,7 +27,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db, boost::shared_ptr<MM
 , iniSettings_(iniSettings)
 , payeeList_(this)
 , categoryList_(db)
-, accountList_(db)
+, accountList_(this)
 , currencyList_(db)
 , bTransactionList_(db)
 , displayDatabaseError_(true)
