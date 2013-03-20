@@ -847,19 +847,21 @@ wxString mmHomePagePanel::displayTopTransactions()
 
 wxString mmHomePagePanel::getCalendarWidget()
 {
-    int font_size = mmIniOptions::instance().html_font_size_ -1;
+    int font_size = mmIniOptions::instance().html_font_size_;
     mmHTMLBuilder hb;
     hb.startTable(wxT("100%"), wxT(""), wxT("1"));
     hb.startTableRow();
     hb.startTableCell();
     hb.addText(wxString::Format(wxT("<font size=\"%i\">"), font_size));
-    hb.startTable(wxT("100%"), wxT("left\" cellspacing=\"0"), wxT("0"));
+    hb.startTable(wxT("100%"), wxT("left\" cellpadding=\"1\" cellspacing=\"0"), wxT("0"));
     hb.startTableRow();
     //hb.addTableCell(wxString()<<wxDateTime::Now().GetYear());
-    //hb.addTableCell(wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Now().GetMonth())), false, false, true);
     hb.startTableCell(wxString::Format(wxT("1")));
-    hb.addText( wxString() << wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Now().GetMonth())));
+    hb.addText( wxString(wxT("<b>"))
+        << wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Now().GetMonth()))
+        << wxT("</b>"));
     hb.endTableCell();
+    hb.addTableCell(wxT(""));
     wxDateTime thisMonth = wxDateTime::Now().SetDay(1);
     for (int d = 1; d <= wxDateTime::Now().GetLastMonthDay().GetDay(); d++)
     {
@@ -875,7 +877,7 @@ wxString mmHomePagePanel::getCalendarWidget()
     }
     hb.addTableCell(wxString::Format(_("Week&nbsp;#%d")
         , wxDateTime::Now().GetWeekOfYear())
-        , false, true, false);
+        , false, false, true);
 
     hb.endTableRow();
     hb.endTable();
