@@ -896,7 +896,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         boost::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
         pPayee->categoryId_ = categID_;
         pPayee->subcategoryId_ = subcategID_;
-        pPayee->UpdateDb(core_->db_.get());
+        core_->payeeList_.UpdatePayee(payeeID_, wxT(""));
     }
 
     wxString transNum = textNumber_->GetValue();

@@ -715,46 +715,6 @@ int mmDBWrapper::relocateCategory(wxSQLite3Database* db,
     return err;
 }
 
-bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
-{
-    try
-    {
-        char sql[] =
-        "select 1 "
-        "from CHECKINGACCOUNT_V1 "
-        "where transcode <> 'Transfer' " //for transfer transactions payee id should be null. if not null jast ignore it
-        "and PAYEEID = ? "
-        "limit 1";
-
-        wxSQLite3Statement st = db->PrepareStatement(sql);
-        st.Bind(1, payeeID);
-        wxSQLite3ResultSet q1 = st.ExecuteQuery();
-
-        bool found = q1.NextRow();
-        st.Finalize();
-
-        if (found)
-        {
-            return false;
-        }
-        // --
-        st = db->PrepareStatement("delete from PAYEE_V1 where PAYEEID = ?");
-        st.Bind(1, payeeID);
-
-        st.ExecuteUpdate();
-        st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::deletePayeeWithConstraints: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("delete from PAYEE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-        return false;
-    }
-
-    return true;
-}
 //--------------------------------------------------------------------
 
 bool mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database &db, int transID, const wxString& status)

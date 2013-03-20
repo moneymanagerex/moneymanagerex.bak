@@ -245,13 +245,16 @@ static const char DELETE_BUDGETENTRYIDS_FROM_BUDGETTABLE_V1[] =
 static const char DELETE_FROM_BUDGETTABLE_V1[] =
     "DELETE FROM BUDGETTABLE_V1 where BUDGETENTRYID = ?";
 
+static const char DELETE_FROM_PAYEE_V1[] =
+    "DELETE FROM PAYEE_V1 WHERE PAYEEID = ?";
+
 static const char DELETE_FROM_SPLITTRANSACTIONS_V1[] =
     "DELETE FROM SPLITTRANSACTIONS_V1 "
     "where TRANSID in( SELECT TRANSID "
     "from CHECKINGACCOUNT_V1 "
     "where ACCOUNTID = ? OR TOACCOUNTID = ? )";
 
-static const char DELETE_TRANSID_SPLITTRANSACTIONS_V1[] = 
+static const char DELETE_TRANSID_SPLITTRANSACTIONS_V1[] =
     "DELETE FROM SPLITTRANSACTIONS_V1 where TRANSID = ?";
 
 static const char DELETE_FROM_BUDGETSPLITTRANSACTIONS_V1[] =
@@ -383,6 +386,9 @@ static const char INSERT_INTO_CHECKINGACCOUNT_V1[] =
 
 static const char INSERT_INTO_INFOTABLE_V1[] =
     "INSERT INTO INFOTABLE_V1 (INFONAME, INFOVALUE) VALUES (?, ?)";
+
+static const char INSERT_INTO_PAYEE_V1[] =
+    "INSERT INTO PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) VALUES (?, ?, ?)";
 
 static const char INSERT_INTO_SPLITTRANSACTIONS_V1[] =
     "INSERT INTO SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
@@ -578,9 +584,6 @@ bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int su
 
 /* Account API */
 void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
-
-/* Payee Table API */
-bool deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID);
 
 /* Category Table API */
 bool deleteCategoryWithConstraints(wxSQLite3Database* db, int categID);
