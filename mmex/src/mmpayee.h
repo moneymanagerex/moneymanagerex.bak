@@ -20,6 +20,8 @@
 #include "mmcategory.h"
 #include "boost/shared_ptr.hpp"
 
+class mmCoreDB;
+
 class mmPayee
 {
 public:
@@ -29,24 +31,22 @@ public:
     int subcategoryId_;
 
     /// Constructor used when loading a payee from the database
-	mmPayee(wxSQLite3ResultSet q1);
+    mmPayee(wxSQLite3ResultSet q1);
     /// Constructor for adding a new payee to the database
     mmPayee(int id, const wxString& name);
-
-    bool UpdateDb(wxSQLite3Database* db);
 };
 
 class mmPayeeList
 {
 public:
-    mmPayeeList(boost::shared_ptr<wxSQLite3Database> db)
-    : db_(db)
+    mmPayeeList(mmCoreDB* core)
+    : core_(core)
     {}
 
     /* Payee Functions */
     int AddPayee(const wxString& payeeName);
     bool RemovePayee(int payeeID);
-    void UpdatePayee(int payeeID, const wxString& payeeName);
+    int UpdatePayee(int payeeID, const wxString& payeeName);
     bool PayeeExists(const wxString& payeeName) const;
     bool PayeeExists(const int payeeid) const;
     int GetPayeeId(const wxString& payeeName) const;
@@ -70,7 +70,7 @@ public:
     void LoadPayees();
 
 private:
-    boost::shared_ptr<wxSQLite3Database> db_;
+    mmCoreDB* core_;
 };
 
 #endif

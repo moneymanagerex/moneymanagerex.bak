@@ -19,6 +19,7 @@
 #include "mmpayee.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 
 // Constructor used when loading a payee from the database
 mmPayee::mmPayee(wxSQLite3ResultSet q1)
@@ -36,30 +37,6 @@ mmPayee::mmPayee(int id, const wxString& name)
 , categoryId_(-1)
 , subcategoryId_(-1)
 {}
-
-bool mmPayee::UpdateDb(wxSQLite3Database* db)
-{
-    try
-    {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_PAYEE_V1);
-        st.Bind(1, name_);
-        st.Bind(2, categoryId_);
-        st.Bind(3, subcategoryId_);
-        st.Bind(4, id_);
-
-        st.ExecuteUpdate();
-        st.Finalize();
-        mmOptions::instance().databaseUpdated_ = true;
-    }
-    catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::updatePayee: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("update PAYEE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-        return false;
-    }
-
-    return true;
-}
 
 bool mmPayeeList::PayeeExists(const wxString& payeeName) const
 {
@@ -81,26 +58,6 @@ bool mmPayeeList::PayeeExists(const int payeeid) const
     return false;
 }
 
-int mmPayeeList::AddPayee(const wxString &payeeName)
-{
-    std::vector<wxString> data;
-    data.push_back(payeeName);
-    data.push_back(wxT("-1"));
-    data.push_back(wxT("-1"));
-    static const char INSERT_INTO_PAYEE_V1[] =
-        "INSERT INTO PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) VALUES (?, ?, ?)";
-    long payeeID = -1;
-    wxString sql = wxString::FromUTF8(INSERT_INTO_PAYEE_V1);
-    int iError = mmDBWrapper::mmSQLiteExecuteUpdate(db_.get(), data, sql, payeeID);
-    if (iError != 0)
-        return -1;
-
-    boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, payeeName));
-    entries_.push_back(pPayee);
-
-    return payeeID;
-}
-
 int mmPayeeList::GetPayeeId(const wxString& payeeName) const
 {
     for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
@@ -119,23 +76,6 @@ wxString mmPayeeList::GetPayeeName(int id) const
     }
 
     return wxEmptyString;
-}
-
-bool mmPayeeList::RemovePayee(int payeeID)
-{
-    if (mmDBWrapper::deletePayeeWithConstraints(db_.get(), payeeID))
-    {
-        std::vector <boost::shared_ptr<mmPayee> >::iterator Iter;
-        for ( Iter = entries_.begin( ) ; Iter != entries_.end( ) ; Iter++ )
-        {
-            if ((*Iter)->id_ == payeeID)
-            {
-                entries_.erase(Iter);
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 bool sortPayees(const boost::shared_ptr<mmPayee>& elem1, const boost::shared_ptr<mmPayee>& elem2 )
@@ -162,13 +102,6 @@ boost::shared_ptr<mmPayee> mmPayeeList::GetPayeeSharedPtr(int payeeID)
     return boost::shared_ptr<mmPayee>();
 }
 
-void mmPayeeList::UpdatePayee(int payeeID, const wxString& payeeName)
-{
-    boost::shared_ptr<mmPayee> pPayee = GetPayeeSharedPtr(payeeID);
-    pPayee->name_ = payeeName;
-    pPayee->UpdateDb(db_.get());
-}
-
 wxArrayString mmPayeeList::FilterPayees(const wxString& patt) const
 {
     wxArrayString payee_list;
@@ -183,7 +116,7 @@ wxArrayString mmPayeeList::FilterPayees(const wxString& patt) const
 
 void mmPayeeList::LoadPayees()
 {
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_PAYEE_V1);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_PAYEE_V1);
 
     while (q1.NextRow())
     {
@@ -193,4 +126,66 @@ void mmPayeeList::LoadPayees()
 
     q1.Finalize();
     SortList();
+}
+
+bool mmPayeeList::RemovePayee(int payeeID)
+{
+    if (core_->bTransactionList_.IsPayeeUsed(payeeID)) return false;
+
+    long payeeId = payeeID;
+    std::vector<wxString> data;
+    data.push_back(wxString()<<payeeID);
+    wxString sql = wxString::FromUTF8(DELETE_FROM_PAYEE_V1);
+    int iError = mmDBWrapper::mmSQLiteExecuteUpdate(core_->db_.get(), data, sql, payeeId);
+    if (iError != 0)
+        return -1;
+
+    std::vector <boost::shared_ptr<mmPayee> >::iterator Iter;
+    for ( Iter = entries_.begin( ) ; Iter != entries_.end( ) ; Iter++ )
+    {
+        if ((*Iter)->id_ == payeeID)
+        {
+            entries_.erase(Iter);
+            return true;
+        }
+    }
+    return false;
+}
+
+int mmPayeeList::AddPayee(const wxString &payeeName)
+{
+    std::vector<wxString> data;
+    data.push_back(payeeName);
+    data.push_back(wxT("-1"));
+    data.push_back(wxT("-1"));
+    long payeeID = -1;
+    wxString sql = wxString::FromUTF8(INSERT_INTO_PAYEE_V1);
+    int iError = mmDBWrapper::mmSQLiteExecuteUpdate(core_->db_.get(), data, sql, payeeID);
+    if (iError != 0)
+        return -1;
+
+    boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, payeeName));
+    entries_.push_back(pPayee);
+
+    return payeeID;
+}
+
+int mmPayeeList::UpdatePayee(int payeeID, const wxString& payeeName)
+{
+    boost::shared_ptr<mmPayee> pPayee = GetPayeeSharedPtr(payeeID);
+    if (!payeeName.IsEmpty()) pPayee->name_ = payeeName;
+    std::vector<wxString> data;
+    data.push_back(pPayee->name_);
+    data.push_back(wxString()<<pPayee->categoryId_);
+    data.push_back(wxString()<<pPayee->subcategoryId_);
+    data.push_back(wxString()<<payeeID);
+
+    long payeeId = -1;
+    wxString sql = wxString::FromUTF8(UPDATE_PAYEE_V1);
+    int iError = mmDBWrapper::mmSQLiteExecuteUpdate(core_->db_.get(), data, sql, payeeId);
+    if (iError != 0)
+        return -1;
+
+    mmOptions::instance().databaseUpdated_ = true;
+    return iError;
 }

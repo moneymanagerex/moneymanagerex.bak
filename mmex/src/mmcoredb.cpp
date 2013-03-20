@@ -25,7 +25,7 @@
 mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db, boost::shared_ptr<MMEX_IniSettings> iniSettings)
 : db_(db)
 , iniSettings_(iniSettings)
-, payeeList_(db)
+, payeeList_(this)
 , categoryList_(db)
 , accountList_(db)
 , currencyList_(db)
