@@ -259,6 +259,7 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
     else
     {
         int payeeID = core_->payeeList_.AddPayee(text);
+		if (payeeID < 0) return;
         wxASSERT(payeeID > 0);
 
         textCtrl_->Clear();
