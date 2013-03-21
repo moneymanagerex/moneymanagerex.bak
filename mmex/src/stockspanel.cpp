@@ -17,13 +17,8 @@
  ********************************************************/
 
 #include "stockspanel.h"
-#include "util.h"
-#include "dbwrapper.h"
 #include "stockdialog.h"
 #include "constants.h"
-#include <boost/scoped_array.hpp>
-#include <string>
-
 
 /*******************************************************/
 namespace
@@ -40,27 +35,234 @@ namespace
         COL_MAX, // number of columns
     };
 }
+
+/*******************************************************/
+BEGIN_EVENT_TABLE(StocksListCtrl, wxListCtrl)
+    EVT_LIST_ITEM_ACTIVATED(ID_PANEL_STOCKS_LISTCTRL,   StocksListCtrl::OnListItemActivated)
+    EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_STOCKS_LISTCTRL, StocksListCtrl::OnItemRightClick)
+    EVT_LIST_ITEM_SELECTED(ID_PANEL_STOCKS_LISTCTRL,    StocksListCtrl::OnListItemSelected)
+    EVT_LIST_ITEM_DESELECTED(ID_PANEL_STOCKS_LISTCTRL,  StocksListCtrl::OnListItemDeselected)
+    EVT_LIST_COL_END_DRAG(ID_PANEL_STOCKS_LISTCTRL,     StocksListCtrl::OnItemResize)
+    EVT_LIST_COL_CLICK(ID_PANEL_STOCKS_LISTCTRL,        StocksListCtrl::OnColClick)
+    EVT_LIST_KEY_DOWN(ID_PANEL_STOCKS_LISTCTRL,         StocksListCtrl::OnListKeyDown)
+
+    EVT_MENU(MENU_TREEPOPUP_NEW,     StocksListCtrl::OnNewStocks)
+    EVT_MENU(MENU_TREEPOPUP_EDIT,    StocksListCtrl::OnEditStocks)
+    EVT_MENU(MENU_TREEPOPUP_DELETE,  StocksListCtrl::OnDeleteStocks)
+
+END_EVENT_TABLE()
+/*******************************************************/
+
+StocksListCtrl::StocksListCtrl(mmStocksPanel* cp, wxWindow *parent,
+const wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+: wxListCtrl(parent, id, pos, size, style)
+, attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont)
+, attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont)
+, cp_(cp)
+, selectedIndex_(-1)
+{}
+
+void StocksListCtrl::InitVariables()
+{
+    m_selected_col = 0;
+    m_asc = true;
+}
+
+void StocksListCtrl::OnItemResize(wxListEvent& event)
+{
+    int i = event.GetColumn();
+    cp_->save_column_width(i);
+}
+
+void StocksListCtrl::OnItemRightClick(wxListEvent& event)
+{
+    selectedIndex_ = event.GetIndex();
+
+    wxMenu menu;
+    menu.Append(MENU_TREEPOPUP_NEW, _("&New Stock Investment"));
+    menu.AppendSeparator();
+    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Stock Investment"));
+    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Stock Investment"));
+    PopupMenu(&menu, event.GetPoint());
+}
+
+wxString StocksListCtrl::OnGetItemText(long item, long column) const
+{
+    return cp_->getItem(item, column);
+}
+
+void StocksListCtrl::OnListItemSelected(wxListEvent& event)
+{
+    selectedIndex_ = event.GetIndex();
+    cp_->updateExtraStocksData(selectedIndex_);
+    cp_->enableEditDeleteButtons(true); //Unhide the Edit and Delete buttons if any record selected
+}
+
+void StocksListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
+{
+    selectedIndex_ = -1;
+    cp_->enableEditDeleteButtons(false); //Hide the Edit and Delete buttons if no records selected
+    cp_->updateExtraStocksData(selectedIndex_);
+}
+
+int StocksListCtrl::OnGetItemImage(long item) const
+{
+    /* Returns the icon to be shown for each entry */
+    if (cp_->trans_[item]->gainLoss_ > 0) return 0;
+    return 1;
+}
+
+wxListItemAttr* StocksListCtrl::OnGetItemAttr(long item) const
+{
+    /* Returns the alternating background pattern */
+    return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
+}
+
+void StocksListCtrl::OnListKeyDown(wxListEvent& event)
+{
+    switch (event.GetKeyCode())
+    {
+        case WXK_DELETE:
+            {
+                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,  MENU_TREEPOPUP_DELETE);
+                OnDeleteStocks(evt);
+            }
+            break;
+
+        default:
+            event.Skip();
+            break;
+    }
+}
+
+void StocksListCtrl::OnNewStocks(wxCommandEvent& /*event*/)
+{
+    mmStockDialog dlg(cp_->core_, 0, false, cp_->accountID_, this);
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        doRefreshItems(dlg.transID_);
+    }
+}
+
+void StocksListCtrl::OnDeleteStocks(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ == -1) return;
+
+    wxMessageDialog msgDlg(this, _("Do you really want to delete the stock investment?"),
+                           _("Confirm Stock Investment Deletion"),wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+    if (msgDlg.ShowModal() == wxID_YES)
+    {
+        mmDBWrapper::deleteStockInvestment(cp_->core_->db_.get(), cp_->trans_[selectedIndex_]->id_);
+        DeleteItem(selectedIndex_);
+        doRefreshItems(-1);
+    }
+}
+
+void StocksListCtrl::OnMoveStocks(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ == -1) return;
+
+    wxArrayString accounts_type;
+    accounts_type.Add(ACCOUNT_TYPE_STOCK);
+    wxArrayInt accounts_id = cp_->core_->accountList_.getAccountsID(accounts_type, cp_->accountID_);
+    if (accounts_id.Count() < 1) return;
+
+    wxArrayString accounts_name;
+    for (size_t i = 0; i < accounts_id.Count(); ++i)
+    {
+        accounts_name.Add(cp_->core_->accountList_.GetAccountName(accounts_id[i]));
+    }
+
+    wxString headerMsg = wxString::Format(_("Moving Transaction from %s to...")
+        ,cp_->core_->accountList_.GetAccountName(cp_->accountID_).c_str());
+    wxSingleChoiceDialog scd(this, _("Select the destination Account "), headerMsg , accounts_name);
+
+    int toAccountID = -1;
+    int error_code = scd.ShowModal();
+    if (error_code == wxID_OK)
+    {
+        wxString acctName = scd.GetStringSelection();
+        toAccountID = cp_->core_->accountList_.GetAccountId(acctName);
+    }
+
+    if ( toAccountID != -1 )
+    {
+        cp_->core_->db_.get()->Begin();
+        if (mmDBWrapper::moveStockInvestment(cp_->core_->db_.get(), cp_->trans_[selectedIndex_]->id_, toAccountID))
+            DeleteItem(selectedIndex_);
+        cp_->core_->db_.get()->Commit();
+    }
+
+    if (error_code == wxID_OK)
+        doRefreshItems(-1);
+}
+
+void StocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ < 0) return;
+
+    wxListEvent evt(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, ID_PANEL_STOCKS_LISTCTRL);
+    AddPendingEvent(evt);
+}
+
+void StocksListCtrl::OnListItemActivated(wxListEvent& /*event*/)
+{
+    cp_->call_dialog(selectedIndex_);
+    cp_->updateExtraStocksData(selectedIndex_);
+}
+
+void StocksListCtrl::OnColClick(wxListEvent& event)
+{
+    if(0 > event.GetColumn() || event.GetColumn() >= COL_MAX) return;
+
+    if (m_selected_col == event.GetColumn()) m_asc = !m_asc;
+
+    wxListItem item;
+    item.SetMask(wxLIST_MASK_IMAGE);
+    item.SetImage(-1);
+    cp_->listCtrlAccount_->SetColumn(m_selected_col, item);
+
+    m_selected_col = event.GetColumn();
+
+    item.SetImage(m_asc ? 3 : 2);
+    SetColumn(m_selected_col, item);
+
+    int trx_id = -1;
+    if (selectedIndex_>=0) trx_id = cp_->trans_[selectedIndex_]->id_;
+    doRefreshItems(trx_id);
+    cp_->updateExtraStocksData(-1);
+}
+
+void StocksListCtrl::doRefreshItems(int trx_id)
+{
+    int selectedIndex = cp_->initVirtualListControl(trx_id, m_selected_col, m_asc);
+    long cnt = static_cast<long>(cp_->trans_.size());
+
+    if (selectedIndex >= cnt || selectedIndex < 0)
+        selectedIndex = m_asc ? cnt - 1 : 0;
+
+    if (cnt>0)
+    {
+        RefreshItems(0, cnt > 0 ? cnt - 1 : 0);
+    }
+    else
+        selectedIndex = -1;
+
+    if (selectedIndex >= 0 && cnt>0)
+    {
+        SetItemState(selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        SetItemState(selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        EnsureVisible(selectedIndex);
+    }
+}
+
+/*******************************************************/
 BEGIN_EVENT_TABLE(mmStocksPanel, wxPanel)
     EVT_BUTTON(wxID_NEW,         mmStocksPanel::OnNewStocks)
     EVT_BUTTON(wxID_EDIT,        mmStocksPanel::OnEditStocks)
     EVT_BUTTON(wxID_DELETE,      mmStocksPanel::OnDeleteStocks)
     EVT_BUTTON(wxID_MOVE_FRAME,  mmStocksPanel::OnMoveStocks)
     EVT_BUTTON(wxID_REFRESH,     mmStocksPanel::OnRefreshQuotes)
-END_EVENT_TABLE()
-/*******************************************************/
-BEGIN_EVENT_TABLE(stocksListCtrl, wxListCtrl)
-    EVT_LIST_ITEM_ACTIVATED(ID_PANEL_STOCKS_LISTCTRL,   stocksListCtrl::OnListItemActivated)
-    EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_STOCKS_LISTCTRL, stocksListCtrl::OnItemRightClick)
-    EVT_LIST_ITEM_SELECTED(ID_PANEL_STOCKS_LISTCTRL,    stocksListCtrl::OnListItemSelected)
-    EVT_LIST_ITEM_DESELECTED(ID_PANEL_STOCKS_LISTCTRL,  stocksListCtrl::OnListItemDeselected)
-    EVT_LIST_COL_END_DRAG(ID_PANEL_STOCKS_LISTCTRL,     stocksListCtrl::OnItemResize)
-    EVT_LIST_COL_CLICK(ID_PANEL_STOCKS_LISTCTRL,        stocksListCtrl::OnColClick)
-    EVT_LIST_KEY_DOWN(ID_PANEL_STOCKS_LISTCTRL,         stocksListCtrl::OnListKeyDown)
-
-    EVT_MENU(MENU_TREEPOPUP_NEW,     stocksListCtrl::OnNewStocks)
-    EVT_MENU(MENU_TREEPOPUP_EDIT,    stocksListCtrl::OnEditStocks)
-    EVT_MENU(MENU_TREEPOPUP_DELETE,  stocksListCtrl::OnDeleteStocks)
-
 END_EVENT_TABLE()
 /*******************************************************/
 mmStocksPanel::mmStocksPanel(mmCoreDB* core,
@@ -73,12 +275,6 @@ mmStocksPanel::mmStocksPanel(mmCoreDB* core,
 , accountID_(accountID)
 {
     Create(parent, winid, pos, size, style, name);
-}
-
-void stocksListCtrl::InitVariables()
-{
-    m_selected_col = 0;
-    m_asc = true;
 }
 
 bool mmStocksPanel::Create(wxWindow *parent,
@@ -113,12 +309,6 @@ void mmStocksPanel::save_column_width(const int width)
     int i = width;
     int col_x = listCtrlAccount_->GetColumnWidth(i);
     core_->iniSettings_->SetIntSetting(wxString::Format(wxT("STOCKS_COL%d_WIDTH"), i),col_x);
-}
-
-void stocksListCtrl::OnItemResize(wxListEvent& event)
-{
-    int i = event.GetColumn();
-    cp_->save_column_width(i);
 }
 
 void mmStocksPanel::CreateControls()
@@ -164,7 +354,7 @@ void mmStocksPanel::CreateControls()
     m_imageList->Add(wxBitmap(wxImage(uparrow_xpm).Scale(16, 16)));
     m_imageList->Add(wxBitmap(wxImage(downarrow_xpm).Scale(16, 16)));
 
-    listCtrlAccount_ = new stocksListCtrl(this, itemSplitterWindow10,
+    listCtrlAccount_ = new StocksListCtrl(this, itemSplitterWindow10,
                                            ID_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
                                            wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
@@ -531,18 +721,6 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
 }
 
-void stocksListCtrl::OnItemRightClick(wxListEvent& event)
-{
-    selectedIndex_ = event.GetIndex();
-
-    wxMenu menu;
-    menu.Append(MENU_TREEPOPUP_NEW, _("&New Stock Investment"));
-    menu.AppendSeparator();
-    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Stock Investment"));
-    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Stock Investment"));
-    PopupMenu(&menu, event.GetPoint());
-}
-
 wxString mmStocksPanel::getItem(long item, long column)
 {
     if (column == COL_DATE)         return trans_[item]->stockPDate_;
@@ -554,25 +732,6 @@ wxString mmStocksPanel::getItem(long item, long column)
     if (column == COL_NOTES)        return trans_[item]->shareNotes_;
 
     return wxT("");
-}
-
-wxString stocksListCtrl::OnGetItemText(long item, long column) const
-{
-    return cp_->getItem(item, column);
-}
-
-void stocksListCtrl::OnListItemSelected(wxListEvent& event)
-{
-    selectedIndex_ = event.GetIndex();
-    cp_->updateExtraStocksData(selectedIndex_);
-    cp_->enableEditDeleteButtons(true); //Unhide the Edit and Delete buttons if any record selected
-}
-
-void stocksListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
-{
-    selectedIndex_ = -1;
-    cp_->enableEditDeleteButtons(false); //Hide the Edit and Delete buttons if no records selected
-    cp_->updateExtraStocksData(selectedIndex_);
 }
 
 void mmStocksPanel::updateExtraStocksData(int selectedIndex)
@@ -663,112 +822,6 @@ void mmStocksPanel::enableEditDeleteButtons(bool en)
     bM->Enable(en);
 }
 
-int stocksListCtrl::OnGetItemImage(long item) const
-{
-    /* Returns the icon to be shown for each entry */
-    if (cp_->trans_[item]->gainLoss_ > 0) return 0;
-    return 1;
-}
-
-wxListItemAttr* stocksListCtrl::OnGetItemAttr(long item) const
-{
-    /* Returns the alternating background pattern */
-    return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
-}
-
-void stocksListCtrl::OnListKeyDown(wxListEvent& event)
-{
-    switch (event.GetKeyCode())
-    {
-        case WXK_DELETE:
-            {
-                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,  MENU_TREEPOPUP_DELETE);
-                OnDeleteStocks(evt);
-            }
-            break;
-
-        default:
-            event.Skip();
-            break;
-    }
-}
-
-void stocksListCtrl::OnNewStocks(wxCommandEvent& /*event*/)
-{
-    mmStockDialog dlg(cp_->core_, 0, false, cp_->accountID_, this);
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        doRefreshItems(dlg.transID_);
-    }
-}
-
-void stocksListCtrl::OnDeleteStocks(wxCommandEvent& /*event*/)
-{
-    if (selectedIndex_ == -1) return;
-
-    wxMessageDialog msgDlg(this, _("Do you really want to delete the stock investment?"),
-                           _("Confirm Stock Investment Deletion"),wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
-    if (msgDlg.ShowModal() == wxID_YES)
-    {
-        mmDBWrapper::deleteStockInvestment(cp_->core_->db_.get(), cp_->trans_[selectedIndex_]->id_);
-        DeleteItem(selectedIndex_);
-        doRefreshItems(-1);
-    }
-}
-
-void stocksListCtrl::OnMoveStocks(wxCommandEvent& /*event*/)
-{
-    if (selectedIndex_ == -1) return;
-
-    wxArrayString accounts_type;
-    accounts_type.Add(ACCOUNT_TYPE_STOCK);
-    wxArrayInt accounts_id = cp_->core_->accountList_.getAccountsID(accounts_type, cp_->accountID_);
-    if (accounts_id.Count() < 1) return;
-
-    wxArrayString accounts_name;
-    for (size_t i = 0; i < accounts_id.Count(); ++i)
-    {
-        accounts_name.Add(cp_->core_->accountList_.GetAccountName(accounts_id[i]));
-    }
-
-    wxString headerMsg = wxString::Format(_("Moving Transaction from %s to...")
-        ,cp_->core_->accountList_.GetAccountName(cp_->accountID_).c_str());
-    wxSingleChoiceDialog scd(this, _("Select the destination Account "), headerMsg , accounts_name);
-
-    int toAccountID = -1;
-    int error_code = scd.ShowModal();
-    if (error_code == wxID_OK)
-    {
-        wxString acctName = scd.GetStringSelection();
-        toAccountID = cp_->core_->accountList_.GetAccountId(acctName);
-    }
-
-    if ( toAccountID != -1 )
-    {
-        cp_->core_->db_.get()->Begin();
-        if (mmDBWrapper::moveStockInvestment(cp_->core_->db_.get(), cp_->trans_[selectedIndex_]->id_, toAccountID))
-            DeleteItem(selectedIndex_);
-        cp_->core_->db_.get()->Commit();
-    }
-
-    if (error_code == wxID_OK)
-        doRefreshItems(-1);
-}
-
-void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
-{
-    if (selectedIndex_ < 0) return;
-
-    wxListEvent evt(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, ID_PANEL_STOCKS_LISTCTRL);
-    AddPendingEvent(evt);
-}
-
-void stocksListCtrl::OnListItemActivated(wxListEvent& /*event*/)
-{
-    cp_->call_dialog(selectedIndex_);
-    cp_->updateExtraStocksData(selectedIndex_);
-}
-
 void mmStocksPanel::call_dialog(const int selectedIndex)
 {
     mmStockDialog dlg(core_, trans_[selectedIndex], true, accountID_, this);
@@ -778,47 +831,3 @@ void mmStocksPanel::call_dialog(const int selectedIndex)
     }
 }
 
-void stocksListCtrl::OnColClick(wxListEvent& event)
-{
-    if(0 > event.GetColumn() || event.GetColumn() >= COL_MAX) return;
-
-    if (m_selected_col == event.GetColumn()) m_asc = !m_asc;
-
-    wxListItem item;
-    item.SetMask(wxLIST_MASK_IMAGE);
-    item.SetImage(-1);
-    cp_->listCtrlAccount_->SetColumn(m_selected_col, item);
-
-    m_selected_col = event.GetColumn();
-
-    item.SetImage(m_asc ? 3 : 2);
-    SetColumn(m_selected_col, item);
-
-    int trx_id = -1;
-    if (selectedIndex_>=0) trx_id = cp_->trans_[selectedIndex_]->id_;
-    doRefreshItems(trx_id);
-    cp_->updateExtraStocksData(-1);
-}
-
-void stocksListCtrl::doRefreshItems(int trx_id)
-{
-    int selectedIndex = cp_->initVirtualListControl(trx_id, m_selected_col, m_asc);
-    long cnt = static_cast<long>(cp_->trans_.size());
-
-    if (selectedIndex >= cnt || selectedIndex < 0)
-        selectedIndex = m_asc ? cnt - 1 : 0;
-
-    if (cnt>0)
-    {
-        RefreshItems(0, cnt > 0 ? cnt - 1 : 0);
-    }
-    else
-        selectedIndex = -1;
-
-    if (selectedIndex >= 0 && cnt>0)
-    {
-        SetItemState(selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-        SetItemState(selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        EnsureVisible(selectedIndex);
-    }
-}

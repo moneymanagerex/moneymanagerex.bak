@@ -25,8 +25,6 @@
 #define SYMBOL_STOCKDIALOG_SIZE wxSize(400, 300)
 #define SYMBOL_STOCKDIALOG_POSITION wxDefaultPosition
 
-#include "guiid.h"
-#include "defs.h"
 #include "stockspanel.h"
 
 class wxDatePickerCtrl;

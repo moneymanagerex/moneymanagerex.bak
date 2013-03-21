@@ -17,11 +17,6 @@
  ********************************************************/
 
 #include "stockdialog.h"
-#include "wx/datectrl.h"
-#include "util.h"
-#include "dbwrapper.h"
-#include "currencydialog.h"
-#include "defs.h"
 #include "constants.h"
 #include "paths.h"
 

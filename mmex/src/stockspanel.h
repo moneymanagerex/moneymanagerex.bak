@@ -29,21 +29,14 @@ class wxListEvent;
 class mmStocksPanel;
 
 /* Custom ListCtrl class that implements virtual LC style */
-class stocksListCtrl: public wxListCtrl
+class StocksListCtrl: public wxListCtrl
 {
-    DECLARE_NO_COPY_CLASS(stocksListCtrl)
+    DECLARE_NO_COPY_CLASS(StocksListCtrl)
     DECLARE_EVENT_TABLE()
 
 public:
-    stocksListCtrl(mmStocksPanel* cp, wxWindow *parent,
-        const wxWindowID id, const wxPoint& pos,
-        const wxSize& size, long style)
-        : wxListCtrl(parent, id, pos, size, style),
-        attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
-        attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
-        cp_(cp),
-        selectedIndex_(-1)
-    {}
+    StocksListCtrl(mmStocksPanel* cp, wxWindow *parent, const wxWindowID id,
+        const wxPoint& pos, const wxSize& size, long style);
 
 public:
     /* required overrides for virtual style list control */
@@ -154,7 +147,7 @@ public:
     void sortTable();
 
 public:
-    stocksListCtrl* listCtrlAccount_;
+    StocksListCtrl* listCtrlAccount_;
     wxImageList* m_imageList;
     int accountID_;
     /************************************************************/
