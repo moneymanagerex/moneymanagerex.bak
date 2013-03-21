@@ -138,7 +138,7 @@ bool mmPayeeList::RemovePayee(int payeeID)
     wxString sql = wxString::FromUTF8(DELETE_FROM_PAYEE_V1);
     int iError = mmDBWrapper::mmSQLiteExecuteUpdate(core_->db_.get(), data, sql, payeeId);
     if (iError != 0)
-        return -1;
+        return false;
 
     std::vector <boost::shared_ptr<mmPayee> >::iterator Iter;
     for ( Iter = entries_.begin( ) ; Iter != entries_.end( ) ; Iter++ )
