@@ -5,7 +5,7 @@ wxSQLite3 and sqlite3 sources from wxSQLite3
 --------------------------------------------
 
 Current versions: wxSQLite3 Version: 3.0.2
-                  SQLite Version: 3.7.15.2
+                  SQLite Version: 3.7.16
 ===============================================================================                
 Copy all files From: wxsqlite3\src
                to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite
@@ -40,7 +40,7 @@ Source files for: wxSQLite3 - sqlite3 interface
   sqlite3secure.c
   sqlite3.def
 
-Source files for: sqlite3 Version 3.7.15.2
+Source files for: sqlite3 Version 3.7.16
   sqlite3.c
   sqlite3.h
   sqlite3ext.h
