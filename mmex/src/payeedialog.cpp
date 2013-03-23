@@ -287,6 +287,9 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
     }
     textCtrl_->Clear();
     fillControls();
+    if (!listBox_->IsEmpty()) {
+        listBox_->Select(0);
+    }
     OnSelChanged(event);
 }
 

@@ -118,6 +118,7 @@ void mmPayeeList::LoadPayees()
 {
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_PAYEE_V1);
 
+    entries_.clear();
     while (q1.NextRow())
     {
         boost::shared_ptr<mmPayee> pPayee(new mmPayee(q1));
@@ -140,16 +141,9 @@ bool mmPayeeList::RemovePayee(int payeeID)
     if (iError != 0)
         return false;
 
-    std::vector <boost::shared_ptr<mmPayee> >::iterator Iter;
-    for ( Iter = entries_.begin( ) ; Iter != entries_.end( ) ; Iter++ )
-    {
-        if ((*Iter)->id_ == payeeID)
-        {
-            entries_.erase(Iter);
-            return true;
-        }
-    }
-    return false;
+    LoadPayees();
+    mmOptions::instance().databaseUpdated_ = true;
+    return true;
 }
 
 int mmPayeeList::AddPayee(const wxString &payeeName)
@@ -164,9 +158,8 @@ int mmPayeeList::AddPayee(const wxString &payeeName)
     if (iError != 0)
         return -1;
 
-    boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, payeeName));
-    entries_.push_back(pPayee);
-
+    LoadPayees();
+    mmOptions::instance().databaseUpdated_ = true;
     return payeeID;
 }
 
@@ -186,6 +179,7 @@ int mmPayeeList::UpdatePayee(int payeeID, const wxString& payeeName)
     if (iError != 0)
         return -1;
 
+    LoadPayees();
     mmOptions::instance().databaseUpdated_ = true;
     return iError;
 }
