@@ -1301,8 +1301,8 @@ int mmDBWrapper::mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxStri
     }
     catch(const wxSQLite3Exception& e)
     {
-        wxLogDebug(wxT("Function::addCurrency: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Add currency. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        wxLogDebug(wxT("Function::mmSQLiteExecuteUpdate: Exception"), e.GetMessage().c_str());
+        wxLogError(wxT("mmSQLiteExecuteUpdate. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
         iError = e.GetErrorCode();
     }
 
