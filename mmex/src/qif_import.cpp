@@ -516,7 +516,8 @@ int mmQIFImportDialog::mmImportQIF()
         {
             dt = getLineData(readLine);
 
-            dtdt = mmParseDisplayStringToDate(dt, dateFormat_).GetDateOnly();
+            mmParseDisplayStringToDate(dtdt, dt, dateFormat_);
+            dtdt = dtdt.GetDateOnly();
             convDate = dtdt.FormatISODate();
             continue;
         }
@@ -923,7 +924,8 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
         {
             wxDateTime dtdt;
             wxString sDate = getLineData(readLine);
-            if (!dtdt.ParseFormat(sDate, dateFormat_, wxDateTime::Now()))
+
+            if (!mmParseDisplayStringToDate(dtdt, sDate, dateFormat_))
                 dateFormatIsOK = false;
             continue;
         }

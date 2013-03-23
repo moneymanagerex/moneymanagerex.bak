@@ -483,22 +483,21 @@ wxString mmGetDateForDisplay(const wxDateTime &dt)
     return dt.Format(mmOptions::instance().dateFormat_);
 }
 
-wxDateTime mmParseDisplayStringToDate(const wxString& dtstr, const wxString& date_format)
+bool mmParseDisplayStringToDate(wxDateTime& date, wxString sDate, wxString sDateMask)
 {
-    wxString date_mask = date_format;
-    if (date_format.IsEmpty())
-        wxString date_mask = mmOptions::instance().dateFormat_;
-    wxString sDate = dtstr, s = wxT("/");
+    if (sDateMask.IsEmpty())
+        sDateMask = mmOptions::instance().dateFormat_;
+    wxString s = wxT("/");
 
     //For correct date parsing, adjust separator format to: %x/%x/%x
-    date_mask.Replace(wxT("`"), s);
-    date_mask.Replace(wxT("' "), s);
-    date_mask.Replace(wxT("/ "), s);
-    date_mask.Replace(wxT("'"), s);
-    date_mask.Replace(wxT("-"), s);
-    date_mask.Replace(wxT("."), s);
-    date_mask.Replace(wxT(","), s);
-    date_mask.Replace(wxT(" "), s);
+    sDateMask.Replace(wxT("`"), s);
+    sDateMask.Replace(wxT("' "), s);
+    sDateMask.Replace(wxT("/ "), s);
+    sDateMask.Replace(wxT("'"), s);
+    sDateMask.Replace(wxT("-"), s);
+    sDateMask.Replace(wxT("."), s);
+    sDateMask.Replace(wxT(","), s);
+    sDateMask.Replace(wxT(" "), s);
 
     sDate.Replace(wxT("`"), s);
     sDate.Replace(wxT("' "), s);
@@ -510,9 +509,9 @@ wxDateTime mmParseDisplayStringToDate(const wxString& dtstr, const wxString& dat
     sDate.Replace(wxT(" "), s);
 
     if (sDate.Len()<9)
-        date_mask.Replace(wxT("%Y"), wxT("%y"));
+        sDateMask.Replace(wxT("%Y"), wxT("%y"));
     else
-        date_mask.Replace(wxT("%y"), wxT("%Y"));
+        sDateMask.Replace(wxT("%y"), wxT("%Y"));
 
     wxStringTokenizer token(sDate, s);
     double a,b,c;
@@ -525,9 +524,9 @@ wxDateTime mmParseDisplayStringToDate(const wxString& dtstr, const wxString& dat
 
     sDate = wxString()<<a<<s<<b<<s<<c;
 
-    wxDateTime dt;
-    dt.ParseFormat(sDate, date_mask, wxDateTime::Now());
-    return dt;
+    bool bResult = date.ParseFormat(sDate, sDateMask, wxDateTime::Now());
+    date = date.GetDateOnly();
+    return bResult;
 }
 
 wxString mmGetDateForStorage(const wxDateTime &dt)
