@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Header Files\reports">
+      <UniqueIdentifier>{e7959f8a-7adf-43c0-935a-706e9b1a96be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\reports">
+      <UniqueIdentifier>{cff7ab9a-0de6-4517-9679-eec2479295b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\aboutdialog.cpp">
@@ -189,50 +195,50 @@
     <ClCompile Include="..\..\src\lua_interface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\reports\trx_stats.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\transactions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\categovertimeperf.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\categexp.cpp">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="..\..\src\reports\payee.cpp">
+      <Filter>Source Files\reports</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\reports\cashflow.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\budgetingperf.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\budget.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\budgetcategorysummary.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\summarystocks.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\summaryassets.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\summary.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\payee.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\reports\incexpesestime.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\reports</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\reports\incexpensesfinancialperiod.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\budget.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\budgetingperf.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\categovertimeperf.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\categexp.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\trx_stats.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\transactions.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\summarystocks.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\summaryassets.cpp">
+      <Filter>Source Files\reports</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\reports\incexpenses.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\summary.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\incexpesestime.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reports\budgetcategorysummary.cpp">
+      <Filter>Source Files\reports</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -407,9 +413,6 @@
     <ClInclude Include="..\..\src\transactionfilterdialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\transdialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\univcsvdialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -425,49 +428,52 @@
     <ClInclude Include="..\..\src\lua_interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\reports\budget.h">
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\reports\trx_stats.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\transactions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\reports\categovertimeperf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\reports\categexp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\reports\cashflow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\reports\budgetingperf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\reports\budgetcategorysummary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\reports\budget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\summarystocks.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\summaryassets.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\summary.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\reports\cashflow.h">
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\reports\categexp.h">
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\reports\categovertimeperf.h">
+      <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\payee.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\incexpesestime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\reports\incexpensesfinancialperiod.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\incexpenses.h">
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\reports\incexpensesfinancialperiod.h">
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\reports\budgetingperf.h">
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\reports\budgetcategorysummary.h">
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\transdialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
