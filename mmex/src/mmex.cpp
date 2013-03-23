@@ -61,7 +61,7 @@
 #include "reportsummaryassets.h"
 #include "reportsummarystocks.h"
 #include "reporttransactions.h"
-#include "reporttransstats.h"
+#include "reports/trx_stats.h"
 #include "recentfiles.h"
 #include "stockspanel.h"
 #include "transdialog.h"

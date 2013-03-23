@@ -373,6 +373,7 @@
     <ClCompile Include="..\..\src\payeedialog.cpp" />
     <ClCompile Include="..\..\src\qif_export.cpp" />
     <ClCompile Include="..\..\src\qif_import.cpp" />
+    <ClCompile Include="..\..\src\reports\trx_stats.cpp" />
     <ClCompile Include="..\..\src\win\platfdep.cpp" />
     <ClCompile Include="..\..\src\recentfiles.cpp" />
     <ClCompile Include="..\..\src\relocatecategorydialog.cpp" />
@@ -391,7 +392,6 @@
     <ClCompile Include="..\..\src\reportsummaryassets.cpp" />
     <ClCompile Include="..\..\src\reportsummarystocks.cpp" />
     <ClCompile Include="..\..\src\reporttransactions.cpp" />
-    <ClCompile Include="..\..\src\reporttransstats.cpp" />
     <ClCompile Include="..\..\src\splitdetailsdialog.cpp" />
     <ClCompile Include="..\..\src\splittransactionsdialog.cpp" />
     <ClCompile Include="..\..\src\stockdialog.cpp" />
@@ -469,8 +469,8 @@
     <ClInclude Include="..\..\src\reportsummary.h" />
     <ClInclude Include="..\..\src\reportsummaryassets.h" />
     <ClInclude Include="..\..\src\reportsummarystocks.h" />
+    <ClInclude Include="..\..\src\reports\trx_stats.h" />
     <ClInclude Include="..\..\src\reporttransactions.h" />
-    <ClInclude Include="..\..\src\reporttransstats.h" />
     <ClInclude Include="..\..\src\resource.h" />
     <ClInclude Include="..\..\src\splitdetailsdialog.h" />
     <ClInclude Include="..\..\src\splittransactionsdialog.h" />
