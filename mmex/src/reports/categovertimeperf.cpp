@@ -105,7 +105,7 @@ void printRow
     columns_totals_t &columns_totals
 )
 {
-    double period_amount = core->bTransactionList_.getAmountForCategory(core, cat_id, subcat_id, false,
+    double period_amount = core->bTransactionList_.getAmountForCategory(cat_id, subcat_id, false,
         periodBegin, periodEnd, false, false, mmIniOptions::instance().ignoreFutureTransactions_
     );
     if (period_amount == 0) {
@@ -132,7 +132,7 @@ void printRow
 
         // wxLogDebug(wxT("begin=%s, end=%s"), dtBegin.Format().c_str(), dtEnd.Format().c_str());
 
-        double month_amount = core->bTransactionList_.getAmountForCategory(core, cat_id, subcat_id, false,
+        double month_amount = core->bTransactionList_.getAmountForCategory(cat_id, subcat_id, false,
             dtBegin, dtEnd, false, false, mmIniOptions::instance().ignoreFutureTransactions_
         );
         wxString month_amount_str;
@@ -207,12 +207,6 @@ mmReportCategoryOverTimePerformance::mmReportCategoryOverTimePerformance(mmCoreD
 }
 //----------------------------------------------------------------------------
 
-wxSQLite3Database& mmReportCategoryOverTimePerformance::getDb() const
-{
-    return *core_->db_;
-}
-//----------------------------------------------------------------------------
-
 wxString mmReportCategoryOverTimePerformance::getHTMLText()
 {
     const int MONTHS_IN_PERIOD = 12; // including current month
@@ -222,6 +216,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     
     hb.addHeader(2, wxString::Format(_("Category Income/Expenses Over Last %d Months "), MONTHS_IN_PERIOD));
     hb.addDateNow();
+    hb.addLineBreak();
 
     // setup period
     wxDateTime dummy = wxDateTime::Now();
@@ -254,7 +249,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxSQLite3ResultSet q1 = getDb().ExecuteQuery(SELECT_ALL_CATEGORIES);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_CATEGORIES);
 
     for (int last_cat_id = g_NullCategory; q1.NextRow();)
     {

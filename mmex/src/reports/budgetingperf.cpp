@@ -3,14 +3,12 @@
 #include "../dbwrapper.h"
 #include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../mmcoredb.h"
 #include "../mmex.h"
 #include "../reportbase.h"
 #include "../util.h"
 
 mmReportBudgetingPerformance::mmReportBudgetingPerformance(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
     : mmReportBudget(mainFrame, core),
-    db_(core_->db_.get()),
       budgetYearID_(budgetYearID)
 {
 }
@@ -58,7 +56,7 @@ void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudg
         {
             transferAsDeposit = false;
         }
-        double actualMonthVal = core_->bTransactionList_.getAmountForCategory(core_, budgetEntry.categID_, budgetEntry.subcategID_,
+        double actualMonthVal = core_->bTransactionList_.getAmountForCategory(budgetEntry.categID_, budgetEntry.subcategID_,
             false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
         wxString actualMonthValStr;
@@ -83,7 +81,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     int endMonth = wxDateTime::Dec;
 
     long startYear;
-    wxString startYearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
+    wxString startYearStr = mmDBWrapper::getBudgetYearForID(core_->db_.get(), budgetYearID_);
     startYearStr.ToLong(&startYear);
 
     wxString headingStr = AdjustYearValues(startDay, startMonth, startYear, startYearStr);
@@ -125,8 +123,8 @@ wxString mmReportBudgetingPerformance::getHTMLText()
 
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxSQLite3Statement st = db_->PrepareStatement(SELECT_SUBCATEGS_FROM_SUBCATEGORY_V1);
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_CATEGORY_V1);
+    wxSQLite3Statement st = core_->db_.get()->PrepareStatement(SELECT_SUBCATEGS_FROM_SUBCATEGORY_V1);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_CATEGORY_V1);
         
     while (q1.NextRow())
     {
@@ -134,7 +132,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         initBudgetEntryFields(th, budgetYearID_);
         th.categID_ = q1.GetInt(wxT("CATEGID"));
         th.catStr_  = q1.GetString(wxT("CATEGNAME"));
-        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
+        mmDBWrapper::getBudgetEntry(core_->db_.get(), budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
 
         // Set the estimated amount for the year
         setBudgetYearlyEstimate(th);
@@ -148,7 +146,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         {
             transferAsDeposit = false;
         }
-        th.actual_ = core_->bTransactionList_.getAmountForCategory(core_, th.categID_, th.subcategID_, false,
+        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,
             yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
@@ -215,7 +213,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
             thsub.subCatStr_  = q2.GetString(wxT("SUBCATEGNAME"));
 
-            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
+            mmDBWrapper::getBudgetEntry(core_->db_.get(), budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
  
             // Set the estimated amount for the year
             setBudgetYearlyEstimate(thsub);
@@ -228,7 +226,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             {
                 transferAsDeposit = false;
             }
-            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(core_, thsub.categID_, thsub.subcategID_, false,
+            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
                 yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
             );
             mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);

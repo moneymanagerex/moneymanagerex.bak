@@ -22,8 +22,6 @@
 #include "../reportbase.h"
 #include "../mmex.h"
 
-class mmCoreDB;
-
 class mmReportSummary : public mmPrintableBase 
 {
 public:
@@ -32,7 +30,6 @@ public:
 
 private:
     mmGUIFrame* frame_;
-    mmCoreDB* core_;
 };
 
 #endif //_MM_EX_REPORTSUMMARY_H_

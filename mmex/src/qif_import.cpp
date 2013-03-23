@@ -828,7 +828,7 @@ int mmQIFImportDialog::mmImportQIF()
                 refTrans[index]->status_ = wxT("F");
             else
                 refTrans[index]->status_ = wxT("D");
-            core_->bTransactionList_.addTransaction(core_, refTrans[index]);
+            core_->bTransactionList_.addTransaction(refTrans[index]);
         }
 
         core_->db_.get()->Commit();

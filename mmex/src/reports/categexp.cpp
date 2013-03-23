@@ -33,7 +33,6 @@ mmReportCategoryExpenses::mmReportCategoryExpenses(
     int type
 ) :
     mmPrintableBase(core),
-    core_(core),
     dtBegin_(dtBegin),
     dtEnd_(dtEnd),
     ignoreDate_(ignoreDate),
@@ -79,7 +78,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         const boost::shared_ptr<mmCategory> category = *it;
         int categID = category->categID_;
         const wxString sCategName = category->categName_;
-        double amt = core_->bTransactionList_.getAmountForCategory(core_, categID, -1, ignoreDate_,
+        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_,
             dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_);
         if (type_ == 1 && amt < 0.0) amt = 0;
         if (type_ == 2 && amt > 0.0) amt = 0;
@@ -109,7 +108,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             int subcategID = sub_category->categID_;
 
             wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);
-            amt = core_->bTransactionList_.getAmountForCategory(core_, categID, subcategID, ignoreDate_,
+            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate_,
                 dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_);
 
             if (type_ == 1 && amt < 0.0) amt = 0;
@@ -161,7 +160,6 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
     hb.endTable();
     hb.endCenter();
-
     hb.end();
 
     gg.init(valueList);

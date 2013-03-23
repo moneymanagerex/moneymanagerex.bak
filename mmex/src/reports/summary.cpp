@@ -23,8 +23,7 @@
 
 mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame) :
     mmPrintableBase(core),
-    frame_(frame),
-    core_(core)
+    frame_(frame)
 {
 }
 
