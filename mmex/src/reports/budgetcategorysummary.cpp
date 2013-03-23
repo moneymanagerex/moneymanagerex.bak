@@ -28,7 +28,7 @@
 #include "../reportbase.h"
 
 mmReportBudgetCategorySummary::mmReportBudgetCategorySummary(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
-    : mmReportBudget(mainFrame, core), core_(core), budgetYearID_(budgetYearID)
+    : mmReportBudget(mainFrame, core), budgetYearID_(budgetYearID)
 {
 }
 
@@ -143,7 +143,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         {
             transferAsDeposit = false;
         }
-        th.actual_ = core_->bTransactionList_.getAmountForCategory(core_, th.categID_, th.subcategID_, false,
+        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,
             yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
@@ -207,7 +207,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             {
                 transferAsDeposit = false;
             }
-            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(core_, thsub.categID_, thsub.subcategID_, false,
+            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
                 yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
             );
             mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);

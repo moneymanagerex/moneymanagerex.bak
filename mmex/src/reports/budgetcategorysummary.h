@@ -23,9 +23,6 @@
 #define _MM_EX_REPORTBUDGET_CATEGORYSUMMARY_H_
 
 #include "budget.h"
-#include "../mmcoredb.h"
-
-class mmCoreDB;
 
 class mmReportBudgetCategorySummary : public mmReportBudget
 {
@@ -35,7 +32,6 @@ public:
     wxString getHTMLText();
 
 private:
-    mmCoreDB* core_;
     int budgetYearID_;
 
     void displayReportLine(mmHTMLBuilder& hb, mmBudgetEntryHolder budEntry);

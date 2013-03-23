@@ -1087,7 +1087,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 
             *pTransaction->splitEntries_.get() = *split_.get();
             pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
-            core_->bTransactionList_.addTransaction(core_, pTransaction);
+            core_->bTransactionList_.addTransaction(pTransaction);
         }
         mmDBWrapper::completeBDInSeries(core_->db_.get(), bdID_);
     }

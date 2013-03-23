@@ -20,7 +20,6 @@
 #define _MM_EX_REPORTBUDGETING_PERFORMANCE_H_
 
 #include "budget.h"
-#include "../mmcoredb.h"
 
 class mmReportBudgetingPerformance : public mmReportBudget
 {
@@ -30,7 +29,6 @@ public:
     wxString getHTMLText();
 
 private:
-    wxSQLite3Database* db_;
     int budgetYearID_;
 
     void DisplayEstimateMonths(mmHTMLBuilder& hb, mmBudgetEntryHolder& budgetEntry, int startMonth);

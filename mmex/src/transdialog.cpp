@@ -942,7 +942,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     if (!edit_)
     {
-        transID_ = core_->bTransactionList_.addTransaction(core_, pTransaction);
+        transID_ = core_->bTransactionList_.addTransaction(pTransaction);
     }
     else
     {

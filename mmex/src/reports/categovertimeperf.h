@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------------
 #include "../reportbase.h"
 //----------------------------------------------------------------------------
-class wxSQLite3Database;
+//class wxSQLite3Database;
 //----------------------------------------------------------------------------
 
 class mmReportCategoryOverTimePerformance : public mmPrintableBase 
@@ -33,7 +33,7 @@ public:
     wxString getHTMLText();
 
 private:
-    wxSQLite3Database& getDb() const;
+//    wxSQLite3Database& getDb() const;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_REPORTCATEGOVERTIME_H_

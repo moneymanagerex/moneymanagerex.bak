@@ -2,7 +2,6 @@
 #include "../defs.h"
 #include "../htmlbuilder.h"
 #include "../util.h"
-#include "../mmcoredb.h"
 
 mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)  : 
         mmPrintableBase(core),

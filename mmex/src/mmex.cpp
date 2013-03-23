@@ -961,7 +961,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                 *pTransaction->splitEntries_.get() = *split.get();
 
                 pTransaction->updateAllData(m_core.get(), th.accountID_, pCurrencyPtr);
-                m_core.get()->bTransactionList_.addTransaction(m_core.get(), pTransaction);
+                m_core.get()->bTransactionList_.addTransaction(pTransaction);
             }
             mmDBWrapper::completeBDInSeries(m_db.get(), th.id_);
 

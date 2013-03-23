@@ -143,12 +143,12 @@ private:
 class mmBankTransactionList
 {
 public:
-    mmBankTransactionList(boost::shared_ptr<wxSQLite3Database> db);
+    mmBankTransactionList(mmCoreDB* core);
     ~mmBankTransactionList() {}
 
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID) const;
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID) const;
-    int addTransaction(mmCoreDB* core, boost::shared_ptr<mmBankTransaction> pTransaction);
+    int addTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     boost::shared_ptr<mmBankTransaction> copyTransaction(/*mmCoreDB* pCore,*/
        const long transactionID, const long accountID, const bool useOriginalDate);
@@ -159,8 +159,8 @@ public:
     /* Update Transactions */
     void UpdateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     void UpdateAllTransactions();
-    void UpdateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
-    int UpdateAllTransactionsForPayee(mmCoreDB* core, int payeeID);
+    void UpdateAllTransactionsForCategory(int categID, int subCategID);
+    int UpdateAllTransactionsForPayee(int payeeID);
 
     bool removeTransaction(int accountID, int transactionID);
     bool deleteTransaction(int accountID, int transactionID);
@@ -174,8 +174,8 @@ public:
     /* Query Functions */
     void getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses, double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
     // The setting asDeposit is only valid if evaluateTransfer is true
-    double getAmountForCategory(const mmCoreDB* core, int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool evaluateTransfer = false, bool asDeposit = false, bool ignoreFuture = false) const;
-    double getAmountForPayee(const mmCoreDB* core, int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
+    double getAmountForCategory(int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool evaluateTransfer = false, bool asDeposit = false, bool ignoreFuture = false) const;
+    double getAmountForPayee(int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
     void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
     wxDateTime getLastDate(int accountID) const;
 
@@ -194,7 +194,7 @@ public:
     std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;
 
 private:
-    boost::shared_ptr<wxSQLite3Database> db_;
+    mmCoreDB* core_;
 };
 
 #endif
