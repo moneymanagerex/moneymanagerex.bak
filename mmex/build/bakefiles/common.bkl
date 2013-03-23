@@ -223,7 +223,7 @@ PATH. Accepted values: AMD64, IA64.
             <if cond="1">/mac</if>
         </set>
 
-        <headers>$(fileList('src/*.h', 'src/reports/*.h'))</headers>
+        <headers>$(fileList( ['src/*.h', 'src/reports/*.h'] ))</headers>
         <sources>$(fileList( [ 'src/*.cpp', 'src/reports/*.cpp', 'src/' + PLATF_DIR + '/*.cpp' ] ))</sources>
 
 
