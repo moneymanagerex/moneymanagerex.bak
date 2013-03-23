@@ -18,11 +18,12 @@
 
 #include "reportsummarystocks.h"
 #include "constants.h"
-#include "defs.h"
 #include "htmlbuilder.h"
-#include "reportbase.h"
-#include "util.h"
 #include "stockspanel.h"
+
+mmReportSummaryStocks::mmReportSummaryStocks(mmCoreDB* core)
+: mmPrintableBase(core)
+{}
 
 static const char SELECT_ROW_SYMBOL_FROM_STOCK_V1[] =
     "SELECT "
@@ -65,7 +66,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         hb.addTotalRow(heldAt_, 9, wxT(""));
 
         display_header(hb);
-        wxSQLite3Statement st = db_->PrepareStatement(SELECT_ROW_SYMBOL_FROM_STOCK_V1);
+        wxSQLite3Statement st = core_->db_->PrepareStatement(SELECT_ROW_SYMBOL_FROM_STOCK_V1);
         st.Bind(1, accountID);
         wxSQLite3ResultSet q2 = st.ExecuteQuery();
 
@@ -121,7 +122,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         q2.Finalize();
 
         double invested = 0;
-        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, accountID, invested);
+        double stockBalance = mmDBWrapper::getStockInvestmentBalance(core_->db_.get(), accountID, invested);
         wxString stockBalanceStr;
         wxString gain_loss_sum_str;
 

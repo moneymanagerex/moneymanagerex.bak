@@ -21,17 +21,15 @@
 
 #include "reportbase.h"
 
-class wxSQLite3Database;
 class mmHTMLBuilder;
 
-class mmReportSummaryStocks : public mmPrintableBase 
+class mmReportSummaryStocks : public mmPrintableBase
 {
 public:
-    mmReportSummaryStocks(mmCoreDB* core, wxSQLite3Database* db) : mmPrintableBase(core), db_(db) {}
+    mmReportSummaryStocks(mmCoreDB* core);
     wxString getHTMLText();
 
 private:
-    wxSQLite3Database* db_;
     void display_header(mmHTMLBuilder& hb);
 };
 

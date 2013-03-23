@@ -1693,7 +1693,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == wxT("Summary of Stocks"))
         {
-            mmPrintableBase* rs = new mmReportSummaryStocks(m_core.get(), m_db.get());
+            mmPrintableBase* rs = new mmReportSummaryStocks(m_core.get());
             createReportsPage(rs);
         }
         else if (sData == wxT("Summary of Assets"))
