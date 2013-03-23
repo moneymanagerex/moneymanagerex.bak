@@ -79,7 +79,7 @@ wxString mmSelectLanguage(wxWindow *parent, boost::shared_ptr<MMEX_IniSettings> 
 wxString mmGetDateForStorage( const wxDateTime &dt );
 wxDateTime mmGetStorageStringAsDate( const wxString& str );
 wxString mmGetDateForDisplay( const wxDateTime &dt );
-wxDateTime mmParseDisplayStringToDate(const wxString& dt, const wxString& date_format );
+bool mmParseDisplayStringToDate(wxDateTime& date, const wxString sDate, wxString sDateMask );
 wxString mmGetNiceDateString( const wxDateTime &dt );
 wxString mmGetNiceDateSimpleString( const wxDateTime &dt );
 wxString mmGetNiceMonthName( int month );
