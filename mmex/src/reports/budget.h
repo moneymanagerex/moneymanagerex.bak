@@ -50,10 +50,10 @@ public:
     void DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange = true);
 
     /// Returns correct values for day and month, adjusted to financial year if required.
-	void AdjustYearValues(int& day, int& month, wxDateTime& year);
+    void AdjustYearValues(int& day, int& month, wxDateTime& year);
 
     /// Returns correct values for day and month, adjusted to financial year if required.
-	/// Also returns a heading string for Month or Year reports.
+    /// Also returns a heading string for Month or Year reports.
     wxString AdjustYearValues(int& day, int& month, long year, wxString yearStr);
 
     /// Sets date to end of financial year if required by user.
@@ -67,8 +67,8 @@ public:
 
     /// Advance the given date by one year.
     void SetDateToEndOfYear(int day, int month, wxDateTime& date, bool isEndDate = true);
-	
-	/// sets the start and end dates for a budget month
+    
+    /// sets the start and end dates for a budget month
     void SetBudgetMonth(wxString budgetYearStr, wxDateTime& startDate, wxDateTime& endDate);
 
 protected:
