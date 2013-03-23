@@ -22,7 +22,7 @@
 #include "../reportbase.h"
 #include "../mmex.h"
 
-class wxSQLite3Database;
+class mmCoreDB;
 
 class mmReportSummary : public mmPrintableBase 
 {
@@ -32,7 +32,7 @@ public:
 
 private:
     mmGUIFrame* frame_;
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
 };
 
 #endif //_MM_EX_REPORTSUMMARY_H_

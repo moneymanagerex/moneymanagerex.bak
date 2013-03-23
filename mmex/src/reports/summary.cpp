@@ -20,12 +20,11 @@
 #include "../constants.h"
 #include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../util.h"
 
 mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame) :
     mmPrintableBase(core),
     frame_(frame),
-    db_(core_->db_.get())
+    core_(core)
 {
 }
 
@@ -35,6 +34,7 @@ wxString mmReportSummary::getHTMLText()
     hb.init();
     hb.addHeader(2, _("Summary of Accounts"));
     hb.addDateNow();
+    hb.addLineBreak();
 
     double tBalance = 0.0;
 
@@ -153,7 +153,7 @@ wxString mmReportSummary::getHTMLText()
     hb.addRowSeparator(2);
 
     /* Assets */
-    double assetBalance = mmDBWrapper::getAssetBalance(db_);
+    double assetBalance = mmDBWrapper::getAssetBalance(core_->db_.get());
     wxString assetBalanceStr;
     mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
@@ -172,7 +172,6 @@ wxString mmReportSummary::getHTMLText()
     hb.endTable();
 
     hb.endCenter();
-
     hb.end();
 
     return hb.getHTMLText();
