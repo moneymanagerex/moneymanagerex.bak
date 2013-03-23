@@ -22,8 +22,8 @@
 #ifndef _MM_EX_REPORTBUDGET_CATEGORYSUMMARY_H_
 #define _MM_EX_REPORTBUDGET_CATEGORYSUMMARY_H_
 
-#include "reportbudget.h"
-#include "mmcoredb.h"
+#include "budget.h"
+#include "../mmcoredb.h"
 
 class mmReportBudgetCategorySummary : public mmReportBudget 
 {

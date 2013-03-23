@@ -19,15 +19,15 @@
 /************************************************************************* 
  Renamed after extensive modifications to original file reportbudgetsetup.cpp
 **************************************************************************/
-#include "budgetingpanel.h"
-#include "dbwrapper.h"
-#include "defs.h"
-#include "htmlbuilder.h"
-#include "mmcoredb.h"
-#include "mmex.h"
-#include "reportbase.h"
-#include "reportbudgetcategorysummary.h"
-#include "util.h"
+#include "budgetcategorysummary.h"
+#include "../budgetingpanel.h"
+#include "../dbwrapper.h"
+#include "../defs.h"
+#include "../htmlbuilder.h"
+#include "../mmcoredb.h"
+#include "../mmex.h"
+#include "../reportbase.h"
+#include "../util.h"
 
 mmReportBudgetCategorySummary::mmReportBudgetCategorySummary(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
     : mmReportBudget(mainFrame, core), db_(core_->db_.get()), budgetYearID_(budgetYearID)

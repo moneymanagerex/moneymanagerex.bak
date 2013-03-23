@@ -22,7 +22,7 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "mmex.h"
-#include "reportbudget.h"
+#include "reports/budget.h"
 #include "categdialog.h"
 #include "mmaccount.h"
 
