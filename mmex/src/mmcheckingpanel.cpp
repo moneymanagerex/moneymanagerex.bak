@@ -1775,11 +1775,9 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 
     mmTransDialog dlg(m_cp->core_, m_cp->accountID(),
        m_cp->m_trans[m_selectedIndex], true, this);
-    if ( dlg.ShowModal() == wxID_OK )
-    {
-        int transID = dlg.getTransID();
-        refreshVisualList(transID);
-    }
+    dlg.ShowModal();
+
+    refreshVisualList(m_cp->m_trans[m_selectedIndex]->transactionID());
 }
 //----------------------------------------------------------------------------
 

@@ -25,6 +25,8 @@
 #include <boost/weak_ptr.hpp>
 #include <vector>
 
+class mmCoreDB;
+
 class mmCategory
 {
 public:
@@ -43,8 +45,8 @@ public:
 class mmCategoryList
 {
 public:
-    mmCategoryList(boost::shared_ptr<wxSQLite3Database> db)
-    : db_(db)
+    mmCategoryList(mmCoreDB* core)
+    : core_(core)
     {}
 
     /* Category Functions */
@@ -77,6 +79,6 @@ public:
     }
 
 private:
-    boost::shared_ptr<wxSQLite3Database> db_;
+    mmCoreDB* core_;
 };
 #endif

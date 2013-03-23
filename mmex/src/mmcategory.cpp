@@ -19,10 +19,13 @@
 
 #include "mmcategory.h"
 #include "dbwrapper.h"
+#include "util.h"
+#include "mmcoredb.h"
 
 void mmCategoryList::LoadCategories()
 {
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_CATEGORIES);
+    entries_.clear();
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_CATEGORIES);
 
     boost::shared_ptr<mmCategory> pCat;
     while (q1.NextRow())
@@ -59,6 +62,33 @@ void mmCategoryList::LoadCategories()
     }
 }
 
+boost::shared_ptr<mmCategory> mmCategoryList::GetCategorySharedPtr(int category, int subcategory) const
+{
+    if (category != -1)
+    {
+        int numCategory = (int)entries_.size();
+        for (int idx = 0; idx < numCategory; idx++)
+        {
+            if (entries_[idx]->categID_ == category)
+            {
+                if (subcategory == -1)
+                    return entries_[idx];
+
+                size_t numSubCategory = entries_[idx]->children_.size();
+                for (size_t idxS = 0; idxS < numSubCategory; ++idxS)
+                {
+                    if (entries_[idx]->children_[idxS]->categID_ == subcategory)
+                    {
+                        return entries_[idx]->children_[idxS];
+                    }
+                }
+            }
+        }
+    }
+    boost::shared_ptr<mmCategory> categ;
+    return categ;
+}
+
 bool mmCategoryList::CategoryExists(const wxString& categoryName) const
 {
     for (const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
@@ -89,20 +119,6 @@ wxString mmCategoryList::GetCategoryName(int categ_id) const
     }
 
     return wxT("");
-}
-
-int mmCategoryList::AddCategory(const wxString& category)
-{
-    if (category.IsEmpty()) return -1;
-    int cID = -1;
-
-    mmDBWrapper::addCategory(db_.get(), category);
-    cID = (db_->GetLastRowId()).ToLong();
-
-    boost::shared_ptr<mmCategory> pCategory(new mmCategory(cID, category));
-    entries_.push_back(pCategory);
-
-    return cID;
 }
 
 wxString mmCategoryList::GetSubCategoryName(int categID, int subCategID) const
@@ -149,138 +165,6 @@ int mmCategoryList::GetSubCategoryID(int parentID, const wxString& subCategoryNa
     return -1;
 }
 
-void mmCategoryList::parseCategoryString(wxString categ, wxString& cat, int& categID, wxString& subcat, int& subCategID)
-{
-    wxStringTokenizer cattkz(categ, wxT(":"));
-
-    cat = cattkz.GetNextToken();
-    if (cattkz.HasMoreTokens())
-        subcat = cattkz.GetNextToken();
-    else
-        subcat = wxT("");
-
-    categID = GetCategoryId(cat);
-
-    if (!subcat.IsEmpty() && categID != -1)
-        subCategID = GetSubCategoryID(categID, subcat);
-    else
-        subCategID = -1;
-}
-
-int mmCategoryList::AddSubCategory(int parentID, const wxString& text)
-{
-    if (text.IsEmpty() || parentID < 0) return -1;
-    int cID = -1;
-
-    mmDBWrapper::addSubCategory(db_.get(), parentID, text);
-    cID = (db_->GetLastRowId()).ToLong();
-
-    boost::shared_ptr<mmCategory> categ = GetCategorySharedPtr(parentID, -1);
-
-    boost::shared_ptr<mmCategory> subCateg(new mmCategory(cID, text));
-    subCateg->parent_ = categ;
-    categ->children_.push_back(subCateg);
-
-    return cID;
-}
-
-boost::shared_ptr<mmCategory> mmCategoryList::GetCategorySharedPtr(int category, int subcategory) const
-{
-    if (category != -1)
-    {
-        int numCategory = (int)entries_.size();
-        for (int idx = 0; idx < numCategory; idx++)
-        {
-            if (entries_[idx]->categID_ == category)
-            {
-                if (subcategory == -1)
-                    return entries_[idx];
-
-                size_t numSubCategory = entries_[idx]->children_.size();
-                for (size_t idxS = 0; idxS < numSubCategory; ++idxS)
-                {
-                    if (entries_[idx]->children_[idxS]->categID_ == subcategory)
-                    {
-                        return entries_[idx]->children_[idxS];
-                    }
-                }
-            }
-        }
-    }
-    boost::shared_ptr<mmCategory> categ;
-    return categ;
-}
-
-bool mmCategoryList::DeleteCategory(int categID)
-{
-    if (mmDBWrapper::deleteCategoryWithConstraints(db_.get(), categID))
-    {
-        std::vector <boost::shared_ptr<mmCategory> >::iterator Iter;
-        for ( Iter = entries_.begin( ); Iter != entries_.end( ); ++Iter )
-        {
-            if ((*Iter)->categID_ == categID)
-            {
-                entries_.erase(Iter);
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-bool mmCategoryList::DeleteSubCategory(int categID, int subCategID)
-{
-    if (mmDBWrapper::deleteSubCategoryWithConstraints(db_.get(), categID, subCategID))
-    {
-        boost::shared_ptr<mmCategory> categ = GetCategorySharedPtr(categID, subCategID);
-        boost::shared_ptr<mmCategory> parent = categ->parent_.lock();
-        wxASSERT(parent);
-
-        std::vector <boost::shared_ptr<mmCategory> >::iterator Iter;
-        for ( Iter = parent->children_.begin( ); Iter != parent->children_.end( ); ++Iter )
-        {
-            if ((*Iter)->categID_ == subCategID)
-            {
-                parent->children_.erase(Iter);
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-bool mmCategoryList::UpdateCategory(int categID, int subCategID, const wxString& text)
-{
-    boost::shared_ptr<mmCategory> categ = GetCategorySharedPtr(categID, subCategID);
-    boost::shared_ptr<mmCategory> parent = categ->parent_.lock();
-
-    if (categ->categName_ != text)
-    {
-        // check if the name already exists
-        if (!parent)
-        {
-            if (CategoryExists(text))
-                return false;
-        }
-        else
-        {
-            // subcategory, check if siblings dont have this name already
-            wxASSERT(parent);
-            for (unsigned int idx = 0; idx < parent->children_.size(); ++idx)
-            {
-                if (parent->children_[idx]->categName_ == text)
-                    return false;
-            }
-        }
-    }
-
-    mmDBWrapper::updateCategory(db_.get(), categID, subCategID, text);
-    categ->categName_ = text;
-    return true;
-}
-
 wxString mmCategoryList::GetCategoryString(int categ_id) const
 {
     wxString catName = this->GetCategoryName(categ_id);
@@ -308,4 +192,79 @@ wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID) cons
     }
     else
         return _("Select Category");
+}
+
+void mmCategoryList::parseCategoryString(wxString categ, wxString& cat, int& categID, wxString& subcat, int& subCategID)
+{
+    wxStringTokenizer cattkz(categ, wxT(":"));
+
+    cat = cattkz.GetNextToken();
+    if (cattkz.HasMoreTokens())
+        subcat = cattkz.GetNextToken();
+    else
+        subcat = wxT("");
+
+    categID = GetCategoryId(cat);
+
+    if (!subcat.IsEmpty() && categID != -1)
+        subCategID = GetSubCategoryID(categID, subcat);
+    else
+        subCategID = -1;
+}
+
+int mmCategoryList::AddCategory(const wxString& category)
+{
+    if (category.IsEmpty()) return -1;
+    int cID = -1;
+
+    mmDBWrapper::addCategory(core_->db_.get(), category);
+    cID = (core_->db_.get()->GetLastRowId()).ToLong();
+
+    LoadCategories();
+    mmOptions::instance().databaseUpdated_ = true;
+
+    return cID;
+}
+
+int mmCategoryList::AddSubCategory(int parentID, const wxString& text)
+{
+    if (text.IsEmpty() || parentID < 0) return -1;
+
+    mmDBWrapper::addSubCategory(core_->db_.get(), parentID, text);
+    int cID = (core_->db_.get()->GetLastRowId()).ToLong();
+
+    LoadCategories();
+    mmOptions::instance().databaseUpdated_ = true;
+
+    return cID;
+}
+
+bool mmCategoryList::DeleteCategory(int categID)
+{
+    bool bResult = (mmDBWrapper::deleteCategoryWithConstraints(core_->db_.get(), categID));
+
+    LoadCategories();
+    mmOptions::instance().databaseUpdated_ = true;
+
+    return bResult;
+}
+
+bool mmCategoryList::DeleteSubCategory(int categID, int subCategID)
+{
+    bool bResult = (mmDBWrapper::deleteSubCategoryWithConstraints(core_->db_.get(), categID, subCategID));
+
+    LoadCategories();
+    mmOptions::instance().databaseUpdated_ = true;
+
+    return bResult;
+}
+
+bool mmCategoryList::UpdateCategory(int categID, int subCategID, const wxString& text)
+{
+
+    bool bResult = mmDBWrapper::updateCategory(core_->db_.get(), categID, subCategID, text);
+    LoadCategories();
+    mmOptions::instance().databaseUpdated_ = true;
+
+    return bResult;
 }
