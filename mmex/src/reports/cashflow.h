@@ -15,9 +15,9 @@ public:
     mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray = 0);
 
     wxString getHTMLText();
-	
+    
     void activateTermAccounts(); 
-	void activateBankAccounts();
+    void activateBankAccounts();
 
 private:
    

@@ -3,7 +3,6 @@
 #include "../defs.h"
 #include "../htmlbuilder.h"
 #include "../reportbase.h"
-#include "../util.h"
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray) :
     mmPrintableBase(core)
@@ -80,6 +79,7 @@ wxString mmReportCashFlow::getHTMLText()
 
     hb.addHeader(2, headerMsg);
     hb.addDateNow();
+    hb.addLineBreak();
 
     hb.startCenter();
 
@@ -413,7 +413,7 @@ wxString mmReportCashFlow::getHTMLText()
         if (addSeparatorAfter) hb.addRowSeparator(3);
     }
 
-   	hb.addRowSeparator(3);
+    hb.addRowSeparator(3);
     hb.endTable();
     hb.endCenter();
     hb.end();
