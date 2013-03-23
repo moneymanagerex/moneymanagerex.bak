@@ -25,7 +25,9 @@
 #include "budget.h"
 #include "../mmcoredb.h"
 
-class mmReportBudgetCategorySummary : public mmReportBudget 
+class mmCoreDB;
+
+class mmReportBudgetCategorySummary : public mmReportBudget
 {
 public:
     mmReportBudgetCategorySummary(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID);
@@ -33,7 +35,7 @@ public:
     wxString getHTMLText();
 
 private:
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     int budgetYearID_;
 
     void displayReportLine(mmHTMLBuilder& hb, mmBudgetEntryHolder budEntry);

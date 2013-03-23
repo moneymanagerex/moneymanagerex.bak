@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *************************************************************************/
 
-/************************************************************************* 
+/*************************************************************************
  Renamed after extensive modifications to original file reportbudgetsetup.cpp
 **************************************************************************/
 #include "budgetcategorysummary.h"
@@ -24,13 +24,11 @@
 #include "../dbwrapper.h"
 #include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../mmcoredb.h"
 #include "../mmex.h"
 #include "../reportbase.h"
-#include "../util.h"
 
 mmReportBudgetCategorySummary::mmReportBudgetCategorySummary(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
-    : mmReportBudget(mainFrame, core), db_(core_->db_.get()), budgetYearID_(budgetYearID)
+    : mmReportBudget(mainFrame, core), core_(core), budgetYearID_(budgetYearID)
 {
 }
 
@@ -40,7 +38,7 @@ wxString mmReportBudgetCategorySummary::actualAmountColour( mmBudgetEntryHolder&
     if (total) {
         actAmtColStr = wxT("blue");
     }
-    
+
     if (budEntry.amt_ == 0) {
         actAmtColStr = wxT("blue");
     } else {
@@ -59,7 +57,7 @@ void mmReportBudgetCategorySummary::displayReportLine(mmHTMLBuilder& hb, mmBudge
     hb.addTableCell(budEntry.catStr_, false, true);
     hb.addTableCell(budEntry.subCatStr_, false, true);
     hb.addTableCell(budEntry.amtString_, true);
-    hb.addTableCell(budEntry.period_, false, true); 
+    hb.addTableCell(budEntry.period_, false, true);
     hb.addTableCell(budEntry.estimatedStr_, true);
     hb.addTableCell(budEntry.actualStr_, true, false, false, actualAmountColour(budEntry));
     hb.endTableRow();
@@ -73,7 +71,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     int endMonth = wxDateTime::Dec;
 
     long startYear;
-    wxString startYearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
+    wxString startYearStr = mmDBWrapper::getBudgetYearForID(core_->db_.get(), budgetYearID_);
     startYearStr.ToLong(&startYear);
 
     wxString headingStr = AdjustYearValues(startDay, startMonth, startYear, startYearStr);
@@ -121,16 +119,16 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
 
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxSQLite3Statement st = db_->PrepareStatement(SELECT_SUBCATEGS_FROM_SUBCATEGORY_V1);
+    wxSQLite3Statement st = core_->db_.get()->PrepareStatement(SELECT_SUBCATEGS_FROM_SUBCATEGORY_V1);
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_CATEGORY_V1);
+    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_CATEGORY_V1);
     while (q1.NextRow())
     {
         mmBudgetEntryHolder th;
         initBudgetEntryFields(th, budgetYearID_);
         th.categID_ = q1.GetInt(wxT("CATEGID"));
         th.catStr_ = q1.GetString(wxT("CATEGNAME"));
-        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
+        mmDBWrapper::getBudgetEntry(core_->db_.get(), budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
 
         setBudgetEstimate(th,monthlyBudget);
         if (th.estimated_ < 0) {
@@ -164,7 +162,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             th.subCatStr_ = wxEmptyString;
             displayReportLine(hb, th);
         }
-        /*************************************************************************** 
+        /***************************************************************************
          Create a TOTALS entry for the category.
          ***************************************************************************/
         mmBudgetEntryHolder catTotals;
@@ -184,7 +182,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
 
         //START: SUBCATEGORY ROW
         st.Bind(1, th.categID_);
-        wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
+        wxSQLite3ResultSet q2 = st.ExecuteQuery();
 
         while(q2.NextRow())
         {
@@ -194,7 +192,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             thsub.catStr_ = th.catStr_;
             thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
             thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
-            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
+            mmDBWrapper::getBudgetEntry(core_->db_.get(), budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
 
             setBudgetEstimate(thsub,monthlyBudget);
             mmex::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
@@ -203,7 +201,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             } else {
                 estIncome += thsub.estimated_;
             }
-            
+
             transferAsDeposit = true;
             if (thsub.amt_ < 0)
             {
@@ -220,13 +218,13 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             }
             mmex::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
             thsub.amtString_ = displayAmtString;
-            
+
             if (mainFrame_->budgetCategoryTotal())
             {
                 displayReportLine(hb, thsub);
             }
 
-            /*************************************************************************** 
+            /***************************************************************************
              Update the TOTALS entry for the subcategory.
              ***************************************************************************/
             catTotals.amt_       += thsub.amt_;
@@ -239,7 +237,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         //END: SUBCATEGORY ROW
         st.Reset();
 
-        /*************************************************************************** 
+        /***************************************************************************
             Display a TOTALS entry for the category.
         ****************************************************************************/
         if (mainFrame_->budgetCategoryTotal()) {
@@ -251,7 +249,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         hb.addTableCell(wxT(""), false, true, true, wxT("blue"));
         hb.addTableCell(wxEmptyString, true, false,true, wxT("blue"));
 //        hb.addTableCell(catTotals.amtString_, true, false,true, wxT("blue"));
-        hb.addTableCell(catTotals.period_, false, true, true, wxT("blue")); 
+        hb.addTableCell(catTotals.period_, false, true, true, wxT("blue"));
         hb.addTableCell(catTotals.estimatedStr_, true, false, true, wxT("blue"));
         hb.addTableCell(catTotals.actualStr_, true, false, true, actualAmountColour(catTotals,true));
         hb.endTableRow();
@@ -297,7 +295,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     wxString incEstStr = wxString() << _("Estimated Income: ") << estIncomeStr;
     wxString incActStr = wxString() << _("Actual Income: ")    << actIncomeStr;
     wxString incDifStr = wxString() << _("Difference Income: ") << difIncomeStr;
-    
+
     wxString expEstStr = wxString() << _("Estimated Expenses: ") << estExpensesStr;
     wxString expActStr = wxString() << _("Actual Expenses: ")    << actExpensesStr;
     wxString expDifStr = wxString() << _("Difference Expenses: ") << difExpenseStr;
@@ -305,7 +303,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     //Summary of Estimated Vs Actual totals
     hb.addLineBreak();
     hb.startCenter();
-    hb.startTable(wxT("50%"));        
+    hb.startTable(wxT("50%"));
 //    hb.addRowSeparator(3);
     hb.startTableRow();
     hb.addTableCell(incEstStr, true, true);

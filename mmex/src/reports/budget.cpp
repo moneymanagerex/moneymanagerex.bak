@@ -119,9 +119,9 @@ void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& sta
     if (withDateRange)
     {
         todaysDate
-        << _("From: ") << wxT("<b>") << mmGetNiceDateSimpleString(startYear) <<  wxT("</b> ")
-        << _("to: ")
-        << wxT ("<b>") << mmGetNiceDateSimpleString(endYear) << wxT ("</b>");
+        << wxString::Format(_("From %s till %s")
+            , mmGetNiceDateSimpleString(startYear).Prepend(wxT("<b>")).Append(wxT("</b> ")).c_str()
+            , mmGetNiceDateSimpleString(endYear).Prepend(wxT("<b>")).Append(wxT("</b> ")).c_str());
     }
     hb.addHeaderItalic(1, todaysDate);
     hb.addLineBreak();
