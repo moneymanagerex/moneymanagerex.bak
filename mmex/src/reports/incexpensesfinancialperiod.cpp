@@ -24,14 +24,14 @@
  period within year.
 *************************************************************************/
 
-#include "reportincexpensesfinancialperiod.h"
+#include "incexpensesfinancialperiod.h"
+#include "budget.h"
 
-#include "defs.h"
-#include "htmlbuilder.h"
-#include "reportbase.h"
-#include "util.h"
-#include "budgetingpanel.h"
-#include "reportbudget.h"
+#include "../defs.h"
+#include "../htmlbuilder.h"
+#include "../reportbase.h"
+#include "../util.h"
+#include "../budgetingpanel.h"
 
 mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year):
     mmPrintableBase(core),

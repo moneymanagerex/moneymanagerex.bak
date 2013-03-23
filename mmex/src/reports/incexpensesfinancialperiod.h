@@ -27,8 +27,8 @@
 #ifndef _MM_EX_REPORTINCEXPENSESFINANCIALPERIOD_H_
 #define _MM_EX_REPORTINCEXPENSESFINANCIALPERIOD_H_
 
-#include "reportbase.h"
-#include "mmex.h"
+#include "../reportbase.h"
+#include "../mmex.h"
 
 class mmReportIncExpensesOverFinancialPeriod : public mmPrintableBase 
 {

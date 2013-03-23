@@ -15,10 +15,10 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *************************************************************************/
-#include "reportbudget.h"
-#include "mmex.h"
-#include "budgetingpanel.h"
-#include "htmlbuilder.h"
+#include "budget.h"
+#include "../mmex.h"
+#include "../budgetingpanel.h"
+#include "../htmlbuilder.h"
 
 mmReportBudget::mmReportBudget(mmGUIFrame* mainFrame, mmCoreDB* core)
     : mmPrintableBase(core), mainFrame_(mainFrame)
