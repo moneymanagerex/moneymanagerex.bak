@@ -24,17 +24,18 @@
 #include <wx/datetime.h>
 #include <wx/string.h>
 
-class wxSQLite3Database;
+class mmCoreDB;
 
 class mmReportCategoryExpenses : public mmPrintableBase 
 {
 public:
-    mmReportCategoryExpenses(mmCoreDB* core, bool ignoreDate, const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title, int type);
+    mmReportCategoryExpenses(mmCoreDB* core
+        , bool ignoreDate, const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title, int type);
 
     wxString getHTMLText();
 
 private:
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;

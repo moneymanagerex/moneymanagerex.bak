@@ -25,7 +25,6 @@
 #include "util.h"
 #include "mmcheckingpanel.h"
 #include "mmtransaction.h"
-#include "reportbudget.h"
 
 mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans,
     mmCoreDB* core, int refAccountID, mmFilterTransactionsDialog* transDialog)
@@ -54,17 +53,9 @@ wxString mmReportTransactions::getHTMLText()
     }
     hb.addHeader(2, transHeading);
 
-    bool includeDateRange = false;
-    wxDateTime startDate = wxDateTime(wxDateTime::Now());
-    wxDateTime endDate = wxDateTime(wxDateTime::Now());
-    if (transDialog_->getDateRange(startDate, endDate))
-    {
-        includeDateRange = true;
-    }
-    mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, startDate, endDate, includeDateRange);
+    hb.addDateNow();
+    hb.addLineBreak();
 
-    hb.startCenter();
     hb.startTable();
     hb.startTable(wxT("95%"));
 

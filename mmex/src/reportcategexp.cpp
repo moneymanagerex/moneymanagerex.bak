@@ -20,11 +20,9 @@
 
 #include "defs.h"
 #include "htmlbuilder.h"
-#include "reportbase.h"
 #include "util.h"
 #include "mmgraphpie.h"
 #include "reportbudget.h"
-#include "dbwrapper.h"
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(
     mmCoreDB* core,
@@ -35,7 +33,7 @@ mmReportCategoryExpenses::mmReportCategoryExpenses(
     int type
 ) :
     mmPrintableBase(core),
-    db_(core_->db_.get()),
+    core_(core),
     dtBegin_(dtBegin),
     dtEnd_(dtEnd),
     ignoreDate_(ignoreDate),
