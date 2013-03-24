@@ -43,33 +43,6 @@ static const char SELECT_ALL_FROM_ASSETS_V1[] =
        "a.value as VALUE "
     "from ASSETS_V1 a ";
 
-static const char SELECT_ROW_FROM_ASSETS_V1[] =
-    "SELECT ASSETNAME, "
-           "NOTES, "
-           "date(STARTDATE, 'localtime') as STARTDATE, "
-           "VALUE, "
-           "VALUECHANGERATE, "
-           "VALUECHANGE, "
-           "ASSETTYPE "
-    "FROM ASSETS_V1 "
-    "where ASSETID = ?";
-
-static const char UPDATE_ASSETS_V1[] =
-    "UPDATE ASSETS_V1 "
-    "SET STARTDATE = ?, ASSETNAME = ?, "
-        "VALUE = ?, VALUECHANGE = ?,"
-        "NOTES = ?, VALUECHANGERATE = ?, "
-        "ASSETTYPE = ? "
-    "where ASSETID = ?";
-
-static const char INSERT_INTO_ASSETS_V1[] =
-    "INSERT INTO ASSETS_V1 ("
-      "STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE "
-    ") values (?, ?, ?, ?, ?, ?, ?)";
-
-static const char DELETE_ASSETID_ASSETS_V1[] =
-    "delete from ASSETS_V1 where ASSETID = ?";
-
 static const char SELECT_ALL_FROM_ACCOUNTLIST_V1[] =
     "SELECT * "
     "FROM ACCOUNTLIST_V1 "
@@ -629,11 +602,6 @@ wxString getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSettings, const wx
 void deleteStockInvestment(wxSQLite3Database* db, int stockID);
 bool moveStockInvestment(wxSQLite3Database* db, int stockID, int toAccountID);
 double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, double& originalVal);
-
-/* Assets API */
-void deleteAsset(wxSQLite3Database* db, int assetID);
-double getAssetBalance(wxSQLite3Database* db);
-double getAssetValue(wxSQLite3Database* db, int assetID);
 
 //----------------------------------------------------------------------------
 

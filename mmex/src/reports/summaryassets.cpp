@@ -17,12 +17,12 @@
  ********************************************************/
 
 #include "summaryassets.h"
-
-#include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../util.h"
-#include "../dbwrapper.h"
-#include "../assetspanel.h"
+#include "../db/assets.h"
+
+mmReportSummaryAssets::mmReportSummaryAssets(mmCoreDB* core)
+: mmPrintableBase(core)
+{}
 
 wxString mmReportSummaryAssets::getHTMLText()
 {
@@ -35,47 +35,33 @@ wxString mmReportSummaryAssets::getHTMLText()
 
     hb.startTable(wxT("95%"));
     hb.startTableRow();
+    hb.addTableHeaderCell(_("Date"));
     hb.addTableHeaderCell(_("Name"));
     hb.addTableHeaderCell(_("Type"));
-    hb.addTableHeaderCell(_("Value"), true);
+    hb.addTableHeaderCell(_("Current Value"), true);
     hb.addTableHeaderCell(_("Notes"));
     hb.endTableRow();
 
     core_->currencyList_.LoadBaseCurrencySettings();
-    
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_ASSETS_V1);
 
-    while (q1.NextRow())
+    TAssetList asset_list_(core_->db_);
+    boost::shared_ptr<TAssetEntry> pEntry;
+    for (unsigned int i = 0; i < asset_list_.entrylist_.size(); ++i)
     {
-        mmAssetHolder th;
-
-        th.id_         = q1.GetInt(wxT("ASSETID"));
-        th.value_      = mmDBWrapper::getAssetValue(db_, th.id_);
-        th.assetName_  = q1.GetString(wxT("ASSETNAME"));
-        th.asset_notes_ = q1.GetString(wxT("NOTES"));
-
-        wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
-        th.assetType_ = wxGetTranslation(assetTypeStr);
-
-        mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
+        pEntry = asset_list_.GetIndexedEntryPtr(i);
 
         hb.startTableRow();
-        hb.addTableCell(th.assetName_, false, true);
-        hb.addTableCell(th.assetType_);
-        hb.addTableCell(th.valueStr_, true);
-        hb.addTableCell(th.asset_notes_);
+        hb.addTableCell(pEntry->display_date_, false, true);
+        hb.addTableCell(pEntry->name_, false, true);
+        hb.addTableCell(wxGetTranslation(pEntry->rate_type_));
+        hb.addTableCell(pEntry->GetValueCurrencyEditFormat(), true);
+        hb.addTableCell(pEntry->notes_);
         hb.endTableRow();
     }
-    q1.Finalize();
     
     /* Assets */
-    double assetBalance = mmDBWrapper::getAssetBalance(db_);
-    wxString assetBalanceStr;
-    core_->currencyList_.LoadBaseCurrencySettings();
-    mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
-
-    hb.addRowSeparator(4);
-    hb.addTotalRow(_("Total Assets: "), 3, assetBalanceStr);
+    hb.addRowSeparator(5);
+    hb.addTotalRow(_("Total Assets: "), 4, asset_list_.GetAssetBalanceCurrencyFormat());
     hb.addTableCell(wxT(""));
     hb.endTableRow();
     hb.endTable();

@@ -15,20 +15,11 @@
  ********************************************************/
 
 #include "assetdialog.h"
-#include "util.h"
-#include "dbwrapper.h"
-#include "currencydialog.h"
-#include "defs.h"
 #include "paths.h"
-#include "constants.h"
-
 #include <wx/datectrl.h>
 
 namespace
 {
-
-enum { DEF_CHANGE_NONE, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
-enum { DEF_ASSET_PROPERTY, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
 
 enum 
 { 
@@ -48,11 +39,18 @@ BEGIN_EVENT_TABLE( mmAssetDialog, wxDialog )
     EVT_CHILD_FOCUS(mmAssetDialog::changeFocus)
 END_EVENT_TABLE()
 
+mmAssetDialog::mmAssetDialog()
+: core_()
+, assetsPanel_(0)
+, pAssetEntry_()
+, m_edit()
+{}
 
-mmAssetDialog::mmAssetDialog(wxWindow* parent, mmCoreDB* core, mmAssetHolder* asset_holder, bool edit) :
-    core_(core),
-    asset_holder_(asset_holder),
-    m_edit(edit)
+mmAssetDialog::mmAssetDialog(wxWindow* parent, mmCoreDB* core, mmAssetsPanel* assetsPanel, TAssetEntry* pAssetEntry, bool edit)
+: core_(core)
+, assetsPanel_(assetsPanel)
+, pAssetEntry_(pAssetEntry)
+, m_edit(edit)
 {
     long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX;
 
@@ -73,8 +71,6 @@ bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& capt
 
     SetIcon(mmex::getProgramIcon());
     
-    fillControls();
-
     if (m_edit)
         dataToControls();
     else   
@@ -86,31 +82,24 @@ bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& capt
 
 void mmAssetDialog::dataToControls()
 {
-    assetID_ = asset_holder_->id_;
+    assetID_ = pAssetEntry_->GetId();
 
-    m_assetName->SetValue(asset_holder_->assetName_);
-    m_notes->SetValue(asset_holder_->assetNotes_);
+    m_assetName->SetValue(pAssetEntry_->name_);
+    m_notes->SetValue(pAssetEntry_->notes_);
 
-    wxDateTime dtdt = asset_holder_->assetDate_;
-    wxString dt = mmGetDateForDisplay(dtdt);
+    wxDateTime dtdt = mmGetStorageStringAsDate(pAssetEntry_->date_);
     m_dpc->SetValue(dtdt);
 
-    wxString value;
-    mmex::formatDoubleToCurrencyEdit(asset_holder_->value_, value);
-    m_value->SetValue(value);
+    m_value->SetValue(pAssetEntry_->GetValueCurrencyEditFormat(true));
 
     wxString valueChangeRate;
-    valueChangeRate.Printf(wxT("%.3f"), asset_holder_->valueChange_);
+    valueChangeRate.Printf(wxT("%.3f"), pAssetEntry_->rate_value_);
     m_valueChangeRate->SetValue(valueChangeRate);
 
-    wxString valueChangeTypeStr = asset_holder_->sAssetValueChange_;
+    wxString valueChangeTypeStr = pAssetEntry_->rate_type_;
 	m_valueChange->SetStringSelection(wxGetTranslation(valueChangeTypeStr));
-	enableDisableRate(valueChangeTypeStr != wxT("None"));
-    m_assetType->SetStringSelection(wxGetTranslation(asset_holder_->assetType_));
-}
-
-void mmAssetDialog::fillControls()
-{
+	enableDisableRate(valueChangeTypeStr != ASSET_RATE_DEF[NONE]);
+    m_assetType->SetStringSelection(wxGetTranslation(pAssetEntry_->type_));
 }
 
 void mmAssetDialog::CreateControls()
@@ -153,13 +142,13 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Asset Type")), flags);
 
     m_assetType = new wxChoice( itemPanel5, wxID_STATIC, wxDefaultPosition, wxSize(150,-1));
-    size_t size = sizeof(ASSET_TYPE)/sizeof(wxString);
+    size_t size = sizeof(ASSET_TYPE_DEF)/sizeof(wxString);
     for(size_t i = 0; i < size; ++i)
-        m_assetType->Append(wxGetTranslation(ASSET_TYPE[i]),
-            new wxStringClientData(ASSET_TYPE[i]));
+        m_assetType->Append(wxGetTranslation(ASSET_TYPE_DEF[i]),
+            new wxStringClientData(ASSET_TYPE_DEF[i]));
 
     m_assetType->SetToolTip(_("Select type of asset"));
-    m_assetType->SetSelection(DEF_ASSET_PROPERTY);
+    m_assetType->SetSelection(PROPERTY);
     itemFlexGridSizer6->Add(m_assetType, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -172,17 +161,15 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Change in Value")), flags);
 
     m_valueChange = new wxChoice( itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1));
-    wxString value_change[] = {
-        wxTRANSLATE("None"),
-        wxTRANSLATE("Appreciates"),
-        wxTRANSLATE("Depreciates")};
-    size = sizeof(value_change)/sizeof(wxString);
+    size = sizeof(ASSET_RATE_DEF)/sizeof(wxString);
     for(size_t i = 0; i < size; ++i)
-    m_valueChange->Append(wxGetTranslation(value_change[i]),
-        new wxStringClientData(value_change[i]));
+    {
+        m_valueChange->Append(wxGetTranslation(ASSET_RATE_DEF[i]),
+        new wxStringClientData(ASSET_RATE_DEF[i]));
+    }
 
     m_valueChange->SetToolTip(_("Specify if the value of the asset changes over time"));
-    m_valueChange->SetSelection(DEF_CHANGE_NONE);
+    m_valueChange->SetSelection(NONE);
     itemFlexGridSizer6->Add(m_valueChange, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_valueChangeRateLabel = new wxStaticText( itemPanel5, wxID_STATIC, _("% Rate"));
@@ -219,7 +206,7 @@ void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& /*event*/)
 {
     int selection = m_valueChange->GetSelection();
     // Disable for "None", Enable for "Appreciates" or "Depreciates"
-    enableDisableRate(selection != DEF_CHANGE_NONE);
+    enableDisableRate(selection != NONE);
 }
 
 void mmAssetDialog::enableDisableRate(bool en)
@@ -241,20 +228,16 @@ void mmAssetDialog::enableDisableRate(bool en)
 
 void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    wxString pdate = m_dpc->GetValue().FormatISODate();
-    wxString notes = m_notes->GetValue().Trim();
-    wxString name = m_assetName->GetValue().Trim();
-
     wxString valueStr = m_value->GetValue().Trim();
     if (valueStr.IsEmpty())
     {
-        mmShowErrorMessageInvalid(this, _("Value"));
+        wxMessageBox(_("Value"), _("Invalid Entry"), wxOK|wxICON_ERROR);
         return;
     }
     double value = 0;
     if (!mmex::formatCurrencyToDouble(valueStr, value))
     {
-        mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
+        wxMessageBox(_("Invalid Value "), _("Invalid Entry"), wxOK|wxICON_ERROR);
         return;
     }
 
@@ -264,19 +247,20 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     if (value_change_obj) valueChangeTypeStr = value_change_obj->GetData();
 
     wxString valueChangeRateStr = m_valueChangeRate->GetValue().Trim();
-    if (valueChangeRateStr.IsEmpty() && valueChangeType != DEF_CHANGE_NONE)
+    if (valueChangeRateStr.IsEmpty() && valueChangeType != NONE)
     {
-        mmShowErrorMessageInvalid(this, _("Rate of Change in Value"));
+        wxMessageBox(_("Rate of Change in Value"), _("Invalid Entry"), wxOK|wxICON_ERROR);
         return;
     }
     double valueChangeRate = 0;
-    if(!valueChangeRateStr.ToDouble(&valueChangeRate)) {
+    if(!valueChangeRateStr.ToDouble(&valueChangeRate))
+    {
         valueChangeRate = -1.0;
     }
     //This should be unnecessary with hidden controls
-    if ((valueChangeType != DEF_CHANGE_NONE) && (valueChangeRate < 0.0))
+    if ((valueChangeType != NONE) && (valueChangeRate < 0.0))
     {
-        mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
+        wxMessageBox(_("Invalid Value "), _("Invalid Entry"), wxOK|wxICON_ERROR);
         return;
     }
 
@@ -284,31 +268,24 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     wxStringClientData* type_obj = (wxStringClientData *)m_assetType->GetClientObject(m_assetType->GetSelection());
     if (type_obj) asset_type = type_obj->GetData();
 
-    wxSQLite3Statement st;
+    if (!pAssetEntry_)
+    {
+        pAssetEntry_ = new TAssetEntry();
+    }
+
+    pAssetEntry_->date_       = m_dpc->GetValue().FormatISODate();
+    pAssetEntry_->notes_      = m_notes->GetValue().Trim();
+    pAssetEntry_->name_       = m_assetName->GetValue().Trim();
+    pAssetEntry_->value_      = value;
+    pAssetEntry_->rate_type_  = valueChangeTypeStr;
+    pAssetEntry_->rate_value_ = valueChangeRate;
+    pAssetEntry_->type_       = asset_type;
+
     if (m_edit)
-        st = core_->db_.get()->PrepareStatement(UPDATE_ASSETS_V1);
+        pAssetEntry_->Update(core_->db_.get());
     else
-        st = core_->db_.get()->PrepareStatement(INSERT_INTO_ASSETS_V1);
+        assetID_ = assetsPanel_->AssetList().AddEntry(pAssetEntry_);
         
-    int i = 0;
-    st.Bind(++i, pdate);
-    st.Bind(++i, name);
-    st.Bind(++i, value);
-    st.Bind(++i, valueChangeTypeStr);
-    st.Bind(++i, notes);
-    st.Bind(++i, valueChangeRate);
-    st.Bind(++i, asset_type);
-    if (m_edit) st.Bind(++i, assetID_);
-
-    wxASSERT(st.GetParamCount() == i);
-
-    st.ExecuteUpdate();
-    st.Finalize();
-
-    mmOptions::instance().databaseUpdated_ = true;
-    if (!m_edit)
-        assetID_ = core_->db_.get()->GetLastRowId().ToLong();
-
     EndModal(wxID_OK);
 }
 
@@ -323,6 +300,8 @@ void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 void mmAssetDialog::changeFocus(wxChildFocusEvent& event)
 {
     wxWindow *w = event.GetWindow();
-    if ( w ) 
-        assetRichText = (w->GetId() == IDC_NOTES ? true : false);    
+    if ( w )
+    {
+        assetRichText = (w->GetId() == IDC_NOTES ? true : false);
+    }
 }
