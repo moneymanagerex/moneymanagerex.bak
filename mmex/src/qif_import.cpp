@@ -644,6 +644,11 @@ int mmQIFImportDialog::mmImportQIF()
             }
 
             to_account_id = -1;
+            if (from_account_id == -1)
+            {
+                from_account_id = core_->accountList_.GetAccountId(newAccounts_->GetString(0));
+                fromAccountID = from_account_id;
+            }
             if (type == TRANS_TYPE_TRANSFER_STR)
             {
                 if (accounts_name.Index(sToAccountName) == wxNOT_FOUND)
@@ -927,31 +932,47 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
 
         if (lineType(readLine) == Date)
         {
-			wxDateTime dtdt = wxDateTime::Now().GetDateOnly();
+            wxDateTime dtdt = wxDateTime::Now().GetDateOnly();
             wxString sDate = getLineData(readLine);
 
-			if (!mmParseDisplayStringToDate(dtdt, sDate, dateFormat_))
+            if (!mmParseDisplayStringToDate(dtdt, sDate, dateFormat_))
                 dateFormatIsOK = false;
             continue;
         }
     }
 
-    bbFile_->Enable(true);
-    bbFile_->SetBitmapLabel(wxBitmap(flag_xpm));
-    bbFormat_->Enable(dateFormatIsOK);
-    if (dateFormatIsOK)
-        bbFormat_->SetBitmapLabel(wxBitmap(flag_xpm));
-    if (newAccounts_->GetCount() != 0)
+    if (newAccounts_->GetCount() == 0)
     {
-        newAccounts_->Enable(true);
+        sAccountName = wxGetTextFromUser(_("Enter name for account to import to")
+            , _("Account missing"), wxT(""));
+        if (sAccountName.IsEmpty())
+            return false;
+        else
+            newAccounts_->Append(sAccountName);
+    }
+
+    if (newAccounts_->GetCount() > 0)
+    {
+        bbFile_->Enable(true);
+        bbFile_->SetBitmapLabel(wxBitmap(flag_xpm));
+        int iBaseCurrencyID = core_->currencyList_.GetBaseCurrencySettings();
+        if (iBaseCurrencyID > 0)
+            newAccounts_->Enable(true);
+        else
+        {
+            mmShowErrorMessageInvalid(this, _("Base Currency Not Set"));
+            return false;
+        }
+
         newAccounts_->SetSelection(0);
     }
     else
-    {
-        bbAccounts_->SetBitmapLabel(wxBitmap(flag_xpm));
-    }
+        return false;
+
     if (dateFormatIsOK)
     {
+        bbFormat_->SetBitmapLabel(wxBitmap(flag_xpm));
+        bbFormat_->Enable(dateFormatIsOK);
         btnOK_->Enable(true);
     }
     return true;
