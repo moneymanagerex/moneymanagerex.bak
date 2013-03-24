@@ -523,8 +523,9 @@ bool mmParseDisplayStringToDate(wxDateTime& date, wxString sDate, wxString sDate
     t.ToDouble(&c);
 
     sDate = wxString()<<a<<s<<b<<s<<c;
-
-    bool bResult = date.ParseFormat(sDate, sDateMask, wxDateTime::Now());
+    bool bResult = true;
+    if (!date.ParseFormat(sDate, sDateMask, wxDateTime::Now()))
+        bResult = false;
     date = date.GetDateOnly();
     return bResult;
 }

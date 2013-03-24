@@ -320,7 +320,11 @@ int mmQIFImportDialog::mmImportQIF()
     wxArrayString accounts_name = core_->accountList_.getAccountsName();
     int fromAccountID = -1;
 
-    wxString sDefCurrencyName = core_->currencyList_.getCurrencyName(core_->currencyList_.GetBaseCurrencySettings());
+    //TODO: if base currency does not set - will be crash when new account adding
+    int iBaseCurrencyID = core_->currencyList_.GetBaseCurrencySettings();
+    wxString sDefCurrencyName = wxT("USD");
+    if (iBaseCurrencyID > 0)
+        sDefCurrencyName = core_->currencyList_.getCurrencyName(iBaseCurrencyID);
 
     fileviewer file_dlg(wxT(""), parent_);
     file_dlg.Show();
@@ -463,12 +467,13 @@ int mmQIFImportDialog::mmImportQIF()
                     pAccount->acctType_ = ACCOUNT_TYPE_BANK;
                     pAccount->name_ = acctName;
                     pAccount->initialBalance_ = val;
-                    pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
+
+                    pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(iBaseCurrencyID);
                     // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
-                    if ( ! core_->accountList_.AccountExists(pAccount->name_))
+                    if ( ! core_->accountList_.AccountExists(acctName))
                         from_account_id = core_->accountList_.AddAccount(pAccount);
-                    accounts_name.Add(pAccount->name_);
-                    acctName = pAccount->name_;
+                    accounts_name.Add(acctName);
+
                     sMsg = wxString::Format(_("Added account '%s'"), acctName.c_str())
                         << wxT("\n") << wxString::Format(_("Initial Balance: %s"), (wxString()<<val).c_str());
                     logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
@@ -922,10 +927,10 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
 
         if (lineType(readLine) == Date)
         {
-            wxDateTime dtdt;
+			wxDateTime dtdt = wxDateTime::Now().GetDateOnly();
             wxString sDate = getLineData(readLine);
 
-            if (!mmParseDisplayStringToDate(dtdt, sDate, dateFormat_))
+			if (!mmParseDisplayStringToDate(dtdt, sDate, dateFormat_))
                 dateFormatIsOK = false;
             continue;
         }
