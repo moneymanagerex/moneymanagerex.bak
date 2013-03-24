@@ -451,9 +451,9 @@ TEST(setBaseCurrencySettings)
 
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
     CHECK(id > 0);
-    pCore->currencyList_.setBaseCurrencySettings(pCore->dbInfoSettings_.get(), id);
+    pCore->currencyList_.SetBaseCurrencySettings(id);
 
-    int base_id = pCore->currencyList_.getBaseCurrencySettings(pCore->dbInfoSettings_.get());
+    int base_id = pCore->currencyList_.GetBaseCurrencySettings();
 
     CHECK(base_id == id);
     displayTimeTaken(wxT("setBaseCurrencySettings"), start_time);
@@ -468,7 +468,7 @@ TEST(getBaseCurrencySettings)
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
     CHECK(id > 0);
 
-    int base_id = pCore->currencyList_.getBaseCurrencySettings(pCore->dbInfoSettings_.get());
+    int base_id = pCore->currencyList_.GetBaseCurrencySettings();
     CHECK(base_id == id);
     displayTimeTaken(wxT("getBaseCurrencySettings"), start_time);
 }
@@ -479,7 +479,7 @@ TEST(loadBaseCurrencySettings)
     const wxDateTime start_time(wxDateTime::UNow());
     mmCoreDB* pCore = pDb_core().get();
 
-    pCore->currencyList_.LoadBaseCurrencySettings(pCore->dbInfoSettings_.get());
+    pCore->currencyList_.LoadBaseCurrencySettings();
 
     CHECK(true);
     displayTimeTaken(wxT("loadBaseCurrencySettings"), start_time);
@@ -558,7 +558,6 @@ TEST(getInfoSettingValue)
 TEST(addPayee)
 {
     const wxDateTime start_time(wxDateTime::UNow());
-    wxSQLite3Database* pDb = get_pDb().get();
     mmCoreDB* pCore = pDb_core().get();
 
     int added = pCore->categoryList_.AddCategory(g_CategName);
@@ -579,8 +578,8 @@ TEST(addPayee)
     boost::shared_ptr<mmPayee> pPayee = pCore->payeeList_.GetPayeeSharedPtr(payeeID);
     pPayee->categoryId_ = cat_id;
     pPayee->subcategoryId_ = sc_id;
-    bool OK = pPayee->UpdateDb(pDb);
-    CHECK(OK);
+    int errCode = pCore->payeeList_.UpdatePayee(pPayee->id_, pPayee->name_);
+    CHECK(errCode == 0);
 
     displayTimeTaken(wxT("addPayee"), start_time);
 }
@@ -635,7 +634,6 @@ TEST(getPayee)
 TEST(updatePayee)
 {
     const wxDateTime start_time(wxDateTime::UNow());
-    wxSQLite3Database* pDb = get_pDb().get();
     mmCoreDB* pCore = pDb_core().get();
 
     int payee_id = pCore->payeeList_.GetPayeeId(g_PayeeName);
@@ -650,8 +648,8 @@ TEST(updatePayee)
     pPayee->name_ = new_name;
     pPayee->categoryId_ = 0;
     pPayee->subcategoryId_ = -1;
-    bool ok = pPayee->UpdateDb(pDb);
-    CHECK(ok);
+    int errCode = pCore->payeeList_.UpdatePayee(pPayee->id_, pPayee->name_);
+    CHECK(errCode == 0);
 
     // Reset the payee list to match the database
     pPayee.reset();
@@ -668,8 +666,8 @@ TEST(updatePayee)
     pPayee->name_ = g_PayeeName;
     pPayee->categoryId_ = cat;
     pPayee->subcategoryId_ = subcat;
-    ok = pPayee->UpdateDb(pDb);
-    CHECK(ok);
+    errCode = pCore->payeeList_.UpdatePayee(pPayee->id_, pPayee->name_);
+    CHECK(errCode == 0);
 
     displayTimeTaken(wxT("updatePayee"), start_time);
 }
@@ -688,18 +686,17 @@ TEST(getAmountForPayee)
     CHECK(name == g_PayeeName);
 
     const wxDateTime dt = wxDateTime::Now();
-    double amt = pCore->bTransactionList_.getAmountForPayee(pCore, id, true, dt, dt);
+    double amt = pCore->bTransactionList_.getAmountForPayee(id, true, dt, dt);
     CHECK(amt == 0.0);
 
     displayTimeTaken(wxT("getAmountForPayee"), start_time);
 }
 //----------------------------------------------------------------------------
 
-TEST(deletePayeeWithConstraints)
+TEST(delete_Payee)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    wxSQLite3Database* pDb = get_pDb().get();
     mmCoreDB* pCore = pDb_core().get();
 
     int id = pCore->payeeList_.GetPayeeId(g_PayeeName);
@@ -708,13 +705,14 @@ TEST(deletePayeeWithConstraints)
     wxString name = pCore->payeeList_.GetPayeeName(id);
     CHECK(name == g_PayeeName);
 
-    bool ok = mmDBWrapper::deletePayeeWithConstraints(pDb, id);
+    bool ok = pCore->payeeList_.RemovePayee(id);
+
     CHECK(ok);
 
-    ok = mmDBWrapper::deletePayeeWithConstraints(pDb, 0);
-    CHECK(ok); // returns true even for wrong id
+    ok = pCore->payeeList_.RemovePayee(0);
+    CHECK(!ok); // returns true even for wrong id
 
-    displayTimeTaken(wxT("deletePayeeWithConstraints"), start_time);
+    displayTimeTaken(wxT("delete_Payee"), start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -747,7 +745,7 @@ TEST(add_new_transactions)
     pBankTransaction_1->toAmt_     = 500;
     pBankTransaction_1->status_    = g_status_reconciled;
     pBankTransaction_1->transType_ = g_TransType_deposit;
-    int trans_id_1 = pCore->bTransactionList_.addTransaction(pCore, pBankTransaction_1);
+    int trans_id_1 = pCore->bTransactionList_.addTransaction(pBankTransaction_1);
     CHECK(trans_id_1 == 1);
 
     // Add a withdrawal transaction - Today
@@ -758,7 +756,7 @@ TEST(add_new_transactions)
     pBankTransaction_2->toAmt_     = 200;
     pBankTransaction_2->status_    = g_status_reconciled;
     pBankTransaction_2->transType_ = g_TransType_withdrawal;
-    int trans_id_2 = pCore->bTransactionList_.addTransaction(pCore, pBankTransaction_2);
+    int trans_id_2 = pCore->bTransactionList_.addTransaction(pBankTransaction_2);
     CHECK(trans_id_2 == 2);
 
     // Add a void deposit transaction - 2 days before today;
@@ -769,7 +767,7 @@ TEST(add_new_transactions)
     pBankTransaction_3->toAmt_     = 1200;
     pBankTransaction_3->status_    = g_status_void;
     pBankTransaction_3->transType_ = g_TransType_deposit;
-    int trans_id_3 = pCore->bTransactionList_.addTransaction(pCore, pBankTransaction_3);
+    int trans_id_3 = pCore->bTransactionList_.addTransaction(pBankTransaction_3);
     CHECK(trans_id_3 == 3);
 
     // Checks that the transaction is in the database.
@@ -830,13 +828,13 @@ TEST(copy_paste_transactions)
     pBankTransaction_1->toAmt_     = 100;
     pBankTransaction_1->status_    = g_status_reconciled;
     pBankTransaction_1->transType_ = g_TransType_withdrawal;
-    int trans_id_1 = pCore->bTransactionList_.addTransaction(pCore, pBankTransaction_1);
+    int trans_id_1 = pCore->bTransactionList_.addTransaction(pBankTransaction_1);
     CHECK(trans_id_1 == 1); // The transaction in previous test was not deleted from the database.
 
     bool new_trans_exist = pCore->bTransactionList_.checkForExistingTransaction(pBankTransaction_1);
     CHECK(new_trans_exist);
 
-    boost::shared_ptr<mmBankTransaction> pCopiedTrans = pCore->bTransactionList_.copyTransaction(pCore, trans_id_1, account_id, true);
+    boost::shared_ptr<mmBankTransaction> pCopiedTrans = pCore->bTransactionList_.copyTransaction(trans_id_1, account_id, true);
     int trans_id_2 = pCopiedTrans->transactionID();
     CHECK(trans_id_2 == 2);
 
