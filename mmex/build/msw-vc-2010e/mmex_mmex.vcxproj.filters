@@ -314,9 +314,6 @@
     <ClInclude Include="..\..\src\maincurrencydialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\mm_Scriptable_Objects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\mmaccount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
