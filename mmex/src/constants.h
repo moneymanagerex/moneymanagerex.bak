@@ -98,16 +98,6 @@ const wxString TIPS_BILLS  = wxT("billsdeposits");
 const wxString TIPS_STOCK  = wxT("investment");
 const wxString TIPS_ASSETS = wxT("assets");
 
-const wxString ASSET_TYPE[] = {
-    wxTRANSLATE("Property"),
-    wxTRANSLATE("Automobile"),
-    wxTRANSLATE("Household Object"),
-    wxTRANSLATE("Art"),
-    wxTRANSLATE("Jewellery"),
-    wxTRANSLATE("Cash"),
-    wxTRANSLATE("Other")
-};
-
 const wxString BILLSDEPOSITS_REPEATS[] = {
     wxTRANSLATE("None"),
     wxTRANSLATE("Weekly"),

@@ -20,12 +20,12 @@
 #include "../constants.h"
 #include "../defs.h"
 #include "../htmlbuilder.h"
+#include "../db/assets.h"
 
-mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame) :
-    mmPrintableBase(core),
-    frame_(frame)
-{
-}
+mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame)
+: mmPrintableBase(core)
+, frame_(frame)
+{}
 
 wxString mmReportSummary::getHTMLText()
 {
@@ -152,17 +152,15 @@ wxString mmReportSummary::getHTMLText()
     hb.addRowSeparator(2);
 
     /* Assets */
-    double assetBalance = mmDBWrapper::getAssetBalance(core_->db_.get());
-    wxString assetBalanceStr;
-    mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+    TAssetList asset_list(core_->db_);
 
     hb.startTableRow();
     hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
-    hb.addTableCell(assetBalanceStr, true);
+    hb.addTableCell(asset_list.GetAssetBalanceCurrencyFormat(), true);
     hb.endTableRow();
 
     tBalance += stockBalance;
-    tBalance += assetBalance;
+    tBalance += asset_list.GetAssetBalance();
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     hb.addRowSeparator(2);

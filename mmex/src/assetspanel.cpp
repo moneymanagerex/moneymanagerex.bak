@@ -15,12 +15,9 @@
  ********************************************************/
 
 #include "assetspanel.h"
-#include "util.h"
 #include "guiid.h"
-#include "dbwrapper.h"
 #include "assetdialog.h"
 #include "constants.h"
-
 
 namespace
 {
@@ -38,37 +35,46 @@ namespace
 } // namespace
 
 /*******************************************************/
-BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
-    EVT_LIST_ITEM_ACTIVATED(IDC_PANEL_STOCKS_LISTCTRL,   assetsListCtrl::OnListItemActivated)
-    EVT_LIST_ITEM_RIGHT_CLICK(IDC_PANEL_STOCKS_LISTCTRL, assetsListCtrl::OnItemRightClick)
-    EVT_LIST_ITEM_SELECTED(IDC_PANEL_STOCKS_LISTCTRL,    assetsListCtrl::OnListItemSelected)
-    EVT_LIST_ITEM_DESELECTED(IDC_PANEL_STOCKS_LISTCTRL,  assetsListCtrl::OnListItemDeselected)
-    EVT_LIST_COL_END_DRAG(IDC_PANEL_STOCKS_LISTCTRL,     assetsListCtrl::OnItemResize)
-    EVT_LIST_COL_CLICK(IDC_PANEL_STOCKS_LISTCTRL,        assetsListCtrl::OnColClick)
+BEGIN_EVENT_TABLE(mmAssetsListCtrl, wxListCtrl)
+    EVT_LIST_ITEM_ACTIVATED(IDC_PANEL_STOCKS_LISTCTRL,   mmAssetsListCtrl::OnListItemActivated)
+    EVT_LIST_ITEM_RIGHT_CLICK(IDC_PANEL_STOCKS_LISTCTRL, mmAssetsListCtrl::OnItemRightClick)
+    EVT_LIST_ITEM_SELECTED(IDC_PANEL_STOCKS_LISTCTRL,    mmAssetsListCtrl::OnListItemSelected)
+    EVT_LIST_ITEM_DESELECTED(IDC_PANEL_STOCKS_LISTCTRL,  mmAssetsListCtrl::OnListItemDeselected)
+    EVT_LIST_COL_END_DRAG(IDC_PANEL_STOCKS_LISTCTRL,     mmAssetsListCtrl::OnItemResize)
+    EVT_LIST_COL_CLICK(IDC_PANEL_STOCKS_LISTCTRL,        mmAssetsListCtrl::OnColClick)
 
-    EVT_MENU(MENU_TREEPOPUP_NEW, assetsListCtrl::OnNewAsset)
-    EVT_MENU(MENU_TREEPOPUP_EDIT, assetsListCtrl::OnEditAsset)
-    EVT_MENU(MENU_TREEPOPUP_DELETE, assetsListCtrl::OnDeleteAsset)
+    EVT_MENU(MENU_TREEPOPUP_NEW,    mmAssetsListCtrl::OnNewAsset)
+    EVT_MENU(MENU_TREEPOPUP_EDIT,   mmAssetsListCtrl::OnEditAsset)
+    EVT_MENU(MENU_TREEPOPUP_DELETE, mmAssetsListCtrl::OnDeleteAsset)
 
-    EVT_LIST_KEY_DOWN(wxID_ANY, assetsListCtrl::OnListKeyDown)
+    EVT_LIST_KEY_DOWN(wxID_ANY, mmAssetsListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
 /*******************************************************/
 
-void assetsListCtrl::OnItemResize(wxListEvent& event)
+mmAssetsListCtrl::mmAssetsListCtrl(mmAssetsPanel* cp, wxWindow *parent,
+const wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+: wxListCtrl(parent, id, pos, size, style)
+, m_attr1(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont)
+, m_attr2(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont)
+, cp_(cp)
+, selectedIndex_(-1)
+{}
+
+void mmAssetsListCtrl::OnItemResize(wxListEvent& event)
 {
     int i = event.GetColumn();
     int width = cp_->GetListCtrlWidth(i);
     cp_->core_->iniSettings_->SetIntSetting(wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), width);
 }
 
-void assetsListCtrl::InitVariables()
+void mmAssetsListCtrl::InitVariables()
 {
     m_selected_col = 0;
     m_asc = true;
     cp_->SetFilter(wxT(" 'Property','Automobile','Household Object','Art','Jewellery','Cash','Other' "));
 }
 
-void assetsListCtrl::OnItemRightClick(wxListEvent& event)
+void mmAssetsListCtrl::OnItemRightClick(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
 
@@ -80,43 +86,43 @@ void assetsListCtrl::OnItemRightClick(wxListEvent& event)
     PopupMenu(&menu, event.GetPoint());
 }
 
-wxString assetsListCtrl::OnGetItemText(long item, long column) const
+wxString mmAssetsListCtrl::OnGetItemText(long item, long column) const
 {
     return cp_->getItem(item, column);
 }
 
-void assetsListCtrl::OnListItemSelected(wxListEvent& event)
+void mmAssetsListCtrl::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
     cp_->updateExtraAssetData(selectedIndex_);
 }
 
-void assetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
+void mmAssetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
     selectedIndex_ = -1;
     cp_->updateExtraAssetData(selectedIndex_);
 }
 
-int assetsListCtrl::OnGetItemImage(long item) const
+int mmAssetsListCtrl::OnGetItemImage(long item) const
 {
     int image_id = 0;
-    size_t size = sizeof(ASSET_TYPE)/sizeof(wxString);
+    size_t size = sizeof(ASSET_TYPE_DEF)/sizeof(wxString);
     for(size_t i = 0; i < size; ++i)
     {
-        if (ASSET_TYPE[i] == OnGetItemText(item, COL_TYPE))
+        if (ASSET_TYPE_DEF[i] == OnGetItemText(item, COL_TYPE))
             image_id = i;
     }
 
     return item;
 }
 
-wxListItemAttr* assetsListCtrl::OnGetItemAttr(long item) const
+wxListItemAttr* mmAssetsListCtrl::OnGetItemAttr(long item) const
 {
     /* Returns the alternating background pattern */
     return item % 2 ? (wxListItemAttr *)&m_attr2 : (wxListItemAttr *)&m_attr1;
 }
 
-void assetsListCtrl::OnListKeyDown(wxListEvent& event)
+void mmAssetsListCtrl::OnListKeyDown(wxListEvent& event)
 {
     if (event.GetKeyCode() == WXK_DELETE)
     {
@@ -129,20 +135,20 @@ void assetsListCtrl::OnListKeyDown(wxListEvent& event)
     }
 }
 
-void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
+void mmAssetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
 {
-    mmAssetDialog dlg(this, cp_->core_, NULL, false);
+    mmAssetDialog dlg(this, cp_->core_, cp_, NULL, false);
     if (dlg.ShowModal() == wxID_OK)
     {
         doRefreshItems(dlg.GetAssetID());
     }
 }
 
-void assetsListCtrl::doRefreshItems(int trx_id)
+void mmAssetsListCtrl::doRefreshItems(int trx_id)
 {
     int selectedIndex = cp_->initVirtualListControl(trx_id, m_selected_col, m_asc);
 
-    long cnt = static_cast<long>(cp_->getTrans().size());
+    long cnt = static_cast<long>(cp_->AssetList().entrylist_.size());
 
     if (selectedIndex >= cnt || selectedIndex < 0)
         selectedIndex = m_asc ? cnt - 1 : 0;
@@ -161,24 +167,23 @@ void assetsListCtrl::doRefreshItems(int trx_id)
     selectedIndex_ = selectedIndex;
 }
 
-void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
+void mmAssetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1)    return;
-    if (cp_->getTrans().empty()) return;
-
     wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"),
         _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        mmDBWrapper::deleteAsset(cp_->core_->db_.get(), cp_->getTrans()[selectedIndex_]->id_);
-        DeleteItem(selectedIndex_);
+        boost::shared_ptr<TAssetEntry> pEntry = cp_->AssetList().GetIndexedEntryPtr(selectedIndex_);
+        cp_->AssetList().DeleteEntry(pEntry->GetId());
+
         cp_->initVirtualListControl(selectedIndex_, m_selected_col, m_asc);
         selectedIndex_ = -1;
         cp_->updateExtraAssetData(selectedIndex_);
     }
 }
 
-void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
+void mmAssetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ < 0)     return;
 
@@ -186,10 +191,10 @@ void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
     AddPendingEvent(evt);
 }
 
-void assetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
+void mmAssetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
     //selectedIndex_ = event.GetIndex();
-    mmAssetDialog dlg(this, cp_->core_, cp_->getTrans()[selectedIndex_], true);
+    mmAssetDialog dlg(this, cp_->core_, cp_, cp_->AssetList().entrylist_[selectedIndex_].get(), true);
 
     if (dlg.ShowModal() == wxID_OK)
         doRefreshItems(dlg.GetAssetID());
@@ -197,7 +202,7 @@ void assetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     cp_->updateExtraAssetData(selectedIndex_);
 }
 
-void assetsListCtrl::OnColClick(wxListEvent& event)
+void mmAssetsListCtrl::OnColClick(wxListEvent& event)
 {
     if(0 > event.GetColumn() || event.GetColumn() >= COL_MAX) return;
 
@@ -214,7 +219,7 @@ void assetsListCtrl::OnColClick(wxListEvent& event)
     SetColumn(m_selected_col, item);
 
     int trx_id = -1;
-    if (selectedIndex_>=0) trx_id = cp_->getTrans()[selectedIndex_]->id_;
+    if (selectedIndex_>=0) trx_id = cp_->AssetList().entrylist_[selectedIndex_]->GetId();
 
     doRefreshItems(trx_id);
 }
@@ -230,6 +235,7 @@ END_EVENT_TABLE()
 
 mmAssetsPanel::mmAssetsPanel(wxWindow *parent, mmCoreDB* core)
 : mmPanelBase(core)
+, asset_list_(core->db_, false) // don't load entries at this point.
 {
     Create(parent, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxPanelNameStr);
 }
@@ -248,16 +254,13 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
 
     m_listCtrlAssets->InitVariables();
     initVirtualListControl();
-    if (!m_trans.empty())
-        m_listCtrlAssets->EnsureVisible(static_cast<long>(m_trans.size()) - 1);
+    // Not sure what this achives at this stage.
+    //if (!m_trans.empty())
+    //    m_listCtrlAssets->EnsureVisible(static_cast<long>(m_trans.size()) - 1);
 
     windowsFreezeThaw(this);
 
     return true;
-}
-
-mmAssetsPanel::~mmAssetsPanel()
-{
 }
 
 void mmAssetsPanel::CreateControls()
@@ -313,7 +316,7 @@ void mmAssetsPanel::CreateControls()
     m_imageList->Add(wxBitmap(wxImage(uparrow_xpm).Scale(16, 16)));
     m_imageList->Add(wxBitmap(wxImage(downarrow_xpm).Scale(16, 16)));
 
-    m_listCtrlAssets = new assetsListCtrl( this, itemSplitterWindow10,
+    m_listCtrlAssets = new mmAssetsListCtrl( this, itemSplitterWindow10,
         IDC_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
 
@@ -396,64 +399,33 @@ void mmAssetsPanel::CreateControls()
 int mmAssetsPanel::initVirtualListControl(int id, int col, bool asc)
 {
     /* Clear all the records */
-    m_trans.clear();
     m_listCtrlAssets->DeleteAllItems();
 
     wxListItem item;
     item.SetMask(wxLIST_MASK_IMAGE);
     item.SetImage(asc ? 8 : 7);
-
     m_listCtrlAssets->SetColumn(col, item);
 
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    const  wxString sql = wxString::FromUTF8(SELECT_ALL_FROM_ASSETS_V1)
+    const wxString sql = wxString::FromUTF8(SELECT_ALL_FROM_ASSETS_V1)
         + wxString::Format(wxT(" where ASSETTYPE in ( %s ) "), filter_.c_str())
-        + wxT(" order by ") + (wxString()<<col+1)
+        + wxT(" order by ") + (wxString() << col + 1)
         + (!asc ? wxT(" desc") : wxT(" "));
+    asset_list_.LoadAssetEntriesUsing(sql);
 
-    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql);
+    m_listCtrlAssets->SetItemCount(asset_list_.entrylist_.size());
+    header_text_->SetLabel(wxString::Format(_("Total: %s"), asset_list_.GetAssetBalanceCurrencyEditFormat()));
 
-    int cnt = 0, selected_item = -1;
-    double total = 0.0;
-
-    for (; q1.NextRow(); ++cnt)
+    int selected_item = -1;
+    for (int i = 0; i < asset_list_.CurrentListSize(); ++i)
     {
-        mmAssetHolder th;
-
-        th.id_ = q1.GetInt(wxT("ASSETID"));
-        th.assetName_ = q1.GetString(wxT("ASSETNAME"));
-
-        wxString dateString = q1.GetString(wxT("STARTDATE"));
-        th.assetDate_ = mmGetStorageStringAsDate(dateString);
-
-        th.assetType_ =  q1.GetString(wxT("ASSETTYPE"));
-        th.sAssetValueChange_ =  q1.GetString(wxT("VALUECHANGE"));
-
-        th.assetNotes_ = q1.GetString(wxT("NOTES"));
-
-        th.valueChange_ = q1.GetDouble(wxT("VALUECHANGERATE"));
-        th.value_ = q1.GetDouble(wxT("VALUE"));
-
-		th.todayValue_ = mmDBWrapper::getAssetValue(core_->db_.get(), th.id_);
-        total += th.todayValue_;
-
-        mmex::formatDoubleToCurrencyEdit(th.todayValue_, th.todayValueStr_);
-        mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
-        mmex::formatDoubleToCurrencyEdit(th.valueChange_, th.valueChangeStr_);
-
-        m_trans.push_back( new mmAssetHolder (th));
-
-		if (th.id_ == id) selected_item = cnt;
-    }	
-
-    m_listCtrlAssets->SetItemCount(cnt);
-    q1.Finalize();
-
-    wxString balance;
-    mmex::formatDoubleToCurrencyEdit(total, balance);
-    wxString lbl  = wxString::Format(_("Total: %s"), balance.c_str());
-    header_text_->SetLabel(lbl);
+        if (id == asset_list_.GetIndexedEntryPtr(i)->GetId())
+        {
+            selected_item = i;
+            break;
+        }
+    }
 
     return selected_item;
 }
@@ -475,11 +447,11 @@ void mmAssetsPanel::OnEditAsset(wxCommandEvent& event)
 
 wxString mmAssetsPanel::getItem(long item, long column)
 {
-    if (column == COL_NAME)  return m_trans[item]->assetName_;
-    if (column == COL_TYPE)  return wxGetTranslation(m_trans[item]->assetType_);
-    if (column == COL_VALUE) return m_trans[item]->todayValueStr_;
-    if (column == COL_DATE)  return mmGetDateForDisplay(m_trans[item]->assetDate_);
-    if (column == COL_NOTES) return m_trans[item]->assetNotes_;
+    if (column == COL_NAME)  return asset_list_.entrylist_[item]->name_;
+    if (column == COL_TYPE)  return wxGetTranslation(asset_list_.entrylist_[item]->type_);
+    if (column == COL_VALUE) return wxString() << asset_list_.entrylist_[item]->GetValueCurrencyEditFormat();
+    if (column == COL_DATE)  return asset_list_.entrylist_[item]->display_date_;
+    if (column == COL_NOTES) return asset_list_.entrylist_[item]->notes_;
 
     return wxGetEmptyString();
 }
@@ -494,10 +466,12 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
         wxString miniInfo;
 
         miniInfo << wxT("\t") << _("Change in Value") << wxT(": ")
-            << wxGetTranslation(m_trans[selIndex]->sAssetValueChange_);
-        if (m_trans[selIndex]->sAssetValueChange_ != wxT("None"))
-            miniInfo<< wxT(" = ") << m_trans[selIndex]->valueChange_ << wxT("%");
-        st->SetLabel(m_trans[selIndex]->assetNotes_);
+        << wxGetTranslation(asset_list_.entrylist_[selIndex]->rate_type_);
+
+        if (asset_list_.entrylist_[selIndex]->rate_type_ != ASSET_RATE_DEF[NONE])
+            miniInfo<< wxT(" = ") << asset_list_.entrylist_[selIndex]->rate_value_ << wxT("%");
+
+        st->SetLabel(asset_list_.entrylist_[selIndex]->notes_);
         stm->SetLabel(miniInfo);
     }
     else
@@ -524,10 +498,10 @@ void mmAssetsPanel::OnMouseLeftDown ( wxMouseEvent& event )
     wxMenu* menu = new wxMenu;
     menu->Append(new wxMenuItem(menu, 0, wxGetTranslation(wxTRANSLATE("All"))));
 
-    size_t size = sizeof(ASSET_TYPE)/sizeof(wxString);
+    size_t size = sizeof(ASSET_TYPE_DEF)/sizeof(wxString);
     for(size_t i = 0; i < size; ++i)
     {
-        wxMenuItem* menuItem = new wxMenuItem(menu, i+1, wxGetTranslation(ASSET_TYPE[i]));
+        wxMenuItem* menuItem = new wxMenuItem(menu, i+1, wxGetTranslation(ASSET_TYPE_DEF[i]));
         menu->Append(menuItem);
     }
     PopupMenu(menu);
@@ -543,13 +517,13 @@ void mmAssetsPanel::OnViewPopupSelected(wxCommandEvent& event)
     filter_ = wxT("");
     wxString label;
 
-    int size = sizeof(ASSET_TYPE)/sizeof(wxString);
+    int size = sizeof(ASSET_TYPE_DEF)/sizeof(wxString);
     for(int i = 0; i < size; ++i)
     {
         if (evt == 0 || evt == i+1)
         {
-            filter_ << wxT("'") << ASSET_TYPE[i] << wxT("'") << wxT(",");
-            if (evt == i+1) label = ASSET_TYPE[i];
+            filter_ << wxT("'") << ASSET_TYPE_DEF[i] << wxT("'") << wxT(",");
+            if (evt == i+1) label = ASSET_TYPE_DEF[i];
         }
     }
     filter_.RemoveLast(1);

@@ -16,23 +16,12 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
-#ifndef _MM_EX_REPORTSUMMARYASSETS_H_
-#define _MM_EX_REPORTSUMMARYASSETS_H_
-
+#pragma once
 #include "../reportbase.h"
-
-class wxSQLite3Database;
 
 class mmReportSummaryAssets : public mmPrintableBase 
 {
 public:
-    mmReportSummaryAssets(mmCoreDB* core,  wxSQLite3Database* db) : mmPrintableBase(core), db_(db) {}
-
+    mmReportSummaryAssets(mmCoreDB* core);
     wxString getHTMLText();
-
-private:
-    wxSQLite3Database* db_;
 };
-
-#endif //_MM_EX_REPORTSUMMARYASSETS_H_
-

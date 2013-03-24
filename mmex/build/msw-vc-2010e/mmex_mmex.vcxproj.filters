@@ -19,6 +19,12 @@
     <Filter Include="Source Files\reports">
       <UniqueIdentifier>{cff7ab9a-0de6-4517-9679-eec2479295b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\db">
+      <UniqueIdentifier>{6a9c7355-3005-47b8-8da6-f6b46a1674f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\db">
+      <UniqueIdentifier>{53d1a7a8-ed3c-4701-848e-41fcb1497fc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\aboutdialog.cpp">
@@ -239,6 +245,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\reports\budgetcategorysummary.cpp">
       <Filter>Source Files\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\db\assets.cpp">
+      <Filter>Source Files\db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\db\entry_base.cpp">
+      <Filter>Source Files\db</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,6 +484,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\transdialog.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\db\assets.h">
+      <Filter>Header Files\db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\db\entry_base.h">
+      <Filter>Header Files\db</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

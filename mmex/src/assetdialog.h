@@ -14,11 +14,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
-#ifndef _MM_EX_ASSETDIALOG_H_
-#define _MM_EX_ASSETDIALOG_H_
-
-#include "defs.h"
-#include "mmcoredb.h"
+#pragma once
 #include "assetspanel.h"
 
 class wxDatePickerCtrl;
@@ -30,13 +26,15 @@ class mmAssetDialog : public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
-    mmAssetDialog() : core_(), asset_holder_(), m_edit() {}
-    mmAssetDialog(wxWindow *parent, mmCoreDB* core, mmAssetHolder* asset_holder, bool edit);
+    mmAssetDialog();
+    mmAssetDialog(wxWindow *parent, mmCoreDB* core, mmAssetsPanel* assetsPanel,
+        TAssetEntry* pAssetEntry, bool edit);
     int GetAssetID() {return assetID_;}
 
 private:
     mmCoreDB* core_;
-    mmAssetHolder* asset_holder_;
+    mmAssetsPanel* assetsPanel_;
+    TAssetEntry* pAssetEntry_;
     bool m_edit;
     bool assetRichText;
 
@@ -59,10 +57,7 @@ private:
     void OnChangeAppreciationType(wxCommandEvent& event);
     void enableDisableRate(bool en);
     
-    void fillControls();
     void dataToControls();
     void changeFocus(wxChildFocusEvent& event);
     int assetID_;
-
 };
-#endif

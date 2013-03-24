@@ -26,6 +26,7 @@
 #include "htmlbuilder.h"
 #include "billsdepositspanel.h"
 #include "mmgraphincexpensesmonth.h"
+#include "db/assets.h"
 
 
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
@@ -427,10 +428,8 @@ wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, do
 wxString mmHomePagePanel::displayAssets(double& tBalance)
 {
     mmHTMLBuilder hb;
-    double assetBalance = mmDBWrapper::getAssetBalance(core_->db_.get());
-    wxString assetBalanceStr;
     core_->currencyList_.LoadBaseCurrencySettings();
-    mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+    TAssetList asset_list(core_->db_);
 
     if (mmIniOptions::instance().enableAssets_)
     {
@@ -442,7 +441,7 @@ wxString mmHomePagePanel::displayAssets(double& tBalance)
         hb.startTableRow();
         hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
         hb.addTableCell(wxT (""), true);
-        hb.addTableCell(assetBalanceStr, true, true, true);
+        hb.addTableCell(asset_list.GetAssetBalanceCurrencyFormat(), true, true, true);
         hb.endTableRow();
         hb.endTable();
 
@@ -450,7 +449,7 @@ wxString mmHomePagePanel::displayAssets(double& tBalance)
         hb.endTableRow();
         hb.endTable();
     }
-    tBalance += assetBalance;
+    tBalance += asset_list.GetAssetBalance();
     return hb.getHTMLText();
 }
 
