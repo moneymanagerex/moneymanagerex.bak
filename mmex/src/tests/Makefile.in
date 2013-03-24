@@ -178,6 +178,8 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_summarystocks.o \
 	mmex_tests_transactions.o \
 	mmex_tests_trx_stats.o \
+	mmex_tests_assets.o \
+	mmex_tests_entry_base.o \
 	mmex_tests_platfdep.o \
 	mmex_tests_dbwrapper_test.o \
 	mmex_tests_mmex_lua_test.o \
@@ -628,6 +630,12 @@ mmex_tests_transactions.o: $(srcdir)/../../src/reports/transactions.cpp
 
 mmex_tests_trx_stats.o: $(srcdir)/../../src/reports/trx_stats.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/trx_stats.cpp
+
+mmex_tests_assets.o: $(srcdir)/../../src/db/assets.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/assets.cpp
+
+mmex_tests_entry_base.o: $(srcdir)/../../src/db/entry_base.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/entry_base.cpp
 
 mmex_tests_platfdep.o: $(srcdir)/../../src/unix/platfdep.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/unix/platfdep.cpp

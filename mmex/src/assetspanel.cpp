@@ -415,7 +415,8 @@ int mmAssetsPanel::initVirtualListControl(int id, int col, bool asc)
     asset_list_.LoadAssetEntriesUsing(sql);
 
     m_listCtrlAssets->SetItemCount(asset_list_.entrylist_.size());
-    header_text_->SetLabel(wxString::Format(_("Total: %s"), asset_list_.GetAssetBalanceCurrencyEditFormat()));
+    header_text_->SetLabel(wxString::Format(_("Total: %s")
+        , asset_list_.GetAssetBalanceCurrencyEditFormat().c_str()));
 
     int selected_item = -1;
     for (int i = 0; i < asset_list_.CurrentListSize(); ++i)

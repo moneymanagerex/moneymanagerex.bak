@@ -108,7 +108,7 @@ void TAssetEntry::Update(wxSQLite3Database* db)
     catch(const wxSQLite3Exception& e)
     {
         //wxLogDebug(wxT("TAssetEntry:Update: %s"), e.GetMessage());
-        wxLogError(wxT("TAssetEntry:Update: %s"), e.GetMessage());
+        wxLogError(wxT("TAssetEntry:Update: %s"), e.GetMessage().c_str());
     }
 }
 
@@ -227,7 +227,7 @@ void TAssetList::LoadEntries(bool load_entries)
     catch (const wxSQLite3Exception& e)
     {
         //wxLogDebug(wxT("TAssetList::LoadEntries %s"), e.GetMessage());
-        wxLogError(wxT("TAssetList::LoadEntries %s"), e.GetMessage());
+        wxLogError(wxT("TAssetList::LoadEntries %s"), e.GetMessage().c_str());
     }
 }
 
