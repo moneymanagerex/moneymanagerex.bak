@@ -306,7 +306,9 @@ bool mmQIFImportDialog::warning_message()
 
 int mmQIFImportDialog::mmImportQIF()
 {
-    wxString acctName, sMsg;
+    wxString acctName = core_->accountList_.GetAccountName(last_imported_acc_id_);
+    int fromAccountID = core_->accountList_.GetAccountId(acctName);
+    wxString sMsg;
 
     //Check date restrictions
     wxDateTime fromDate = wxDateTime::Now(), toDate = wxDateTime::Now();
@@ -318,13 +320,8 @@ int mmQIFImportDialog::mmImportQIF()
         toDate = toDateCtrl_->GetValue().GetDateOnly();
 
     wxArrayString accounts_name = core_->accountList_.getAccountsName();
-    int fromAccountID = -1;
 
-    //TODO: if base currency does not set - will be crash when new account adding
-    int iBaseCurrencyID = core_->currencyList_.GetBaseCurrencySettings();
-    wxString sDefCurrencyName = wxT("USD");
-    if (iBaseCurrencyID > 0)
-        sDefCurrencyName = core_->currencyList_.getCurrencyName(iBaseCurrencyID);
+    wxString sDefCurrencyName = core_->currencyList_.getCurrencyName(core_->currencyList_.GetBaseCurrencySettings());
 
     fileviewer file_dlg(wxT(""), parent_);
     file_dlg.Show();
@@ -467,13 +464,12 @@ int mmQIFImportDialog::mmImportQIF()
                     pAccount->acctType_ = ACCOUNT_TYPE_BANK;
                     pAccount->name_ = acctName;
                     pAccount->initialBalance_ = val;
-
-                    pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(iBaseCurrencyID);
+                    pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(sDefCurrencyName);
                     // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
-                    if ( ! core_->accountList_.AccountExists(acctName))
+                    if ( ! core_->accountList_.AccountExists(pAccount->name_))
                         from_account_id = core_->accountList_.AddAccount(pAccount);
-                    accounts_name.Add(acctName);
-
+                    accounts_name.Add(pAccount->name_);
+                    acctName = pAccount->name_;
                     sMsg = wxString::Format(_("Added account '%s'"), acctName.c_str())
                         << wxT("\n") << wxString::Format(_("Initial Balance: %s"), (wxString()<<val).c_str());
                     logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
@@ -644,11 +640,6 @@ int mmQIFImportDialog::mmImportQIF()
             }
 
             to_account_id = -1;
-            if (from_account_id == -1)
-            {
-                from_account_id = core_->accountList_.GetAccountId(newAccounts_->GetString(0));
-                fromAccountID = from_account_id;
-            }
             if (type == TRANS_TYPE_TRANSFER_STR)
             {
                 if (accounts_name.Index(sToAccountName) == wxNOT_FOUND)
@@ -932,7 +923,7 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
 
         if (lineType(readLine) == Date)
         {
-            wxDateTime dtdt = wxDateTime::Now().GetDateOnly();
+            wxDateTime dtdt;
             wxString sDate = getLineData(readLine);
 
             if (!mmParseDisplayStringToDate(dtdt, sDate, dateFormat_))
@@ -941,33 +932,33 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
         }
     }
 
-    if (newAccounts_->GetCount() == 0)
+    bbFile_->Enable(true);
+    bbFile_->SetBitmapLabel(wxBitmap(flag_xpm));
+    bbFormat_->Enable(dateFormatIsOK);
+    if (dateFormatIsOK)
+        bbFormat_->SetBitmapLabel(wxBitmap(flag_xpm));
+
+    if (sAccountName.IsEmpty() && last_imported_acc_id_<0)
     {
-        sAccountName = wxGetTextFromUser(_("Enter name for account to import to")
-            , _("Account missing"), wxT(""));
-        if (sAccountName.IsEmpty())
-            return false;
-        else
-            newAccounts_->Append(sAccountName);
+        wxArrayString data = core_->accountList_.getAccountsName();
+        sAccountName = wxGetSingleChoice(_("Choose Account to Import to")
+            , _("Account"), data);
+        last_imported_acc_id_ = core_->accountList_.GetAccountId(sAccountName);
+        if (last_imported_acc_id_ < 0) return false;
     }
 
     if (newAccounts_->GetCount() > 0)
     {
-        bbFile_->Enable(true);
-        bbFile_->SetBitmapLabel(wxBitmap(flag_xpm));
         int iBaseCurrencyID = core_->currencyList_.GetBaseCurrencySettings();
-        if (iBaseCurrencyID > 0)
-            newAccounts_->Enable(true);
-        else
+        if (iBaseCurrencyID < 0)
         {
             mmShowErrorMessageInvalid(this, _("Base Currency Not Set"));
             return false;
         }
-
+        newAccounts_->Enable(true);
         newAccounts_->SetSelection(0);
+        bbAccounts_->SetBitmapLabel(wxBitmap(flag_xpm));
     }
-    else
-        return false;
 
     if (dateFormatIsOK)
     {
