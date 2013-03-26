@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-24 22:35+0400\n"
-"PO-Revision-Date: 2013-03-24 22:35+0400\n"
+"POT-Creation-Date: 2013-03-26 13:05+0400\n"
+"PO-Revision-Date: 2013-03-26 13:22+0400\n"
 "Last-Translator: Nikolay <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "Language: de\n"
@@ -259,7 +259,7 @@ msgid "Repeat Transaction - Auto Execution Checking"
 msgstr "wiederkehrenden Buchungen - Prüfung automatische Durchführung"
 
 #: src/billsdepositsdialog.cpp:207 src/billsdepositsdialog.cpp:1107
-#: src/mmtransaction.cpp:277 src/qif_import.cpp:709
+#: src/mmtransaction.cpp:277 src/qif_import.cpp:714
 #: src/transactionfilterdialog.cpp:127 src/transdialog.cpp:961
 msgid "Split Category"
 msgstr "Kategorie teilen"
@@ -2019,7 +2019,7 @@ msgstr "(Optional) Geben Sie einen Titel oder Ihren Namen ein."
 msgid "Used as a database title for displayed and printed reports."
 msgstr "wird für Titel  und gedruckte Berichte verwendet."
 
-#: src/mmex.cpp:361
+#: src/mmex.cpp:361 src/qif_import.cpp:963
 msgid "Base Currency Not Set"
 msgstr "Basiswährung nicht definiert"
 
@@ -3922,7 +3922,7 @@ msgstr "Konto zum Exportieren auswählen:"
 msgid "QIF Export"
 msgstr "QIF-Export"
 
-#: src/qif_export.cpp:232 src/qif_import.cpp:859
+#: src/qif_export.cpp:232 src/qif_import.cpp:864
 msgid "QIF Files"
 msgstr "QIF-Dateien"
 
@@ -3981,7 +3981,7 @@ msgstr ""
 msgid "Are you are sure you want to proceed with the import?"
 msgstr "sind Sie sicher das mit dem Import weitergefahren werden soll?"
 
-#: src/qif_import.cpp:301 src/qif_import.cpp:510 src/qif_import.cpp:848
+#: src/qif_import.cpp:301 src/qif_import.cpp:510 src/qif_import.cpp:853
 #: src/qif_import.h:2
 msgid "QIF Import"
 msgstr "QIF-Import"
@@ -3999,7 +3999,7 @@ msgstr " falsche QIF-Zeile"
 msgid "Importing account type: %s"
 msgstr "Importiere Kontotyp : "
 
-#: src/qif_import.cpp:477 src/qif_import.cpp:665
+#: src/qif_import.cpp:477 src/qif_import.cpp:670
 #, fuzzy, c-format
 msgid "Added account '%s'"
 msgstr "Konto:"
@@ -4048,47 +4048,52 @@ msgstr "Betrag ist leer"
 msgid "Category is missing"
 msgstr "Kategorie"
 
-#: src/qif_import.cpp:635 src/qif_import.cpp:694 src/univcsvdialog.cpp:443
+#: src/qif_import.cpp:635 src/qif_import.cpp:699 src/univcsvdialog.cpp:443
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/qif_import.cpp:677
+#: src/qif_import.cpp:682 src/qif_import.cpp:947
 #, fuzzy
 msgid "Account missing"
 msgstr "Kontenliste"
 
-#: src/qif_import.cpp:692
+#: src/qif_import.cpp:697
 #, fuzzy
 msgid "Payee missing"
 msgstr "Empfänger"
 
-#: src/qif_import.cpp:700
+#: src/qif_import.cpp:705
 #, fuzzy, c-format
 msgid "Payee Added: %s"
 msgstr "Zahlungsempfänger zugefügt:"
 
-#: src/qif_import.cpp:812
+#: src/qif_import.cpp:817
 #, fuzzy, c-format
 msgid "Transactions imported from QIF: %ld"
 msgstr " Buchungen importiert von QIF:"
 
-#: src/qif_import.cpp:841
+#: src/qif_import.cpp:846
 msgid "Import finished successfully"
 msgstr ""
 
-#: src/qif_import.cpp:845 src/univcsvdialog.cpp:743
+#: src/qif_import.cpp:850 src/univcsvdialog.cpp:743
 msgid "Imported transactions discarded by user!"
 msgstr "Importierte Buchungen durch Benutzer verworfen!"
 
-#: src/qif_import.cpp:860
+#: src/qif_import.cpp:865
 #, fuzzy
 msgid "Choose QIF data file to Import"
 msgstr "QIF-Datei für Import auswählen"
 
-#: src/qif_import.cpp:902
+#: src/qif_import.cpp:907
 #, fuzzy, c-format
 msgid "Line %i"
 msgstr "Zeile : "
+
+#: src/qif_import.cpp:946
+#, fuzzy
+msgid "Enter name for account to import to"
+msgstr "In welches Konto importierten:"
 
 #: src/recentfiles.cpp:99
 msgid "Empty"
@@ -6112,10 +6117,6 @@ msgstr "Andere"
 
 #~ msgid "Import from CSV"
 #~ msgstr "Importiere von CSV"
-
-#, fuzzy
-#~ msgid "Choose account to import to:"
-#~ msgstr "In welches Konto importierten:"
 
 #, fuzzy
 #~ msgid "Transactions imported from CSV"
