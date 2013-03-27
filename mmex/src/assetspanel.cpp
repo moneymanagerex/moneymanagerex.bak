@@ -349,6 +349,8 @@ void mmAssetsPanel::CreateControls()
     m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));      // Jewellery
     m_imageList->Add(wxBitmap(wxImage(coin_xpm).Scale(16, 16)));    // Cash
     m_imageList->Add(wxBitmap(wxImage(rubik_cube_xpm).Scale(16, 16)));          // Other
+    m_imageList->Add(wxBitmap(wxImage(uparrow_xpm).Scale(16, 16)));
+    m_imageList->Add(wxBitmap(wxImage(downarrow_xpm).Scale(16, 16))); 
 
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"));
