@@ -55,8 +55,8 @@ END_EVENT_TABLE()
 mmAssetsListCtrl::mmAssetsListCtrl(mmAssetsPanel* cp, wxWindow *parent,
 const wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 : wxListCtrl(parent, id, pos, size, style)
-, m_attr1(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont)
-, m_attr2(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont)
+, m_attr1(*wxBLACK, mmColors::listAlternativeColor0, wxNullFont)
+, m_attr2(*wxBLACK, mmColors::listAlternativeColor1, wxNullFont)
 , cp_(cp)
 , selectedIndex_(-1)
 {}
@@ -346,9 +346,9 @@ void mmAssetsPanel::CreateControls()
     m_imageList->Add(wxBitmap(wxImage(car_xpm).Scale(16, 16)));             // Automobile
     m_imageList->Add(wxBitmap(wxImage(clock_xpm).Scale(16, 16)));           // Household Object
     m_imageList->Add(wxBitmap(wxImage(art_xpm).Scale(16, 16)));             // Art
-    m_imageList->Add(wxBitmap(wxImage(rubik_cube_xpm).Scale(16, 16)));      // Jewellery
-    m_imageList->Add(wxBitmap(wxImage(money_dollar_xpm).Scale(16, 16)));    // Cash
-    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));          // Other
+    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));      // Jewellery
+    m_imageList->Add(wxBitmap(wxImage(coin_xpm).Scale(16, 16)));    // Cash
+    m_imageList->Add(wxBitmap(wxImage(rubik_cube_xpm).Scale(16, 16)));          // Other
 
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"));
