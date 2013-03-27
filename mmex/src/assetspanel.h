@@ -36,6 +36,8 @@ public:
     void OnNewAsset(wxCommandEvent& event);
     void OnEditAsset(wxCommandEvent& event);
     void OnDeleteAsset(wxCommandEvent& event);
+    void OnDuplicateAsset(wxCommandEvent& event);
+
     void InitVariables();
     void doRefreshItems(int trx_id = -1);
 
@@ -59,6 +61,7 @@ private:
     void OnListItemDeselected(wxListEvent& event);
     void OnColClick(wxListEvent& event);
     void OnItemResize(wxListEvent& event);
+    bool EditAsset(TAssetEntry* pEntry);
 };
 
 class mmAssetsPanel : public mmPanelBase
@@ -71,10 +74,10 @@ public:
     void updateExtraAssetData(int selIndex);
     int initVirtualListControl(int trx_id = -1, int col = 0, bool asc = true);
     wxString getItem(long item, long column);
-    void SetFilter(wxString filter) {filter_=filter; }
-    int GetListCtrlWidth(int id) {return m_listCtrlAssets->GetColumnWidth(id);}
-    void SetListCtrlColumn(int m_selected_col, wxListItem item)
-    {m_listCtrlAssets->SetColumn(m_selected_col, item);}
+    void SetFilter(wxString filter);
+    int GetListCtrlWidth(int id);
+    void SetListCtrlColumn(int m_selected_col, wxListItem item);
+
     TAssetList& AssetList() { return asset_list_; }
 
 private:
