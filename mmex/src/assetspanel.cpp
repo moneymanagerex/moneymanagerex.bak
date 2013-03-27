@@ -46,6 +46,7 @@ BEGIN_EVENT_TABLE(mmAssetsListCtrl, wxListCtrl)
     EVT_MENU(MENU_TREEPOPUP_NEW,    mmAssetsListCtrl::OnNewAsset)
     EVT_MENU(MENU_TREEPOPUP_EDIT,   mmAssetsListCtrl::OnEditAsset)
     EVT_MENU(MENU_TREEPOPUP_DELETE, mmAssetsListCtrl::OnDeleteAsset)
+    EVT_MENU(MENU_ON_DUPLICATE_TRANSACTION, mmAssetsListCtrl::OnDuplicateAsset)
 
     EVT_LIST_KEY_DOWN(wxID_ANY, mmAssetsListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
@@ -81,6 +82,8 @@ void mmAssetsListCtrl::OnItemRightClick(wxListEvent& event)
     wxMenu menu;
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Asset"));
     menu.AppendSeparator();
+    menu.Append(MENU_ON_DUPLICATE_TRANSACTION, _("D&uplicate Asset"));
+    menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Asset"));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Asset"));
     PopupMenu(&menu, event.GetPoint());
@@ -109,11 +112,11 @@ int mmAssetsListCtrl::OnGetItemImage(long item) const
     size_t size = sizeof(ASSET_TYPE_DEF)/sizeof(wxString);
     for(size_t i = 0; i < size; ++i)
     {
-        if (ASSET_TYPE_DEF[i] == OnGetItemText(item, COL_TYPE))
+        if (ASSET_TYPE_DEF[i] == cp_->AssetList().entrylist_[item]->type_)
             image_id = i;
     }
 
-    return item;
+    return image_id;
 }
 
 wxListItemAttr* mmAssetsListCtrl::OnGetItemAttr(long item) const
@@ -191,15 +194,45 @@ void mmAssetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
     AddPendingEvent(evt);
 }
 
+void mmAssetsListCtrl::OnDuplicateAsset(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ < 0)     return;
+
+    int original_index = selectedIndex_;
+
+    // Duplicate the asset entry
+    TAssetEntry* pNewEntry = new TAssetEntry(cp_->AssetList().entrylist_[selectedIndex_].get());
+    int new_asset_id = cp_->AssetList().AddEntry(pNewEntry);
+    // Locate new entry in the visual list.
+    cp_->AssetList().GetEntryPtr(new_asset_id);
+    selectedIndex_ = cp_->AssetList().GetCurrentIndex();
+    
+    if (! EditAsset(pNewEntry))
+    {
+        // remove the duplicate asset canceled by user.
+        cp_->AssetList().DeleteEntry(new_asset_id);
+        selectedIndex_ = original_index;
+        cp_->updateExtraAssetData(selectedIndex_);
+    }
+}
+
 void mmAssetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
-    //selectedIndex_ = event.GetIndex();
-    mmAssetDialog dlg(this, cp_->core_, cp_, cp_->AssetList().entrylist_[selectedIndex_].get(), true);
+    EditAsset(cp_->AssetList().entrylist_[selectedIndex_].get());
+}
 
+bool mmAssetsListCtrl::EditAsset(TAssetEntry* pEntry)
+{
+    mmAssetDialog dlg(this, cp_->core_, cp_, pEntry, true);
+    bool edit = true;
     if (dlg.ShowModal() == wxID_OK)
+    {
         doRefreshItems(dlg.GetAssetID());
+        cp_->updateExtraAssetData(selectedIndex_);
+    }
+    else edit = false;
 
-    cp_->updateExtraAssetData(selectedIndex_);
+    return edit;
 }
 
 void mmAssetsListCtrl::OnColClick(wxListEvent& event)
@@ -300,29 +333,24 @@ void mmAssetsPanel::CreateControls()
     /* ---------------------- */
 
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( this, wxID_STATIC,
-        wxDefaultPosition, wxSize(200, 200), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
-
-    wxSize imageSize(16, 16);
-    m_imageList.reset(new wxImageList(imageSize.GetWidth(), imageSize.GetHeight()));
-    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));
-    //TODO: Provide more icons
-    //m_imageList->Add(wxBitmap(wxImage(car_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(uparrow_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(downarrow_xpm).Scale(16, 16)));
+        wxDefaultPosition, wxSize(200, 200), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER);
 
     m_listCtrlAssets = new mmAssetsListCtrl( this, itemSplitterWindow10,
         IDC_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
-        wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
+        wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
 
-    //m_imageList.get()->Add(wxBitmap(assets_xpm));
+    wxSize imageSize(16, 16);
+    m_imageList.reset(new wxImageList(imageSize.GetWidth(), imageSize.GetHeight()));
+    //TODO: Provide better icons
+    m_imageList->Add(wxBitmap(wxImage(house_xpm).Scale(16, 16)));           // Property
+    m_imageList->Add(wxBitmap(wxImage(car_xpm).Scale(16, 16)));             // Automobile
+    m_imageList->Add(wxBitmap(wxImage(clock_xpm).Scale(16, 16)));           // Household Object
+    m_imageList->Add(wxBitmap(wxImage(art_xpm).Scale(16, 16)));             // Art
+    m_imageList->Add(wxBitmap(wxImage(rubik_cube_xpm).Scale(16, 16)));      // Jewellery
+    m_imageList->Add(wxBitmap(wxImage(money_dollar_xpm).Scale(16, 16)));    // Cash
+    m_imageList->Add(wxBitmap(wxImage(assets_xpm).Scale(16, 16)));          // Other
+
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
-
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"));
 
     wxListItem itemCol;
@@ -455,6 +483,21 @@ wxString mmAssetsPanel::getItem(long item, long column)
     if (column == COL_NOTES) return asset_list_.entrylist_[item]->notes_;
 
     return wxGetEmptyString();
+}
+
+void mmAssetsPanel::SetFilter(wxString filter)
+{
+    filter_ = filter;
+}
+
+int mmAssetsPanel::GetListCtrlWidth(int id)
+{
+    return m_listCtrlAssets->GetColumnWidth(id);
+}
+
+void mmAssetsPanel::SetListCtrlColumn(int m_selected_col, wxListItem item)
+{
+    m_listCtrlAssets->SetColumn(m_selected_col, item);
 }
 
 void mmAssetsPanel::updateExtraAssetData(int selIndex)
