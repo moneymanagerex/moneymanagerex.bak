@@ -508,10 +508,13 @@ bool mmParseDisplayStringToDate(wxDateTime& date, wxString sDate, wxString sDate
     sDate.Replace(wxT(","), s);
     sDate.Replace(wxT(" "), s);
 
-    if (sDate.Len()<9)
+    //Bad idea to change date mask here.
+    //some dates may be wrong parsed, for example:
+    // 1/1/2001 & 01/01/01
+    /*if (sDate.Len()<9)
         sDateMask.Replace(wxT("%Y"), wxT("%y"));
     else
-        sDateMask.Replace(wxT("%y"), wxT("%Y"));
+        sDateMask.Replace(wxT("%y"), wxT("%Y"));*/
 
     wxStringTokenizer token(sDate, s);
     double a,b,c;
