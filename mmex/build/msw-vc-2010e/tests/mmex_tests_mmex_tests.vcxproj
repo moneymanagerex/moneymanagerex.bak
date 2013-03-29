@@ -345,6 +345,8 @@
     <ClCompile Include="..\..\..\src\customreportdisplay.cpp" />
     <ClCompile Include="..\..\..\src\customreportindex.cpp" />
     <ClCompile Include="..\..\..\src\dbwrapper.cpp" />
+    <ClCompile Include="..\..\..\src\db\assets.cpp" />
+    <ClCompile Include="..\..\..\src\db\entry_base.cpp" />
     <ClCompile Include="..\..\..\src\lua_interface.cpp" />
     <ClCompile Include="..\..\..\src\qif_export.cpp" />
     <ClCompile Include="..\..\..\src\qif_import.cpp" />
@@ -426,6 +428,8 @@
     <ClInclude Include="..\..\..\src\customreportdisplay.h" />
     <ClInclude Include="..\..\..\src\customreportindex.h" />
     <ClInclude Include="..\..\..\src\dbwrapper.h" />
+    <ClInclude Include="..\..\..\src\db\assets.h" />
+    <ClInclude Include="..\..\..\src\db\entry_base.h" />
     <ClInclude Include="..\..\..\src\defs.h" />
     <ClInclude Include="..\..\..\src\fileviewerdialog.h" />
     <ClInclude Include="..\..\..\src\filtertransdialog.h" />
