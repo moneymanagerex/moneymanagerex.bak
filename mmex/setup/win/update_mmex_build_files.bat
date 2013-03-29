@@ -96,17 +96,23 @@ copy "..\..\resources\currency_seed.csv" "%mmex_build_dir%\res"
 copy "..\..\resources\kaching.wav"       "%mmex_build_dir%\res"
 copy "..\..\resources\mmex.ico"          "%mmex_build_dir%\res"
 @echo ------------------------------------------------------------------------
+@echo.
+@echo Updated Support Files for: %mmex_build_dir%
+@echo.
 pause
 cls
 
 :skip_this_location
 REM Work out where to go next.
-if %location%==vc-static-u    goto update_ud
-if %location%==vc-static-ud   goto update_28u
-if %location%==vc-static-28u  goto update_28ud
-if %location%==vc-static-28ud goto update_29u
-if %location%==vc-static-29u  goto update_29ud
-if %location%==vc-static-29ud goto update_release
+if %location%==vc-static-u          goto update_ud
+if %location%==vc-static-ud         goto update_ud_tests
+if %location%==tests\vc-static-ud   goto update_28u
+if %location%==vc-static-28u        goto update_28ud
+if %location%==vc-static-28ud       goto update_28ud_tests
+if %location%==tests\vc-static-28ud goto update_29u
+if %location%==vc-static-29u        goto update_29ud
+if %location%==vc-static-29ud       goto update_29ud_tests
+if %location%==tests\vc-static-29ud goto update_release
 goto ScriptEnd
 REM -------------------------------------------------------------------------- 
 
@@ -122,6 +128,12 @@ set location=vc-static-ud
 set current_location=%location%
 goto UpdateFiles
 
+REM Unicode Debug Tests
+:update_ud_tests
+set location=tests\vc-static-ud
+set current_location=%location%
+goto UpdateFiles
+
 REM wx28 Unicode Release
 :update_28u
 set location=vc-static-28u
@@ -134,6 +146,12 @@ set location=vc-static-28ud
 set current_location=%location%
 goto UpdateFiles
 
+REM wx28 Unicode Debug Tests
+:update_28ud_tests
+set location=tests\vc-static-28ud
+set current_location=%location%
+goto UpdateFiles
+
 REM wx29 Unicode Release
 :update_29u
 set location=vc-static-29u
@@ -143,6 +161,12 @@ goto UpdateFiles
 REM wx29 Unicode Debug
 :update_29ud
 set location=vc-static-29ud
+set current_location=%location%
+goto UpdateFiles
+
+REM wx29 Unicode Debug Tests
+:update_29ud_tests
+set location=tests\vc-static-29ud
 set current_location=%location%
 goto UpdateFiles
 
