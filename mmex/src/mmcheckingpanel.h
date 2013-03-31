@@ -16,17 +16,12 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
-//----------------------------------------------------------------------------
 #ifndef _MM_EX_CHECKINGPANEL_H_
 #define _MM_EX_CHECKINGPANEL_H_
 //----------------------------------------------------------------------------
-#include "filtertransdialog.h"
-#include "defs.h"
-#include "mmpanelbase.h"
-//----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
-#include <vector>
+#include "filtertransdialog.h"
+#include "mmpanelbase.h"
 //----------------------------------------------------------------------------
 class mmGUIFrame;
 class mmBankTransaction;

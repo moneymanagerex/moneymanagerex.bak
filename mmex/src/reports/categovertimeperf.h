@@ -31,9 +31,6 @@ public:
     mmReportCategoryOverTimePerformance(mmCoreDB *core);
 
     wxString getHTMLText();
-
-private:
-//    wxSQLite3Database& getDb() const;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_REPORTCATEGOVERTIME_H_

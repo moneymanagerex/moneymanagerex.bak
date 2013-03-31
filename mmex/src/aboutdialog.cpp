@@ -17,12 +17,9 @@
  *******************************************************/
 #include "aboutdialog.h"
 #include "constants.h"
-#include "defs.h"
-#include "dbwrapper.h"
 #include "htmlbuilder.h"
 #include "fileviewerdialog.h"
 #include "paths.h"
-#include "util.h"
 /*******************************************************/
 
 #include <boost/version.hpp>

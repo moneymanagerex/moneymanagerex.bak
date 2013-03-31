@@ -19,12 +19,8 @@
 
 #include "budgetingpanel.h"
 #include "budgetentrydialog.h"
-#include "util.h"
-#include "dbwrapper.h"
 #include "mmex.h"
 #include "reports/budget.h"
-#include "categdialog.h"
-#include "mmaccount.h"
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBudgetingPanel, wxPanel)

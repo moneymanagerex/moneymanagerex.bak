@@ -2,8 +2,6 @@
 #include "chart.h"
 #include "util.h"
 
-#include <algorithm>
-
 bool sortValueList(const ValuePair& elem1, const ValuePair& elem2)
 {
     return fabs(elem1.amount) > fabs(elem2.amount);

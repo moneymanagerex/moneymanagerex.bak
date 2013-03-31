@@ -27,9 +27,8 @@
 #define SYMBOL_TRANSDIALOG_POSITION wxDefaultPosition
 
 #include "guiid.h"
-#include "defs.h"
 #include "mmcoredb.h"
-#include<wx/spinbutt.h>
+#include <wx/spinbutt.h>
 
 class wxDatePickerCtrl;
 

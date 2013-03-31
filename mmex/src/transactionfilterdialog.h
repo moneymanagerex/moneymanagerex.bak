@@ -19,8 +19,6 @@
 #ifndef _MM_EX_TRANSACTIONFILTERDIALOG_H_
 #define _MM_EX_TRANSACTIONFILTERDIALOG_H_
 
-#include "guiid.h"
-#include "defs.h"
 #include "mmcoredb.h"
 
 #define SYMBOL_TRANSACTIONFILTERDIALOG_TITLE _("MMEX Account View: Transaction Filter")

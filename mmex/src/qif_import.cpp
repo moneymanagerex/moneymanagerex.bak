@@ -1,12 +1,8 @@
+
+#include "qif_import.h"
 #include "constants.h"
 #include "util.h"
-#include "dbwrapper.h"
-#include "guiid.h"
 #include "fileviewerdialog.h"
-#include "mmex.h"
-#include "mmcoredb.h"
-#include "platfdep.h"
-#include "qif_import.h"
 #include "paths.h"
 
 enum qifAccountInfoType

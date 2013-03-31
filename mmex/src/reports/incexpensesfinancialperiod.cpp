@@ -27,18 +27,14 @@
 #include "incexpensesfinancialperiod.h"
 #include "budget.h"
 
-#include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../reportbase.h"
-#include "../util.h"
-#include "../budgetingpanel.h"
+#include "../mmex.h"
 
-mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year):
-    mmPrintableBase(core),
-    year_(year),
-    printYear_(year)
-{
-}
+mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year)
+: mmPrintableBase(core)
+, year_(year)
+, printYear_(year)
+{}
 
 wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 {

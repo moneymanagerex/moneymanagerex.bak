@@ -19,10 +19,7 @@
 #ifndef _MM_EX_SPLITTRANSACTIONDIALOG_H_
 #define _MM_EX_SPLITTRANSACTIONDIALOG_H_
 
-#include "wx/listctrl.h"
 #include "guiid.h"
-#include "defs.h"
-#include "mmcoredb.h"
 #include "mmtransaction.h"
 ////@end includes
 

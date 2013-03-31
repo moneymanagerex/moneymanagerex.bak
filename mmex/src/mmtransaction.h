@@ -17,7 +17,6 @@
 #ifndef _MM_EX_MMTRANSACTION_H_
 #define _MM_EX_MMTRANSACTION_H_
 
-#include "boost/shared_ptr.hpp"
 #include "dbwrapper.h"
 #include "mmcategory.h"
 #include "mmpayee.h"

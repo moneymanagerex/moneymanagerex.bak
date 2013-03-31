@@ -21,16 +21,13 @@
 **************************************************************************/
 #include "budgetcategorysummary.h"
 #include "../budgetingpanel.h"
-#include "../dbwrapper.h"
-#include "../defs.h"
 #include "../htmlbuilder.h"
 #include "../mmex.h"
-#include "../reportbase.h"
 
 mmReportBudgetCategorySummary::mmReportBudgetCategorySummary(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
-    : mmReportBudget(mainFrame, core), budgetYearID_(budgetYearID)
-{
-}
+: mmReportBudget(mainFrame, core)
+, budgetYearID_(budgetYearID)
+{}
 
 wxString mmReportBudgetCategorySummary::actualAmountColour( mmBudgetEntryHolder& budEntry, bool total)
 {

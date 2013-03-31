@@ -19,7 +19,6 @@
 #include "categexp.h"
 #include "budget.h"
 
-#include "../defs.h"
 #include "../htmlbuilder.h"
 #include "../util.h"
 #include "../mmgraphpie.h"

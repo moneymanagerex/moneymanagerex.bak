@@ -26,8 +26,6 @@
 #define SYMBOL_BUDGETENTRYDIALOG_POSITION wxDefaultPosition
 
 #include "guiid.h"
-#include "defs.h"
-#include "dbwrapper.h"
 #include "mmcoredb.h"
 
 class mmBudgetEntryDialog : public wxDialog

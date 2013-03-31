@@ -1,19 +1,17 @@
 #include "incexpenses.h"
 #include "budget.h"
 
-#include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../reportbase.h"
 #include "../util.h"
 #include "../mmgraphincexpensesmonth.h"
 
-mmReportIncomeExpenses::mmReportIncomeExpenses(
-    mmCoreDB* core, 
-    bool ignoreDate, 
-    const wxDateTime& dtBegin, 
-    const wxDateTime& dtEnd,
-    const wxString& title
-) : mmPrintableBase(core), dtBegin_(dtBegin), dtEnd_(dtEnd), ignoreDate_(ignoreDate), title_(title)
+mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, bool ignoreDate,
+    const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title)
+: mmPrintableBase(core)
+, dtBegin_(dtBegin)
+, dtEnd_(dtEnd)
+, ignoreDate_(ignoreDate)
+, title_(title)
 {
     wxASSERT(dtBegin_ == dtBegin);
 }

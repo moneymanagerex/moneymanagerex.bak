@@ -1,18 +1,13 @@
 #include "incexpesestime.h"
 
-#include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../reportbase.h"
-#include "../util.h"
-#include "../dbwrapper.h"
 #include "../budgetingpanel.h"
 
-mmReportIncExpensesOverTime::mmReportIncExpensesOverTime(mmCoreDB* core, int year, int shift) : 
-    mmPrintableBase(core),
-    year_(year),
-    shift_(shift)
-{
-}
+mmReportIncExpensesOverTime::mmReportIncExpensesOverTime(mmCoreDB* core, int year, int shift)
+: mmPrintableBase(core)
+, year_(year)
+, shift_(shift)
+{}
 
 wxString mmReportIncExpensesOverTime::getHTMLText()
 {

@@ -21,10 +21,6 @@
 
 #include "../reportbase.h"
 
-#include <wx/datetime.h>
-#include <wx/string.h>
-
-
 class mmReportCategoryExpenses : public mmPrintableBase 
 {
 public:

@@ -19,9 +19,7 @@
 #include "budgetyeardialog.h"
 #include "budgetyearentrydialog.h"
 #include "util.h"
-#include "defs.h"
 #include "paths.h"
-#include <wx/statline.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetYearDialog, wxDialog )
 

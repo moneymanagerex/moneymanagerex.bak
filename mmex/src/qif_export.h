@@ -9,8 +9,6 @@
 #define SYMBOL_QIFDIALOG_SIZE wxSize(500, 300)
 #define SYMBOL_QIFDIALOG_POSITION wxDefaultPosition
 
-#include "guiid.h"
-#include "defs.h"
 #include "mmcoredb.h"
 
 class wxDatePickerCtrl;

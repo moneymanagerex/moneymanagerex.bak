@@ -22,12 +22,7 @@
 #include "defs.h"
 #include "mmcurrency.h"
 
-#include <wx/wxprec.h>
-#include <boost/shared_ptr.hpp>
 #include <boost/static_assert.hpp>
-
-#include <iostream>
-
 
 class mmCoreDB;
 class MMEX_IniSettings;

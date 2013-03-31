@@ -20,8 +20,6 @@
 #include "customreportindex.h"
 #include "paths.h"
 #include "util.h"
-#include <wx/helpbase.h>
-#include <wx/help.h>
 
 const int titleTextWidth   = 200; // Determines width of Headings Textbox.
 const int sourceTextHeight = 200; // Determines height of Source Textbox.

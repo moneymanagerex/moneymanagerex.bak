@@ -19,10 +19,6 @@
 #ifndef _MM_EX_MMACCOUNT_H_
 #define _MM_EX_MMACCOUNT_H_
 
-#include <vector>
-#include <boost/shared_ptr.hpp>
-
-#include "defs.h"
 #include "mmcurrency.h"
 #include "mmtransaction.h"
 

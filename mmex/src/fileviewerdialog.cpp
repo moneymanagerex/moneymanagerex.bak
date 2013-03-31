@@ -17,7 +17,6 @@
  ********************************************************/
 
 #include "fileviewerdialog.h"
-#include "defs.h"
 
 IMPLEMENT_DYNAMIC_CLASS( fileviewer, wxDialog )
 

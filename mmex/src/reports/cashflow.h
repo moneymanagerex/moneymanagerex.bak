@@ -4,9 +4,6 @@
 #include "../reportbase.h"
 #include "../mmex.h"
 
-#include <wx/datetime.h>
-#include <vector>
-
 class wxArrayString;
 
 class mmReportCashFlow : public mmPrintableBase 

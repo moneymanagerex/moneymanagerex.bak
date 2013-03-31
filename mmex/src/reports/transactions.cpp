@@ -19,18 +19,16 @@
 
 #include "transactions.h"
 #include "../constants.h"
-#include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../reportbase.h"
 #include "../util.h"
-#include "../mmcheckingpanel.h"
-#include "../mmtransaction.h"
 
 mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans,
     mmCoreDB* core, int refAccountID, mmFilterTransactionsDialog* transDialog)
-:mmPrintableBase(core), trans_(trans), refAccountID_(refAccountID), transDialog_(transDialog)
-{
-}
+: mmPrintableBase(core)
+, trans_(trans)
+, refAccountID_(refAccountID)
+, transDialog_(transDialog)
+{}
 
 mmReportTransactions::~mmReportTransactions()
 {
