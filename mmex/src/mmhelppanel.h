@@ -21,9 +21,6 @@
 #define _MM_EX_HELPPANEL_H_
 
 #include "mmpanelbase.h"
-#include "guiid.h"
-#include "defs.h"
-#include "reportbase.h"
 
 class wxHtmlWindow;
 class mmGUIFrame;

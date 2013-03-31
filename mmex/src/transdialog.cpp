@@ -17,23 +17,13 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
-#include "constants.h"
 #include "transdialog.h"
-#include "wx/datectrl.h"
-#include "wx/dateevt.h"
+#include "constants.h"
+#include "util.h"
+#include "paths.h"
 #include "categdialog.h"
 #include "payeedialog.h"
-#include "util.h"
-#include "dbwrapper.h"
 #include "splittransactionsdialog.h"
-#include "defs.h"
-#include "paths.h"
-#include <wx/event.h>
-#include <wx/choice.h>
-
-#include <sstream>
-
-// Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 

@@ -16,13 +16,10 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
-#include "constants.h"
 #include "mmhomepagepanel.h"
 #include "mmex.h"
-#include "util.h"
+#include "constants.h"
 
-#include "transdialog.h"
-#include "newacctdialog.h"
 #include "htmlbuilder.h"
 #include "billsdepositspanel.h"
 #include "mmgraphincexpensesmonth.h"

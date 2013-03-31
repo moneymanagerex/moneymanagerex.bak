@@ -1,18 +1,16 @@
+
 #include "cashflow.h"
 #include "../constants.h"
-#include "../defs.h"
 #include "../htmlbuilder.h"
-#include "../reportbase.h"
 
-mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray) :
-    mmPrintableBase(core)
-    , frame_(frame)
-    , accountArray_(accountArray)
-    , activeTermAccounts_(false)
-    , activeBankAccounts_(false)
-    , cashflowreporttype_(cashflowreporttype)
-{
-}
+mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray)
+: mmPrintableBase(core)
+, frame_(frame)
+, accountArray_(accountArray)
+, activeTermAccounts_(false)
+, activeBankAccounts_(false)
+, cashflowreporttype_(cashflowreporttype)
+{}
 
 void mmReportCashFlow::activateTermAccounts() 
 {

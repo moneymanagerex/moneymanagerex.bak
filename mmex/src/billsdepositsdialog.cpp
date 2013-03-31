@@ -19,17 +19,11 @@
 
 #include "billsdepositsdialog.h"
 #include "constants.h"
-#include "wx/datectrl.h"
+#include "util.h"
+#include "paths.h"
 #include "categdialog.h"
 #include "payeedialog.h"
-#include "util.h"
-#include "dbwrapper.h"
 #include "splittransactionsdialog.h"
-#include "defs.h"
-#include "paths.h"
-
-#include <limits>
-
 
 IMPLEMENT_DYNAMIC_CLASS( mmBDDialog, wxDialog )
 

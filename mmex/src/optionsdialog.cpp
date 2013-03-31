@@ -18,14 +18,10 @@
  *************************************************************************/
 
 #include "optionsdialog.h"
-#include "defs.h"
 #include "maincurrencydialog.h"
 #include "util.h"
 #include <wx/colordlg.h>
-#include <wx/combobox.h>
 #include "mmgraphgenerator.h"
-#include <wx/statline.h>
-#include <limits>
 #include "constants.h"
 
 enum

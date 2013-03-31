@@ -27,7 +27,6 @@
 #define SYMBOL_BDDIALOG_POSITION wxDefaultPosition
 
 #include "guiid.h"
-#include "defs.h"
 #include "mmcoredb.h"
 #include <wx/spinbutt.h>
 

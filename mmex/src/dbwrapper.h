@@ -20,12 +20,8 @@
 #ifndef _MM_EX_DBWRAPPER_H_
 #define _MM_EX_DBWRAPPER_H_
 //----------------------------------------------------------------------------
-#include "defs.h"
 #include "mmcurrency.h"
 #include "mmex_settings.h"
-//----------------------------------------------------------------------------
-#include <boost/shared_ptr.hpp>
-#include <vector>
 
 //----------------------------------------------------------------------------
 static const char SELECT_ALL_FROM_ASSETS_V1[] =

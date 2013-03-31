@@ -19,7 +19,6 @@
 #include "constants.h"
 #include "newacctdialog.h"
 #include "maincurrencydialog.h"
-#include "defs.h"
 #include "util.h"
 #include "paths.h"
 

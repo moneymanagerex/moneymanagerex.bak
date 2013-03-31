@@ -17,10 +17,9 @@
  ********************************************************/
 
 #include "billsdepositspanel.h"
-#include "util.h"
-//#include "dbwrapper.h"
 #include "billsdepositsdialog.h"
 #include "constants.h"
+#include "util.h"
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)

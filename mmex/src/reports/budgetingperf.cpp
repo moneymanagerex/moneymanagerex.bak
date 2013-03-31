@@ -1,17 +1,12 @@
 #include "budgetingperf.h"
 #include "../budgetingpanel.h"
-#include "../dbwrapper.h"
-#include "../defs.h"
 #include "../htmlbuilder.h"
 #include "../mmex.h"
-#include "../reportbase.h"
-#include "../util.h"
 
 mmReportBudgetingPerformance::mmReportBudgetingPerformance(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
-    : mmReportBudget(mainFrame, core),
-      budgetYearID_(budgetYearID)
-{
-}
+: mmReportBudget(mainFrame, core)
+, budgetYearID_(budgetYearID)
+{}
 
 void mmReportBudgetingPerformance::DisplayEstimateMonths(mmHTMLBuilder& hb, mmBudgetEntryHolder& budgetEntry, int startMonth)
 {

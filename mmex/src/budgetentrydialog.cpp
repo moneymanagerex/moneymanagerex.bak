@@ -18,7 +18,6 @@
 
 #include "budgetentrydialog.h"
 #include "util.h"
-#include "defs.h"
 #include "paths.h"
 
 enum { DEF_TYPE_EXPENSE, DEF_TYPE_INCOME };

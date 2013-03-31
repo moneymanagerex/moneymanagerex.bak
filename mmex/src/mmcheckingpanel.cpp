@@ -15,18 +15,13 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
-//----------------------------------------------------------------------------
 
 #include "mmcheckingpanel.h"
 #include "transdialog.h"
 #include "splittransactionsdialog.h"
-#include "util.h"
-#include "dbwrapper.h"
 #include "mmex.h"
 #include "constants.h"
 //----------------------------------------------------------------------------
-#include <wx/event.h>
-#include <algorithm>
 #include <boost/unordered_map.hpp>
 #include <wx/srchctrl.h>
 //----------------------------------------------------------------------------

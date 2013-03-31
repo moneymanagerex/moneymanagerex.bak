@@ -18,7 +18,6 @@
 
 #include "summary.h"
 #include "../constants.h"
-#include "../defs.h"
 #include "../htmlbuilder.h"
 #include "../db/assets.h"
 

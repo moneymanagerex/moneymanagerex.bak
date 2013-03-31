@@ -20,12 +20,7 @@
 #define _MM_EX_BUDGETINGPANEL_H_
 
 #include "mmpanelbase.h"
-#include "guiid.h"
-#include "defs.h"
-#include "wx/wxprec.h"
 #include "util.h"
-
-#include "mmcoredb.h"
 
 class wxListCtrl;
 class wxListEvent;

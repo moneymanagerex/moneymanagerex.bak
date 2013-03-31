@@ -26,7 +26,6 @@
 #define SYMBOL_BUDGETYEARDIALOG_POSITION wxDefaultPosition
 
 #include "guiid.h"
-#include "defs.h"
 #include "mmcoredb.h"
 
 class mmBudgetYearDialog : public wxDialog

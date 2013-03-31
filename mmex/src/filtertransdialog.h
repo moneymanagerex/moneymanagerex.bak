@@ -7,9 +7,6 @@
 #pragma interface "filtertransdialog.cpp"
 #endif
 
-#include "wx/datectrl.h"
-#include "guiid.h"
-#include "mmcheckingpanel.h"
 #include "mmcoredb.h"
 
 #define ID_MYDIALOG9 10095

@@ -20,8 +20,6 @@
 #define _MM_EX_REPORTSPANEL_H_
 
 #include "mmpanelbase.h"
-#include "guiid.h"
-#include "defs.h"
 #include "reportbase.h"
 
 class wxHtmlWindow;

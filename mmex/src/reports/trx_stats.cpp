@@ -1,13 +1,12 @@
+
 #include "trx_stats.h"
-#include "../defs.h"
 #include "../htmlbuilder.h"
 #include "../util.h"
 
-mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)  : 
-        mmPrintableBase(core),
-        year_(year + 1)
-{
-}
+mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)
+: mmPrintableBase(core)
+, year_(year + 1)
+{}
 
 wxString mmReportTransactionStats::getHTMLText()
 {

@@ -18,7 +18,6 @@
 
 #include "mmpayee.h"
 #include "util.h"
-#include "dbwrapper.h"
 #include "mmcoredb.h"
 
 // Constructor used when loading a payee from the database

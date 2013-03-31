@@ -20,7 +20,6 @@
 #define _MM_EX_REPORTPAYEE_H_
 
 #include "../reportbase.h"
-#include <wx/datetime.h>
 
 class mmReportPayeeExpenses : public mmPrintableBase 
 {

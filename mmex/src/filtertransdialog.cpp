@@ -16,11 +16,8 @@
 
 #include "filtertransdialog.h"
 #include "constants.h"
-#include "defs.h"
 #include "util.h"
-#include "dbwrapper.h"
 #include "categdialog.h"
-#include "payeedialog.h"
 #include "paths.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmFilterTransactionsDialog, wxDialog )

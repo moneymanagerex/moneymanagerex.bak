@@ -20,7 +20,6 @@
 #define _MM_EX_UNIVCSVDIALOG_H_
 
 #include "guiid.h"
-#include "defs.h"
 #include "mmcoredb.h"
 
 #define ID_MYDIALOG8 10040

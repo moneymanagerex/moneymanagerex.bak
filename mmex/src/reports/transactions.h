@@ -20,10 +20,6 @@
 #define _MM_EX_REPORTTRANSACT_H_
 
 #include "../reportbase.h"
-#include <wx/datetime.h>
-
-#include <vector>
-#include <boost/shared_ptr.hpp>
 #include "../filtertransdialog.h"
 
 class mmBankTransaction;

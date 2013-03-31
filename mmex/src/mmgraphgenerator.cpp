@@ -20,10 +20,6 @@
 #include "mmgraphgenerator.h"
 #include "util.h"
 //----------------------------------------------------------------------------
-#include <vector>
-#include <algorithm>
-#include <wx/filename.h>
-//----------------------------------------------------------------------------
 
 namespace 
 {

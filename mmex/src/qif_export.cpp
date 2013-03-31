@@ -2,19 +2,8 @@
  ********************************************************/
 #include "constants.h"
 #include "qif_export.h"
-#include "wx/datectrl.h"
-#include "wx/dateevt.h"
 #include "util.h"
-#include "dbwrapper.h"
-#include "defs.h"
 #include "paths.h"
-#include <wx/event.h>
-#include <wx/choice.h>
-
-#include <sstream>
-
-// Defines for Transaction: (Status and Type) now located in dbWrapper.h
-
 
 IMPLEMENT_DYNAMIC_CLASS( mmQIFExportDialog, wxDialog )
 

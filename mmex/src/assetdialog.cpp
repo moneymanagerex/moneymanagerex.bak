@@ -16,7 +16,6 @@
 
 #include "assetdialog.h"
 #include "paths.h"
-#include <wx/datectrl.h>
 
 namespace
 {

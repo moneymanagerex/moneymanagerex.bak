@@ -20,7 +20,6 @@
 #include "util.h"
 #include "constants.h"
 #include "mmcoredb.h"
-#include "dbwrapper.h"
 
 mmAccount::mmAccount(wxSQLite3ResultSet& q1)
 {

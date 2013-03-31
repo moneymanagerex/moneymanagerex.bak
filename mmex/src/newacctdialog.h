@@ -26,7 +26,6 @@
 #define SYMBOL_NEWCHKGACCTDIALOG_POSITION wxDefaultPosition
 
 #include "guiid.h"
-#include "defs.h"
 #include "mmcoredb.h"
 
 class mmNewAcctDialog : public wxDialog

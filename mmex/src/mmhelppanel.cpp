@@ -18,14 +18,9 @@
  *************************************************************************/
 
 #include "mmhelppanel.h"
-#include "util.h"
-#include "htmlbuilder.h"
-#include "reportbase.h"
 #include "paths.h"
 #include "constants.h"
 #include "mmex.h"
-
-#include <wx/app.h>
 
 BEGIN_EVENT_TABLE(mmHelpPanel, wxPanel)
     EVT_BUTTON(wxID_BACKWARD, mmHelpPanel::OnHelpPageBack)

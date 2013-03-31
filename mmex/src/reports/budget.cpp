@@ -22,7 +22,8 @@
 #include "../htmlbuilder.h"
 
 mmReportBudget::mmReportBudget(mmGUIFrame* mainFrame, mmCoreDB* core)
-    : mmPrintableBase(core), mainFrame_(mainFrame)
+: mmPrintableBase(core)
+, mainFrame_(mainFrame)
 {}
 
 /**************************************************************************************
