@@ -287,9 +287,8 @@ bool mmAssetsPanel::Create(wxWindow *parent, wxWindowID winid, const wxPoint &po
 
     m_listCtrlAssets->InitVariables();
     initVirtualListControl();
-    // Not sure what this achives at this stage.
-    //if (!m_trans.empty())
-    //    m_listCtrlAssets->EnsureVisible(static_cast<long>(m_trans.size()) - 1);
+    if (!asset_list_.entrylist_.empty())
+        m_listCtrlAssets->EnsureVisible(static_cast<long>(asset_list_.entrylist_.size()) - 1);
 
     windowsFreezeThaw(this);
 
