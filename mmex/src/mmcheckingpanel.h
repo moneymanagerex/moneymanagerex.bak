@@ -166,11 +166,8 @@ private:
 
     wxString getMiniInfoStr(int selIndex) const;
 
-    int accountID() const { return m_AccountID; }
-
     double getBalance(mmBankTransaction* transPtr, double currentBalance) const;
-    void setBalance(mmBankTransaction* transPtr, double currentBalance );
-
+    void setBalance(mmBankTransaction* transPtr, double currentBalance);
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_CHECKINGPANEL_H_

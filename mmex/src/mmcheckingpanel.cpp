@@ -353,8 +353,8 @@ private:
     /* Sort Columns */
     void OnColClick(wxListEvent& event);
 
-    //  Returns the account ID by user selection
-    int destinationAccountID(wxString accName);
+	/// Called when moving a transaction to a new account.
+    int DestinationAccountID();
     long topItemIndex_;
 };
 //----------------------------------------------------------------------------
@@ -1560,7 +1560,7 @@ wxString TransactionListCtrl::OnGetItemText(long item, long column) const
         mmBankTransaction *tr = ok ? m_cp->m_trans[index] : 0;
         if (tr->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
-            if ( tr->accountID_ == m_cp->accountID() )
+            if ( tr->accountID_ == m_cp->m_AccountID )
                 item_text.Prepend(wxT("> "));
             else
                 item_text.Prepend(wxT("< "));
@@ -1675,10 +1675,10 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
     bool useOriginalDate = m_cp->core_->iniSettings_->GetBoolSetting(INIDB_USE_ORG_DATE_COPYPASTE, false);
 
     boost::shared_ptr<mmBankTransaction> pCopiedTrans =
-        m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, m_cp->accountID(), useOriginalDate);
+        m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, m_cp->m_AccountID, useOriginalDate);
 
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(m_cp->accountID()).lock();
-    pCopiedTrans->updateAllData(m_cp->core_, m_cp->accountID(), pCurrencyPtr, true);
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(m_cp->m_AccountID).lock();
+    pCopiedTrans->updateAllData(m_cp->core_, m_cp->m_AccountID, pCurrencyPtr, true);
     int transID = pCopiedTrans->transactionID();
     refreshVisualList(transID);
 }
@@ -1755,7 +1755,7 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     for (size_t i=0; i<m_cp->m_trans.size(); ++i )
     {
         if (m_cp->m_listCtrlAccount->GetItemState(i, wxLIST_STATE_SELECTED) == wxLIST_STATE_SELECTED)
-            m_cp->core_->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[i]->transactionID());
+            m_cp->core_->bTransactionList_.deleteTransaction(m_cp->m_AccountID, m_cp->m_trans[i]->transactionID());
     }
     m_cp->core_->db_.get()->Commit();
 
@@ -1768,7 +1768,7 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex < 0) return;
 
-    mmTransDialog dlg(m_cp->core_, m_cp->accountID(),
+    mmTransDialog dlg(m_cp->core_, m_cp->m_AccountID,
        m_cp->m_trans[m_selectedIndex], true, this);
     dlg.ShowModal();
 
@@ -1778,7 +1778,7 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 
 void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog dlg(m_cp->core_, m_cp->accountID(), NULL, false, this);
+    mmTransDialog dlg(m_cp->core_, m_cp->m_AccountID, NULL, false, this);
 
     if ( dlg.ShowModal() == wxID_OK )
     {
@@ -1793,7 +1793,7 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
     if (m_selectedIndex < 0) return;
 
     wxDateTime transTime = m_cp->m_trans[m_selectedIndex]->date_;
-    mmTransDialog dlg(m_cp->core_, m_cp->accountID(),
+    mmTransDialog dlg(m_cp->core_, m_cp->m_AccountID,
         m_cp->m_trans[m_selectedIndex], true, this);
 
     dlg.SetDialogToDuplicateTransaction();
@@ -1834,52 +1834,49 @@ void TransactionListCtrl::refreshVisualList(const int trans_id, long topItemInde
     m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 
-//  Called only when moving a deposit/withdraw transaction to a new account.
-int TransactionListCtrl::destinationAccountID(wxString accName)
+//  Called when moving a transaction to a new account.
+int TransactionListCtrl::DestinationAccountID()
 {
-    int account_id = m_cp->m_trans[m_selectedIndex]->accountID_;
-    if (m_cp->accountID() == m_cp->m_trans[m_selectedIndex]->accountID_
-        && m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR)
-        account_id = m_cp->m_trans[m_selectedIndex]->toAccountID_;
-    wxArrayString as = m_cp->core_->accountList_.getAccountsName(account_id);
+    wxString source_name = m_cp->core_->accountList_.GetAccountName(m_cp->m_AccountID);
+    wxString headerMsg = _("Moving Transaction from ") + source_name + _(" to...");
 
-    wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
-    wxSingleChoiceDialog scd(this, _("Select the destination Account "), headerMsg , as);
+    wxArrayString dest_name_list = m_cp->core_->accountList_.getAccountsName(m_cp->m_AccountID);
+    wxSingleChoiceDialog scd(this, _("Select the destination Account "), headerMsg , dest_name_list);
 
-    int accountID = -1;
+    int dest_account_id = -1;
     if (scd.ShowModal() == wxID_OK)
     {
-        wxString acctName = scd.GetStringSelection();
-        accountID = m_cp->core_->accountList_.GetAccountId(acctName);
+        wxString dest_account_name = scd.GetStringSelection();
+        dest_account_id = m_cp->core_->accountList_.GetAccountId(dest_account_name);
     }
 
-    return accountID;
+    return dest_account_id;
 }
 
 void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex < 0) return;
-    wxString sDestAccount = m_cp->m_trans[m_selectedIndex]->fromAccountStr_;
-    int toAccountID = destinationAccountID(sDestAccount);
-    if ( toAccountID != -1 )
+
+    int toAccountID = DestinationAccountID();
+    if (toAccountID != -1)
     {
         boost::shared_ptr<mmBankTransaction> pTransaction;
-        pTransaction = m_cp->core_->bTransactionList_.getBankTransactionPtr(m_cp->accountID(),
-                              m_cp->m_trans[m_selectedIndex]->transactionID() );
+        pTransaction = m_cp->core_->bTransactionList_.getBankTransactionPtr(
+            m_cp->m_AccountID, m_cp->m_trans[m_selectedIndex]->transactionID()
+        );
+        
+        // Looking at transaction from A end. Transaction is a deposit, withdrawal or transfer.
+        if (m_cp->m_AccountID == pTransaction->accountID_)
+            pTransaction->accountID_ = toAccountID;
 
-        int orig_accountID = pTransaction->accountID_;
-        pTransaction->accountID_ = toAccountID;
-        if (pTransaction->toAccountID_ == toAccountID)
-        {
-            pTransaction->toAccountID_ = orig_accountID;
-            double amount = pTransaction->amt_;
-            pTransaction->amt_ = pTransaction->toAmt_;
-            pTransaction->toAmt_ = amount;
-        }
+        // Looking at transaction from b end. Transaction is a transfer
+        if (m_cp->m_AccountID == pTransaction->toAccountID_)
+            pTransaction->toAccountID_ = toAccountID;
+        
+        // Update the transaction
         m_cp->core_->bTransactionList_.UpdateTransaction(pTransaction);
-
+        refreshVisualList();
     }
-    refreshVisualList();
 }
 
 //----------------------------------------------------------------------------
