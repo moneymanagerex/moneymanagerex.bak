@@ -180,9 +180,6 @@
     <ClCompile Include="..\..\src\stockspanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\transactionfilterdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\transdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -417,9 +414,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\stockspanel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\transactionfilterdialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\univcsvdialog.h">
