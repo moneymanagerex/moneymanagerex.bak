@@ -959,7 +959,7 @@ void mmTransDialog::SetSplitState()
 
     bCategory_->SetLabel(categString);
     cSplit_->SetValue(entries > 0);
-    cSplit_->Enable((entries == 1 || entries == 0 && categID_ > -1) && sTransaction_type_ != TRANS_TYPE_TRANSFER_STR);
+    cSplit_->Enable(((entries == 1) || ((entries == 0) && (categID_ > -1) && (sTransaction_type_ != TRANS_TYPE_TRANSFER_STR))));
 
     textAmount_->Enable(entries < 1);
 }

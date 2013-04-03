@@ -415,11 +415,15 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
         pAccount->accessInfo_ = textCtrlAccess->GetValue();
 
     if (edit_)
+    {
         if (core_->accountList_.UpdateAccount(pAccount) == 0)
             EndModal(wxID_OK);
+    }
     else
+    {
         if (core_->accountList_.AddAccount(pAccount) > 0)
             EndModal(wxID_OK);
+    }
 
 }
 
