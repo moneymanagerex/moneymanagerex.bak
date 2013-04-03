@@ -710,7 +710,7 @@ int mmQIFImportDialog::mmImportQIF()
             else
                 sValid = wxT("NO");
 
-            if (bValid && (bFromDate && dtdt < fromDate || bToDate && dtdt > toDate))
+            if ((bValid) && (bFromDate) && ((dtdt < fromDate) || (bToDate && (dtdt > toDate))))
             {
                 sValid = wxT("SKIP");
                 bValid = false;
@@ -770,7 +770,7 @@ int mmQIFImportDialog::mmImportQIF()
                     if (refTrans[index]->transType_ != TRANS_TYPE_TRANSFER_STR) continue;
                     if (refTrans[index]->status_ == wxT("D")) continue;
                     if (refTrans[index]->date_!= dtdt) continue;
-                    if (refTrans[index]->amt_ < 0 && val < 0 || refTrans[index]->amt_ > 0 && val >0 ) continue;
+                    if (((refTrans[index]->amt_ < 0) && (val < 0)) || ((refTrans[index]->amt_ > 0) && (val >0))) continue;
                     if (refTrans[index]->accountID_!= from_account_id) continue;
                     if (refTrans[index]->transNum_ != transNum) continue;
                     if (refTrans[index]->notes_ != notes) continue;

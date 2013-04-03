@@ -1273,8 +1273,8 @@ bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID
                 if (splits->entries_[i]->categID_==iCatID && splits->entries_[i]->subCategID_==iSubCatID)
                 {
                     bTrxUsed = true;
-                    if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR && splits->entries_[i]->splitAmount_ > 0
-                        || pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR && splits->entries_[i]->splitAmount_ < 0)
+                    if ((pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR && splits->entries_[i]->splitAmount_ > 0)
+                        || (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR && splits->entries_[i]->splitAmount_ < 0))
                         sum += fabs(splits->entries_[i]->splitAmount_);
                     else
                         sum -= fabs(splits->entries_[i]->splitAmount_);
