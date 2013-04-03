@@ -72,8 +72,6 @@ private:
     int referenceAccountID_;    // used for transfer transactions
 
     void CreateControls();
-    bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
-    void addPayee(wxString payee, int categID, int subcategID );
     void OnSplitChecked(wxCommandEvent& event);
     void OnOk(wxCommandEvent& event);
     void OnCancel(wxCommandEvent& event);
