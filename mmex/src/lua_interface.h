@@ -36,8 +36,8 @@ public:
     TLuaInterface();
     ~TLuaInterface();
     
-    wxString RunLuaCode(wxString lua_code);
-    wxString RunLuaFile(wxString lua_filename);
+    wxString RunLuaCode(const wxString& lua_code);
+    wxString RunLuaFile(const wxString& lua_filename);
 
 private:
     lua_State* lua_;

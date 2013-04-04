@@ -47,7 +47,7 @@ TLuaInterface::~TLuaInterface()
 }
 
 // Passes Lua code in a string, to be run by Lua.
-wxString TLuaInterface::RunLuaCode(wxString lua_code)
+wxString TLuaInterface::RunLuaCode(const wxString& lua_code)
 {
     lua_result_ = luaL_loadstring(lua_, lua_code.ToUTF8());
     if (lua_result_)
@@ -65,7 +65,7 @@ wxString TLuaInterface::RunLuaCode(wxString lua_code)
 }
 
 // Passes a filename containing Lua code, to be run by Lua.
-wxString TLuaInterface::RunLuaFile(wxString lua_filename)
+wxString TLuaInterface::RunLuaFile(const wxString& lua_filename)
 {
     lua_result_ = luaL_loadfile(lua_, lua_filename.ToUTF8());
     if (lua_result_)
