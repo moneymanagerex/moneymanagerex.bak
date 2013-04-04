@@ -164,10 +164,10 @@ void mmReportBudget::GetFinancialYearValues(int& day, int& month)
     month = wxAtoi(mmOptions::instance().financialYearStartMonthString_) - 1;
     if ( (day > 28) && (month == wxDateTime::Feb) )
         day = 28;
-    else if ( (day > 30) && (month == wxDateTime::Sep) ||
-              (day > 30) && (month == wxDateTime::Apr) ||
-              (day > 30) && (month == wxDateTime::Jun) ||
-              (day > 30) && (month == wxDateTime::Nov) )
+    else if ( ((day > 30) && (month == wxDateTime::Sep)) ||
+              ((day > 30) && (month == wxDateTime::Apr)) ||
+              ((day > 30) && (month == wxDateTime::Jun)) ||
+              ((day > 30) && (month == wxDateTime::Nov)) )
     {
         day = 30;
     }
