@@ -28,21 +28,21 @@
 #include "constants.h"
 
 //----------------------------------------------------------------------------
-//#include "db/settings.h"
-//#include "db/currency.h"
-//#include "db/account.h"
-//#include "db/payee_table.h"
-//#include "db/category.h"
-//#include "db/subcategory.h"
-//#include "db/transaction.h"
-//#include "db/splittransaction.h"
-//#include "db/transactionbill.h"
-//#include "db/stocks.h"
+#include "db/settings.h"
+#include "db/currency.h"
+#include "db/account.h"
+#include "db/payee_table.h"
+#include "db/category.h"
+#include "db/subcategory.h"
+#include "db/transaction.h"
+#include "db/splittransaction.h"
+#include "db/transactionbill.h"
+#include "db/stocks.h"
 #include "db/assets.h"
-//#include "db/budget_year.h"
-//#include "db/budget_table.h"
+#include "db/budget_year.h"
+#include "db/budget_table.h"
 
-#if 0
+#if 1
 //----------------------------------------------------------------------------
 /// Central class holding all major components of the database
 class TDatabase
@@ -93,7 +93,7 @@ boost::shared_ptr<TDatabase> main_db()
 SUITE(new_classes_test)
 {
 
-#if 0
+#if 1
 TEST(Central_Database_Test)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -119,7 +119,7 @@ TEST(Central_Database_Test)
 }
 #endif
 
-#if 0
+#if 1
 TEST(TCurrencyList_Add)
 {
     printf("\nNew_Classes_Test: START");
@@ -151,7 +151,7 @@ TEST(TCurrencyList_Add)
 }
 #endif
 
-#if 0
+#if 1
 TEST(TAccountList_Test_Add)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -159,16 +159,16 @@ TEST(TAccountList_Test_Add)
 
     TAccountList account_list(get_pDb(), currency_list);
     TAccountEntry* account_entry = new TAccountEntry();
-    account_entry->acc_name_ = wxT("Savings");
-    account_entry->acc_status_ = ACCOUNT_STATE_DEF[OPEN];
-    account_entry->acc_type_   = ACCOUNT_TYPE_DEF[BANK];
+    account_entry->acc_name_    = wxT("Savings");
+    account_entry->acc_state_   = ACCOUNT_STATE_DEF[OPEN];
+    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[BANK];
     account_entry->currency_id_ = currency_list.GetCurrencyId(wxT("AUD"), true);
     int id_1 = account_list.AddEntry(account_entry);
 
     account_entry = new TAccountEntry();
-    account_entry->acc_name_ = wxT("Cheque");
-    account_entry->acc_status_ = ACCOUNT_STATE_DEF[CLOSED];
-    account_entry->acc_type_   = ACCOUNT_TYPE_DEF[TERM];
+    account_entry->acc_name_    = wxT("Cheque");
+    account_entry->acc_state_   = ACCOUNT_STATE_DEF[CLOSED];
+    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[TERM];
     account_entry->currency_id_ = currency_list.GetCurrencyId(wxT("USD"), true);
     int id_2 = account_list.AddEntry(account_entry);
 
@@ -178,7 +178,7 @@ TEST(TAccountList_Test_Add)
 }
 #endif
 
-#if 0
+#if 1
 TEST(TCategoryList_Test)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -309,7 +309,7 @@ TEST(TCategoryList_SubList_Test)
 }
 #endif
 
-#if 0
+#if 1
 TEST(TPayeeList_Test_1)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -408,7 +408,7 @@ TEST(TTransactionBillList_Add)
 }
 #endif
 
-#if 0
+#if 1
 TEST(TSplitTransactionList_Test_Create)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -640,7 +640,7 @@ TEST(TAssetList_Test_Delete_entries)
     displayTimeTaken(wxT("TAssetList_Test_Delete_entries"), start_time);
 }
 
-TEST(TAssetList_Test_Add_3_years_of_entries)
+TEST(TAssetList_Test_Add_5_years_of_entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
@@ -674,9 +674,45 @@ TEST(TAssetList_Test_Add_3_years_of_entries)
     displayTimeTaken(wxT("TAssetList_Test_Add_5_years_of_entries"), start_time);
 }
 
+TEST(TAssetList_Test_GetIndexedEntryPtr)
+{
+    printf("\nTesting speed of Iterators vs indexing...");
+    display_STD_IO_separation_line();
+
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    boost::shared_ptr<TAssetEntry> pEntry;
+    for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
+    {
+        pEntry = asset_list.GetIndexedEntryPtr(i);
+ 
+        CHECK_EQUAL(20000, pEntry->value_);
+    }
+
+    displayTimeTaken(wxT("TAssetList_Test_GetIndexedEntryPtr"), start_time);
+}
+
+TEST(TAssetList_Test_const_iterator)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    for (std::vector<boost::shared_ptr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
+        it != asset_list.entrylist_.end(); ++ it)
+    {
+        const boost::shared_ptr<TAssetEntry> pEntry = *it;
+
+        CHECK_EQUAL(20000, pEntry->value_);
+    }
+
+    displayTimeTaken(wxT("TAssetList_Test_const_iterator"), start_time);
+    display_STD_IO_separation_line();
+}
+
 #endif
 
-#if 0
+#if 1
 TEST(TStockList_Test_Add)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -743,7 +779,7 @@ TEST(TStockList_Test_Delete)
 }
 #endif
 
-#if 0
+#if 1
 TEST(TBudgetYearList_Add)
 {
     const wxDateTime start_time(wxDateTime::UNow());
