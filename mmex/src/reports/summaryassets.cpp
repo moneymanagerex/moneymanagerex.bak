@@ -45,10 +45,10 @@ wxString mmReportSummaryAssets::getHTMLText()
     core_->currencyList_.LoadBaseCurrencySettings();
 
     TAssetList asset_list_(core_->db_);
-    boost::shared_ptr<TAssetEntry> pEntry;
-    for (unsigned int i = 0; i < asset_list_.entrylist_.size(); ++i)
+    for (std::vector<boost::shared_ptr<TAssetEntry> >::const_iterator it = asset_list_.entrylist_.begin();
+        it != asset_list_.entrylist_.end(); ++ it)
     {
-        pEntry = asset_list_.GetIndexedEntryPtr(i);
+        const boost::shared_ptr<TAssetEntry> pEntry = *it;
 
         hb.startTableRow();
         hb.addTableCell(pEntry->display_date_, false, true);
