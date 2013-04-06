@@ -53,7 +53,7 @@ public:
 
     void Update(wxSQLite3Database* db);
 
-    void TCurrencyEntry::SetCurrencySettings();
+    void SetCurrencySettings();
 };
 
 /************************************************************************************
