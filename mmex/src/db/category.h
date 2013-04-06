@@ -48,7 +48,7 @@ public:
 class TCategoryList : public TListBase
 {
 private:
-    std::vector<boost::shared_ptr<TCategoryEntry>> entrylist_;
+    std::vector<boost::shared_ptr<TCategoryEntry> > entrylist_;
 
     void LoadEntries();
 

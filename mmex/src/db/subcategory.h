@@ -52,7 +52,7 @@ private:
     void LoadEntries(int subcat_id = -1);
 
 public:
-    std::vector<boost::shared_ptr<TSubCategoryEntry>> entrylist_;
+    std::vector<boost::shared_ptr<TSubCategoryEntry> > entrylist_;
 
     TSubCategoryList(boost::shared_ptr<wxSQLite3Database> db, int cat_id = -1);
 
