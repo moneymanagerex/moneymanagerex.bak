@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  Commit a change to the SVN repository, then create the build.
  *************************************************************************/
 const wxString MMEX_REVISION_ID = wxT("$Rev$");
-//----------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 const int mmex::MIN_DATAVERSION = 2;
 const wxChar * const mmex::DATAVERSION = wxT("2");
 const wxChar *const mmex::DEFDATEFORMAT = wxT("%m/%d/%y");
