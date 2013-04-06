@@ -172,12 +172,16 @@ void mmAssetsListCtrl::doRefreshItems(int trx_id)
 
 void mmAssetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
 {
-    if (selectedIndex_ == -1)    return;
-    wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"),
-        _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+    if (selectedIndex_ < 0)    return;
+
+    wxMessageDialog msgDlg(this
+        , _("Do you really want to delete the Asset?")
+        , _("Confirm Asset Deletion")
+        , wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        boost::shared_ptr<TAssetEntry> pEntry = cp_->AssetList().GetIndexedEntryPtr(selectedIndex_);
+        const boost::shared_ptr<TAssetEntry> pEntry = cp_->AssetList().GetIndexedEntryPtr(selectedIndex_);
         cp_->AssetList().DeleteEntry(pEntry->GetId());
 
         cp_->initVirtualListControl(selectedIndex_, m_selected_col, m_asc);
