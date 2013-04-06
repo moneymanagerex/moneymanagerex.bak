@@ -74,82 +74,79 @@ wxString mmReportTransactions::getHTMLText()
     bool unknownnReferenceAccount = true;
     bool transferTransactionFound = false;
     double total = 0;
-    for (unsigned int index = 0; index < trans_->size(); index++)
-    {
-        // std::vector<wxString> data;
-        std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
 
+    for (std::vector<boost::shared_ptr<mmBankTransaction> >::const_iterator it = trans_->begin();
+        it != trans_->end(); ++ it)
+    {
         // For transfer transactions, we need to fix the data reference point first.
-        if ( refAccountID_ > -1 && refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR &&
-             (refAccountID_ == refTrans[index]->accountID_ || refAccountID_ == refTrans[index]->toAccountID_) )
+        if ( refAccountID_ > -1 && it->get()->transType_ == TRANS_TYPE_TRANSFER_STR &&
+             (refAccountID_ == it->get()->accountID_ || refAccountID_ == it->get()->toAccountID_) )
         {
-            boost::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(refAccountID_);
-            boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+            const boost::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(refAccountID_);
+            const boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
             wxASSERT(pCurrency);
             pCurrency->loadCurrencySettings();
-//XXX check
-//            refTrans[index]->updateAllData(core_,refAccountID_,pCurrency);
         }
 
         bool negativeTransAmount = false;   // this can be either a transfer or withdrawl
 
         // Display the data for the selected row
         hb.startTableRow();
-        hb.addTableCell(refTrans[index]->dateStr_, false);
-        hb.addTableCellLink(wxString::Format(wxT("TRXID:%d"), refTrans[index]->transactionID()), refTrans[index]->fromAccountStr_, false);
-        hb.addTableCell(refTrans[index]->payeeStr_, false, true);
-        hb.addTableCell(refTrans[index]->status_);
-        hb.addTableCell(refTrans[index]->fullCatStr_, false, true);
+        hb.addTableCell(it->get()->dateStr_, false);
+        hb.addTableCellLink(wxString::Format(wxT("TRXID:%d"), it->get()->transactionID()), it->get()->fromAccountStr_, false);
+        hb.addTableCell(it->get()->payeeStr_, false, true);
+        hb.addTableCell(it->get()->status_);
+        hb.addTableCell(it->get()->fullCatStr_, false, true);
 
-        if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
+        if (it->get()->transType_ == TRANS_TYPE_DEPOSIT_STR)
             hb.addTableCell(_("Deposit"));
-        else if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+        else if (it->get()->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
         {
             hb.addTableCell(_("Withdrawal"));
             negativeTransAmount = true;
         }
-        else if (refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR)
+        else if (it->get()->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             hb.addTableCell(_("Transfer"));
             if (refAccountID_ >= 0 )
             {
                 unknownnReferenceAccount = false;
-                if (refTrans[index]->accountID_ == refAccountID_)
+                if (it->get()->accountID_ == refAccountID_)
                     negativeTransAmount   = true;  // transfer is a withdrawl from account
             }
-            else if (refTrans[index]->fromAccountStr_ == refTrans[index]->payeeStr_)
+            else if (it->get()->fromAccountStr_ == it->get()->payeeStr_)
                 negativeTransAmount = true;
         }
 
         // Get the exchange rate for the selected account
-        double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
-        double transAmount = refTrans[index]->amt_ * dbRate;
-        if (refTrans[index]->reportCategAmountStr_ != wxT(""))
+        double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(it->get()->accountID_);
+        double transAmount = it->get()->amt_ * dbRate;
+        if (it->get()->reportCategAmountStr_ != wxT(""))
         {
-            transAmount = refTrans[index]->reportCategAmount_ * dbRate;
-            if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR && transAmount < 0)
+            transAmount = it->get()->reportCategAmount_ * dbRate;
+            if (it->get()->transType_ == TRANS_TYPE_WITHDRAWAL_STR && transAmount < 0)
                 negativeTransAmount = false;
-            else if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR && transAmount < 0)
+            else if (it->get()->transType_ == TRANS_TYPE_DEPOSIT_STR && transAmount < 0)
                 negativeTransAmount = true;
         }
 
         wxString amtColour = negativeTransAmount ? wxT("RED") : wxT("BLACK");
 
-        if (refTrans[index]->reportCategAmountStr_ == wxT(""))
-            hb.addTableCell(refTrans[index]->transAmtString_, true, false,false, amtColour);
+        if (it->get()->reportCategAmountStr_ == wxT(""))
+            hb.addTableCell(it->get()->transAmtString_, true, false,false, amtColour);
         else
-            hb.addTableCell(refTrans[index]->reportCategAmountStr_, true, false,false, amtColour);
-        hb.addTableCell(refTrans[index]->transNum_);
-        hb.addTableCell(refTrans[index]->notes_, false, true);
+            hb.addTableCell(it->get()->reportCategAmountStr_, true, false,false, amtColour);
+        hb.addTableCell(it->get()->transNum_);
+        hb.addTableCell(it->get()->notes_, false, true);
         hb.endTableRow();
 
-        if (refTrans[index]->status_ != wxT("V"))
+        if (it->get()->status_ != wxT("V"))
         {
-            if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
+            if (it->get()->transType_ == TRANS_TYPE_DEPOSIT_STR)
                 total += transAmount;
-            else if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+            else if (it->get()->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
                 total -= transAmount;
-            else if (refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR)
+            else if (it->get()->transType_ == TRANS_TYPE_TRANSFER_STR)
             {
                 transferTransactionFound = true;
                 if (negativeTransAmount)
