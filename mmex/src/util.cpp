@@ -521,8 +521,14 @@ bool mmParseDisplayStringToDate(wxDateTime& date, wxString sDate, wxString sDate
     t = token.GetNextToken().Trim();
     t.ToDouble(&c);
 
-    sDate = wxString()<<a<<s<<b<<s<<c;
     bool bResult = true;
+
+    if (((a>999) || (b>999) || (c>999)) && (sDateMask.Contains(wxT("%y"))))
+        return false;
+    if ((a<100) && (b<100) && (c<100) && (sDateMask.Contains(wxT("%Y"))))
+        return false;
+
+    sDate = wxString()<<a<<s<<b<<s<<c;
     if (!date.ParseFormat(sDate, sDateMask, wxDateTime::Now()))
         bResult = false;
     date = date.GetDateOnly();
