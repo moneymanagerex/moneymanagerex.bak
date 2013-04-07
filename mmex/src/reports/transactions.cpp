@@ -38,6 +38,13 @@ mmReportTransactions::~mmReportTransactions()
     transDialog_->Destroy();
 }
 
+wxString addFilterDetailes(wxString sHeader, wxString sValue)
+{
+    wxString sData;
+    sData << wxT("<b>") << sHeader << wxT(" </b>") << sValue << wxT("<br>");
+    return sData;
+}
+
 wxString mmReportTransactions::getHTMLText()
 {
     mmHTMLBuilder hb;
@@ -93,7 +100,8 @@ wxString mmReportTransactions::getHTMLText()
         // Display the data for the selected row
         hb.startTableRow();
         hb.addTableCell(it->get()->dateStr_, false);
-        hb.addTableCellLink(wxString::Format(wxT("TRXID:%d"), it->get()->transactionID()), it->get()->fromAccountStr_, false);
+        hb.addTableCellLink(wxString::Format(wxT("TRXID:%d")
+            , it->get()->transactionID()), it->get()->fromAccountStr_, false);
         hb.addTableCell(it->get()->payeeStr_, false, true);
         hb.addTableCell(it->get()->status_);
         hb.addTableCell(it->get()->fullCatStr_, false, true);
@@ -179,36 +187,36 @@ wxString mmReportTransactions::getHTMLText()
     wxString filterDetails;
 
     if ( transDialog_->getAccountCheckBox())
-        filterDetails << wxT("<b>") << _("Account:") << wxT(" </b>") << transDialog_->getAccountName() << wxT("<br>");
+        filterDetails << addFilterDetailes(_("Account:"), transDialog_->getAccountName());
+
     //Date range
     if ( transDialog_->getDateRangeCheckBox())
-        filterDetails << wxT("<b>") << _("Date Range:") << wxT(" </b>") << transDialog_->userDateRangeStr() << wxT("<br>");
+        filterDetails << addFilterDetailes(_("Date Range:"), transDialog_->userDateRangeStr());
 
     //Payees
     if ( transDialog_->getPayeeCheckBox())
-        filterDetails << wxT("<b>") << _("Payee:") << wxT(" </b>") <<transDialog_->userPayeeStr() << wxT("<br>");
+        filterDetails << addFilterDetailes(_("Payee:"), transDialog_->userPayeeStr());
 
     //Category
     if ( transDialog_->getCategoryCheckBox())
         filterDetails << wxT("<b>") << _("Category:") << wxT(" </b>") <<transDialog_->userCategoryStr()
         << (transDialog_->getExpandStatus() ? wxString(wxT(" <b> ")) << _("Subcategory:") << wxT(" </b>") << _("Any"): wxT(""))
         << wxT("<br>");
-
     //Status
     if ( transDialog_->getStatusCheckBox())
-        filterDetails << wxT("<b>") << _("Status:") << wxT(" </b>") <<transDialog_->userStatusStr() << wxT("<br>");
+        filterDetails << addFilterDetailes(_("Status:"), transDialog_->userStatusStr());
     //Type
     if ( transDialog_->getTypeCheckBox() )
-        filterDetails << wxT("<b>") << _("Type:") << wxT(" </b>") <<transDialog_->userTypeStr() << wxT("<br>");
+        filterDetails << addFilterDetailes(_("Type:"), transDialog_->userTypeStr());
     //Amount Range
     if ( transDialog_->getAmountRangeCheckBox())
-        filterDetails << wxT("<b>") << _("Amount Range:") << wxT(" </b>") <<transDialog_->userAmountRangeStr() << wxT("<br>");
+        filterDetails << addFilterDetailes(_("Amount Range:"), transDialog_->userAmountRangeStr());
     //Number
     if ( transDialog_->getNumberCheckBox())
-        filterDetails << wxT("<b>") << _("Number:") << wxT(" </b>") <<transDialog_->getNumber() << wxT("<br>");
+        filterDetails << addFilterDetailes(_("Number:"), transDialog_->getNumber());
     //Notes
     if ( transDialog_->getNotesCheckBox())
-        filterDetails << wxT("<b>") << _("Notes:") << wxT(" </b>") <<transDialog_->getNotes() << wxT("<br>");
+        filterDetails << addFilterDetailes(_("Notes:"), transDialog_->getNotes());
 
     if ( !filterDetails.IsEmpty())
     {

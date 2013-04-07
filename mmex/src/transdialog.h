@@ -125,6 +125,7 @@ private:
     wxDatePickerCtrl* dpc_;
     wxSpinButton *spinCtrl_;
     wxStaticText* itemStaticTextWeek_;
+    wxStaticText* account_label_;
     wxStaticText* payee_label_;
     int categID_;
     int subcategID_;
