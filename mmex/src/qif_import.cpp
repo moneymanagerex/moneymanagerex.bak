@@ -330,7 +330,6 @@ int mmQIFImportDialog::mmImportQIF()
     wxString readLine;
     int numLines = 0;
     int trxNumLine = 1;
-    int numImported = 0;
 
     wxString dt = wxDateTime::Now().FormatISODate();
     wxString sPayee, type, sAmount, transNum, notes, convDate, sToAccountName;
@@ -695,6 +694,7 @@ int mmQIFImportDialog::mmImportQIF()
                 else
                     payeeID = core_->payeeList_.GetPayeeId(sPayee);
             }
+
             if (mmSplit->entries_.size() > 0)
             {
                 categID = -1;
@@ -718,7 +718,7 @@ int mmQIFImportDialog::mmImportQIF()
             sMsg = wxString::Format(
                 wxT("Line:%ld Trx:%ld %s D:%s Acc:'%s' %s P:'%s%s' Amt:%s C:'%s' \n")
                 , trxNumLine
-                , numImported + 1
+                , vQIF_trxs.size() + 1
                 , sValid.c_str()
                 , convDate.c_str()
                 , core_->accountList_.GetAccountName(from_account_id).c_str()
@@ -749,7 +749,6 @@ int mmQIFImportDialog::mmImportQIF()
             pTransaction->accountID_ = from_account_id;
             pTransaction->toAccountID_ = to_account_id;
             pTransaction->payee_ = core_->payeeList_.GetPayeeSharedPtr(payeeID);
-            pTransaction->payeeStr_ = sPayee;
             pTransaction->transType_ = type;
             pTransaction->amt_ = val;
             pTransaction->status_ = status;
@@ -759,6 +758,10 @@ int mmQIFImportDialog::mmImportQIF()
             if (mmSplit->numEntries()) categID = -1;
             pTransaction->category_ = core_->categoryList_.GetCategorySharedPtr(categID, subCategID);
             *pTransaction->splitEntries_ = *mmSplit;
+
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(from_account_id).lock();
+            wxASSERT(pCurrencyPtr);
+            pTransaction->updateAllData(core_, from_account_id, pCurrencyPtr, true);
 
             //For any transfer transaction always mirrored transaction present
             //Just take alternate amount and skip it
@@ -796,12 +799,11 @@ int mmQIFImportDialog::mmImportQIF()
             if (bValid)
             {
                 vQIF_trxs.push_back(pTransaction);
-                numImported++;
             }
         }
     }
 
-    sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), numImported);
+    sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), vQIF_trxs.end());
     logWindow->AppendText(sMsg << wxT("\n"));
 
     canceledbyuser = file_dlg.ShowModal() == wxID_CANCEL;
