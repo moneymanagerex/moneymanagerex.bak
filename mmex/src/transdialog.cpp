@@ -259,9 +259,13 @@ void mmTransDialog::SetTransferControls(bool transfer)
         toTextAmount_->Enable(cAdvanced_->GetValue());
 
         if (toID_ > 0) dataStr = (core_->accountList_.GetAccountName(toID_));
-        payee_label_->SetLabel(_("To"));
         data = core_->accountList_.getAccountsName();
+        payee_label_->SetLabel(_("To"));
+        cbPayee_->UnsetToolTip();
         cbPayee_->SetToolTip(_("Specify which account the transfer is going to"));
+        cbAccount_->UnsetToolTip();
+        cbAccount_->SetToolTip(_("Specify which account the transfer is going from"));
+        account_label_->SetLabel(_("From"));
     }
     else
     {
@@ -270,14 +274,20 @@ void mmTransDialog::SetTransferControls(bool transfer)
 
         if (type_num == DEF_WITHDRAWAL)
         {
-            cbPayee_->SetToolTip(_("Specify where the transaction is coming from"));
+            cbPayee_->UnsetToolTip();
+            cbPayee_->SetToolTip(_("Specify to whom the transaction is going to"));
             payee_label_->SetLabel(_("Payee"));
         }
         else
         {
-            cbPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
+            cbPayee_->UnsetToolTip();
+            cbPayee_->SetToolTip(_("Specify where the transaction is coming from"));
             payee_label_->SetLabel(_("From"));
         }
+        cbAccount_->UnsetToolTip();
+        cbAccount_->SetToolTip(_("Specify account for the transaction"));
+        account_label_->SetLabel(_("Account"));
+
         data = core_->payeeList_.FilterPayees(wxT(""));
         toTextAmount_->Enable(false);
         toTextAmount_->SetValue(wxT(""));
@@ -402,7 +412,8 @@ void mmTransDialog::CreateControls()
     cbAccount_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmTransDialog::OnAccountUpdated), NULL, this);
 
-    flex_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Account")), flags);
+    account_label_ = new wxStaticText(this, wxID_STATIC, _("Account"));
+    flex_sizer->Add(account_label_, flags);
     flex_sizer->Add(cbAccount_, flags);
 
     // Payee ---------------------------------------------
@@ -778,7 +789,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString sAccountName = cbAccount_->GetValue();
     newAccountID_ = core_->accountList_.GetAccountId(sAccountName);
-    
+
     if (newAccountID_ < 1)
     {
         mmShowErrorMessageInvalid(this, _("Account"));
