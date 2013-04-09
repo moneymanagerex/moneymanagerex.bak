@@ -501,20 +501,21 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
         else
             pCopyTransaction->accountID_ = pBankTransaction->accountID_;
     }
-    pCopyTransaction->toAccountID_ = pBankTransaction->toAccountID_;
+    pCopyTransaction->date_        = (useOriginalDate ? pBankTransaction->date_ : wxDateTime::Now());
     pCopyTransaction->amt_         = pBankTransaction->amt_;
     pCopyTransaction->toAmt_       = pBankTransaction->toAmt_;
-    pCopyTransaction->payee_       = pBankTransaction->payee_;
-    pCopyTransaction->payeeID_     = pBankTransaction->payeeID_;
     pCopyTransaction->transType_   = pBankTransaction->transType_;
     pCopyTransaction->status_      = pBankTransaction->status_;
-    pCopyTransaction->transNum_    = pBankTransaction->transNum_;
-    pCopyTransaction->notes_       = pBankTransaction->notes_;
+    pCopyTransaction->payee_       = pBankTransaction->payee_;
+    pCopyTransaction->payeeStr_    = pBankTransaction->payeeStr_;
+    pCopyTransaction->payeeID_     = pBankTransaction->payeeID_;
+    pCopyTransaction->category_    = pBankTransaction->category_;
     pCopyTransaction->categID_     = pBankTransaction->categID_;
     pCopyTransaction->subcategID_  = pBankTransaction->subcategID_;
-    pCopyTransaction->date_        = (useOriginalDate ? pBankTransaction->date_ : wxDateTime::Now());
-    pCopyTransaction->category_    = pBankTransaction->category_;
     pCopyTransaction->followupID_  = pBankTransaction->followupID_;
+    pCopyTransaction->toAccountID_ = pBankTransaction->toAccountID_;
+    pCopyTransaction->transNum_    = pBankTransaction->transNum_;
+    pCopyTransaction->notes_       = pBankTransaction->notes_;
 
     // we need to create a new pointer for Split transactions.
     boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
