@@ -803,7 +803,7 @@ int mmQIFImportDialog::mmImportQIF()
         }
     }
 
-    sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), vQIF_trxs.end());
+    sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), vQIF_trxs.size());
     logWindow->AppendText(sMsg << wxT("\n"));
 
     canceledbyuser = file_dlg.ShowModal() == wxID_CANCEL;
