@@ -1678,7 +1678,7 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, m_cp->m_AccountID, useOriginalDate);
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(m_cp->m_AccountID).lock();
-    pCopiedTrans->updateAllData(m_cp->core_, m_cp->m_AccountID, pCurrencyPtr, true);
+    //pCopiedTrans->updateAllData(m_cp->core_, m_cp->m_AccountID, pCurrencyPtr, true);
     int transID = pCopiedTrans->transactionID();
     refreshVisualList(transID);
 }

@@ -177,7 +177,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     if (transType_ != TRANS_TYPE_TRANSFER_STR)
     {
         // needed to correct possible crash if database becomes corrupt.
-        if (payee_.lock() == 0 )
+        if (!payee_.lock())
         {
             if (core->displayDatabaseError_)
             {
