@@ -181,8 +181,7 @@ void mmAssetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
 
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        const boost::shared_ptr<TAssetEntry> pEntry = cp_->AssetList().GetIndexedEntryPtr(selectedIndex_);
-        cp_->AssetList().DeleteEntry(pEntry->GetId());
+        cp_->AssetList().DeleteEntry(cp_->AssetList().GetIndexedEntryPtr(selectedIndex_)->GetId());
 
         cp_->initVirtualListControl(selectedIndex_, m_selected_col, m_asc);
         selectedIndex_ = -1;
