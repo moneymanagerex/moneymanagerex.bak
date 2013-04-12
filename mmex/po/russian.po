@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-07 20:57+0400\n"
-"PO-Revision-Date: 2013-04-07 20:58+0400\n"
+"POT-Creation-Date: 2013-04-12 13:08+0400\n"
+"PO-Revision-Date: 2013-04-12 13:11+0400\n"
 "Last-Translator: Nikolay <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -193,9 +193,8 @@ msgid "&New Asset"
 msgstr "Новый актив"
 
 #: src/assetspanel.cpp:85
-#, fuzzy
 msgid "D&uplicate Asset"
-msgstr "Повтор"
+msgstr "Дублировать актив"
 
 #: src/assetspanel.cpp:87
 msgid "&Edit Asset"
@@ -4034,9 +4033,8 @@ msgid "Line %i"
 msgstr "Строка %i"
 
 #: src/qif_import.cpp:942
-#, fuzzy
 msgid "Choose Account to Import to"
-msgstr "Выберите счёт для импорта:"
+msgstr "Выберите счёт для импорта"
 
 #: src/recentfiles.cpp:99
 msgid "Empty"
@@ -4318,19 +4316,16 @@ msgid "Deactivates the filter"
 msgstr "Отключение фильтра"
 
 #: src/transdialog.cpp:267
-#, fuzzy
 msgid "Specify which account the transfer is going from"
 msgstr "Определите счёт откуда будет произведено перечисление"
 
 #: src/transdialog.cpp:278
-#, fuzzy
 msgid "Specify to whom the transaction is going to"
 msgstr "Укажите счёт куда будет произведено перечисление"
 
 #: src/transdialog.cpp:288
-#, fuzzy
 msgid "Specify account for the transaction"
-msgstr "Введите сумму для данной проводки"
+msgstr "Выберите счёт транзакции"
 
 #: src/transdialog.cpp:511
 msgid "Specify the category for this transaction"
