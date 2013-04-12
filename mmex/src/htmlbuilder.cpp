@@ -22,8 +22,8 @@
 
 mmHTMLBuilder::mmHTMLBuilder() {
     // init colors from config
-    color0_ = mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX);
-    color1_ = mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX);
+    color1_ = mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX);
+    color0_ = mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
     // init font size from config
     font_size_ = mmIniOptions::instance().html_font_size_;
 }
@@ -35,8 +35,12 @@ void mmHTMLBuilder::init()
     html_+= mmex::getProgramName();
     html_+= wxT(" - ");
     html_+= _("Report");
-    html_+= wxT("</title>\n</head><body bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
-    html_+= wxT("\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
+    html_+= wxT("</title>\n</head>");
+    html_+= wxString::Format(wxT("<body bgcolor=\"%s\" "), mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX));
+    html_+= wxString::Format(wxT("\" text=\"%s\" "), mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX));
+    html_+= wxString::Format(wxT("link=\"%s\" "), wxT("#0000cc"));
+    html_+= wxString::Format(wxT("vlink=\"%s\" "), wxT("#551a8b"));
+    html_+= wxString::Format(wxT("alink=\"%s\">"), wxT("#ff0000"));
     html_+= wxString::Format(wxT("<font size=\"%i\">\n"), font_size_);
 
     //if I need more space on the top of home page and reports I will delete user name from settings
@@ -66,14 +70,14 @@ void mmHTMLBuilder::end()
     html_+= wxT("\n</font></body>\n</html>\n");
 }
 
-void mmHTMLBuilder::addHeader(const int level, const wxString& header)
+void mmHTMLBuilder::addHeader(const int& level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
     html_+= wxString::Format(wxT("<font size=\"%i\"><b>%s</b></font><br>\n"), header_font_size, header.c_str());
 }
 
-void mmHTMLBuilder::addHeaderItalic(const int level, const wxString& header)
+void mmHTMLBuilder::addHeaderItalic(const int& level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
@@ -102,7 +106,7 @@ void mmHTMLBuilder::addLineBreak()
     html_+= wxT("<br>\n");
 }
 
-void mmHTMLBuilder::addHorizontalLine(int size)
+void mmHTMLBuilder::addHorizontalLine(const int& size)
 {
     html_+= wxT("<hr");
     if(size > 0)
@@ -129,6 +133,7 @@ void mmHTMLBuilder::endCenter()
 void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign, const wxString& border)
 {
     html_+= wxT("<table cellspacing=\"1\" ");
+    html_+= wxString::Format(wxT("bgcolor=\"%s\" "), mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX));
     //Comment line above then uncomment line below for debug homepage
     //html_+= wxT("<table border=\"2\" cellspacing=\"1\"");
     if(!width.empty())
@@ -145,7 +150,7 @@ void mmHTMLBuilder::startTableRow(const wxString& custom_color)
 {
     wxString s = wxT("<tr bgcolor=\"%s\" >");
     if (custom_color.IsEmpty())
-        html_ += wxString::Format(s, (bgswitch_ ? color1_ : color0_).c_str());
+        html_ += wxString::Format(s, (bgswitch_ ? color0_ : color1_).c_str());
     else
         html_ += wxString::Format(s, custom_color.c_str());
 }
@@ -158,7 +163,7 @@ void mmHTMLBuilder::startTableCell(const wxString& width)
     html_+= wxT(">");
 }
 
-void mmHTMLBuilder::addRowSeparator(int cols)
+void mmHTMLBuilder::addRowSeparator(const int& cols)
 {
     bgswitch_ = true;
 
@@ -174,7 +179,7 @@ void mmHTMLBuilder::addRowSeparator(int cols)
     }
 }
 
-void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxString& value)
+void mmHTMLBuilder::addTotalRow(const wxString& caption, const int& cols, const wxString& value)
 {
     html_+= wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
     if(cols - 1 > 1)
@@ -183,7 +188,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxStrin
     html_+= wxString::Format(wxT("</i></b></font></td><td nowrap align=\"right\"><font size=\"%d\"><b><i>%s</i></b></font></td></tr>\n"), font_size_, value.c_str());
 }
 
-void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data)
+void mmHTMLBuilder::addTotalRow(const wxString& caption, const int& cols, const std::vector<wxString>& data)
 {
     html_+= wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
     if((long)cols - data.size() > 1)
@@ -201,7 +206,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<w
     html_+= wxT("</td></tr>\n");
 }
 
-void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols)
+void mmHTMLBuilder::addTableHeaderRow(const wxString& value, const int& cols)
 {
     html_+= wxT("<tr><th align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"");
     if(cols > 1)
@@ -212,7 +217,7 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols)
     bgswitch_ = true;
 }
 
-void mmHTMLBuilder::addTableHeaderCell(const wxString& value, bool numeric)
+void mmHTMLBuilder::addTableHeaderCell(const wxString& value, const bool& numeric)
 {
     html_+= numeric ? wxT("<th nowrap align=\"right\" ") : wxT("<th align=\"left\" ");
     html_+= wxT(" valign=\"center\" bgcolor=\"#d5d6de\">");
@@ -220,7 +225,8 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value, bool numeric)
     bgswitch_ = false;
 }
 
-void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor)
+void mmHTMLBuilder::addTableCell(const wxString& value
+    , const bool& numeric, const bool& italic, const bool& bold, const wxString& fontColor)
 {
     html_<< (numeric ? wxT("<td nowrap align=\"right\" >") : wxT("<td>"));
 
@@ -237,7 +243,9 @@ void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool itali
     html_+= wxT("</td>\n");
 }
 
-void mmHTMLBuilder::addTableCellLink(const wxString& href, const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor)
+void mmHTMLBuilder::addTableCellLink(const wxString& href
+    , const wxString& value, const bool& numeric
+    , const bool& italic, const bool& bold, const wxString& fontColor)
 {
     addTableCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), numeric, italic, bold, fontColor);
 }
@@ -247,7 +255,7 @@ void mmHTMLBuilder::addTableHeaderCellLink(const wxString& href, const wxString&
     addTableHeaderCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), false);
 }
 
-void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href, const wxString& value, int cols)
+void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href, const wxString& value, const int& cols)
 {
     addTableHeaderRow(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), cols);
 }
