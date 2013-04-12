@@ -53,15 +53,15 @@ protected:
     enum { PAL_MAX = 24 };
     wxColour palete[PAL_MAX];
 
-    wxMemoryDC dc;
-    int width;
-    int height;
+    wxMemoryDC dc_;
+    int width_;
+    int height_;
 
     wxFont plainFont;
     wxFont boldFont;
 
 private:
-    wxBitmap image;
+    wxBitmap image_;
 };
 //----------------------------------------------------------------------------
 enum EPieChartStyle { PIE_CHART_PERCENT, PIE_CHART_ABSOLUT };
