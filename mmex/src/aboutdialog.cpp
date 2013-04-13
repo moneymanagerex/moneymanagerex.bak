@@ -40,7 +40,7 @@ BEGIN_EVENT_TABLE(mmAboutDialog, wxDialog)
     EVT_HTML_LINK_CLICKED(wxID_ANY, mmAboutDialog::OnLinkClicked)
 END_EVENT_TABLE()
 
-mmAboutDialog::mmAboutDialog( wxWindow* parent) 
+mmAboutDialog::mmAboutDialog( wxWindow* parent)
 {
     wxString caption = wxString(_("About")) << wxT(" ") << mmex::getProgramName();
     Create(parent, ID_DIALOG_ABOUT, caption, wxDefaultPosition,
@@ -74,30 +74,13 @@ bool mmAboutDialog::Create(wxWindow* parent,
 
 void mmAboutDialog::InitControls()
 {
-    //Read data from file
-    wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
-    wxFileInputStream input(filePath);
-    wxTextInputStream text(input);
-    wxArrayString data;
-    data.Add(wxT(""));
-
-    int part = 0;
-    while (!input.Eof())
-    {
-        wxString line = text.ReadLine() << wxT("\n");
-        if (!line.Contains(wxT("-------------\n")))
-            data[part] << line;
-        else {
-            ++part;
-            data.Add(wxT(""));
-        }
-    }
-
     mmHTMLBuilder hb;
-    wxString html = mmex::getProgramDescription();
-    html.Replace(wxT("\n"), wxT("<br>"));
-    html << wxT("<br>") << wxT("<br>");
     hb.init();
+    wxString html = mmex::getProgramDescription();
+    html.Replace(wxT("======================================\n"), wxT("<hr>"));
+    html.Replace(wxT("\n"), wxT("<br>"));
+    html << wxT("<br>") << wxT("\n");
+    hb.addHeader(3, wxT("Money Manager Ex"));
     hb.addParaText(html);
     hb.addTableCellLink( mmex::getProgramFacebookSite()
         , _("Visit us on Facebook"));
@@ -105,10 +88,47 @@ void mmAboutDialog::InitControls()
     html = hb.getHTMLText();
     about_text_ -> SetPage(html);
 
-    developers_text_ -> SetValue(data[0]);
-    if (data.GetCount()>1) translators_text_ -> SetValue(data[1]);
-    if (data.GetCount()>2) artwork_text_ -> SetValue(data[2]);
-    if (data.GetCount()>3) sponsors_text_ -> SetValue(data[3]);
+    wxArrayString data;
+    data.Add(wxT(""));
+
+    int part = 0;
+    hb.init();
+
+    //Read data from file
+    wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
+    wxFileInputStream input(filePath);
+    wxTextInputStream text(input);
+
+    while (!input.Eof())
+    {
+        wxString line = text.ReadLine();
+        if (line.StartsWith(wxT("=============")))
+            line = wxT("<hr>\n");
+        else if (line.StartsWith(wxT("##")))
+        {
+            line.Replace(wxT("##"), wxT("<H3>"));
+            line.Append(wxT("</H3>\n"));
+        }
+        else
+            line << wxT("<br>\n");
+
+        if (line.StartsWith(wxT("-------------")))
+        {
+            hb.addParaText(data[part]);
+            hb.end();
+            data[part] = hb.getHTMLText();
+            ++part;
+            hb.init();
+            data.Add(wxT(""));
+        }
+        else
+            data[part] << line;
+    }
+
+    developers_text_ -> SetPage(data[0]);
+    if (data.GetCount()>1) translators_text_ -> SetPage(data[1]);
+    if (data.GetCount()>2) artwork_text_ -> SetPage(data[2]);
+    if (data.GetCount()>3) sponsors_text_ -> SetPage(data[3]);
 
 }
 void mmAboutDialog::CreateControls()
@@ -159,30 +179,30 @@ void mmAboutDialog::CreateControls()
 
     wxSize internal_size = wxSize(400, 400); //developers_tab_->GetBestVirtualSize();
 
-    about_text_ = new wxHtmlWindow( about_tab, wxID_ANY, 
-        wxDefaultPosition, wxDefaultSize, 
-        wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    about_text_ = new wxHtmlWindow( about_tab, wxID_ANY
+        , wxDefaultPosition, wxDefaultSize
+        , wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     about_sizer->Add(about_text_, 1, wxGROW|wxALL, 1);
 
-    developers_text_ = new wxTextCtrl( developers_tab,
-        wxID_ANY, wxT(""), wxDefaultPosition, internal_size, wxTE_MULTILINE );
-    developers_text_->SetEditable(false);
+    developers_text_ = new wxHtmlWindow( developers_tab
+        , wxID_ANY, wxDefaultPosition, internal_size
+        , wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     developers_sizer->Add(developers_text_, 1, wxEXPAND);
 
-	translators_text_ = new wxTextCtrl( translators_tab,
-		wxID_ANY, wxT(""), wxDefaultPosition, internal_size, wxTE_MULTILINE );
-	translators_text_->SetEditable(false);
-	translators_sizer->Add(translators_text_, 1, wxEXPAND);
+    translators_text_ = new wxHtmlWindow( translators_tab
+        , wxID_ANY, wxDefaultPosition, internal_size
+        , wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    translators_sizer->Add(translators_text_, 1, wxEXPAND);
 
-	artwork_text_ = new wxTextCtrl( artwork_tab,
-		wxID_ANY, wxT(""), wxDefaultPosition, internal_size, wxTE_MULTILINE );
-	artwork_text_->SetEditable(false);
-	artwork_sizer->Add(artwork_text_, 1, wxEXPAND);
+    artwork_text_ = new wxHtmlWindow( artwork_tab
+        , wxID_ANY, wxDefaultPosition, internal_size
+        , wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    artwork_sizer->Add(artwork_text_, 1, wxEXPAND);
 
-	sponsors_text_ = new wxTextCtrl( sponsors_tab,
-		wxID_ANY, wxT(""), wxDefaultPosition, internal_size, wxTE_MULTILINE );
-	sponsors_text_->SetEditable(false);
-	sponsors_sizer->Add(sponsors_text_, 1, wxEXPAND);
+    sponsors_text_ = new wxHtmlWindow( sponsors_tab
+        , wxID_ANY, wxDefaultPosition, internal_size
+        , wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    sponsors_sizer->Add(sponsors_text_, 1, wxEXPAND);
 
     itemBoxSizer->Add(about_notebook, flags);
     about_notebook->Layout();
