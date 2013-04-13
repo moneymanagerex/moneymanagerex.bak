@@ -53,6 +53,7 @@ wxString getProgramName();
 wxString getProgramVersion();
 wxString getProgramCopyright();
 wxString getProgramWebSite();
+wxString getProgramForum();
 wxString getProgramFacebookSite();
 wxString getProgramDescription();
 } // namespace mmex

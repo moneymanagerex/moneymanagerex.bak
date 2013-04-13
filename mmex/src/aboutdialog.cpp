@@ -79,11 +79,17 @@ void mmAboutDialog::InitControls()
     wxString html = mmex::getProgramDescription();
     html.Replace(wxT("======================================\n"), wxT("<hr>"));
     html.Replace(wxT("\n"), wxT("<br>"));
-    html << wxT("<br>") << wxT("\n");
+    html << wxT("<br><hr>") << wxT("\n");
     hb.addHeader(3, wxT("Money Manager Ex"));
     hb.addParaText(html);
+    hb.addLineBreak();
     hb.addTableCellLink( mmex::getProgramFacebookSite()
         , _("Visit us on Facebook"));
+    hb.addLineBreak();
+    hb.addTableCellLink( mmex::getProgramForum()
+        , _("Visit MMEX Forum"));
+    hb.addLineBreak();
+
     hb.end();
     html = hb.getHTMLText();
     about_text_ -> SetPage(html);
