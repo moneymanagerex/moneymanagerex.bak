@@ -31,7 +31,7 @@ mmHTMLBuilder::mmHTMLBuilder() {
 void mmHTMLBuilder::init()
 {
     bgswitch_ = true;
-    html_+= wxT("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /><title>");
+    html_ = wxT("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /><title>");
     html_+= mmex::getProgramName();
     html_+= wxT(" - ");
     html_+= _("Report");

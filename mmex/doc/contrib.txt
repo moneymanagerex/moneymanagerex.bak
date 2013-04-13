@@ -1,11 +1,9 @@
-Active Developers
-======================================
+##Active Developers
 Stefano          [stef145g]
 Nikolay          [Nikolay]
 Pat              [omalleypat]
-
-Code Builds/Fixes/Patches
-======================================
+=======================================
+##Code Builds/Fixes/Patches
 Alex Ukhov
 Bettega Stefano
 Greg Newton
@@ -25,9 +23,8 @@ Vadim
 Vat
 Wesley Ellis 	 [elliswr]
 
---------------------------------------
-Translations
-======================================
+---------------------------------------
+##Translations
 Brazilian Portuguese
 -- Jose Carlos
 Bulgarian
@@ -94,9 +91,9 @@ Ukrainian
 -- Leonid Shturma
 Vietnamese
 -- Nicky, Luu Cong Thanh, Toan [nktvnvn]
+=======================================
 
-User Manual
-======================================
+##User Manual
 English
 -- Stefano 	 [stef145g]
 -- Tina P, Terry Wick
@@ -116,17 +113,15 @@ Polish
 Spanish
 -- jorgeb
 
---------------------------------------
-Silk Icons
-======================================
+---------------------------------------
+##Art and Icons
 Greg Chapman
 
 http://openclipart.org
 http://www.famfamfam.com/lab/icons/silk
 
---------------------------------------
-Sponsors
-======================================
+---------------------------------------
+##Sponsors
 William Thompson
 Robert Gumpright
 Jason McWhorter
@@ -145,3 +140,5 @@ Michelle Sarkis
 Gabriele Falistocco
 jchalmers
 willmetz
+---------------------------------------
+
