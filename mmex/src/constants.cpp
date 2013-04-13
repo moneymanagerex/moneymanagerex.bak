@@ -86,6 +86,10 @@ wxString mmex::getProgramWebSite()
     return wxT("http://codelathe.com/mmex");
 }
 
+wxString mmex::getProgramForum()
+{
+    return wxT("http://www.codelathe.com/forum");
+}
 wxString mmex::getProgramFacebookSite()
 {
     return wxT("http://www.facebook.com/pages/Money-Manager-Ex/242286559144586");

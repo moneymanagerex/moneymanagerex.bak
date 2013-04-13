@@ -1184,20 +1184,28 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     /* ================================================================================================= */
 
-    wxTreeItemId reportsSummary = navTreeCtrl_->AppendItem(reports, _("Summary of Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(reportsSummary, new mmTreeItemData(wxT("Summary of Accounts")));
+    wxTreeItemId reportsSummary = navTreeCtrl_->AppendItem(reports
+        , _("Summary of Accounts"), 4, 4);
+    navTreeCtrl_->SetItemData(reportsSummary
+        , new mmTreeItemData(wxT("Summary of Accounts")));
 
-    wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary, _("Stocks"), 4, 4);
-    navTreeCtrl_->SetItemData(reportsStocks, new mmTreeItemData(wxT("Summary of Stocks")));
+    wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary
+        , _("Stocks"), 4, 4);
+    navTreeCtrl_->SetItemData(reportsStocks
+        , new mmTreeItemData(wxT("Summary of Stocks")));
 
     if (mmIniOptions::instance().enableAssets_)
     {
-        wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary, _("Assets"), 4, 4);
-        navTreeCtrl_->SetItemData(reportsAssets, new mmTreeItemData(wxT("Summary of Assets")));
+        wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary
+            , _("Assets"), 4, 4);
+        navTreeCtrl_->SetItemData(reportsAssets
+            , new mmTreeItemData(wxT("Summary of Assets")));
     }
 
-    wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports, _("Where the Money Goes"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTime, new mmTreeItemData(wxT("Where the Money Goes")));
+    wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports
+        , _("Where the Money Goes"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTime
+        , new mmTreeItemData(wxT("Where the Money Goes")));
 
     wxTreeItemId categsOverTimeCalMonth = navTreeCtrl_->AppendItem(categsOverTime, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(categsOverTimeCalMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Last Calendar Month")));
@@ -2234,7 +2242,8 @@ void mmGUIFrame::createMenu()
     menu_file->Append(MENU_EXPORT, _("&Export"), exportMenu);
 
     wxMenu* importMenu = new wxMenu;
-    importMenu->Append(MENU_IMPORT_UNIVCSV, _("&CSV Files..."), _("Import from any CSV file"));
+    importMenu->Append(MENU_IMPORT_UNIVCSV, _("&CSV Files...")
+        , _("Import from any CSV file"));
     importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files..."), _("Import from QIF"));
     menu_file->Append(MENU_IMPORT, _("&Import"), importMenu);
 
@@ -2360,15 +2369,18 @@ void mmGUIFrame::createMenu()
     menuTools->Append(menuItemCurrency);
 
     wxMenu *menuRelocation = new wxMenu;
-    wxMenuItem* menuItemCategoryRelocation = new wxMenuItem(menuRelocation,
-        MENU_CATEGORY_RELOCATION,_("&Categories..."),_("Reassign all categories to another category"));
+    wxMenuItem* menuItemCategoryRelocation = new wxMenuItem(menuRelocation
+        , MENU_CATEGORY_RELOCATION, _("&Categories...")
+        , _("Reassign all categories to another category"));
        menuItemCategoryRelocation->SetBitmap(wxBitmap(relocate_categories_xpm));
-    wxMenuItem* menuItemPayeeRelocation = new wxMenuItem(menuRelocation,
-        MENU_PAYEE_RELOCATION,_("&Payees..."),_("Reassign all payees to another payee"));
+    wxMenuItem* menuItemPayeeRelocation = new wxMenuItem(menuRelocation
+        , MENU_PAYEE_RELOCATION, _("&Payees...")
+        , _("Reassign all payees to another payee"));
     menuItemPayeeRelocation->SetBitmap(wxBitmap(relocate_payees_xpm));
     menuRelocation->Append(menuItemCategoryRelocation);
     menuRelocation->Append(menuItemPayeeRelocation);
-    menuTools->AppendSubMenu(menuRelocation,_("Relocation of..."),_("Relocate Categories && Payees"));
+    menuTools->AppendSubMenu(menuRelocation, _("Relocation of...")
+        , _("Relocate Categories && Payees"));
 
     menuTools->AppendSeparator();
 
@@ -2390,7 +2402,8 @@ void mmGUIFrame::createMenu()
 
     if (mmIniOptions::instance().enableAssets_)
     {
-        wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, _("&Assets"), _("Assets"));
+        wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS
+            , _("&Assets"), _("Assets"));
         menuItemAssets->SetBitmap(wxBitmap(car_xpm));
         menuTools->Append(menuItemAssets);
     }
@@ -2405,8 +2418,9 @@ void mmGUIFrame::createMenu()
     menuTools->AppendSeparator();
 
     // Create Item
-    wxMenuItem* menuItemCustomReportEdit = new wxMenuItem(menuTools,
-        wxID_EDIT, _("Custom Reports..."), _("Create or modify reports for the Reports section"));
+    wxMenuItem* menuItemCustomReportEdit = new wxMenuItem(menuTools
+        , wxID_EDIT, _("Custom Reports...")
+        , _("Create or modify reports for the Reports section"));
     menuItemCustomReportEdit->SetBitmap(wxBitmap(customsql_xpm));
     // Add menu to Tools menu
     menuTools->Append(menuItemCustomReportEdit);
@@ -2459,22 +2473,24 @@ void mmGUIFrame::createMenu()
 
     if (mmIniOptions::instance().enableReportIssues_)
     {
-       wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES,
-          _("Visit MMEX Forum or &Report New Issues."), _("Visit the MMEX forum. See existing user comments, or report new issues with the software."));
+       wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES
+          , _("Visit MMEX Forum")
+          , _("Visit the MMEX forum. See existing user comments, or report new issues with the software."));
        menuItemReportIssues->SetBitmap(wxBitmap(issues_xpm));
        menuHelp->Append(menuItemReportIssues);
     }
 
     if (mmIniOptions::instance().enableBeNotifiedForNewReleases_)
     {
-       wxMenuItem* menuItemNotify = new wxMenuItem(menuTools, MENU_ANNOUNCEMENTMAILING,
-          _("Register/View Release &Notifications."), _("Sign up to Notification Mailing List or View existing announcements."));
+       wxMenuItem* menuItemNotify = new wxMenuItem(menuTools, MENU_ANNOUNCEMENTMAILING
+          ,_("Register/View Release &Notifications.")
+          , _("Sign up to Notification Mailing List or View existing announcements."));
        menuItemNotify->SetBitmap(wxBitmap(notify_xpm));
        menuHelp->Append(menuItemNotify);
     }
 
     wxMenuItem* menuItemFacebook = new wxMenuItem(menuTools, MENU_FACEBOOK,
-                                                _("Visit us on Facebook"), _("Visit us on Facebook"));
+        _("Visit us on Facebook"), _("Visit us on Facebook"));
     menuItemFacebook->SetBitmap(wxBitmap(facebook_xpm));
     menuHelp->Append(menuItemFacebook);
 
@@ -3376,7 +3392,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& /*event*/)
 {
-   wxString url = wxT("http://www.codelathe.com/forum");
+   wxString url = mmex::getProgramForum();
    wxLaunchDefaultBrowser(url);
 }
 //----------------------------------------------------------------------------
