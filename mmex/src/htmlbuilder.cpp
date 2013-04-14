@@ -36,8 +36,8 @@ void mmHTMLBuilder::init()
     html_+= wxT(" - ");
     html_+= _("Report");
     html_+= wxT("</title>\n</head>");
-    html_+= wxString::Format(wxT("<body bgcolor=\"%s\" "), mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX));
-    html_+= wxString::Format(wxT("\" text=\"%s\" "), mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX));
+	html_+= wxString::Format(wxT("<body bgcolor=\"%s\" "), mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
+    html_+= wxString::Format(wxT("\" text=\"%s\" "), mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
     html_+= wxString::Format(wxT("link=\"%s\" "), wxT("#0000cc"));
     html_+= wxString::Format(wxT("vlink=\"%s\" "), wxT("#551a8b"));
     html_+= wxString::Format(wxT("alink=\"%s\">"), wxT("#ff0000"));
@@ -133,11 +133,11 @@ void mmHTMLBuilder::endCenter()
 void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign, const wxString& border)
 {
     html_+= wxT("<table cellspacing=\"1\" ");
-    html_+= wxString::Format(wxT("bgcolor=\"%s\" "), mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX));
+    html_+= wxString::Format(wxT("bgcolor=\"%s\" "), mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
     //Comment line above then uncomment line below for debug homepage
     //html_+= wxT("<table border=\"2\" cellspacing=\"1\"");
     if(!width.empty())
-        html_+= wxString::Format(wxT(" width=\"%s\""),width.c_str());
+        html_+= wxString::Format(wxT(" width=\"%s\""), width.c_str());
     if(!valign.empty())
         html_+= wxString::Format(wxT(" valign=\"%s\""), valign.c_str());
     if(!border.empty())
