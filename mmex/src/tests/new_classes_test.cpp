@@ -674,7 +674,7 @@ TEST(TAssetList_Test_Add_5_years_of_entries)
     displayTimeTaken(wxT("TAssetList_Test_Add_5_years_of_entries"), start_time);
 }
 
-TEST(TAssetList_Test_GetIndexedEntryPtr)
+TEST(TAssetList_GetIndexedEntryPtr_Test)
 {
     printf("\nTesting speed of Iterators vs indexing...");
     display_STD_IO_separation_line();
@@ -690,10 +690,10 @@ TEST(TAssetList_Test_GetIndexedEntryPtr)
         CHECK_EQUAL(20000, pEntry->value_);
     }
 
-    displayTimeTaken(wxT("TAssetList_Test_GetIndexedEntryPtr"), start_time);
+    displayTimeTaken(wxT("TAssetList_GetIndexedEntryPtr_Test"), start_time);
 }
 
-TEST(TAssetList_Test_const_iterator)
+TEST(TAssetList_const_iterator_Test)
 {
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
@@ -706,10 +706,59 @@ TEST(TAssetList_Test_const_iterator)
         CHECK_EQUAL(20000, pEntry->value_);
     }
 
-    displayTimeTaken(wxT("TAssetList_Test_const_iterator"), start_time);
-    display_STD_IO_separation_line();
+    displayTimeTaken(wxT("TAssetList_const_iterator_Test"), start_time);
 }
 
+TEST(TAssetList_const_iterator_Retest)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    for (std::vector<boost::shared_ptr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
+        it != asset_list.entrylist_.end(); ++ it)
+    {
+        const boost::shared_ptr<TAssetEntry> pEntry = *it;
+
+        CHECK_EQUAL(20000, pEntry->value_);
+    }
+
+    displayTimeTaken(wxT("TAssetList_const_iterator_Retest"), start_time);
+}
+
+TEST(TAssetList_GetIndexedEntryPtr_Retest)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    boost::shared_ptr<TAssetEntry> pEntry;
+    for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
+    {
+        pEntry = asset_list.GetIndexedEntryPtr(i);
+ 
+        CHECK_EQUAL(20000, pEntry->value_);
+    }
+
+    displayTimeTaken(wxT("TAssetList_GetIndexedEntryPtr_Retest"), start_time);
+}
+
+
+TEST(TAssetList_Test_GetEntryPtr)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    boost::shared_ptr<TAssetEntry> pEntry;
+    for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
+    {
+        pEntry = asset_list.GetIndexedEntryPtr(i);
+        pEntry = asset_list.GetEntryPtr(pEntry->GetId());
+
+        CHECK_EQUAL(20000, pEntry->value_);
+    }
+
+    displayTimeTaken(wxT("TAssetList_Test_GetEntryPtr"), start_time);
+    display_STD_IO_separation_line();
+}
 #endif
 
 #if 1
