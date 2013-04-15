@@ -19,6 +19,7 @@
 
 #include "mmgraphgenerator.h"
 #include "util.h"
+#include "singleton.h"
 //----------------------------------------------------------------------------
 
 namespace 
@@ -74,7 +75,7 @@ wxString Eraser::getFilePath(mmGraphGenerator::EType type)
 
 Eraser& Eraser::instance()
 {
-    return mmex::Singleton<Eraser>::instance();
+    return Singleton<Eraser>::instance();
 }
 //----------------------------------------------------------------------------
 
