@@ -22,7 +22,7 @@
 #include "../htmlbuilder.h"
 #include "../util.h"
 
-mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans,
+mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> > trans,
     mmCoreDB* core, int refAccountID, mmFilterTransactionsDialog* transDialog)
 : mmPrintableBase(core)
 , trans_(trans)
@@ -32,7 +32,6 @@ mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBan
 
 mmReportTransactions::~mmReportTransactions()
 {
-    delete trans_;
     // incase the user wants to print a report, we maintain the transaction dialog
     // until we are finished with the report.
     transDialog_->Destroy();
@@ -82,8 +81,8 @@ wxString mmReportTransactions::getHTMLText()
     bool transferTransactionFound = false;
     double total = 0;
 
-    for (std::vector<boost::shared_ptr<mmBankTransaction> >::const_iterator it = trans_->begin();
-        it != trans_->end(); ++ it)
+    for (std::vector<boost::shared_ptr<mmBankTransaction> >::const_iterator it = trans_.begin();
+        it != trans_.end(); ++ it)
     {
         // For transfer transactions, we need to fix the data reference point first.
         if ( refAccountID_ > -1 && it->get()->transType_ == TRANS_TYPE_TRANSFER_STR &&
