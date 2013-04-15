@@ -19,7 +19,6 @@
 #ifndef _MM_EX_CHECKINGPANEL_H_
 #define _MM_EX_CHECKINGPANEL_H_
 //----------------------------------------------------------------------------
-#include <boost/scoped_ptr.hpp>
 #include "filtertransdialog.h"
 #include "mmpanelbase.h"
 //----------------------------------------------------------------------------
@@ -122,7 +121,7 @@ private:
 
     TransactionListCtrl *m_listCtrlAccount;
     int m_AccountID;
-    boost::scoped_ptr<wxImageList> m_imageList;
+    wxScopedPtr<wxImageList> m_imageList;
     std::vector<mmBankTransaction*> m_trans;
 
     wxSharedPtr<wxSQLite3Database> getDb() const;

@@ -25,7 +25,6 @@
 #include <wx/wizard.h>
 
 //----------------------------------------------------------------------------
-#include <boost/scoped_ptr.hpp>
 #include <wx/sharedptr.h>
 
 #include "guiid.h"
@@ -218,7 +217,7 @@ public:
 
 private:
     /* handles to the DB Abstraction */
-    boost::scoped_ptr<mmCoreDB> m_core;
+    wxScopedPtr<mmCoreDB> m_core;
 
     /* handles to SQLite Database */
     wxSharedPtr<wxSQLite3Database> m_db;
@@ -259,7 +258,7 @@ private:
     wxString customSqlReportSelectedItem_;
 
     /* printing */
-    boost::scoped_ptr<wxHtmlEasyPrinting> printer_;
+    wxScopedPtr<wxHtmlEasyPrinting> printer_;
     void restorePrinterValues();
     int helpFileIndex_;
 

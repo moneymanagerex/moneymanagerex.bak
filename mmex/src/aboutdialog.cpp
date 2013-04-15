@@ -22,7 +22,6 @@
 #include "paths.h"
 /*******************************************************/
 
-#include <boost/version.hpp>
 #include <wx/version.h>
 #include <wx/wxsqlite3.h>
 #include <wx/statline.h>

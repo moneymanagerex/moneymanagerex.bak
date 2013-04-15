@@ -22,8 +22,6 @@
 #include "defs.h"
 #include "mmcurrency.h"
 
-#include <boost/static_assert.hpp>
-
 class mmCoreDB;
 class MMEX_IniSettings;
 
@@ -313,8 +311,6 @@ struct LastDays
 template <int MonthsAgoStart, int MonthsAgoEnd = 0, typename CurrentData = Today>
 struct LastMonths
 {
-    BOOST_STATIC_ASSERT(MonthsAgoStart >= MonthsAgoEnd);
-
     inline static wxDateTime StartRange()
     {
         wxDateTime datePast = CurrentData::StartRange().GetDateOnly().Subtract(MonthsAgoStart * wxDateSpan::Month());

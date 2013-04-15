@@ -20,7 +20,7 @@
 #define _MM_EX_GRAPHINCEXPENSESMONTH_H_
 
 #include "mmgraphgenerator.h"
-#include <boost/scoped_ptr.hpp>
+#include <wx/scopedptr.h>
 
 class BarChart;
 
@@ -34,7 +34,7 @@ public:
     bool Generate(const wxString& chartTitle);
 
 private:
-    boost::scoped_ptr<BarChart> chart;
+    wxScopedPtr<BarChart> chart;
 };
 
 #endif // _MM_EX_GRAPHINCEXPENSESMONTH_H_
