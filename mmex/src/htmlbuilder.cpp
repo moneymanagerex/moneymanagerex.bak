@@ -36,14 +36,16 @@ void mmHTMLBuilder::init()
     html_+= wxT(" - ");
     html_+= _("Report");
     html_+= wxT("</title>\n</head>");
-	html_+= wxString::Format(wxT("<body bgcolor=\"%s\" "), mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
-    html_+= wxString::Format(wxT("\" text=\"%s\" "), mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
+	html_+= wxString::Format(wxT("<body bgcolor=\"%s\" ")
+		, mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
+    html_+= wxString::Format(wxT("\" text=\"%s\" ")
+		, mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
     html_+= wxString::Format(wxT("link=\"%s\" "), wxT("#0000cc"));
     html_+= wxString::Format(wxT("vlink=\"%s\" "), wxT("#551a8b"));
     html_+= wxString::Format(wxT("alink=\"%s\">"), wxT("#ff0000"));
     html_+= wxString::Format(wxT("<font size=\"%i\">\n"), font_size_);
 
-    //if I need more space on the top of home page and reports I will delete user name from settings
+    //Show user name if provided
     if (mmOptions::instance().userNameString_ != wxT (""))
     {
         int cols = 1;
@@ -74,26 +76,30 @@ void mmHTMLBuilder::addHeader(const int& level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
-    html_+= wxString::Format(wxT("<font size=\"%i\"><b>%s</b></font><br>\n"), header_font_size, header.c_str());
+    html_+= wxString::Format(wxT("<font size=\"%i\"><b>%s</b></font><br>\n")
+		, header_font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addHeaderItalic(const int& level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
-    html_+= wxString::Format(wxT("<font size=\"%i\"><i>%s</i></font>\n"), header_font_size, header.c_str());
+    html_+= wxString::Format(wxT("<font size=\"%i\"><i>%s</i></font>\n")
+		, header_font_size, header.c_str());
 }
 
 void mmHTMLBuilder::addDateNow()
 {
-    wxString dt = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()).c_str());
+    wxString dt = wxString::Format(_("Today's Date: %s")
+		, mmGetNiceDateString(wxDateTime::Now()).c_str());
     addHeaderItalic(1, dt);
     addLineBreak();
 }
 
 void mmHTMLBuilder::addParaText(const wxString& text)
 {
-    html_+= wxString::Format(wxT("<p><font size=\"%d\">%s</font></p>\n"), font_size_, text.c_str());
+    html_+= wxString::Format(wxT("<p><font size=\"%d\">%s</font></p>\n")
+		, font_size_, text.c_str());
 }
 
 void mmHTMLBuilder::addText(const wxString& text)
@@ -130,10 +136,12 @@ void mmHTMLBuilder::endCenter()
     html_+= wxT("</center>");
 }
 
-void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign, const wxString& border)
+void mmHTMLBuilder::startTable(const wxString& width
+	, const wxString& valign, const wxString& border)
 {
     html_+= wxT("<table cellspacing=\"1\" ");
-    html_+= wxString::Format(wxT("bgcolor=\"%s\" "), mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
+    html_+= wxString::Format(wxT("bgcolor=\"%s\" ")
+		, mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX).c_str());
     //Comment line above then uncomment line below for debug homepage
     //html_+= wxT("<table border=\"2\" cellspacing=\"1\"");
     if(!width.empty())
@@ -179,18 +187,24 @@ void mmHTMLBuilder::addRowSeparator(const int& cols)
     }
 }
 
-void mmHTMLBuilder::addTotalRow(const wxString& caption, const int& cols, const wxString& value)
+void mmHTMLBuilder::addTotalRow(const wxString& caption
+	, const int& cols, const wxString& value)
 {
     html_+= wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
     if(cols - 1 > 1)
         html_+= wxString::Format(wxT(" colspan=\"%d\""), cols - 1);
-    html_+= wxString::Format(wxT("><font size=\"%d\"><b><i>&nbsp;&nbsp;%s"), font_size_, caption.c_str());
-    html_+= wxString::Format(wxT("</i></b></font></td><td nowrap align=\"right\"><font size=\"%d\"><b><i>%s</i></b></font></td></tr>\n"), font_size_, value.c_str());
+    html_+= wxString::Format(wxT("><font size=\"%d\"><b><i>&nbsp;&nbsp;%s")
+		, font_size_, caption.c_str());
+    html_+= wxString::Format(wxT("</i></b></font></td><td nowrap align=\"right\"><font size=\"%d\"><b><i>%s</i></b></font></td></tr>\n")
+		, font_size_, value.c_str());
 }
 
-void mmHTMLBuilder::addTotalRow(const wxString& caption, const int& cols, const std::vector<wxString>& data)
+void mmHTMLBuilder::addTotalRow(const wxString& caption, const int& cols
+	, const std::vector<wxString>& data)
 {
-    html_+= wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
+    html_+= wxT("<tr bgcolor=\"");
+	html_+= mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
+	html_+= wxT("\"><td");
     if((long)cols - data.size() > 1)
         html_+= wxString::Format(wxT(" colspan=\"%ld\""), (long)cols - data.size());
     html_+= wxString::Format(wxT("><font size=\"%d\"><b><i>&nbsp;&nbsp;"), font_size_);
@@ -199,7 +213,8 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, const int& cols, const 
 
     for (unsigned long idx = 0; idx < data.size(); idx++)
     {
-        html_+= wxString::Format(wxT("</td><td nowrap align=\"right\"><font size=\"%d\"><b><i>"), font_size_);
+        html_+= wxString::Format(wxT("</td><td nowrap align=\"right\"><font size=\"%d\"><b><i>")
+			, font_size_);
         html_+= data[idx];
         html_+= wxT("</i></b></font>");
     }
@@ -247,7 +262,8 @@ void mmHTMLBuilder::addTableCellLink(const wxString& href
     , const wxString& value, const bool& numeric
     , const bool& italic, const bool& bold, const wxString& fontColor)
 {
-    addTableCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), numeric, italic, bold, fontColor);
+    addTableCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n")
+		, numeric, italic, bold, fontColor);
 }
 
 void mmHTMLBuilder::addTableHeaderCellLink(const wxString& href, const wxString& value)
@@ -255,7 +271,8 @@ void mmHTMLBuilder::addTableHeaderCellLink(const wxString& href, const wxString&
     addTableHeaderCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), false);
 }
 
-void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href, const wxString& value, const int& cols)
+void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href
+	, const wxString& value, const int& cols)
 {
     addTableHeaderRow(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), cols);
 }
