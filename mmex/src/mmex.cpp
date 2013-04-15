@@ -69,7 +69,6 @@
 #include "util.h"
 
 //----------------------------------------------------------------------------
-#include <boost/version.hpp>
 #include <string>
 #include <wx/debugrpt.h>
 #include <wx/sysopt.h>
@@ -3051,9 +3050,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
     if (m_core.get()->accountList_.getNumAccounts() == 0) return;
 
-    std::vector< boost::shared_ptr<mmBankTransaction> >* trans
-        = new std::vector< boost::shared_ptr<mmBankTransaction> >;
-
+    std::vector< boost::shared_ptr<mmBankTransaction> > trans;
 
     mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
@@ -3154,23 +3151,13 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
                     }
                 }
 
-                (*trans).push_back(pBankTransaction);
+                trans.push_back(pBankTransaction);
             }
         }
-
-        //FIXME: TODO:
-        //std::sort((*trans).begin(), (*trans).end(), sortTransactionsByDate1);
 
         mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getAccountID(), dlg);
         createReportsPage(rs);
     }
-    else
-    {
-        delete trans;
-    }
-
-//  The transaction filter dialog will be destroyed by the report object when completed.
-    //dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
