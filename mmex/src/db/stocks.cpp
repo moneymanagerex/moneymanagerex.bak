@@ -127,7 +127,7 @@ void TStockEntry::Update(wxSQLite3Database* db)
  TStockList Methods
  ***********************************************************************************/
 /// Constructor
-TStockList::TStockList(boost::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TStockList::TStockList(wxSharedPtr<wxSQLite3Database> db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
@@ -167,7 +167,7 @@ void TStockList::LoadEntriesUsing(const wxString& sql_statement)
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
-            boost::shared_ptr<TStockEntry> pEntry(new TStockEntry(q1));
+            wxSharedPtr<TStockEntry> pEntry(new TStockEntry(q1));
             entrylist_.push_back(pEntry);
         }
         q1.Finalize();
@@ -180,7 +180,7 @@ void TStockList::LoadEntriesUsing(const wxString& sql_statement)
 
 int TStockList::AddEntry(TStockEntry* pStockEntry)
 {
-    boost::shared_ptr<TStockEntry> pEntry(pStockEntry);
+    wxSharedPtr<TStockEntry> pEntry(pStockEntry);
     entrylist_.push_back(pEntry);
     pEntry->Add(ListDatabase());
 
@@ -189,7 +189,7 @@ int TStockList::AddEntry(TStockEntry* pStockEntry)
 
 void TStockList::DeleteEntry(int stock_id)
 {
-    boost::shared_ptr<TStockEntry> pEntry = GetEntryPtr(stock_id);
+    wxSharedPtr<TStockEntry> pEntry = GetEntryPtr(stock_id);
     if (pEntry)
     {
         pEntry->Delete(ListDatabase());
@@ -197,9 +197,9 @@ void TStockList::DeleteEntry(int stock_id)
     }
 }
 
-boost::shared_ptr<TStockEntry> TStockList::GetEntryPtr(int stock_id)
+wxSharedPtr<TStockEntry> TStockList::GetEntryPtr(int stock_id)
 {
-    boost::shared_ptr<TStockEntry> pEntry;
+    wxSharedPtr<TStockEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -217,9 +217,9 @@ boost::shared_ptr<TStockEntry> TStockList::GetEntryPtr(int stock_id)
     return pEntry;
 }
 
-boost::shared_ptr<TStockEntry> TStockList::GetIndexedEntryPtr(unsigned int list_index)
+wxSharedPtr<TStockEntry> TStockList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    boost::shared_ptr<TStockEntry> pEntry;
+    wxSharedPtr<TStockEntry> pEntry;
     if (list_index < entrylist_.size())
     {
         pEntry = entrylist_[list_index];

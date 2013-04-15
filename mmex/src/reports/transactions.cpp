@@ -22,7 +22,7 @@
 #include "../htmlbuilder.h"
 #include "../util.h"
 
-mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> > trans,
+mmReportTransactions::mmReportTransactions( std::vector< wxSharedPtr<mmBankTransaction> > trans,
     mmCoreDB* core, int refAccountID, mmFilterTransactionsDialog* transDialog)
 : mmPrintableBase(core)
 , trans_(trans)
@@ -81,15 +81,15 @@ wxString mmReportTransactions::getHTMLText()
     bool transferTransactionFound = false;
     double total = 0;
 
-    for (std::vector<boost::shared_ptr<mmBankTransaction> >::const_iterator it = trans_.begin();
+    for (std::vector<wxSharedPtr<mmBankTransaction> >::const_iterator it = trans_.begin();
         it != trans_.end(); ++ it)
     {
         // For transfer transactions, we need to fix the data reference point first.
         if ( refAccountID_ > -1 && it->get()->transType_ == TRANS_TYPE_TRANSFER_STR &&
              (refAccountID_ == it->get()->accountID_ || refAccountID_ == it->get()->toAccountID_) )
         {
-            const boost::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(refAccountID_);
-            const boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+            const wxSharedPtr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(refAccountID_);
+            const wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
             wxASSERT(pCurrency);
             pCurrency->loadCurrencySettings();
         }

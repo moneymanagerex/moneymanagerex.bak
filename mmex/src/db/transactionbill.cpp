@@ -149,7 +149,7 @@ TTransactionEntry* TTransactionBillEntry::GetTransaction()
     return pEntry;
 }
 
-void TTransactionBillEntry::SetTransaction(boost::shared_ptr<TTransactionEntry> pEntry)
+void TTransactionBillEntry::SetTransaction(wxSharedPtr<TTransactionEntry> pEntry)
 {
     id_from_account = pEntry->id_from_account;
     id_to_account_  = pEntry->id_to_account_;
@@ -172,7 +172,7 @@ void TTransactionBillEntry::SetTransaction(boost::shared_ptr<TTransactionEntry> 
  TTransactionList Methods
  ***********************************************************************************/
 /// Constructor
-TTransactionBillList::TTransactionBillList(boost::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TTransactionBillList::TTransactionBillList(wxSharedPtr<wxSQLite3Database> db, bool load_entries)
 : TTransactionList(db, false)
 {
     LoadEntries(load_entries);
@@ -212,7 +212,7 @@ void TTransactionBillList::LoadEntriesUsing(const wxString& sql_statement)
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        boost::shared_ptr<TTransactionBillEntry> pEntry(new TTransactionBillEntry(q1));
+        wxSharedPtr<TTransactionBillEntry> pEntry(new TTransactionBillEntry(q1));
         entrylist_.push_back(pEntry);
     }
     q1.Finalize();
@@ -220,7 +220,7 @@ void TTransactionBillList::LoadEntriesUsing(const wxString& sql_statement)
 
 int TTransactionBillList::AddEntry(TTransactionBillEntry* pTransBillEntry)
 {
-    boost::shared_ptr<TTransactionBillEntry> pEntry(pTransBillEntry);
+    wxSharedPtr<TTransactionBillEntry> pEntry(pTransBillEntry);
     entrylist_.push_back(pEntry);
     pEntry->Add(db_.get());
 
@@ -229,7 +229,7 @@ int TTransactionBillList::AddEntry(TTransactionBillEntry* pTransBillEntry)
 
 void TTransactionBillList::DeleteEntry(int trans_bill_id)
 {
-    boost::shared_ptr<TTransactionBillEntry> pEntry = GetEntryPtr(trans_bill_id);
+    wxSharedPtr<TTransactionBillEntry> pEntry = GetEntryPtr(trans_bill_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -237,9 +237,9 @@ void TTransactionBillList::DeleteEntry(int trans_bill_id)
     }
 }
 
-boost::shared_ptr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int trans_bill_id)
+wxSharedPtr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int trans_bill_id)
 {
-    boost::shared_ptr<TTransactionBillEntry> pEntry;
+    wxSharedPtr<TTransactionBillEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -257,9 +257,9 @@ boost::shared_ptr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int t
     return pEntry;
 }
 
-boost::shared_ptr<TTransactionBillEntry> TTransactionBillList::GetIndexedEntryPtr(unsigned int list_index)
+wxSharedPtr<TTransactionBillEntry> TTransactionBillList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    boost::shared_ptr<TTransactionBillEntry> pEntry;
+    wxSharedPtr<TTransactionBillEntry> pEntry;
     if (list_index < entrylist_.size())
     {
         pEntry = entrylist_[list_index];

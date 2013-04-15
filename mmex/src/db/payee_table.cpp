@@ -86,7 +86,7 @@ void TPayeeEntry::Update(wxSQLite3Database* db)
  TPayeeList Methods
  ***********************************************************************************/
 /// Constructor
-TPayeeList::TPayeeList(boost::shared_ptr<wxSQLite3Database> db)
+TPayeeList::TPayeeList(wxSharedPtr<wxSQLite3Database> db)
 : TListBase(db)
 {
     LoadEntries();
@@ -113,7 +113,7 @@ void TPayeeList::LoadEntries()
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_PAYEE_V1);
         while (q1.NextRow())
         {
-            boost::shared_ptr<TPayeeEntry> pEntry(new TPayeeEntry(q1));
+            wxSharedPtr<TPayeeEntry> pEntry(new TPayeeEntry(q1));
             entrylist_.push_back(pEntry);
         }
         q1.Finalize();
@@ -134,7 +134,7 @@ int TPayeeList::AddEntry(const wxString& name, wxString category, wxString subca
     }
     else
     {
-        boost::shared_ptr<TPayeeEntry> pEntry(new TPayeeEntry(name));
+        wxSharedPtr<TPayeeEntry> pEntry(new TPayeeEntry(name));
         entrylist_.push_back(pEntry);
         payee_id = pEntry->Add(db_.get());
     }
@@ -144,7 +144,7 @@ int TPayeeList::AddEntry(const wxString& name, wxString category, wxString subca
 
 void TPayeeList::UpdateEntry(int payee_id, const wxString& new_payee_name, int cat_id, int subcat_id)
 {
-    boost::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
+    wxSharedPtr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
     pEntry->name_ = new_payee_name;
     if (cat_id > 0) pEntry->cat_id_ = cat_id;
     if (subcat_id > 0) pEntry->subcat_id_ = subcat_id;
@@ -153,7 +153,7 @@ void TPayeeList::UpdateEntry(int payee_id, const wxString& new_payee_name, int c
 
 void TPayeeList::UpdateEntry(const wxString& payee_name, int cat_id, int subcat_id)
 {
-    boost::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_name);
+    wxSharedPtr<TPayeeEntry> pEntry = GetEntryPtr(payee_name);
     pEntry->cat_id_ = cat_id;
     pEntry->subcat_id_ = subcat_id;
     pEntry->Update(db_.get());
@@ -161,7 +161,7 @@ void TPayeeList::UpdateEntry(const wxString& payee_name, int cat_id, int subcat_
 
 void TPayeeList::DeleteEntry(int payee_id)
 {
-    boost::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
+    wxSharedPtr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -176,9 +176,9 @@ void TPayeeList::DeleteEntry(wxString payee_name)
 
 //-----------------------------------------------------------------------------
 
-boost::shared_ptr<TPayeeEntry> TPayeeList::GetEntryPtr(int payee_id)
+wxSharedPtr<TPayeeEntry> TPayeeList::GetEntryPtr(int payee_id)
 {
-    boost::shared_ptr<TPayeeEntry> pEntry;
+    wxSharedPtr<TPayeeEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -196,9 +196,9 @@ boost::shared_ptr<TPayeeEntry> TPayeeList::GetEntryPtr(int payee_id)
     return pEntry;
 }
 
-boost::shared_ptr<TPayeeEntry> TPayeeList::GetEntryPtr(const wxString& name)
+wxSharedPtr<TPayeeEntry> TPayeeList::GetEntryPtr(const wxString& name)
 {
-    boost::shared_ptr<TPayeeEntry> pEntry;
+    wxSharedPtr<TPayeeEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -219,7 +219,7 @@ boost::shared_ptr<TPayeeEntry> TPayeeList::GetEntryPtr(const wxString& name)
 int TPayeeList::GetPayeeId(const wxString& payee_name)
 {
     int payee_id = -1;
-    boost::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_name);
+    wxSharedPtr<TPayeeEntry> pEntry = GetEntryPtr(payee_name);
     if (pEntry)
     {
         payee_id = pEntry->GetId();
@@ -231,7 +231,7 @@ int TPayeeList::GetPayeeId(const wxString& payee_name)
 wxString TPayeeList::GetPayeeName(int payee_id)
 {
     wxString payee_name;
-    boost::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
+    wxSharedPtr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
     if (pEntry)
     {
         payee_name = pEntry->name_;

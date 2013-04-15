@@ -33,13 +33,13 @@ class mmAppStartDialog: public wxDialog
 
 public:
     mmAppStartDialog();
-    mmAppStartDialog(boost::shared_ptr<MMEX_IniSettings> pIniSettings, wxWindow* parent);
+    mmAppStartDialog(wxSharedPtr<MMEX_IniSettings> pIniSettings, wxWindow* parent);
    ~mmAppStartDialog();
 
     void SetCloseButtonToExit();
 
 private:
-    boost::shared_ptr<MMEX_IniSettings> pIniSettings_;
+    wxSharedPtr<MMEX_IniSettings> pIniSettings_;
     wxCheckBox* itemCheckBox;
     wxButton* itemButtonClose_;
     wxButton* itemButtonExit_;

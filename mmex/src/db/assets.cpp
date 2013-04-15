@@ -198,7 +198,7 @@ wxString TAssetEntry::DisplayDate()
  TAssetList Methods
  ***********************************************************************************/
 /// Constructor
-TAssetList::TAssetList(boost::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TAssetList::TAssetList(wxSharedPtr<wxSQLite3Database> db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
@@ -237,7 +237,7 @@ void TAssetList::LoadAssetEntriesUsing(const wxString& sql_statement)
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        boost::shared_ptr<TAssetEntry> pEntry(new TAssetEntry(q1));
+        wxSharedPtr<TAssetEntry> pEntry(new TAssetEntry(q1));
         entrylist_.push_back(pEntry);
     }
     q1.Finalize();
@@ -245,7 +245,7 @@ void TAssetList::LoadAssetEntriesUsing(const wxString& sql_statement)
 
 int TAssetList::AddEntry(TAssetEntry* pAssetEntry)
 {
-    boost::shared_ptr<TAssetEntry> pEntry(pAssetEntry);
+    wxSharedPtr<TAssetEntry> pEntry(pAssetEntry);
     entrylist_.push_back(pEntry);
     pEntry->Add(db_.get());
 
@@ -254,7 +254,7 @@ int TAssetList::AddEntry(TAssetEntry* pAssetEntry)
 
 void TAssetList::DeleteEntry(int asset_id)
 {
-    boost::shared_ptr<TAssetEntry> pEntry = GetEntryPtr(asset_id);
+    wxSharedPtr<TAssetEntry> pEntry = GetEntryPtr(asset_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -262,9 +262,9 @@ void TAssetList::DeleteEntry(int asset_id)
     }
 }
 
-boost::shared_ptr<TAssetEntry> TAssetList::GetEntryPtr(int asset_id)
+wxSharedPtr<TAssetEntry> TAssetList::GetEntryPtr(int asset_id)
 {
-    boost::shared_ptr<TAssetEntry> pEntry;
+    wxSharedPtr<TAssetEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -282,9 +282,9 @@ boost::shared_ptr<TAssetEntry> TAssetList::GetEntryPtr(int asset_id)
     return pEntry;
 }
 
-boost::shared_ptr<TAssetEntry> TAssetList::GetIndexedEntryPtr(unsigned int list_index)
+wxSharedPtr<TAssetEntry> TAssetList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    boost::shared_ptr<TAssetEntry> pEntry;
+    wxSharedPtr<TAssetEntry> pEntry;
     if (list_index < entrylist_.size())
     {
         pEntry = entrylist_[list_index];

@@ -121,7 +121,7 @@ void TAccountEntry::Update(wxSQLite3Database* db)
  TAccountList Methods
  ***********************************************************************************/
 /// Constructor
-TAccountList::TAccountList(boost::shared_ptr<wxSQLite3Database> db
+TAccountList::TAccountList(wxSharedPtr<wxSQLite3Database> db
 , TCurrencyList& currency_list, bool load_entries)
 : TListBase(db)
 , currency_list_(currency_list)
@@ -166,7 +166,7 @@ void TAccountList::LoadEntriesUsing(const wxString& sql_statement)
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
-            boost::shared_ptr<TAccountEntry> pEntry(new TAccountEntry(q1));
+            wxSharedPtr<TAccountEntry> pEntry(new TAccountEntry(q1));
             entrylist_.push_back(pEntry);
         }
         q1.Finalize();
@@ -179,7 +179,7 @@ void TAccountList::LoadEntriesUsing(const wxString& sql_statement)
 
 int TAccountList::AddEntry(TAccountEntry* pAccountEntry)
 {
-    boost::shared_ptr<TAccountEntry> pEntry(pAccountEntry);
+    wxSharedPtr<TAccountEntry> pEntry(pAccountEntry);
     entrylist_.push_back(pEntry);
     pEntry->Add(ListDatabase());
 
@@ -188,7 +188,7 @@ int TAccountList::AddEntry(TAccountEntry* pAccountEntry)
 
 void TAccountList::DeleteEntry(int account_id)
 {
-    boost::shared_ptr<TAccountEntry> pEntry = GetEntryPtr(account_id);
+    wxSharedPtr<TAccountEntry> pEntry = GetEntryPtr(account_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -203,9 +203,9 @@ void TAccountList::DeleteEntry(const wxString& account_name)
 
 //-----------------------------------------------------------------------------
 
-boost::shared_ptr<TAccountEntry> TAccountList::GetEntryPtr(int account_id)
+wxSharedPtr<TAccountEntry> TAccountList::GetEntryPtr(int account_id)
 {
-    boost::shared_ptr<TAccountEntry> pEntry;
+    wxSharedPtr<TAccountEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -223,9 +223,9 @@ boost::shared_ptr<TAccountEntry> TAccountList::GetEntryPtr(int account_id)
     return pEntry;
 }
 
-boost::shared_ptr<TAccountEntry> TAccountList::GetEntryPtr(const wxString& name)
+wxSharedPtr<TAccountEntry> TAccountList::GetEntryPtr(const wxString& name)
 {
-    boost::shared_ptr<TAccountEntry> pEntry;
+    wxSharedPtr<TAccountEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -243,9 +243,9 @@ boost::shared_ptr<TAccountEntry> TAccountList::GetEntryPtr(const wxString& name)
     return pEntry;
 }
 
-boost::shared_ptr<TAccountEntry> TAccountList::GetIndexedEntryPtr(unsigned int list_index)
+wxSharedPtr<TAccountEntry> TAccountList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    boost::shared_ptr<TAccountEntry> pEntry;
+    wxSharedPtr<TAccountEntry> pEntry;
     if (list_index < entrylist_.size())
     {
         pEntry = entrylist_[list_index];
@@ -257,7 +257,7 @@ boost::shared_ptr<TAccountEntry> TAccountList::GetIndexedEntryPtr(unsigned int l
 int TAccountList::GetAccountId(const wxString& account_name)
 {
     int account_id = -1;
-    boost::shared_ptr<TAccountEntry> pEntry = GetEntryPtr(account_name);
+    wxSharedPtr<TAccountEntry> pEntry = GetEntryPtr(account_name);
     if (pEntry)
     {
         account_id = pEntry->GetId();
@@ -269,7 +269,7 @@ int TAccountList::GetAccountId(const wxString& account_name)
 wxString TAccountList::GetAccountName(int account_id)
 {
     wxString account_name;
-    boost::shared_ptr<TAccountEntry> pEntry = GetEntryPtr(account_id);
+    wxSharedPtr<TAccountEntry> pEntry = GetEntryPtr(account_id);
     if (pEntry)
     {
         account_name = pEntry->acc_name_;

@@ -30,10 +30,10 @@ class RecentDatabaseFiles
 {
 public:
     // This constructor is for a more generic use of this class
-    //RecentDatabaseFiles(boost::shared_ptr<MMEX_IniSettings> pIniSettings, int listSize, wxString dbIndexName);
+    //RecentDatabaseFiles(wxSharedPtr<MMEX_IniSettings> pIniSettings, int listSize, wxString dbIndexName);
     
     // This constructor is for recent files list
-    RecentDatabaseFiles(boost::shared_ptr<MMEX_IniSettings> pIniSettings, wxMenu *menuRecentFiles);
+    RecentDatabaseFiles(wxSharedPtr<MMEX_IniSettings> pIniSettings, wxMenu *menuRecentFiles);
     ~RecentDatabaseFiles();
   
     void loadRecentList();
@@ -47,7 +47,7 @@ public:
     bool validLastListedFile(wxString& lastListedFileName);
 
 private:
-    boost::shared_ptr<MMEX_IniSettings> pIniSettings_;
+    wxSharedPtr<MMEX_IniSettings> pIniSettings_;
     wxMenu *menuRecentFiles_;
     wxArrayString recentFileList_;
 

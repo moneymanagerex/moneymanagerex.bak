@@ -19,7 +19,7 @@
 #include "recentfiles.h"
 #include "guiid.h"
 
-//RecentDatabaseFiles::RecentDatabaseFiles(boost::shared_ptr<MMEX_IniSettings> pIniSettings, int listSize, wxString dbIndexName)
+//RecentDatabaseFiles::RecentDatabaseFiles(wxSharedPtr<MMEX_IniSettings> pIniSettings, int listSize, wxString dbIndexName)
 //: pIniSettings_(pIniSettings)
 //, menuRecentFiles_(NULL)
 //, recentListSize_(listSize)
@@ -32,7 +32,7 @@
 //    loadRecentList();
 //}
 
-RecentDatabaseFiles::RecentDatabaseFiles(boost::shared_ptr<MMEX_IniSettings> pIniSettings, wxMenu *menuRecentFiles)
+RecentDatabaseFiles::RecentDatabaseFiles(wxSharedPtr<MMEX_IniSettings> pIniSettings, wxMenu *menuRecentFiles)
 : pIniSettings_(pIniSettings)
 , menuRecentFiles_(menuRecentFiles)
 , recentListSize_(6)

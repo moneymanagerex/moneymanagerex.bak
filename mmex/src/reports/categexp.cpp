@@ -74,7 +74,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         int categs = 0;
         bool grandtotalseparator = true;
         double categtotal = 0.0;
-        const boost::shared_ptr<mmCategory> category = *it;
+        const wxSharedPtr<mmCategory> category = *it;
         int categID = category->categID_;
         const wxString sCategName = category->categName_;
         double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_,
@@ -99,11 +99,11 @@ wxString mmReportCategoryExpenses::getHTMLText()
             hb.endTableRow();
         }
 
-        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin()
+        for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin()
             ; cit != category->children_.end()
             ; ++ cit)
         {
-            const boost::shared_ptr<mmCategory> sub_category = *cit;
+            const wxSharedPtr<mmCategory> sub_category = *cit;
             int subcategID = sub_category->categID_;
 
             wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);

@@ -18,7 +18,7 @@
 #define _MM_EX_MMCURRENCY_H_
 
 #include <vector>
-#include <boost/shared_ptr.hpp>
+#include <wx/sharedptr.h>
 #include <wx/string.h>
 
 class wxSQLite3Database;
@@ -52,20 +52,20 @@ public:
 class mmCurrencyList
 {
 public:
-    mmCurrencyList(boost::shared_ptr<wxSQLite3Database> db);
+    mmCurrencyList(wxSharedPtr<wxSQLite3Database> db);
 
     /// Must be called after currency list object is created.
-    void SetInfoTable(boost::shared_ptr<MMEX_IniSettings> info_table);
+    void SetInfoTable(wxSharedPtr<MMEX_IniSettings> info_table);
     void LoadCurrencies();
 
     /* Currency Functions */
-    int AddCurrency(boost::shared_ptr<mmCurrency> pCurrency);
+    int AddCurrency(wxSharedPtr<mmCurrency> pCurrency);
     void DeleteCurrency(int currencyID);
-    void UpdateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
+    void UpdateCurrency(wxSharedPtr<mmCurrency> pCurrency);
     int getCurrencyID(const wxString& currencyName, bool symbol = false) const;
     wxString getCurrencyName(int currencyID, bool symbol = false) const;
-    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
-    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName, bool symbol = false) const;
+    wxSharedPtr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
+    wxSharedPtr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName, bool symbol = false) const;
 
     void LoadBaseCurrencySettings() const;
     void LoadCurrencySetting(const wxString& currencySymbol);
@@ -73,19 +73,19 @@ public:
     void SetBaseCurrencySettings(int currencyID);
 	bool OnlineUpdateCurRate(wxString& sError);
 
-    std::vector< boost::shared_ptr<mmCurrency> > currencies_;
+    std::vector< wxSharedPtr<mmCurrency> > currencies_;
 
-    typedef std::vector< boost::shared_ptr<mmCurrency> >::const_iterator const_iterator;
+    typedef std::vector< wxSharedPtr<mmCurrency> >::const_iterator const_iterator;
     std::pair<const_iterator, const_iterator> range() const
     { 
         return std::make_pair(currencies_.begin(), currencies_.end());
     }
    
 private:
-    boost::shared_ptr<wxSQLite3Database> db_;
-    boost::shared_ptr<MMEX_IniSettings> info_table_;
+    wxSharedPtr<wxSQLite3Database> db_;
+    wxSharedPtr<MMEX_IniSettings> info_table_;
 
-    void SetCurrencySetting(boost::shared_ptr<mmCurrency> pCurrency) const;
+    void SetCurrencySetting(wxSharedPtr<mmCurrency> pCurrency) const;
 };
 
 #endif

@@ -118,7 +118,7 @@ wxString TBudgetTableEntry::GetAmountCurrencyEditFormat()
  TBudgetTableList Methods
  ***********************************************************************************/
 /// Constructor
-TBudgetTableList::TBudgetTableList(boost::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TBudgetTableList::TBudgetTableList(wxSharedPtr<wxSQLite3Database> db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
@@ -156,7 +156,7 @@ void TBudgetTableList::LoadEntriesUsing(const wxString& sql_statement)
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        boost::shared_ptr<TBudgetTableEntry> pEntry(new TBudgetTableEntry(q1));
+        wxSharedPtr<TBudgetTableEntry> pEntry(new TBudgetTableEntry(q1));
         entrylist_.push_back(pEntry);
     }
     q1.Finalize();
@@ -164,7 +164,7 @@ void TBudgetTableList::LoadEntriesUsing(const wxString& sql_statement)
 
 int TBudgetTableList::AddEntry(TBudgetTableEntry* pBudgetTableEntry)
 {
-    boost::shared_ptr<TBudgetTableEntry> pEntry(pBudgetTableEntry);
+    wxSharedPtr<TBudgetTableEntry> pEntry(pBudgetTableEntry);
     entrylist_.push_back(pEntry);
     pEntry->Add(db_.get());
 
@@ -173,7 +173,7 @@ int TBudgetTableList::AddEntry(TBudgetTableEntry* pBudgetTableEntry)
 
 void TBudgetTableList::DeleteEntry(int asset_id)
 {
-    boost::shared_ptr<TBudgetTableEntry> pEntry = GetEntryPtr(asset_id);
+    wxSharedPtr<TBudgetTableEntry> pEntry = GetEntryPtr(asset_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -181,9 +181,9 @@ void TBudgetTableList::DeleteEntry(int asset_id)
     }
 }
 
-boost::shared_ptr<TBudgetTableEntry> TBudgetTableList::GetEntryPtr(int asset_id)
+wxSharedPtr<TBudgetTableEntry> TBudgetTableList::GetEntryPtr(int asset_id)
 {
-    boost::shared_ptr<TBudgetTableEntry> pEntry;
+    wxSharedPtr<TBudgetTableEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -201,9 +201,9 @@ boost::shared_ptr<TBudgetTableEntry> TBudgetTableList::GetEntryPtr(int asset_id)
     return pEntry;
 }
 
-boost::shared_ptr<TBudgetTableEntry> TBudgetTableList::GetIndexedEntryPtr(unsigned int list_index)
+wxSharedPtr<TBudgetTableEntry> TBudgetTableList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    boost::shared_ptr<TBudgetTableEntry> pEntry;
+    wxSharedPtr<TBudgetTableEntry> pEntry;
     if (list_index < entrylist_.size())
     {
         pEntry = entrylist_[list_index];

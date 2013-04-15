@@ -49,7 +49,7 @@ public:
     void Update(wxSQLite3Database* db);
     /// Get the transaction entry from the bill transaction
     TTransactionEntry* GetTransaction();
-    void SetTransaction(boost::shared_ptr<TTransactionEntry> pEntry);
+    void SetTransaction(wxSharedPtr<TTransactionEntry> pEntry);
 };
 
 /************************************************************************************
@@ -61,9 +61,9 @@ private:
     void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<boost::shared_ptr<TTransactionBillEntry> > entrylist_;
+    std::vector<wxSharedPtr<TTransactionBillEntry> > entrylist_;
 
-    TTransactionBillList(boost::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TTransactionBillList(wxSharedPtr<wxSQLite3Database> db, bool load_entries = true);
 
     /// Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
@@ -71,8 +71,8 @@ public:
     int AddEntry(TTransactionBillEntry* pTransBillsEntry);
     void DeleteEntry(int trans_bill_id);
 
-    boost::shared_ptr<TTransactionBillEntry> GetEntryPtr(int trans_bill_id);
-    boost::shared_ptr<TTransactionBillEntry> GetIndexedEntryPtr(unsigned int list_index);
+    wxSharedPtr<TTransactionBillEntry> GetEntryPtr(int trans_bill_id);
+    wxSharedPtr<TTransactionBillEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
 };

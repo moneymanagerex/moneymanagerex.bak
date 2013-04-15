@@ -309,7 +309,7 @@ void mmBudgetingPanel::initVirtualListControl()
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        const boost::shared_ptr<mmCategory> category = *it;
+        const wxSharedPtr<mmCategory> category = *it;
 
         mmBudgetEntryHolder th;
         budgetDetails.initBudgetEntryFields(th, budgetYearID_);
@@ -364,11 +364,11 @@ void mmBudgetingPanel::initVirtualListControl()
             trans_.push_back(th);
         }
 
-        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
+        for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin();
                 cit != category->children_.end();
                 ++ cit)
         {
-            const boost::shared_ptr<mmCategory> sub_category = *cit;
+            const wxSharedPtr<mmCategory> sub_category = *cit;
 
             mmBudgetEntryHolder thsub;
             budgetDetails.initBudgetEntryFields(thsub, budgetYearID_);

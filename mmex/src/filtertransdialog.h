@@ -145,7 +145,7 @@ private:
     wxRadioBox* m_radio_box_;
     wxCheckBox* transNumberCheckBox_;
     wxTextCtrl* transNumberEdit_;
-    std::vector< boost::shared_ptr<mmBankTransaction> >* trans_;
+    std::vector< wxSharedPtr<mmBankTransaction> >* trans_;
     mmCoreDB* core_;
 
     int categID_;

@@ -51,9 +51,9 @@ private:
     void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<boost::shared_ptr<TBudgetYearEntry> >entrylist_;
+    std::vector<wxSharedPtr<TBudgetYearEntry> >entrylist_;
 
-    TBudgetYearList(boost::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TBudgetYearList(wxSharedPtr<wxSQLite3Database> db, bool load_entries = true);
 
     /// Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
@@ -62,8 +62,8 @@ public:
     int AddEntry(wxString budget_year_name);
     void DeleteEntry(int budget_year_id);
     
-    boost::shared_ptr<TBudgetYearEntry> GetEntryPtr(int budget_year_id);
-    boost::shared_ptr<TBudgetYearEntry> GetIndexedEntryPtr(unsigned int list_index);
+    wxSharedPtr<TBudgetYearEntry> GetEntryPtr(int budget_year_id);
+    wxSharedPtr<TBudgetYearEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
 };

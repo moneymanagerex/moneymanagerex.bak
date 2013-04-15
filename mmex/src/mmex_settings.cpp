@@ -48,7 +48,7 @@ const char SELECT_INFO_RECORD[] = "select * from INFOTABLE_V1";
 /****************************************************************************
  MMEX_IniRecord Class methods
  ****************************************************************************/
-MMEX_IniRecord::MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db
+MMEX_IniRecord::MMEX_IniRecord(wxSharedPtr<wxSQLite3Database> ini_db
     , bool main_db
     , wxString name)
 : iniDb_(ini_db)
@@ -57,7 +57,7 @@ MMEX_IniRecord::MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db
 , settingName_(name)
 {}
 
-MMEX_IniRecord::MMEX_IniRecord(boost::shared_ptr<wxSQLite3Database> ini_db
+MMEX_IniRecord::MMEX_IniRecord(wxSharedPtr<wxSQLite3Database> ini_db
     , bool main_db
     , wxSQLite3ResultSet& q1)
 : iniDb_(ini_db)
@@ -128,7 +128,7 @@ void MMEX_IniRecord::Save()
 /****************************************************************************
  MMEX_IniSettings Class methods
  ****************************************************************************/
-MMEX_IniSettings::MMEX_IniSettings(boost::shared_ptr<wxSQLite3Database> ini_db, bool main_db)
+MMEX_IniSettings::MMEX_IniSettings(wxSharedPtr<wxSQLite3Database> ini_db, bool main_db)
 : ini_db_(ini_db)
 , main_db_(main_db)
 {
@@ -165,7 +165,7 @@ void MMEX_IniSettings::Load()
     else          q1 = ini_db_->ExecuteQuery(SELECT_INI_RECORD);
     while (q1.NextRow())
     {
-        boost::shared_ptr<MMEX_IniRecord> pRecord(new MMEX_IniRecord(ini_db_, main_db_, q1));
+        wxSharedPtr<MMEX_IniRecord> pRecord(new MMEX_IniRecord(ini_db_, main_db_, q1));
         ini_records_.push_back(pRecord);
     }
     q1.Finalize();
@@ -233,7 +233,7 @@ void MMEX_IniSettings::SetBoolSetting(const wxString& name, bool value)
     MMEX_IniRecord* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
+        wxSharedPtr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
@@ -246,7 +246,7 @@ void MMEX_IniSettings::SetIntSetting(const wxString& name, int value)
     MMEX_IniRecord* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
+        wxSharedPtr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
@@ -258,7 +258,7 @@ void MMEX_IniSettings::SetStringSetting(const wxString& name, const wxString& va
     MMEX_IniRecord* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
+        wxSharedPtr<MMEX_IniRecord> pNewRecord(new MMEX_IniRecord(ini_db_, main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }

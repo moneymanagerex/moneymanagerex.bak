@@ -55,8 +55,8 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
 {
     if (accountID > 0)
     {
-        boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
-        boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+        wxSharedPtr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
+
         wxASSERT(pCurrency);
 
         if (pCurrency)
@@ -66,7 +66,7 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
     return 1.0;
 }
 
-boost::shared_ptr<mmAccount> mmAccountList::GetAccountSharedPtr(int accountID) const
+wxSharedPtr<mmAccount> mmAccountList::GetAccountSharedPtr(int accountID) const
 {
     account_v::value_type res;
 
@@ -224,8 +224,7 @@ bool mmAccountList::currencyInUse(int currencyID) const
 
 wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID) const
 {
-    boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
-    boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+    wxSharedPtr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID); 
     wxASSERT(pCurrency);
 
     if (pCurrency)
@@ -236,8 +235,7 @@ wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID) const
 
 wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
 {
-    boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
-    boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+    wxSharedPtr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
     wxASSERT(pCurrency);
 
     if (pCurrency)
@@ -248,8 +246,7 @@ wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
 
 wxString mmAccountList::GetAccountCurrencyName(int accountID) const
 {
-    boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
-    boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+    wxSharedPtr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
     wxASSERT(pCurrency);
 
     if (pCurrency)
@@ -259,7 +256,7 @@ wxString mmAccountList::GetAccountCurrencyName(int accountID) const
 }
 
 
-boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) const
+wxSharedPtr<mmCurrency> mmAccountList::getCurrencySharedPtr(int accountID) const
 {
     int len = (int)accounts_.size();
     for (int idx = 0; idx < len; idx++)
@@ -268,7 +265,7 @@ boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) con
             return accounts_[idx]->currency_;
     }
     wxASSERT(false);
-    return boost::weak_ptr<mmCurrency>();
+    return wxSharedPtr<mmCurrency>();
 }
 
 std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator>
@@ -277,12 +274,12 @@ std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator>
     return std::make_pair(accounts_.begin(), accounts_.end());
 }
 
-int mmAccountList::UpdateAccount(boost::shared_ptr<mmAccount> pAccount)
+int mmAccountList::UpdateAccount(wxSharedPtr<mmAccount> pAccount)
 {
     wxString statusStr = pAccount->status_ == mmAccount::MMEX_Closed ? wxT("Closed") : wxT("Open");
     wxString favStr = pAccount->favoriteAcct_ ? wxT("TRUE") : wxT("FALSE");
 
-    boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+    wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
     wxASSERT(pCurrency);
     int currencyID = pCurrency->currencyID_;
 
@@ -313,7 +310,7 @@ int mmAccountList::UpdateAccount(boost::shared_ptr<mmAccount> pAccount)
     return iError;
 }
 
-int mmAccountList::AddAccount(boost::shared_ptr<mmAccount> pAccount)
+int mmAccountList::AddAccount(wxSharedPtr<mmAccount> pAccount)
 {
     wxString statusStr = wxT("Open");
     if (pAccount->status_ == mmAccount::MMEX_Closed)
@@ -323,7 +320,7 @@ int mmAccountList::AddAccount(boost::shared_ptr<mmAccount> pAccount)
     if (!pAccount->favoriteAcct_)
         favStr = wxT("FALSE");
 
-    boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+    wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
     wxASSERT(pCurrency);
     int currencyID = pCurrency->currencyID_;
 
@@ -402,10 +399,10 @@ bool mmAccountList::RemoveAccount(int accountID)
 
     mmOptions::instance().databaseUpdated_ = true;
 
-    std::vector<boost::shared_ptr<mmAccount> >::iterator iter;
+    std::vector<wxSharedPtr<mmAccount> >::iterator iter;
     for (iter = accounts_.begin(); iter != accounts_.end(); )
     {
-        boost::shared_ptr<mmAccount> pAccount = (*iter);
+        wxSharedPtr<mmAccount> pAccount = (*iter);
         if (pAccount->id_ == accountID)
         {
             iter = accounts_.erase(iter);
@@ -424,9 +421,9 @@ void mmAccountList::LoadAccounts(const mmCurrencyList& currencyList)
 
     while (q1.NextRow())
     {
-        boost::shared_ptr<mmAccount> pAccount(new mmAccount(q1));
+        wxSharedPtr<mmAccount> pAccount(new mmAccount(q1));
 
-        boost::weak_ptr<mmCurrency> pCurrency =
+        wxSharedPtr<mmCurrency> pCurrency =
             currencyList.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
         pAccount->currency_ = pCurrency;
 

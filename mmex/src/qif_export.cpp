@@ -318,9 +318,9 @@ wxString mmQIFExportDialog::writeAccHeader(int accountID, bool qif)
     wxString buffer = wxT("");
     if (qif)
     {
-        boost::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(accountID);
+        wxSharedPtr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(accountID);
         wxASSERT(pAccount);
-        boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+        wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
         wxASSERT(pCurrency);
 
         const wxString sAccName = core_->accountList_.GetAccountName(accountID);
@@ -347,7 +347,7 @@ wxString mmQIFExportDialog::exportCategories(bool qif)
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        const boost::shared_ptr<mmCategory> category = *it;
+        const wxSharedPtr<mmCategory> category = *it;
         const wxString categ_name = category->categName_;
         bool bIncome = false;
         core_->bTransactionList_.IsCategoryUsed(category->categID_
@@ -357,11 +357,11 @@ wxString mmQIFExportDialog::exportCategories(bool qif)
             << wxT("^") << wxT("\n");
         buffer_csv << categ_name <<  delimit_ << wxT("\n");
 
-        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
+        for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin();
                 cit != category->children_.end();
                 ++ cit)
         {
-            const boost::shared_ptr<mmCategory> sub_category = *cit;
+            const wxSharedPtr<mmCategory> sub_category = *cit;
             bIncome = false;
             bool bSubcateg = sub_category->categID_ != -1;
             core_->bTransactionList_.IsCategoryUsed(category->categID_
@@ -417,7 +417,7 @@ void mmQIFExportDialog::mmExportQIF()
 
             for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
             {
-                boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
+                wxSharedPtr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
                 if ((pBankTransaction->accountID_ != fromAccountID) && (pBankTransaction->toAccountID_ != fromAccountID))
                    continue;
 

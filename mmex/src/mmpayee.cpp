@@ -39,7 +39,7 @@ mmPayee::mmPayee(int id, const wxString& name)
 
 bool mmPayeeList::PayeeExists(const wxString& payeeName) const
 {
-    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    for (std::vector< wxSharedPtr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
         if (! (*it)->name_.CmpNoCase(payeeName)) return true;
     }
@@ -49,7 +49,7 @@ bool mmPayeeList::PayeeExists(const wxString& payeeName) const
 
 bool mmPayeeList::PayeeExists(const int payeeid) const
 {
-    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    for (std::vector< wxSharedPtr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
         if ((*it)->id_ == payeeid) return true;
     }
@@ -59,7 +59,7 @@ bool mmPayeeList::PayeeExists(const int payeeid) const
 
 int mmPayeeList::GetPayeeId(const wxString& payeeName) const
 {
-    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    for (std::vector< wxSharedPtr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
         if (! (*it)->name_.CmpNoCase(payeeName)) return (*it)->id_;
     }
@@ -69,7 +69,7 @@ int mmPayeeList::GetPayeeId(const wxString& payeeName) const
 
 wxString mmPayeeList::GetPayeeName(int id) const
 {
-    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    for (std::vector< wxSharedPtr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
         if ((*it)->id_ == id) return (*it)->name_;
     }
@@ -77,7 +77,7 @@ wxString mmPayeeList::GetPayeeName(int id) const
     return wxEmptyString;
 }
 
-bool sortPayees(const boost::shared_ptr<mmPayee>& elem1, const boost::shared_ptr<mmPayee>& elem2 )
+bool sortPayees(const wxSharedPtr<mmPayee>& elem1, const wxSharedPtr<mmPayee>& elem2 )
 {
     return elem1->name_ < elem2->name_;
 }
@@ -88,7 +88,7 @@ void mmPayeeList::SortList(void)
     std::sort(entries_.begin(), entries_.end(), sortPayees);
 }
 
-boost::shared_ptr<mmPayee> mmPayeeList::GetPayeeSharedPtr(int payeeID)
+wxSharedPtr<mmPayee> mmPayeeList::GetPayeeSharedPtr(int payeeID)
 {
     int numPayees = (int)entries_.size();
     for (int idx = 0; idx < numPayees; idx++)
@@ -98,7 +98,7 @@ boost::shared_ptr<mmPayee> mmPayeeList::GetPayeeSharedPtr(int payeeID)
            return entries_[idx];
         }
     }
-    return boost::shared_ptr<mmPayee>();
+    return wxSharedPtr<mmPayee>();
 }
 
 wxArrayString mmPayeeList::FilterPayees(const wxString& patt) const
@@ -120,7 +120,7 @@ void mmPayeeList::LoadPayees()
     entries_.clear();
     while (q1.NextRow())
     {
-        boost::shared_ptr<mmPayee> pPayee(new mmPayee(q1));
+        wxSharedPtr<mmPayee> pPayee(new mmPayee(q1));
         entries_.push_back(pPayee);
     }
 
@@ -164,7 +164,7 @@ int mmPayeeList::AddPayee(const wxString &payeeName)
 
 int mmPayeeList::UpdatePayee(int payeeID, const wxString& payeeName)
 {
-    boost::shared_ptr<mmPayee> pPayee = GetPayeeSharedPtr(payeeID);
+    wxSharedPtr<mmPayee> pPayee = GetPayeeSharedPtr(payeeID);
     if (!payeeName.IsEmpty()) pPayee->name_ = payeeName;
     std::vector<wxString> data;
     data.push_back(pPayee->name_);

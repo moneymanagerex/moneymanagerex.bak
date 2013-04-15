@@ -119,7 +119,7 @@ void TSettingsEntry::Save(wxSQLite3Database* db)
 /****************************************************************************
  TSettingsList Class methods
  ****************************************************************************/
-TSettingsList::TSettingsList(boost::shared_ptr<wxSQLite3Database> db, bool main_db)
+TSettingsList::TSettingsList(wxSharedPtr<wxSQLite3Database> db, bool main_db)
 : TListBase(db)
 , main_db_(main_db)
 {
@@ -156,7 +156,7 @@ void TSettingsList::Load()
     else          q1 = db_->ExecuteQuery(SELECT_INI_RECORD);
     while (q1.NextRow())
     {
-        boost::shared_ptr<TSettingsEntry> pRecord(new TSettingsEntry(main_db_, q1));
+        wxSharedPtr<TSettingsEntry> pRecord(new TSettingsEntry(main_db_, q1));
         ini_records_.push_back(pRecord);
     }
     q1.Finalize();
@@ -224,7 +224,7 @@ void TSettingsList::SetBoolSetting(const wxString& name, bool value)
     TSettingsEntry* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<TSettingsEntry> pNewRecord(new TSettingsEntry(main_db_, name));
+        wxSharedPtr<TSettingsEntry> pNewRecord(new TSettingsEntry(main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
@@ -237,7 +237,7 @@ void TSettingsList::SetIntSetting(const wxString& name, int value)
     TSettingsEntry* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<TSettingsEntry> pNewRecord(new TSettingsEntry(main_db_, name));
+        wxSharedPtr<TSettingsEntry> pNewRecord(new TSettingsEntry(main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
@@ -249,7 +249,7 @@ void TSettingsList::SetStringSetting(const wxString& name, const wxString& value
     TSettingsEntry* pExistingRecord = GetRecord(name);
     if (!pExistingRecord)
     {
-        boost::shared_ptr<TSettingsEntry> pNewRecord(new TSettingsEntry(main_db_, name));
+        wxSharedPtr<TSettingsEntry> pNewRecord(new TSettingsEntry(main_db_, name));
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
