@@ -19,21 +19,6 @@
 #include "assetdialog.h"
 #include "constants.h"
 
-namespace
-{
-
-    enum EColumn
-    {
-        COL_NAME,
-        COL_DATE,
-        COL_TYPE,
-        COL_VALUE,
-        COL_NOTES,
-        COL_MAX, // number of columns
-    };
-
-} // namespace
-
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmAssetsListCtrl, wxListCtrl)
     EVT_LIST_ITEM_ACTIVATED(IDC_PANEL_STOCKS_LISTCTRL,   mmAssetsListCtrl::OnListItemActivated)
@@ -240,7 +225,7 @@ bool mmAssetsListCtrl::EditAsset(TAssetEntry* pEntry)
 
 void mmAssetsListCtrl::OnColClick(wxListEvent& event)
 {
-    if(0 > event.GetColumn() || event.GetColumn() >= COL_MAX) return;
+    if(0 > event.GetColumn() || event.GetColumn() >= mmAssetsPanel::COL_MAX) return;
 
     if (m_selected_col == event.GetColumn()) m_asc = !m_asc;
 
