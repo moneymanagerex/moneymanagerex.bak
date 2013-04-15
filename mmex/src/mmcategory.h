@@ -23,7 +23,6 @@
 
 #include "defs.h"
 
-#include <boost/weak_ptr.hpp>
 #include <vector>
 
 class mmCoreDB;

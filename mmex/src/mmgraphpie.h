@@ -21,7 +21,7 @@
 
 #include "mmgraphgenerator.h"
 
-#include <boost/scoped_ptr.hpp>
+#include <wx/scopedptr.h>
 #include <vector>
 
 struct ValuePair;
@@ -37,7 +37,7 @@ public:
     bool Generate(const wxString& chartTitle);
 
 private:
-    boost::scoped_ptr<PieChart> chart;
+    wxScopedPtr<PieChart> chart;
 };
 
 #endif // _MM_EX_GRAPHPIE_H_

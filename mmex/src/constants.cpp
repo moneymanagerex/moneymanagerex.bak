@@ -20,7 +20,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <wx/string.h>
 #include <wx/filefn.h>
 #include "paths.h"
-#include <boost/version.hpp>
 
 /*************************************************************************
  Revision of last commit: $Revision$
@@ -101,9 +100,6 @@ wxString mmex::getProgramDescription()
     description << _("MMEX is using the following support products") << wxT(":\n")
                 << wxT("======================================\n")
                 << wxVERSION_STRING << wxT("\n")
-                << wxT("Boost C++ ") << (BOOST_VERSION/100000) << wxT('.')
-                << (BOOST_VERSION / 100 % 1000) << wxT('.')
-                << (BOOST_VERSION % 100) << wxT("\n")
                 << wxT("SQLite3 ") << wxSQLite3Database::GetVersion() << wxT("\n")
                 << wxT("wxSQLite 3.0.2")<< wxT("\n")
                 << wxT("Lua 5.2.1");

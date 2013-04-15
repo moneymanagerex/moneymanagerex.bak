@@ -17,7 +17,6 @@
 #pragma once
 #include "mmpanelbase.h"
 #include "db/assets.h"
-#include <boost/scoped_ptr.hpp>
 
 class wxListCtrl;
 class wxListEvent;
@@ -88,7 +87,7 @@ private:
     wxString filter_;
     wxStaticText* header_text_;
 
-    boost::scoped_ptr<wxImageList> m_imageList;
+    wxScopedPtr<wxImageList> m_imageList;
     TAssetList asset_list_;
 
     bool Create(wxWindow *parent, wxWindowID winid, const wxPoint& pos, const wxSize& size, long style, const wxString &name);
