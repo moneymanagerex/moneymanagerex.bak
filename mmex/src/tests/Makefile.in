@@ -178,8 +178,20 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_summarystocks.o \
 	mmex_tests_transactions.o \
 	mmex_tests_trx_stats.o \
+	mmex_tests_account.o \
 	mmex_tests_assets.o \
+	mmex_tests_budget_table.o \
+	mmex_tests_budget_year.o \
+	mmex_tests_category.o \
+	mmex_tests_currency.o \
 	mmex_tests_entry_base.o \
+	mmex_tests_payee_table.o \
+	mmex_tests_settings.o \
+	mmex_tests_splittransaction.o \
+	mmex_tests_stocks.o \
+	mmex_tests_subcategory.o \
+	mmex_tests_transaction.o \
+	mmex_tests_transactionbill.o \
 	mmex_tests_platfdep.o \
 	mmex_tests_dbwrapper_test.o \
 	mmex_tests_mmex_lua_test.o \
@@ -631,11 +643,47 @@ mmex_tests_transactions.o: $(srcdir)/../../src/reports/transactions.cpp
 mmex_tests_trx_stats.o: $(srcdir)/../../src/reports/trx_stats.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/trx_stats.cpp
 
+mmex_tests_account.o: $(srcdir)/../../src/db/account.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/account.cpp
+
 mmex_tests_assets.o: $(srcdir)/../../src/db/assets.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/assets.cpp
 
+mmex_tests_budget_table.o: $(srcdir)/../../src/db/budget_table.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/budget_table.cpp
+
+mmex_tests_budget_year.o: $(srcdir)/../../src/db/budget_year.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/budget_year.cpp
+
+mmex_tests_category.o: $(srcdir)/../../src/db/category.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/category.cpp
+
+mmex_tests_currency.o: $(srcdir)/../../src/db/currency.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/currency.cpp
+
 mmex_tests_entry_base.o: $(srcdir)/../../src/db/entry_base.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/entry_base.cpp
+
+mmex_tests_payee_table.o: $(srcdir)/../../src/db/payee_table.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/payee_table.cpp
+
+mmex_tests_settings.o: $(srcdir)/../../src/db/settings.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/settings.cpp
+
+mmex_tests_splittransaction.o: $(srcdir)/../../src/db/splittransaction.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/splittransaction.cpp
+
+mmex_tests_stocks.o: $(srcdir)/../../src/db/stocks.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/stocks.cpp
+
+mmex_tests_subcategory.o: $(srcdir)/../../src/db/subcategory.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/subcategory.cpp
+
+mmex_tests_transaction.o: $(srcdir)/../../src/db/transaction.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/transaction.cpp
+
+mmex_tests_transactionbill.o: $(srcdir)/../../src/db/transactionbill.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/db/transactionbill.cpp
 
 mmex_tests_platfdep.o: $(srcdir)/../../src/unix/platfdep.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/unix/platfdep.cpp
