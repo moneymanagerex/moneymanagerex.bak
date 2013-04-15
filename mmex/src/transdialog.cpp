@@ -542,7 +542,6 @@ void mmTransDialog::OnAccountUpdated(wxCommandEvent& /*event*/)
 
 void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
 {
-    wxString prev_payee_name = payee_name_;
     payee_name_ = cbPayee_->GetValue();
 
     bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
@@ -555,59 +554,6 @@ void mmTransDialog::OnPayeeUpdated(wxCommandEvent& event)
         toID_ = core_->accountList_.GetAccountId(payee_name_);
     }
 
-    if (prev_payee_name != payee_name_)
-    {
-        wxCommandEvent evt(wxTE_PROCESS_ENTER, ID_DIALOG_TRANS_PAYEECOMBO);
-        OnPayeeTextEnter(evt);
-    }
-
-    event.Skip();
-}
-
-void mmTransDialog::OnPayeeTextEnter(wxCommandEvent& event)
-{
-    wxString value = cbPayee_->GetValue();
-    if (value.IsEmpty()) bBestChoice_ = true;
-
-    cbPayee_ -> SetEvtHandlerEnabled(false);
-    cbPayee_ -> Clear();
-    wxArrayString data;
-
-    bool transfer_transaction = transaction_type_->GetStringSelection() == wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
-    if (!transfer_transaction)
-        data = core_->payeeList_.FilterPayees(wxT(""));
-    else
-        data = core_->accountList_.getAccountsName();
-
-    for (size_t i = 0; i < data.Count(); ++i)
-    {
-        if (data[i].Lower().Matches(value.Lower().Append(wxT("*"))))
-            cbPayee_ ->Append(data[i]);
-    }
-    if (cbPayee_ ->GetCount() < 1)
-    {
-        for (size_t i = 0; i < data.Count(); ++i)
-        {
-            cbPayee_ ->Append(data[i]);
-        }
-        bBestChoice_ = true;
-    }
-#if wxCHECK_VERSION(2,9,0)
-        cbPayee_->AutoComplete(data);
-#endif
-
-    if (cbPayee_->GetCount() == 1 && bBestChoice_)
-    {
-        cbPayee_->SetSelection(0);
-        bBestChoice_ = false;
-    }
-    else
-        cbPayee_->SetValue(value);
-
-    OnPayeeUpdated(event);
-
-    cbPayee_->SetInsertionPointEnd();
-    cbPayee_ -> SetEvtHandlerEnabled(true);
     event.Skip();
 }
 
@@ -1035,8 +981,6 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
     {
         if (!cbPayee_->GetValue().IsEmpty()) {
             cbPayee_->SetValue(wxT(""));
-            wxCommandEvent evt(wxEVT_COMMAND_TEXT_UPDATED, ID_DIALOG_TRANS_PAYEECOMBO);
-            OnPayeeTextEnter(evt);
             return;
         }
         else {

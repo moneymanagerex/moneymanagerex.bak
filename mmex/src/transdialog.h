@@ -80,7 +80,6 @@ private:
     void OnPayee(wxCommandEvent& event);
     void OnPayeeUpdated(wxCommandEvent& event);
     void OnAccountUpdated(wxCommandEvent& event);
-    void OnPayeeTextEnter(wxCommandEvent& event);
     void OnAutoTransNum(wxCommandEvent& event);
     void OnTransTypeChanged(wxCommandEvent& event);
     void OnSpin(wxSpinEvent&);
