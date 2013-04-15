@@ -39,8 +39,8 @@ public:
     void clear() { html_ = wxGetEmptyString(); }
 
     /** Create an HTML header and returns as a wxString */
-    void addHeader(const int& level, const wxString& header);
-    void addHeaderItalic(const int& level, const wxString& header);
+    void addHeader(const int level, const wxString& header);
+    void addHeaderItalic(const int level, const wxString& header);
     void addDateNow();
 
     /** Create an HTML paragrapth */
@@ -51,7 +51,7 @@ public:
     void addLineBreak();
 
     /** Create an HTML HorizontalLine */
-    void addHorizontalLine(const int& size = 0);
+    void addHorizontalLine(const int size = 0);
 
     /** Create an HTML Image tag */
     void addImage(const wxString& src);
@@ -73,13 +73,13 @@ public:
     void startTableCell(const wxString& width = wxGetEmptyString());
 
     /** Add a special row that is a separator, cols is the number of columns the row has to spread along */
-    void addRowSeparator(const int& cols);
+    void addRowSeparator(const int cols);
 
     /** Add a special row that will format total values */
-    void addTotalRow(const wxString& caption, const int& cols, const wxString& value);
+    void addTotalRow(const wxString& caption, const int cols, const wxString& value);
 
     /** Add a special row that will format total values */
-    void addTotalRow(const wxString& caption, const int& cols, const std::vector<wxString>& data);
+    void addTotalRow(const wxString& caption, const int cols, const std::vector<wxString>& data);
 
     /** Add a Table header cell */
     void addTableHeaderCell(const wxString& value, const bool& numeric = false);
@@ -88,10 +88,10 @@ public:
     void addTableHeaderCellLink(const wxString& href, const wxString& value);
 
     /** Add a Table header row */
-    void addTableHeaderRow(const wxString& value, const int& cols);
+    void addTableHeaderRow(const wxString& value, const int cols);
 
     /** Add a Table header row with link */
-    void addTableHeaderRowLink(const wxString& href, const wxString& value, const int& cols);
+    void addTableHeaderRowLink(const wxString& href, const wxString& value, const int cols);
 
     /** Add a Cell value */
     void addTableCell(const wxString& value

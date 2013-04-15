@@ -72,7 +72,7 @@ void mmHTMLBuilder::end()
     html_+= wxT("\n</font></body>\n</html>\n");
 }
 
-void mmHTMLBuilder::addHeader(const int& level, const wxString& header)
+void mmHTMLBuilder::addHeader(const int level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
@@ -80,7 +80,7 @@ void mmHTMLBuilder::addHeader(const int& level, const wxString& header)
 		, header_font_size, header.c_str());
 }
 
-void mmHTMLBuilder::addHeaderItalic(const int& level, const wxString& header)
+void mmHTMLBuilder::addHeaderItalic(const int level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
@@ -112,7 +112,7 @@ void mmHTMLBuilder::addLineBreak()
     html_+= wxT("<br>\n");
 }
 
-void mmHTMLBuilder::addHorizontalLine(const int& size)
+void mmHTMLBuilder::addHorizontalLine(const int size)
 {
     html_+= wxT("<hr");
     if(size > 0)
@@ -171,7 +171,7 @@ void mmHTMLBuilder::startTableCell(const wxString& width)
     html_+= wxT(">");
 }
 
-void mmHTMLBuilder::addRowSeparator(const int& cols)
+void mmHTMLBuilder::addRowSeparator(const int cols)
 {
     bgswitch_ = true;
 
@@ -188,7 +188,7 @@ void mmHTMLBuilder::addRowSeparator(const int& cols)
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption
-	, const int& cols, const wxString& value)
+	, const int cols, const wxString& value)
 {
     html_+= wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
     if(cols - 1 > 1)
@@ -199,7 +199,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption
 		, font_size_, value.c_str());
 }
 
-void mmHTMLBuilder::addTotalRow(const wxString& caption, const int& cols
+void mmHTMLBuilder::addTotalRow(const wxString& caption, const int cols
 	, const std::vector<wxString>& data)
 {
     html_+= wxT("<tr bgcolor=\"");
@@ -221,7 +221,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, const int& cols
     html_+= wxT("</td></tr>\n");
 }
 
-void mmHTMLBuilder::addTableHeaderRow(const wxString& value, const int& cols)
+void mmHTMLBuilder::addTableHeaderRow(const wxString& value, const int cols)
 {
     html_+= wxT("<tr><th align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"");
     if(cols > 1)
@@ -272,7 +272,7 @@ void mmHTMLBuilder::addTableHeaderCellLink(const wxString& href, const wxString&
 }
 
 void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href
-	, const wxString& value, const int& cols)
+	, const wxString& value, const int cols)
 {
     addTableHeaderRow(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), cols);
 }
