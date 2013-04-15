@@ -70,7 +70,6 @@
 
 //----------------------------------------------------------------------------
 #include <boost/version.hpp>
-#include <boost/scoped_array.hpp>
 #include <string>
 #include <wx/debugrpt.h>
 #include <wx/sysopt.h>
@@ -3663,7 +3662,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
 
     wxArrayString as;
     int num = (int)m_core->accountList_.accounts_.size();
-    boost::scoped_array<int> arrAcctID(new int[num]);
+    std::vector<int> arrAcctID;
 
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->accountList_.range();
     int idx = 0;
