@@ -19,6 +19,7 @@
 #include "mmpayee.h"
 #include "util.h"
 #include "mmcoredb.h"
+#include <algorithm>
 
 // Constructor used when loading a payee from the database
 mmPayee::mmPayee(wxSQLite3ResultSet q1)

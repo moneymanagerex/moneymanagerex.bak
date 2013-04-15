@@ -20,6 +20,7 @@
 #include "util.h"
 #include "paths.h"
 #include "platfdep.h"
+#include <algorithm>
 
 IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVDialog, wxDialog)
 
