@@ -21,6 +21,7 @@
 #include "univcsvdialog.h"
 #include "paths.h"
 #include "constants.h"
+#include "singleton.h"
 
 #include <wx/sstream.h>
 //----------------------------------------------------------------------------
@@ -246,7 +247,7 @@ mmIniOptions::mmIniOptions()
 
 mmIniOptions& mmIniOptions::instance()
 {
-    return mmex::Singleton<mmIniOptions>::instance();
+    return Singleton<mmIniOptions>::instance();
 }
 
 //----------------------------------------------------------------------------
@@ -267,7 +268,7 @@ mmOptions::mmOptions()
 //----------------------------------------------------------------------------
 mmOptions& mmOptions::instance()
 {
-    return mmex::Singleton<mmOptions>::instance();
+    return Singleton<mmOptions>::instance();
 }
 
 //----------------------------------------------------------------------------
@@ -680,7 +681,7 @@ void mmex::CurrencyFormatter::loadSettings(const mmCurrency &cur)
 
 mmex::CurrencyFormatter& mmex::CurrencyFormatter::instance()
 {
-    return mmex::Singleton<mmex::CurrencyFormatter>::instance();
+    return Singleton<mmex::CurrencyFormatter>::instance();
 }
 //----------------------------------------------------------------------------
 
