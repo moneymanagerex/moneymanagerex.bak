@@ -66,6 +66,17 @@ private:
 class mmAssetsPanel : public mmPanelBase
 {
     DECLARE_EVENT_TABLE()
+public:
+// TODO
+    enum EColumn
+    {
+        COL_NAME,
+        COL_DATE,
+        COL_TYPE,
+        COL_VALUE,
+        COL_NOTES,
+        COL_MAX, // number of columns
+    };
 
 public:
     mmAssetsPanel(wxWindow *parent, mmCoreDB* core);

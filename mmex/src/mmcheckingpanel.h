@@ -28,50 +28,6 @@ class TransactionListCtrl;
 class mmFilterTransactionsDialog;
 //----------------------------------------------------------------------------
 
-// This structure is currently not being used.
-// temporarily removed for now
-#if 0
-/* 
-    Holds a single transaction 
-*/
-struct mmTransactionHolder: public mmHolderBase
-{
-    wxDateTime date_;
-    wxString dateStr_;
-
-    int catID_;
-    wxString catStr_;
-    int subcategID_;
-    wxString subCatStr_;
-
-    int payeeID_;
-    wxString payeeStr_;
-
-    wxString transNum_;
-    wxString status_;
-    wxString notes_;
-    wxString transType_;
-    
-    wxString transAmtString_;
-    double amt_;
-
-    wxString transToAmtString_;
-    double toAmt_;
-    
-    int accountID_;
-    int toAccountID_;
-
-    wxString fromAccountStr_;
-    
-    wxString withdrawalStr_;
-    wxString depositStr_;
-
-    double balance_;
-    wxString balanceStr_;
-};
-#endif
-//----------------------------------------------------------------------------
-
 class mmCheckingPanel : public mmPanelBase
 {
 public:

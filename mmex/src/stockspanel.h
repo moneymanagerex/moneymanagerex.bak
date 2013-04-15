@@ -102,6 +102,18 @@ struct mmStockTransactionHolder: public mmHolderBase
 class mmStocksPanel : public mmPanelBase
 {
     DECLARE_EVENT_TABLE()
+public:
+    enum EColumn
+    {
+        COL_DATE,
+        COL_NAME,
+        COL_NUMBER,
+        COL_VALUE,
+        COL_GAIN_LOSS,
+        COL_CURRENT,
+        COL_NOTES,
+        COL_MAX, // number of columns
+    };
 
 public:
     mmStocksPanel(

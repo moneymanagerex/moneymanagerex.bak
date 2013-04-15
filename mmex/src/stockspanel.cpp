@@ -21,22 +21,6 @@
 #include "constants.h"
 
 /*******************************************************/
-namespace
-{
-    enum EColumn
-    {
-        COL_DATE,
-        COL_NAME,
-        COL_NUMBER,
-        COL_VALUE,
-        COL_GAIN_LOSS,
-        COL_CURRENT,
-        COL_NOTES,
-        COL_MAX, // number of columns
-    };
-}
-
-/*******************************************************/
 BEGIN_EVENT_TABLE(StocksListCtrl, wxListCtrl)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_STOCKS_LISTCTRL,   StocksListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_STOCKS_LISTCTRL, StocksListCtrl::OnItemRightClick)
@@ -213,7 +197,7 @@ void StocksListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 
 void StocksListCtrl::OnColClick(wxListEvent& event)
 {
-    if(0 > event.GetColumn() || event.GetColumn() >= COL_MAX) return;
+    if(0 > event.GetColumn() || event.GetColumn() >= mmStocksPanel::COL_MAX) return;
 
     if (m_selected_col == event.GetColumn()) m_asc = !m_asc;
 
