@@ -22,12 +22,8 @@
 #include "mmex.h"
 #include "constants.h"
 //----------------------------------------------------------------------------
-#include <boost/unordered_map.hpp>
 #include <wx/srchctrl.h>
 //----------------------------------------------------------------------------
-
-namespace
-{
 
 enum EColumn
 {
@@ -105,193 +101,6 @@ void createColumns(MMEX_IniSettings *pIniSettings, wxListCtrl &lst)
     }
 }
 //----------------------------------------------------------------------------
-
-template<class T>
-inline bool sort(const T &t1, const T &t2, bool asc)
-{
-    return asc ? t1 < t2 : t1 > t2;
-}
-//----------------------------------------------------------------------------
-typedef bool (*sort_fun_t)(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc);
-//----------------------------------------------------------------------------
-
-bool sortTransByDate(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-    bool res = false;
-
-    if (t1->date_ == t2->date_)
-        res = sort(t1->transactionID(), t2->transactionID(), asc);
-    else
-        res = sort(t1->date_, t2->date_, asc);
-
-    return res;
-}
-//----------------------------------------------------------------------------
-
-bool sortTransByNum(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-    long v1 = 0;
-    long v2 = 0;
-
-    bool ok1 = t1->transNum_.ToLong(&v1);
-    bool ok2 = t2->transNum_.ToLong(&v2);
-
-    bool res = false;
-
-    if (ok1 && ok2)
-        res = sort(v1, v2, asc);
-    else
-        res = sort(t1->transNum_, t2->transNum_, asc);
-
-    return res;
-}
-//----------------------------------------------------------------------------
-
-bool sortTransByPayee(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-//  Primary sort by Payee, secondary sort by Date.
-    bool res = false;
-    if (t1->payeeStr_ == t2->payeeStr_)
-        res = sort(t1->date_, t2->date_, asc);
-    else
-        res = sort(t1->payeeStr_, t2->payeeStr_, asc);
-
-    return res;
-}
-//----------------------------------------------------------------------------
-
-bool sortTransByStatus(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-//  Primary sort by Status, Secondary sort by Date.
-    bool res = false;
-    if (t1->status_ == t2->status_)
-        res = sort(t1->date_, t2->date_, asc);
-    else
-        res = sort(t1->status_, t2->status_, asc);
-
-    return res;
-}
-//----------------------------------------------------------------------------
-
-bool sortTransByCateg(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-//  Primary sort by Category, Secondary sort by Date.
-    bool res = false;
-    if (t1->fullCatStr_ == t2->fullCatStr_)
-        res = sort(t1->date_, t2->date_, asc);
-    else
-        res = sort(t1->fullCatStr_, t2->fullCatStr_, asc);
-
-    return res;
-}
-//----------------------------------------------------------------------------
-
-/*
-    FIXME: formatCurrencyToDouble too slow.
-*/
-bool sortAsCurrency(const wxString &s1, const wxString &s2, bool asc)
-{
-    double v1 = 0;
-    double v2 = 0;
-
-    bool ok1 = mmex::formatCurrencyToDouble(s1, v1);
-    bool ok2 = mmex::formatCurrencyToDouble(s2, v2);
-
-    bool res = false;
-
-    if (ok1 && ok2)
-        res = sort(v1, v2, asc);
-    else
-        res = sort(s1, s2, asc);
-
-    return res;
-}
-//----------------------------------------------------------------------------
-
-bool sortTransByWithdrowal(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-    return sortAsCurrency(t1->withdrawalStr_, t2->withdrawalStr_, asc);
-}
-//----------------------------------------------------------------------------
-
-bool sortTransByDeposit(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-    return sortAsCurrency(t1->depositStr_, t2->depositStr_, asc);
-}
-//----------------------------------------------------------------------------
-
-bool sortTransByBalanse(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-    return sort(t1->balance_, t2->balance_, asc);
-}
-//----------------------------------------------------------------------------
-
-bool sortTransByNotes(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
-{
-    return sort(t1->notes_, t2->notes_, asc);
-}
-//----------------------------------------------------------------------------
-
-sort_fun_t getSortFx(EColumn col)
-{
-    static sort_fun_t fx[COL_MAX] = {0};
-
-    if (!fx[COL_DATE_OR_TRANSACTION_ID])
-    {
-        fx[COL_DATE_OR_TRANSACTION_ID] = sortTransByDate;
-        fx[COL_TRANSACTION_NUMBER] = sortTransByNum;
-        fx[COL_PAYEE_STR] = sortTransByPayee;
-        fx[COL_STATUS] = sortTransByStatus;
-        fx[COL_CATEGORY] = sortTransByCateg;
-        fx[COL_WITHDRAWAL] = sortTransByWithdrowal;
-        fx[COL_DEPOSIT] = sortTransByDeposit;
-        fx[COL_BALANCE] = sortTransByBalanse;
-        fx[COL_NOTES] = sortTransByNotes;
-    }
-
-    sort_fun_t f = fx[col];
-    wxASSERT(f);
-
-    return f;
-}
-//----------------------------------------------------------------------------
-
-/*
-    Return whether first element is greater than the second
-*/
-struct TransSort : public std::binary_function<const mmBankTransaction*,
-                                               const mmBankTransaction*,
-                                               bool>
-{
-    TransSort(EColumn col, bool asc) : m_f(getSortFx(col)), m_asc(asc) {}
-
-    bool operator() (const mmBankTransaction *t1, const mmBankTransaction *t2) const
-    {
-        return m_f(t1, t2, m_asc);
-    }
-
-private:
-    sort_fun_t m_f;
-    bool m_asc;
-};
-//----------------------------------------------------------------------------
-
-/*
-    This function is not sort_fun_t.
-*/
-bool sortTransByDateAsc(const mmBankTransaction *t1, const mmBankTransaction *t2)
-{
-    bool res = false;
-
-    if (t1->date_ == t2->date_)
-        res = t1->transactionID() < t2->transactionID();
-    else
-        res = t1->date_ < t2->date_;
-
-    return res;
-}
-
-} // namespace
 
 //----------------------------------------------------------------------------
 class TransactionListCtrl : public wxListCtrl
@@ -467,7 +276,7 @@ bool mmCheckingPanel::Create(
 
 void mmCheckingPanel::sortTable()
 {
-    std::sort(m_trans.begin(), m_trans.end(), TransSort(g_sortcol, g_asc));
+// TODO sorting w/ ORM using database directly
 }
 //----------------------------------------------------------------------------
 
@@ -911,47 +720,6 @@ public:
 };
 //---------------------------------------------------------------------------
 
-typedef std::pair<wxSharedPtr<TransactionPtr_Matcher>, bool> TransactionMatchData;
-typedef boost::unordered_map<wxString, TransactionMatchData> TransactionMatchMap;
-
-const TransactionMatchMap& initTransactionMatchMap()
-{
-    static TransactionMatchMap map;
-
-    map[VIEW_TRANS_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_Status<>(wxT("R"))), false);
-    map[VIEW_TRANS_UNRECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_Status<>(wxT(""))), false);
-    map[VIEW_TRANS_NOT_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_Status< std::not_equal_to<wxString> >(wxT("R"))), false);
-    map[VIEW_TRANS_VOID] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_Status<>(wxT("V"))), false);
-    map[VIEW_TRANS_FLAGGED] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_Status<>(wxT("F"))), false);
-    map[VIEW_TRANS_DUPLICATES] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_Status<>(wxT("D"))), false);
-
-    map[VIEW_TRANS_TODAY_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
-    map[VIEW_TRANS_LAST_30_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
-    map[VIEW_TRANS_LAST_90_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
-    map[VIEW_TRANS_LAST_MONTH_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 1> >()), true);
-    map[VIEW_TRANS_CURRENT_MONTH_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth<> >()), true);
-    map[VIEW_TRANS_LAST_3MONTHS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_DateTime<DateTimeProviders::LastMonths<2> >()), true);
-    map[VIEW_TRANS_LAST_365_DAYS] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_DateTime<DateTimeProviders::LastDays<365> >()), true);
-    map[VIEW_TRANS_CURRENT_YEAR_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(
-        new MatchTransaction_DateTime<DateTimeProviders::CurrentYear >()), true);
-
-    return map;
-}
-static const TransactionMatchMap& s_transactionMatchers_Map = initTransactionMatchMap();
-
 void mmCheckingPanel::initVirtualListControl(const int trans_id)
 {
     // clear everything
@@ -990,24 +758,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
 
         bool toAdd = true;
 //      bool getBal = false;
-        if (s_transactionMatchers_Map.count(currentView_) > 0)
-        {
-            // wxSharedPtr<TransactionPtr_Matcher> pMatcher;
-            TransactionMatchMap::const_iterator it = s_transactionMatchers_Map.find(currentView_);
-            TransactionMatchMap::const_iterator end;
-            if (it != end)
-            {
-                TransactionMatchMap::value_type pair = *it;
-
-                TransactionMatchData data = pair.second;
-                TransactionPtr_MatcherPtr matcher = data.first;
-                wxASSERT(matcher);
-
-                toAdd = matcher->Match(pBankTransaction);
-//              getBal = data.second;
-            }
-        }
-
+        
         if (transFilterActive_)
         {
             toAdd  = transFilterDlg_->somethingSelected();  // remove transaction from list and add if wanted.
@@ -1048,7 +799,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
      Stage 2
      Sort all account transactions by date to, determine balances.
     **********************************************************************************/
-    std::sort(account_transPtr.begin(), account_transPtr.end(), sortTransByDateAsc);
+//    std::sort(account_transPtr.begin(), account_transPtr.end(), sortTransByDateAsc);
 
     /**********************************************************************************
      Stage 3

@@ -228,31 +228,6 @@ bool formatCurrencyToDouble( const wxString& str, double& val );
 
 } // namespace mmex
 
-namespace boost
-{
-    inline std::size_t hash_value(const wxChar* string)
-    {
-        long int_key = 0;
-
-        while (*string) {
-            int_key += static_cast<wxUChar>(*string++);
-            }
-
-        return int_key;
-    }
-
-   /* problems using wxWidgets 2.9.x */
-    inline std::size_t hash_value(const wxString& value)
-    {
-        size_t key = 0;
-        for(wxString::const_iterator it = value.begin(); it != value.end(); ++ it)
-            key += static_cast<wxUChar>(*it);
-
-        return key;
-    }
-
-} // namespace boost
-
 //----------------------------------------------------------------------------
 
 namespace DateTimeProviders {
