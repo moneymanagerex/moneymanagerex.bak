@@ -24,6 +24,7 @@
 #include "billsdepositspanel.h"
 #include "mmgraphincexpensesmonth.h"
 #include "db/assets.h"
+#include <algorithm>
 
 
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
