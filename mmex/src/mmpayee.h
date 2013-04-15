@@ -18,7 +18,7 @@
 #define _MM_EX_MMPAYEE_H_
 
 #include "mmcategory.h"
-#include "boost/shared_ptr.hpp"
+#include "wx/sharedptr.h"
 
 class mmCoreDB;
 
@@ -51,16 +51,16 @@ public:
     bool PayeeExists(const int payeeid) const;
     int GetPayeeId(const wxString& payeeName) const;
     wxString GetPayeeName(int id) const;
-    boost::shared_ptr<mmPayee> GetPayeeSharedPtr(int payeeID);
+    wxSharedPtr<mmPayee> GetPayeeSharedPtr(int payeeID);
     void SortList(void);
     wxArrayString FilterPayees(const wxString& patt) const;
 
-    std::vector< boost::shared_ptr<mmPayee> > entries_;
+    std::vector< wxSharedPtr<mmPayee> > entries_;
     int Num() const
     {
         return entries_.size();
     }
-    typedef std::vector< boost::shared_ptr<mmPayee> >::const_iterator const_iterator;
+    typedef std::vector< wxSharedPtr<mmPayee> >::const_iterator const_iterator;
     std::pair<const_iterator, const_iterator> Range() const
     {
         return std::make_pair(entries_.begin(), entries_.end());

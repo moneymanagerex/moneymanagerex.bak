@@ -22,7 +22,7 @@
 #include "util.h"
 
 //----------------------------------------------------------------------------
-mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db, boost::shared_ptr<MMEX_IniSettings> iniSettings)
+mmCoreDB::mmCoreDB(wxSharedPtr<wxSQLite3Database> db, wxSharedPtr<MMEX_IniSettings> iniSettings)
 : db_(db)
 , iniSettings_(iniSettings)
 , payeeList_(this)

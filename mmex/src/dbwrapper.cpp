@@ -1305,7 +1305,7 @@ int mmDBWrapper::mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxStri
 }
 //----------------------------------------------------------------------------
 
-wxString mmDBWrapper::getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSettings, const wxString &defaultVal)
+wxString mmDBWrapper::getLastDbPath(wxSharedPtr<MMEX_IniSettings> iniSettings, const wxString &defaultVal)
 {
     wxString path = iniSettings->GetStringSetting(wxT("LASTFILENAME"), defaultVal);
 
@@ -1337,9 +1337,9 @@ wxString mmDBWrapper::getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSetti
     only if the file is write protected by the operating system.  In either
     case the database must already exist, otherwise an error is returned.
 */
-boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, const wxString &key)
+wxSharedPtr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, const wxString &key)
 {
-    boost::shared_ptr<wxSQLite3Database> db = static_db_ptr();
+    wxSharedPtr<wxSQLite3Database> db = static_db_ptr();
 
     int err = SQLITE_OK;
     wxString errStr=wxEmptyString;

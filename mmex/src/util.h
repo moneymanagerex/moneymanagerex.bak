@@ -69,7 +69,7 @@ private:
 void mmShowErrorMessageInvalid( wxWindow *parent, const wxString &message );
 void mmShowErrorMessage( wxWindow *parent, const wxString &message, const wxString &messageheader );
 
-wxString mmSelectLanguage(wxWindow *parent, boost::shared_ptr<MMEX_IniSettings> pIniSettings, bool forced_show_dlg, bool save_setting = true);
+wxString mmSelectLanguage(wxWindow *parent, wxSharedPtr<MMEX_IniSettings> pIniSettings, bool forced_show_dlg, bool save_setting = true);
 
 wxString mmGetDateForStorage( const wxDateTime &dt );
 wxDateTime mmGetStorageStringAsDate( const wxString& str );
@@ -93,7 +93,7 @@ void fixFileExt(wxFileName &f, const wxString &ext);
 
 void correctEmptyFileExt(wxString ext, wxString & fileName );
 
-void mmLoadColorsFromDatabase(boost::shared_ptr<MMEX_IniSettings> pIniSettings);
+void mmLoadColorsFromDatabase(wxSharedPtr<MMEX_IniSettings> pIniSettings);
 wxColour mmGetColourFromString( const wxString& str );
 wxString mmGetStringFromColour( wxColour color );
 
@@ -125,7 +125,7 @@ class mmIniOptions
 public:
     mmIniOptions();
     static mmIniOptions& instance();
-    void loadOptions(boost::shared_ptr<MMEX_IniSettings> pIniSettings);
+    void loadOptions(wxSharedPtr<MMEX_IniSettings> pIniSettings);
     int account_image_id(mmCoreDB* core, int account_id);
 
     bool enableAssets_;
@@ -362,7 +362,7 @@ wxImageList* navtree_images_list_();
 /// Located here as a function to allow removal in GTK
 void windowsFreezeThaw(wxWindow* pWindow);
 
-boost::shared_ptr<wxSQLite3Database> static_db_ptr();
+wxSharedPtr<wxSQLite3Database> static_db_ptr();
 
 #endif // _MM_EX_UTIL_H_
 //----------------------------------------------------------------------------

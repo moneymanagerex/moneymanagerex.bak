@@ -53,9 +53,9 @@ private:
     void LoadEntries();
 
 public:
-    std::vector<boost::shared_ptr<TPayeeEntry> > entrylist_;
+    std::vector<wxSharedPtr<TPayeeEntry> > entrylist_;
 
-    TPayeeList(boost::shared_ptr<wxSQLite3Database> db);
+    TPayeeList(wxSharedPtr<wxSQLite3Database> db);
 
     int AddEntry(const wxString& name, wxString category = wxEmptyString, wxString subcategory = wxEmptyString);
     void UpdateEntry(int payee_id, const wxString& new_payee_name, int cat_id = -1, int subcat_id = -1);
@@ -65,8 +65,8 @@ public:
     void DeleteEntry(int payee_id);
     void DeleteEntry(wxString payee_name);
 
-    boost::shared_ptr<TPayeeEntry> GetEntryPtr(const wxString& name);
-    boost::shared_ptr<TPayeeEntry> GetEntryPtr(int payee_id);
+    wxSharedPtr<TPayeeEntry> GetEntryPtr(const wxString& name);
+    wxSharedPtr<TPayeeEntry> GetEntryPtr(int payee_id);
     int GetPayeeId(const wxString& name);
     wxString GetPayeeName(int payee_id);
     bool PayeeExists(const wxString& name);

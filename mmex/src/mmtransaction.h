@@ -61,14 +61,14 @@ public:
     double getTotalSplits() const { return total_; }
     double getUpdatedTotalSplits();
 
-    void addSplit(boost::shared_ptr<mmSplitTransactionEntry> split);
+    void addSplit(wxSharedPtr<mmSplitTransactionEntry> split);
     void removeSplit(int splitID);
     void removeSplitByIndex(int splitIndex);
 
-    void updateToDB(boost::shared_ptr<wxSQLite3Database>& db, int transID, bool edit);
+    void updateToDB(wxSharedPtr<wxSQLite3Database>& db, int transID, bool edit);
     void loadFromBDDB(mmCoreDB* core, int bdID);
 
-    std::vector<boost::shared_ptr<mmSplitTransactionEntry> > entries_;
+    std::vector<wxSharedPtr<mmSplitTransactionEntry> > entries_;
     double total_;
 };
 
@@ -76,7 +76,7 @@ class mmBankTransaction : public mmTransaction
 {
 public:
     mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1);
-    mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db);
+    mmBankTransaction(wxSharedPtr<wxSQLite3Database> db);
     virtual ~mmBankTransaction() {}
 
     bool containsCategory(int categID, int subcategID, bool ignoreSubCateg = false) const;
@@ -85,17 +85,17 @@ public:
     double value(int accountID) const;
     void updateAllData(mmCoreDB* core,
         int accountID,
-        boost::shared_ptr<mmCurrency> currencyPtr,
+        wxSharedPtr<mmCurrency> currencyPtr,
         bool forceUpdate=false);
 
     void getSplitTransactions(mmSplitTransactionEntries* splits) const;
-    boost::shared_ptr<wxSQLite3Database> db_;
+    wxSharedPtr<wxSQLite3Database> db_;
 
     /* Core Data */
     wxDateTime date_;
 
-    boost::weak_ptr<mmCategory> category_;
-    boost::weak_ptr<mmPayee> payee_;
+    wxSharedPtr<mmCategory> category_;
+    wxSharedPtr<mmPayee> payee_;
 
     wxString transNum_;
     wxString status_;
@@ -108,7 +108,7 @@ public:
     int accountID_;
     int toAccountID_;
 
-    boost::shared_ptr<mmSplitTransactionEntries> splitEntries_;
+    wxSharedPtr<mmSplitTransactionEntries> splitEntries_;
 
     /* Derived Data */
     wxString dateStr_;
@@ -145,18 +145,18 @@ public:
     mmBankTransactionList(mmCoreDB* core);
     ~mmBankTransactionList() {}
 
-    boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID) const;
-    boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID) const;
-    int addTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
-    bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
-    boost::shared_ptr<mmBankTransaction> copyTransaction(/*mmCoreDB* pCore,*/
+    wxSharedPtr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID) const;
+    wxSharedPtr<mmBankTransaction> getBankTransactionPtr(int transactionID) const;
+    int addTransaction(wxSharedPtr<mmBankTransaction> pTransaction);
+    bool checkForExistingTransaction(wxSharedPtr<mmBankTransaction> pTransaction);
+    wxSharedPtr<mmBankTransaction> copyTransaction(/*mmCoreDB* pCore,*/
        const long transactionID, const long accountID, const bool useOriginalDate);
 
     /// Loads database primary Transactions into memory.
     void LoadTransactions(mmCoreDB* core);
 
     /* Update Transactions */
-    void UpdateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
+    void UpdateTransaction(wxSharedPtr<mmBankTransaction> pTransaction);
     void UpdateAllTransactions();
     void UpdateAllTransactionsForCategory(int categID, int subCategID);
     int UpdateAllTransactionsForPayee(int payeeID);
@@ -189,8 +189,8 @@ public:
     bool IsPayeeUsed(const int iPayeeID) const;
 
     /* Data */
-    typedef std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator const_iterator;
-    std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;
+    typedef std::vector< wxSharedPtr<mmBankTransaction> >::const_iterator const_iterator;
+    std::vector< wxSharedPtr<mmBankTransaction> > transactions_;
 
 private:
     mmCoreDB* core_;

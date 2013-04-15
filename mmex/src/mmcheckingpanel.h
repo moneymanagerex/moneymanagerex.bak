@@ -125,7 +125,7 @@ private:
     boost::scoped_ptr<wxImageList> m_imageList;
     std::vector<mmBankTransaction*> m_trans;
 
-    boost::shared_ptr<wxSQLite3Database> getDb() const;
+    wxSharedPtr<wxSQLite3Database> getDb() const;
     void initViewTransactionsHeader();
     void setAccountSummary();
     void sortTable();

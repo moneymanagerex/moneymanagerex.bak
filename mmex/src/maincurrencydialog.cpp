@@ -238,7 +238,7 @@ void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
         int currID = core_->currencyList_.getCurrencyID(currText);
         if (currID == -1)
         {
-            boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
+            wxSharedPtr<mmCurrency> pCurrency(new mmCurrency());
             pCurrency->currencyName_ = currText;
             pCurrency->currencySymbol_ = currency_symbol;
             currencyID_ = core_->currencyList_.AddCurrency(pCurrency);

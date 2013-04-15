@@ -81,7 +81,7 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 
     SetIcon(mmex::getProgramIcon());
 
-    boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
+    wxSharedPtr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
     split_ = split;
 
     dataToControls();
@@ -625,7 +625,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             return;
         }
 
-        boost::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
+        wxSharedPtr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
         cbPayee_->SetValue(mmReadyDisplayString(pPayee->name_));
         payeeUnknown_ = false;
 
@@ -894,7 +894,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     else
     {
         // save the category used for this payee to allow automatic category fill at user request.
-        boost::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
+        wxSharedPtr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
         pPayee->categoryId_ = categID_;
         pPayee->subcategoryId_ = subcategID_;
         core_->payeeList_.UpdatePayee(payeeID_, wxT(""));
@@ -912,10 +912,10 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString date1 = dpc_->GetValue().FormatISODate();
 
-    boost::shared_ptr<mmBankTransaction> pTransaction;
+    wxSharedPtr<mmBankTransaction> pTransaction;
     if (!edit_)
     {
-        boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
+        wxSharedPtr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
         pTransaction = pTemp;
     }
     else
@@ -923,7 +923,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID());
     }
 
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(newAccountID_).lock();
+    wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(newAccountID_);
     wxASSERT(pCurrencyPtr);
 
     pTransaction->accountID_ = newAccountID_;
@@ -978,7 +978,7 @@ void mmTransDialog::SetSplitState()
 void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 {
     /* Reset Category */
-    //split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
+    //split_ = wxSharedPtr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
     if (cSplit_->IsChecked())
     {
         activateSplitTransactionsDlg();
@@ -1117,7 +1117,7 @@ void mmTransDialog::onTextEntered(wxCommandEvent& event)
 void mmTransDialog::activateSplitTransactionsDlg()
 {
     bool bDeposit = sTransaction_type_ == TRANS_TYPE_DEPOSIT_STR;
-    boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+    wxSharedPtr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
     if (categID_ > -1)
     {
         wxString sAmount = textAmount_->GetValue();
@@ -1201,7 +1201,7 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
     this->SetTitle(_("Duplicate Transaction"));
 
     // we need to create a new pointer for Split transactions.
-    boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
+    wxSharedPtr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
     core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID())->getSplitTransactions(splitTransEntries.get());
     split_.get()->entries_ = splitTransEntries->entries_;
 }

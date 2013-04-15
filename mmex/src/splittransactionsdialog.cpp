@@ -186,7 +186,7 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& /*event*/ )
         
         lcSplit_->SetItem(numToInsert, 1, dispAmount);
 
-        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+        wxSharedPtr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
         pSplitEntry->splitAmount_  = *sdd.m_amount_;
         pSplitEntry->categID_      = categID;
         pSplitEntry->subCategID_   = subcategID;

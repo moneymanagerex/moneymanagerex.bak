@@ -106,7 +106,7 @@ void mmCategDialog::fillControls()
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
         wxTreeItemId maincat;
-        const boost::shared_ptr<mmCategory> category = *it;
+        const wxSharedPtr<mmCategory> category = *it;
         bool bShow = categShowStatus(category->categID_, -1);
         if (cbShowAll_->IsChecked() || bShow)
         {
@@ -114,11 +114,11 @@ void mmCategDialog::fillControls()
             treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));
             if (!bShow) treeCtrl_->SetItemTextColour(maincat, wxColour(wxT("GREY")));
 
-            for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
+            for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin();
                     cit != category->children_.end();
                     ++ cit)
             {
-                const boost::shared_ptr<mmCategory> sub_category = *cit;
+                const wxSharedPtr<mmCategory> sub_category = *cit;
                 bShow = categShowStatus(category->categID_, sub_category->categID_);
                 if (cbShowAll_->IsChecked() || bShow)
                 {

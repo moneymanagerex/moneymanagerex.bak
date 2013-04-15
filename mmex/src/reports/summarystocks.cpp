@@ -127,7 +127,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         wxString stockBalanceStr;
         wxString gain_loss_sum_str;
 
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountID).lock();
+        wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(accountID);
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 

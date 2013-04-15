@@ -340,8 +340,8 @@ int mmQIFImportDialog::mmImportQIF()
     double val = 0.0, dSplitAmount = 0.0;
     bool bTrxComplited = true;
 
-    std::vector< boost::shared_ptr<mmBankTransaction> > vQIF_trxs;
-    boost::shared_ptr< mmSplitTransactionEntries > mmSplit(new mmSplitTransactionEntries());
+    std::vector< wxSharedPtr<mmBankTransaction> > vQIF_trxs;
+    wxSharedPtr< mmSplitTransactionEntries > mmSplit(new mmSplitTransactionEntries());
 
     while(!input.Eof() && !canceledbyuser)
     {
@@ -452,7 +452,7 @@ int mmQIFImportDialog::mmImportQIF()
                 {
                     //TODO: Repeated code
                     mmAccount* ptrBase = new mmAccount();
-                    boost::shared_ptr<mmAccount> pAccount(ptrBase);
+                    wxSharedPtr<mmAccount> pAccount(ptrBase);
 
                     pAccount->favoriteAcct_ = true;
                     pAccount->status_ = mmAccount::MMEX_Open;
@@ -588,7 +588,7 @@ int mmQIFImportDialog::mmImportQIF()
             if (type == TRANS_TYPE_WITHDRAWAL_STR)
                 dSplitAmount = -dSplitAmount;
             //Add split entry
-            boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+            wxSharedPtr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
             pSplitEntry->splitAmount_  = dSplitAmount;
             pSplitEntry->categID_      = categID;
             pSplitEntry->subCategID_   = subCategID;
@@ -640,7 +640,7 @@ int mmQIFImportDialog::mmImportQIF()
                 if (accounts_name.Index(sToAccountName) == wxNOT_FOUND)
                 {
                     mmAccount* ptrBase = new mmAccount();
-                    boost::shared_ptr<mmAccount> pAccount(ptrBase);
+                    wxSharedPtr<mmAccount> pAccount(ptrBase);
 
                     pAccount->favoriteAcct_ = true;
                     pAccount->status_ = mmAccount::MMEX_Open;
@@ -744,7 +744,7 @@ int mmQIFImportDialog::mmImportQIF()
             bTrxComplited = true;
             if (!bValid) continue;
 
-            boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core_->db_));
+            wxSharedPtr<mmBankTransaction> pTransaction(new mmBankTransaction(core_->db_));
             pTransaction->date_ = dtdt;
             pTransaction->accountID_ = from_account_id;
             pTransaction->toAccountID_ = to_account_id;
@@ -759,7 +759,7 @@ int mmQIFImportDialog::mmImportQIF()
             pTransaction->category_ = core_->categoryList_.GetCategorySharedPtr(categID, subCategID);
             *pTransaction->splitEntries_ = *mmSplit;
 
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(from_account_id).lock();
+            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(from_account_id);
             wxASSERT(pCurrencyPtr);
             pTransaction->updateAllData(core_, from_account_id, pCurrencyPtr, true);
 
@@ -767,7 +767,7 @@ int mmQIFImportDialog::mmImportQIF()
             //Just take alternate amount and skip it
             if (type == TRANS_TYPE_TRANSFER_STR)
             {
-                std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = vQIF_trxs;
+                std::vector<wxSharedPtr<mmBankTransaction> >& refTrans = vQIF_trxs;
                 for (unsigned int index = 0; index < vQIF_trxs.size(); index++)
                 {
                     if (refTrans[index]->transType_ != TRANS_TYPE_TRANSFER_STR) continue;
@@ -812,14 +812,14 @@ int mmQIFImportDialog::mmImportQIF()
     {
         core_->db_.get()->Begin();
 
-        std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = vQIF_trxs;
+        std::vector<wxSharedPtr<mmBankTransaction> >& refTrans = vQIF_trxs;
 
         //TODO: Update transfer transactions toAmount
 
         for (unsigned int index = 0; index < vQIF_trxs.size(); index++)
         {
             //fromAccountID = refTrans[index]->accountID_;
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(fromAccountID);
             wxASSERT(pCurrencyPtr);
             refTrans[index]->amt_ = fabs(refTrans[index]->amt_);
             refTrans[index]->toAmt_ = fabs(refTrans[index]->toAmt_);

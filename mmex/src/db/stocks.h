@@ -62,9 +62,9 @@ private:
     void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<boost::shared_ptr<TStockEntry> >entrylist_;
+    std::vector<wxSharedPtr<TStockEntry> >entrylist_;
 
-    TStockList(boost::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TStockList(wxSharedPtr<wxSQLite3Database> db, bool load_entries = true);
 
     /// Allows specialised list loading provided by SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
@@ -72,8 +72,8 @@ public:
     int AddEntry(TStockEntry* pStockEntry);
     void DeleteEntry(int stock_id);
 
-    boost::shared_ptr<TStockEntry> GetEntryPtr(int stock_id);
-    boost::shared_ptr<TStockEntry> GetIndexedEntryPtr(unsigned int list_index);
+    wxSharedPtr<TStockEntry> GetEntryPtr(int stock_id);
+    wxSharedPtr<TStockEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
     double GetStockBalance();

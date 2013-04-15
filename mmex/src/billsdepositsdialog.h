@@ -118,7 +118,7 @@ private:
     int bdID_;
     double toTransAmount_;
     bool advancedToTransAmountSet_;
-    boost::shared_ptr<mmSplitTransactionEntries> split_;
+    wxSharedPtr<mmSplitTransactionEntries> split_;
 
     wxString payeeDepositTip_;
     wxString payeeWithdrawalTip_;

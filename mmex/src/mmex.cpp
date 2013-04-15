@@ -171,9 +171,9 @@ bool OnInitImpl(mmGUIApp &app)
     wxImage::AddHandler(new wxJPEGHandler());
     wxImage::AddHandler(new wxPNGHandler());
 
-    boost::shared_ptr<wxSQLite3Database> pIniSettingsDb(new wxSQLite3Database);
+    wxSharedPtr<wxSQLite3Database> pIniSettingsDb(new wxSQLite3Database);
     pIniSettingsDb.get()->Open(mmex::getPathUser(mmex::SETTINGS));
-    boost::shared_ptr<MMEX_IniSettings> pIniSettings(new MMEX_IniSettings(pIniSettingsDb));
+    wxSharedPtr<MMEX_IniSettings> pIniSettings(new MMEX_IniSettings(pIniSettingsDb));
 
     /* Load Colors from Database */
     mmLoadColorsFromDatabase(pIniSettings);
@@ -511,7 +511,7 @@ bool mmAddAccountPage2::TransferDataFromWindow()
 
     mmAccount* ptrBase = new mmAccount();
 
-    boost::shared_ptr<mmAccount> pAccount(ptrBase);
+    wxSharedPtr<mmAccount> pAccount(ptrBase);
 
     pAccount->favoriteAcct_ = true;
     pAccount->status_ = mmAccount::MMEX_Open;
@@ -620,7 +620,7 @@ END_EVENT_TABLE()
 mmGUIFrame::mmGUIFrame(const wxString& title,
                        const wxPoint& pos,
                        const wxSize& size,
-                       boost::shared_ptr<MMEX_IniSettings> pIniSettings)
+                       wxSharedPtr<MMEX_IniSettings> pIniSettings)
 : wxFrame(0, -1, title, pos, size)
 , m_inisettings(pIniSettings)
 , gotoAccountID_(-1)
@@ -935,11 +935,11 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
             if ( (repeats < 11) || (numRepeats > 0) || (repeats > 14))
             {
                 continueExecution = true;
-                boost::shared_ptr<mmBankTransaction> pTransaction;
-                boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
+                wxSharedPtr<mmBankTransaction> pTransaction;
+                wxSharedPtr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
                 pTransaction = pTemp;
 
-                boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencyWeakPtr(th.accountID_).lock();
+                wxSharedPtr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(th.accountID_);
                 wxASSERT(pCurrencyPtr);
 
                 pTransaction->accountID_ = th.accountID_;
@@ -954,7 +954,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                 pTransaction->date_ = th.nextOccurDate_;
                 pTransaction->toAmt_ = th.toAmt_;
 
-                boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
+                wxSharedPtr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
                 split->loadFromBDDB(m_core.get(),th.id_);
                 *pTransaction->splitEntries_.get() = *split.get();
 
@@ -1615,7 +1615,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else
         {
-           boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+           wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
            if (pAccount)
            {
                 wxString acctType = pAccount->acctType_;
@@ -1890,7 +1890,7 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& /*event*/)
    if (selectedItemData_)
    {
       int data = selectedItemData_->getData();
-      boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+      wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
       if (pAccount)
       {
          wxString website = pAccount->website_;
@@ -1906,7 +1906,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+        wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
         if (pAccount)
         {
            wxString acctType = pAccount->acctType_;
@@ -1929,7 +1929,7 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+        wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
         if (pAccount)
         {
             wxMessageDialog msgDlg(this,
@@ -1975,7 +1975,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
         int data = iData->getData();
         if (!iData->isBudgetingNode())
         {
-            boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+            wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
             if (pAccount)
             {
                 wxString acctType = pAccount->acctType_;
@@ -3050,15 +3050,15 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
     if (m_core.get()->accountList_.getNumAccounts() == 0) return;
 
-    std::vector< boost::shared_ptr<mmBankTransaction> > trans;
+    std::vector< wxSharedPtr<mmBankTransaction> > trans;
 
     mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
-        std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
+        std::vector< wxSharedPtr<mmBankTransaction> >::const_iterator i;
         for (i = m_core.get()->bTransactionList_.transactions_.begin(); i != m_core.get()->bTransactionList_.transactions_.end(); i++ )
         {
-            boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+            wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
             if (pBankTransaction)
             {
 
@@ -3140,7 +3140,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
                     {
                         pBankTransaction->reportCategAmount_ = (pBankTransaction->getAmountForSplit(categID, subcategID));
 
-                        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
+                        wxSharedPtr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(pBankTransaction->accountID_);
                         wxASSERT(pCurrencyPtr);
                         mmex::formatDoubleToCurrency(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
                     }
@@ -3850,7 +3850,7 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
 {
     this->SetEvtHandlerEnabled(false);
     //Use Shared pointer to ensure mmCustomSQLDialog object gets destroyed.
-    boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customReportSelectedItem, this ));
+    wxSharedPtr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customReportSelectedItem, this ));
 
     int dialogStatus = wxID_MORE;
     while (dialogStatus == wxID_MORE)

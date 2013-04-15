@@ -26,7 +26,7 @@
 
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <wx/sharedptr.h>
 
 #include "guiid.h"
 #include "util.h"
@@ -159,7 +159,7 @@ public:
     mmGUIFrame(const wxString& title,
                const wxPoint& pos,
                const wxSize& size,
-               boost::shared_ptr<MMEX_IniSettings> pIniSettings);
+               wxSharedPtr<MMEX_IniSettings> pIniSettings);
 
     ~mmGUIFrame();
 
@@ -221,8 +221,8 @@ private:
     boost::scoped_ptr<mmCoreDB> m_core;
 
     /* handles to SQLite Database */
-    boost::shared_ptr<wxSQLite3Database> m_db;
-    boost::shared_ptr<MMEX_IniSettings>  m_inisettings;
+    wxSharedPtr<wxSQLite3Database> m_db;
+    wxSharedPtr<MMEX_IniSettings>  m_inisettings;
 
     /* Currently open file name */
     wxString fileName_;

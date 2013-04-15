@@ -63,12 +63,12 @@ private:
     friend class TSplitTransactionList;
 
     wxString db_table_;
-    std::vector< boost::shared_ptr<TSplitEntry> > global_entries_;
+    std::vector< wxSharedPtr<TSplitEntry> > global_entries_;
 
     void LoadSplitEntries();
 
 public:
-    TSplitEntriesList(boost::shared_ptr<wxSQLite3Database> db, wxString db_table = SPLIT_TRANS_TABLE);
+    TSplitEntriesList(wxSharedPtr<wxSQLite3Database> db, wxString db_table = SPLIT_TRANS_TABLE);
 };
 
 /***********************************************************************************
@@ -80,12 +80,12 @@ private:
     int id_transaction_;
     TSplitEntriesList& entries_List_;
     double total_;
-    std::vector< boost::shared_ptr<TSplitEntry> > entries_;
+    std::vector< wxSharedPtr<TSplitEntry> > entries_;
 
     /// Load the transaction split entries from the global list.
     void LoadEntries();
     
-    void AddEntry(boost::shared_ptr<TSplitEntry> split_entry);
+    void AddEntry(wxSharedPtr<TSplitEntry> split_entry);
     void ReEvaluateTotal();
     void RemoveGlobalEntry(int entry_id);
 
@@ -106,11 +106,11 @@ public:
     double TotalAmount();
 
     int AddEntry(int cat_id, int subcat_id, double amount);
-    void UpdateEntry(boost::shared_ptr<TSplitEntry> split_entry);
-    void DeleteEntry(boost::shared_ptr<TSplitEntry> split_entry);
+    void UpdateEntry(wxSharedPtr<TSplitEntry> split_entry);
+    void DeleteEntry(wxSharedPtr<TSplitEntry> split_entry);
     
     int GetListSize();
-    boost::shared_ptr<TSplitEntry> GetEntryPtr(int id_split_trans);
-    boost::shared_ptr<TSplitEntry> GetIndexedEntryPtr(int index);
+    wxSharedPtr<TSplitEntry> GetEntryPtr(int id_split_trans);
+    wxSharedPtr<TSplitEntry> GetIndexedEntryPtr(int index);
 
 };

@@ -19,7 +19,7 @@
 #include "util.h"
 #include "mmcoredb.h"
 
-void mmSplitTransactionEntries::addSplit(boost::shared_ptr<mmSplitTransactionEntry> split)
+void mmSplitTransactionEntries::addSplit(wxSharedPtr<mmSplitTransactionEntry> split)
 {
     total_ += split->splitAmount_;
     entries_.push_back(split);
@@ -54,7 +54,7 @@ void mmSplitTransactionEntries::removeSplitByIndex(int splitIndex)
     entries_.erase(entries_.begin() + splitIndex);
 }
 
-void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>& db,
+void mmSplitTransactionEntries::updateToDB(wxSharedPtr<wxSQLite3Database>& db,
                                            int transID,
                                            bool edit)
 {
@@ -97,7 +97,7 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core, int bdID)
    wxSQLite3ResultSet q1 = st.ExecuteQuery();
    while (q1.NextRow())
    {
-      boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
+      wxSharedPtr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
       pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
       pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
 
@@ -113,13 +113,13 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core, int bdID)
     st.Finalize();
 }
 //-----------------------------------------------------------------------------//
-mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db) :
+mmBankTransaction::mmBankTransaction(wxSharedPtr<wxSQLite3Database> db) :
     mmTransaction(-1),
     db_(db),
     isInited_(false),
     updateRequired_(false)
 {
-    splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
+    splitEntries_ = wxSharedPtr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
 }
 
 mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
@@ -141,10 +141,10 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
     followupID_  = q1.GetInt(wxT("FOLLOWUPID"));
     category_    = core->categoryList_.GetCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
 
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(accountID_).lock();
+    wxSharedPtr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencySharedPtr(accountID_);
     wxASSERT(pCurrencyPtr);
 
-    splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
+    splitEntries_ = wxSharedPtr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
     getSplitTransactions(splitEntries_.get());
 
     updateAllData(core, accountID_, pCurrencyPtr);
@@ -152,7 +152,7 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
 
 void mmBankTransaction::updateAllData(mmCoreDB* core,
                                       int accountID,
-                                      boost::shared_ptr<mmCurrency> currencyPtr,
+                                      wxSharedPtr<mmCurrency> currencyPtr,
                                       bool forceUpdate
                                       )
 {
@@ -177,7 +177,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     if (transType_ != TRANS_TYPE_TRANSFER_STR)
     {
         // needed to correct possible crash if database becomes corrupt.
-        if (!payee_.lock())
+        if (!payee_)
         {
             if (core->displayDatabaseError_)
             {
@@ -194,7 +194,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         }
         else
         {
-            boost::shared_ptr<mmPayee> pPayee = payee_.lock();
+            wxSharedPtr<mmPayee> pPayee = payee_;
             wxASSERT(pPayee);
             payeeStr_ = pPayee->name_;
             payeeID_ = pPayee->id_;
@@ -230,7 +230,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
 
     fromAccountStr_ = core->accountList_.GetAccountName(accountID_);
 
-    boost::shared_ptr<mmCategory> pCategory = category_.lock();
+    wxSharedPtr<mmCategory> pCategory = category_;
     if (!pCategory && !splitEntries_->numEntries())
     {
         // If category is missing, we mark is as unknown
@@ -238,14 +238,14 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         if (categID == -1) categID = core->categoryList_.AddCategory(wxT("Unknown"));
 
         category_ = core->categoryList_.GetCategorySharedPtr(categID, -1);
-        pCategory = category_.lock();
+        pCategory = category_;
         wxASSERT(pCategory);
         updateRequired_ = true;
     }
 
     if (pCategory)
     {
-        boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
+        wxSharedPtr<mmCategory> parent = pCategory->parent_;
         if (parent)
         {
             catStr_ = parent->categName_;
@@ -317,7 +317,7 @@ void mmBankTransaction::getSplitTransactions(mmSplitTransactionEntries* splits) 
 
     while (q1.NextRow())
     {
-        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+        wxSharedPtr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
 
         pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
         pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
@@ -387,7 +387,7 @@ mmBankTransactionList::mmBankTransactionList(mmCoreDB* core)
    transactions_.reserve(5000);
 }
 
-int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
+int mmBankTransactionList::addTransaction(wxSharedPtr<mmBankTransaction> pBankTransaction)
 {
     if (checkForExistingTransaction(pBankTransaction))
     {
@@ -430,7 +430,7 @@ int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> p
     return pBankTransaction->transactionID();
 }
 
-bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
+bool mmBankTransactionList::checkForExistingTransaction(wxSharedPtr<mmBankTransaction> pBankTransaction)
 {
     bool found = false;
 
@@ -460,7 +460,7 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
         {
             mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
 
-            boost::shared_ptr<mmBankTransaction> pTempTransaction = getBankTransactionPtr(transactionID);
+            wxSharedPtr<mmBankTransaction> pTempTransaction = getBankTransactionPtr(transactionID);
             mmSplitTransactionEntries* temp_splits = pTempTransaction->splitEntries_.get();
 
             if (splits->entries_.size() != temp_splits->entries_.size())
@@ -483,14 +483,14 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
     return found;
 }
 
-boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
+wxSharedPtr<mmBankTransaction> mmBankTransactionList::copyTransaction(
    const long transactionID, const long accountID, const bool useOriginalDate)
 {
-    boost::shared_ptr<mmBankTransaction> pBankTransaction = getBankTransactionPtr(transactionID);
+    wxSharedPtr<mmBankTransaction> pBankTransaction = getBankTransactionPtr(transactionID);
     if (!pBankTransaction)
-       return boost::shared_ptr<mmBankTransaction>();
+       return wxSharedPtr<mmBankTransaction>();
 
-    boost::shared_ptr<mmBankTransaction> pCopyTransaction(new mmBankTransaction(core_->db_));
+    wxSharedPtr<mmBankTransaction> pCopyTransaction(new mmBankTransaction(core_->db_));
 
     if (pBankTransaction->transType_!=TRANS_TYPE_TRANSFER_STR)
         pCopyTransaction->accountID_ = accountID;
@@ -518,7 +518,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
     pCopyTransaction->notes_       = pBankTransaction->notes_;
 
     // we need to create a new pointer for Split transactions.
-    boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
+    wxSharedPtr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
     pBankTransaction->getSplitTransactions(splitTransEntries.get());
     pCopyTransaction->splitEntries_.get()->entries_ = splitTransEntries->entries_;
 
@@ -554,11 +554,11 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(
     return pCopyTransaction;
 }
 
-boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr(int accountID, int transactionID) const
+wxSharedPtr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr(int accountID, int transactionID) const
 {
     for (const_iterator i = transactions_.begin(); i!= transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (((pBankTransaction->accountID_ == accountID) ||
@@ -571,14 +571,14 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
     }
     // didn't find the transaction
     wxASSERT(false);
-    return boost::shared_ptr<mmBankTransaction> ();
+    return wxSharedPtr<mmBankTransaction> ();
 }
 
-boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr(int transactionID) const
+wxSharedPtr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr(int transactionID) const
 {
     for (const_iterator i = transactions_.begin(); i!= transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (pBankTransaction->transactionID() == transactionID)
@@ -589,7 +589,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
     }
     // didn't find the transaction
     wxASSERT(false);
-    return boost::shared_ptr<mmBankTransaction> ();
+    return wxSharedPtr<mmBankTransaction> ();
 }
 
 void mmBankTransactionList::LoadTransactions(mmCoreDB* core)
@@ -598,14 +598,14 @@ void mmBankTransactionList::LoadTransactions(mmCoreDB* core)
 
     while (q1.NextRow())
     {
-        boost::shared_ptr<mmBankTransaction> pAccountTransaction(new mmBankTransaction(core, q1));
+        wxSharedPtr<mmBankTransaction> pAccountTransaction(new mmBankTransaction(core, q1));
         transactions_.push_back(pAccountTransaction);
     }
 
     q1.Finalize();
 }
 
-void mmBankTransactionList::UpdateTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
+void mmBankTransactionList::UpdateTransaction(wxSharedPtr<mmBankTransaction> pBankTransaction)
 {
     if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
         pBankTransaction->payeeID_ = -1;
@@ -642,7 +642,7 @@ void mmBankTransactionList::UpdateAllTransactions()
     // We need to update all transactions incase of errors when loading
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction && pBankTransaction->updateRequired_)
         {
            UpdateTransaction(pBankTransaction);
@@ -657,14 +657,14 @@ void mmBankTransactionList::UpdateAllTransactionsForCategory(int categID,
     // We need to update all transactions incase of errors when loading
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction && (pBankTransaction->categID_ == categID)
             && (pBankTransaction->subcategID_ == subCategID))
         {
             pBankTransaction->category_ = core_->categoryList_.GetCategorySharedPtr(categID, subCategID);
-            boost::shared_ptr<mmCategory> pCategory = pBankTransaction->category_.lock();
+            wxSharedPtr<mmCategory> pCategory = pBankTransaction->category_;
 
-            boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
+            wxSharedPtr<mmCategory> parent = pCategory->parent_;
             if (parent)
             {
                 pBankTransaction->catStr_ = parent->categName_;
@@ -688,13 +688,13 @@ int mmBankTransactionList::UpdateAllTransactionsForPayee(int payeeID)
     // We need to update all transactions incase of errors when loading
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction && (pBankTransaction->payeeID_ == payeeID))
         {
             pBankTransaction->payee_ = core_->payeeList_.GetPayeeSharedPtr(payeeID);
             if (pBankTransaction->transType_ != TRANS_TYPE_TRANSFER_STR)
             {
-                boost::shared_ptr<mmPayee> pPayee = pBankTransaction->payee_.lock();
+                wxSharedPtr<mmPayee> pPayee = pBankTransaction->payee_;
                 wxASSERT(pPayee);
                 pBankTransaction->payeeStr_ = pPayee->name_;
                 pBankTransaction->payeeID_ = pPayee->id_;
@@ -710,7 +710,7 @@ void mmBankTransactionList::getExpensesIncome(const mmCoreDB* core, int accountI
 {
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
+        const wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (accountID != -1)
@@ -753,7 +753,7 @@ void mmBankTransactionList::getTransactionStats(int accountID, int& number,
 {
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
+        const wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
 
         if (pBankTransaction)
         {
@@ -790,7 +790,7 @@ wxDateTime mmBankTransactionList::getLastDate(int accountID) const
 
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
+        const wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
 
         if (pBankTransaction)
         {
@@ -829,7 +829,7 @@ int mmBankTransactionList::getLastUsedCategoryID(const int accountID
 
     while (searching && index >= 0)
     {
-        boost::shared_ptr<const mmBankTransaction> pTransaction = transactions_[index];
+        const wxSharedPtr<mmBankTransaction> pTransaction = transactions_[index];
         if (pTransaction)
         {
             if ((pTransaction->accountID_ == accountID || pTransaction->toAccountID_ == accountID)
@@ -856,7 +856,7 @@ int mmBankTransactionList::getLastUsedPayeeID(const int accountID, wxString sTyp
     bool searching = true;
     while (searching && index >= 0)
     {
-        boost::shared_ptr<const mmBankTransaction> pBankTransaction = transactions_[index];
+        const wxSharedPtr<mmBankTransaction> pBankTransaction = transactions_[index];
         if (pBankTransaction)
         {
             if (pBankTransaction->accountID_ == accountID
@@ -880,7 +880,7 @@ double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate,
     double amt = 0.0;
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
+        const wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (pBankTransaction->payeeID_ == payeeID)
@@ -928,7 +928,7 @@ double mmBankTransactionList::getAmountForCategory(
 
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
+        const wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
 
         if (!pBankTransaction || !pBankTransaction->containsCategory(categID, subcategID))
         {
@@ -987,7 +987,7 @@ double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture) const
     wxDateTime now = wxDateTime::Now();
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        const wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
@@ -1015,7 +1015,7 @@ bool mmBankTransactionList::getDailyBalance(const mmCoreDB* core, int accountID,
     double convRate = core->accountList_.getAccountBaseCurrencyConvRate(accountID);
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
@@ -1042,7 +1042,7 @@ double mmBankTransactionList::getReconciledBalance(int accountID, bool ignoreFut
     double balance = 0.0;
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
@@ -1069,7 +1069,7 @@ int mmBankTransactionList::countFollowupTransactions() const
     int numFollowup = 0;
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (pBankTransaction->status_ != wxT("F"))
@@ -1084,10 +1084,10 @@ int mmBankTransactionList::countFollowupTransactions() const
 /** removes the transaction from memory */
 bool mmBankTransactionList::removeTransaction(int accountID, int transactionID)
 {
-    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    std::vector< wxSharedPtr<mmBankTransaction> >::iterator i;
     for (i = transactions_.begin(); i!= transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if ((pBankTransaction->accountID_ == accountID) || (pBankTransaction->toAccountID_ == accountID))
@@ -1118,10 +1118,10 @@ bool mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
 
 void mmBankTransactionList::deleteTransactions(int accountID)
 {
-    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    std::vector< wxSharedPtr<mmBankTransaction> >::iterator i;
     for (i = transactions_.begin(); i!= transactions_.end(); )
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if ((pBankTransaction->accountID_ == accountID) ||
@@ -1141,7 +1141,7 @@ wxArrayString mmBankTransactionList::getTransactionNumber(const int accountID, c
     wxArrayString number_strings;
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
@@ -1173,7 +1173,7 @@ int mmBankTransactionList::RelocatePayee(mmCoreDB* core, const int destPayeeID, 
         changedPayees_=0;
         for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
         {
-            boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+            wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
             if (pBankTransaction && (pBankTransaction->payeeID_ == sourcePayeeID))
             {
                 pBankTransaction->payee_ = core->payeeList_.GetPayeeSharedPtr(destPayeeID);
@@ -1200,7 +1200,7 @@ int mmBankTransactionList::RelocateCategory(mmCoreDB* core,
         changedSubCats=0;
         for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
         {
-            boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+            wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
             if (pBankTransaction && (pBankTransaction->categID_ == sourceCatID)
                 && pBankTransaction->subcategID_== sourceSubCatID)
             {
@@ -1237,7 +1237,7 @@ void mmBankTransactionList::ChangeDateFormat()
 {
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             pBankTransaction->dateStr_ = (pBankTransaction->date_).Format(mmOptions::instance().dateFormat_);
@@ -1251,7 +1251,7 @@ bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID
     double sum = 0;
     bool bTrxUsed = false;
 
-    boost::shared_ptr<mmBankTransaction> pBankTransaction;
+    wxSharedPtr<mmBankTransaction> pBankTransaction;
     while (index >= 0)
     {
         pBankTransaction = transactions_[index];
@@ -1292,7 +1292,7 @@ bool mmBankTransactionList::IsPayeeUsed(const int iPayeeID) const
 {
     int index = transactions_.size() - 1;
     bool searching = false;
-    boost::shared_ptr<mmBankTransaction> pBankTransaction;
+    wxSharedPtr<mmBankTransaction> pBankTransaction;
     while (!searching && index >= 0)
     {
         pBankTransaction = transactions_[index];

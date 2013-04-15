@@ -539,7 +539,7 @@ static const char CREATE_VIEW_ALLDATA[] =
 namespace mmDBWrapper
 {
 
-boost::shared_ptr<wxSQLite3Database> Open(const wxString &dbpath, const wxString &key = wxGetEmptyString());
+wxSharedPtr<wxSQLite3Database> Open(const wxString &dbpath, const wxString &key = wxGetEmptyString());
 
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
 bool IsSelect(wxSQLite3Database* db, wxString sScript, int &rows);
@@ -592,7 +592,7 @@ void loadCurrencySettings(wxSQLite3Database* db, int currencyID);
 bool deleteCurrency(wxSQLite3Database* db, int currencyID);
 int mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxString> data, const wxString sql, long &lLastRowId);
 
-wxString getLastDbPath(boost::shared_ptr<MMEX_IniSettings> iniSettings, const wxString &defaultVal = wxGetEmptyString());
+wxString getLastDbPath(wxSharedPtr<MMEX_IniSettings> iniSettings, const wxString &defaultVal = wxGetEmptyString());
 
 /* Stocks API */
 void deleteStockInvestment(wxSQLite3Database* db, int stockID);

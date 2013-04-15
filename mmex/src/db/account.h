@@ -81,9 +81,9 @@ private:
     int NumberOfAccounts(int account_type);
 
 public:
-    std::vector<boost::shared_ptr<TAccountEntry> > entrylist_;
+    std::vector<wxSharedPtr<TAccountEntry> > entrylist_;
 
-    TAccountList(boost::shared_ptr<wxSQLite3Database> db,
+    TAccountList(wxSharedPtr<wxSQLite3Database> db,
     TCurrencyList& currency_list, bool load_entries = true);
 
     /// Allows specialised list loading provided by SQL statement
@@ -95,9 +95,9 @@ public:
     void DeleteEntry(int account_id);
     void DeleteEntry(const wxString& account_name);
 
-    boost::shared_ptr<TAccountEntry> GetEntryPtr(int account_id);
-    boost::shared_ptr<TAccountEntry> GetEntryPtr(const wxString& name);
-    boost::shared_ptr<TAccountEntry> GetIndexedEntryPtr(unsigned int list_index);
+    wxSharedPtr<TAccountEntry> GetEntryPtr(int account_id);
+    wxSharedPtr<TAccountEntry> GetEntryPtr(const wxString& name);
+    wxSharedPtr<TAccountEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int GetAccountId(const wxString& account_name);
     wxString GetAccountName(int account_id);

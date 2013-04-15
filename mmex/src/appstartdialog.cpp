@@ -44,7 +44,7 @@ mmAppStartDialog::mmAppStartDialog()
 {}
 
 
-mmAppStartDialog::mmAppStartDialog(boost::shared_ptr<MMEX_IniSettings> pIniSettings, wxWindow* parent)
+mmAppStartDialog::mmAppStartDialog(wxSharedPtr<MMEX_IniSettings> pIniSettings, wxWindow* parent)
 : pIniSettings_(pIniSettings)
 , itemCheckBox()
 {

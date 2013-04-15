@@ -735,7 +735,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     double amount = m_trans[selIndex]->amt_;
     wxString amountStr;
 
-    boost::shared_ptr<mmCurrency> pCurrency = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
+    wxSharedPtr<mmCurrency> pCurrency = core_->accountList_.getCurrencySharedPtr(accountId);
     int currencyid = pCurrency->currencyID_;
     //TODO: FIXME: If base currency does not set bug may happens
     if (basecurrencyid == -1) basecurrencyid = currencyid;
@@ -747,7 +747,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     if (transcodeStr == TRANS_TYPE_TRANSFER_STR)
     {
         double toconvrate = core_->accountList_.getAccountBaseCurrencyConvRate(toaccountId);
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(toaccountId).lock();
+        wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(toaccountId);
         wxASSERT(pCurrencyPtr);
         wxString tocurpfxStr = pCurrencyPtr->pfxSymbol_;
         wxString tocursfxStr = pCurrencyPtr->sfxSymbol_;
@@ -764,7 +764,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         mmex::formatDoubleToCurrency(toamount, toamountStr);
         mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
-        pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
+        pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(accountId);
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         mmex::formatDoubleToCurrency(amount, amountStr);
@@ -824,13 +824,13 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         {
             //load settings for base currency
             wxString currencyName = core_->currencyList_.getCurrencyName(basecurrencyid);
-            boost::shared_ptr<mmCurrency> pCurrencyBase = core_->currencyList_.getCurrencySharedPtr(currencyName);
+            wxSharedPtr<mmCurrency> pCurrencyBase = core_->currencyList_.getCurrencySharedPtr(currencyName);
             wxASSERT(pCurrencyBase);
             wxString basecuramountStr;
             mmDBWrapper::loadCurrencySettings(core_->db_.get(), pCurrencyBase->currencyID_);
             mmex::formatDoubleToCurrency(amount*convrate, basecuramountStr);
 
-            pCurrencyBase = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
+            pCurrencyBase = core_->accountList_.getCurrencySharedPtr(accountId);
             wxASSERT(pCurrencyBase);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyBase);
             mmex::formatDoubleToCurrency(amount, amountStr);
@@ -873,13 +873,13 @@ void mmCheckingPanel::setAccountSummary()
 }
 //----------------------------------------------------------------------------
 
-typedef boost::shared_ptr<mmBankTransaction> TransactionPtr;
+typedef wxSharedPtr<mmBankTransaction> TransactionPtr;
 struct TransactionPtr_Matcher
 {
     virtual ~TransactionPtr_Matcher() {}
     virtual bool Match(const TransactionPtr&) = 0;
 };
-typedef boost::shared_ptr<TransactionPtr_Matcher> TransactionPtr_MatcherPtr;
+typedef wxSharedPtr<TransactionPtr_Matcher> TransactionPtr_MatcherPtr;
 
 template <class EqualTraits = std::equal_to<wxString> >
 class MatchTransaction_Status: public TransactionPtr_Matcher
@@ -911,7 +911,7 @@ public:
 };
 //---------------------------------------------------------------------------
 
-typedef std::pair<boost::shared_ptr<TransactionPtr_Matcher>, bool> TransactionMatchData;
+typedef std::pair<wxSharedPtr<TransactionPtr_Matcher>, bool> TransactionMatchData;
 typedef boost::unordered_map<wxString, TransactionMatchData> TransactionMatchMap;
 
 const TransactionMatchMap& initTransactionMatchMap()
@@ -958,8 +958,8 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     m_trans.clear();
     m_listCtrlAccount->DeleteAllItems();
 
-    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(m_AccountID);
-    boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+    wxSharedPtr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(m_AccountID);
+    wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
     wxASSERT(pCurrency);
     pCurrency->loadCurrencySettings();
 
@@ -977,7 +977,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     std::vector<mmBankTransaction*> account_transPtr;
     for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
+        wxSharedPtr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
         if (pBankTransaction->accountID_ != m_AccountID
             && (pBankTransaction->toAccountID_ != m_AccountID
             || pBankTransaction->transType_ != TRANS_TYPE_TRANSFER_STR))
@@ -992,7 +992,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
 //      bool getBal = false;
         if (s_transactionMatchers_Map.count(currentView_) > 0)
         {
-            // boost::shared_ptr<TransactionPtr_Matcher> pMatcher;
+            // wxSharedPtr<TransactionPtr_Matcher> pMatcher;
             TransactionMatchMap::const_iterator it = s_transactionMatchers_Map.find(currentView_);
             TransactionMatchMap::const_iterator end;
             if (it != end)
@@ -1674,10 +1674,10 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 
     bool useOriginalDate = m_cp->core_->iniSettings_->GetBoolSetting(INIDB_USE_ORG_DATE_COPYPASTE, false);
 
-    boost::shared_ptr<mmBankTransaction> pCopiedTrans =
+    wxSharedPtr<mmBankTransaction> pCopiedTrans =
         m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, m_cp->m_AccountID, useOriginalDate);
 
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(m_cp->m_AccountID).lock();
+    wxSharedPtr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencySharedPtr(m_cp->m_AccountID);
     //pCopiedTrans->updateAllData(m_cp->core_, m_cp->m_AccountID, pCurrencyPtr, true);
     int transID = pCopiedTrans->transactionID();
     refreshVisualList(transID);
@@ -1860,7 +1860,7 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
     int toAccountID = DestinationAccountID();
     if (toAccountID != -1)
     {
-        boost::shared_ptr<mmBankTransaction> pTransaction;
+        wxSharedPtr<mmBankTransaction> pTransaction;
         pTransaction = m_cp->core_->bTransactionList_.getBankTransactionPtr(
             m_cp->m_AccountID, m_cp->m_trans[m_selectedIndex]->transactionID()
         );
@@ -1934,7 +1934,7 @@ TransactionListCtrl::TransactionListCtrl(
 }
 //----------------------------------------------------------------------------
 
-boost::shared_ptr<wxSQLite3Database> mmCheckingPanel::getDb() const
+wxSharedPtr<wxSQLite3Database> mmCheckingPanel::getDb() const
 {
     wxASSERT(core_);
     return core_->db_;
