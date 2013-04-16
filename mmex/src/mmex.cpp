@@ -1760,9 +1760,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == wxT("Income vs Expenses - All Time"))
         {
-            wxString title = _("Income vs Expenses - All Time");
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
-                , true, wxDateTime::Now(), wxDateTime::Now(), title);
+            mmPrintableBase* rs = new mmReportIncomeExpensesAllTime(m_core.get());
             createReportsPage(rs);
         }
         else if (sData == wxT("Income vs Expenses"))
@@ -1793,13 +1791,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData.StartsWith(wxT("Income vs Expenses - ")))
         {
-            GetDateRange(dtBegin, dtEnd, sData);
-
-            if (bIgnoreFuture && sData == wxT("Income vs Expenses - Current Month"))
-                title = _("Income vs Expenses - Current Month to Date");
-
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get()
-                , false, dtBegin, dtEnd, title);
+            mmPrintableBase* rs = new mmReportIncomeExpensesCurrentMonth(m_core.get());
             createReportsPage(rs);
         }
         else if (sData == wxT("Cash Flow"))

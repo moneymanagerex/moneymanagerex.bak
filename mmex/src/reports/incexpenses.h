@@ -28,10 +28,27 @@ public:
 
     wxString getHTMLText();
 
-private:
+protected:
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;
     wxString title_;
+};
+
+class mmReportIncomeExpensesAllTime: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesAllTime(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    {}
+};
+
+class mmReportIncomeExpensesCurrentMonth: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesCurrentMonth(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    {
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
 };
 #endif // _MM_EX_REPORTINCEXP_H_
