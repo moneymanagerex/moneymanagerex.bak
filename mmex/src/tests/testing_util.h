@@ -19,11 +19,12 @@
 
 #pragma once
 //#define UTIL_TEST_INCLUDED_IN_BUILD
+
 //#define DBWRAPPER_TEST_INCLUDED_IN_BUILD
 //#define MMEX_LUA_TEST_INCLUDED_IN_BUILD
+
 #define NEW_CLASSES_TEST_INCLUDED_IN_BUILD
 
-#include <boost/scoped_ptr.hpp>
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
 #include "dbwrapper.h"
@@ -66,20 +67,20 @@ private:
 // Returns the user's current working directory for the new inidb database.
 wxString getIniDbPpath();
 
-boost::shared_ptr<wxSQLite3Database> get_pInidb();
+wxSharedPtr<wxSQLite3Database> get_pInidb();
 
 // Single point access for the test database, stored in memory.
-boost::shared_ptr<MMEX_IniSettings> pSettingsList();
+wxSharedPtr<MMEX_IniSettings> pSettingsList();
 
 /*****************************************************************************************
  Create a single access point for the database, Remove database on completion.
  *****************************************************************************************/
 // Returns the user's current working directory for the new database.
 wxString getDbPath();
-boost::shared_ptr<wxSQLite3Database> get_pDb();
+wxSharedPtr<wxSQLite3Database> get_pDb();
 
 // Create a single access point for the main database, stored in memory.
-boost::shared_ptr<mmCoreDB> pDb_core();
+wxSharedPtr<mmCoreDB> pDb_core();
  
 void const displayTimeTaken(const wxString msg, const wxDateTime start_time);
 
