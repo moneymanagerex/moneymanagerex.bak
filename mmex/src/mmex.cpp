@@ -1717,7 +1717,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData.StartsWith(wxT("Where the Money Comes From - ")))
         {
-            mmPrintableBase* rs = new mmReportCategoryExpensesComesCurrentMonth(m_core.get());:w
+            mmPrintableBase* rs = new mmReportCategoryExpensesComesCurrentMonth(m_core.get());
             createReportsPage(rs);
         }
         else if (sData == wxT("Categories - Over Time"))
