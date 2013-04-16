@@ -1182,54 +1182,48 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     /* ================================================================================================= */
 
-    wxTreeItemId reportsSummary = navTreeCtrl_->AppendItem(reports
-        , _("Summary of Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(reportsSummary
-        , new mmTreeItemData(wxT("Summary of Accounts")));
+    wxTreeItemId reportsSummary = navTreeCtrl_->AppendItem(reports, _("Summary of Accounts"), 4, 4);
+    navTreeCtrl_->SetItemData(reportsSummary, new mmTreeItemData(wxT("Summary of Accounts"), new mmReportSummary(m_core.get(), this)));
 
-    wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary
-        , _("Stocks"), 4, 4);
-    navTreeCtrl_->SetItemData(reportsStocks
-        , new mmTreeItemData(wxT("Summary of Stocks")));
+    wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary, _("Stocks"), 4, 4);
+    navTreeCtrl_->SetItemData(reportsStocks, new mmTreeItemData(wxT("Summary of Stocks"), new mmReportSummaryStocks(m_core.get())));
 
     if (mmIniOptions::instance().enableAssets_)
     {
-        wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary
-            , _("Assets"), 4, 4);
-        navTreeCtrl_->SetItemData(reportsAssets
-            , new mmTreeItemData(wxT("Summary of Assets")));
+        wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary, _("Assets"), 4, 4);
+        navTreeCtrl_->SetItemData(reportsAssets, new mmTreeItemData(wxT("Summary of Assets"), new mmReportSummaryAssets(m_core.get())));
     }
 
-    wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports
-        , _("Where the Money Goes"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTime
-        , new mmTreeItemData(wxT("Where the Money Goes")));
+    wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports, _("Where the Money Goes"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTime, new mmTreeItemData(wxT("Where the Money Goes"), new mmReportCategoryExpensesGoes(m_core.get())));
 
     wxTreeItemId categsOverTimeCalMonth = navTreeCtrl_->AppendItem(categsOverTime, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCalMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Last Calendar Month")));
+    navTreeCtrl_->SetItemData(categsOverTimeCalMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Last Calendar Month"), new mmReportCategoryExpensesGoesLastMonth(m_core.get())));
 
     wxString currentMonthMsg = _("Current Month");
     if (mmIniOptions::instance().ignoreFutureTransactions_) currentMonthMsg = _("Current Month to Date");
 
     wxTreeItemId categsOverTimeCurrentMonth = navTreeCtrl_->AppendItem(categsOverTime, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCurrentMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Month")));
+    navTreeCtrl_->SetItemData(categsOverTimeCurrentMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Month"), new mmReportCategoryExpensesGoesCurrentMonth(m_core.get())));
 
     wxTreeItemId categsOverTimeLast30 = navTreeCtrl_->AppendItem(categsOverTime, _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeLast30, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - 30 Days")));
+    navTreeCtrl_->SetItemData(categsOverTimeLast30, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - 30 Days"), new mmReportCategoryExpensesGoesLast30Days(m_core.get())));
 
     wxTreeItemId categsOverTimeLastYear = navTreeCtrl_->AppendItem(categsOverTime, _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeLastYear, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Last Year")));
+    navTreeCtrl_->SetItemData(categsOverTimeLastYear, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Last Year"), new mmReportCategoryExpensesGoesLastYear(m_core.get())));
 
     wxTreeItemId categsOverTimeCurrentYear = navTreeCtrl_->AppendItem(categsOverTime, _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Year")));
+    navTreeCtrl_->SetItemData(categsOverTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Year"), new mmReportCategoryExpensesGoesCurrentYear(m_core.get())));
 
     if (financialYearIsDifferent())
     {
         wxTreeItemId categsOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(categsOverTime, _("Last Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(categsOverTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Last Financial Year")));
+        navTreeCtrl_->SetItemData(categsOverTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Last Financial Year")
+                    , new mmReportCategoryExpensesGoesLastFinancialYear(m_core.get())));
 
         wxTreeItemId categsOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(categsOverTime, _("Current Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(categsOverTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Financial Year")));
+        navTreeCtrl_->SetItemData(categsOverTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Financial Year")
+                    ,new mmReportCategoryExpensesGoesCurrentFinancialYear(m_core.get())));
     }
     ///////////////////////////////////////////////////////////
 
@@ -1687,33 +1681,27 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == wxT("Summary of Accounts"))
         {
-            mmPrintableBase* rs = new mmReportSummary(m_core.get(), this);
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData == wxT("Summary of Stocks"))
         {
-            mmPrintableBase* rs = new mmReportSummaryStocks(m_core.get());
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData == wxT("Summary of Assets"))
         {
-            mmPrintableBase* rs = new mmReportSummaryAssets(m_core.get());
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData == wxT("Where the Money Goes"))
         {
-            mmPrintableBase* rs = new mmReportCategoryExpensesGoes(m_core.get());
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData.StartsWith(wxT("Where the Money Goes -")))
         {
-            mmPrintableBase* rs = new mmReportCategoryExpensesGoesCurrentMonth(m_core.get());
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData == wxT("Where the Money Comes From"))
         {
-            mmPrintableBase* rs = new mmReportCategoryExpensesComes(m_core.get());
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData.StartsWith(wxT("Where the Money Comes From - ")))
         {
