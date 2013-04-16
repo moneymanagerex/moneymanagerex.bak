@@ -21,6 +21,7 @@
 
 #include "defs.h"
 #include "mmcurrency.h"
+#include "reportbase.h"
 
 class mmCoreDB;
 class MMEX_IniSettings;
@@ -46,13 +47,15 @@ private:
     wxString name_;
 };
 
-class mmPrintableBase;
 class mmTreeItemData : public wxTreeItemData
 {
 public:
     mmTreeItemData(int id, bool isBudget): id_(id), isString_(false), isBudgetingNode_(isBudget) {}
-    mmTreeItemData(const wxString& string): isString_(true), isBudgetingNode_(false), stringData_(string) {}
-    mmTreeItemData(const wxString& string, mmPrintableBase* report): isString_(true), isBudgetingNode_(false), stringData_(string), report_(report) {}
+    mmTreeItemData(const wxString& string, mmPrintableBase* report = 0): isString_(true), isBudgetingNode_(false), stringData_(string), report_(report) {}
+    ~mmTreeItemData() 
+    {
+        if (report_) delete report_;
+    }
 
     int getData() const { return id_; }
     wxString getString() const { return stringData_; }
