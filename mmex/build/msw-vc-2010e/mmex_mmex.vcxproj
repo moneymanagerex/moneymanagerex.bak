@@ -9,14 +9,6 @@
       <Configuration>Unicode Release Multilib WX_PYTHON_0</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="wx28 Debug Unicode Multilib WX_PYTHON_0|Win32">
-      <Configuration>wx28 Debug Unicode Multilib WX_PYTHON_0</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="wx28 Release Unicode Multilib WX_PYTHON_0|Win32">
-      <Configuration>wx28 Release Unicode Multilib WX_PYTHON_0</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="wx29 Debug Unicode Multilib WX_PYTHON_0|Win32">
       <Configuration>wx29 Debug Unicode Multilib WX_PYTHON_0</Configuration>
       <Platform>Win32</Platform>
@@ -41,22 +33,12 @@
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='wx28 Debug Unicode Multilib WX_PYTHON_0|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='wx29 Release Unicode Multilib WX_PYTHON_0|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='wx28 Release Unicode Multilib WX_PYTHON_0|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
@@ -70,16 +52,10 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wx29 Debug Unicode Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wx28 Debug Unicode Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wx29 Release Unicode Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='wx28 Release Unicode Multilib WX_PYTHON_0|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -87,22 +63,16 @@
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'">vc-static-u\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='wx29 Release Unicode Multilib WX_PYTHON_0|Win32'">vc-static-29u\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='wx28 Release Unicode Multilib WX_PYTHON_0|Win32'">vc-static-28u\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'">vc-static-u\mmex\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='wx29 Release Unicode Multilib WX_PYTHON_0|Win32'">vc-static-29u\mmex\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='wx28 Release Unicode Multilib WX_PYTHON_0|Win32'">vc-static-28u\mmex\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='wx29 Release Unicode Multilib WX_PYTHON_0|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='wx28 Release Unicode Multilib WX_PYTHON_0|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='wx29 Debug Unicode Multilib WX_PYTHON_0|Win32'">vc-static-29ud\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='wx28 Debug Unicode Multilib WX_PYTHON_0|Win32'">vc-static-28ud\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">vc-static-ud\mmex\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='wx29 Debug Unicode Multilib WX_PYTHON_0|Win32'">vc-static-29ud\mmex\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='wx28 Debug Unicode Multilib WX_PYTHON_0|Win32'">vc-static-28ud\mmex\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='wx29 Debug Unicode Multilib WX_PYTHON_0|Win32'">true</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='wx28 Debug Unicode Multilib WX_PYTHON_0|Win32'">true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release Multilib WX_PYTHON_0|Win32'">
     <ClCompile>
@@ -174,42 +144,6 @@
       <PreprocessorDefinitions>_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
       <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswu;$(WXWIN_29)\include;$(BOOSTDIR);..\..\lib\sqlite;..\..\lib\wxsqlite;..\..\lib\lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='wx28 Release Unicode Multilib WX_PYTHON_0|Win32'">
-    <ClCompile>
-      <AdditionalOptions>/Zi %(AdditionalOptions)</AdditionalOptions>
-      <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(WXWIN_28)\lib\vc_lib\mswu;$(WXWIN_28)\include;$(BOOSTDIR);..\..\lib\sqlite;..\..\lib\wxsqlite;..\..\lib\lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ObjectFileName>vc-static-28u\mmex\</ObjectFileName>
-      <ProgramDataBaseFileName>vc-static-28u\mmex.pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level4</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <AdditionalOptions>/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-28u\wxsqlite.lib;vc-static-28u\sqlite.lib;vc-static-28u\lua.lib;wxmsw28u_core.lib;wxmsw28u_qa.lib;wxbase28u_net.lib;wxmsw28u_html.lib;wxbase28u_xml.lib;wxmsw28u_aui.lib;wxmsw28u_adv.lib;wxbase28u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>vc-static-28u\mmex.exe</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(WXWIN_28)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ProgramDatabaseFile>vc-static-28u\mmex.pdb</ProgramDatabaseFile>
-      <SubSystem>Windows</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-    <Midl>
-      <PreprocessorDefinitions>WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\lib\sqlite;..\..\lib\wxsqlite;..\..\lib\lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(WXWIN_28)\lib\vc_lib\mswu;$(WXWIN_28)\include;$(BOOSTDIR);..\..\lib\sqlite;..\..\lib\wxsqlite;..\..\lib\lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">
@@ -286,44 +220,6 @@
       <PreprocessorDefinitions>_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
       <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswud;$(WXWIN_29)\include;$(BOOSTDIR);..\..\lib\sqlite;..\..\lib\wxsqlite;..\..\lib\lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='wx28 Debug Unicode Multilib WX_PYTHON_0|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(WXWIN_28)\lib\vc_lib\mswud;$(WXWIN_28)\include;$(BOOSTDIR);..\..\lib\sqlite;..\..\lib\wxsqlite;..\..\lib\lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ObjectFileName>vc-static-28ud\mmex\</ObjectFileName>
-      <ProgramDataBaseFileName>vc-static-28ud\mmex.pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level4</WarningLevel>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>vc-static-28ud\wxsqlite.lib;vc-static-28ud\sqlite.lib;vc-static-28ud\lua.lib;wxmsw28ud_core.lib;wxmsw28ud_qa.lib;wxbase28ud_net.lib;wxmsw28ud_html.lib;wxbase28ud_xml.lib;wxmsw28ud_aui.lib;wxmsw28ud_adv.lib;wxbase28ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxexpatd.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;wsock32.lib;odbc32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>vc-static-28ud\mmex.exe</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(WXWIN_28)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>vc-static-28ud\mmex.pdb</ProgramDatabaseFile>
-      <SubSystem>Windows</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-    <Midl>
-      <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\lib\sqlite;..\..\lib\wxsqlite;..\..\lib\lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(WXWIN_28)\lib\vc_lib\mswud;$(WXWIN_28)\include;$(BOOSTDIR);..\..\lib\sqlite;..\..\lib\wxsqlite;..\..\lib\lua\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
