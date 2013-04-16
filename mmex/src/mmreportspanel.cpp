@@ -43,7 +43,6 @@ mmReportsPanel::mmReportsPanel( mmGUIFrame* frame,
 
 mmReportsPanel::~mmReportsPanel()
 {
-    delete rb_;
 }
 
 bool mmReportsPanel::Create( wxWindow *parent, wxWindowID winid,
