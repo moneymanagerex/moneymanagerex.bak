@@ -1291,27 +1291,29 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(payeesOverTime, new mmTreeItemData(wxT("Payee Report")));
 
     wxTreeItemId payeesOverTimeCalMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxTRANSLATE("Payees - Last Calendar Month")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxTRANSLATE("Payees - Last Calendar Month"), new mmReportPayeeExpensesLastMonth(m_core.get())));
 
     wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxTRANSLATE("Payees - Current Month")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxTRANSLATE("Payees - Current Month"), new mmReportPayeeExpensesCurrentMonth(m_core.get())));
 
     wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime, _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLast30, new mmTreeItemData(wxTRANSLATE("Payees - Last 30 Days")));
+    navTreeCtrl_->SetItemData(payeesOverTimeLast30, new mmTreeItemData(wxTRANSLATE("Payees - Last 30 Days"), new mmReportPayeeExpensesLast30Days(m_core.get())));
 
     wxTreeItemId payeesOverTimeLastYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, new mmTreeItemData(wxTRANSLATE("Payees - Last Year")));
+    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, new mmTreeItemData(wxTRANSLATE("Payees - Last Year"), new mmReportPayeeExpensesLastYear(m_core.get())));
 
     wxTreeItemId payeesOverTimeCurrentYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Payees - Current Year")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Payees - Current Year"), new mmReportPayeeExpensesCurrentYear(m_core.get())));
 
     if (financialYearIsDifferent())
     {
         wxTreeItemId payeesOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Payees - Last Financial Year")));
+        navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Payees - Last Financial Year")
+                    , new mmReportPayeeExpensesLastFinancialYear(m_core.get())));
 
         wxTreeItemId payeesOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Payees - Current Financial Year")));
+        navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Payees - Current Financial Year")
+                    , new mmReportPayeeExpensesCurrentFinancialYear(m_core.get())));
     }
     ///////////////////////////////////////////////////////////////////
 
@@ -1721,22 +1723,11 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == wxT("Payee Report"))
         {
-            wxString title = _("Payee Report");
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get()
-                , true, wxDateTime::Now(), wxDateTime::Now(), title);
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData.StartsWith(wxT("Payees - ")))
         {
-            GetDateRange(dtBegin, dtEnd, sData);
-
-            if (bIgnoreFuture && wxT("Payees - Current Month"))
-                title = _("Payees - Current Month to Date");
-
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get()
-                , false, dtBegin, dtEnd, title);
-            createReportsPage(rs);
-
+            createReportsPage(iData->get_report());
         }
         else if (sData == wxT("Income vs Expenses - All Time"))
         {
