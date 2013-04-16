@@ -3590,7 +3590,6 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
     }
 
     wxArrayString as;
-    int num = (int)m_core->accountList_.accounts_.size();
     std::vector<int> arrAcctID;
 
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->accountList_.range();
