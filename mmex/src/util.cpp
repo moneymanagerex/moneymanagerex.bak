@@ -1144,6 +1144,7 @@ wxDateTime getUserDefinedFinancialYear(bool prevDayRequired)
     return financialYear;
 }
 
+#if 0
 void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData)
 {
     wxDateTime today = wxDateTime::Now();
@@ -1221,3 +1222,4 @@ void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData)
     else
         wxASSERT(false);
 }
+#endif
