@@ -1261,27 +1261,29 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(categs, new mmTreeItemData(wxT("Categories - Over Time")));
 
     wxTreeItemId categsCalMonth = navTreeCtrl_->AppendItem(categs, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(categsCalMonth, new mmTreeItemData(wxTRANSLATE("Categories - Last Calendar Month")));
+    navTreeCtrl_->SetItemData(categsCalMonth, new mmTreeItemData(wxTRANSLATE("Categories - Last Calendar Month"), new mmReportCategoryOverTimePerformance(m_core.get())));
 
     wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(categsCurrentMonth, new mmTreeItemData(wxTRANSLATE("Categories - Current Month")));
+    navTreeCtrl_->SetItemData(categsCurrentMonth, new mmTreeItemData(wxTRANSLATE("Categories - Current Month"), new mmReportCategoryExpensesCategoriesCurrentMonth(m_core.get())));
 
     wxTreeItemId categsTimeLast30 = navTreeCtrl_->AppendItem(categs, _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(categsTimeLast30, new mmTreeItemData(wxTRANSLATE("Categories - 30 Days")));
+    navTreeCtrl_->SetItemData(categsTimeLast30, new mmTreeItemData(wxTRANSLATE("Categories - 30 Days"), new mmReportCategoryExpensesCategoriesLast30Days(m_core.get())));
 
     wxTreeItemId categsTimeLastYear = navTreeCtrl_->AppendItem(categs, _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsTimeLastYear, new mmTreeItemData(wxTRANSLATE("Categories - Last Year")));
+    navTreeCtrl_->SetItemData(categsTimeLastYear, new mmTreeItemData(wxTRANSLATE("Categories - Last Year"), new mmReportCategoryExpensesCategoriesLastYear(m_core.get())));
 
     wxTreeItemId categsTimeCurrentYear = navTreeCtrl_->AppendItem(categs, _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Categories - Current Year")));
+    navTreeCtrl_->SetItemData(categsTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Categories - Current Year"), new mmReportCategoryExpensesCategoriesCurrentYear(m_core.get())));
 
     if (financialYearIsDifferent())
     {
         wxTreeItemId categsTimeLastFinancialYear = navTreeCtrl_->AppendItem(categs, _("Last Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(categsTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Categories - Last Financial Year")));
+        navTreeCtrl_->SetItemData(categsTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Categories - Last Financial Year")
+                    , new mmReportCategoryExpensesCategoriesLastFinancialYear(m_core.get())));
 
         wxTreeItemId categsTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(categs, _("Current Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(categsTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Categories - Current Financial Year")));
+        navTreeCtrl_->SetItemData(categsTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Categories - Current Financial Year")
+                    , new mmReportCategoryExpensesCategoriesCurrentFinancialYear(m_core.get())));
     }
     ///////////////////////////////////////////////////////////
 
@@ -1711,22 +1713,11 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == wxT("Categories - Over Time"))
         {
-            wxProgressDialog proDlg(_("Category Report"), _("Category Report being generated... Please wait."), 100, this);
-            mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(m_core.get());
-            proDlg.Update(70);
-            createReportsPage(rs);
-            proDlg.Update(95);
+            createReportsPage(iData->get_report());
         }
         else if (sData.StartsWith(wxT("Categories - ")))
         {
-            GetDateRange(dtBegin, dtEnd, sData);
-
-            if (bIgnoreFuture && sData == wxT("Categories - Current Month"))
-                title = _("Current Month to Date");
-
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
-                , false, dtBegin, dtEnd, title, 0);
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData == wxT("Payee Report"))
         {
