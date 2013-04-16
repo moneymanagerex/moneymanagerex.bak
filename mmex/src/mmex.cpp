@@ -1685,6 +1685,11 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             CreateCustomReport(customReportID);
         }
+        else
+        {
+            createReportsPage(iData->get_report());
+        }
+#if 0
         else if (sData == wxT("Summary of Accounts"))
         {
             createReportsPage(iData->get_report());
@@ -1817,6 +1822,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             mmPrintableBase* rs = new mmReportTransactionStats(m_core.get(), year);
             createReportsPage(rs);
         }
+#endif
     }
 }
 //----------------------------------------------------------------------------
