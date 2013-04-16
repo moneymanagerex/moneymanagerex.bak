@@ -46,14 +46,17 @@ private:
     wxString name_;
 };
 
+class mmPrintableBase;
 class mmTreeItemData : public wxTreeItemData
 {
 public:
     mmTreeItemData(int id, bool isBudget): id_(id), isString_(false), isBudgetingNode_(isBudget) {}
-    mmTreeItemData(const wxString& string): id_(), isString_(true), isBudgetingNode_(false), stringData_(string) {}
+    mmTreeItemData(const wxString& string): isString_(true), isBudgetingNode_(false), stringData_(string) {}
+    mmTreeItemData(const wxString& string, mmPrintableBase* report): isString_(true), isBudgetingNode_(false), stringData_(string), report_(report) {}
 
     int getData() const { return id_; }
     wxString getString() const { return stringData_; }
+    mmPrintableBase* get_report() const { return report_; }
     bool isStringData() const { return isString_; }
     bool isBudgetingNode() const { return isBudgetingNode_; }
 
@@ -62,6 +65,7 @@ private:
     bool isString_;
     bool isBudgetingNode_;
     wxString stringData_;
+    mmPrintableBase* report_;
 };
 
 void mmShowErrorMessageInvalid( wxWindow *parent, const wxString &message );

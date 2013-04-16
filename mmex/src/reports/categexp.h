@@ -55,6 +55,72 @@ public:
     }
 };
 
+class mmReportCategoryExpensesGoesLastMonth: public mmReportCategoryExpensesGoes
+{
+public:
+    mmReportCategoryExpensesGoesLastMonth(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
+    {
+        this->title_ = _("Where the Money Goes - Last Month to Date");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
+class mmReportCategoryExpensesGoesLast30Days: public mmReportCategoryExpensesGoes
+{
+public:
+    mmReportCategoryExpensesGoesLast30Days(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
+    {
+        this->title_ = _("Where the Money Goes - Last Month to Date");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
+class mmReportCategoryExpensesGoesLastYear: public mmReportCategoryExpensesGoes
+{
+public:
+    mmReportCategoryExpensesGoesLastYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
+    {
+        this->title_ = _("Where the Money Goes - Last Month to Date");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
+class mmReportCategoryExpensesGoesCurrentYear: public mmReportCategoryExpensesGoes
+{
+public:
+    mmReportCategoryExpensesGoesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
+    {
+        this->title_ = _("Where the Money Goes - Last Month to Date");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
+class mmReportCategoryExpensesGoesLastFinancialYear: public mmReportCategoryExpensesGoes
+{
+public:
+    mmReportCategoryExpensesGoesLastFinancialYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
+    {
+        this->title_ = _("Where the Money Goes - Last Month to Date");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
+class mmReportCategoryExpensesGoesCurrentFinancialYear: public mmReportCategoryExpensesGoes
+{
+public:
+    mmReportCategoryExpensesGoesCurrentFinancialYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
+    {
+        this->title_ = _("Where the Money Goes - Last Month to Date");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
 class mmReportCategoryExpensesComes: public mmReportCategoryExpenses
 {
 public:
