@@ -28,12 +28,61 @@ public:
 
     wxString getHTMLText();
 
-private:
+protected:
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     
     bool ignoreDate_;
     wxString title_;
+};
+
+class mmReportPayeeExpensesCurrentMonth: public mmReportPayeeExpenses
+{
+public:
+    mmReportPayeeExpensesCurrentMonth(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    {}
+};
+
+class mmReportPayeeExpensesLastMonth: public mmReportPayeeExpenses
+{
+public:
+    mmReportPayeeExpensesLastMonth(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    {}
+};
+
+class mmReportPayeeExpensesLast30Days: public mmReportPayeeExpenses
+{
+public:
+    mmReportPayeeExpensesLast30Days(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    {}
+};
+
+class mmReportPayeeExpensesLastYear: public mmReportPayeeExpenses
+{
+public:
+    mmReportPayeeExpensesLastYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    {}
+};
+
+class mmReportPayeeExpensesCurrentYear: public mmReportPayeeExpenses
+{
+public:
+    mmReportPayeeExpensesCurrentYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    {}
+};
+
+class mmReportPayeeExpensesLastFinancialYear: public mmReportPayeeExpenses
+{
+public:
+    mmReportPayeeExpensesLastFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    {}
+};
+
+class mmReportPayeeExpensesCurrentFinancialYear: public mmReportPayeeExpenses
+{
+public:
+    mmReportPayeeExpensesCurrentFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    {}
 };
 
 #endif //_MM_EX_REPORTPAYEE_H_
