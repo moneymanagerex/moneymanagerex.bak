@@ -1587,30 +1587,24 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if (iData->isBudgetingNode())
         {
             wxString reportWaitingMsg = _("Budget report being generated... Please wait.");
+            int year = data;
 
             wxTreeItemId idparent = navTreeCtrl_->GetItemParent(id);
             mmTreeItemData* iParentData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(idparent));
             if (iParentData->getString() == wxT("Budget Performance"))
             {
-                //wxProgressDialog proDlg(_("Budget Performance"), reportWaitingMsg, 100, this);
-                mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), this, data);
-                //proDlg.Update(70);
+                int year = data;
+                mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), this, year);
                 createReportsPage(rs);
-                //proDlg.Update(95);
             }
             else if (iParentData->getString() == wxT("Budget Setup Performance"))
             {
-                //wxProgressDialog proDlg(_("Budget Category Summary"), reportWaitingMsg, 100, this);
-                mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, data);
-                //proDlg.Update(70);
+                mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, year);
                 createReportsPage(rs);
-                //proDlg.Update(95);
             }
             else
             {
-                // wxProgressDialog proDlg(_("Budget Setup"), reportWaitingMsg, 100, this);
-                createBudgetingPage(data);
-                // proDlg.Update(95);
+                createBudgetingPage(year);
             }
         }
         else
@@ -1682,8 +1676,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         int customReportID;      // Define before all the if...else statements
         //========================================================================
 
-        wxDateTime dtBegin;
-        wxDateTime dtEnd;
+        wxDateTime dtBegin, dtEnd;
         wxString sData = iData->getString();
         wxString title = wxGetTranslation(sData);
         bool bIgnoreFuture = mmIniOptions::instance().ignoreFutureTransactions_;
@@ -1709,42 +1702,22 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == wxT("Where the Money Goes"))
         {
-            wxDateTime dtEnd =  wxDateTime::Now();
-            wxDateTime dtBegin =  wxDateTime::Now();
-            wxString title = _("Where the Money Goes");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
-                , true, dtBegin, dtEnd, title, 2);
+            mmPrintableBase* rs = new mmReportCategoryExpensesGoes(m_core.get());
             createReportsPage(rs);
         }
         else if (sData.StartsWith(wxT("Where the Money Goes -")))
         {
-            GetDateRange(dtBegin, dtEnd, sData);
-
-            if (bIgnoreFuture && sData == wxT("Where the Money Goes - Current Month"))
-                title = _("Where the Money Goes - Current Month to Date");
-
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
-                , false, dtBegin, dtEnd, title, 2);
+            mmPrintableBase* rs = new mmReportCategoryExpensesGoesCurrentMonth(m_core.get());
             createReportsPage(rs);
         }
         else if (sData == wxT("Where the Money Comes From"))
         {
-            wxDateTime dtEnd =  wxDateTime::Now();
-            wxDateTime dtBegin =  wxDateTime::Now();
-            wxString title = _("Where the Money Comes From");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
-                , true, dtBegin, dtEnd, title, 1);
+            mmPrintableBase* rs = new mmReportCategoryExpensesComes(m_core.get());
             createReportsPage(rs);
         }
         else if (sData.StartsWith(wxT("Where the Money Comes From - ")))
         {
-            GetDateRange(dtBegin, dtEnd, sData);
-
-            if (bIgnoreFuture && sData == wxT("Where the Money Comes From - Current Month"))
-                title = _("Where the Money Comes From - Current Month to Date");
-
-            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get()
-                , false, dtBegin, dtEnd, title, 1);
+            mmPrintableBase* rs = new mmReportCategoryExpensesComesCurrentMonth(m_core.get());:w
             createReportsPage(rs);
         }
         else if (sData == wxT("Categories - Over Time"))
