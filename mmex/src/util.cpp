@@ -30,7 +30,7 @@ namespace
 {
 
 //----------------------------------------------------------------------------
-const wxChar g_def_decimal_point = wxT('.');
+const wxChar g_def_decimal_point = '.';
 const int g_def_scale = 100;
 
 //----------------------------------------------------------------------------
@@ -46,16 +46,15 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
     wxString lang;
 
     wxArrayString lang_files;
-    size_t cnt = wxDir::GetAllFiles(langPath, &lang_files, wxT("*.mo"));
+    size_t cnt = wxDir::GetAllFiles(langPath, &lang_files, "*.mo");
 
     if (!cnt)
     {
         if (verbose)
         {
-            wxString s = wxT("Can't find language files (.mo) at \"");
-            s << langPath << wxT('\"');
+            wxString s = wxString::Format("Can't find language files (.mo) at \"%s\"", langPath);
 
-            wxMessageDialog dlg(parent, s, wxT("Error"), wxOK|wxICON_ERROR);
+            wxMessageDialog dlg(parent, s, "Error", wxOK|wxICON_ERROR);
             dlg.ShowModal();
         }
 
@@ -69,7 +68,7 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
     }
 
     lang_files.Sort(CaseInsensitiveCmp);
-    lang = wxGetSingleChoice(wxT("Please choose language"), wxT("Languages"), lang_files, parent);
+    lang = wxGetSingleChoice("Please choose language", "Languages", lang_files, parent);
 
     return lang.Lower();
 }
@@ -122,7 +121,7 @@ wchar_t get_group_separator(wxChar sep)
 wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_sz)
 {
     wxString val;
-    val.Printf(wxT("%.0f"), x);
+    val.Printf("%.0f", x);
 
     wxChar grp_sep = fmt.getGroupSeparator();
 
@@ -190,12 +189,12 @@ void DoubleToCurrency(const mmex::CurrencyFormatter &fmt, double val, wxString& 
         if (!pfx.empty())
         {
             s += pfx;
-            s += wxT(' ');
+            s += ' ';
         }
     }
 
     if (val < 0)
-        s += wxT('-'); // "minus" sign
+        s += '-'; // "minus" sign
 
     int scale = fmt.getScale();
     double abs_val = fabs(mmRound(val*scale));
@@ -255,13 +254,13 @@ void correctEmptyFileExt(wxString ext, wxString & fileName)
 {
     wxFileName tempFileName(fileName);
     if (tempFileName.GetExt().IsEmpty())
-        fileName << wxT(".") << ext;
+        fileName << "." << ext;
 }
 
 //----------------------------------------------------------------------------
 mmOptions::mmOptions()
 : dateFormat_(mmex::DEFDATEFORMAT)
-, language_(wxT("english"))
+, language_("english")
 , databaseUpdated_(false)
 {}
 
@@ -274,33 +273,33 @@ mmOptions& mmOptions::instance()
 //----------------------------------------------------------------------------
 void mmOptions::loadOptions(MMEX_IniSettings* info_table)
 {
-    dateFormat_     = info_table->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
-    userNameString_ = info_table->GetStringSetting(wxT("USERNAME"), wxT(""));
+    dateFormat_     = info_table->GetStringSetting("DATEFORMAT", mmex::DEFDATEFORMAT);
+    userNameString_ = info_table->GetStringSetting("USERNAME", "");
 
-    financialYearStartDayString_   = info_table->GetStringSetting(wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
-    financialYearStartMonthString_ = info_table->GetStringSetting(wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
+    financialYearStartDayString_   = info_table->GetStringSetting("FINANCIAL_YEAR_START_DAY", "1");
+    financialYearStartMonthString_ = info_table->GetStringSetting("FINANCIAL_YEAR_START_MONTH", "7");
 }
 
 //----------------------------------------------------------------------------
 void mmOptions::saveOptions(MMEX_IniSettings* info_table)
 {
-    info_table->SetStringSetting(wxT("DATEFORMAT"), dateFormat_);
+    info_table->SetStringSetting("DATEFORMAT", dateFormat_);
 }
 
 // --------------------------------------------------------------------------
 void mmIniOptions::loadOptions(wxSharedPtr<MMEX_IniSettings> pIniSettings)
 {
-    expandStocksHome_ = pIniSettings->GetBoolSetting(wxT("ENABLESTOCKS"), true);
-    enableAssets_     = pIniSettings->GetBoolSetting(wxT("ENABLEASSETS"), true);
-    enableBudget_     = pIniSettings->GetBoolSetting(wxT("ENABLEBUDGET"), true);
-    enableGraphs_     = pIniSettings->GetBoolSetting(wxT("ENABLEGRAPHS"), true);
+    expandStocksHome_ = pIniSettings->GetBoolSetting("ENABLESTOCKS", true);
+    enableAssets_     = pIniSettings->GetBoolSetting("ENABLEASSETS", true);
+    enableBudget_     = pIniSettings->GetBoolSetting("ENABLEBUDGET", true);
+    enableGraphs_     = pIniSettings->GetBoolSetting("ENABLEGRAPHS", true);
 
-    html_font_size_   = pIniSettings->GetIntSetting(wxT("HTMLFONTSIZE"), 3);
+    html_font_size_   = pIniSettings->GetIntSetting("HTMLFONTSIZE", 3);
 
-    expandBankHome_   = pIniSettings->GetBoolSetting(wxT("EXPAND_BANK_HOME"), true);
-    expandTermHome_   = pIniSettings->GetBoolSetting(wxT("EXPAND_TERM_HOME"), false);
-    expandBankTree_   = pIniSettings->GetBoolSetting(wxT("EXPAND_BANK_TREE"), true);
-    expandTermTree_   = pIniSettings->GetBoolSetting(wxT("EXPAND_TERM_TREE"), false);
+    expandBankHome_   = pIniSettings->GetBoolSetting("EXPAND_BANK_HOME", true);
+    expandTermHome_   = pIniSettings->GetBoolSetting("EXPAND_TERM_HOME", false);
+    expandBankTree_   = pIniSettings->GetBoolSetting("EXPAND_BANK_TREE", true);
+    expandTermTree_   = pIniSettings->GetBoolSetting("EXPAND_TERM_TREE", false);
 
     budgetFinancialYears_           = pIniSettings->GetBoolSetting(INIDB_BUDGET_FINANCIAL_YEARS, false);
     budgetIncludeTransfers_         = pIniSettings->GetBoolSetting(INIDB_BUDGET_INCLUDE_TRANSFERS, false);
@@ -309,21 +308,21 @@ void mmIniOptions::loadOptions(wxSharedPtr<MMEX_IniSettings> pIniSettings)
     ignoreFutureTransactions_       = pIniSettings->GetBoolSetting(INIDB_IGNORE_FUTURE_TRANSACTIONS, false);
 
     // Read the preference as a string and convert to int
-    transPayeeSelectionNone_ = pIniSettings->GetIntSetting(wxT("TRANSACTION_PAYEE_NONE"), 0);
+    transPayeeSelectionNone_ = pIniSettings->GetIntSetting("TRANSACTION_PAYEE_NONE", 0);
 
     // For the category selection, default behavior should remain that the last category used for the payee is selected.
     //  This is item 1 (0-indexed) in the list.
-    transCategorySelectionNone_ = pIniSettings->GetIntSetting(wxT("TRANSACTION_CATEGORY_NONE"), 1);
-    transStatusReconciled_      = pIniSettings->GetIntSetting(wxT("TRANSACTION_STATUS_RECONCILED"), 0);
-    transDateDefault_           = pIniSettings->GetIntSetting(wxT("TRANSACTION_DATE_DEFAULT"), 0);
+    transCategorySelectionNone_ = pIniSettings->GetIntSetting("TRANSACTION_CATEGORY_NONE", 1);
+    transStatusReconciled_      = pIniSettings->GetIntSetting("TRANSACTION_STATUS_RECONCILED", 0);
+    transDateDefault_           = pIniSettings->GetIntSetting("TRANSACTION_DATE_DEFAULT", 0);
 }
 
 // ---------------------------------------------------------------------------
 //void mmPlayTransactionSound(wxSQLite3Database* db_)
 //{
-//    wxString useSound = mmDBWrapper::getINISettingValue(db_, INIDB_USE_TRANSACTION_SOUND, wxT("TRUE"));
+//    wxString useSound = mmDBWrapper::getINISettingValue(db_, INIDB_USE_TRANSACTION_SOUND, "TRUE");
 //
-//    if (useSound == wxT("TRUE"))
+//    if (useSound == "TRUE")
 //    {
 //        wxSound registerSound(mmex::getPathResource(mmex::TRANS_SOUND));
 //        if (registerSound.IsOk())
@@ -352,9 +351,9 @@ wxString mmSelectLanguage(wxWindow *parent, wxSharedPtr<MMEX_IniSettings> pIniSe
         if (verbose)
         {
             //TODO fix string for proper translation
-            wxString s = wxT("Directory of language files does not exist:\n\"");
-            s << langPath << wxT('\"');
-            wxMessageDialog dlg(parent, s, wxT("Error"), wxOK|wxICON_ERROR);
+            wxString s = "Directory of language files does not exist:\n\"";
+            s << langPath << '\"';
+            wxMessageDialog dlg(parent, s, "Error", wxOK|wxICON_ERROR);
             dlg.ShowModal();
         }
 
@@ -363,7 +362,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSharedPtr<MMEX_IniSettings> pIniSe
 
     if (!forced_show_dlg)
     {
-        lang = pIniSettings->GetStringSetting(LANGUAGE_PARAMETER, wxT("english"));
+        lang = pIniSettings->GetStringSetting(LANGUAGE_PARAMETER, "english");
         if (!lang.empty() && locale.AddCatalog(lang) && locale.IsLoaded(lang))
         {
             mmOptions::instance().language_ = lang;
@@ -387,7 +386,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSharedPtr<MMEX_IniSettings> pIniSe
 wxString mmReadyDisplayString(const wxString& orig)
 {
     wxString toReturn = orig;
-    toReturn.Replace(wxT("&"), wxT("&&"));
+    toReturn.Replace("&", "&&");
     return toReturn;
 }
 
@@ -429,22 +428,22 @@ wxString mmGetNiceWeekDayName(int week_day)
 wxString mmGetNiceDateString(const wxDateTime &dt)
 {
     wxString dts = wxString() << mmGetNiceWeekDayName(dt.GetWeekDay())
-                              << wxT(", ") << mmGetNiceDateSimpleString(dt);
+                              << ", " << mmGetNiceDateSimpleString(dt);
     return dts;
 }
 
 wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
 {
     wxString dateFmt = mmOptions::instance().dateFormat_;
-    dateFmt.Replace(wxT("%Y%m%d"), wxT("%Y %m %d"));
-    dateFmt.Replace(wxT("."), wxT(" "));
-    dateFmt.Replace(wxT(","), wxT(" "));
-    dateFmt.Replace(wxT("/"), wxT(" "));
-    dateFmt.Replace(wxT("-"), wxT(" "));
-    dateFmt.Replace(wxT("%d"), wxString::Format(wxT("%d"), dt.GetDay()));
-    dateFmt.Replace(wxT("%Y"), wxString::Format(wxT("%d"), dt.GetYear()));
-    dateFmt.Replace(wxT("%y"), wxString::Format(wxT("%d"), dt.GetYear()).Mid(2,2));
-    dateFmt.Replace(wxT("%m"), mmGetNiceMonthName(dt.GetMonth()));
+    dateFmt.Replace("%Y%m%d", "%Y %m %d");
+    dateFmt.Replace(".", " ");
+    dateFmt.Replace(",", " ");
+    dateFmt.Replace("/", " ");
+    dateFmt.Replace("-", " ");
+    dateFmt.Replace("%d", wxString::Format("%d", dt.GetDay()));
+    dateFmt.Replace("%Y", wxString::Format("%d", dt.GetYear()));
+    dateFmt.Replace("%y", wxString::Format("%d", dt.GetYear()).Mid(2,2));
+    dateFmt.Replace("%m", mmGetNiceMonthName(dt.GetMonth()));
 
     return dateFmt;
 }
@@ -458,20 +457,20 @@ void mmShowErrorMessage(wxWindow *parent
 
 void mmShowErrorMessageInvalid(wxWindow *parent, const wxString &message)
 {
-    wxString msg = wxString::Format(_("Entry %s is invalid"), message.c_str());
+    wxString msg = wxString::Format(_("Entry %s is invalid"), message);
     mmShowErrorMessage(parent, msg, _("Invalid Entry"));
 }
 
 wxString inQuotes(wxString label, wxString& delimiter)
 {
-    if (label.Contains(delimiter) || label.Contains(wxT("\"")))
+    if (label.Contains(delimiter) || label.Contains("\""))
     {
-        label.Replace(wxT("\""),wxT("\"\""), true);
-        label = wxString() << wxT("\"") << label << wxT("\"");
+        label.Replace("\"","\"\"", true);
+        label = wxString() << "\"" << label << "\"";
     }
 
-    label.Replace(wxT("\t"),wxT("    "), true);
-    label.Replace(wxT("\n"),wxT(" "), true);
+    label.Replace("\t","    ", true);
+    label.Replace("\n"," ", true);
     return label;
 }
 
@@ -484,34 +483,34 @@ bool mmParseDisplayStringToDate(wxDateTime& date, wxString sDate, wxString sDate
 {
     if (sDateMask.IsEmpty())
         sDateMask = mmOptions::instance().dateFormat_;
-    wxString s = wxT("/");
+    wxString s = "/";
 
     //For correct date parsing, adjust separator format to: %x/%x/%x
-    sDateMask.Replace(wxT("`"), s);
-    sDateMask.Replace(wxT("' "), s);
-    sDateMask.Replace(wxT("/ "), s);
-    sDateMask.Replace(wxT("'"), s);
-    sDateMask.Replace(wxT("-"), s);
-    sDateMask.Replace(wxT("."), s);
-    sDateMask.Replace(wxT(","), s);
-    sDateMask.Replace(wxT(" "), s);
+    sDateMask.Replace("`", s);
+    sDateMask.Replace("' ", s);
+    sDateMask.Replace("/ ", s);
+    sDateMask.Replace("'", s);
+    sDateMask.Replace("-", s);
+    sDateMask.Replace(".", s);
+    sDateMask.Replace(",", s);
+    sDateMask.Replace(" ", s);
 
-    sDate.Replace(wxT("`"), s);
-    sDate.Replace(wxT("' "), s);
-    sDate.Replace(wxT("/ "), s);
-    sDate.Replace(wxT("'"), s);
-    sDate.Replace(wxT("-"), s);
-    sDate.Replace(wxT("."), s);
-    sDate.Replace(wxT(","), s);
-    sDate.Replace(wxT(" "), s);
+    sDate.Replace("`", s);
+    sDate.Replace("' ", s);
+    sDate.Replace("/ ", s);
+    sDate.Replace("'", s);
+    sDate.Replace("-", s);
+    sDate.Replace(".", s);
+    sDate.Replace(",", s);
+    sDate.Replace(" ", s);
 
     //Bad idea to change date mask here.
     //some dates may be wrong parsed, for example:
     // 1/1/2001 & 01/01/01
     /*if (sDate.Len()<9)
-        sDateMask.Replace(wxT("%Y"), wxT("%y"));
+        sDateMask.Replace("%Y", "%y");
     else
-        sDateMask.Replace(wxT("%y"), wxT("%Y"));*/
+        sDateMask.Replace("%y", "%Y");*/
 
     wxStringTokenizer token(sDate, s);
     double a,b,c;
@@ -524,9 +523,9 @@ bool mmParseDisplayStringToDate(wxDateTime& date, wxString sDate, wxString sDate
 
     bool bResult = true;
 
-    if (((a>999) || (b>999) || (c>999)) && (sDateMask.Contains(wxT("%y"))))
+    if (((a>999) || (b>999) || (c>999)) && (sDateMask.Contains("%y")))
         return false;
-    if ((a<100) && (b<100) && (c<100) && (sDateMask.Contains(wxT("%Y"))))
+    if ((a<100) && (b<100) && (c<100) && (sDateMask.Contains("%Y")))
         return false;
 
     sDate = wxString()<<a<<s<<b<<s<<c;
@@ -551,7 +550,7 @@ wxDateTime mmGetStorageStringAsDate(const wxString& str)
 
 wxColour mmGetColourFromString(const wxString& str)
 {
-    wxStringTokenizer tkz(str, wxT(","), wxTOKEN_RET_EMPTY_ALL);
+    wxStringTokenizer tkz(str, ",", wxTOKEN_RET_EMPTY_ALL);
     unsigned char red = 0xFF;
     unsigned char blue = 0xFF;
     unsigned char green = 0xFF;
@@ -580,25 +579,25 @@ wxColour mmGetColourFromString(const wxString& str)
 
 wxString mmGetStringFromColour(wxColour color)
 {
-    return wxString::Format(wxT("%d,%d,%d"), color.Red(), color.Green(), color.Blue());
+    return wxString::Format("%d,%d,%d", color.Red(), color.Green(), color.Blue());
 }
 
 void mmLoadColorsFromDatabase(wxSharedPtr<MMEX_IniSettings> pIniSettings)
 {
-    mmColors::listAlternativeColor0 = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTALT0"), wxT("225,237,251")));
-    mmColors::listAlternativeColor1 = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTALT1"), wxT("255,255,255")));
-    mmColors::listBackColor         = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTBACK"), wxT("255,255,255")));
-    mmColors::navTreeBkColor        = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("NAVTREE"), wxT("255,255,255")));
-    mmColors::listBorderColor       = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTBORDER"), wxT("0,0,0")));
-    mmColors::listDetailsPanelColor = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTDETAILSPANEL"), wxT("244,247,251")));
-    mmColors::listFutureDateColor   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("LISTFUTUREDATES"), wxT("116,134,168")));
-    mmColors::userDefColor1   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR1"), wxT("255,0,0")));
-    mmColors::userDefColor2   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR2"), wxT("255,165,0")));
-    mmColors::userDefColor3   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR3"), wxT("255,255,0")));
-    mmColors::userDefColor4   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR4"), wxT("0,255,0")));
-    mmColors::userDefColor5   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR5"), wxT("0,255,255")));
-    mmColors::userDefColor6   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR6"), wxT("0,0,255")));
-    mmColors::userDefColor7   = mmGetColourFromString(pIniSettings->GetStringSetting(wxT("USER_COLOR7"), wxT("0,0,128")));
+    mmColors::listAlternativeColor0 = mmGetColourFromString(pIniSettings->GetStringSetting("LISTALT0", "225,237,251"));
+    mmColors::listAlternativeColor1 = mmGetColourFromString(pIniSettings->GetStringSetting("LISTALT1", "255,255,255"));
+    mmColors::listBackColor         = mmGetColourFromString(pIniSettings->GetStringSetting("LISTBACK", "255,255,255"));
+    mmColors::navTreeBkColor        = mmGetColourFromString(pIniSettings->GetStringSetting("NAVTREE", "255,255,255"));
+    mmColors::listBorderColor       = mmGetColourFromString(pIniSettings->GetStringSetting("LISTBORDER", "0,0,0"));
+    mmColors::listDetailsPanelColor = mmGetColourFromString(pIniSettings->GetStringSetting("LISTDETAILSPANEL", "244,247,251"));
+    mmColors::listFutureDateColor   = mmGetColourFromString(pIniSettings->GetStringSetting("LISTFUTUREDATES", "116,134,168"));
+    mmColors::userDefColor1   = mmGetColourFromString(pIniSettings->GetStringSetting("USER_COLOR1", "255,0,0"));
+    mmColors::userDefColor2   = mmGetColourFromString(pIniSettings->GetStringSetting("USER_COLOR2", "255,165,0"));
+    mmColors::userDefColor3   = mmGetColourFromString(pIniSettings->GetStringSetting("USER_COLOR3", "255,255,0"));
+    mmColors::userDefColor4   = mmGetColourFromString(pIniSettings->GetStringSetting("USER_COLOR4", "0,255,0"));
+    mmColors::userDefColor5   = mmGetColourFromString(pIniSettings->GetStringSetting("USER_COLOR5", "0,255,255"));
+    mmColors::userDefColor6   = mmGetColourFromString(pIniSettings->GetStringSetting("USER_COLOR6", "0,0,255"));
+    mmColors::userDefColor7   = mmGetColourFromString(pIniSettings->GetStringSetting("USER_COLOR7", "0,0,128"));
 }
 
 
@@ -629,14 +628,14 @@ mmex::CurrencyFormatter::CurrencyFormatter()
 
 void mmex::CurrencyFormatter::loadDefaultSettings()
 {
-    m_pfx_symbol = wxT("$");
+    m_pfx_symbol = "$";
     m_sfx_symbol.clear();
 
     m_decimal_point = g_def_decimal_point;
-    m_group_separator = wxT(',');
+    m_group_separator = ',';
 
-    m_unit_name = wxT("dollar");
-    m_cent_name = wxT("cent");
+    m_unit_name = "dollar";
+    m_cent_name = "cent";
 
     m_scale = g_def_scale;
 }
@@ -711,7 +710,7 @@ bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
 
     // adjust decimal point char to a decimal point.
     wxString gdp = fmt.getDecimalPoint();
-    if (s.Find(gdp)) s.Replace(gdp, (wxT(".")));
+    if (s.Find(gdp)) s.Replace(gdp, ("."));
 
     return !s.empty() && s.ToDouble(&val);
 }
@@ -720,11 +719,11 @@ bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 {
     // if number does not have a decimal point, add one to user requirements
-    int dp = strValue.Find(wxT("."));
+    int dp = strValue.Find(".");
     if (dp < 0)
-        strValue << amtSeparator << wxT("0");
+        strValue << amtSeparator << "0";
     else
-        strValue.Replace(wxT("."),amtSeparator);
+        strValue.Replace(".",amtSeparator);
 
     return strValue;
 }
@@ -732,13 +731,13 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 int getTransformedTrxStatus(const wxString& in)
 {
     int out;
-    if (in == wxT("R"))
+    if (in == "R")
         out = (DEF_STATUS_RECONCILED);
-    else if (in == wxT("V"))
+    else if (in == "V")
         out = (DEF_STATUS_VOID);
-    else if (in == wxT("F"))
+    else if (in == "F")
         out = (DEF_STATUS_FOLLOWUP);
-    else if (in == wxT("D"))
+    else if (in == "D")
         out = (DEF_STATUS_DUPLICATE);
     else
         out = (DEF_STATUS_NONE);
@@ -750,15 +749,15 @@ wxString getTransformedTrxStatus(int in)
 {
     wxString statusStr = wxEmptyString;
     if (in == DEF_STATUS_RECONCILED)
-        statusStr = wxT("R");
+        statusStr = "R";
     else if (in == DEF_STATUS_VOID)
-        statusStr = wxT("V");
+        statusStr = "V";
     else if (in == DEF_STATUS_FOLLOWUP)
-        statusStr = wxT("F");
+        statusStr = "F";
     else if (in == DEF_STATUS_DUPLICATE)
-        statusStr = wxT("D");
+        statusStr = "D";
     else
-        statusStr = wxT("");
+        statusStr = "";
 
     return statusStr;
 }
@@ -797,36 +796,36 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
     int i=0;
     //Single quotes will be used instead double quotes
     //Replace all single quotes first
-    line.Replace(wxT("'"), wxT("SingleQuotesReplacer12345"));
+    line.Replace("'", "SingleQuotesReplacer12345");
     //Replace double quotes that used twice to replacer
-    line.Replace(wxT("\"\"\"")+delimit+wxT("\"\"\""), wxT("DoubleQuotesReplacer12345\"")+delimit+wxT("\"DoubleQuotesReplacer12345"));
-    line.Replace(wxT("\"\"\"")+delimit, wxT("DoubleQuotesReplacer12345\"")+delimit);
-    line.Replace(delimit+wxT("\"\"\""), delimit+wxT("\"DoubleQuotesReplacer12345"));
-    line.Replace(wxT("\"\"")+delimit, wxT("DoubleQuotesReplacer12345")+delimit);
-    line.Replace(delimit+wxT("\"\""), delimit+wxT("DoubleQuotesReplacer12345"));
+    line.Replace("\"\"\""+delimit+"\"\"\"", wxT("DoubleQuotesReplacer12345\"")+delimit+wxT("\"DoubleQuotesReplacer12345"));
+    line.Replace("\"\"\""+delimit, "DoubleQuotesReplacer12345\""+delimit);
+    line.Replace(delimit+"\"\"\"", delimit+"\"DoubleQuotesReplacer12345");
+    line.Replace("\"\""+delimit, "DoubleQuotesReplacer12345"+delimit);
+    line.Replace(delimit+"\"\"", delimit+"DoubleQuotesReplacer12345");
 
     //replace delimiter to TAB and double quotes to single quotes
-    line.Replace(wxT("\"")+delimit+wxT("\""), wxT("'\t'"));
-    line.Replace(wxT("\"")+delimit, wxT("'\t"));
-    line.Replace(delimit+wxT("\""), wxT("\t'"));
-    line.Replace(wxT("\"\""), wxT("DoubleQuotesReplacer12345"));
-    line.Replace(wxT("\""), wxT("'"));
+    line.Replace("\""+delimit+"\"", wxT("'\t'"));
+    line.Replace("\""+delimit, "'\t");
+    line.Replace(delimit+"\"", "\t'");
+    line.Replace("\"\"", "DoubleQuotesReplacer12345");
+    line.Replace("\"", "'");
 
     wxString temp_line = wxEmptyString;
     wxString token;
-    wxStringTokenizer tkz1(line, wxT("'"));
+    wxStringTokenizer tkz1(line, "'");
 
     while (tkz1.HasMoreTokens())
     {
         token = tkz1.GetNextToken();
         if (0 == fmod((double)i,2))
-            token.Replace(delimit,wxT("\t"));
+            token.Replace(delimit,"\t");
         temp_line << token;
         i++;
     };
     //Replace back all replacers to the original value
-    temp_line.Replace(wxT("DoubleQuotesReplacer12345"), wxT("\""));
-    temp_line.Replace(wxT("SingleQuotesReplacer12345"), wxT("'"));
+    temp_line.Replace("DoubleQuotesReplacer12345", "\"");
+    temp_line.Replace("SingleQuotesReplacer12345", "'");
     line = temp_line;
 
     return line;
@@ -851,27 +850,27 @@ const wxArrayString date_format_mask()
 {
     wxArrayString mask;
 
-    mask.Add(wxT("%d/%m/%y"));
-    mask.Add(wxT("%d/%m/%Y"));
-    mask.Add(wxT("%d-%m-%y"));
-    mask.Add(wxT("%d-%m-%Y"));
-    mask.Add(wxT("%d.%m.%y"));
-    mask.Add(wxT("%d.%m.%Y"));
-    mask.Add(wxT("%d,%m,%y"));
-    mask.Add(wxT("%d/%m'%Y"));
-    mask.Add(wxT("%d/%m %Y"));
-    mask.Add(wxT("%m/%d/%y"));
-    mask.Add(wxT("%m/%d/%Y"));
-    mask.Add(wxT("%m-%d-%y"));
-    mask.Add(wxT("%m-%d-%Y"));
-    mask.Add(wxT("%m/%d'%y"));
-    mask.Add(wxT("%m/%d'%Y"));
-    mask.Add(wxT("%y/%m/%d"));
-    mask.Add(wxT("%y-%m-%d"));
-    mask.Add(wxT("%Y/%m/%d"));
-    mask.Add(wxT("%Y-%m-%d"));
-    mask.Add(wxT("%Y.%m.%d"));
-    mask.Add(wxT("%Y%m%d"));
+    mask.Add("%d/%m/%y");
+    mask.Add("%d/%m/%Y");
+    mask.Add("%d-%m-%y");
+    mask.Add("%d-%m-%Y");
+    mask.Add("%d.%m.%y");
+    mask.Add("%d.%m.%Y");
+    mask.Add("%d,%m,%y");
+    mask.Add("%d/%m'%Y");
+    mask.Add("%d/%m %Y");
+    mask.Add("%m/%d/%y");
+    mask.Add("%m/%d/%Y");
+    mask.Add("%m-%d-%y");
+    mask.Add("%m-%d-%Y");
+    mask.Add("%m/%d'%y");
+    mask.Add("%m/%d'%Y");
+    mask.Add("%y/%m/%d");
+    mask.Add("%y-%m-%d");
+    mask.Add("%Y/%m/%d");
+    mask.Add("%Y-%m-%d");
+    mask.Add("%Y.%m.%d");
+    mask.Add("%Y%m%d");
 
     return mask;
 }
@@ -880,27 +879,27 @@ const wxArrayString date_format()
 {
     wxArrayString date_format;
 
-    date_format.Add(wxT("DD/MM/YY"));
-    date_format.Add(wxT("DD/MM/YYYY"));
-    date_format.Add(wxT("DD-MM-YY"));
-    date_format.Add(wxT("DD-MM-YYYY"));
-    date_format.Add(wxT("DD.MM.YY"));
-    date_format.Add(wxT("DD.MM.YYYY"));
-    date_format.Add(wxT("DD,MM,YY"));
-    date_format.Add(wxT("DD/MM'YYYY"));
-    date_format.Add(wxT("DD/MM YYYY"));
-    date_format.Add(wxT("MM/DD/YY"));
-    date_format.Add(wxT("MM/DD/YYYY"));
-    date_format.Add(wxT("MM-DD-YY"));
-    date_format.Add(wxT("MM-DD-YYYY"));
-    date_format.Add(wxT("MM/DD'YY"));
-    date_format.Add(wxT("MM/DD'YYYY"));
-    date_format.Add(wxT("YY/MM/DD"));
-    date_format.Add(wxT("YY-MM-DD"));
-    date_format.Add(wxT("YYYY/MM/DD"));
-    date_format.Add(wxT("YYYY-MM-DD"));
-    date_format.Add(wxT("YYYY.MM.DD"));
-    date_format.Add(wxT("YYYYMMDD"));
+    date_format.Add("DD/MM/YY");
+    date_format.Add("DD/MM/YYYY");
+    date_format.Add("DD-MM-YY");
+    date_format.Add("DD-MM-YYYY");
+    date_format.Add("DD.MM.YY");
+    date_format.Add("DD.MM.YYYY");
+    date_format.Add("DD,MM,YY");
+    date_format.Add("DD/MM'YYYY");
+    date_format.Add("DD/MM YYYY");
+    date_format.Add("MM/DD/YY");
+    date_format.Add("MM/DD/YYYY");
+    date_format.Add("MM-DD-YY");
+    date_format.Add("MM-DD-YYYY");
+    date_format.Add("MM/DD'YY");
+    date_format.Add("MM/DD'YYYY");
+    date_format.Add("YY/MM/DD");
+    date_format.Add("YY-MM-DD");
+    date_format.Add("YYYY/MM/DD");
+    date_format.Add("YYYY-MM-DD");
+    date_format.Add("YYYY.MM.DD");
+    date_format.Add("YYYYMMDD");
 
     return date_format;
 }
@@ -953,7 +952,7 @@ int mmIniOptions::account_image_id(mmCoreDB* core, int account_id)
 {
     double selectedImage = 9;
     wxString image_num_str = core->dbInfoSettings_->GetStringSetting(
-        wxString::Format(wxT("ACC_IMAGE_ID_%d"), account_id), wxT(""));
+        wxString::Format("ACC_IMAGE_ID_%d", account_id), "");
     if (mmex::formatCurrencyToDouble(image_num_str, selectedImage))
     {
         if (selectedImage > 0)
@@ -971,9 +970,9 @@ int mmIniOptions::account_image_id(mmCoreDB* core, int account_id)
     else if (favorite)
         s = 1;
 
-    if (acctType == wxT("Term"))
+    if (acctType == "Term")
         t = 3;
-    else if (acctType == wxT("Investment"))
+    else if (acctType == "Investment")
         t = 6;
 
     selectedImage += t + s;
@@ -1031,10 +1030,10 @@ wxSharedPtr<wxSQLite3Database> static_db_ptr()
 
 bool mmCalculator(wxString sInput, wxString& sOutput)
 {
-    sInput.Replace(wxT(")("), wxT(")*("));
+    sInput.Replace("(", "*(");
     bool bResult = true;
-    int a = sInput.Replace(wxT("("), wxT("("));
-    int b = sInput.Replace(wxT(")"), wxT(")"));
+    int a = sInput.Replace("(", "(");
+    int b = sInput.Replace(")", ")");
     if (a != b) return false;
     if (a > 0)
     {
@@ -1042,48 +1041,48 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
         {
             if (sInput[i] == '(') a += i;
             if (sInput[i] == ')') b += i;
-            if (sInput[i] == '(' && i > 0) bResult = bResult && (wxString(wxT("(+-*/")).Contains(sInput[i-1]));
-            if (sInput[i] == ')' && i < sInput.Len()-1) bResult = bResult && (wxString(wxT(")+-*/")).Contains(sInput[i+1]));
+            if (sInput[i] == '(' && i > 0) bResult = bResult && (wxString("(+-*/").Contains(sInput[i-1]));
+            if (sInput[i] == ')' && i < sInput.Len()-1) bResult = bResult && wxString("+-*/").Contains(sInput[i+1]);
         }
         if (a >= b || !bResult) return false;
     }
 
-    wxString sTemp = sInput.Trim().Prepend(wxT("(")).Append(wxT(")"));
+    wxString sTemp = sInput.Trim().Prepend("(").Append(")");
     wxString midBrackets, sToCalc;
     double dAmount = 0;
 
-    while (sTemp.Contains(wxT("(")) && bResult)
+    while (sTemp.Contains("(") && bResult)
     {
         dAmount = 0;
         size_t leftPos = sTemp.Find('(', true);
-        size_t rightPos = sTemp.find(wxT(")"), leftPos);
+        size_t rightPos = sTemp.find(")", leftPos);
         midBrackets = sTemp.SubString(leftPos, rightPos);
-        midBrackets.Replace(wxT("(-"), wxT("(N"));
+        midBrackets.Replace("(-", "(N");
         sToCalc = midBrackets.SubString(1, midBrackets.Len()-2);
         if (sToCalc.IsEmpty()) bResult = false;
         double dTempAmount;
-        sToCalc.Replace(wxT("*-"), wxT("M"));
-        sToCalc.Replace(wxT("/-"), wxT("D"));
-        sToCalc.Replace(wxT("+-"), wxT("-"));
-        sToCalc.Replace(wxT("-+"), wxT("-"));
-        sToCalc.Replace(wxT("+"), wxT("|"));
-        sToCalc.Replace(wxT("-"), wxT("|-"));
-        midBrackets.Replace(wxT("(N"), wxT("(-"));
+        sToCalc.Replace("*-", "M");
+        sToCalc.Replace("/-", "D");
+        sToCalc.Replace("+-", "-");
+        sToCalc.Replace("-+", "-");
+        sToCalc.Replace("+", "|");
+        sToCalc.Replace("-", "|-");
+        midBrackets.Replace("(N", "(-");
 
-        wxStringTokenizer token(sToCalc, wxT("|"));
+        wxStringTokenizer token(sToCalc, "|");
 
         while (token.HasMoreTokens() && bResult)
         {
             double dSubtotal = 1;
             wxString sToken = token.GetNextToken();
-            sToken.Replace(wxT("M"), wxT("|M"));
-            sToken.Replace(wxT("D"), wxT("|D"));
-            sToken.Replace(wxT("*"), wxT("|*"));
-            sToken.Replace(wxT("/"), wxT("|/"));
-            sToken.Replace(wxT("N"), wxT("-"));
-            sToken.Prepend(wxT("*"));
+            sToken.Replace("M", "|M");
+            sToken.Replace("D", "|D");
+            sToken.Replace("*", "|*");
+            sToken.Replace("/", "|/");
+            sToken.Replace("N", "-");
+            sToken.Prepend("*");
 
-            wxStringTokenizer token2(sToken, wxT("|"));
+            wxStringTokenizer token2(sToken, "|");
             while (token2.HasMoreTokens() && bResult)
             {
                 wxString sElement = token2.GetNextToken();
@@ -1092,10 +1091,10 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
 
                 if (sElement.ToDouble(&dTempAmount) || mmex::formatCurrencyToDouble(sElement, dTempAmount))
                 {
-                    if (sSign == wxT("*")) dSubtotal = dSubtotal*dTempAmount;
-                    else if (sSign == wxT("M")) dSubtotal = -dSubtotal*dTempAmount;
-                    else if (sSign == wxT("/") && dTempAmount != 0) dSubtotal = dSubtotal/dTempAmount;
-                    else if (sSign == wxT("D") && dTempAmount != 0) dSubtotal = -dSubtotal/dTempAmount;
+                    if (sSign == "*") dSubtotal = dSubtotal*dTempAmount;
+                    else if (sSign == "M") dSubtotal = -dSubtotal*dTempAmount;
+                    else if (sSign == "/" && dTempAmount != 0) dSubtotal = dSubtotal/dTempAmount;
+                    else if (sSign == "D" && dTempAmount != 0) dSubtotal = -dSubtotal/dTempAmount;
                     else bResult = false;
                 }
                 else
@@ -1105,7 +1104,7 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
         }
         sTemp.Replace(midBrackets, wxString()<<dAmount);
     }
-    if (sTemp.Contains(wxT("("))||sTemp.Contains(wxT(")"))) bResult = false;
+    if (sTemp.Contains("(")||sTemp.Contains(")")) bResult = false;
     if (bResult) mmex::formatDoubleToCurrencyEdit(dAmount, sOutput);
 
     return bResult;
@@ -1149,12 +1148,12 @@ void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData)
 {
     wxDateTime today = wxDateTime::Now();
 
-    wxStringTokenizer token(sData, wxT("-"));
+    wxStringTokenizer token(sData, "-");
     token.GetNextToken();
     wxString sRange = token.GetNextToken();
     sRange = sRange.SubString(1, sRange.Length());
 
-    if (sRange == wxT("Last Calendar Month"))
+    if (sRange == "Last Calendar Month")
     {
         wxDateTime::Month cm = today.GetMonth();
         int numDays = 0;
@@ -1167,13 +1166,13 @@ void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData)
         dtEnd = prevMonthEnd;
         dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays)).Add(wxDateSpan::Day());
     }
-    else if (sRange == wxT("30 Days") || sRange == wxT("Last 30 Days"))
+    else if (sRange == "30 Days" || sRange == "Last 30 Days")
     {
         wxDateTime prevMonthEnd = today;
         dtEnd = today;
         dtBegin = today.Subtract(wxDateSpan::Month()).Add(wxDateSpan::Day());
     }
-    else if (sRange == wxT("Current Month"))
+    else if (sRange == "Current Month")
     {
         wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()-1));
         dtBegin = prevMonthEnd;
@@ -1183,7 +1182,7 @@ void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData)
             dtEnd = wxDateTime::Now();
         }
     }
-    else if (sRange == wxT("Last Year"))
+    else if (sRange == "Last Year")
     {
         int year = today.GetYear() - 1;
         wxDateTime prevYearEnd = wxDateTime(today);
@@ -1197,7 +1196,7 @@ void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData)
         dtEnd = prevYearEnd;
         dtBegin = prevYearStart;
     }
-    else if (sRange == wxT("Current Year"))
+    else if (sRange == "Current Year")
     {
         int year = today.GetYear() - 1;
         wxDateTime yearBegin = wxDateTime(today);
@@ -1207,14 +1206,14 @@ void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData)
         dtEnd = today;
         dtBegin = yearBegin;
     }
-    else if (sRange == wxT("Last Financial Year"))
+    else if (sRange == "Last Financial Year")
     {
         wxDateTime refDate = wxDateTime(getUserDefinedFinancialYear(true));
         dtEnd = refDate;
         dtBegin = refDate.Subtract(wxDateSpan::Year()).Add(wxDateSpan::Day());
 
     }
-    else if (sRange == wxT("Current Financial Year"))
+    else if (sRange == "Current Financial Year")
     {
         dtBegin = wxDateTime(getUserDefinedFinancialYear(true)).Add(wxDateSpan::Day());
         dtEnd   = wxDateTime::Now();
