@@ -29,11 +29,48 @@ public:
 
     wxString getHTMLText();
 
-private:
+protected:
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;
     wxString title_;
     int type_;
 };
+
+class mmReportCategoryExpensesGoes: public mmReportCategoryExpenses
+{
+public:
+    mmReportCategoryExpensesGoes(mmCoreDB* core): mmReportCategoryExpenses(core, false, wxDateTime::Now(), wxDateTime(), _("Where the Money Goes"), 2)
+    {}
+};
+
+class mmReportCategoryExpensesGoesCurrentMonth: public mmReportCategoryExpensesGoes
+{
+public:
+    mmReportCategoryExpensesGoesCurrentMonth(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
+    {
+        this->title_ = _("Where the Money Goes - Current Month to Date");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
+class mmReportCategoryExpensesComes: public mmReportCategoryExpenses
+{
+public:
+    mmReportCategoryExpensesComes(mmCoreDB* core): mmReportCategoryExpenses(core, false, wxDateTime::Now(), wxDateTime(), _("Where the Money Comes From"), 1)
+    {}
+};
+
+class mmReportCategoryExpensesComesCurrentMonth: public mmReportCategoryExpensesComes
+{
+public:
+    mmReportCategoryExpensesComesCurrentMonth(mmCoreDB* core): mmReportCategoryExpensesComes(core)
+    {
+        this->title_ = _("Where the Money Comes From - Current Month to Date");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
 #endif // _MM_EX_REPORTCATEGEXP_H_
