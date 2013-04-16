@@ -1231,27 +1231,29 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(posCategs, new mmTreeItemData(wxT("Where the Money Comes From")));
 
     wxTreeItemId posCategsCalMonth = navTreeCtrl_->AppendItem(posCategs, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsCalMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Last Calendar Month")));
+    navTreeCtrl_->SetItemData(posCategsCalMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Last Calendar Month"), new mmReportCategoryExpensesComesLastMonth(m_core.get())));
 
     wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(posCategsCurrentMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Month")));
+    navTreeCtrl_->SetItemData(posCategsCurrentMonth, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Month"), new mmReportCategoryExpensesComesCurrentMonth(m_core.get())));
 
     wxTreeItemId posCategsTimeLast30 = navTreeCtrl_->AppendItem(posCategs, _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsTimeLast30, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - 30 Days")));
+    navTreeCtrl_->SetItemData(posCategsTimeLast30, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - 30 Days"), new mmReportCategoryExpensesComesLast30Days(m_core.get())));
 
     wxTreeItemId posCategsTimeLastYear = navTreeCtrl_->AppendItem(posCategs, _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsTimeLastYear, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Last Year")));
+    navTreeCtrl_->SetItemData(posCategsTimeLastYear, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Last Year"), new mmReportCategoryExpensesComesLastYear(m_core.get())));
 
     wxTreeItemId posCategsTimeCurrentYear = navTreeCtrl_->AppendItem(posCategs, _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Year")));
+    navTreeCtrl_->SetItemData(posCategsTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Year"), new mmReportCategoryExpensesComesCurrentYear(m_core.get())));
 
     if (financialYearIsDifferent())
     {
         wxTreeItemId posCategsTimeLastFinancialYear = navTreeCtrl_->AppendItem(posCategs, _("Last Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(posCategsTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Last Financial Year")));
+        navTreeCtrl_->SetItemData(posCategsTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Last Financial Year")
+                    , new mmReportCategoryExpensesComesLastFinancialYear(m_core.get())));
 
         wxTreeItemId posCategsTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(posCategs, _("Current Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(posCategsTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Financial Year")));
+        navTreeCtrl_->SetItemData(posCategsTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Financial Year")
+                    , new mmReportCategoryExpensesComesCurrentFinancialYear(m_core.get())));
     }
     ///////////////////////////////////////////////////////////
 
@@ -1705,8 +1707,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData.StartsWith(wxT("Where the Money Comes From - ")))
         {
-            mmPrintableBase* rs = new mmReportCategoryExpensesComesCurrentMonth(m_core.get());
-            createReportsPage(rs);
+            createReportsPage(iData->get_report());
         }
         else if (sData == wxT("Categories - Over Time"))
         {
