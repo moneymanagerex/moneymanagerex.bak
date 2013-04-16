@@ -62,7 +62,7 @@ bool mmReportsPanel::Create( wxWindow *parent, wxWindowID winid,
 
 wxString mmReportsPanel::getReportText()
 {
-    return rb_->getHTMLText();
+    return rb_ ?  rb_->getHTMLText(): wxT("");
 }
 
 void mmReportsPanel::CreateControls()
