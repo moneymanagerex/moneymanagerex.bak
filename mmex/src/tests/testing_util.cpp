@@ -61,7 +61,7 @@ wxString getIniDbPpath()
     return fn.GetFullPath();
 }
 
-boost::shared_ptr<wxSQLite3Database> get_pInidb()
+wxSharedPtr<wxSQLite3Database> get_pInidb()
 {
 // change order for termination case
 #ifdef DBWRAPPER_TEST_INCLUDED_IN_BUILD
@@ -70,22 +70,26 @@ boost::shared_ptr<wxSQLite3Database> get_pInidb()
     static Cleanup temp_IniDatabase(getIniDbPpath());
 #endif
 
-    static boost::shared_ptr<wxSQLite3Database> pInidb(new wxSQLite3Database);
+    static wxSharedPtr<wxSQLite3Database> pInidb(new wxSQLite3Database);
 
     if (!pInidb->IsOpen())
     {
-        wxString path = getIniDbPpath();
-        wxRemoveFile(path);
-        
+        const wxString path = getIniDbPpath();
+        if (wxFileExists(path))
+        {
+            wxRemoveFile(path);
+        }
+
         pInidb->Open(path);
     }
+
     return pInidb;
 }
 
 // Single point access for the test database, stored in memory.
-boost::shared_ptr<MMEX_IniSettings> pSettingsList()
+wxSharedPtr<MMEX_IniSettings> pSettingsList()
 {
-    static boost::shared_ptr<MMEX_IniSettings> pIniList(new MMEX_IniSettings(get_pInidb()));
+    static wxSharedPtr<MMEX_IniSettings> pIniList(new MMEX_IniSettings(get_pInidb()));
 
     return pIniList;
 }
@@ -101,7 +105,7 @@ wxString getDbPath()
     return fn.GetFullPath();
 }
 
-boost::shared_ptr<wxSQLite3Database> get_pDb()
+wxSharedPtr<wxSQLite3Database> get_pDb()
 {
 #ifdef DBWRAPPER_TEST_INCLUDED_IN_BUILD
     static Cleanup temp_database(getDbPath());
@@ -109,13 +113,15 @@ boost::shared_ptr<wxSQLite3Database> get_pDb()
     static Cleanup temp_database(getDbPath(), true);
 #endif
 
-
-    boost::shared_ptr<wxSQLite3Database> pDb = static_db_ptr();
+    wxSharedPtr<wxSQLite3Database> pDb = static_db_ptr();
 
     if (!pDb->IsOpen())
     {
-        wxString path = getDbPath();
-        wxRemoveFile(path);
+        const wxString path = getDbPath();
+        if (wxFileExists(path))
+        {
+            wxRemoveFile(path);
+        }
 
         pDb->Open(path);
     }
@@ -124,9 +130,9 @@ boost::shared_ptr<wxSQLite3Database> get_pDb()
 }
 
 // Create a single access point for the main database, stored in memory.
-boost::shared_ptr<mmCoreDB> pDb_core()
+wxSharedPtr<mmCoreDB> pDb_core()
 {
-    static boost::shared_ptr<mmCoreDB> pCore(new mmCoreDB(get_pDb(), pSettingsList()));
+    static wxSharedPtr<mmCoreDB> pCore(new mmCoreDB(get_pDb(), pSettingsList()));
 
     return pCore;
 }

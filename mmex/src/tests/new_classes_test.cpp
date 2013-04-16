@@ -62,7 +62,7 @@ public:
     TBudgetYearList         budget_year_list_;
     TBudgetTableList        budget_table_list_;
 
-    TDatabase(boost::shared_ptr<wxSQLite3Database> db)
+    TDatabase(wxSharedPtr<wxSQLite3Database> db)
     : info_settings_(db, true)
     , currency_list_(db)
     , account_list_(db, currency_list_)
@@ -80,9 +80,9 @@ public:
 };
 
 // Create a single access point for the main database, stored in memory.
-boost::shared_ptr<TDatabase> main_db()
+wxSharedPtr<TDatabase> main_db()
 {
-    static boost::shared_ptr<TDatabase> pCore(new TDatabase(get_pDb()));
+    static wxSharedPtr<TDatabase> pCore(new TDatabase(get_pDb()));
 
     return pCore;
 }
@@ -100,9 +100,9 @@ TEST(Central_Database_Test)
     printf("\nCentral_Database_Test: START");
     display_STD_IO_separation_line();
 
-    boost::shared_ptr<wxSQLite3Database> pDB = get_pDb();
+    wxSharedPtr<wxSQLite3Database> pDB = get_pDb();
     pDB->Begin();
-    boost::shared_ptr<TDatabase> pCore = main_db();
+    wxSharedPtr<TDatabase> pCore = main_db();
     pDB->Commit();
 
     if (!pCore->info_settings_.Exists(wxT("MMEXVERSION")))
@@ -143,7 +143,7 @@ TEST(TCurrencyList_Add)
     int id_AUD = currency_list.AddEntry(pCurrencyAUD);
     CHECK(id_first != id_AUD);
 
-    boost::shared_ptr<TCurrencyEntry> pEntry = currency_list.GetEntryPtr(id_first);
+    wxSharedPtr<TCurrencyEntry> pEntry = currency_list.GetEntryPtr(id_first);
     pEntry->baseConv_ = 1.5;
     pEntry->Update(currency_list.ListDatabase());
 
@@ -205,7 +205,7 @@ TEST(TCategoryList_Test)
     
     get_pDb()->Commit();
 
-    boost::shared_ptr<TCategoryEntry> pCatEntry = cat_list.GetEntryPtr(2);
+    wxSharedPtr<TCategoryEntry> pCatEntry = cat_list.GetEntryPtr(2);
     if (pCatEntry)
     {
         CHECK(true);
@@ -266,7 +266,7 @@ TEST(TSubCategoryList_Test)
     }
     cat_list.ListDatabase()->Commit();
 
-    boost::shared_ptr<TSubCategoryEntry> pSubCatEntry = subcat_list.GetEntryPtr(cat_id, wxT("Insurance"));
+    wxSharedPtr<TSubCategoryEntry> pSubCatEntry = subcat_list.GetEntryPtr(cat_id, wxT("Insurance"));
 
     if (pSubCatEntry)
     {
@@ -334,7 +334,7 @@ TEST(TPayeeList_Test_1)
 
     payee_list.UpdateEntry(wxT("Coles"), 1, 1);
 
-    boost::shared_ptr<TPayeeEntry> pEntry = payee_list.GetEntryPtr(wxT("Coles"));
+    wxSharedPtr<TPayeeEntry> pEntry = payee_list.GetEntryPtr(wxT("Coles"));
     CHECK_EQUAL(wxT("Coles"), pEntry->name_);
     CHECK_EQUAL(1, pEntry->subcat_id_);
     CHECK_EQUAL(1, pEntry->cat_id_);
@@ -461,7 +461,7 @@ TEST(TSplitTransactionList_Test_update)
     int list_size = split_list.GetListSize();
     CHECK_EQUAL(4, list_size);
     // record_id = 3, list_index = 2
-    boost::shared_ptr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
+    wxSharedPtr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
 
     pEntry->amount_ = 500;
     split_list.UpdateEntry(pEntry);
@@ -482,7 +482,7 @@ TEST(TSplitTransactionList_Test_delete)
 
     int list_size = split_list.GetListSize();
     CHECK_EQUAL(4, list_size);
-    boost::shared_ptr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
+    wxSharedPtr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
     split_list.DeleteEntry(pEntry);
     CHECK_EQUAL(700, split_list.TotalAmount());
     list_size = split_list.GetListSize();
@@ -544,7 +544,7 @@ TEST(TAssetList_Test_entry_with_listed_entry)
     asset_entry->rate_value_ = 50;
     asset_entry->Update(asset_list.ListDatabase());
 
-    boost::shared_ptr<TAssetEntry> listed_asset_entry = asset_list.GetEntryPtr(asset_id);
+    wxSharedPtr<TAssetEntry> listed_asset_entry = asset_list.GetEntryPtr(asset_id);
     CHECK(listed_asset_entry->name_ == asset_entry->name_);
 
     displayTimeTaken(wxT("TAssetList_Test_entry_with_listed_entry"), start_time);
@@ -560,7 +560,7 @@ TEST(TAssetList_Test_Values)
     TAssetList asset_list(get_pDb());
     CHECK_EQUAL(1, asset_list.CurrentListSize());
 
-    boost::shared_ptr<TAssetEntry> asset_entry = asset_list.GetIndexedEntryPtr(0);
+    wxSharedPtr<TAssetEntry> asset_entry = asset_list.GetIndexedEntryPtr(0);
     if (asset_entry)
     {
         CHECK_EQUAL(date, asset_entry->date_);
@@ -629,7 +629,7 @@ TEST(TAssetList_Test_Delete_entries)
     const wxDateTime start_time(wxDateTime::UNow());
 
     TAssetList asset_list(get_pDb());
-    boost::shared_ptr<TAssetEntry> listed_asset_entry;
+    wxSharedPtr<TAssetEntry> listed_asset_entry;
 
     while (asset_list.CurrentListSize() > 0)
     {
@@ -682,7 +682,7 @@ TEST(TAssetList_GetIndexedEntryPtr_Test)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    boost::shared_ptr<TAssetEntry> pEntry;
+    wxSharedPtr<TAssetEntry> pEntry;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -698,10 +698,10 @@ TEST(TAssetList_const_iterator_Test)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    for (std::vector<boost::shared_ptr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
+    for (std::vector<wxSharedPtr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
         it != asset_list.entrylist_.end(); ++ it)
     {
-        const boost::shared_ptr<TAssetEntry> pEntry = *it;
+        const wxSharedPtr<TAssetEntry> pEntry = *it;
 
         CHECK_EQUAL(20000, pEntry->value_);
     }
@@ -714,10 +714,10 @@ TEST(TAssetList_const_iterator_Retest)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    for (std::vector<boost::shared_ptr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
+    for (std::vector<wxSharedPtr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
         it != asset_list.entrylist_.end(); ++ it)
     {
-        const boost::shared_ptr<TAssetEntry> pEntry = *it;
+        const wxSharedPtr<TAssetEntry> pEntry = *it;
 
         CHECK_EQUAL(20000, pEntry->value_);
     }
@@ -730,7 +730,7 @@ TEST(TAssetList_GetIndexedEntryPtr_Retest)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    boost::shared_ptr<TAssetEntry> pEntry;
+    wxSharedPtr<TAssetEntry> pEntry;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -747,7 +747,7 @@ TEST(TAssetList_Test_GetEntryPtr)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    boost::shared_ptr<TAssetEntry> pEntry;
+    wxSharedPtr<TAssetEntry> pEntry;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -805,7 +805,7 @@ TEST(TStockList_Test_Update)
     const wxDateTime start_time(wxDateTime::UNow());
 
     TStockList stock_list(get_pDb());
-    boost::shared_ptr<TStockEntry> stock_entry = stock_list.GetEntryPtr(2); // 2nd entry from test 1
+    wxSharedPtr<TStockEntry> stock_entry = stock_list.GetEntryPtr(2); // 2nd entry from test 1
     stock_entry->value_ = 3000;
     stock_entry->Update(stock_list.ListDatabase());
 
