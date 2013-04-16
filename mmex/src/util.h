@@ -248,6 +248,7 @@ wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false);
 
 // Validators -----------------------------------------------------
 
+// TODO replace with build-in validator
 class doubleValidator : public wxTextValidator {
 public:
     doubleValidator() : wxTextValidator(wxFILTER_INCLUDE_CHAR_LIST)
