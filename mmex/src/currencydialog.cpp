@@ -23,6 +23,7 @@
 #include "paths.h"
 
 #include <wx/combobox.h>
+#include <wx/valnum.h>
 
 #ifndef __VISUALC__
 #define INT_PTR intptr_t
@@ -219,12 +220,12 @@ void mmCurrencyDialog::CreateControls()
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Scale")), flags);
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SCALE, wxT(""),
-        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer3->Add(itemTextCtrl19, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Conversion to Base Rate")), flags);
     wxTextCtrl* itemTextCtrl82 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_BASECONVRATE, wxT(""),
-        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer3->Add(itemTextCtrl82, flagsExpand);
     itemTextCtrl82->SetToolTip(_("Other currency conversion rate. Set Base Currency to 1."));
 

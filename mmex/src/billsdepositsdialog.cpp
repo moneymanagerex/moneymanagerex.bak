@@ -24,6 +24,7 @@
 #include "categdialog.h"
 #include "payeedialog.h"
 #include "splittransactionsdialog.h"
+#include <wx/valnum.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmBDDialog, wxDialog )
 
@@ -363,7 +364,7 @@ void mmBDDialog::CreateControls()
     itemFlexGridSizer5->Add(staticTimesRepeat_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     textNumRepeats_ = new wxTextCtrl( this, ID_DIALOG_BD_TEXTCTRL_NUM_TIMES, wxT(""),
-                                      wxDefaultPosition, wxSize(110, -1), 0, doubleValidator() );
+                                      wxDefaultPosition, wxSize(110, -1), 0, wxFloatingPointValidator<double>() );
     itemFlexGridSizer5->Add(textNumRepeats_, flags);
     textNumRepeats_->SetMaxLength(12);
     setRepeatDetails();
@@ -452,11 +453,11 @@ void mmBDDialog::CreateControls()
     wxStaticText* staticTextAmount = new wxStaticText( transactionPanel, wxID_STATIC, _("Amount"));
 
     textAmount_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""),
-                                  wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+                                  wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     textAmount_->SetToolTip(amountNormalTip_);
 
     toTextAmount_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""),
-                                    wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+                                    wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);

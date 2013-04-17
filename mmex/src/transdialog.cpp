@@ -25,6 +25,8 @@
 #include "payeedialog.h"
 #include "splittransactionsdialog.h"
 
+#include <wx/valnum.h>
+
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
@@ -388,14 +390,14 @@ void mmTransDialog::CreateControls()
 
     textAmount_ = new wxTextCtrl( this, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""),
         wxDefaultPosition, wxSize(110, -1),
-        wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER, wxFloatingPointValidator<double>());
     textAmount_->Connect(ID_DIALOG_TRANS_TEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER,
         wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
     textAmount_->Connect( wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnKeyDown), NULL, this);
 
     toTextAmount_ = new wxTextCtrl( this, ID_DIALOG_TRANS_TOTEXTAMOUNT, wxT(""),
         wxDefaultPosition, wxSize(110, -1),
-        wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER, wxFloatingPointValidator<double>());
     toTextAmount_->Connect(ID_DIALOG_TRANS_TOTEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER,
         wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
