@@ -1030,7 +1030,7 @@ wxSharedPtr<wxSQLite3Database> static_db_ptr()
 
 bool mmCalculator(wxString sInput, wxString& sOutput)
 {
-    sInput.Replace("(", "*(");
+    sInput.Replace(")(", ")*(");
     bool bResult = true;
     int a = sInput.Replace("(", "(");
     int b = sInput.Replace(")", ")");
@@ -1042,7 +1042,7 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
             if (sInput[i] == '(') a += i;
             if (sInput[i] == ')') b += i;
             if (sInput[i] == '(' && i > 0) bResult = bResult && (wxString("(+-*/").Contains(sInput[i-1]));
-            if (sInput[i] == ')' && i < sInput.Len()-1) bResult = bResult && wxString("+-*/").Contains(sInput[i+1]);
+            if (sInput[i] == ')' && i < sInput.Len()-1) bResult = bResult && wxString(")+-*/").Contains(sInput[i+1]);
         }
         if (a >= b || !bResult) return false;
     }
