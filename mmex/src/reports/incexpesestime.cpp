@@ -31,7 +31,7 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
 
     hb.startCenter();
 
-    hb.startTable(wxT("75%"));
+    hb.startTable("75%");
     hb.startTableRow();
     hb.addTableHeaderCell(_("Year"));
     hb.addTableHeaderCell(_("Month"));
@@ -73,7 +73,7 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
 
         hb.addTableCell(actualIncStr, true, true, true);
         hb.addTableCell(actualExpStr, true, true, true);
-        hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? wxT("RED") : wxT("")));
+        hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? "RED" : ""));
 
         hb.endTableRow();
     }
