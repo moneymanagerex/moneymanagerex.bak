@@ -41,7 +41,7 @@ END_EVENT_TABLE()
 
 mmAboutDialog::mmAboutDialog( wxWindow* parent)
 {
-    wxString caption = wxString(_("About")) << wxT(" ") << mmex::getProgramName();
+    wxString caption = wxString(_("About")) << " " << mmex::getProgramName();
     Create(parent, ID_DIALOG_ABOUT, caption, wxDefaultPosition,
         wxSize(500, 220), wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX);
 }
@@ -76,10 +76,10 @@ void mmAboutDialog::InitControls()
     mmHTMLBuilder hb;
     hb.init();
     wxString html = mmex::getProgramDescription();
-    html.Replace(wxT("======================================\n"), wxT("<hr>"));
-    html.Replace(wxT("\n"), wxT("<br>"));
-    html << wxT("<br><hr>") << wxT("\n");
-    hb.addHeader(3, wxT("Money Manager Ex"));
+    html.Replace("======================================\n", "<hr>");
+    html.Replace("\n", "<br>");
+    html << "<br><hr>" << "\n";
+    hb.addHeader(3, "Money Manager Ex");
     hb.addParaText(html);
     hb.addLineBreak();
     hb.addTableCellLink( mmex::getProgramFacebookSite()
@@ -94,7 +94,7 @@ void mmAboutDialog::InitControls()
     about_text_ -> SetPage(html);
 
     wxArrayString data;
-    data.Add(wxT(""));
+    data.Add("");
 
     int part = 0;
     hb.init();
@@ -107,24 +107,24 @@ void mmAboutDialog::InitControls()
     while (!input.Eof())
     {
         wxString line = text.ReadLine();
-        if (line.StartsWith(wxT("=============")))
-            line = wxT("<hr>\n");
-        else if (line.StartsWith(wxT("##")))
+        if (line.StartsWith("============="))
+            line = "<hr>\n";
+        else if (line.StartsWith("##"))
         {
-            line.Replace(wxT("##"), wxT("<H3>"));
-            line.Append(wxT("</H3>\n"));
+            line.Replace("##", "<H3>");
+            line.Append("</H3>\n");
         }
         else
-            line << wxT("<br>\n");
+            line << "<br>\n";
 
-        if (line.StartsWith(wxT("-------------")))
+        if (line.StartsWith("-------------"))
         {
             hb.addParaText(data[part]);
             hb.end();
             data[part] = hb.getHTMLText();
             ++part;
             hb.init();
-            data.Add(wxT(""));
+            data.Add("");
         }
         else
             data[part] << line;

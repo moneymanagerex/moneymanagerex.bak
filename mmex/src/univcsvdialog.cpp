@@ -709,11 +709,11 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 
             //FIXME: %ld
             wxString msg = wxString::Format(_("Total Lines : %d"), countNumTotal);
-            msg << wxT ("\n");
+            msg << wxT("\n");
             msg << wxString::Format(_("Total Imported : %d"), countImported);
-            msg << wxT ("\n\n");
+            msg << wxT("\n\n");
             msg << wxString::Format(_("Log file written to : %s"), logFile.GetFullPath().c_str());
-            msg << wxT ("\n\n");
+            msg << wxT("\n\n");
 
             wxString confirmMsg = msg + _("Please confirm saving...");
             if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing CSV"), wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
