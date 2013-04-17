@@ -208,7 +208,7 @@ public:
 class mmReportCategoryExpensesCategories: public mmReportCategoryExpenses
 {
 public:
-    mmReportCategoryExpensesCategories(mmCoreDB* core): mmReportCategoryExpenses(core, false, wxDateTime::Now(), wxDateTime(), _("Where the Money Categories From"), 1)
+    mmReportCategoryExpensesCategories(mmCoreDB* core): mmReportCategoryExpenses(core, false, wxDateTime::Now(), wxDateTime(), _("Where the Money Categories From"), 0)
     {}
 };
 
