@@ -50,8 +50,18 @@ private:
 class mmTreeItemData : public wxTreeItemData
 {
 public:
-    mmTreeItemData(int id, bool isBudget): id_(id), isString_(false), isBudgetingNode_(isBudget) {}
-    mmTreeItemData(const wxString& string, mmPrintableBase* report = 0): isString_(true), isBudgetingNode_(false), stringData_(string), report_(report) {}
+    mmTreeItemData(int id, bool isBudget)
+        : id_(id)
+        , isString_(false)
+        , isBudgetingNode_(isBudget)
+        , report_(0)
+    {}
+    mmTreeItemData(const wxString& string, mmPrintableBase* report = 0)
+        : isString_(true)
+        , isBudgetingNode_(false)
+        , stringData_(string)
+        , report_(report)
+    {}
     ~mmTreeItemData() 
     {
         if (report_) delete report_;
