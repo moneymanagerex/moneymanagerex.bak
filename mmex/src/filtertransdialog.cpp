@@ -19,6 +19,7 @@
 #include "util.h"
 #include "categdialog.h"
 #include "paths.h"
+#include <wx/valnum.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmFilterTransactionsDialog, wxDialog )
 
@@ -265,9 +266,9 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanelSizer->Add(amountRangeCheckBox_, flags);
 
     amountMinEdit_ = new wxTextCtrl( itemPanel, wxID_ANY, wxT(""),
-        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     amountMaxEdit_ = new wxTextCtrl( itemPanel, wxID_ANY, wxT(""),
-        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
     amountSizer->Add(amountMinEdit_, flagsExpand);

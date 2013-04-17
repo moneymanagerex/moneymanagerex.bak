@@ -19,6 +19,7 @@
 #include "budgetentrydialog.h"
 #include "util.h"
 #include "paths.h"
+#include <wx/valnum.h>
 
 enum { DEF_TYPE_EXPENSE, DEF_TYPE_INCOME };
 enum { DEF_FREQ_NONE, DEF_FREQ_WEEKLY, DEF_FREQ_BIWEEKLY, DEF_FREQ_MONTHLY, DEF_FREQ_BIMONTHLY, DEF_FREQ_QUARTERLY, DEF_FREQ_HALFYEARLY, DEF_FREQ_YEARLY, DEF_FREQ_DAILY};
@@ -199,7 +200,7 @@ void mmBudgetEntryDialog::CreateControls()
         wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     textAmount_ = new wxTextCtrl( itemPanel7, 
-        ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, wxT(""), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
+        ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, wxT(""), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER, wxFloatingPointValidator<double>());
     itemGridSizer2->Add(textAmount_);
     textAmount_->SetToolTip(_("Enter the amount budgeted for this category."));
     textAmount_->SetFocus();

@@ -21,6 +21,7 @@
 #include "maincurrencydialog.h"
 #include "util.h"
 #include "paths.h"
+#include <wx/valnum.h>
 
 enum { ACCT_TYPE_CHECKING, ACCT_TYPE_INVESTMENT, ACCT_TYPE_TERM };
 enum { ACCT_STATUS_OPEN, ACCT_STATUS_CLOSED };
@@ -187,7 +188,7 @@ void mmNewAcctDialog::CreateControls()
 
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this,
         ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE,
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0, doubleValidator());
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0, wxFloatingPointValidator<double>());
     grid_sizer->Add(itemTextCtrl19, flagsExpand);
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Currency:")), flags);

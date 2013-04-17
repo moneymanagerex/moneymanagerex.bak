@@ -246,23 +246,6 @@ bool mmCalculator(wxString sInput, wxString& sOutput);
 wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false);
 //void GetDateRange(wxDateTime &dtBegin, wxDateTime &dtEnd, const wxString sData);
 
-// Validators -----------------------------------------------------
-
-// TODO replace with build-in validator
-class doubleValidator : public wxTextValidator {
-public:
-    doubleValidator() : wxTextValidator(wxFILTER_INCLUDE_CHAR_LIST)
-    {
-        wxArrayString list;
-        wxString valid_chars(wxT("(+-12 345,678.90/*)"));
-        size_t len = valid_chars.Length();
-        for (size_t i=0; i<len; i++) {
-            list.Add(wxString(valid_chars.GetChar(i)));
-        }
-        SetIncludes(list);
-    }
-};
-
 wxImageList* navtree_images_list_();
 
 /// Located here as a function to allow removal in GTK

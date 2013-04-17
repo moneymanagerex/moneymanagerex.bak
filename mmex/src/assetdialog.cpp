@@ -16,6 +16,8 @@
 
 #include "assetdialog.h"
 #include "paths.h"
+#include <wx/valnum.h>
+#include <wx/valnum.h>
 
 namespace
 {
@@ -153,7 +155,7 @@ void mmAssetDialog::CreateControls()
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Value")), flags);
 
-    m_value = new wxTextCtrl( itemPanel5, wxID_STATIC, wxGetEmptyString(), wxDefaultPosition, wxSize(150,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+    m_value = new wxTextCtrl( itemPanel5, wxID_STATIC, wxGetEmptyString(), wxDefaultPosition, wxSize(150,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     m_value->SetToolTip(_("Enter the current value of the asset"));
     itemFlexGridSizer6->Add(m_value, flags);
 
@@ -174,7 +176,7 @@ void mmAssetDialog::CreateControls()
     m_valueChangeRateLabel = new wxStaticText( itemPanel5, wxID_STATIC, _("% Rate"));
     itemFlexGridSizer6->Add(m_valueChangeRateLabel, flags);
 
-    m_valueChangeRate = new wxTextCtrl( itemPanel5, wxID_STATIC, wxGetEmptyString(), wxDefaultPosition, wxSize(150,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+    m_valueChangeRate = new wxTextCtrl( itemPanel5, wxID_STATIC, wxGetEmptyString(), wxDefaultPosition, wxSize(150,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     m_valueChangeRate->SetToolTip(_("Enter the rate at which the asset changes its value in % per year"));
     itemFlexGridSizer6->Add(m_valueChangeRate, flags);
     enableDisableRate(false);

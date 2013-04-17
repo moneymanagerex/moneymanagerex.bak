@@ -19,6 +19,7 @@
 #include "stockdialog.h"
 #include "constants.h"
 #include "paths.h"
+#include <wx/valnum.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmStockDialog, wxDialog )
 
@@ -161,28 +162,28 @@ void mmStockDialog::CreateControls()
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Number of Shares")), flags);
 
     numShares_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_NUMBER_SHARES, wxT(""),
-        wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer6->Add(numShares_, flags);
     numShares_->SetToolTip(_("Enter number of shares held"));
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Purchase Price")), flags);
 
     purchasePrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_PP, wxT(""),
-        wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer6->Add(purchasePrice_, flags);
     purchasePrice_->SetToolTip(_("Enter purchase price for each stock"));
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Current Price")), flags);
 
     currentPrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_CP, wxT(""),
-        wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer6->Add(currentPrice_, flags);
     currentPrice_->SetToolTip(_("Enter current stock price"));
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Commission")), flags);
 
     commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, wxT("0"),
-        wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
+        wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer6->Add(commission_, flags);
     commission_->SetToolTip(_("Enter any commission paid"));
 
