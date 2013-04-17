@@ -50,14 +50,14 @@ void mmAssetsListCtrl::OnItemResize(wxListEvent& event)
 {
     int i = event.GetColumn();
     int width = cp_->GetListCtrlWidth(i);
-    cp_->core_->iniSettings_->SetIntSetting(wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), width);
+    cp_->core_->iniSettings_->SetIntSetting(wxString::Format("ASSETS_COL%d_WIDTH", i), width);
 }
 
 void mmAssetsListCtrl::InitVariables()
 {
     m_selected_col = 0;
     m_asc = true;
-    cp_->SetFilter(wxT(" 'Property','Automobile','Household Object','Art','Jewellery','Cash','Other' "));
+    cp_->SetFilter(" 'Property','Automobile','Household Object','Art','Jewellery','Cash','Other' ");
 }
 
 void mmAssetsListCtrl::OnItemRightClick(wxListEvent& event)
@@ -299,7 +299,7 @@ void mmAssetsPanel::CreateControls()
     int font_size = this->GetFont().GetPointSize() + 2;
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, wxID_STATIC, _("Assets"));
-    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, ""));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
@@ -361,11 +361,11 @@ void mmAssetsPanel::CreateControls()
     m_listCtrlAssets->InsertColumn(COL_NOTES, itemCol);
 
     /* See if we can get data from inidb */
-    int col0 = core_->iniSettings_->GetIntSetting(wxT("ASSETS_COL0_WIDTH"), 150);
-    int col1 = core_->iniSettings_->GetIntSetting(wxT("ASSETS_COL1_WIDTH"), -2);
-    int col2 = core_->iniSettings_->GetIntSetting(wxT("ASSETS_COL2_WIDTH"), -2);
-    int col3 = core_->iniSettings_->GetIntSetting(wxT("ASSETS_COL3_WIDTH"), -2);
-    int col4 = core_->iniSettings_->GetIntSetting(wxT("ASSETS_COL4_WIDTH"), 450);
+    int col0 = core_->iniSettings_->GetIntSetting("ASSETS_COL0_WIDTH", 150);
+    int col1 = core_->iniSettings_->GetIntSetting("ASSETS_COL1_WIDTH", -2);
+    int col2 = core_->iniSettings_->GetIntSetting("ASSETS_COL2_WIDTH", -2);
+    int col3 = core_->iniSettings_->GetIntSetting("ASSETS_COL3_WIDTH", -2);
+    int col4 = core_->iniSettings_->GetIntSetting("ASSETS_COL4_WIDTH", 450);
 
     m_listCtrlAssets->SetColumnWidth(COL_NAME, col0);
     m_listCtrlAssets->SetColumnWidth(COL_DATE, col1);
@@ -402,12 +402,12 @@ void mmAssetsPanel::CreateControls()
     itemButton7->Enable(false);
 
     //Infobar-mini
-    wxStaticText* itemStaticText44 = new wxStaticText( assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""));
+    wxStaticText* itemStaticText44 = new wxStaticText( assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, "");
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
 
     //Infobar
     wxStaticText* itemStaticText33 = new wxStaticText( assets_panel,
-        IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
+        IDC_PANEL_ASSET_STATIC_DETAILS, "", wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxLEFT|wxRIGHT, 14);
 
     updateExtraAssetData(-1);
@@ -426,9 +426,9 @@ int mmAssetsPanel::initVirtualListControl(int id, int col, bool asc)
     core_->currencyList_.LoadBaseCurrencySettings();
 
     const wxString sql = wxString::FromUTF8(SELECT_ALL_FROM_ASSETS_V1)
-        + wxString::Format(wxT(" where ASSETTYPE in ( %s ) "), filter_.c_str())
-        + wxT(" order by ") + (wxString() << col + 1)
-        + (!asc ? wxT(" desc") : wxT(" "));
+        + wxString::Format(" where ASSETTYPE in ( %s ) ", filter_.c_str())
+        + " order by " + (wxString() << col + 1)
+        + (!asc ? " desc" : " ");
     asset_list_.LoadAssetEntriesUsing(sql);
 
     m_listCtrlAssets->SetItemCount(asset_list_.entrylist_.size());
@@ -498,18 +498,18 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
         enableEditDeleteButtons(true);
         wxString miniInfo;
 
-        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ")
+        miniInfo << "\t" << _("Change in Value") << ": "
         << wxGetTranslation(asset_list_.entrylist_[selIndex]->rate_type_);
 
-        if (asset_list_.entrylist_[selIndex]->rate_type_ != ASSET_RATE_DEF[NONE])
-            miniInfo<< wxT(" = ") << asset_list_.entrylist_[selIndex]->rate_value_ << wxT("%");
+        if (asset_list_.entrylist_[selIndex]->rate_type_ != ASSET_RATE_DEF[TAssetEntry::NONE])
+            miniInfo<< " = " << asset_list_.entrylist_[selIndex]->rate_value_ << "%";
 
         st->SetLabel(asset_list_.entrylist_[selIndex]->notes_);
         stm->SetLabel(miniInfo);
     }
     else
     {
-        stm -> SetLabel(wxT(""));
+        stm -> SetLabel("");
         st->SetLabel(Tips(TIPS_ASSETS));
         enableEditDeleteButtons(false);
     }
@@ -547,7 +547,7 @@ void mmAssetsPanel::OnViewPopupSelected(wxCommandEvent& event)
 {
     int evt =  event.GetId();
 
-    filter_ = wxT("");
+    filter_ = "";
     wxString label;
 
     int size = sizeof(ASSET_TYPE_DEF)/sizeof(wxString);
@@ -555,7 +555,7 @@ void mmAssetsPanel::OnViewPopupSelected(wxCommandEvent& event)
     {
         if (evt == 0 || evt == i+1)
         {
-            filter_ << wxT("'") << ASSET_TYPE_DEF[i] << wxT("'") << wxT(",");
+            filter_ << "'" << ASSET_TYPE_DEF[i] << "'" << ",";
             if (evt == i+1) label = ASSET_TYPE_DEF[i];
         }
     }

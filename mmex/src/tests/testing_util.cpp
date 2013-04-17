@@ -28,7 +28,7 @@ Cleanup::Cleanup(wxString filename, bool pause)
 , pause_(pause)
 {
     printf("\nTest file created at location:\n");
-    printf(wxString::Format(wxT("%s \n\n"), dbFileName_.c_str()).char_str());
+    printf(wxString::Format("%s \n\n", dbFileName_.c_str()).char_str());
 }
 
 // Cleanup class destructor - Called on test completion.
@@ -57,7 +57,7 @@ Cleanup::~Cleanup()
 // Returns the user's current working directory for the new inidb database.
 wxString getIniDbPpath()
 {
-    wxFileName fn(wxFileName::GetCwd(), wxT("mmexinidb_test.db3"));
+    wxFileName fn(wxFileName::GetCwd(), "mmexinidb_test.db3");
     return fn.GetFullPath();
 }
 
@@ -101,7 +101,7 @@ wxSharedPtr<MMEX_IniSettings> pSettingsList()
 // Returns the user's current working directory for the new database.
 wxString getDbPath()
 {
-    wxFileName fn(wxFileName::GetCwd(), wxT("mmex_tests.db3"));
+    wxFileName fn(wxFileName::GetCwd(), "mmex_tests.db3");
     return fn.GetFullPath();
 }
 
@@ -141,9 +141,9 @@ wxSharedPtr<mmCoreDB> pDb_core()
 void const displayTimeTaken(const wxString msg, const wxDateTime start_time)
 {
     const wxDateTime end_time(wxDateTime::UNow());
-    const wxString time_dif = (end_time - start_time).Format(wxT("%S%l"));
+    const wxString time_dif = (end_time - start_time).Format("%S%l");
 
-    printf(wxString::Format(wxT("Time Taken: %s milliseconds - Test: %s \n"), time_dif.c_str(), msg.c_str()).char_str());
+    printf(wxString::Format("Time Taken: %s milliseconds - Test: %s \n", time_dif.c_str(), msg.c_str()).char_str());
 }
 /*****************************************************************************************/
 

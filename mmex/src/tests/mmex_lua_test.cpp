@@ -49,7 +49,7 @@ TEST(init_DB)
     mmCoreDB* pCore = pDb_core().get();
     CHECK(pCore->displayDatabaseError_ == true);
 
-    displayTimeTaken(wxT("init_DB"), start_time);    
+    displayTimeTaken("init_DB", start_time);    
 }
 
 TEST(lua_interface_hello_world)
@@ -59,16 +59,16 @@ TEST(lua_interface_hello_world)
     TLuaInterface* lua_core = new TLuaInterface();
 
     wxString lua_program = wxString() <<
-        wxT("print \"\"                        \n") <<
-        wxT("print \"Message from Lua.\"       \n") <<
-        wxT("print \"Hello World.\"            \n") <<
-        wxT("print \"\"                        \n")
-    ; // end of text script 
+        "print \"\"                        \n"
+        "print \"Message from Lua.\"       \n"
+        "print \"Hello World.\"            \n"
+        "print \"\"                        \n"
+    ; // end of text script
 
     wxString lua_code_result = lua_core->RunLuaCode(lua_program);
     printf(lua_code_result.char_str());
 
-    displayTimeTaken(wxT("lua_interface_hello_world"), start_time);
+    displayTimeTaken("lua_interface_hello_world", start_time);
 }
 
 TEST(lua_interface_lua_syntax_error)
@@ -77,16 +77,16 @@ TEST(lua_interface_lua_syntax_error)
     TLuaInterface* lua_core = new TLuaInterface();
 
     wxString lua_program = wxString() << 
-        wxT("print \"\"                        \n")
-        wxT("print \"Message from Lua.\"       \n")
-        wxT("print \"Hello World.\"            \n")
-        wxT("print                             \n") // missing empty quotes
+        "print \"\"                        \n"
+        "print \"Message from Lua.\"       \n"
+        "print \"Hello World.\"            \n"
+        "print                             \n" // missing empty quotes
     ; // end of text script 
 
     wxString lua_code_result = lua_core->RunLuaCode(lua_program);
     printf(lua_code_result.char_str());
 
-    displayTimeTaken(wxT("lua_interface_lua_syntax_error"), start_time);
+    displayTimeTaken("lua_interface_lua_syntax_error", start_time);
 }
 
 TEST(lua_interface_test_sql_good)
@@ -95,13 +95,13 @@ TEST(lua_interface_test_sql_good)
     TLuaInterface* lua_core = new TLuaInterface();
 
     wxString lua_program = wxString() <<
-        wxT("sql_1 = \"select * from category_v1\"            \n") <<
-        wxT("sql_result = mmGetSQLResultSet(sql_1)            \n") <<
-        wxT("sql_2 = \"update category_v1 set categid = 1 \"  \n") <<
-        wxT("sql_2 = sql_2 .. \"where categid=1\"             \n") <<
-        wxT("sql_result = sql_result ..                       \n") <<
-        wxT("             mmGetSQLResultSet(sql_2)           \n") <<
-        wxT("return sql_result                                \n")
+        "sql_1 = \"select * from category_v1\"            \n"
+        "sql_result = mmGetSQLResultSet(sql_1)            \n"
+        "sql_2 = \"update category_v1 set categid = 1 \"  \n"
+        "sql_2 = sql_2 .. \"where categid=1\"             \n"
+        "sql_result = sql_result ..                       \n"
+        "             mmGetSQLResultSet(sql_2)            \n"
+        "return sql_result                                \n"
     ; // end of text script 
 
     display_STD_IO_line();
@@ -109,7 +109,7 @@ TEST(lua_interface_test_sql_good)
     printf(lua_code_result.char_str());
     display_STD_IO_line();
 
-    displayTimeTaken(wxT("lua_interface_test_sql_good"), start_time);
+    displayTimeTaken("lua_interface_test_sql_good", start_time);
 }
 
 TEST(lua_interface_test_sql_bad)
@@ -118,9 +118,9 @@ TEST(lua_interface_test_sql_bad)
     TLuaInterface* lua_core = new TLuaInterface();
 
     wxString lua_program = wxString() <<
-        wxT("sql_script = \"select * from cat_v1\"            \n") <<
-        wxT("result, error = mmGetSQLResultSet(sql_script)   \n") <<
-        wxT("return result                                    \n")
+        "sql_script = \"select * from cat_v1\"            \n"
+        "result, error = mmGetSQLResultSet(sql_script)    \n"
+        "return result                                    \n"
     ; // end of text script 
 
     display_STD_IO_line();
@@ -128,7 +128,7 @@ TEST(lua_interface_test_sql_bad)
     printf(lua_code_result.char_str());
     display_STD_IO_line();
 
-    displayTimeTaken(wxT("lua_interface_test_sql_bad"), start_time);
+    displayTimeTaken("lua_interface_test_sql_bad", start_time);
 }
 
 TEST(lua_interface_test_RunLuaFile)
@@ -136,14 +136,14 @@ TEST(lua_interface_test_RunLuaFile)
     const wxDateTime start_time(wxDateTime::UNow());
     TLuaInterface* lua_core = new TLuaInterface();
 
-    wxString lua_test_filename = wxT("./mmex_lua_test_file.lua");
+    wxString lua_test_filename = "./mmex_lua_test_file.lua";
 
     display_STD_IO_line();
     wxString lua_code_result = lua_core->RunLuaFile(lua_test_filename);
     printf(lua_code_result.char_str());
     display_STD_IO_line();
 
-    displayTimeTaken(wxT("lua_interface_test_RunLuaFile"), start_time);
+    displayTimeTaken("lua_interface_test_RunLuaFile", start_time);
 }
 
 } // SUITE end Inidb_test

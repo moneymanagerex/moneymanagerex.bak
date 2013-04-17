@@ -1679,7 +1679,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         wxDateTime dtBegin, dtEnd;
         wxString sData = iData->getString();
         wxString title = wxGetTranslation(sData);
-        bool bIgnoreFuture = mmIniOptions::instance().ignoreFutureTransactions_;
+//        bool bIgnoreFuture = mmIniOptions::instance().ignoreFutureTransactions_;
 
         if ( IsCustomReportSelected(customReportID, iData) )
         {

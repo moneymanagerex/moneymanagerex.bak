@@ -25,14 +25,14 @@
 TAssetEntry::TAssetEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_         = q1.GetInt(wxT("ASSETID"));
-    date_       = q1.GetString(wxT("STARTDATE"));
-    name_       = q1.GetString(wxT("ASSETNAME"));
-    value_      = q1.GetDouble(wxT("VALUE"));
-    rate_type_  = q1.GetString(wxT("VALUECHANGE"));
-    notes_      = q1.GetString(wxT("NOTES"));
-    rate_value_ = q1.GetDouble(wxT("VALUECHANGERATE"));
-    type_       = q1.GetString(wxT("ASSETTYPE"));
+    id_         = q1.GetInt("ASSETID");
+    date_       = q1.GetString("STARTDATE");
+    name_       = q1.GetString("ASSETNAME");
+    value_      = q1.GetDouble("VALUE");
+    rate_type_  = q1.GetString("VALUECHANGE");
+    notes_      = q1.GetString("NOTES");
+    rate_value_ = q1.GetDouble("VALUECHANGERATE");
+    type_       = q1.GetString("ASSETTYPE");
     // calculated value
     display_date_ = mmGetDateForDisplay(mmGetStorageStringAsDate(date_));
 }
@@ -52,13 +52,13 @@ TAssetEntry::TAssetEntry(TAssetEntry* pEntry)
 
 void TAssetEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 {
-    st.Bind(++db_index, date_);      // q1.GetString(wxT("STARTDATE"));
-    st.Bind(++db_index, name_);      // q1.GetString(wxT("ASSETNAME"));
-    st.Bind(++db_index, value_);     // q1.GetDouble(wxT("VALUE"));
-    st.Bind(++db_index, rate_type_); // q1.GetString(wxT("VALUECHANGE"));
-    st.Bind(++db_index, notes_);     // q1.GetString(wxT("NOTES"));
-    st.Bind(++db_index, rate_value_);// q1.GetDouble(wxT("VALUECHANGERATE"));
-    st.Bind(++db_index, type_);      // q1.GetString(wxT("ASSETTYPE"));
+    st.Bind(++db_index, date_);      // q1.GetString("STARTDATE");
+    st.Bind(++db_index, name_);      // q1.GetString("ASSETNAME");
+    st.Bind(++db_index, value_);     // q1.GetDouble("VALUE");
+    st.Bind(++db_index, rate_type_); // q1.GetString("VALUECHANGE");
+    st.Bind(++db_index, notes_);     // q1.GetString("NOTES");
+    st.Bind(++db_index, rate_value_);// q1.GetDouble("VALUECHANGERATE");
+    st.Bind(++db_index, type_);      // q1.GetString("ASSETTYPE");
 }
 
 /// Constructor for creating a new asset entry.
@@ -85,7 +85,7 @@ int TAssetEntry::Add(wxSQLite3Database* db)
 
 void TAssetEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from ASSETS_V1 where ASSETID = ?")); 
+    DeleteEntry(db, "delete from ASSETS_V1 where ASSETID = ?"); 
 }
 
 void TAssetEntry::Update(wxSQLite3Database* db)
@@ -107,8 +107,8 @@ void TAssetEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TAssetEntry:Update: %s"), e.GetMessage());
-        wxLogError(wxT("TAssetEntry:Update: %s"), e.GetMessage().c_str());
+        //wxLogDebug("TAssetEntry:Update: %s", e.GetMessage());
+        wxLogError("TAssetEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -208,7 +208,7 @@ void TAssetList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists(wxT("ASSETS_V1")))
+        if (!db_->TableExists("ASSETS_V1"))
         {
             const char CREATE_TABLE_ASSETS_V1[] =
             "CREATE TABLE ASSETS_V1 (ASSETID integer primary key, "
@@ -221,13 +221,13 @@ void TAssetList::LoadEntries(bool load_entries)
 
         if (load_entries)
         {
-            LoadAssetEntriesUsing(wxT("select * from assets_v1"));
+            LoadAssetEntriesUsing("select * from assets_v1");
         }
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TAssetList::LoadEntries %s"), e.GetMessage());
-        wxLogError(wxT("TAssetList::LoadEntries %s"), e.GetMessage().c_str());
+        //wxLogDebug("TAssetList::LoadEntries %s", e.GetMessage());
+        wxLogError("TAssetList::LoadEntries %s", e.GetMessage().c_str());
     }
 }
 

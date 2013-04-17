@@ -35,7 +35,7 @@ TEST(wxSQLite3Exception)
     display_STD_IO_separation_line();
     const wxDateTime start_time(wxDateTime::UNow());
     wxSQLite3Database* db = get_pDb().get();
-    displayTimeTaken(wxT("wxSQLite3Exception"), start_time);
+    displayTimeTaken("wxSQLite3Exception", start_time);
     CHECK_THROW(db->ExecuteUpdate("update bad_table set bad_col = unknown_value"), wxSQLite3Exception);
 }
 //----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ TEST(ViewExists)
 
     ok = mmDBWrapper::ViewExists(pDb, "master_view");
     CHECK(ok);
-    displayTimeTaken(wxT("ViewExists"), start_time);
+    displayTimeTaken("ViewExists", start_time);
 
 //    pDb->ExecuteUpdate("drop view master_view");
 }
@@ -98,7 +98,7 @@ TEST(init_DB)
     mmCoreDB* pCore = pDb_core().get();
     CHECK(pCore->displayDatabaseError_ == true);
 
-    displayTimeTaken(wxT("init_DB"), start_time);    
+    displayTimeTaken("init_DB", start_time);    
 }
 //----------------------------------------------------------------------------
 #if 0
@@ -117,7 +117,7 @@ TEST(getCurrencySymbol)
 
     s = mmDBWrapper::getCurrencySymbol(pCore->db_.get(), 0);
     CHECK(s.empty());
-    displayTimeTaken(wxT("getCurrencySymbol"), start_time);    
+    displayTimeTaken("getCurrencySymbol", start_time);    
 }
 #endif
 //----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ TEST(checkDBVersion)
     wxSQLite3Database* pDb = get_pDb().get();
     bool ok = mmDBWrapper::checkDBVersion(pDb);
     CHECK(ok);
-    displayTimeTaken(wxT("checkDBVersion"), start_time);
+    displayTimeTaken("checkDBVersion", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -144,7 +144,7 @@ TEST(addBudgetYear)
 
     year_id = mmDBWrapper::getBudgetYearID(pDb, g_BudgetYear);
     CHECK(year_id > 0);
-    displayTimeTaken(wxT("addBudgetYear"), start_time);
+    displayTimeTaken("addBudgetYear", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -153,12 +153,12 @@ TEST(getBudgetYearID)
     const wxDateTime start_time(wxDateTime::UNow());
     wxSQLite3Database* pDb = get_pDb().get();
 
-    int year_id = mmDBWrapper::getBudgetYearID(pDb, wxT("unknown_year"));
+    int year_id = mmDBWrapper::getBudgetYearID(pDb, "unknown_year");
     CHECK(year_id == -1);
 
     year_id = mmDBWrapper::getBudgetYearID(pDb, g_BudgetYear);
     CHECK(year_id > 0);
-    displayTimeTaken(wxT("getBudgetYearID"), start_time);
+    displayTimeTaken("getBudgetYearID", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -172,7 +172,7 @@ TEST(getBudgetYearForID)
 
     wxString year = mmDBWrapper::getBudgetYearForID(pDb, year_id);
     CHECK(year == g_BudgetYear);
-    displayTimeTaken(wxT("getBudgetYearForID"), start_time);
+    displayTimeTaken("getBudgetYearForID", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -195,7 +195,7 @@ TEST(updateYearForID)
     mmDBWrapper::updateYearForID(pDb, g_BudgetYear, year_id);
     year = mmDBWrapper::getBudgetYearForID(pDb, year_id);
     CHECK(year == g_BudgetYear);
-    displayTimeTaken(wxT("updateYearForID"), start_time);
+    displayTimeTaken("updateYearForID", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -224,7 +224,7 @@ TEST(copyBudgetYear)
 
     ok = mmDBWrapper::copyBudgetYear(pDb, new_year_id, base_year_id);
     CHECK(ok);
-    displayTimeTaken(wxT("copyBudgetYear"), start_time);
+    displayTimeTaken("copyBudgetYear", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -233,12 +233,12 @@ TEST(deleteBudgetYear)
     const wxDateTime start_time(wxDateTime::UNow());
     wxSQLite3Database* pDb = get_pDb().get();
 
-    bool deleted = mmDBWrapper::deleteBudgetYear(pDb, wxT("wrong_year"));
+    bool deleted = mmDBWrapper::deleteBudgetYear(pDb, "wrong_year");
     CHECK(!deleted);
 
     deleted = mmDBWrapper::deleteBudgetYear(pDb, g_BudgetYear);
     CHECK(deleted);
-    displayTimeTaken(wxT("deleteBudgetYear"), start_time);
+    displayTimeTaken("deleteBudgetYear", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -252,7 +252,7 @@ TEST(addCategory)
     int id = pCore->categoryList_.GetCategoryId(g_CategName);
 
     CHECK(id == cat_id);
-    displayTimeTaken(wxT("addCategory"), start_time);
+    displayTimeTaken("addCategory", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -268,7 +268,7 @@ TEST(addSubCategory)
 
     int id = pCore->categoryList_.GetSubCategoryID(cat_id, g_SubCategName);
     CHECK(id == subcat_id);
-    displayTimeTaken(wxT("addSubCategory"), start_time);
+    displayTimeTaken("addSubCategory", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -280,9 +280,9 @@ TEST(getCategoryID)
     int cat_id = pCore->categoryList_.GetCategoryId(g_CategName);
     CHECK(cat_id > 0);
 
-    cat_id = pCore->categoryList_.GetCategoryId(wxT("unknown category"));
+    cat_id = pCore->categoryList_.GetCategoryId("unknown category");
     CHECK(cat_id == -1);
-    displayTimeTaken(wxT("getCategoryID"), start_time);
+    displayTimeTaken("getCategoryID", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -297,9 +297,9 @@ TEST(getSubCategoryID)
     int sc_id = pCore->categoryList_.GetSubCategoryID(cat_id, g_SubCategName);
     CHECK(sc_id > 0);
 
-    sc_id = pCore->categoryList_.GetSubCategoryID(cat_id, wxT("unknown subcategory"));
+    sc_id = pCore->categoryList_.GetSubCategoryID(cat_id, "unknown subcategory");
     CHECK(sc_id == -1);
-    displayTimeTaken(wxT("getSubCategoryID"), start_time);
+    displayTimeTaken("getSubCategoryID", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -316,7 +316,7 @@ TEST(getCategoryName)
 
     name = pCore->categoryList_.GetCategoryName(0);
     CHECK(name.empty());
-    displayTimeTaken(wxT("getCategoryName"), start_time);
+    displayTimeTaken("getCategoryName", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -336,7 +336,7 @@ TEST(getSubCategoryName)
 
     name = pCore->categoryList_.GetSubCategoryName(cat_id, 0);
     CHECK(name.empty());
-    displayTimeTaken(wxT("getSubCategoryName"), start_time);
+    displayTimeTaken("getSubCategoryName", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -353,7 +353,7 @@ TEST(updateCategory)
 
     // --
 
-    const wxString new_name = wxT("new name");
+    const wxString new_name = "new name";
 
     bool ok = pCore->categoryList_.UpdateCategory(cat_id, -1, new_name);
     CHECK(ok);
@@ -374,7 +374,7 @@ TEST(updateCategory)
 
     ok = pCore->categoryList_.UpdateCategory(cat_id, sc_id, g_SubCategName); // restore
     CHECK(ok);
-    displayTimeTaken(wxT("updateCategory"), start_time);
+    displayTimeTaken("updateCategory", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -392,7 +392,7 @@ TEST(deleteSubCategoryWithConstraints)
 
     bool ok = mmDBWrapper::deleteSubCategoryWithConstraints(pDb, cat_id, sc_id);
     CHECK(ok);
-    displayTimeTaken(wxT("deleteSubCategoryWithConstraints"), start_time);
+    displayTimeTaken("deleteSubCategoryWithConstraints", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -407,7 +407,7 @@ TEST(deleteCategoryWithConstraints)
 
     bool ok = mmDBWrapper::deleteCategoryWithConstraints(pDb, cat_id);
     CHECK(ok);
-    displayTimeTaken(wxT("deleteCategoryWithConstraints"), start_time);
+    displayTimeTaken("deleteCategoryWithConstraints", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -419,9 +419,9 @@ TEST(getCurrencyID)
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
     CHECK(id > 0);
 
-    id = pCore->currencyList_.getCurrencyID(wxT("unknown currency"));
+    id = pCore->currencyList_.getCurrencyID("unknown currency");
     CHECK(id == -1);
-    displayTimeTaken(wxT("getCurrencyID"), start_time);
+    displayTimeTaken("getCurrencyID", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -440,7 +440,7 @@ TEST(getCurrencyName)
 
     name = pCore->currencyList_.getCurrencyName(-1);
     CHECK(name.empty());
-    displayTimeTaken(wxT("getCurrencyName"), start_time);
+    displayTimeTaken("getCurrencyName", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -456,7 +456,7 @@ TEST(setBaseCurrencySettings)
     int base_id = pCore->currencyList_.GetBaseCurrencySettings();
 
     CHECK(base_id == id);
-    displayTimeTaken(wxT("setBaseCurrencySettings"), start_time);
+    displayTimeTaken("setBaseCurrencySettings", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -470,7 +470,7 @@ TEST(getBaseCurrencySettings)
 
     int base_id = pCore->currencyList_.GetBaseCurrencySettings();
     CHECK(base_id == id);
-    displayTimeTaken(wxT("getBaseCurrencySettings"), start_time);
+    displayTimeTaken("getBaseCurrencySettings", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -482,7 +482,7 @@ TEST(loadBaseCurrencySettings)
     pCore->currencyList_.LoadBaseCurrencySettings();
 
     CHECK(true);
-    displayTimeTaken(wxT("loadBaseCurrencySettings"), start_time);
+    displayTimeTaken("loadBaseCurrencySettings", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -498,7 +498,7 @@ TEST(getCurrencyBaseConvRate)
 
     double rate = mmDBWrapper::getCurrencyBaseConvRateForId(pDb, id);
     CHECK(rate != 0.0);
-    displayTimeTaken(wxT("getCurrencyBaseConvRate"), start_time);
+    displayTimeTaken("getCurrencyBaseConvRate", start_time);
 }
 #endif
 //----------------------------------------------------------------------------
@@ -513,7 +513,7 @@ TEST(load_Currency_Settings)
     CHECK(id > 0);
 
     mmDBWrapper::loadCurrencySettings(pDb, id);
-    displayTimeTaken(wxT("load_Currency_Settings"), start_time);
+    displayTimeTaken("load_Currency_Settings", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -522,15 +522,15 @@ TEST(setInfoSettingValue)
     const wxDateTime start_time(wxDateTime::UNow());
     mmCoreDB* pCore = pDb_core().get();
 
-    const wxString name = wxT("settings name");
-    const wxString val = wxT("settings value");
+    const wxString name = "settings name";
+    const wxString val  = "settings value";
 
     pCore->dbInfoSettings_->SetStringSetting(name, val);
 
-    wxString s = pCore->dbInfoSettings_->GetStringSetting(name, wxT(""));
+    wxString s = pCore->dbInfoSettings_->GetStringSetting(name, "");
     CHECK(s == val);
     pCore->dbInfoSettings_->Save(); // ensure they end up in the database
-    displayTimeTaken(wxT("setInfoSettingValue"), start_time);
+    displayTimeTaken("setInfoSettingValue", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -539,8 +539,8 @@ TEST(getInfoSettingValue)
     const wxDateTime start_time(wxDateTime::UNow());
     mmCoreDB* pCore = pDb_core().get();
 
-    const wxString name = wxT("wrong name");
-    const wxString defVal = wxT("default value");
+    const wxString name   = "wrong name";
+    const wxString defVal = "default value";
 
     wxString s = pCore->dbInfoSettings_->GetStringSetting(name, defVal);
     CHECK(s == defVal);
@@ -548,10 +548,10 @@ TEST(getInfoSettingValue)
     // --
 
     pCore->dbInfoSettings_->SetStringSetting(name, defVal);
-    s = pCore->dbInfoSettings_->GetStringSetting(name, wxT(""));
+    s = pCore->dbInfoSettings_->GetStringSetting(name, "");
     CHECK(s == defVal);
     pCore->dbInfoSettings_->Save(); // ensure they end up in the database
-    displayTimeTaken(wxT("getInfoSettingValue"), start_time);
+    displayTimeTaken("getInfoSettingValue", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -581,7 +581,7 @@ TEST(addPayee)
     int errCode = pCore->payeeList_.UpdatePayee(pPayee->id_, pPayee->name_);
     CHECK(errCode == 0);
 
-    displayTimeTaken(wxT("addPayee"), start_time);
+    displayTimeTaken("addPayee", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -603,10 +603,10 @@ TEST(getPayeeID)
     wxString name = pCore->payeeList_.GetPayeeName(id);
     CHECK(name == g_PayeeName);
 
-    id = pCore->payeeList_.GetPayeeId(wxT("bad payee name"));
+    id = pCore->payeeList_.GetPayeeId("bad payee name");
     CHECK(id < 0);
 
-    displayTimeTaken(wxT("getPayeeID"), start_time);
+    displayTimeTaken("getPayeeID", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -627,7 +627,7 @@ TEST(getPayee)
     wxString name = pCore->payeeList_.GetPayeeName(0);
     CHECK(name.empty());
 
-    displayTimeTaken(wxT("getPayee"), start_time);
+    displayTimeTaken("getPayee", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -643,7 +643,7 @@ TEST(updatePayee)
     int cat    = pPayee->categoryId_;
     int subcat = pPayee->subcategoryId_;
 
-    const wxString new_name = wxT("new payee name");
+    const wxString new_name = "new payee name";
 
     pPayee->name_ = new_name;
     pPayee->categoryId_ = 0;
@@ -669,7 +669,7 @@ TEST(updatePayee)
     errCode = pCore->payeeList_.UpdatePayee(pPayee->id_, pPayee->name_);
     CHECK(errCode == 0);
 
-    displayTimeTaken(wxT("updatePayee"), start_time);
+    displayTimeTaken("updatePayee", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -689,7 +689,7 @@ TEST(getAmountForPayee)
     double amt = pCore->bTransactionList_.getAmountForPayee(id, true, dt, dt);
     CHECK(amt == 0.0);
 
-    displayTimeTaken(wxT("getAmountForPayee"), start_time);
+    displayTimeTaken("getAmountForPayee", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -712,7 +712,7 @@ TEST(delete_Payee)
     ok = pCore->payeeList_.RemovePayee(0);
     CHECK(!ok); // returns true even for wrong id
 
-    displayTimeTaken(wxT("delete_Payee"), start_time);
+    displayTimeTaken("delete_Payee", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -723,7 +723,7 @@ TEST(getNumAccounts)
 
     int cnt = pCore->accountList_.getNumAccounts();
     CHECK(!cnt);
-    displayTimeTaken(wxT("getNumAccounts"), start_time);
+    displayTimeTaken("getNumAccounts", start_time);
 }
 //----------------------------------------------------------------------------
 
@@ -808,7 +808,7 @@ TEST(add_new_transactions)
     trans_exist = pCore->bTransactionList_.checkForExistingTransaction(pBankTransaction_2);
     CHECK(!trans_exist);  // 
 
-    displayTimeTaken(wxT("add_new_transactions"), start_time);
+    displayTimeTaken("add_new_transactions", start_time);
 
     //remove empty spaces from the database
     //pCore->db_.get()->Vacuum();
@@ -850,7 +850,7 @@ TEST(copy_paste_transactions)
 
     int trans_list_size = pCore->bTransactionList_.transactions_.size();
     CHECK(trans_list_size == 2);
-    displayTimeTaken(wxT("copy_paste_transactions"), start_time);
+    displayTimeTaken("copy_paste_transactions", start_time);
 }
 
 } // SUITE
@@ -866,10 +866,10 @@ TEST(New_INIDB_TEST_1)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-	const wxString TEST_NAME_BOOL = wxT("Test 1 BOOL");
-	const wxString TEST_NAME_INT  = wxT("Test 1 INTEGER");
-	const wxString TEST_NAME_STR  = wxT("Test 1 STRING");
-	const wxString TEST_VALUE_STR = wxT("String Value Test 1");
+	const wxString TEST_NAME_BOOL = "Test 1 BOOL";
+	const wxString TEST_NAME_INT  = "Test 1 INTEGER";
+	const wxString TEST_NAME_STR  = "Test 1 STRING";
+	const wxString TEST_VALUE_STR = "String Value Test 1";
 
     wxSharedPtr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
@@ -883,7 +883,7 @@ TEST(New_INIDB_TEST_1)
     wxString s = pSettings->GetStringSetting(TEST_NAME_STR, TEST_VALUE_STR);
     CHECK_EQUAL(s, TEST_VALUE_STR);
 
-    displayTimeTaken(wxT("New_INIDB_TEST_1"), start_time);
+    displayTimeTaken("New_INIDB_TEST_1", start_time);
 }
 #endif
 
@@ -892,10 +892,10 @@ TEST(New_INIDB_TEST_2)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    const wxString TEST_NAME_BOOL = wxT("Test 2 BOOL");
-	const wxString TEST_NAME_INT  = wxT("Test 2 INTEGER");
-	const wxString TEST_NAME_STR  = wxT("Test 2 STRING");
-	const wxString TEST_VALUE_STR = wxT("String Value Test 2");
+    const wxString TEST_NAME_BOOL = "Test 2 BOOL";
+	const wxString TEST_NAME_INT  = "Test 2 INTEGER";
+	const wxString TEST_NAME_STR  = "Test 2 STRING";
+	const wxString TEST_VALUE_STR = "String Value Test 2";
 
     wxSharedPtr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
@@ -912,7 +912,7 @@ TEST(New_INIDB_TEST_2)
     wxString s = pSettings->GetStringSetting(TEST_NAME_STR, TEST_VALUE_STR);
     CHECK_EQUAL(s, TEST_VALUE_STR);
 
-    displayTimeTaken(wxT("New_INIDB_TEST_2"), start_time);
+    displayTimeTaken("New_INIDB_TEST_2", start_time);
 }
 #endif
 
@@ -921,12 +921,12 @@ TEST(New_INIDB_TEST_3)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-	const wxString TEST_NAME_BOOL = wxT("Test 3 BOOL");
-	const wxString TEST_NAME_INT  = wxT("Test 3 INTEGER");
-	const wxString TEST_NAME_STR  = wxT("Test 3 STRING");
+	const wxString TEST_NAME_BOOL = "Test 3 BOOL";
+	const wxString TEST_NAME_INT  = "Test 3 INTEGER";
+	const wxString TEST_NAME_STR  = "Test 3 STRING";
 
-    const wxString TEST_VALUE_STR_NEW = wxT("String Value Test 3");
-	const wxString TEST_VALUE_STR_ADJ = wxT("String Value Test 3_adjusted");
+    const wxString TEST_VALUE_STR_NEW = "String Value Test 3";
+	const wxString TEST_VALUE_STR_ADJ = "String Value Test 3_adjusted";
 
     wxSharedPtr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
@@ -957,7 +957,7 @@ TEST(New_INIDB_TEST_3)
     s = pSettings->GetStringSetting(TEST_NAME_STR, TEST_VALUE_STR_NEW);
     CHECK_EQUAL(s, TEST_VALUE_STR_ADJ);
 
-    displayTimeTaken(wxT("New_INIDB_TEST_3"), start_time);
+    displayTimeTaken("New_INIDB_TEST_3", start_time);
 }
 #endif
 
@@ -972,7 +972,7 @@ TEST(New_INIDB_TEST_4)
     wxString test_name; 
     for(int i = 0; i < 100; ++i)
     {
-        test_name = wxT("Inidb Test ");
+        test_name = "Inidb Test ";
         test_name << i;
         pSettings->SetIntSetting(test_name, i);
     }
@@ -980,7 +980,7 @@ TEST(New_INIDB_TEST_4)
     CHECK_EQUAL(99, value);
     pSettings->Save();
 
-    displayTimeTaken(wxT("New_INIDB_TEST_4"), start_time);
+    displayTimeTaken("New_INIDB_TEST_4", start_time);
 }
 #endif
 
@@ -995,13 +995,13 @@ TEST(New_INIDB_TEST_5)
     wxString test_name; 
     for(int i = 0; i < 100; ++i)
     {
-        test_name = wxT("Inidb Test ");
+        test_name = "Inidb Test ";
         test_name << i;
         int value = pSettings->GetIntSetting(test_name, 50);
         CHECK_EQUAL(i, value);
     }
 
-    displayTimeTaken(wxT("New_INIDB_TEST_5"), start_time);
+    displayTimeTaken("New_INIDB_TEST_5", start_time);
 }
 #endif
 
@@ -1015,9 +1015,9 @@ TEST(New_INFO_DB_TEST_1)
 
     MMEX_IniSettings pdb_settings(pdb, true);
 
-    const wxString name    = wxT("New_info_test_1: setting name");
-    const wxString val     = wxT("New_info_test_1: setting value");
-    const wxString new_val = wxT("New_info_test_1: new setting value");
+    const wxString name    = "New_info_test_1: setting name";
+    const wxString val     = "New_info_test_1: setting value";
+    const wxString new_val = "New_info_test_1: new setting value";
 
     wxString test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, val);
@@ -1027,7 +1027,7 @@ TEST(New_INFO_DB_TEST_1)
     CHECK_EQUAL(test_name, new_val);
     pdb_settings.Save();
 
-    displayTimeTaken(wxT("New_INFO_DB_TEST_1"), start_time);
+    displayTimeTaken("New_INFO_DB_TEST_1", start_time);
 }
 #endif
 
@@ -1041,9 +1041,9 @@ TEST(New_INFO_DB_TEST_2)
 
     MMEX_IniSettings pdb_settings(pdb, true);
 
-    const wxString name    = wxT("New_info_test_2: setting name");
-    const wxString val     = wxT("New_info_test_2: setting value");
-    const wxString new_val = wxT("New_info_test_2: new setting value");
+    const wxString name    = "New_info_test_2: setting name";
+    const wxString val     = "New_info_test_2: setting value";
+    const wxString new_val = "New_info_test_2: new setting value";
 
     wxString test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, val);
@@ -1053,7 +1053,7 @@ TEST(New_INFO_DB_TEST_2)
     CHECK_EQUAL(test_name, new_val);
     pdb_settings.Save();
 
-    displayTimeTaken(wxT("New_INFO_DB_TEST_2"), start_time);
+    displayTimeTaken("New_INFO_DB_TEST_2", start_time);
 }
 #endif
 
@@ -1067,9 +1067,9 @@ TEST(New_INFO_DB_TEST_3)
 
     MMEX_IniSettings pdb_settings(pdb, true);
 
-    const wxString name    = wxT("New_info_test_3: setting name");
-    const wxString val     = wxT("New_info_test_3: setting value");
-    const wxString new_val = wxT("New_info_test_3: new setting value");
+    const wxString name    = "New_info_test_3: setting name";
+    const wxString val     = "New_info_test_3: setting value";
+    const wxString new_val = "New_info_test_3: new setting value";
 
     wxString test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, val);
@@ -1078,14 +1078,14 @@ TEST(New_INFO_DB_TEST_3)
     test_name =  pdb_settings.GetStringSetting(name, val);
     CHECK_EQUAL(test_name, new_val);
 
-    const wxString prev_name = wxT("settings name");
-    const wxString prev_val  = wxT("settings value");
+    const wxString prev_name = "settings name";
+    const wxString prev_val  = "settings value";
 
-    test_name =  pdb_settings.GetStringSetting(prev_name, wxT(""));
+    test_name =  pdb_settings.GetStringSetting(prev_name, "");
     CHECK_EQUAL(test_name, prev_val);
     pdb_settings.Save();
 
-    displayTimeTaken(wxT("New_INFO_DB_TEST_3"), start_time);
+    displayTimeTaken("New_INFO_DB_TEST_3", start_time);
 }
 #endif
 
