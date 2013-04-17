@@ -33,16 +33,16 @@
 #include <iostream>
 //----------------------------------------------------------------------------
 
-const wxString g_BudgetYear   = wxT("2009");
-const wxString g_CategName    = wxT("new category");
-const wxString g_SubCategName = wxT("new subcategory");
-const wxString g_CurrencyName = wxT("US Dollar");
-const wxString g_PayeeName    = wxT("Payee #1");
+const wxString g_BudgetYear   = "2009";
+const wxString g_CategName    = "new category";
+const wxString g_SubCategName = "new subcategory";
+const wxString g_CurrencyName = "US Dollar";
+const wxString g_PayeeName    = "Payee #1";
 
-const wxString g_TransType_deposit    = wxT("Deposit");
-const wxString g_TransType_withdrawal = wxT("Withdrawal");
-const wxString g_status_reconciled    = wxT("R");
-const wxString g_status_void          = wxT("V");
+const wxString g_TransType_deposit    = "Deposit";
+const wxString g_TransType_withdrawal = "Withdrawal";
+const wxString g_status_reconciled    = "R";
+const wxString g_status_void          = "V";
 //----------------------------------------------------------------------------
 
 /*****************************************************************************************

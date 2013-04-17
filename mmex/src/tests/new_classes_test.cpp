@@ -105,16 +105,16 @@ TEST(Central_Database_Test)
     wxSharedPtr<TDatabase> pCore = main_db();
     pDB->Commit();
 
-    if (!pCore->info_settings_.Exists(wxT("MMEXVERSION")))
+    if (!pCore->info_settings_.Exists("MMEXVERSION"))
     {
-        pCore->info_settings_.SetStringSetting(wxT("MMEXVERSION"), mmex::getProgramVersion());
-        pCore->info_settings_.SetStringSetting(wxT("DATAVERSION"), mmex::DATAVERSION);
-		pCore->info_settings_.SetStringSetting(wxT("CREATEDATE"), wxDateTime::Now().FormatISODate());
-        pCore->info_settings_.SetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+        pCore->info_settings_.SetStringSetting("MMEXVERSION", mmex::getProgramVersion());
+        pCore->info_settings_.SetStringSetting("DATAVERSION", mmex::DATAVERSION);
+		pCore->info_settings_.SetStringSetting("CREATEDATE", wxDateTime::Now().FormatISODate());
+        pCore->info_settings_.SetStringSetting("DATEFORMAT", mmex::DEFDATEFORMAT);
         pCore->info_settings_.Save();
     }
 
-    displayTimeTaken(wxT("Central_Database_Test"), start_time);
+    displayTimeTaken("Central_Database_Test", start_time);
     display_STD_IO_separation_line();
 }
 #endif
@@ -147,7 +147,7 @@ TEST(TCurrencyList_Add)
     pEntry->baseConv_ = 1.5;
     pEntry->Update(currency_list.ListDatabase());
 
-    displayTimeTaken(wxT("TCurrencyList_Add"), start_time);
+    displayTimeTaken("TCurrencyList_Add", start_time);
 }
 #endif
 
@@ -159,22 +159,22 @@ TEST(TAccountList_Test_Add)
 
     TAccountList account_list(get_pDb(), currency_list);
     TAccountEntry* account_entry = new TAccountEntry();
-    account_entry->acc_name_    = wxT("Savings");
-    account_entry->acc_state_   = ACCOUNT_STATE_DEF[OPEN];
-    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[BANK];
-    account_entry->currency_id_ = currency_list.GetCurrencyId(wxT("AUD"), true);
+    account_entry->acc_name_    = "Savings";
+    account_entry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::OPEN];
+    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::BANK];
+    account_entry->currency_id_ = currency_list.GetCurrencyId("AUD", true);
     int id_1 = account_list.AddEntry(account_entry);
 
     account_entry = new TAccountEntry();
-    account_entry->acc_name_    = wxT("Cheque");
-    account_entry->acc_state_   = ACCOUNT_STATE_DEF[CLOSED];
-    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[TERM];
-    account_entry->currency_id_ = currency_list.GetCurrencyId(wxT("USD"), true);
+    account_entry->acc_name_    = "Cheque";
+    account_entry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::CLOSED];
+    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TERM];
+    account_entry->currency_id_ = currency_list.GetCurrencyId("USD", true);
     int id_2 = account_list.AddEntry(account_entry);
 
     CHECK(id_1 != id_2);
 
-    displayTimeTaken(wxT("TAccountList_Test_Add"), start_time);
+    displayTimeTaken("TAccountList_Test_Add", start_time);
 }
 #endif
 
@@ -186,30 +186,30 @@ TEST(TCategoryList_Test)
     TCategoryList cat_list(get_pDb());
 
     int cat_id; 
-    get_pDb()->Begin();
+    cat_list.ListDatabase()->Begin();
 
-    cat_id = cat_list.AddEntry(wxT("Food"));
+    cat_id = cat_list.AddEntry("Food");
     CHECK(cat_id > 0);
  
-    cat_id = cat_list.AddEntry(wxT("Income"));
+    cat_id = cat_list.AddEntry("Income");
     CHECK(cat_id > 0);
     
-    cat_id = cat_list.AddEntry(wxT("Auto"));
+    cat_id = cat_list.AddEntry("Auto");
     CHECK(cat_id > 0);
 
-    cat_list.UpdateEntry(cat_id, wxT("Automobile"));
-    CHECK_EQUAL(wxT("Automobile"), cat_list.GetCategoryName(cat_id));
+    cat_list.UpdateEntry(cat_id, "Automobile");
+    CHECK_EQUAL("Automobile", cat_list.GetCategoryName(cat_id));
 
-    cat_id = cat_list.AddEntry(wxT("Healthcare"));
+    cat_id = cat_list.AddEntry("Healthcare");
     CHECK(cat_id > 0);
     
-    get_pDb()->Commit();
+    cat_list.ListDatabase()->Commit();
 
     wxSharedPtr<TCategoryEntry> pCatEntry = cat_list.GetEntryPtr(2);
     if (pCatEntry)
     {
         CHECK(true);
-        CHECK_EQUAL(wxT("Income"), pCatEntry->name_);
+        CHECK_EQUAL("Income", pCatEntry->name_);
         cat_list.DeleteEntry(pCatEntry->GetId());
     }
     else
@@ -217,7 +217,7 @@ TEST(TCategoryList_Test)
         CHECK(false);
     }
 
-    displayTimeTaken(wxT("TCategoryList_Test"), start_time);
+    displayTimeTaken("TCategoryList_Test", start_time);
 }
 
 TEST(TSubCategoryList_Test)
@@ -230,63 +230,63 @@ TEST(TSubCategoryList_Test)
     cat_list.ListDatabase()->Begin();
     int cat_id = -1;
 
-    cat_id = cat_list.GetCategoryId(wxT("Food"));
+    cat_id = cat_list.GetCategoryId("Food");
     CHECK(cat_id > 0);
     if (cat_id > 0)
     {
-        subcat_list.AddEntry(cat_id, wxT("Groceries"));
-        subcat_list.AddEntry(cat_id, wxT("Dining Out"));
-        subcat_list.AddEntry(cat_id, wxT("Miscellaneous"));
+        subcat_list.AddEntry(cat_id, "Groceries");
+        subcat_list.AddEntry(cat_id, "Dining Out");
+        subcat_list.AddEntry(cat_id, "Miscellaneous");
     }
 
-    cat_id = cat_list.GetCategoryId(wxT("Income"));
+    cat_id = cat_list.GetCategoryId("Income");
     CHECK(cat_id <= 0);
 
-    cat_id = cat_list.GetCategoryId(wxT("Automobile"));
+    cat_id = cat_list.GetCategoryId("Automobile");
     CHECK(cat_id > 0);
     if (cat_id > 0)
     {
-        subcat_list.AddEntry(cat_id, wxT("Fuel"));
-        subcat_list.AddEntry(cat_id, wxT("Maintenance"));
-        subcat_list.AddEntry(cat_id, wxT("Registration"));
-        subcat_list.AddEntry(cat_id, wxT("Insurance"));
-        subcat_list.AddEntry(cat_id, wxT("Miscellaneous"));
+        subcat_list.AddEntry(cat_id, "Fuel");
+        subcat_list.AddEntry(cat_id, "Maintenance");
+        subcat_list.AddEntry(cat_id, "Registration");
+        subcat_list.AddEntry(cat_id, "Insurance");
+        subcat_list.AddEntry(cat_id, "Miscellaneous");
     }
 
-    cat_id = cat_list.GetCategoryId(wxT("Healthcare"));
+    cat_id = cat_list.GetCategoryId("Healthcare");
     CHECK(cat_id > 0);
     if (cat_id > 0)
     {
-        subcat_list.AddEntry(cat_id, wxT("Doctor"));
-        subcat_list.AddEntry(cat_id, wxT("Dentist"));
-        subcat_list.AddEntry(cat_id, wxT("Chemist"));
-        subcat_list.AddEntry(cat_id, wxT("Eyecare"));
-        subcat_list.AddEntry(cat_id, wxT("Insurance"));
-        subcat_list.AddEntry(cat_id, wxT("Miscellaneous"));
+        subcat_list.AddEntry(cat_id, "Doctor");
+        subcat_list.AddEntry(cat_id, "Dentist");
+        subcat_list.AddEntry(cat_id, "Chemist");
+        subcat_list.AddEntry(cat_id, "Eyecare");
+        subcat_list.AddEntry(cat_id, "Insurance");
+        subcat_list.AddEntry(cat_id, "Miscellaneous");
     }
     cat_list.ListDatabase()->Commit();
 
-    wxSharedPtr<TSubCategoryEntry> pSubCatEntry = subcat_list.GetEntryPtr(cat_id, wxT("Insurance"));
+    wxSharedPtr<TSubCategoryEntry> pSubCatEntry = subcat_list.GetEntryPtr(cat_id, "Insurance");
 
     if (pSubCatEntry)
     {
         CHECK(true);
-        pSubCatEntry->name_ = wxT("Health Insurance");
+        pSubCatEntry->name_ = "Health Insurance";
         pSubCatEntry->Update(get_pDb().get());                // Test direct update;
     }
     else CHECK(false);
 
-    CHECK(! subcat_list.SubCategoryExists(cat_id, wxT("Insurance")));
-    CHECK(subcat_list.SubCategoryExists(cat_id, wxT("Health Insurance")));
+    CHECK(! subcat_list.SubCategoryExists(cat_id, "Insurance"));
+    CHECK(subcat_list.SubCategoryExists(cat_id, "Health Insurance"));
 
-    int subcat_id = subcat_list.GetSubCategoryId(cat_id, wxT("Health Insurance"));
-    subcat_list.UpdateEntry(cat_id, subcat_id, wxT("Insurance"));
-    CHECK(subcat_list.SubCategoryExists(cat_id, wxT("Insurance")));
+    int subcat_id = subcat_list.GetSubCategoryId(cat_id, "Health Insurance");
+    subcat_list.UpdateEntry(cat_id, subcat_id, "Insurance");
+    CHECK(subcat_list.SubCategoryExists(cat_id, "Insurance"));
 
     subcat_list.DeleteEntry(cat_id, subcat_id);
-    CHECK(! subcat_list.SubCategoryExists(cat_id, wxT("Insurance")));
+    CHECK(! subcat_list.SubCategoryExists(cat_id, "Insurance"));
 
-    displayTimeTaken(wxT("TSubCategoryList_Test"), start_time);
+    displayTimeTaken("TSubCategoryList_Test", start_time);
 }
 
 TEST(TCategoryList_SubList_Test)
@@ -294,18 +294,18 @@ TEST(TCategoryList_SubList_Test)
     const wxDateTime start_time(wxDateTime::UNow());
     TCategoryList cat_list(get_pDb());
 
-    int cat_id = cat_list.GetCategoryId(wxT("Automobile"));
+    int cat_id = cat_list.GetCategoryId("Automobile");
     TSubCategoryList subcat_sublist(get_pDb(), cat_id);
 
-    int subcat_id = subcat_sublist.GetSubCategoryId(cat_id, wxT("Registration"));
+    int subcat_id = subcat_sublist.GetSubCategoryId(cat_id, "Registration");
 
     wxString sub_name = subcat_sublist.GetSubCategoryName(cat_id, subcat_id);
-    CHECK_EQUAL(wxT("Registration"), sub_name);
+    CHECK_EQUAL("Registration", sub_name);
 
-    cat_id = cat_list.GetCategoryId(wxT("Food"));
-    CHECK(! subcat_sublist.SubCategoryExists(cat_id, wxT("Miscellaneous")));
+    cat_id = cat_list.GetCategoryId("Food");
+    CHECK(! subcat_sublist.SubCategoryExists(cat_id, "Miscellaneous"));
 
-    displayTimeTaken(wxT("TCategoryList_SubList_Test"), start_time);
+    displayTimeTaken("TCategoryList_SubList_Test", start_time);
 }
 #endif
 
@@ -317,32 +317,32 @@ TEST(TPayeeList_Test_1)
     TPayeeList payee_list(get_pDb());
     int payee_id;
 
-    payee_id = payee_list.AddEntry(wxT("Coles"));
+    payee_id = payee_list.AddEntry("Coles");
     CHECK(payee_id > 0);
 
-    payee_id = payee_list.AddEntry(wxT("Woolworths"));
+    payee_id = payee_list.AddEntry("Woolworths");
     CHECK(payee_id > 0);
 
-    payee_id = payee_list.AddEntry(wxT("ACTEW"));
+    payee_id = payee_list.AddEntry("ACTEW");
     CHECK(payee_id > 0);
 
-    payee_id = payee_list.GetPayeeId(wxT("Woolworths"));
-    CHECK_EQUAL(wxT("Woolworths"), payee_list.GetPayeeName(payee_id));
+    payee_id = payee_list.GetPayeeId("Woolworths");
+    CHECK_EQUAL("Woolworths", payee_list.GetPayeeName(payee_id));
 
-    payee_list.UpdateEntry(payee_id, wxT("Big W"));
-    CHECK_EQUAL(wxT("Big W"), payee_list.GetPayeeName(payee_id));
+    payee_list.UpdateEntry(payee_id, "Big W");
+    CHECK_EQUAL("Big W", payee_list.GetPayeeName(payee_id));
 
-    payee_list.UpdateEntry(wxT("Coles"), 1, 1);
+    payee_list.UpdateEntry("Coles", 1, 1);
 
-    wxSharedPtr<TPayeeEntry> pEntry = payee_list.GetEntryPtr(wxT("Coles"));
-    CHECK_EQUAL(wxT("Coles"), pEntry->name_);
+    wxSharedPtr<TPayeeEntry> pEntry = payee_list.GetEntryPtr("Coles");
+    CHECK_EQUAL("Coles", pEntry->name_);
     CHECK_EQUAL(1, pEntry->subcat_id_);
     CHECK_EQUAL(1, pEntry->cat_id_);
 
-    payee_list.DeleteEntry(wxT("Big W"));
-    CHECK(! payee_list.PayeeExists(wxT("Big W")));
+    payee_list.DeleteEntry("Big W");
+    CHECK(! payee_list.PayeeExists("Big W"));
 
-    displayTimeTaken(wxT("TPayeeList_Test_1"), start_time);
+    displayTimeTaken("TPayeeList_Test_1", start_time);
 }
 
 TEST(TPayeeList_Test_2)
@@ -352,13 +352,13 @@ TEST(TPayeeList_Test_2)
     TPayeeList payee_list(get_pDb());
     int payee_id;
 
-    payee_id = payee_list.AddEntry(wxT("Woolworths"));
+    payee_id = payee_list.AddEntry("Woolworths");
     CHECK(payee_id > 0);
 
-    payee_id = payee_list.AddEntry(wxT("ACTEW"));
+    payee_id = payee_list.AddEntry("ACTEW");
     CHECK(payee_id > 0);
 
-    displayTimeTaken(wxT("TPayeeList_Test_2"), start_time);
+    displayTimeTaken("TPayeeList_Test_2", start_time);
 }
 
 TEST(TTransactionList_Add)
@@ -370,7 +370,7 @@ TEST(TTransactionList_Add)
     pTransEntry_1->amount_from_  = 1000;
     pTransEntry_1->trans_status_ = TRANS_STATE_DEF[TRANS_RECONCILED];
     pTransEntry_1->trans_type_   = TRANS_TYPE_DEF[TRANS_DEPOSIT];
-    pTransEntry_1->trans_notes_  = wxT("Transaction Entry");  
+    pTransEntry_1->trans_notes_  = "Transaction Entry";  
     int id_1 = transactions.AddEntry(pTransEntry_1);
 
     TTransactionEntry* pTransEntry_2 = new TTransactionEntry(pTransEntry_1);
@@ -382,7 +382,7 @@ TEST(TTransactionList_Add)
     CHECK(id_1 != id_2);
     CHECK(pTransEntry_1->GetId() != pTransEntry_2->GetId());
 
-    displayTimeTaken(wxT("TTransactionList_Add"), start_time);
+    displayTimeTaken("TTransactionList_Add", start_time);
 }
 
 TEST(TTransactionBillList_Add)
@@ -395,7 +395,7 @@ TEST(TTransactionBillList_Add)
     pBillEntry->trans_status_ = TRANS_STATE_DEF[TRANS_RECONCILED];
     pBillEntry->trans_type_   = TRANS_TYPE_DEF[TRANS_DEPOSIT];
     pBillEntry->num_repeats_  = 10;
-    pBillEntry->trans_notes_  = wxT("Repeat Transaction Entry");  
+    pBillEntry->trans_notes_  = "Repeat Transaction Entry";  
     pBillEntry->nextOccurDate_ = start_time.Add(wxDateSpan::Month()).FormatISODate();
     int id_1 = repeat_transactions.AddEntry(pBillEntry);
 
@@ -404,7 +404,7 @@ TEST(TTransactionBillList_Add)
 
     CHECK(id_1 != id_2);
 
-    displayTimeTaken(wxT("TTransactionBillList_Add"), start_time);
+    displayTimeTaken("TTransactionBillList_Add", start_time);
 }
 #endif
 
@@ -445,7 +445,7 @@ TEST(TSplitTransactionList_Test_Create)
     TSplitTransactionList split_list_2(trans_id, global_splits);
     CHECK_EQUAL(1000, split_list_2.TotalAmount());
 
-    displayTimeTaken(wxT("TSplitTransList_Test_Create"), start_time);
+    displayTimeTaken("TSplitTransList_Test_Create", start_time);
 }
 
 TEST(TSplitTransactionList_Test_update)
@@ -467,7 +467,7 @@ TEST(TSplitTransactionList_Test_update)
     split_list.UpdateEntry(pEntry);
     CHECK_EQUAL(1200, split_list.TotalAmount());
 
-    displayTimeTaken(wxT("TSplitTransList_Test_update"), start_time);
+    displayTimeTaken("TSplitTransList_Test_update", start_time);
 }
 
 TEST(TSplitTransactionList_Test_delete)
@@ -498,7 +498,7 @@ TEST(TSplitTransactionList_Test_delete)
         split_list.DeleteEntry(pEntry);
         CHECK_EQUAL(300, split_list.TotalAmount());
     }
-    displayTimeTaken(wxT("TSplitTransList_Test_delete"), start_time);
+    displayTimeTaken("TSplitTransList_Test_delete", start_time);
 }
 
 TEST(TSplitTransactionList_Test_add_after_delete)
@@ -519,7 +519,7 @@ TEST(TSplitTransactionList_Test_add_after_delete)
     split_entry_id = split_list.AddEntry(10,22,300);
     CHECK_EQUAL(800, split_list.TotalAmount());
 
-    displayTimeTaken(wxT("TSplitTranList_Test_add_after_delete"), start_time);
+    displayTimeTaken("TSplitTranList_Test_add_after_delete", start_time);
 }
 #endif
 
@@ -533,21 +533,21 @@ TEST(TAssetList_Test_entry_with_listed_entry)
 
     TAssetEntry* asset_entry = new TAssetEntry();
 	asset_entry->date_ = date;
-    asset_entry->name_ = ASSET_TYPE_DEF[AUTO];
+    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::AUTO];
     asset_entry->value_ = 2000;
 
     TAssetList asset_list(get_pDb());
     int asset_id = asset_list.AddEntry(asset_entry);
     CHECK(asset_id > 0);
 
-    asset_entry->rate_type_ = ASSET_RATE_DEF[DEPRECIATE];
+    asset_entry->rate_type_ = ASSET_RATE_DEF[TAssetEntry::DEPRECIATE];
     asset_entry->rate_value_ = 50;
     asset_entry->Update(asset_list.ListDatabase());
 
     wxSharedPtr<TAssetEntry> listed_asset_entry = asset_list.GetEntryPtr(asset_id);
     CHECK(listed_asset_entry->name_ == asset_entry->name_);
 
-    displayTimeTaken(wxT("TAssetList_Test_entry_with_listed_entry"), start_time);
+    displayTimeTaken("TAssetList_Test_entry_with_listed_entry", start_time);
 }
 
 TEST(TAssetList_Test_Values)
@@ -564,21 +564,21 @@ TEST(TAssetList_Test_Values)
     if (asset_entry)
     {
         CHECK_EQUAL(date, asset_entry->date_);
-        CHECK_EQUAL(ASSET_TYPE_DEF[AUTO], asset_entry->name_);
+        CHECK_EQUAL(ASSET_TYPE_DEF[TAssetEntry::AUTO], asset_entry->name_);
         CHECK_EQUAL(2000, asset_entry->value_);
 
         double depreciation_value = asset_entry->GetValue();
         CHECK_EQUAL(500, depreciation_value);
  
-        asset_entry->rate_type_ = ASSET_RATE_DEF[APPRECIATE];
+        asset_entry->rate_type_ = ASSET_RATE_DEF[TAssetEntry::APPRECIATE];
         double appreciation_value = asset_entry->GetValue();
         CHECK_EQUAL(4500, appreciation_value);
 
         // wxString str_value;
-        // str_value << wxT("\n\nAsset Value: ") << asset_entry->value_;
-        // str_value << wxT("     Rate: ") << asset_entry->rate_value_;
-        // str_value << wxT("\nDepreciate: ") << depreciation_value;
-		// str_value << wxT("     Apreciate: ") << appreciation_value << wxT("\n\n");
+        // str_value << "\n\nAsset Value: " << asset_entry->value_;
+        // str_value << "     Rate: " << asset_entry->rate_value_;
+        // str_value << "\nDepreciate: " << depreciation_value;
+		// str_value << "     Apreciate: " << appreciation_value << "\n\n";
         // printf(str_value.char_str());
     }
     else
@@ -591,7 +591,7 @@ TEST(TAssetList_Test_Values)
 
     CHECK_EQUAL(0, asset_list.CurrentListSize());
 
-    displayTimeTaken(wxT("TAssetList_Test_Values"), start_time);
+    displayTimeTaken("TAssetList_Test_Values", start_time);
 }
 
 TEST(TAssetList_Test_Balance)
@@ -604,14 +604,14 @@ TEST(TAssetList_Test_Balance)
     TAssetList asset_list(get_pDb());
     TAssetEntry* asset_entry = new TAssetEntry();
 	asset_entry->date_ = date;
-    asset_entry->name_ = ASSET_TYPE_DEF[HOUSE];
+    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::HOUSE];
     asset_entry->value_ = 2000;
     
     int id_1 = asset_list.AddEntry(asset_entry);
 
     asset_entry = new TAssetEntry();
 	asset_entry->date_ = date;
-    asset_entry->name_ = ASSET_TYPE_DEF[OTHER];
+    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::OTHER];
     asset_entry->value_ = 1000;
     
     int id_2 = asset_list.AddEntry(asset_entry);
@@ -621,7 +621,7 @@ TEST(TAssetList_Test_Balance)
     double value = asset_list.GetAssetBalance();
     CHECK_EQUAL(3000, value);
 
-    displayTimeTaken(wxT("TAssetList_Test_Balance"), start_time);
+    displayTimeTaken("TAssetList_Test_Balance", start_time);
 }
 
 TEST(TAssetList_Test_Delete_entries)
@@ -637,7 +637,7 @@ TEST(TAssetList_Test_Delete_entries)
         asset_list.DeleteEntry(listed_asset_entry->GetId());
     }
 
-    displayTimeTaken(wxT("TAssetList_Test_Delete_entries"), start_time);
+    displayTimeTaken("TAssetList_Test_Delete_entries", start_time);
 }
 
 TEST(TAssetList_Test_Add_5_years_of_entries)
@@ -647,10 +647,10 @@ TEST(TAssetList_Test_Add_5_years_of_entries)
     wxDateTime date = wxDateTime::Now();
 
     TAssetEntry* first_entry = new TAssetEntry();
-    first_entry->name_       = ASSET_TYPE_DEF[AUTO];
+    first_entry->name_       = ASSET_TYPE_DEF[TAssetEntry::AUTO];
 	first_entry->date_       = date.FormatISODate();
     first_entry->value_      = 20000;
-    first_entry->rate_type_  = ASSET_RATE_DEF[DEPRECIATE];
+    first_entry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::DEPRECIATE];
     first_entry->rate_value_ = 20;
 
     TAssetList asset_list(get_pDb());
@@ -671,7 +671,7 @@ TEST(TAssetList_Test_Add_5_years_of_entries)
     }
     asset_list.ListDatabase()->Commit();
 
-    displayTimeTaken(wxT("TAssetList_Test_Add_5_years_of_entries"), start_time);
+    displayTimeTaken("TAssetList_Test_Add_5_years_of_entries", start_time);
 }
 
 TEST(TAssetList_GetIndexedEntryPtr_Test)
@@ -690,7 +690,7 @@ TEST(TAssetList_GetIndexedEntryPtr_Test)
         CHECK_EQUAL(20000, pEntry->value_);
     }
 
-    displayTimeTaken(wxT("TAssetList_GetIndexedEntryPtr_Test"), start_time);
+    displayTimeTaken("TAssetList_GetIndexedEntryPtr_Test", start_time);
 }
 
 TEST(TAssetList_const_iterator_Test)
@@ -706,7 +706,7 @@ TEST(TAssetList_const_iterator_Test)
         CHECK_EQUAL(20000, pEntry->value_);
     }
 
-    displayTimeTaken(wxT("TAssetList_const_iterator_Test"), start_time);
+    displayTimeTaken("TAssetList_const_iterator_Test", start_time);
 }
 
 TEST(TAssetList_const_iterator_Retest)
@@ -722,7 +722,7 @@ TEST(TAssetList_const_iterator_Retest)
         CHECK_EQUAL(20000, pEntry->value_);
     }
 
-    displayTimeTaken(wxT("TAssetList_const_iterator_Retest"), start_time);
+    displayTimeTaken("TAssetList_const_iterator_Retest", start_time);
 }
 
 TEST(TAssetList_GetIndexedEntryPtr_Retest)
@@ -738,7 +738,7 @@ TEST(TAssetList_GetIndexedEntryPtr_Retest)
         CHECK_EQUAL(20000, pEntry->value_);
     }
 
-    displayTimeTaken(wxT("TAssetList_GetIndexedEntryPtr_Retest"), start_time);
+    displayTimeTaken("TAssetList_GetIndexedEntryPtr_Retest", start_time);
 }
 
 
@@ -756,7 +756,7 @@ TEST(TAssetList_Test_GetEntryPtr)
         CHECK_EQUAL(20000, pEntry->value_);
     }
 
-    displayTimeTaken(wxT("TAssetList_Test_GetEntryPtr"), start_time);
+    displayTimeTaken("TAssetList_Test_GetEntryPtr", start_time);
     display_STD_IO_separation_line();
 }
 #endif
@@ -774,7 +774,7 @@ TEST(TStockList_Test_Add)
     TStockList stock_list(get_pDb());
     TStockEntry* stock_entry = new TStockEntry();
     stock_entry->heldat_ = account_id;
-    stock_entry->name_ = wxT("Stock Name - Should be in Account");
+    stock_entry->name_ = "Stock Name - Should be in Account";
     stock_entry->pur_date_ = date; // date of purchase
     stock_entry->pur_price_ = 1.2275;
     stock_entry->num_shares_ = 1000;
@@ -784,7 +784,7 @@ TEST(TStockList_Test_Add)
 
     stock_entry = new TStockEntry();
     stock_entry->heldat_ = account_id;
-    stock_entry->name_ = wxT("Stock Name - Should be in Account");
+    stock_entry->name_ = "Stock Name - Should be in Account";
     stock_entry->pur_date_ = date; // date of purchase
     stock_entry->pur_price_ = 1.7275;
     stock_entry->num_shares_ = 1000;
@@ -797,7 +797,7 @@ TEST(TStockList_Test_Add)
     double value = stock_list.GetStockBalance();
     CHECK_EQUAL(3000, value);
 
-    displayTimeTaken(wxT("TStockList_Test_Add"), start_time);
+    displayTimeTaken("TStockList_Test_Add", start_time);
 }
 
 TEST(TStockList_Test_Update)
@@ -812,7 +812,7 @@ TEST(TStockList_Test_Update)
     double value = stock_list.GetStockBalance();
     CHECK_EQUAL(5000, value);
 
-    displayTimeTaken(wxT("TStockList_Test_Update"), start_time);
+    displayTimeTaken("TStockList_Test_Update", start_time);
 }
 
 TEST(TStockList_Test_Delete)
@@ -824,7 +824,7 @@ TEST(TStockList_Test_Delete)
     double value = stock_list.GetStockBalance();
     CHECK_EQUAL(3000, value);
 
-    displayTimeTaken(wxT("TStockList_Test_Delete"), start_time);
+    displayTimeTaken("TStockList_Test_Delete", start_time);
 }
 #endif
 
@@ -834,10 +834,10 @@ TEST(TBudgetYearList_Add)
     const wxDateTime start_time(wxDateTime::UNow());
     TBudgetYearList budget_year(get_pDb());
 
-    int year_id = budget_year.AddEntry(wxT("2011"));
+    int year_id = budget_year.AddEntry("2011");
 
     CHECK(year_id > 0);
-    displayTimeTaken(wxT("TBudgetYearList_Add"), start_time);
+    displayTimeTaken("TBudgetYearList_Add", start_time);
 }
 
 #endif

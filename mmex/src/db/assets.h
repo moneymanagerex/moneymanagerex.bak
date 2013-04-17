@@ -19,14 +19,12 @@
 #pragma once
 #include "entry_base.h"
 
-enum ASSET_RATE {NONE, APPRECIATE, DEPRECIATE};
 const wxString ASSET_RATE_DEF[] = {
-    wxT("None"),
-    wxT("Appreciates"),
-    wxT("Depreciates")
+    "None",
+    "Appreciates",
+    "Depreciates"
 };
 
-enum ASSET_TYPE {PROPERTY, AUTO, HOUSE, ART, JEWELLERY, CASH, OTHER};
 const wxString ASSET_TYPE_DEF[] = {
     wxTRANSLATE("Property"),
     wxTRANSLATE("Automobile"),
@@ -53,13 +51,16 @@ private:
     double GetDepreciatedValue(const wxDateTime& startDate, double value, double rate);
 
 public:
-    wxString name_;         // wxT("ASSETNAME")
-    wxString type_;         // wxT("ASSETTYPE")
-    wxString date_;         // wxT("STARTDATE")
-    wxString notes_;        // wxT("NOTES")
-    double value_;          // wxT("VALUE")
-    wxString rate_type_;    // wxT("VALUECHANGE")
-    double rate_value_;     // wxT("VALUECHANGERATE")
+    enum ASSET_RATE {NONE, APPRECIATE, DEPRECIATE};
+    enum ASSET_TYPE {PROPERTY, AUTO, HOUSE, ART, JEWELLERY, CASH, OTHER};
+
+    wxString name_;         // "ASSETNAME"
+    wxString type_;         // "ASSETTYPE"
+    wxString date_;         // "STARTDATE"
+    wxString notes_;        // "NOTES"
+    double value_;          // "VALUE"
+    wxString rate_type_;    // "VALUECHANGE"
+    double rate_value_;     // "VALUECHANGERATE"
 
     /// Calculated value
     wxString display_date_;

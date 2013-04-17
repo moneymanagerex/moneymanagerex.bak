@@ -25,22 +25,22 @@
 TAccountEntry::TAccountEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_             = q1.GetInt(wxT("ACCOUNTID"));
-    acc_name_       = q1.GetString(wxT("ACCOUNTNAME"));
-    acc_type_       = q1.GetString(wxT("ACCOUNTTYPE"));
-    acc_number_     = q1.GetString(wxT("ACCOUNTNUM"));
-    acc_state_      = q1.GetString(wxT("STATUS"));
-    notes_          = q1.GetString(wxT("NOTES"));  
-    held_at_        = q1.GetString(wxT("HELDAT"));
-    website_        = q1.GetString(wxT("WEBSITE"));
-    contact_info_   = q1.GetString(wxT("CONTACTINFO"));
-    access_info_    = q1.GetString(wxT("ACCESSINFO"));
-    init_balance_   = q1.GetDouble(wxT("INITIALBAL"));
+    id_             = q1.GetInt("ACCOUNTID");
+    acc_name_       = q1.GetString("ACCOUNTNAME");
+    acc_type_       = q1.GetString("ACCOUNTTYPE");
+    acc_number_     = q1.GetString("ACCOUNTNUM");
+    acc_state_      = q1.GetString("STATUS");
+    notes_          = q1.GetString("NOTES");  
+    held_at_        = q1.GetString("HELDAT");
+    website_        = q1.GetString("WEBSITE");
+    contact_info_   = q1.GetString("CONTACTINFO");
+    access_info_    = q1.GetString("ACCESSINFO");
+    init_balance_   = q1.GetDouble("INITIALBAL");
 
     favoriteAcct_ = false;
-    if (q1.GetString(wxT("FAVORITEACCT")) == wxT("TRUE")) favoriteAcct_ = true;
+    if (q1.GetString("FAVORITEACCT") == "TRUE") favoriteAcct_ = true;
 
-    currency_id_    = q1.GetDouble(wxT("CURRENCYID"));
+    currency_id_    = q1.GetDouble("CURRENCYID");
 }
 
 void TAccountEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
@@ -56,8 +56,8 @@ void TAccountEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
     st.Bind(++db_index, access_info_);
     st.Bind(++db_index, init_balance_);
 
-    if (favoriteAcct_) st.Bind(++db_index, wxT("TRUE"));
-    else st.Bind(++db_index, wxT("FALSE"));
+    if (favoriteAcct_) st.Bind(++db_index, "TRUE");
+    else st.Bind(++db_index, "FALSE");
 
     st.Bind(++db_index, currency_id_);
 }
@@ -89,7 +89,7 @@ int TAccountEntry::Add(wxSQLite3Database* db)
 
 void TAccountEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from ACCOUNTLIST_V1 where ACCOUNTID = ?"));
+    DeleteEntry(db, "delete from ACCOUNTLIST_V1 where ACCOUNTID = ?");
 }
 
 void TAccountEntry::Update(wxSQLite3Database* db)
@@ -113,7 +113,7 @@ void TAccountEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        wxLogError(wxT("TAccountEntry:Update: %s"), e.GetMessage().c_str());
+        wxLogError("TAccountEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -133,7 +133,7 @@ void TAccountList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists(wxT("ACCOUNTLIST_V1")))
+        if (!db_->TableExists("ACCOUNTLIST_V1"))
         {
             const char CREATE_TABLE_ACCOUNTLIST_V1[] =
             "CREATE TABLE ACCOUNTLIST_V1(ACCOUNTID integer primary key, "
@@ -148,12 +148,12 @@ void TAccountList::LoadEntries(bool load_entries)
 
         if (load_entries)
         {
-            LoadEntriesUsing(wxT("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME"));
+            LoadEntriesUsing("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME");
         }
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxLogError(wxT("TAccountList:LoadEntries: %s"), e.GetMessage().c_str());
+        wxLogError("TAccountList:LoadEntries: %s", e.GetMessage().c_str());
     }
 }
 
@@ -173,7 +173,7 @@ void TAccountList::LoadEntriesUsing(const wxString& sql_statement)
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxLogError(wxT("TAccountList:LoadEntriesUsing: %s"), e.GetMessage().c_str());
+        wxLogError("TAccountList:LoadEntriesUsing: %s", e.GetMessage().c_str());
     }
 }
 
@@ -308,15 +308,15 @@ int TAccountList::NumberOfAccounts(int account_type)
 
 int TAccountList::NumberOfBankAccounts()
 {
-    return NumberOfAccounts(BANK);
+    return NumberOfAccounts(TAccountEntry::BANK);
 }
 
 int TAccountList::NumberOfTermAccounts()
 {
-    return NumberOfAccounts(TERM);
+    return NumberOfAccounts(TAccountEntry::TERM);
 }
 
 int TAccountList::NumberOfStockAccounts()
 {
-    return NumberOfAccounts(STOCK);
+    return NumberOfAccounts(TAccountEntry::STOCK);
 }

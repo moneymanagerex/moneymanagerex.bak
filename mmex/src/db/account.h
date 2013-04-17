@@ -19,17 +19,15 @@
 #pragma once
 #include "entry_base.h"
 
-enum ACCOUNT_STATE {OPEN, CLOSED};
 const wxString ACCOUNT_STATE_DEF[] = {
-    wxT("Open"),
-    wxT("Closed")
+    "Open",
+    "Closed"
 };
 
-enum ACCOUNT_TYPE {BANK, TERM, STOCK};
 const wxString ACCOUNT_TYPE_DEF[] = {
-    wxT("Checking"),
-    wxT("Term"),
-    wxT("Investment")
+    "Checking",
+    "Term",
+    "Investment"
 };
 
 class TCurrencyList;
@@ -47,6 +45,9 @@ private:
     void SetDatabaseValues(wxSQLite3Statement& st, int& db_index);
 
 public:
+    enum ACCOUNT_STATE {OPEN, CLOSED};
+    enum ACCOUNT_TYPE {BANK, TERM, STOCK};
+    
     wxString acc_name_;
     wxString acc_type_;
     wxString acc_number_;
