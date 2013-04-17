@@ -12,21 +12,21 @@ protected:
     wxDateTime start_date_, end_date_;
 };
 
-class mmCurrentMonth: mmDateRange
+class mmCurrentMonth: public mmDateRange
 {
 public:
     mmCurrentMonth(): mmDateRange()
     {}
 };
 
-class mmLastMonth: mmDateRange
+class mmLastMonth: public mmDateRange
 {
 public:
     mmLastMonth(): mmDateRange()
     {}
 };
 
-class mmCurrentYear: mmDateRange
+class mmCurrentYear: public mmDateRange
 {
 public:
     mmCurrentYear(): mmDateRange()
@@ -36,14 +36,14 @@ public:
     }
 };
 
-class mmLastYear: mmDateRange
+class mmLastYear: public mmDateRange
 {
 public:
     mmLastYear(): mmDateRange()
     {}
 };
 
-class mmCurrentFinancialYear: mmDateRange
+class mmCurrentFinancialYear: public mmDateRange
 {
 public:
     mmCurrentFinancialYear(): mmDateRange()
@@ -53,14 +53,14 @@ public:
     }
 };
 
-class mmLastFinancialYear: mmDateRange
+class mmLastFinancialYear: public mmDateRange
 {
 public:
     mmLastFinancialYear(): mmDateRange()
     {}
 };
 
-class mmLast30Days: mmDateRange
+class mmLast30Days: public mmDateRange
 {
 public:
     mmLast30Days(): mmDateRange()
