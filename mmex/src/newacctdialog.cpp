@@ -157,7 +157,7 @@ void mmNewAcctDialog::CreateControls()
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Account Name:")), flags);
 
-    textAccountName_ = new wxTextCtrl( this, wxID_ANY, wxT(""));
+    textAccountName_ = new wxTextCtrl( this, wxID_ANY, "");
     grid_sizer->Add(textAccountName_, flagsExpand);
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Account Type:")), flags);
@@ -184,11 +184,11 @@ void mmNewAcctDialog::CreateControls()
     itemChoice6->SetSelection(ACCT_STATUS_OPEN);
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC
-        , wxString::Format(_("Initial Balance: %s"), wxString(wxT("")).c_str())), flags);
+        , wxString::Format(_("Initial Balance: %s"),"")), flags);
 
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this,
         ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE,
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0, wxFloatingPointValidator<double>());
+        "", wxDefaultPosition, wxDefaultSize, 0, wxFloatingPointValidator<double>());
     grid_sizer->Add(itemTextCtrl19, flagsExpand);
 
     grid_sizer->Add(new wxStaticText( this, wxID_STATIC, _("Currency:")), flags);
@@ -219,7 +219,7 @@ void mmNewAcctDialog::CreateControls()
     wxBoxSizer *notes_sizer = new wxBoxSizer(wxVERTICAL);
     notes_tab->SetSizer(notes_sizer);
 
-    notesCtrl_ = new wxTextCtrl(notes_tab, ID_DIALOG_NEWACCT_TEXTCTRL_NOTES, wxT(""),
+    notesCtrl_ = new wxTextCtrl(notes_tab, ID_DIALOG_NEWACCT_TEXTCTRL_NOTES, "",
         wxDefaultPosition, wxSize(270,180), wxTE_MULTILINE);
     notes_sizer->Add(notesCtrl_, flagsExpand);
     //
@@ -237,30 +237,30 @@ void mmNewAcctDialog::CreateControls()
         _("Account Number:")), flags);
 
     wxTextCtrl* itemTextCtrl6 = new wxTextCtrl(others_tab,
-        ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER, wxT(""), wxDefaultPosition, wxDefaultSize);
+        ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER, "", wxDefaultPosition, wxDefaultSize);
     grid_sizer2->Add(itemTextCtrl6, flagsExpand);
 
     grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Held At:")), flags);
 
     wxTextCtrl* itemTextCtrl8 = new wxTextCtrl(others_tab,
-        ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT, wxT("") );
+        ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT, "" );
     grid_sizer2->Add(itemTextCtrl8, flagsExpand);
 
     grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Website:")), flags);
     wxTextCtrl* itemTextCtrl10 = new wxTextCtrl(others_tab,
-        ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE, wxT("") );
+        ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE, "" );
     grid_sizer2->Add(itemTextCtrl10, flagsExpand);
 
     grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Contact:")),
         flags);
     wxTextCtrl* itemTextCtrl12 = new wxTextCtrl(others_tab,
-        ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT, wxT("") );
+        ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT, "" );
     grid_sizer2->Add(itemTextCtrl12, flagsExpand);
 
     grid_sizer2->Add(new wxStaticText(others_tab, wxID_STATIC, _("Access Info:")),
          flags);
     wxTextCtrl* itemTextCtrl14 = new wxTextCtrl(others_tab,
-        ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO, wxT("*********"));
+        ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO, "*********");
     grid_sizer2->Add(itemTextCtrl14, flagsExpand);
 
     itemBoxSizer3->Add(acc_notebook);
@@ -399,7 +399,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     {
         if (!mmex::formatCurrencyToDouble(bal, pAccount->initialBalance_))
         {
-            mmShowErrorMessageInvalid(this, wxString::Format(_("Initial Balance: %s"), bal.c_str()));
+            mmShowErrorMessageInvalid(this, wxString::Format(_("Initial Balance: %s"), bal));
             return;
         }
     }
@@ -436,7 +436,7 @@ void mmNewAcctDialog::OnImageButton(wxCommandEvent& /*event*/)
     //Skip all images before custom images
     const int k = 18;
     wxMenu* mainMenu = new wxMenu;
-    mainMenu->Append(new wxMenuItem(mainMenu, 0, wxT("-=======-")));
+    mainMenu->Append(new wxMenuItem(mainMenu, 0, "-=======-"));
 
     wxImageList* imageList = navtree_images_list_();
 
@@ -454,7 +454,7 @@ void mmNewAcctDialog::OnCustonImage(wxCommandEvent& event)
 {
     int selectedImage = event.GetId();
 
-    core_->dbInfoSettings_->SetStringSetting(wxString::Format(wxT("ACC_IMAGE_ID_%d"), accountID_), wxString()<<selectedImage);
+    core_->dbInfoSettings_->SetStringSetting(wxString::Format("ACC_IMAGE_ID_%d", accountID_), wxString()<<selectedImage);
     if (selectedImage == 0)
         selectedImage = mmIniOptions::instance().account_image_id(core_, accountID_);
 
@@ -476,7 +476,7 @@ void mmNewAcctDialog::changeFocus(wxChildFocusEvent& event)
     }
     if (!edit_ && notesCtrl_->GetValue() == notesLabel_)
     {
-        notesCtrl_->SetValue(wxT(""));
+        notesCtrl_->SetValue("");
         notesCtrl_->SetForegroundColour(notesColour_);
     }
 }
