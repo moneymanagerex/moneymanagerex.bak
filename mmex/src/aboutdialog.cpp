@@ -76,7 +76,7 @@ void mmAboutDialog::InitControls()
     mmHTMLBuilder hb;
     hb.init();
     wxString html = mmex::getProgramDescription();
-    html.Replace("======================================\n", "<hr>");
+    html.Replace("======================================\n", "");
     html.Replace("\n", "<br>");
     html << "<br><hr>" << "\n";
     hb.addHeader(3, "Money Manager Ex");
