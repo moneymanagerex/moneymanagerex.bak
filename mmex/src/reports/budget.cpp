@@ -33,28 +33,28 @@ void mmReportBudget::setBudgetMonthlyEstimate(mmBudgetEntryHolder& budEntry)
 {
     int ndays = 365;
 
-    if (budEntry.period_ == wxT("Monthly")) {
+    if (budEntry.period_ == "Monthly") {
         budEntry.estimated_ = budEntry.amt_;
 
-    } else if (budEntry.period_ == wxT("Yearly")) {
+    } else if (budEntry.period_ == "Yearly") {
         budEntry.estimated_ = budEntry.amt_ / 12;
 
-    } else if (budEntry.period_ == wxT("Weekly")) {
+    } else if (budEntry.period_ == "Weekly") {
         budEntry.estimated_ = ((budEntry.amt_ / 7) * ndays) / 12;
 
-    } else if (budEntry.period_ == wxT("Bi-Weekly")) {
+    } else if (budEntry.period_ == "Bi-Weekly") {
         budEntry.estimated_ = ((budEntry.amt_ / 14) * ndays) / 12;
 
-    } else if (budEntry.period_ == wxT("Bi-Monthly")) {
+    } else if (budEntry.period_ == "Bi-Monthly") {
         budEntry.estimated_ = budEntry.amt_ / 2;
 
-    } else if (budEntry.period_ == wxT("Quarterly")) {
+    } else if (budEntry.period_ == "Quarterly") {
         budEntry.estimated_ = budEntry.amt_ / 3;
 
-    } else if (budEntry.period_ == wxT("Half-Yearly")) {
+    } else if (budEntry.period_ == "Half-Yearly") {
         budEntry.estimated_ = (budEntry.amt_ / 6);
 
-    } else if (budEntry.period_ == wxT("Daily")) {
+    } else if (budEntry.period_ == "Daily") {
         budEntry.estimated_ = (budEntry.amt_ * ndays) / 12;
 
     } else {
@@ -64,28 +64,28 @@ void mmReportBudget::setBudgetMonthlyEstimate(mmBudgetEntryHolder& budEntry)
 
 void mmReportBudget::setBudgetYearlyEstimate(mmBudgetEntryHolder& budEntry)
 {
-    if (budEntry.period_ == wxT("Monthly")) {
+    if (budEntry.period_ == "Monthly") {
         budEntry.estimated_ = budEntry.amt_ * 12;
 
-    } else if (budEntry.period_ == wxT("Yearly")) {
+    } else if (budEntry.period_ == "Yearly") {
         budEntry.estimated_ = budEntry.amt_;
 
-    } else if (budEntry.period_ == wxT("Weekly")) {
+    } else if (budEntry.period_ == "Weekly") {
         budEntry.estimated_ = budEntry.amt_ * 52;
 
-    } else if (budEntry.period_ == wxT("Bi-Weekly")) {
+    } else if (budEntry.period_ == "Bi-Weekly") {
         budEntry.estimated_ = budEntry.amt_ * 26;
 
-    } else if (budEntry.period_ == wxT("Bi-Monthly")) {
+    } else if (budEntry.period_ == "Bi-Monthly") {
         budEntry.estimated_ = budEntry.amt_ * 6;
 
-    } else if (budEntry.period_ == wxT("Quarterly")) {
+    } else if (budEntry.period_ == "Quarterly") {
         budEntry.estimated_ = budEntry.amt_ * 4;
 
-    } else if (budEntry.period_ == wxT("Half-Yearly")) {
+    } else if (budEntry.period_ == "Half-Yearly") {
         budEntry.estimated_ = budEntry.amt_ * 2;
 
-    } else if (budEntry.period_ == wxT("Daily")) {
+    } else if (budEntry.period_ == "Daily") {
         budEntry.estimated_ = budEntry.amt_ * 365;
 
     } else {
@@ -105,25 +105,25 @@ void mmReportBudget::initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id
 {
     budEntry.id_ = id;
     budEntry.subcategID_ = -1;
-    budEntry.subCatStr_  = wxT("");
+    budEntry.subCatStr_  = "";
     budEntry.amt_ = 0.0;
-    budEntry.period_ = wxT("None");
+    budEntry.period_ = "None";
     budEntry.estimated_ = 0.0;
-    budEntry.estimatedStr_ = wxT("0.0");
+    budEntry.estimatedStr_ = "0.0";
     budEntry.actual_ = 0.0;
-    budEntry.actualStr_ = wxT("0.0");
+    budEntry.actualStr_ = "0.0";
 }
 
 void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange)
 {
-    wxString todaysDate = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()).c_str());
-    todaysDate << wxT("<br>") << wxT("<br>");
+    wxString todaysDate = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()));
+    todaysDate << "<br>" << "<br>";
     if (withDateRange)
     {
         todaysDate
         << wxString::Format(_("From %s till %s")
-            , mmGetNiceDateSimpleString(startYear).Prepend(wxT("<b>")).Append(wxT("</b> ")).c_str()
-            , mmGetNiceDateSimpleString(endYear).Prepend(wxT("<b>")).Append(wxT("</b> ")).c_str());
+            , mmGetNiceDateSimpleString(startYear).Prepend("<b>").Append("</b> ")
+            , mmGetNiceDateSimpleString(endYear).Prepend("<b>").Append("</b> "));
     }
     hb.addHeaderItalic(1, todaysDate);
     hb.addLineBreak();
@@ -150,7 +150,7 @@ void mmReportBudget::SetDateToEndOfYear(int day, int month, wxDateTime& date, bo
 
 void mmReportBudget::SetBudgetMonth(wxString budgetYearStr, wxDateTime& startDate, wxDateTime& endDate)
 {
-    wxStringTokenizer tz(budgetYearStr,wxT("-"));
+    wxStringTokenizer tz(budgetYearStr,"-");
     wxString yearStr = tz.GetNextToken();
     wxString monthStr = tz.GetNextToken();
     int month = wxAtoi(monthStr) - 1;
@@ -178,7 +178,7 @@ wxString mmReportBudget::AdjustYearValues(int& day, int& month, long year, wxStr
     if ((yearStr.length() < 5)) {
         if ( mainFrame_->budgetFinancialYears() ) {
             GetFinancialYearValues(day, month);
-            yearStr = wxString() << _("Financial Year: ") << yearStr << wxT(" - ") << (year + 1);
+            yearStr = wxString() << _("Financial Year: ") << yearStr << " - " << (year + 1);
         } else
             yearStr = wxString() << _("Year: ") << yearStr;
     } else {

@@ -40,7 +40,7 @@ mmReportTransactions::~mmReportTransactions()
 wxString addFilterDetailes(wxString sHeader, wxString sValue)
 {
     wxString sData;
-    sData << wxT("<b>") << sHeader << wxT(" </b>") << sValue << wxT("<br>");
+    sData << "<b>" << sHeader << " </b>" << sValue << "<br>";
     return sData;
 }
 
@@ -53,7 +53,7 @@ wxString mmReportTransactions::getHTMLText()
     if (refAccountID_ > -1)
     {
         transHeading = wxString::Format(_("Transaction List for Account: %s")
-            ,core_->accountList_.GetAccountName(refAccountID_).c_str());
+            ,core_->accountList_.GetAccountName(refAccountID_));
     }
     hb.addHeader(2, transHeading);
 
@@ -61,7 +61,7 @@ wxString mmReportTransactions::getHTMLText()
     hb.addLineBreak();
 
     hb.startTable();
-    hb.startTable(wxT("95%"));
+    hb.startTable("95%");
 
     // Display the data Headings
     hb.startTableRow();
@@ -99,7 +99,7 @@ wxString mmReportTransactions::getHTMLText()
         // Display the data for the selected row
         hb.startTableRow();
         hb.addTableCell(it->get()->dateStr_, false);
-        hb.addTableCellLink(wxString::Format(wxT("TRXID:%d")
+        hb.addTableCellLink(wxString::Format("TRXID:%d"
             , it->get()->transactionID()), it->get()->fromAccountStr_, false);
         hb.addTableCell(it->get()->payeeStr_, false, true);
         hb.addTableCell(it->get()->status_);
@@ -128,7 +128,7 @@ wxString mmReportTransactions::getHTMLText()
         // Get the exchange rate for the selected account
         double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(it->get()->accountID_);
         double transAmount = it->get()->amt_ * dbRate;
-        if (it->get()->reportCategAmountStr_ != wxT(""))
+        if (it->get()->reportCategAmountStr_ != "")
         {
             transAmount = it->get()->reportCategAmount_ * dbRate;
             if (it->get()->transType_ == TRANS_TYPE_WITHDRAWAL_STR && transAmount < 0)
@@ -137,9 +137,9 @@ wxString mmReportTransactions::getHTMLText()
                 negativeTransAmount = true;
         }
 
-        wxString amtColour = negativeTransAmount ? wxT("RED") : wxT("BLACK");
+        wxString amtColour = negativeTransAmount ? "RED" : "BLACK";
 
-        if (it->get()->reportCategAmountStr_ == wxT(""))
+        if (it->get()->reportCategAmountStr_ == "")
             hb.addTableCell(it->get()->transAmtString_, true, false,false, amtColour);
         else
             hb.addTableCell(it->get()->reportCategAmountStr_, true, false,false, amtColour);
@@ -147,7 +147,7 @@ wxString mmReportTransactions::getHTMLText()
         hb.addTableCell(it->get()->notes_, false, true);
         hb.endTableRow();
 
-        if (it->get()->status_ != wxT("V"))
+        if (it->get()->status_ != "V")
         {
             if (it->get()->transType_ == TRANS_TYPE_DEPOSIT_STR)
                 total += transAmount;
@@ -198,9 +198,9 @@ wxString mmReportTransactions::getHTMLText()
 
     //Category
     if ( transDialog_->getCategoryCheckBox())
-        filterDetails << wxT("<b>") << _("Category:") << wxT(" </b>") <<transDialog_->userCategoryStr()
-        << (transDialog_->getExpandStatus() ? wxString(wxT(" <b> ")) << _("Subcategory:") << wxT(" </b>") << _("Any"): wxT(""))
-        << wxT("<br>");
+        filterDetails << "<b>" << _("Category:") << " </b>" <<transDialog_->userCategoryStr()
+        << (transDialog_->getExpandStatus() ? wxString(" <b> ") << _("Subcategory:") << " </b>" << _("Any"): "")
+        << "<br>";
     //Status
     if ( transDialog_->getStatusCheckBox())
         filterDetails << addFilterDetailes(_("Status:"), transDialog_->userStatusStr());
@@ -220,7 +220,7 @@ wxString mmReportTransactions::getHTMLText()
     if ( !filterDetails.IsEmpty())
     {
         hb.addHorizontalLine();
-        filterDetails.Prepend( wxString()<< wxT("<b>") << _("Filtering Details: ") << wxT ("</b><br>"));
+        filterDetails.Prepend( wxString()<< "<b>" << _("Filtering Details: ") << "</b><br>");
         hb.addParaText(filterDetails );
     }
 
