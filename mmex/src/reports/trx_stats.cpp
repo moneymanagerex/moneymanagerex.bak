@@ -13,7 +13,7 @@ wxString mmReportTransactionStats::getHTMLText()
     int yearsHist = 10; //How many years should show the report 
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxString rangeStr = wxString::Format(wxT("%d - %d"), year_ - yearsHist + 1, year_);
+    wxString rangeStr = wxString::Format("%d - %d", year_ - yearsHist + 1, year_);
 
     mmHTMLBuilder hb;
     hb.init();
@@ -25,14 +25,14 @@ wxString mmReportTransactionStats::getHTMLText()
     wxDateTime yearEnd(31, wxDateTime::Dec, year_ - yearsHist);
 
     hb.startCenter();
-    hb.startTable(wxT("50%"));
+    hb.startTable("50%");
     //Header 
     // Month 2011 2010 2009.....
     hb.startTableRow();
     hb.addTableHeaderCell(_("Month"));
     for (int y = 1; y <= yearsHist; y++) 
     {
-        hb.addTableHeaderCell(wxString::Format(wxT("%d"), year_ - y + 1));
+        hb.addTableHeaderCell(wxString::Format("%d", year_ - y + 1));
     }
     hb.endTableRow();
     //Table
@@ -52,7 +52,7 @@ wxString mmReportTransactionStats::getHTMLText()
             bool ignoreDate = false;
             int numThis = 0;
             core_->bTransactionList_.getTransactionStats(-1, numThis, ignoreDate, dtThisBegin, dtThisEnd);
-            hb.addTableCell(wxString::Format(wxT("%d"), numThis), true);
+            hb.addTableCell(wxString::Format("%d", numThis), true);
             grand_total[y] += numThis;
         }
         hb.endTableRow();
@@ -64,7 +64,7 @@ wxString mmReportTransactionStats::getHTMLText()
     //Grand Totals
     for (std::map<int, int>::const_iterator it = grand_total.begin(); it != grand_total.end(); ++ it)
     {
-        hb.addTableCell(wxString::Format(wxT("%d"), it->second), true);
+        hb.addTableCell(wxString::Format("%d", it->second), true);
     }
     //------------
     hb.endTable();

@@ -55,7 +55,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     mmGraphPie gg;
     hb.addImage(gg.getOutputFileName());
 
-    hb.startTable(wxT("60%"));
+    hb.startTable("60%");
     hb.startTableRow();
     hb.addTableHeaderCell(_("Category"));
     hb.addTableHeaderCell(_("Amount"), true);
@@ -67,7 +67,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
     double grandtotal = 0.0;
 
-    wxString sBalance = wxT("?");
+    wxString sBalance = "?";
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
@@ -138,8 +138,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
             mmex::formatDoubleToCurrency(categtotal, categtotalStr);
             hb.addRowSeparator(0);
             hb.startTableRow();
-            hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
-            hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
+            hb.addTableCell(_("Category Total: "),false, true, true, "GRAY");
+            hb.addTableCell(categtotalStr, true, false, true, "GRAY");
             hb.endTableRow();
         }
 

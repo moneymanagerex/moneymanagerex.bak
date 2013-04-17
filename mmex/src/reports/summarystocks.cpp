@@ -55,7 +55,7 @@ wxString mmReportSummaryStocks::getHTMLText()
     account_type.Add(ACCOUNT_TYPE_STOCK);
     const wxArrayInt accounts_id = core_->accountList_.getAccountsID(account_type);
 
-    hb.startTable(wxT("95%"));
+    hb.startTable("95%");
     for (size_t i = 0; i < accounts_id.Count(); ++i)
     {
         const int accountID  = accounts_id[i];
@@ -63,8 +63,8 @@ wxString mmReportSummaryStocks::getHTMLText()
         double gain_loss_sum = 0.0;
         wxString heldAt_ = core_->accountList_.GetAccountName(accountID);
 
-        hb.addTotalRow(wxT(""), 9, wxT(""));
-        hb.addTotalRow(heldAt_, 9, wxT(""));
+        hb.addTotalRow("", 9, "");
+        hb.addTotalRow(heldAt_, 9, "");
 
         display_header(hb);
         wxSQLite3Statement st = core_->db_->PrepareStatement(SELECT_ROW_SYMBOL_FROM_STOCK_V1);
@@ -75,17 +75,17 @@ wxString mmReportSummaryStocks::getHTMLText()
         {
             mmStockTransactionHolder th;
 
-            //th.id_              = q2.GetInt(wxT("STOCKID"));
-            th.shareName_       = q2.GetString(wxT("STOCKNAME"));
-            th.numShares_       = q2.GetDouble(wxT("NUMSHARES"));
-            th.numSharesStr_    = q2.GetString(wxT("NUMSHARES"));
-            th.stockSymbol_     = q2.GetString(wxT("SYMBOL"));
+            //th.id_              = q2.GetInt("STOCKID");
+            th.shareName_       = q2.GetString("STOCKNAME");
+            th.numShares_       = q2.GetDouble("NUMSHARES");
+            th.numSharesStr_    = q2.GetString("NUMSHARES");
+            th.stockSymbol_     = q2.GetString("SYMBOL");
 
-            th.currentPrice_    = q2.GetDouble(wxT("CURRENTPRICE"));
-            th.purchasePrice_   = q2.GetDouble(wxT("PURCHASEPRICE"));
-            th.value_           = q2.GetDouble(wxT("VALUE"));
-            double commission   = q2.GetDouble(wxT("COMMISSION"));
-            wxString dateString = q2.GetString(wxT("PURCHASEDATE"));
+            th.currentPrice_    = q2.GetDouble("CURRENTPRICE");
+            th.purchasePrice_   = q2.GetDouble("PURCHASEPRICE");
+            th.value_           = q2.GetDouble("VALUE");
+            double commission   = q2.GetDouble("COMMISSION");
+            wxString dateString = q2.GetString("PURCHASEDATE");
             wxDateTime dtdt     = mmGetStorageStringAsDate(dateString);
             wxString dt         = mmGetDateForDisplay(dtdt);
 
@@ -112,7 +112,7 @@ wxString mmReportSummaryStocks::getHTMLText()
             hb.addTableCell(commString, true);
 
             if(th.gainLoss_ < 0.0)
-                hb.addTableCell(th.gainLossStr_, true, true, true, wxT("RED"));
+                hb.addTableCell(th.gainLossStr_, true, true, true, "RED");
             else
                 hb.addTableCell(th.gainLossStr_, true, false, true);
 

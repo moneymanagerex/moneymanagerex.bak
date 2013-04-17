@@ -40,8 +40,8 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 {
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxString yearStr = wxString::Format(wxT("%d"), year_);
-    wxString finYearStr = yearStr + wxT(" - ") + wxString::Format(wxT("%d"), (year_ + 1));
+    wxString yearStr = wxString::Format("%d", year_);
+    wxString finYearStr = yearStr + " - " + wxString::Format("%d", (year_ + 1));
 
     wxDateTime sofy = wxDateTime( getUserDefinedFinancialYear() );
     int startDay = sofy.GetDay();
@@ -59,7 +59,7 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 
     hb.startCenter();
 
-    hb.startTable(wxT("75%"));
+    hb.startTable("75%");
     hb.startTableRow();
     hb.addTableHeaderCell(_("Year"));
     hb.addTableHeaderCell(_("Month"));
@@ -85,7 +85,7 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
         {
             yidx = wxDateTime::Jan;
             year_ ++ ;
-            yearStr = wxString::Format(wxT("%d"), year_);
+            yearStr = wxString::Format("%d", year_);
         }
 
         wxString monName = mmGetNiceMonthName(yidx);
@@ -123,7 +123,7 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 
         hb.addTableCell(actualIncStr, true, true, true);
         hb.addTableCell(actualExpStr, true, true, true);
-        hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? wxT("RED") : wxT("")));
+        hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? "RED" : ""));
 
         hb.endTableRow();
     }

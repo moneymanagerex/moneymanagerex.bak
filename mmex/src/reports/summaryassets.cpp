@@ -33,7 +33,7 @@ wxString mmReportSummaryAssets::getHTMLText()
 
     hb.startCenter();
 
-    hb.startTable(wxT("95%"));
+    hb.startTable("95%");
     hb.startTableRow();
     hb.addTableHeaderCell(_("Date"));
     hb.addTableHeaderCell(_("Name"));
@@ -62,7 +62,7 @@ wxString mmReportSummaryAssets::getHTMLText()
     /* Assets */
     hb.addRowSeparator(5);
     hb.addTotalRow(_("Total Assets: "), 4, asset_list_.GetAssetBalanceCurrencyFormat());
-    hb.addTableCell(wxT(""));
+    hb.addTableCell("");
     hb.endTableRow();
     hb.endTable();
 
