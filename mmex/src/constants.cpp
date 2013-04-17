@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  OR
  Commit a change to the SVN repository, then create the build.
  *************************************************************************/
-const wxString MMEX_REVISION_ID = wxT("$Rev$");
+const wxString MMEX_REVISION_ID = "$Rev$";
 //---------------------------------------------------------------------------
 const int mmex::MIN_DATAVERSION = 2;
 const wxChar * const mmex::DATAVERSION = wxT("2");
@@ -40,13 +40,13 @@ const wxChar *const mmex::DEFDELIMTER = wxT(",");
 // Using google: To specify the exchange, use exch:code
 // Using yahoo: To specify the exchange, use code.exch
 
-// const wxChar *const mmex::DEFSTOCKURL = wxT("http://www.google.com/finance?q=%s");
+// const wxChar *const mmex::DEFSTOCKURL = "http://www.google.com/finance?q=%s";
 
 // Will display the stock page when using Looks up the current value
-const wxChar *const mmex::DEFSTOCKURL = wxT("http://finance.yahoo.com/echarts?s=%s");
+const wxString mmex::DEFSTOCKURL = "http://finance.yahoo.com/echarts?s=%s";
 
 // Looks up the current value
-// const wxChar *const mmex::DEFSTOCKURL = wxT("http://finance.yahoo.com/lookup?s=%s");
+// const wxChar *const mmex::DEFSTOCKURL = "http://finance.yahoo.com/lookup?s=%s";
 
 //US Dollar (USD) in Euro (EUR) Chart
 //http://www.google.com/finance?q=CURRENCY%3AUSD
@@ -55,54 +55,54 @@ const wxChar *const mmex::DEFSTOCKURL = wxT("http://finance.yahoo.com/echarts?s=
 
 wxString mmex::getProgramName()
 {
-    return wxString(wxT("MoneyManagerEx"));
+    return wxString("MoneyManagerEx");
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::getProgramVersion()
 {
     wxString revision(MMEX_REVISION_ID);
-    revision.Replace(wxT("$"), wxEmptyString);
+    revision.Replace("$", wxEmptyString);
 
 /**************************************************
  Refer to comments in the file: constants.h
  **************************************************/
 #ifndef _MM_EX_BUILD_TYPE_RELEASE
-    revision.Replace(wxT("Rev: "), wxT("DEV:SVN-"));
+    revision.Replace("Rev: ", "DEV:SVN-");
 #endif
 
     revision.Trim();
-    return wxString::Format(wxT("0.9.9.2  %s"), revision.c_str());
+    return wxString::Format("0.9.9.2  %s", revision);
 }
 //----------------------------------------------------------------------------
 wxString mmex::getProgramCopyright()
 {
-    return wxT("(c) 2005-2012 Madhan Kanagavel");
+    return "(c) 2005-2012 Madhan Kanagavel";
 }
 
 wxString mmex::getProgramWebSite()
 {
-    return wxT("http://codelathe.com/mmex");
+    return "http://codelathe.com/mmex";
 }
 
 wxString mmex::getProgramForum()
 {
-    return wxT("http://www.codelathe.com/forum");
+    return "http://www.codelathe.com/forum";
 }
 wxString mmex::getProgramFacebookSite()
 {
-    return wxT("http://www.facebook.com/pages/Money-Manager-Ex/242286559144586");
+    return "http://www.facebook.com/pages/Money-Manager-Ex/242286559144586";
 }
 
 wxString mmex::getProgramDescription()
 {
     wxString description;
-    description << _("MMEX is using the following support products") << wxT(":\n")
-                << wxT("======================================\n")
-                << wxVERSION_STRING << wxT("\n")
-                << wxT("SQLite3 ") << wxSQLite3Database::GetVersion() << wxT("\n")
-                << wxT("wxSQLite 3.0.2")<< wxT("\n")
-                << wxT("Lua 5.2.1");
+    description << _("MMEX is using the following support products") << ":\n"
+                << "======================================\n"
+                << wxVERSION_STRING << "\n"
+                << "SQLite3 " << wxSQLite3Database::GetVersion() << "\n"
+                << "wxSQLite 3.0.2"<< "\n"
+                << "Lua 5.2.1";
     return description;
 }
 

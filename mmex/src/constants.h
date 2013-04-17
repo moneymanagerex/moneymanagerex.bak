@@ -43,7 +43,7 @@ extern const wxChar * const DATAVERSION;
 
 extern const wxChar *const DEFDATEFORMAT;
 extern const wxChar *const DEFDELIMTER;
-extern const wxChar *const DEFSTOCKURL;
+extern const wxString DEFSTOCKURL;
 
 /*
         Uses for titles, reports, etc.
@@ -74,30 +74,30 @@ const wxString VIEW_TRANS_LAST_3MONTHS_STR   = wxTRANSLATE("View Last 3 Months")
 const wxString VIEW_TRANS_LAST_365_DAYS      = wxTRANSLATE("View Last 365 days");
 const wxString VIEW_TRANS_CURRENT_YEAR_STR   = wxTRANSLATE("View Current Year");
 
-const wxString NAVTREECTRL_REPORTS = wxT("Reports");
-const wxString NAVTREECTRL_HELP = wxT("Help");
-const wxString NAVTREECTRL_CUSTOM_REPORTS = wxT("Custom_Reports");
-const wxString NAVTREECTRL_INVESTMENT = wxT("Stocks");
-const wxString NAVTREECTRL_BUDGET = wxT("Budgeting");
+const wxString NAVTREECTRL_REPORTS = "Reports";
+const wxString NAVTREECTRL_HELP = "Help";
+const wxString NAVTREECTRL_CUSTOM_REPORTS = "Custom_Reports";
+const wxString NAVTREECTRL_INVESTMENT = "Stocks";
+const wxString NAVTREECTRL_BUDGET = "Budgeting";
 
-const wxString  VIEW_ACCOUNTS_ALL_STR       = wxT("ALL");
-const wxString  VIEW_ACCOUNTS_OPEN_STR      = wxT("Open");
-const wxString  VIEW_ACCOUNTS_FAVORITES_STR = wxT("Favorites");
+const wxString  VIEW_ACCOUNTS_ALL_STR       = "ALL";
+const wxString  VIEW_ACCOUNTS_OPEN_STR      = "Open";
+const wxString  VIEW_ACCOUNTS_FAVORITES_STR = "Favorites";
 
-const wxString INIDB_UPDATE_CURRENCY_RATE   = wxT("UPDATECURRENCYRATE");
-const wxString INIDB_USE_TRANSACTION_SOUND  = wxT("USETRANSSOUND");
-const wxString INIDB_USE_ORG_DATE_COPYPASTE = wxT("USEORIGDATEONCOPYPASTE");
+const wxString INIDB_UPDATE_CURRENCY_RATE   = "UPDATECURRENCYRATE";
+const wxString INIDB_USE_TRANSACTION_SOUND  = "USETRANSSOUND";
+const wxString INIDB_USE_ORG_DATE_COPYPASTE = "USEORIGDATEONCOPYPASTE";
 
-const wxString INIDB_BUDGET_FINANCIAL_YEARS       = wxT("BUDGET_FINANCIAL_YEARS");
-const wxString INIDB_BUDGET_INCLUDE_TRANSFERS     = wxT("BUDGET_INCLUDE_TRANSFERS");
-const wxString INIDB_BUDGET_SETUP_WITHOUT_SUMMARY = wxT("BUDGET_SETUP_WITHOUT_SUMMARY");
-const wxString INIDB_BUDGET_SUMMARY_WITHOUT_CATEG = wxT("BUDGET_SUMMARY_WITHOUT_CATEGORIES");
-const wxString INIDB_IGNORE_FUTURE_TRANSACTIONS   = wxT("IGNORE_FUTURE_TRANSACTIONS");
+const wxString INIDB_BUDGET_FINANCIAL_YEARS       = "BUDGET_FINANCIAL_YEARS";
+const wxString INIDB_BUDGET_INCLUDE_TRANSFERS     = "BUDGET_INCLUDE_TRANSFERS";
+const wxString INIDB_BUDGET_SETUP_WITHOUT_SUMMARY = "BUDGET_SETUP_WITHOUT_SUMMARY";
+const wxString INIDB_BUDGET_SUMMARY_WITHOUT_CATEG = "BUDGET_SUMMARY_WITHOUT_CATEGORIES";
+const wxString INIDB_IGNORE_FUTURE_TRANSACTIONS   = "IGNORE_FUTURE_TRANSACTIONS";
 
-const wxString TIPS_BANKS  = wxT("checkingpanel");
-const wxString TIPS_BILLS  = wxT("billsdeposits");
-const wxString TIPS_STOCK  = wxT("investment");
-const wxString TIPS_ASSETS = wxT("assets");
+const wxString TIPS_BANKS  = "checkingpanel";
+const wxString TIPS_BILLS  = "billsdeposits";
+const wxString TIPS_STOCK  = "investment";
+const wxString TIPS_ASSETS = "assets";
 
 const wxString BILLSDEPOSITS_REPEATS[] = {
     wxTRANSLATE("None"),
@@ -174,182 +174,182 @@ static const wxString TIPS[] = {
 };
 
 static const wxString CURRENCIES[] = {
-    wxT("AFN"),  wxT("Afghanistan Afghani"),
-    wxT("ALL"),  wxT("Albania Lek"),
-    wxT("DZD"),  wxT("Algeria Dinar"),
-    wxT("AOA"),  wxT("Angola Kwanza"),
-    wxT("ARS"),  wxT("Argentina Peso"),
-    wxT("AMD"),  wxT("Armenia Dram"),
-    wxT("AWG"),  wxT("Aruba Guilder"),
-    wxT("AUD"),  wxT("Australia Dollar"),
-    wxT("AZN"),  wxT("Azerbaijan New Manat"),
-    wxT("BSD"),  wxT("Bahamas Dollar"),
-    wxT("BHD"),  wxT("Bahrain Dinar"),
-    wxT("BDT"),  wxT("Bangladesh Taka"),
-    wxT("BBD"),  wxT("Barbados Dollar"),
-    wxT("BYR"),  wxT("Belarus Ruble"),
-    wxT("BZD"),  wxT("Belize Dollar"),
-    wxT("BMD"),  wxT("Bermuda Dollar"),
-    wxT("BTN"),  wxT("Bhutan Ngultrum"),
-    wxT("BOB"),  wxT("Bolivia Boliviano"),
-    wxT("BAM"),  wxT("Bosnia and Herzegovina Convertible Marka"),
-    wxT("BWP"),  wxT("Botswana Pula"),
-    wxT("BRL"),  wxT("Brazil Real"),
-    wxT("BND"),  wxT("Brunei Darussalam Dollar"),
-    wxT("BGN"),  wxT("Bulgaria Lev"),
-    wxT("BIF"),  wxT("Burundi Franc"),
-    wxT("KHR"),  wxT("Cambodia Riel"),
-    wxT("CAD"),  wxT("Canada Dollar"),
-    wxT("CVE"),  wxT("Cape Verde Escudo"),
-    wxT("KYD"),  wxT("Cayman Islands Dollar"),
-    wxT("CLP"),  wxT("Chile Peso"),
-    wxT("CNY"),  wxT("China Yuan Renminbi"),
-    wxT("COP"),  wxT("Colombia Peso"),
-    wxT("XOF"),  wxT("Communauté Financière Africaine (BCEAO) Franc"),
-    wxT("KMF"),  wxT("Comoros Franc"),
-    wxT("XPF"),  wxT("Comptoirs Français du Pacifique (CFP) Franc"),
-    wxT("CDF"),  wxT("Congo/Kinshasa Franc"),
-    wxT("CRC"),  wxT("Costa Rica Colon"),
-    wxT("HRK"),  wxT("Croatia Kuna"),
-    wxT("CUC"),  wxT("Cuba Convertible Peso"),
-    wxT("CUP"),  wxT("Cuba Peso"),
-    wxT("CZK"),  wxT("Czech Republic Koruna"),
-    wxT("DKK"),  wxT("Denmark Krone"),
-    wxT("DJF"),  wxT("Djibouti Franc"),
-    wxT("DOP"),  wxT("Dominican Republic Peso"),
-    wxT("XCD"),  wxT("East Caribbean Dollar"),
-    wxT("EGP"),  wxT("Egypt Pound"),
-    wxT("SVC"),  wxT("El Salvador Colon"),
-    wxT("ERN"),  wxT("Eritrea Nakfa"),
-    wxT("ETB"),  wxT("Ethiopia Birr"),
-    wxT("EUR"),  wxT("Euro Member Countries"),
-    wxT("FKP"),  wxT("Falkland Islands (Malvinas) Pound"),
-    wxT("FJD"),  wxT("Fiji Dollar"),
-    wxT("GMD"),  wxT("Gambia Dalasi"),
-    wxT("GEL"),  wxT("Georgia Lari"),
-    wxT("GHS"),  wxT("Ghana Cedi"),
-    wxT("GIP"),  wxT("Gibraltar Pound"),
-    wxT("GTQ"),  wxT("Guatemala Quetzal"),
-    wxT("GGP"),  wxT("Guernsey Pound"),
-    wxT("GNF"),  wxT("Guinea Franc"),
-    wxT("GYD"),  wxT("Guyana Dollar"),
-    wxT("HTG"),  wxT("Haiti Gourde"),
-    wxT("HNL"),  wxT("Honduras Lempira"),
-    wxT("HKD"),  wxT("Hong Kong Dollar"),
-    wxT("HUF"),  wxT("Hungary Forint"),
-    wxT("ISK"),  wxT("Iceland Krona"),
-    wxT("INR"),  wxT("India Rupee"),
-    wxT("IDR"),  wxT("Indonesia Rupiah"),
-    wxT("XDR"),  wxT("International Monetary Fund (IMF) Special Drawing Rights"),
-    wxT("IRR"),  wxT("Iran Rial"),
-    wxT("IQD"),  wxT("Iraq Dinar"),
-    wxT("IMP"),  wxT("Isle of Man Pound"),
-    wxT("ILS"),  wxT("Israel Shekel"),
-    wxT("JMD"),  wxT("Jamaica Dollar"),
-    wxT("JPY"),  wxT("Japan Yen"),
-    wxT("JEP"),  wxT("Jersey Pound"),
-    wxT("JOD"),  wxT("Jordan Dinar"),
-    wxT("KZT"),  wxT("Kazakhstan Tenge"),
-    wxT("KES"),  wxT("Kenya Shilling"),
-    wxT("KPW"),  wxT("Korea (North) Won"),
-    wxT("KRW"),  wxT("Korea (South) Won"),
-    wxT("KWD"),  wxT("Kuwait Dinar"),
-    wxT("KGS"),  wxT("Kyrgyzstan Som"),
-    wxT("LAK"),  wxT("Laos Kip"),
-    wxT("LVL"),  wxT("Latvia Lat"),
-    wxT("LBP"),  wxT("Lebanon Pound"),
-    wxT("LSL"),  wxT("Lesotho Loti"),
-    wxT("LRD"),  wxT("Liberia Dollar"),
-    wxT("LYD"),  wxT("Libya Dinar"),
-    wxT("LTL"),  wxT("Lithuania Litas"),
-    wxT("MOP"),  wxT("Macau Pataca"),
-    wxT("MKD"),  wxT("Macedonia Denar"),
-    wxT("MGA"),  wxT("Madagascar Ariary"),
-    wxT("MWK"),  wxT("Malawi Kwacha"),
-    wxT("MYR"),  wxT("Malaysia Ringgit"),
-    wxT("MVR"),  wxT("Maldives (Maldive Islands) Rufiyaa"),
-    wxT("MRO"),  wxT("Mauritania Ouguiya"),
-    wxT("MUR"),  wxT("Mauritius Rupee"),
-    wxT("MXN"),  wxT("Mexico Peso"),
-    wxT("MDL"),  wxT("Moldova Leu"),
-    wxT("MNT"),  wxT("Mongolia Tughrik"),
-    wxT("MAD"),  wxT("Morocco Dirham"),
-    wxT("MZN"),  wxT("Mozambique Metical"),
-    wxT("MMK"),  wxT("Myanmar (Burma) Kyat"),
-    wxT("NAD"),  wxT("Namibia Dollar"),
-    wxT("NPR"),  wxT("Nepal Rupee"),
-    wxT("ANG"),  wxT("Netherlands Antilles Guilder"),
-    wxT("NZD"),  wxT("New Zealand Dollar"),
-    wxT("NIO"),  wxT("Nicaragua Cordoba"),
-    wxT("NGN"),  wxT("Nigeria Naira"),
-    wxT("NOK"),  wxT("Norway Krone"),
-    wxT("OMR"),  wxT("Oman Rial"),
-    wxT("PKR"),  wxT("Pakistan Rupee"),
-    wxT("PAB"),  wxT("Panama Balboa"),
-    wxT("PGK"),  wxT("Papua New Guinea Kina"),
-    wxT("PYG"),  wxT("Paraguay Guarani"),
-    wxT("PEN"),  wxT("Peru Nuevo Sol"),
-    wxT("PHP"),  wxT("Philippines Peso"),
-    wxT("PLN"),  wxT("Poland Zloty"),
-    wxT("QAR"),  wxT("Qatar Riyal"),
-    wxT("RON"),  wxT("Romania New Leu"),
-    wxT("RUB"),  wxT("Russia Ruble"),
-    wxT("RWF"),  wxT("Rwanda Franc"),
-    wxT("SHP"),  wxT("Saint Helena Pound"),
-    wxT("WST"),  wxT("Samoa Tala"),
-    wxT("STD"),  wxT("São Tomé and Príncipe Dobra"),
-    wxT("SAR"),  wxT("Saudi Arabia Riyal"),
-    wxT("RSD"),  wxT("Serbia Dinar"),
-    wxT("SCR"),  wxT("Seychelles Rupee"),
-    wxT("SLL"),  wxT("Sierra Leone Leone"),
-    wxT("SGD"),  wxT("Singapore Dollar"),
-    wxT("SBD"),  wxT("Solomon Islands Dollar"),
-    wxT("SOS"),  wxT("Somalia Shilling"),
-    wxT("ZAR"),  wxT("South Africa Rand"),
-    wxT("LKR"),  wxT("Sri Lanka Rupee"),
-    wxT("SDG"),  wxT("Sudan Pound"),
-    wxT("SRD"),  wxT("Suriname Dollar"),
-    wxT("SZL"),  wxT("Swaziland Lilangeni"),
-    wxT("SEK"),  wxT("Sweden Krona"),
-    wxT("CHF"),  wxT("Switzerland Franc"),
-    wxT("SYP"),  wxT("Syria Pound"),
-    wxT("TWD"),  wxT("Taiwan New Dollar"),
-    wxT("TJS"),  wxT("Tajikistan Somoni"),
-    wxT("TZS"),  wxT("Tanzania Shilling"),
-    wxT("THB"),  wxT("Thailand Baht"),
-    wxT("TOP"),  wxT("Tonga Pa'anga"),
-    wxT("TTD"),  wxT("Trinidad and Tobago Dollar"),
-    wxT("TND"),  wxT("Tunisia Dinar"),
-    wxT("TRY"),  wxT("Turkey Lira"),
-    wxT("TMT"),  wxT("Turkmenistan Manat"),
-    wxT("TVD"),  wxT("Tuvalu Dollar"),
-    wxT("UGX"),  wxT("Uganda Shilling"),
-    wxT("UAH"),  wxT("Ukraine Hryvna"),
-    wxT("AED"),  wxT("United Arab Emirates Dirham"),
-    wxT("GBP"),  wxT("United Kingdom Pound"),
-    wxT("USD"),  wxT("United States Dollar"),
-    wxT("UYU"),  wxT("Uruguay Peso"),
-    wxT("UZS"),  wxT("Uzbekistan Som"),
-    wxT("VUV"),  wxT("Vanuatu Vatu"),
-    wxT("VEF"),  wxT("Venezuela Bolivar"),
-    wxT("VND"),  wxT("Viet Nam Dong"),
-    wxT("YER"),  wxT("Yemen Rial"),
-    wxT("ZMK"),  wxT("Zambia Kwacha"),
-    wxT("ZWD"),  wxT("Zimbabwe Dollar")
+    "AFN",  "Afghanistan Afghani",
+    "ALL",  "Albania Lek",
+    "DZD",  "Algeria Dinar",
+    "AOA",  "Angola Kwanza",
+    "ARS",  "Argentina Peso",
+    "AMD",  "Armenia Dram",
+    "AWG",  "Aruba Guilder",
+    "AUD",  "Australia Dollar",
+    "AZN",  "Azerbaijan New Manat",
+    "BSD",  "Bahamas Dollar",
+    "BHD",  "Bahrain Dinar",
+    "BDT",  "Bangladesh Taka",
+    "BBD",  "Barbados Dollar",
+    "BYR",  "Belarus Ruble",
+    "BZD",  "Belize Dollar",
+    "BMD",  "Bermuda Dollar",
+    "BTN",  "Bhutan Ngultrum",
+    "BOB",  "Bolivia Boliviano",
+    "BAM",  "Bosnia and Herzegovina Convertible Marka",
+    "BWP",  "Botswana Pula",
+    "BRL",  "Brazil Real",
+    "BND",  "Brunei Darussalam Dollar",
+    "BGN",  "Bulgaria Lev",
+    "BIF",  "Burundi Franc",
+    "KHR",  "Cambodia Riel",
+    "CAD",  "Canada Dollar",
+    "CVE",  "Cape Verde Escudo",
+    "KYD",  "Cayman Islands Dollar",
+    "CLP",  "Chile Peso",
+    "CNY",  "China Yuan Renminbi",
+    "COP",  "Colombia Peso",
+    "XOF",  "Communauté Financière Africaine (BCEAO) Franc",
+    "KMF",  "Comoros Franc",
+    "XPF",  "Comptoirs Français du Pacifique (CFP) Franc",
+    "CDF",  "Congo/Kinshasa Franc",
+    "CRC",  "Costa Rica Colon",
+    "HRK",  "Croatia Kuna",
+    "CUC",  "Cuba Convertible Peso",
+    "CUP",  "Cuba Peso",
+    "CZK",  "Czech Republic Koruna",
+    "DKK",  "Denmark Krone",
+    "DJF",  "Djibouti Franc",
+    "DOP",  "Dominican Republic Peso",
+    "XCD",  "East Caribbean Dollar",
+    "EGP",  "Egypt Pound",
+    "SVC",  "El Salvador Colon",
+    "ERN",  "Eritrea Nakfa",
+    "ETB",  "Ethiopia Birr",
+    "EUR",  "Euro Member Countries",
+    "FKP",  "Falkland Islands (Malvinas) Pound",
+    "FJD",  "Fiji Dollar",
+    "GMD",  "Gambia Dalasi",
+    "GEL",  "Georgia Lari",
+    "GHS",  "Ghana Cedi",
+    "GIP",  "Gibraltar Pound",
+    "GTQ",  "Guatemala Quetzal",
+    "GGP",  "Guernsey Pound",
+    "GNF",  "Guinea Franc",
+    "GYD",  "Guyana Dollar",
+    "HTG",  "Haiti Gourde",
+    "HNL",  "Honduras Lempira",
+    "HKD",  "Hong Kong Dollar",
+    "HUF",  "Hungary Forint",
+    "ISK",  "Iceland Krona",
+    "INR",  "India Rupee",
+    "IDR",  "Indonesia Rupiah",
+    "XDR",  "International Monetary Fund (IMF) Special Drawing Rights",
+    "IRR",  "Iran Rial",
+    "IQD",  "Iraq Dinar",
+    "IMP",  "Isle of Man Pound",
+    "ILS",  "Israel Shekel",
+    "JMD",  "Jamaica Dollar",
+    "JPY",  "Japan Yen",
+    "JEP",  "Jersey Pound",
+    "JOD",  "Jordan Dinar",
+    "KZT",  "Kazakhstan Tenge",
+    "KES",  "Kenya Shilling",
+    "KPW",  "Korea (North) Won",
+    "KRW",  "Korea (South) Won",
+    "KWD",  "Kuwait Dinar",
+    "KGS",  "Kyrgyzstan Som",
+    "LAK",  "Laos Kip",
+    "LVL",  "Latvia Lat",
+    "LBP",  "Lebanon Pound",
+    "LSL",  "Lesotho Loti",
+    "LRD",  "Liberia Dollar",
+    "LYD",  "Libya Dinar",
+    "LTL",  "Lithuania Litas",
+    "MOP",  "Macau Pataca",
+    "MKD",  "Macedonia Denar",
+    "MGA",  "Madagascar Ariary",
+    "MWK",  "Malawi Kwacha",
+    "MYR",  "Malaysia Ringgit",
+    "MVR",  "Maldives (Maldive Islands) Rufiyaa",
+    "MRO",  "Mauritania Ouguiya",
+    "MUR",  "Mauritius Rupee",
+    "MXN",  "Mexico Peso",
+    "MDL",  "Moldova Leu",
+    "MNT",  "Mongolia Tughrik",
+    "MAD",  "Morocco Dirham",
+    "MZN",  "Mozambique Metical",
+    "MMK",  "Myanmar (Burma) Kyat",
+    "NAD",  "Namibia Dollar",
+    "NPR",  "Nepal Rupee",
+    "ANG",  "Netherlands Antilles Guilder",
+    "NZD",  "New Zealand Dollar",
+    "NIO",  "Nicaragua Cordoba",
+    "NGN",  "Nigeria Naira",
+    "NOK",  "Norway Krone",
+    "OMR",  "Oman Rial",
+    "PKR",  "Pakistan Rupee",
+    "PAB",  "Panama Balboa",
+    "PGK",  "Papua New Guinea Kina",
+    "PYG",  "Paraguay Guarani",
+    "PEN",  "Peru Nuevo Sol",
+    "PHP",  "Philippines Peso",
+    "PLN",  "Poland Zloty",
+    "QAR",  "Qatar Riyal",
+    "RON",  "Romania New Leu",
+    "RUB",  "Russia Ruble",
+    "RWF",  "Rwanda Franc",
+    "SHP",  "Saint Helena Pound",
+    "WST",  "Samoa Tala",
+    "STD",  "São Tomé and Príncipe Dobra",
+    "SAR",  "Saudi Arabia Riyal",
+    "RSD",  "Serbia Dinar",
+    "SCR",  "Seychelles Rupee",
+    "SLL",  "Sierra Leone Leone",
+    "SGD",  "Singapore Dollar",
+    "SBD",  "Solomon Islands Dollar",
+    "SOS",  "Somalia Shilling",
+    "ZAR",  "South Africa Rand",
+    "LKR",  "Sri Lanka Rupee",
+    "SDG",  "Sudan Pound",
+    "SRD",  "Suriname Dollar",
+    "SZL",  "Swaziland Lilangeni",
+    "SEK",  "Sweden Krona",
+    "CHF",  "Switzerland Franc",
+    "SYP",  "Syria Pound",
+    "TWD",  "Taiwan New Dollar",
+    "TJS",  "Tajikistan Somoni",
+    "TZS",  "Tanzania Shilling",
+    "THB",  "Thailand Baht",
+    "TOP",  "Tonga Pa'anga",
+    "TTD",  "Trinidad and Tobago Dollar",
+    "TND",  "Tunisia Dinar",
+    "TRY",  "Turkey Lira",
+    "TMT",  "Turkmenistan Manat",
+    "TVD",  "Tuvalu Dollar",
+    "UGX",  "Uganda Shilling",
+    "UAH",  "Ukraine Hryvna",
+    "AED",  "United Arab Emirates Dirham",
+    "GBP",  "United Kingdom Pound",
+    "USD",  "United States Dollar",
+    "UYU",  "Uruguay Peso",
+    "UZS",  "Uzbekistan Som",
+    "VUV",  "Vanuatu Vatu",
+    "VEF",  "Venezuela Bolivar",
+    "VND",  "Viet Nam Dong",
+    "YER",  "Yemen Rial",
+    "ZMK",  "Zambia Kwacha",
+    "ZWD",  "Zimbabwe Dollar"
 };
 //*----------------------------------------------------------------------------*//
 
-const wxString LANGUAGE_PARAMETER = wxT("LANGUAGE");
+const wxString LANGUAGE_PARAMETER = "LANGUAGE";
 
 const int BD_REPEATS_MULTIPLEX_BASE  = 100;
 
-const wxString ACCOUNT_TYPE_BANK  = wxT("Checking");
-const wxString ACCOUNT_TYPE_TERM  = wxT("Term");
-const wxString ACCOUNT_TYPE_STOCK = wxT("Investment");
+const wxString ACCOUNT_TYPE_BANK  = "Checking";
+const wxString ACCOUNT_TYPE_TERM  = "Term";
+const wxString ACCOUNT_TYPE_STOCK = "Investment";
 
-const wxString TRANS_TYPE_WITHDRAWAL_STR   = wxT("Withdrawal");
-const wxString TRANS_TYPE_DEPOSIT_STR      = wxT("Deposit");
-const wxString TRANS_TYPE_TRANSFER_STR     = wxT("Transfer");
+const wxString TRANS_TYPE_WITHDRAWAL_STR   = "Withdrawal";
+const wxString TRANS_TYPE_DEPOSIT_STR      = "Deposit";
+const wxString TRANS_TYPE_TRANSFER_STR     = "Transfer";
 
 enum {DEF_STATUS_NONE , DEF_STATUS_RECONCILED , DEF_STATUS_VOID , DEF_STATUS_FOLLOWUP , DEF_STATUS_DUPLICATE };
 enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
