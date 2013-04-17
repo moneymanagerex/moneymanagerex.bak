@@ -47,8 +47,56 @@ class mmReportIncomeExpensesCurrentMonth: public mmReportIncomeExpenses
 public:
     mmReportIncomeExpensesCurrentMonth(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
     {
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
     }
 };
+
+class mmReportIncomeExpensesLastMonth: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesLastMonth(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    {
+    }
+};
+
+class mmReportIncomeExpensesCurrentYear: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesCurrentYear(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    {
+    }
+};
+
+class mmReportIncomeExpensesLastYear: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesLastYear(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    {
+    }
+};
+
+class mmReportIncomeExpensesCurrentFinancialYear: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    {
+    }
+};
+
+class mmReportIncomeExpensesLastFinancialYear: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    {
+    }
+};
+
+class mmReportIncomeExpensesLast30Days: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesLast30Days(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    {
+    }
+};
+
 #endif // _MM_EX_REPORTINCEXP_H_
+
