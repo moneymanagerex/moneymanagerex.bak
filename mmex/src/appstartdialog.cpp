@@ -74,7 +74,7 @@ mmAppStartDialog::~mmAppStartDialog()
     try
     {
         bool showBeginApp = itemCheckBox->GetValue();
-        pIniSettings_->SetBoolSetting(wxT("SHOWBEGINAPP"), showBeginApp);
+        pIniSettings_->SetBoolSetting("SHOWBEGINAPP", showBeginApp);
     }
     catch (...)
     {
@@ -117,7 +117,7 @@ void mmAppStartDialog::CreateControls()
     {
         wxButton* itemButton9 = new wxButton( this, wxID_INDEX, _("Visit Website for more information"));
         wxString s = _("Open the %s website for latest news, updates etc");
-        s = wxString::Format(s, mmex::getProgramName().c_str());
+        s = wxString::Format(s, mmex::getProgramName());
 
         itemButton9->SetToolTip(s);
         itemBoxSizer5->Add(itemButton9, 0, wxGROW|wxALL, 5);
@@ -127,11 +127,11 @@ void mmAppStartDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer10, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxString showAppStartString = _("Show this window next time %s starts");
-    showAppStartString = wxString::Format(showAppStartString, mmex::getProgramName().c_str());
+    showAppStartString = wxString::Format(showAppStartString, mmex::getProgramName());
 
     itemCheckBox = new wxCheckBox( this, wxID_STATIC, showAppStartString, wxDefaultPosition,
         wxDefaultSize, wxCHK_2STATE );
-    bool showBeginApp = pIniSettings_->GetBoolSetting(wxT("SHOWBEGINAPP"), true);
+    bool showBeginApp = pIniSettings_->GetBoolSetting("SHOWBEGINAPP", true);
     if (showBeginApp) itemCheckBox->SetValue(true);
     else              itemCheckBox->SetValue(false);
     itemBoxSizer10->Add(itemCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -158,7 +158,7 @@ void mmAppStartDialog::CreateControls()
         }
         else
         {
-            itemButton61->SetToolTip(wxString::Format(_("Open the previously opened database : %s"), val.c_str()));
+            itemButton61->SetToolTip(wxString::Format(_("Open the previously opened database : %s"), val));
         }
     }
     else
@@ -177,9 +177,9 @@ void mmAppStartDialog::OnButtonAppstartHelpClick( wxCommandEvent& /*event*/ )
 {
     int helpFileIndex_ = mmex::HTML_INDEX;
     wxFileName helpIndexFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
-    wxString url = wxT("file://");
+    wxString url = "file://";
 
-    if (mmOptions::instance().language_ != wxT("english")) helpIndexFile.AppendDir(mmOptions::instance().language_);
+    if (mmOptions::instance().language_ != "english") helpIndexFile.AppendDir(mmOptions::instance().language_);
 
     if (helpIndexFile.FileExists()) // Load the help file for the given language
     {

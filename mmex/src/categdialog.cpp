@@ -142,7 +142,7 @@ void mmCategDialog::fillControls()
     treeCtrl_->SelectItem(selectedItemId_);
     treeCtrl_->EnsureVisible(selectedItemId_);
 
-    textCtrl_->SetValue(wxT (""));
+    textCtrl_->SetValue(wxT(""));
     selectButton_->Disable();
     deleteButton_->Disable();
     editButton_->Disable();

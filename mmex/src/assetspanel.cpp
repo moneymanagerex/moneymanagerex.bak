@@ -426,14 +426,14 @@ int mmAssetsPanel::initVirtualListControl(int id, int col, bool asc)
     core_->currencyList_.LoadBaseCurrencySettings();
 
     const wxString sql = wxString::FromUTF8(SELECT_ALL_FROM_ASSETS_V1)
-        + wxString::Format(" where ASSETTYPE in ( %s ) ", filter_.c_str())
+        + wxString::Format(" where ASSETTYPE in ( %s ) ", filter_)
         + " order by " + (wxString() << col + 1)
         + (!asc ? " desc" : " ");
     asset_list_.LoadAssetEntriesUsing(sql);
 
     m_listCtrlAssets->SetItemCount(asset_list_.entrylist_.size());
     header_text_->SetLabel(wxString::Format(_("Total: %s")
-        , asset_list_.GetAssetBalanceCurrencyEditFormat().c_str()));
+        , asset_list_.GetAssetBalanceCurrencyEditFormat()));
 
     int selected_item = -1;
     for (int i = 0; i < asset_list_.CurrentListSize(); ++i)

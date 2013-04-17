@@ -158,7 +158,7 @@ void StocksListCtrl::OnMoveStocks(wxCommandEvent& /*event*/)
     }
 
     wxString headerMsg = wxString::Format(_("Moving Transaction from %s to...")
-        ,cp_->core_->accountList_.GetAccountName(cp_->accountID_).c_str());
+        ,cp_->core_->accountList_.GetAccountName(cp_->accountID_));
     wxSingleChoiceDialog scd(this, _("Select the destination Account "), headerMsg , accounts_name);
 
     int toAccountID = -1;
@@ -268,7 +268,7 @@ bool mmStocksPanel::Create(wxWindow *parent,
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxPanel::Create(parent, winid, pos, size, style, name);
 
-    strLastUpdate_ = core_->dbInfoSettings_->GetStringSetting(wxT("STOCKS_LAST_REFRESH_DATETIME"), wxT(""));
+    strLastUpdate_ = core_->dbInfoSettings_->GetStringSetting("STOCKS_LAST_REFRESH_DATETIME", "");
     windowsFreezeThaw(this);
     CreateControls();
     GetSizer()->Fit(this);
@@ -292,7 +292,7 @@ void mmStocksPanel::save_column_width(const int width)
 {
     int i = width;
     int col_x = listCtrlAccount_->GetColumnWidth(i);
-    core_->iniSettings_->SetIntSetting(wxString::Format(wxT("STOCKS_COL%d_WIDTH"), i),col_x);
+    core_->iniSettings_->SetIntSetting(wxString::Format("STOCKS_COL%d_WIDTH", i),col_x);
 }
 
 void mmStocksPanel::CreateControls()
@@ -309,10 +309,10 @@ void mmStocksPanel::CreateControls()
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
     int font_size = this->GetFont().GetPointSize() + 2;
-    header_text_ = new wxStaticText(headerPanel, wxID_STATIC, wxT(""));
-    header_text_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    header_text_ = new wxStaticText(headerPanel, wxID_STATIC, "");
+    header_text_->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, ""));
 
-    header_total_ = new wxStaticText(headerPanel, wxID_STATIC, wxT(""));
+    header_total_ = new wxStaticText(headerPanel, wxID_STATIC, "");
 
     wxBitmap pic(led_off_xpm);
     refresh_button_ = new wxBitmapButton( headerPanel, wxID_REFRESH, pic);
@@ -358,7 +358,7 @@ void mmStocksPanel::CreateControls()
         itemCol.SetText(wxString() << columns[i]);
         listCtrlAccount_->InsertColumn(i, columns[i], (i<2 || i>5 ? wxLIST_FORMAT_LEFT : wxLIST_FORMAT_RIGHT));
 
-        int col_x = core_->iniSettings_->GetIntSetting(wxString::Format(wxT("STOCKS_COL%d_WIDTH"), i), -2);
+        int col_x = core_->iniSettings_->GetIntSetting(wxString::Format("STOCKS_COL%d_WIDTH", i), -2);
         listCtrlAccount_->SetColumnWidth(i, col_x);
     }
 
@@ -399,7 +399,7 @@ void mmStocksPanel::CreateControls()
     stock_details_short_ = new wxStaticText(BottomPanel, wxID_STATIC, strLastUpdate_);
     BoxSizerHBottom->Add(stock_details_short_, 1, wxGROW|wxTOP, 12);
     //Infobar
-    stock_details_ = new wxStaticText(BottomPanel, wxID_STATIC, wxT(""),
+    stock_details_ = new wxStaticText(BottomPanel, wxID_STATIC, "",
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
     BoxSizerVBottom->Add(stock_details_, 1, wxGROW|wxLEFT|wxRIGHT, 14);
 
@@ -418,7 +418,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     listCtrlAccount_->SetColumn(col, item);
 
     wxString str = core_->accountList_.GetAccountName(accountID_);
-    header_text_->SetLabel(wxString::Format(_("Stock Investments: %s"), str.c_str()));
+    header_text_->SetLabel(wxString::Format(_("Stock Investments: %s"), str));
 
     //mmDBWrapper::loadCurrencySettings(core_->db_.get(), accountID_);
     double originalVal = 0.0;
@@ -444,25 +444,25 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     mmex::formatDoubleToCurrency((total > originalVal ? total - originalVal : originalVal - total), diffStr);
 
     wxString lbl;
-    lbl << _("Total: ") << balance << wxT ("     ") << _("Invested: ") << original;
+    lbl << _("Total: ") << balance << "     " << _("Invested: ") << original;
 
     //Percent
     wxString diffStrPercents;
     if (originalVal!= 0.0) {
         if (total > originalVal)
-            lbl << wxT ("     ") << _("Gain: ");
+            lbl << "     " << _("Gain: ");
         else
-            lbl << wxT ("     ") << _("Loss: ");
+            lbl << "     " << _("Loss: ");
         double diffPercents = (total > originalVal ? total/originalVal*100.0-100.0 : -(total/originalVal*100.0-100.0));
         mmex::formatDoubleToCurrencyEdit(diffPercents, diffStrPercents);
-        lbl << diffStr << wxT("  ( ") << diffStrPercents << wxT(" %)");
+        lbl << diffStr << "  ( " << diffStrPercents << " %)";
     }
 
     header_total_->SetLabel(lbl);
 
     const  wxString sql =  wxString::FromUTF8(SELECT_ROW_HELDAT_FROM_STOCK_V1)
-        + wxT(" order by ") + (wxString()<<col+1)
-        + (!asc ? wxT(" desc") : wxT(" "));
+        + " order by " + (wxString()<<col+1)
+        + (!asc ? " desc" : " ");
 
     wxSQLite3Statement st = core_->db_.get()->PrepareStatement(sql);
     st.Bind(1, accountID_);
@@ -474,24 +474,24 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     {
         mmStockTransactionHolder th;
 
-        th.id_                = q1.GetInt(wxT("STOCKID"));
-        th.stockPDate_        = q1.GetString(wxT("PURCHDATE"));
-        int accountID         = q1.GetInt(wxT("HELDAT"));
-        th.stockSymbol_       = q1.GetString (wxT ("SYMBOL"));
+        th.id_                = q1.GetInt("STOCKID");
+        th.stockPDate_        = q1.GetString("PURCHDATE");
+        int accountID         = q1.GetInt("HELDAT");
+        th.stockSymbol_       = q1.GetString ("SYMBOL");
         th.heldAt_            = core_->accountList_.GetAccountName(accountID);
-        th.shareName_         = q1.GetString(wxT("STOCKNAME"));
-        th.shareNotes_        = q1.GetString(wxT("NOTES"));
-        th.numSharesStr_      = wxT("");
-        th.numShares_         = q1.GetDouble(wxT("NUMSHARES"));
-        th.totalnumShares_    = q1.GetDouble(wxT("TOTAL_NUMSHARES"));
-        th.purchasedTime_     = q1.GetInt (wxT ("PURCHASEDTIME"));
+        th.shareName_         = q1.GetString("STOCKNAME");
+        th.shareNotes_        = q1.GetString("NOTES");
+        th.numSharesStr_      = "";
+        th.numShares_         = q1.GetDouble("NUMSHARES");
+        th.totalnumShares_    = q1.GetDouble("TOTAL_NUMSHARES");
+        th.purchasedTime_     = q1.GetInt ("PURCHASEDTIME");
 
-        th.currentPrice_      = q1.GetDouble(wxT("CURRENTPRICE"));
-        th.purchasePrice_     = q1.GetDouble(wxT("PURCHASEPRICE"));
-        th.avgpurchasePrice_  = q1.GetDouble (wxT ("AVG_PURCHASEPRICE"));
-        th.value_             = q1.GetDouble(wxT("VALUE"));
-        th.commission_        = q1.GetDouble(wxT("COMMISSION"));
-        th.stockDays_         = q1.GetDouble (wxT ("DAYSOWN"));
+        th.currentPrice_      = q1.GetDouble("CURRENTPRICE");
+        th.purchasePrice_     = q1.GetDouble("PURCHASEPRICE");
+        th.avgpurchasePrice_  = q1.GetDouble ("AVG_PURCHASEPRICE");
+        th.value_             = q1.GetDouble("VALUE");
+        th.commission_        = q1.GetDouble("COMMISSION");
+        th.stockDays_         = q1.GetDouble ("DAYSOWN");
 
         if (th.id_ == id) selected_item = cnt;
         th.gainLoss_          = th.value_ - ((th.numShares_ * th.purchasePrice_) + th.commission_);
@@ -504,7 +504,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
 
         //I wish see integer if it integer else double
         if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0)
-            th.numSharesStr_=wxString::Format(wxT("%.4f"),th.numShares_);
+            th.numSharesStr_=wxString::Format("%.4f",th.numShares_);
         else
             th.numSharesStr_ <<  static_cast<long>(th.numShares_);
 
@@ -514,9 +514,9 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
             th.totalnumSharesStr_ <<  static_cast<long>(th.totalnumShares_);
 
         //sqlite does not support %y date mask therefore null value should be replaces
-        if (th.stockPDate_ == wxT(""))
+        if (th.stockPDate_ == "")
         {
-            wxString dateString = q1.GetString(wxT("PURCHASEDATE"));
+            wxString dateString = q1.GetString("PURCHASEDATE");
             wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
             th.stockPDate_ = mmGetDateForDisplay(dtdt);
         }
@@ -564,7 +564,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 {
     if(trans_.size() < 1) return;
 
-    wxString YSymbols = wxT("");
+    wxString YSymbols = "";
     wxSortedArrayString symbols_array;
 
     for (size_t i = 0; i < trans_.size(); ++i)
@@ -572,14 +572,14 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         wxString symbol = trans_[i]->stockSymbol_.Upper();
         if (symbols_array.Index(symbol) == wxNOT_FOUND) {
             symbols_array.Add(symbol);
-            YSymbols += symbol + wxT("+");
+            YSymbols += symbol + "+";
         }
     }
     YSymbols.RemoveLast(1);
 
     //http://finance.yahoo.com/d/quotes.csv?s=SBER03.ME+GZPR.ME&f=sl1n&e=.csv
-    wxString site = wxString::Format(wxT("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv"),
-        YSymbols.c_str());
+    wxString site = wxString::Format("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv",
+        YSymbols);
 
     refresh_button_->SetBitmapLabel(wxBitmap(wxImage(led_yellow_xpm).Scale(16,16)));
     stock_details_->SetLabel(_("Connecting..."));
@@ -590,12 +590,12 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     {
         refresh_button_->SetBitmapLabel(wxBitmap(wxImage(led_red_xpm).Scale(16,16)));
         stock_details_->SetLabel(quotes);
-        stock_details_short_->SetLabel(wxT(""));
+        stock_details_short_->SetLabel("");
         return;
     }
 
     //--//
-    wxStringTokenizer tkz(quotes, wxT("\r\n"));
+    wxStringTokenizer tkz(quotes, "\r\n");
     wxString StockSymbolWithSuffix, dName;
     bool updated;
     double dPrice = 0.0;
@@ -632,12 +632,12 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         //    to modify the price
 
         //// UK finance apparently downloads values in pence
-        //if (!yahoo_->Server_.CmpNoCase(wxT("uk.finance.yahoo.com")))
+        //if (!yahoo_->Server_.CmpNoCase("uk.finance.yahoo.com"))
         //    dPrice = dPrice / 100;
         //// ------------------
         if (updated && dPrice > 0)
         {
-            if(StockSymbolWithSuffix.substr(StockSymbolWithSuffix.Find(wxT("."))) == wxT(".L"))
+            if(StockSymbolWithSuffix.substr(StockSymbolWithSuffix.Find(".")) == ".L")
                 dPrice = dPrice / 100;
             stocks_data.insert(std::make_pair(StockSymbolWithSuffix, std::make_pair(dPrice, dName)));
         }
@@ -654,12 +654,12 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         dPrice = data.first;
 
         sh.id_ = trans_[i]->id_;
-        sh.numShares_ = trans_[i]->numShares_; //q1.GetDouble(wxT("NUMSHARES"));
+        sh.numShares_ = trans_[i]->numShares_; //q1.GetDouble("NUMSHARES");
         // If the stock's symbol is not found, Yahoo CSV will return 0 for the current price.
         // Therefore, we assume the current price of all existing stock's symbols are greater
         // than zero and we will not update any stock if its curreny price is zero.
-        if(dPrice == 0 || sh.numShares_ < 0.0) dPrice = trans_[i]->currentPrice_ /*q1.GetDouble(wxT("CURRENTPRICE")*/;
-        sh.shareName_ = trans_[i]->shareName_; //q1.GetString (wxT ("STOCKNAME"));
+        if(dPrice == 0 || sh.numShares_ < 0.0) dPrice = trans_[i]->currentPrice_ /*q1.GetDouble("CURRENTPRICE"*/;
+        sh.shareName_ = trans_[i]->shareName_; //q1.GetString ("STOCKNAME");
         if (sh.shareName_.IsEmpty()) sh.shareName_ = data.second;
 
         sh.currentPrice_ = dPrice;
@@ -696,12 +696,12 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     StocksRefreshStatus_ = true;
     refresh_button_->SetBitmapLabel(wxBitmap(wxImage(led_green_xpm).Scale(16,16)));
 
-    strLastUpdate_.Printf(_("%s on %s"), LastRefreshDT_.FormatTime().c_str(),
-                             LastRefreshDT_.FormatDate().c_str());
-    core_->dbInfoSettings_->SetStringSetting(wxT("STOCKS_LAST_REFRESH_DATETIME"), strLastUpdate_);
+    strLastUpdate_.Printf(_("%s on %s"), LastRefreshDT_.FormatTime(),
+                             LastRefreshDT_.FormatDate());
+    core_->dbInfoSettings_->SetStringSetting("STOCKS_LAST_REFRESH_DATETIME", strLastUpdate_);
 
     stock_details_->SetLabel(_("Stock prices successfully updated"));
-    stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_.c_str()));
+    stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_));
 
 }
 
@@ -715,7 +715,7 @@ wxString mmStocksPanel::getItem(long item, long column)
     if (column == COL_CURRENT)      return trans_[item]->cPriceStr_;
     if (column == COL_NOTES)        return trans_[item]->shareNotes_;
 
-    return wxT("");
+    return "";
 }
 
 void mmStocksPanel::updateExtraStocksData(int selectedIndex)
@@ -723,7 +723,7 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
     if (selectedIndex == -1)
     {
         stock_details_->SetLabel(Tips(TIPS_STOCK));
-        stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_.c_str()));
+        stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_));
     }
     else
     {
@@ -766,30 +766,30 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
         mmex::formatDoubleToCurrencyEdit(stocktotalgainloss, stocktotalgainlossStr);
         //mmex::formatDoubleToCurrencyEdit(stocknumShares, stocknumSharesStr);
 
-        wxString miniInfo = wxT("");
-        if (trans_[selectedIndex]->stockSymbol_ != wxT(""))
-        miniInfo << wxT("\t") << _("Symbol: ") << trans_[selectedIndex]->stockSymbol_ << wxT ("\t\t");
-        miniInfo << _ ("Total:") << wxT (" (") << trans_[selectedIndex]->totalnumSharesStr_ << wxT (") ");
+        wxString miniInfo = "";
+        if (trans_[selectedIndex]->stockSymbol_ != "")
+        miniInfo << "\t" << _("Symbol: ") << trans_[selectedIndex]->stockSymbol_ << "\t\t";
+        miniInfo << _ ("Total:") << " (" << trans_[selectedIndex]->totalnumSharesStr_ << ") ";
         //If some share has been bot for a short period we don't need that info because the forecast may be too optimistic
         //if (stockDaysOwn > 182.5)
-        //miniInfo << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex]->stockPercentagePerYearStr_;
+        //miniInfo << "\t\t" << _("Percent/Year: ") << trans_[selectedIndex]->stockPercentagePerYearStr_;
         stock_details_short_->SetLabel(miniInfo);
 
-        wxString additionInfo = wxT("");
+        wxString additionInfo = "";
         //Selected share info
         additionInfo
-        << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockPurchasePriceStr << wxT("|") << wxT(" = ") << stockDifferenceStr
-        << wxT (" * ") << stocknumSharesStr << wxT (" = ") << stockgainlossStr << wxT (" ( ") << stockPercentageStr << wxT ('%')
-        //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ")  << _("Yearly")
-        << wxT (" )") << wxT ("\n");
+        << "|" << stockCurrentPriceStr << " - " << stockPurchasePriceStr << "|" << " = " << stockDifferenceStr
+        << " * " << stocknumSharesStr << " = " << stockgainlossStr << " ( " << stockPercentageStr << wxT('%')
+        //<< " | "<< stockPercentagePerYearStr << "% "  << _("Yearly")
+        << " )" << "\n";
         //Summary for account for selected symbol
         if (trans_[selectedIndex]->purchasedTime_ > 1)
         {
-            additionInfo << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockavgPurchasePriceStr << wxT("|") << wxT(" = ") << stocktotalDifferenceStr
-            << wxT (" * ") << stocktotalnumSharesStr << wxT (" = ") << stocktotalgainlossStr << wxT (" ( ") << stocktotalPercentageStr << wxT ('%')
-            //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _("Yearly")
-            << wxT (" )") //<< wxT ("\n")
-            << wxT ("\n") << getItem(selectedIndex, COL_NOTES);
+            additionInfo << "|" << stockCurrentPriceStr << " - " << stockavgPurchasePriceStr << "|" << " = " << stocktotalDifferenceStr
+            << " * " << stocktotalnumSharesStr << " = " << stocktotalgainlossStr << " ( " << stocktotalPercentageStr << wxT('%')
+            //<< " | "<< stockPercentagePerYearStr << "% " << _("Yearly")
+            << " )" //<< "\n"
+            << "\n" << getItem(selectedIndex, COL_NOTES);
         }
 
         stock_details_->SetLabel(additionInfo);

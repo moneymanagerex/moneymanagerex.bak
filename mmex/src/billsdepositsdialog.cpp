@@ -134,23 +134,23 @@ void mmBDDialog::dataToControls()
 
     if (q1.NextRow())
     {
-        categID_ = q1.GetInt(wxT("CATEGID"));
-        subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
+        categID_ = q1.GetInt("CATEGID");
+        subcategID_ = q1.GetInt("SUBCATEGID");
 
-        wxString transNumString = q1.GetString(wxT("TRANSACTIONNUMBER"));
-        wxString notesString  = q1.GetString(wxT("NOTES"));
-        wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
-        double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
-        toTransAmount_ = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+        wxString transNumString = q1.GetString("TRANSACTIONNUMBER");
+        wxString notesString  = q1.GetString("NOTES");
+        wxString transTypeString = q1.GetString("TRANSCODE");
+        double transAmount = q1.GetDouble("TRANSAMOUNT");
+        toTransAmount_ = q1.GetDouble("TOTRANSAMOUNT");
 
-        wxString statusString  = q1.GetString(wxT("STATUS"));
+        wxString statusString  = q1.GetString("STATUS");
         //wxString statusString  = pBankTransaction_->status_;
-        if (statusString == wxT("")) statusString = wxT("N");
-        choiceStatus_->SetSelection(wxString(wxT("NRVFD")).Find(statusString));
+        if (statusString == "") statusString = "N";
+        choiceStatus_->SetSelection(wxString("NRVFD").Find(statusString));
 
-        wxString nextOccurrString = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
-        wxString numRepeatStr  = q1.GetString(wxT("NUMOCCURRENCES"));
-        if (numRepeatStr != wxT("-1"))
+        wxString nextOccurrString = q1.GetString("NEXTOCCURRENCEDATE");
+        wxString numRepeatStr  = q1.GetString("NUMOCCURRENCES");
+        if (numRepeatStr != "-1")
             textNumRepeats_->SetValue(numRepeatStr);
 
         wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
@@ -159,7 +159,7 @@ void mmBDDialog::dataToControls()
         dpc_->SetValue(dtno);
         calendarCtrl_->SetDate (dtno);
 
-        int repeatSel = q1.GetInt(wxT("REPEATS"));
+        int repeatSel = q1.GetInt("REPEATS");
         // Have used repeatSel to multiplex auto repeat fields.
         if (repeatSel >= BD_REPEATS_MULTIPLEX_BASE)
         {
@@ -179,7 +179,7 @@ void mmBDDialog::dataToControls()
         itemRepeats_->SetSelection(repeatSel);
         setRepeatDetails();
         if (repeatSel == 0) // if none
-            textNumRepeats_->SetValue(wxT(""));
+            textNumRepeats_->SetValue("");
 
         if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
             transaction_type_->SetSelection(DEF_WITHDRAWAL);
@@ -189,9 +189,9 @@ void mmBDDialog::dataToControls()
             transaction_type_->SetSelection(DEF_TRANSFER);
         updateControlsForTransType();
 
-        payeeID_ = q1.GetInt(wxT("PAYEEID"));
-        toID_ = q1.GetInt(wxT("TOACCOUNTID"));
-        accountID_ = q1.GetInt(wxT("ACCOUNTID"));
+        payeeID_ = q1.GetInt("PAYEEID");
+        toID_ = q1.GetInt("TOACCOUNTID");
+        accountID_ = q1.GetInt("ACCOUNTID");
         wxString accountName = core_->accountList_.GetAccountName(accountID_);
         itemAccountName_->SetLabel(accountName);
 
@@ -346,7 +346,7 @@ void mmBDDialog::CreateControls()
     if ( i <=10 || i>14)
         itemRepeats_->Append(wxGetTranslation(BILLSDEPOSITS_REPEATS[i]));
     else
-        itemRepeats_->Append(wxString::Format( wxGetTranslation(BILLSDEPOSITS_REPEATS[i]), wxT("(x)")));
+        itemRepeats_->Append(wxString::Format( wxGetTranslation(BILLSDEPOSITS_REPEATS[i]), "(x)"));
 
 
     wxBoxSizer* repeatBoxSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -363,7 +363,7 @@ void mmBDDialog::CreateControls()
     staticTimesRepeat_ = new wxStaticText( this, wxID_STATIC, _("Times Repeated") );
     itemFlexGridSizer5->Add(staticTimesRepeat_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
-    textNumRepeats_ = new wxTextCtrl( this, ID_DIALOG_BD_TEXTCTRL_NUM_TIMES, wxT(""),
+    textNumRepeats_ = new wxTextCtrl( this, ID_DIALOG_BD_TEXTCTRL_NUM_TIMES, "",
                                       wxDefaultPosition, wxSize(110, -1), 0, wxFloatingPointValidator<double>() );
     itemFlexGridSizer5->Add(textNumRepeats_, flags);
     textNumRepeats_->SetMaxLength(12);
@@ -452,11 +452,11 @@ void mmBDDialog::CreateControls()
 
     wxStaticText* staticTextAmount = new wxStaticText( transactionPanel, wxID_STATIC, _("Amount"));
 
-    textAmount_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""),
+    textAmount_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTAMOUNT, "",
                                   wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     textAmount_->SetToolTip(amountNormalTip_);
 
-    toTextAmount_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""),
+    toTextAmount_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTAMOUNT, "",
                                     wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
@@ -481,7 +481,7 @@ void mmBDDialog::CreateControls()
     transPanelSizer->Add(bPayee_, flags);
 
     // Payee Alternate ------------------------------------------------
-    wxStaticText* staticTextTo = new wxStaticText( transactionPanel, ID_DIALOG_TRANS_STATIC_FROM, wxT(" ") );
+    wxStaticText* staticTextTo = new wxStaticText( transactionPanel, ID_DIALOG_TRANS_STATIC_FROM, " " );
     bTo_ = new wxButton( transactionPanel, ID_DIALOG_TRANS_BUTTONTO, _("Select To Acct"),
                          wxDefaultPosition, wxSize(225, -1), 0 );
     bTo_->SetToolTip(_("Specify which account the transfer is going to"));
@@ -508,7 +508,7 @@ void mmBDDialog::CreateControls()
     transPanelSizer->Add(bCategory_, flags);
 
     // Number ---------------------------------------------
-    textNumber_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTNUMBER, wxT(""),
+    textNumber_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTNUMBER, "",
                                   wxDefaultPosition, wxSize(225, -1));
     textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
 
@@ -516,7 +516,7 @@ void mmBDDialog::CreateControls()
     transPanelSizer->Add(textNumber_, flags);
 
     // Notes ---------------------------------------------
-    textNotes_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTNOTES, wxT(""),
+    textNotes_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTNOTES, "",
                                  wxDefaultPosition, wxSize(225, 80), wxTE_MULTILINE );
     textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
 
@@ -724,7 +724,7 @@ void mmBDDialog::updateControlsForTransType()
         displayControlsForType(DEF_WITHDRAWAL);
         SetTransferControls();
         stp->SetLabel(_("Payee"));
-        st->SetLabel(wxT(""));
+        st->SetLabel("");
         bPayee_->SetToolTip(payeeWithdrawalTip_);
         if (payeeUnknown_)
             resetPayeeString();
@@ -734,7 +734,7 @@ void mmBDDialog::updateControlsForTransType()
         displayControlsForType(DEF_DEPOSIT);
         SetTransferControls();
         stp->SetLabel(_("From"));
-        st->SetLabel(wxT(""));
+        st->SetLabel("");
         bPayee_->SetToolTip(payeeDepositTip_);
         if (payeeUnknown_)
             resetPayeeString();
@@ -768,7 +768,7 @@ void mmBDDialog::resetPayeeString(bool normal)
 {
     wxString payeeStr = _("Select Payee");
     payeeID_ = -1;
-    wxArrayString filtd = core_->payeeList_.FilterPayees(wxT(""));
+    wxArrayString filtd = core_->payeeList_.FilterPayees("");
 
     if (filtd.Count() == 1)
     {
@@ -785,7 +785,7 @@ void mmBDDialog::resetPayeeString(bool normal)
 
 void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    wxString transaction_type = wxT("");
+    wxString transaction_type = "";
     wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(transaction_type_->GetSelection());
     if (type_obj) transaction_type = type_obj->GetData();
 
@@ -922,10 +922,10 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString nextOccurDate = dpcbd_->GetValue().FormatISODate();
 
-    wxString status = wxT("");
+    wxString status = "";
     wxStringClientData* status_obj = (wxStringClientData *)choiceStatus_->GetClientObject(choiceStatus_->GetSelection());
     if (status_obj) status = status_obj->GetData().Left(1);
-    status.Replace(wxT("N"), wxT(""));
+    status.Replace("N", "");
 
     wxString date1 = dpc_->GetValue().FormatISODate();
 
@@ -1075,7 +1075,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
             pTransaction->amt_ = amount;
             pTransaction->status_ = status;
             pTransaction->transNum_ = transNum;
-            pTransaction->notes_ = notes.c_str();
+            pTransaction->notes_ = notes;
             pTransaction->category_ = core_->categoryList_.GetCategorySharedPtr(categID_, subcategID_);
             pTransaction->date_ = dpc_->GetValue();
             pTransaction->toAmt_ = toTransAmount_;
@@ -1257,35 +1257,35 @@ void mmBDDialog::setRepeatDetails()
     {
         staticTextRepeats_->SetLabel( repeatLabelActivate );
         staticTimesRepeat_->SetLabel( timeLabelDays);
-        toolTipsStr << _("Specify period in Days to activate.") << wxT("\n") << _("Becomes blank when not active.");
+        toolTipsStr << _("Specify period in Days to activate.") << "\n" << _("Becomes blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
     }
     else if (repeats == 12)
     {
         staticTextRepeats_->SetLabel(repeatLabelActivate );
         staticTimesRepeat_->SetLabel(timeLabelMonths);
-        toolTipsStr << _("Specify period in Months to activate.") << wxT("\n") << _("Becomes blank when not active.");
+        toolTipsStr << _("Specify period in Months to activate.") << "\n" << _("Becomes blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
     }
     else if (repeats == 13)
     {
         staticTextRepeats_->SetLabel(repeatLabelRepeats);
         staticTimesRepeat_->SetLabel(timeLabelDays);
-        toolTipsStr << _("Specify period in Days to activate.") << wxT("\n") << _("Leave blank when not active.");
+        toolTipsStr << _("Specify period in Days to activate.") << "\n" << _("Leave blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
     }
     else if (repeats == 14)
     {
         staticTextRepeats_->SetLabel(repeatLabelRepeats);
         staticTimesRepeat_->SetLabel(timeLabelMonths);
-        toolTipsStr << _("Specify period in Months to activate.") << wxT("\n") << _("Leave blank when not active.");
+        toolTipsStr << _("Specify period in Months to activate.") << "\n" << _("Leave blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
     }
     else
     {
         staticTextRepeats_->SetLabel(repeatLabelRepeats);
         staticTimesRepeat_->SetLabel( _("Times Repeated") );
-        toolTipsStr << _("Specify the number of times this series repeats.") << wxT("\n") << _("Leave blank if this series continues forever.");
+        toolTipsStr << _("Specify the number of times this series repeats.") << "\n" << _("Leave blank if this series continues forever.");
         textNumRepeats_->SetToolTip(toolTipsStr);
     }
 }

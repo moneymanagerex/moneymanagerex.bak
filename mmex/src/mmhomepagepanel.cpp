@@ -438,7 +438,7 @@ wxString mmHomePagePanel::displayAssets(double& tBalance)
         hb.startTable(wxT("100%"));
         hb.startTableRow();
         hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
-        hb.addTableCell(wxT (""), true);
+        hb.addTableCell(wxT(""), true);
         hb.addTableCell(asset_list.GetAssetBalanceCurrencyFormat(), true, true, true);
         hb.endTableRow();
         hb.endTable();
@@ -676,7 +676,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
         //for Withdrawal amount should be negative
         if (th.transType_== TRANS_TYPE_WITHDRAWAL_STR)
         {
-            th.transAmtString_= wxT ("-") + th.transAmtString_;
+            th.transAmtString_= wxT("-") + th.transAmtString_;
             th.amt_ = -th.amt_;
         }
 
