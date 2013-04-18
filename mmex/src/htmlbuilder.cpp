@@ -40,9 +40,9 @@ void mmHTMLBuilder::init()
 		, mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX));
     html_+= wxString::Format("\" text=\"%s\" "
 		, mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX));
-    html_+= wxString::Format("link=\"%s\" "), "#0000cc";
-    html_+= wxString::Format("vlink=\"%s\" "), "#551a8b";
-    html_+= wxString::Format("alink=\"%s\">"), "#ff0000";
+    html_+= wxString::Format("link=\"%s\" ", "#0000cc");
+    html_+= wxString::Format("vlink=\"%s\" ", "#551a8b");
+    html_+= wxString::Format("alink=\"%s\">", "#ff0000");
     html_+= wxString::Format("<font size=\"%i\">\n", font_size_);
 
     //Show user name if provided
