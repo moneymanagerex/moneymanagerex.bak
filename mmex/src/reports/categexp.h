@@ -20,6 +20,7 @@
 #define _MM_EX_REPORTCATEGEXP_H_
 
 #include "../reportbase.h"
+#include "../mmex.h"
 
 class mmReportCategoryExpenses : public mmPrintableBase 
 {
@@ -91,7 +92,7 @@ public:
     mmReportCategoryExpensesGoesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
     {
         this->dtBegin_ = wxDateTime::Now().SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
-        if (false /*mmIniOptions::instance().ignoreFutureTransactions_*/)
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
         {
             this->title_ = _("Where the Money Goes - Current Year to Date");
             this->dtEnd_ = wxDateTime::Now().GetLastMonthDay().GetDateOnly();  
@@ -139,7 +140,7 @@ public:
     mmReportCategoryExpensesComesCurrentMonth(mmCoreDB* core): mmReportCategoryExpensesComes(core)
     {
         this->dtBegin_ = wxDateTime::Now().SetDay(1).GetDateOnly();
-        if (false /*mmIniOptions::instance().ignoreFutureTransactions_*/)
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
         {
             this->title_ = _("Where the Money Comes From - Current Month to Date");
             this->dtEnd_ = wxDateTime::Now().GetDateOnly();
@@ -192,7 +193,7 @@ public:
     mmReportCategoryExpensesComesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesComes(core)
     {
         this->dtBegin_ = wxDateTime::Now().SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
-        if (false /*mmIniOptions::instance().ignoreFutureTransactions_*/)
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
         {
             this->title_ = _("Where the Money Comes From - Current Year to Date");
             this->dtEnd_ = wxDateTime::Now().GetLastMonthDay().GetDateOnly();  
@@ -240,7 +241,7 @@ public:
     mmReportCategoryExpensesCategoriesCurrentMonth(mmCoreDB* core): mmReportCategoryExpensesCategories(core)
     {
         this->dtBegin_ = wxDateTime::Now().SetDay(1).GetDateOnly();
-        if (false /*mmIniOptions::instance().ignoreFutureTransactions_*/)
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
         {
             this->title_ = _("Where the Money Categories From - Current Month to Date");
             this->dtEnd_ = wxDateTime::Now().GetDateOnly();
@@ -294,7 +295,7 @@ public:
     mmReportCategoryExpensesCategoriesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesCategories(core)
     {
         this->dtBegin_ = wxDateTime::Now().SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
-        if (false /*mmIniOptions::instance().ignoreFutureTransactions_*/)
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
         {
             this->title_ = _("Where the Money Categories From - Current Year to Date");
             this->dtEnd_ = wxDateTime::Now().GetLastMonthDay().GetDateOnly();  
