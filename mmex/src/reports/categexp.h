@@ -95,7 +95,7 @@ public:
         if (mmIniOptions::instance().ignoreFutureTransactions_)
         {
             this->title_ = _("Where the Money Goes - Current Year to Date");
-            this->dtEnd_ = wxDateTime::Now().GetLastMonthDay().GetDateOnly();  
+            this->dtEnd_ = wxDateTime::Now().GetDateOnly();  
         }
         else
         {
@@ -196,7 +196,7 @@ public:
         if (mmIniOptions::instance().ignoreFutureTransactions_)
         {
             this->title_ = _("Where the Money Comes From - Current Year to Date");
-            this->dtEnd_ = wxDateTime::Now().GetLastMonthDay().GetDateOnly();  
+            this->dtEnd_ = wxDateTime::Now().GetDateOnly();  
         }
         else
         {
@@ -298,7 +298,7 @@ public:
         if (mmIniOptions::instance().ignoreFutureTransactions_)
         {
             this->title_ = _("Where the Money Categories From - Current Year to Date");
-            this->dtEnd_ = wxDateTime::Now().GetLastMonthDay().GetDateOnly();  
+            this->dtEnd_ = wxDateTime::Now().GetDateOnly();  
         }
         else
         {
