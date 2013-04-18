@@ -1318,7 +1318,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     ///////////////////////////////////////////////////////////////////
 
     wxTreeItemId incexpOverTime = navTreeCtrl_->AppendItem(reports, _("Income vs Expenses"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData("Income vs Expenses"));
+    navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData("Income vs Expenses", new mmReportIncExpensesOverTime(m_core.get(), wxDateTime::Now().GetYear(), 10)));
 
     wxTreeItemId incexpOverTimeCalMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeCalMonth, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Calendar Month")));
@@ -1741,8 +1741,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (sData == "Income vs Expenses")
         {
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get()
-                , wxDateTime::Now().GetYear(), 10);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get(), wxDateTime::Now().GetYear(), 10);
 
             createReportsPage(rs);
         }
