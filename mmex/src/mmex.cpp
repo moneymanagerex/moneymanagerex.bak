@@ -1416,7 +1416,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     ///////////////////////////////////////////////////////
     wxTreeItemId transactionStats = navTreeCtrl_->AppendItem(reports, _("Transaction Statistics"), 4, 4);
-    navTreeCtrl_->SetItemData(transactionStats, new mmTreeItemData("Transaction Statistics"));
+    navTreeCtrl_->SetItemData(transactionStats, new mmTreeItemData("Transaction Statistics", new mmReportTransactionStats(m_core.get(), wxDateTime::Now().GetYear() - 1)));
 
      ///////////////////////////////////////////////////////////////////
 
@@ -1813,13 +1813,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
             AddPendingEvent(evt);
-        }
-        else if (sData == "Transaction Statistics")
-        {
-            wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear()-1;
-            mmPrintableBase* rs = new mmReportTransactionStats(m_core.get(), year);
-            createReportsPage(rs);
         }
 #endif
     }
