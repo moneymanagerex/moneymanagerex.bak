@@ -26,7 +26,8 @@ class mmReportCategoryExpenses : public mmPrintableBase
 {
 public:
     mmReportCategoryExpenses(mmCoreDB* core
-        , bool ignoreDate, const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title, int type);
+        , bool ignoreDate, const wxDateTime& dtBegin
+        , const wxDateTime& dtEnd, const wxString& title, int type);
 
     wxString getHTMLText();
 
@@ -79,7 +80,7 @@ class mmReportCategoryExpensesGoesLastYear: public mmReportCategoryExpensesGoes
 public:
     mmReportCategoryExpensesGoesLastYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
     {
-        this->title_ = _("Where the Money Goes - Last Month to Date");
+        this->title_ = _("Where the Money Goes - Last Year");
         this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Years(1))
             .SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
         this->dtEnd_ = wxDateTime(dtBegin_).SetMonth(wxDateTime::Dec).SetDay(31);
@@ -110,9 +111,18 @@ class mmReportCategoryExpensesGoesLastFinancialYear: public mmReportCategoryExpe
 public:
     mmReportCategoryExpensesGoesLastFinancialYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
     {
-        this->title_ = _("Where the Money Goes - Last Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Years(1))
+            .SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
+        {
+            this->title_ = _("Where the Money Goes - Last Financial Year to Date");
+            this->dtEnd_ = wxDateTime::Now().GetDateOnly();  
+        }
+        else
+        {
+            this->title_ = _("Where the Money Goes - Last Financial Year");
+            this->dtEnd_ = wxDateTime(dtBegin_).SetMonth(wxDateTime::Dec).SetDay(31);  
+        }
     }
 };
 
@@ -121,9 +131,27 @@ class mmReportCategoryExpensesGoesCurrentFinancialYear: public mmReportCategoryE
 public:
     mmReportCategoryExpensesGoesCurrentFinancialYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
     {
-        this->title_ = _("Where the Money Goes - Last Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+        int day = core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_DAY"), 1);
+        int monthItem = core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_MONTH"), 7);
+        this->dtBegin_ = wxDateTime::Now().SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
+
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
+        {
+            this->title_ = _("Where the Money Goes - Current Financial Year to Date");
+            this->dtEnd_ = wxDateTime::Now().GetDateOnly();  
+        }
+        else
+        {
+            this->title_ = _("Where the Money Goes - Current Financial Year");
+            this->dtEnd_ = wxDateTime(dtBegin_).SetMonth(wxDateTime::Dec).SetDay(31);  
+        }
+        dtBegin_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1));
+        dtEnd_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1));
+        if (wxDateTime::Now().GetDateOnly() < dtBegin_)
+        {
+            dtEnd_.Subtract(wxDateSpan::Years(1));
+            dtBegin_.Subtract(wxDateSpan::Years(1));
+        }
     }
 };
 
