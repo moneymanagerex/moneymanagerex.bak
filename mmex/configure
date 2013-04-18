@@ -5492,7 +5492,7 @@ $as_echo_n "checking for wxWidgets version >= $min_wx_version ($WXCFG_FLAGS)... 
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes (version $WX_VERSION)" >&5
 $as_echo "yes (version $WX_VERSION)" >&6; }
-      WX_LIBS=`$WX_CONFIG_WITH_ARGS --libs`
+      WX_LIBS=`$WX_CONFIG_WITH_ARGS --libs std, aui`
 
                               { $as_echo "$as_me:${as_lineno-$LINENO}: checking for wxWidgets static library" >&5
 $as_echo_n "checking for wxWidgets static library... " >&6; }
