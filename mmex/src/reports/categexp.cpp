@@ -22,6 +22,7 @@
 #include "../htmlbuilder.h"
 #include "../util.h"
 #include "../mmgraphpie.h"
+#include "../mmex.h"
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(
     mmCoreDB* core,
@@ -166,3 +167,19 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
     return hb.getHTMLText();
 }
+
+mmReportCategoryExpensesGoesCurrentMonth::mmReportCategoryExpensesGoesCurrentMonth(mmCoreDB* core) : 
+    mmReportCategoryExpensesGoes(core)
+    {
+        this->dtBegin_ = wxDateTime::Now().SetDay(1).GetDateOnly();
+        if (mmIniOptions::instance().ignoreFutureTransactions_)
+        {
+            this->title_ = _("Where the Money Goes - Current Month to Date");
+            this->dtEnd_ = wxDateTime::Now().GetDateOnly();
+        }
+        else
+        {
+            this->title_ = _("Where the Money Goes - Current Month");
+            this->dtEnd_ = wxDateTime(dtBegin_).GetLastMonthDay();
+        }
+    }
