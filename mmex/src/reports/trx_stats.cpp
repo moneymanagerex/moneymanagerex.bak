@@ -5,7 +5,7 @@
 
 mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)
 : mmPrintableBase(core)
-, year_(year + 1)
+, year_(year)
 {}
 
 wxString mmReportTransactionStats::getHTMLText()
