@@ -50,7 +50,7 @@ public:
     mmReportCategoryExpensesGoesCurrentMonth(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
     {
         this->title_ = _("Where the Money Goes - Current Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+		this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1)).GetDateOnly();
         this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
     }
 };
@@ -83,8 +83,9 @@ public:
     mmReportCategoryExpensesGoesLastYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
     {
         this->title_ = _("Where the Money Goes - Last Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+		this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Years(1))
+			.SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
+        this->dtEnd_ = wxDateTime(dtBegin_).SetMonth(wxDateTime::Dec).SetDay(31);
     }
 };
 
@@ -167,8 +168,9 @@ public:
     mmReportCategoryExpensesComesLastYear(mmCoreDB* core): mmReportCategoryExpensesComes(core)
     {
         this->title_ = _("Where the Money Comes From - Last Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+		this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Years(1))
+			.SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
+        this->dtEnd_ = wxDateTime(dtBegin_).SetMonth(wxDateTime::Dec).SetDay(31);
     }
 };
 
@@ -229,8 +231,8 @@ public:
     mmReportCategoryExpensesCategoriesLastMonth(mmCoreDB* core): mmReportCategoryExpensesCategories(core)
     {
         this->title_ = _("Where the Money Categories From - Last Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Months(1)).SetDay(1).GetDateOnly();
+		this->dtEnd_ = wxDateTime::Now().Subtract(wxDateSpan::Months(1)).GetLastMonthDay().GetDateOnly();
     }
 };
 
@@ -239,9 +241,9 @@ class mmReportCategoryExpensesCategoriesLast30Days: public mmReportCategoryExpen
 public:
     mmReportCategoryExpensesCategoriesLast30Days(mmCoreDB* core): mmReportCategoryExpensesCategories(core)
     {
-        this->title_ = _("Where the Money Categories From - Last Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+        this->title_ = _("Where the Money Categories From - Last 30 Days");
+        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Months(1)).Add(wxDateSpan::Days(1)).GetDateOnly();
+        this->dtEnd_ = wxDateTime::Now().GetDateOnly();
     }
 };
 
@@ -250,9 +252,10 @@ class mmReportCategoryExpensesCategoriesLastYear: public mmReportCategoryExpense
 public:
     mmReportCategoryExpensesCategoriesLastYear(mmCoreDB* core): mmReportCategoryExpensesCategories(core)
     {
-        this->title_ = _("Where the Money Categories From - Last Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+        this->title_ = _("Where the Money Categories From - Last Year");
+		this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Years(1))
+			.SetMonth(wxDateTime::Jan).SetDay(1).GetDateOnly();
+        this->dtEnd_ = wxDateTime(dtBegin_).SetMonth(wxDateTime::Dec).SetDay(31);
     }
 };
 
@@ -261,9 +264,9 @@ class mmReportCategoryExpensesCategoriesCurrentYear: public mmReportCategoryExpe
 public:
     mmReportCategoryExpensesCategoriesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesCategories(core)
     {
-        this->title_ = _("Where the Money Categories From - Last Month to Date");
-        this->dtBegin_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->dtEnd_ = wxDateTime::Now().GetLastMonthDay();
+        this->title_ = _("Where the Money Categories From - Current Year");
+		this->dtBegin_ = wxDateTime::Now().SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
+		this->dtEnd_ = wxDateTime::Now().GetLastMonthDay().GetDateOnly();
     }
 };
 
