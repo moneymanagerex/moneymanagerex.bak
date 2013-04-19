@@ -36,6 +36,16 @@ public:
     }
 };
 
+class mmCurrentYearToDate: public mmDateRange
+{
+public:
+    mmCurrentYearToDate(): mmDateRange()
+    {
+        this->start_date_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
+        this->end_date_ = wxDateTime::Now().GetLastMonthDay();
+    }
+};
+
 class mmLastYear: public mmDateRange
 {
 public:

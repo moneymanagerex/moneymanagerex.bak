@@ -92,17 +92,20 @@ class mmReportCategoryExpensesGoesCurrentYear: public mmReportCategoryExpensesGo
 public:
     mmReportCategoryExpensesGoesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
     {
+        this->title_ = _("Where the Money Goes - Current Year");
         this->dtBegin_ = wxDateTime::Now().SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
-        if (mmIniOptions::instance().ignoreFutureTransactions_)
-        {
-            this->title_ = _("Where the Money Goes - Current Year to Date");
-            this->dtEnd_ = wxDateTime::Now().GetDateOnly();  
-        }
-        else
-        {
-            this->title_ = _("Where the Money Goes - Current Year");
-            this->dtEnd_ = wxDateTime(dtBegin_).SetMonth(wxDateTime::Dec).SetDay(31);  
-        }
+        this->dtEnd_ = wxDateTime(dtBegin_).SetMonth(wxDateTime::Dec).SetDay(31);  
+    }
+};
+
+class mmReportCategoryExpensesGoesCurrentYearToDate: public mmReportCategoryExpensesGoes
+{
+public:
+    mmReportCategoryExpensesGoesCurrentYearToDate(mmCoreDB* core): mmReportCategoryExpensesGoes(core)
+    {
+        this->title_ = _("Where the Money Goes - Current Year to Date");
+        this->dtBegin_ = wxDateTime::Now().SetDay(1).SetMonth(wxDateTime::Jan).GetDateOnly();
+        this->dtEnd_ = wxDateTime::Now().GetDateOnly();  
     }
 };
 
