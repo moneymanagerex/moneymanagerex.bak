@@ -102,7 +102,7 @@ void mmCustomSQLDialog::fillControls()
 
     if (edit_)
     {
-        m_radio_box_->SetSelection(reportIndex_->CurrentReportFileType() == wxT("LUA"));
+        m_radio_box_->SetSelection(reportIndex_->CurrentReportFileType() == "LUA");
         reportTitleTxtCtrl_->ChangeValue(reportIndex_->CurrentReportTitle());
         if (reportIndex_->CurrentReportFileName().IsEmpty())
         {
@@ -152,7 +152,7 @@ void mmCustomSQLDialog::fillControls()
                 customReportItem = treeCtrl_->AppendItem(root_, reportTitle);
                 customSqlReportRootItem = customReportItem;
             }
-            reportNumberStr.Printf(wxT("Custom_Report_%d"), ++reportNumber);
+            reportNumberStr.Printf("Custom_Report_%d", ++reportNumber);
             treeCtrl_->SetItemData(customReportItem, new mmTreeItemData(reportNumberStr));
 
             if (reportNumber == iSelectedId_) customReportSelectedItem = customReportItem;
@@ -189,7 +189,7 @@ void mmCustomSQLDialog::CreateControls()
     flex_sizer->Add(new wxStaticText( this, wxID_ANY, _("Script type:")), flags);
     wxString choices[] = { _("SQL"), _("Lua")};
     int num = sizeof(choices) / sizeof(wxString);
-    m_radio_box_ = new wxRadioBox(this, wxID_STATIC, wxT("")
+    m_radio_box_ = new wxRadioBox(this, wxID_STATIC, ""
         , wxDefaultPosition, wxDefaultSize, num, choices, 2, wxRA_SPECIFY_COLS);
     flex_sizer->Add(m_radio_box_, flags.Center());
 
@@ -202,7 +202,7 @@ void mmCustomSQLDialog::CreateControls()
     flex_sizer->Add(new wxStaticText( this, wxID_ANY, _("Report Title:")), flags);
     flex_sizer->AddSpacer(1);
 
-    reportTitleTxtCtrl_ = new wxTextCtrl( this, wxID_FILE, wxT(""),
+    reportTitleTxtCtrl_ = new wxTextCtrl( this, wxID_FILE, "",
         wxDefaultPosition, wxSize(titleTextWidth,-1));
     reportTitleTxtCtrl_->SetToolTip(_("Report Title is used as the file name of the SQL script."));
 
@@ -226,7 +226,7 @@ void mmCustomSQLDialog::CreateControls()
     headingPanelSizerH->Add(headingPanelSizerV3, flagsExpand);
 
     headingPanelSizerV3->Add(new wxStaticText( this, wxID_PROPERTIES, _("Custom script:")), flags);
-    tcSourceTxtCtrl_ = new wxTextCtrl( this, wxID_VIEW_DETAILS, wxT(""),
+    tcSourceTxtCtrl_ = new wxTextCtrl( this, wxID_VIEW_DETAILS, "",
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL|wxTE_NOHIDESEL );
     tcSourceTxtCtrl_->Connect(wxID_ANY, wxEVT_CHAR,
         wxKeyEventHandler(mmCustomSQLDialog::OnSourceTxtChar), NULL, this);
@@ -281,17 +281,17 @@ wxString mmCustomSQLDialog::sSctiptType()
 {
     int i = m_radio_box_->GetSelection();
     if (i == 0)
-        return wxT("SQL");
+        return "SQL";
     else
-        return wxT("LUA");
+        return "LUA";
 }
 
 void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
 {
-    wxString sScriptFileName = wxFileSelector( sSctiptType()==wxT("SQL") ?
+    wxString sScriptFileName = wxFileSelector( sSctiptType()=="SQL" ?
         _("Load Custom SQL file:") : _("Load Custom Lua file:"),
         mmex::getPathUser(mmex::DIRECTORY), wxEmptyString, wxEmptyString,
-        sSctiptType()==wxT("SQL") ? wxT("SQL File(*.sql)|*.sql") : wxT("Lua File(*.lua)|*.lua")
+        sSctiptType()=="SQL" ? "SQL File(*.sql)|*.sql" : "Lua File(*.lua)|*.lua"
         , wxFD_FILE_MUST_EXIST);
     if ( !sScriptFileName.empty() )
     {
@@ -302,7 +302,7 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
         wxTextFile reportFile(sScriptFileName);
         if (reportFile.Open())
         {
-            reportText << reportFile.GetFirstLine() << wxT("\n");
+            reportText << reportFile.GetFirstLine() << "\n";
             size_t currentline = 1;
             while (! reportFile.Eof())
             {
@@ -310,7 +310,7 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
                 currentline ++;
                 if (currentline < reportFile.GetLineCount())
                 {
-                    reportText << wxT("\n");
+                    reportText << "\n";
                 }
             }
             tcSourceTxtCtrl_->SetValue(reportText);
@@ -321,7 +321,7 @@ void mmCustomSQLDialog::OnOpen(wxCommandEvent& /*event*/)
         }
         else
         {
-            wxString msg = wxString() << _("Unable to open file.") << sScriptFileName << wxT("\n\n");
+            wxString msg = wxString() << _("Unable to open file.") << sScriptFileName << "\n\n";
             wxMessageBox(msg,reportIndex_->UserDialogHeading(),wxOK|wxICON_ERROR);
         }
     }
@@ -344,8 +344,8 @@ bool mmCustomSQLDialog::SaveCustomReport()
         return false;
     }
 
-    reportfileName.Replace(wxT(" "),wxT("_"));          // Replace spaces with underscore character
-    reportfileName += sSctiptType() == wxT("SQL") ? wxT(".sql") : wxT(".lua");  // Add the file extenstion
+    reportfileName.Replace(" ", "_"); // Replace spaces with underscore character
+    reportfileName += sSctiptType() == "SQL" ? ".sql" : ".lua";  // Add the file extenstion
 
     if (reportfileName == loadedFileName_ && !newload_)
     {
@@ -373,7 +373,7 @@ bool mmCustomSQLDialog::SaveCustomReport()
         wxString sqlSource = tcSourceTxtCtrl_->GetValue();
         if ( !reportfileName.empty() && !sqlSource.empty() )
         {
-            reportfileName.Replace(wxT(":"),wxT("_")); // else windows 7 will hide the filename.
+            reportfileName.Replace(":", "_"); // else windows 7 will hide the filename.
             wxTextFile tfSourceFile(mmex::getPathUser(mmex::DIRECTORY) + reportfileName);
 
             // If the file does not exist and cannot be created, throw an error
@@ -508,7 +508,7 @@ void mmCustomSQLDialog::OnSelChanged(wxTreeEvent& event)
     loadedFileName_ = reportIndex_->CurrentReportFileName(false);
     if (reportIndex_->CurrentReportFileName().IsEmpty())
     {
-        tcSourceTxtCtrl_->ChangeValue(wxT(""));
+        tcSourceTxtCtrl_->ChangeValue("");
         headingOnlyCheckBox_->SetValue(true);
     }
     else
@@ -518,7 +518,7 @@ void mmCustomSQLDialog::OnSelChanged(wxTreeEvent& event)
         wxString sSQLData;
         reportIndex_->GetReportFileData(sSQLData);
         tcSourceTxtCtrl_->ChangeValue(sSQLData);
-        if (reportIndex_->CurrentReportFileType() == wxT("LUA"))
+        if (reportIndex_->CurrentReportFileType() == "LUA")
             m_radio_box_->SetSelection(1);
         else
             m_radio_box_->SetSelection(0);
@@ -533,7 +533,7 @@ void mmCustomSQLDialog::OnLabelChanged(wxTreeEvent& event)
     edit_ = true;
     wxString sOldLabel = reportIndex_->CurrentReportTitle();
     wxString sLabel = event.GetLabel();
-    wxString reportNumberStr = wxString::Format(wxT("Custom_Report_%d"), iSelectedId_);
+    wxString reportNumberStr = wxString::Format("Custom_Report_%d", iSelectedId_);
 
     if (!sLabel.IsEmpty() && sLabel!=sOldLabel)
     {
@@ -548,17 +548,17 @@ void mmCustomSQLDialog::OnLabelChanged(wxTreeEvent& event)
 bool mmCustomSQLDialog::DeleteCustomSqlReport()
 {
     wxString msg = wxString() << _("Delete the Custom Report Title:")
-                              << wxT("\n\n")
+                              << "\n\n"
                               << reportIndex_->CurrentReportTitle();
     int iError = wxMessageBox(msg ,reportIndex_->UserDialogHeading(),wxYES_NO|wxICON_QUESTION);
     if ( iError == wxYES )
     {
         wxString msg = _("Do you want to delete the SQL file as well?");
-        if (reportIndex_->CurrentReportFileType() == wxT("LUA"))
+        if (reportIndex_->CurrentReportFileType() == "LUA")
         {
             msg = _("Do you want to delete the Lua file as well?");
         }
-        msg << wxT("\n");
+        msg << "\n";
 
         bool delete_file = false;
         if ( wxMessageBox(msg, reportIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
@@ -588,7 +588,7 @@ void mmCustomSQLDialog::OnMenuSelected(wxCommandEvent& event)
     if (id == 1)
     {
         reportTitleTxtCtrl_->SetValue(_("New SQL Custom Report"));
-        tcSourceTxtCtrl_->ChangeValue(wxT("select 'Hello World'"));
+        tcSourceTxtCtrl_->ChangeValue("select 'Hello World'");
         loadedFileName_.Clear();
         m_radio_box_->SetSelection(0);
         navCtrlUpdateRequired_ = SaveCustomReport();
@@ -596,7 +596,7 @@ void mmCustomSQLDialog::OnMenuSelected(wxCommandEvent& event)
     if (id == 2)
     {
         reportTitleTxtCtrl_->SetValue(_("New Lua Custom Report"));
-        tcSourceTxtCtrl_->ChangeValue(wxT("return \"Hello World\""));
+        tcSourceTxtCtrl_->ChangeValue("return \"Hello World\"");
         loadedFileName_.Clear();
         m_radio_box_->SetSelection(1);
         navCtrlUpdateRequired_ = SaveCustomReport();
