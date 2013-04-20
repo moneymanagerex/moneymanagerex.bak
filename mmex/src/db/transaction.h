@@ -19,7 +19,6 @@
 
 #include "entry_base.h"
 
-enum TRANS_STATE {TRANS_NONE, TRANS_RECONCILED, TRANS_VOID, TRANS_FOLLOWUP, TRANS_DUPLICATE};
 const wxString TRANS_STATE_DEF[] = {
     wxT("N"),
     wxT("R"),
@@ -28,7 +27,6 @@ const wxString TRANS_STATE_DEF[] = {
     wxT("D")
 };
 
-enum TRANS_TYPE {TRANS_WITHDRAWAL, TRANS_DEPOSIT, TRANS_TRANSFER};
 const wxString TRANS_TYPE_DEF[] = {
     wxT("Withdrawal"),
     wxT("Deposit"),
@@ -51,6 +49,20 @@ protected:
     void GetDatabaseValues(wxSQLite3ResultSet& q1);
 
 public:
+    enum TRANS_STATE {
+        TRANS_NONE,
+        TRANS_RECONCILED,
+        TRANS_VOID,
+        TRANS_FOLLOWUP,
+        TRANS_DUPLICATE
+    };
+
+    enum TRANS_TYPE {
+        TRANS_WITHDRAWAL,
+        TRANS_DEPOSIT,
+        TRANS_TRANSFER
+    };
+
     int id_from_account;
     int id_to_account_;
     int id_payee_;
@@ -69,6 +81,7 @@ public:
 
     /// Constructor for creating a new transaction entry
     TTransactionEntry();
+    
     /// Copy constructor using a pointer
     TTransactionEntry(TTransactionEntry* pEntry);
     

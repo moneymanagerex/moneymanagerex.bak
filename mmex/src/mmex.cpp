@@ -29,7 +29,6 @@
 #include "customreportdialog.h"
 #include "customreportdisplay.h"
 #include "customreportindex.h"
-#include "dbwrapper.h"
 #include "filtertransdialog.h"
 #include "htmlbuilder.h"
 #include "maincurrencydialog.h"
@@ -47,7 +46,6 @@
 #include "qif_import.h"
 #include "relocatecategorydialog.h"
 #include "relocatepayeedialog.h"
-#include "reportbase.h"
 #include "reports/budgetcategorysummary.h"
 #include "reports/budgetingperf.h"
 #include "reports/cashflow.h"
@@ -66,12 +64,10 @@
 #include "stockspanel.h"
 #include "transdialog.h"
 #include "univcsvdialog.h"
-#include "util.h"
+#include "db/transactionbill.h"
 
 //----------------------------------------------------------------------------
-#include <string>
 #include <wx/debugrpt.h>
-#include <wx/sysopt.h>
 //----------------------------------------------------------------------------
 
 const int REPEAT_TRANS_DELAY_TIME = 7000; // 7 seconds
@@ -835,6 +831,56 @@ void mmGUIFrame::setHomePageActive(bool active)
 //----------------------------------------------------------------------------
 void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 {
+// preparing new code to replace old code when other sections are completed.
+#if 0
+    bool continueExecution = false;
+
+    TTransactionBillList bills(m_db);
+    int remaining_days;
+    int index = 0;
+    while (index < bills.CurrentListSize())
+    {
+        wxSharedPtr<TTransactionBillEntry> bill_entry = bills.GetIndexedEntryPtr(index);
+
+        if (bill_entry->RequiresExecution(remaining_days))
+        {
+            if (remaining_days > 0)
+            {
+                continueExecution = true;
+            }
+            if (bill_entry->autoExecuteManual_ || bill_entry->autoExecuteSilent_)
+            {
+                TTransactionEntry trans_entry = bill_entry->GetTransaction();
+
+                if (bill_entry->autoExecuteManual_)
+                {
+                    // TODO:
+                    // Allow the user to adjust the values of the transaction
+                }
+
+                // TODO:
+                // Add the new transaction to the transaction list.
+
+                bill_entry->AdjustNextOccuranceDate();
+                bill_entry->Update(bills.ListDatabase());
+
+            }
+        }
+        ++index;
+
+        if (activeHomePage_)
+        {
+            createHomePage(); // Update home page details only if it is being displayed
+        }
+    }
+
+    if (continueExecution)
+    {
+        autoRepeatTransactionsTimer_.Start(5, wxTIMER_ONE_SHOT);
+    }
+#endif
+
+#if 1
     bool autoExecuteManual = false; // Used when decoding: REPEATS
     bool autoExecuteSilent = false;
     bool requireExecution  = false;
@@ -976,6 +1022,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
     {
         autoRepeatTransactionsTimer_.Start(5, wxTIMER_ONE_SHOT);
     }
+#endif
 }
 //----------------------------------------------------------------------------
 

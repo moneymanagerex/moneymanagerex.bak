@@ -249,6 +249,12 @@
     <ClCompile Include="..\..\src\db\entry_base.cpp">
       <Filter>Source Files\db</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\db\transactionbill.cpp">
+      <Filter>Source Files\db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\db\transaction.cpp">
+      <Filter>Source Files\db</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\aboutdialog.h">
@@ -483,6 +489,12 @@
       <Filter>Header Files\db</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\db\entry_base.h">
+      <Filter>Header Files\db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\db\transactionbill.h">
+      <Filter>Header Files\db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\db\transaction.h">
       <Filter>Header Files\db</Filter>
     </ClInclude>
   </ItemGroup>

@@ -243,6 +243,8 @@
     <ClCompile Include="..\..\src\dbwrapper.cpp" />
     <ClCompile Include="..\..\src\db\assets.cpp" />
     <ClCompile Include="..\..\src\db\entry_base.cpp" />
+    <ClCompile Include="..\..\src\db\transaction.cpp" />
+    <ClCompile Include="..\..\src\db\transactionbill.cpp" />
     <ClCompile Include="..\..\src\fileviewerdialog.cpp" />
     <ClCompile Include="..\..\src\filtertransdialog.cpp" />
     <ClCompile Include="..\..\src\guiid.cpp" />
@@ -319,6 +321,8 @@
     <ClInclude Include="..\..\src\dbwrapper.h" />
     <ClInclude Include="..\..\src\db\assets.h" />
     <ClInclude Include="..\..\src\db\entry_base.h" />
+    <ClInclude Include="..\..\src\db\transaction.h" />
+    <ClInclude Include="..\..\src\db\transactionbill.h" />
     <ClInclude Include="..\..\src\defs.h" />
     <ClInclude Include="..\..\src\fileviewerdialog.h" />
     <ClInclude Include="..\..\src\filtertransdialog.h" />

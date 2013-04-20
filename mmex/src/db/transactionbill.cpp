@@ -18,20 +18,31 @@
 
 #include "transactionbill.h"
 
-const int BD_REPEATS_MULTIPLEX_BASE  = 100;
+const int REPEAT_TYPE_MULTIPLEX_BASE = 100;
 
 /************************************************************************************
- TTransactionEntry Methods
+ TTransactionBillEntry Methods
  ***********************************************************************************/
 
-    /// Constructor for creating a new transaction entry
+/// Constructor for creating a new transaction entry
 TTransactionBillEntry::TTransactionBillEntry()
 : TTransactionEntry()
-, repeats_(0)
-, num_repeats_(0)
 , autoExecuteManual_(false)
 , autoExecuteSilent_(false)
+, repeat_type_(NONE)
+, num_repeats_(0)
 {}
+
+/// Copy constructor using a pointer
+TTransactionBillEntry::TTransactionBillEntry(TTransactionBillEntry* pEntry)
+: TTransactionEntry(pEntry)
+{
+    autoExecuteManual_ = pEntry->autoExecuteManual_;
+    autoExecuteSilent_ = pEntry->autoExecuteSilent_;
+    repeat_type_       = pEntry->repeat_type_;
+    nextOccurDate_     = pEntry->nextOccurDate_;
+    num_repeats_       = pEntry->num_repeats_;
+}
 
 /// Constructor used to load a transaction from the database.
 TTransactionBillEntry::TTransactionBillEntry(wxSQLite3ResultSet& q1)
@@ -41,23 +52,32 @@ TTransactionBillEntry::TTransactionBillEntry(wxSQLite3ResultSet& q1)
 {
     id_ = q1.GetInt(wxT("BDID"));
     GetDatabaseValues(q1);
-    repeats_       = q1.GetInt(wxT("REPEATS"));
+    repeat_type_   = q1.GetInt(wxT("REPEATS"));
     nextOccurDate_ = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
     num_repeats_   = q1.GetInt(wxT("NUMOCCURRENCES"));
 
     // DeMultiplex the Auto Executable fields from the db entry: REPEATS
-    if (repeats_ >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute - User Acknowlegement
+    if (repeat_type_ >= REPEAT_TYPE_MULTIPLEX_BASE)    // Auto Execute - User Acknowlegement
     {
-        repeats_ -= BD_REPEATS_MULTIPLEX_BASE;
+        repeat_type_ -= REPEAT_TYPE_MULTIPLEX_BASE;
         autoExecuteManual_ = true;
     }
 
-    if (repeats_ >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute - Silent mode
+    if (repeat_type_ >= REPEAT_TYPE_MULTIPLEX_BASE)    // Auto Execute - Silent mode
     {
-        repeats_ -= BD_REPEATS_MULTIPLEX_BASE;
+        repeat_type_ -= REPEAT_TYPE_MULTIPLEX_BASE;
         autoExecuteManual_ = false;               // Can only be manual or auto. Not both
         autoExecuteSilent_ = true;
     }
+}
+
+int TTransactionBillEntry::MultiplexedRepeatType()
+{
+    // Multiplex Auto executable onto the repeat field of the database.
+    int db_repeats = repeat_type_;
+    if (autoExecuteManual_) db_repeats += REPEAT_TYPE_MULTIPLEX_BASE;
+    if (autoExecuteSilent_) db_repeats += REPEAT_TYPE_MULTIPLEX_BASE;
+    return db_repeats;
 }
 
 int TTransactionBillEntry::Add(wxSQLite3Database* db)
@@ -74,11 +94,7 @@ int TTransactionBillEntry::Add(wxSQLite3Database* db)
     int db_index = 0;
     SetDatabaseValues(st, db_index);
 
-    // Multiplex Auto executable onto the repeat field of the database.
-    if (autoExecuteManual_) repeats_ += BD_REPEATS_MULTIPLEX_BASE;
-    if (autoExecuteSilent_) repeats_ += BD_REPEATS_MULTIPLEX_BASE;
-    st.Bind(++db_index, repeats_);
-
+    st.Bind(++db_index, MultiplexedRepeatType());
     st.Bind(++db_index, nextOccurDate_);
     st.Bind(++db_index, num_repeats_);
     
@@ -107,12 +123,7 @@ void TTransactionBillEntry::Update(wxSQLite3Database* db)
         int db_index = 0;
         SetDatabaseValues(st, db_index);
 
-        // Multiplex Auto executable onto the repeat field of the database.
-        if (autoExecuteManual_) repeats_ += BD_REPEATS_MULTIPLEX_BASE;
-        if (autoExecuteSilent_) repeats_ += BD_REPEATS_MULTIPLEX_BASE;
-        st.Bind(++db_index, repeats_);
-
-        st.Bind(++db_index, repeats_);
+        st.Bind(++db_index, MultiplexedRepeatType());
         st.Bind(++db_index, nextOccurDate_);
         st.Bind(++db_index, num_repeats_);
         st.Bind(++db_index, id_);
@@ -121,7 +132,6 @@ void TTransactionBillEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        // wxLogDebug(wxT("TTransactionBillEntry:update: %s"), e.GetMessage().c_str());
         wxLogError(wxT("TTransactionBillEntry:update: %s"), e.GetMessage().c_str());
     }
 }
@@ -168,8 +178,125 @@ void TTransactionBillEntry::SetTransaction(wxSharedPtr<TTransactionEntry> pEntry
     trans_notes_    = pEntry->trans_notes_;
 }
 
+/*
+ num_repeats represents the number of times the bill transaction is to occur,
+ and is decremented by 1 each time except for IN_X_DAYS .. EVERY_X_MONTHS
+ where it represents a time span, and becomes inactive for IN_X_periods only.
+*/
+void TTransactionBillEntry::AdjustNextOccuranceDate()
+{
+    wxDateTime new_occur_date = mmGetStorageStringAsDate(nextOccurDate_);
+
+    if (repeat_type_ == NONE)
+    {
+        num_repeats_ = 0;
+    }
+    else if (repeat_type_ == WEEKLY)
+    {
+        new_occur_date.Add(wxTimeSpan::Week());
+    }
+    else if (repeat_type_ == BI_WEEKLY)
+    {
+        new_occur_date.Add(wxTimeSpan::Weeks(2));
+    }
+    else if (repeat_type_ == MONTHLY)
+    {
+        new_occur_date.Add(wxDateSpan::Month());
+    }
+    else if (repeat_type_ == BI_MONTHLY)
+    {
+        new_occur_date.Add(wxDateSpan::Months(2));
+    }
+    else if (repeat_type_ == QUARTERLY)
+    {
+        new_occur_date.Add(wxDateSpan::Months(3));
+    }
+    else if (repeat_type_ == HALF_YEARLY)
+    {
+        new_occur_date.Add(wxDateSpan::Months(6));
+    }
+    else if (repeat_type_ == YEARLY)
+    {
+        new_occur_date.Add(wxDateSpan::Year());
+    }
+    else if (repeat_type_ == FOUR_MONTHLY)
+    {
+        new_occur_date.Add(wxDateSpan::Months(4));
+    }
+    else if (repeat_type_ == FOUR_WEEKLY)
+    {
+        new_occur_date.Add(wxDateSpan::Weeks(4));
+    }
+    else if (repeat_type_ == DAILY)
+    {
+        new_occur_date.Add(wxDateSpan::Day());
+    }
+    else if ((repeat_type_ == IN_X_DAYS) || (repeat_type_ == IN_X_MONTHS))
+    {
+        num_repeats_ = INACTIVE;
+    }
+    else if (repeat_type_ == EVERY_X_DAYS)
+    {
+        if (num_repeats_ > 0)
+        {
+            new_occur_date.Add(wxDateSpan::Days(num_repeats_));
+        }
+    }
+    else if (repeat_type_ == EVERY_X_MONTHS)
+    {
+        if (num_repeats_ > 0)
+        {
+            new_occur_date.Add(wxDateSpan::Months(num_repeats_));
+        }
+    }
+    else if ((repeat_type_ == MONTHLY_LAST_DAY) || (repeat_type_ == MONTHLY_LAST_BUSINESS_DAY))
+    {
+        new_occur_date.Add(wxDateSpan::Month());
+        new_occur_date.SetToLastMonthDay(new_occur_date.GetMonth(),new_occur_date.GetYear());
+        if (repeat_type_ == MONTHLY_LAST_BUSINESS_DAY) // last weekday of month
+        {
+            if ((new_occur_date.GetWeekDay() == wxDateTime::Sun) ||
+                (new_occur_date.GetWeekDay() == wxDateTime::Sat))
+            {
+                new_occur_date.SetToPrevWeekDay(wxDateTime::Fri);
+            }
+        }
+    }
+
+    if (num_repeats_ > 0)
+    {
+        if ((repeat_type_ < IN_X_DAYS) || (repeat_type_ > EVERY_X_MONTHS))
+        {
+            --num_repeats_;
+        }
+    }
+
+    nextOccurDate_ = new_occur_date.FormatISODate();
+}
+
+bool TTransactionBillEntry::RequiresExecution(int& remaining_days)
+{
+    wxDateTime next_occur_date = mmGetStorageStringAsDate(nextOccurDate_);
+    wxTimeSpan ts = next_occur_date.Subtract(wxDateTime::Now());
+    
+    remaining_days = ts.GetDays();
+    int remaining_minutes = ts.GetMinutes();
+
+    bool execution_required = false;
+    if (remaining_minutes > 0)
+    {
+        remaining_days += 1;
+    }
+    if (remaining_days < 1)
+    {
+        execution_required = true;
+    }
+
+    return execution_required;
+}
+
 /************************************************************************************
- TTransactionList Methods
+ TTransactionBillList Methods
  ***********************************************************************************/
 /// Constructor
 TTransactionBillList::TTransactionBillList(wxSharedPtr<wxSQLite3Database> db, bool load_entries)
@@ -201,7 +328,6 @@ void TTransactionBillList::LoadEntries(bool load_entries)
     }
     catch (const wxSQLite3Exception& e)
     {
-        // wxLogDebug(wxT("TTransactionBillList:LoadEntries %s"), e.GetMessage().c_str());
         wxLogError(wxT("TTransactionBillList:LoadEntries %s"), e.GetMessage().c_str());
     }
 }
@@ -240,10 +366,8 @@ void TTransactionBillList::DeleteEntry(int trans_bill_id)
 wxSharedPtr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int trans_bill_id)
 {
     wxSharedPtr<TTransactionBillEntry> pEntry;
-    size_t list_size = entrylist_.size();
     size_t index = 0;
-
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
         if (entrylist_[index]->id_ == trans_bill_id)
         {
