@@ -1398,30 +1398,48 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId payeesOverTime = navTreeCtrl_->AppendItem(reports, _("Payees"), 4, 4);
     navTreeCtrl_->SetItemData(payeesOverTime, new mmTreeItemData("Payee Report"));
 
-    wxTreeItemId payeesOverTimeCalMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxTRANSLATE("Payees - Last Calendar Month"), new mmReportPayeeExpensesLastMonth(m_core.get())));
+    wxTreeItemId payeesOverTimeCalMonth = navTreeCtrl_->AppendItem(payeesOverTime
+        , _("Last Calendar Month"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth
+        , new mmTreeItemData(wxTRANSLATE("Payees - Last Calendar Month")
+        , new mmReportPayeeExpensesLastMonth(m_core.get())));
 
     wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxTRANSLATE("Payees - Current Month"), new mmReportPayeeExpensesCurrentMonth(m_core.get())));
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth
+        , new mmTreeItemData(wxTRANSLATE("Payees - Current Month")
+        , new mmReportPayeeExpensesCurrentMonth(m_core.get())));
 
-    wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime, _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLast30, new mmTreeItemData(wxTRANSLATE("Payees - Last 30 Days"), new mmReportPayeeExpensesLast30Days(m_core.get())));
+    wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime
+        , _("Last 30 Days"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeLast30
+        , new mmTreeItemData(wxTRANSLATE("Payees - Last 30 Days")
+        , new mmReportPayeeExpensesLast30Days(m_core.get())));
 
-    wxTreeItemId payeesOverTimeLastYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, new mmTreeItemData(wxTRANSLATE("Payees - Last Year"), new mmReportPayeeExpensesLastYear(m_core.get())));
+    wxTreeItemId payeesOverTimeLastYear = navTreeCtrl_->AppendItem(payeesOverTime
+        , _("Last Year"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeLastYear
+        , new mmTreeItemData(wxTRANSLATE("Payees - Last Year")
+        , new mmReportPayeeExpensesLastYear(m_core.get())));
 
-    wxTreeItemId payeesOverTimeCurrentYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Payees - Current Year"), new mmReportPayeeExpensesCurrentYear(m_core.get())));
+    wxTreeItemId payeesOverTimeCurrentYear = navTreeCtrl_->AppendItem(payeesOverTime
+        , _("Current Year"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear
+        , new mmTreeItemData(wxTRANSLATE("Payees - Current Year")
+        , new mmReportPayeeExpensesCurrentYear(m_core.get())));
 
     if (financialYearIsDifferent())
     {
-        wxTreeItemId payeesOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Payees - Last Financial Year")
-                    , new mmReportPayeeExpensesLastFinancialYear(m_core.get())));
+        wxTreeItemId payeesOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime
+            , _("Last Financial Year"), 4, 4);
+        navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear
+            , new mmTreeItemData(wxTRANSLATE("Payees - Last Financial Year")
+            , new mmReportPayeeExpensesLastFinancialYear(m_core.get())));
 
-        wxTreeItemId payeesOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Payees - Current Financial Year")
-                    , new mmReportPayeeExpensesCurrentFinancialYear(m_core.get())));
+        wxTreeItemId payeesOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime
+            , _("Current Financial Year"), 4, 4);
+        navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear
+            , new mmTreeItemData(wxTRANSLATE("Payees - Current Financial Year")
+            , new mmReportPayeeExpensesCurrentFinancialYear(m_core.get())));
     }
     ///////////////////////////////////////////////////////////////////
 
@@ -1429,19 +1447,24 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData("Income vs Expenses", new mmReportIncExpensesOverTime(m_core.get(), wxDateTime::Now().GetYear(), 10)));
 
     wxTreeItemId incexpOverTimeCalMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCalMonth, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Calendar Month")));
+    navTreeCtrl_->SetItemData(incexpOverTimeCalMonth
+        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Calendar Month")));
 
     wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Month")));
+    navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth
+        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Month")));
 
     wxTreeItemId incexpOverTimeLast30 = navTreeCtrl_->AppendItem(incexpOverTime, _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeLast30, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - 30 Days")));
+    navTreeCtrl_->SetItemData(incexpOverTimeLast30
+        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - 30 Days")));
 
     wxTreeItemId incexpOverTimeLastYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeLastYear, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Year")));
+    navTreeCtrl_->SetItemData(incexpOverTimeLastYear
+        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Year")));
 
     wxTreeItemId incexpOverTimeCurrentYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCurrentYear, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Year")));
+    navTreeCtrl_->SetItemData(incexpOverTimeCurrentYear
+        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Year")));
 
     if (financialYearIsDifferent())
     {
