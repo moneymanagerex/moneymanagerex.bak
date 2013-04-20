@@ -9,7 +9,7 @@
 class mmDateRange
 {
 public:
-    mmDateRange(): now_(wxDateTime::Now())
+    mmDateRange(): now_(wxDateTime::Now().GetDateOnly())
     {
         start_date_ = now_;
         end_date_ = now_;
@@ -47,7 +47,8 @@ class mmLastMonth: public mmDateRange
 public:
     mmLastMonth(): mmDateRange()
     {
-        // TODO
+        this->start_date_.Subtract(wxDateSpan::Months(1)).SetDay(1);
+        this->end_date_ = wxDateTime(this->start_date_).GetLastMonthDay();
     }
 };
 

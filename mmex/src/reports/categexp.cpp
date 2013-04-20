@@ -26,15 +26,14 @@
 mmReportCategoryExpenses::mmReportCategoryExpenses(
     mmCoreDB* core,
     bool ignoreDate,
-    const wxDateTime& dtBegin,
-    const wxDateTime& dtEnd,
+    mmDateRange* date_range,
     const wxString& title,
     int type
 ) :
     mmPrintableBase(core),
     ignoreDate_(ignoreDate),
-    dtBegin_(dtBegin),
-    dtEnd_(dtEnd),
+    dtBegin_(date_range->start_date()),
+    dtEnd_(date_range->end_date()),
     title_(title),
     type_(type),
     ignoreFutureDate_(mmIniOptions::instance().ignoreFutureTransactions_)
