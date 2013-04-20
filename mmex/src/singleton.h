@@ -2,6 +2,9 @@
     Author: Lisheng Guan (guanlisheng@gmail.com) 
 */
 
+#ifndef _MM_EX_SINGLETON_H_
+#define _MM_EX_SINGLETON_H_
+
 template <class T>
 class Singleton
 {
@@ -18,3 +21,5 @@ private:
     Singleton(const Singleton<T>&);
     Singleton<T>& operator= (const Singleton<T> &); 
 };
+
+#endif // _MM_EX_SINGLETON_H_
