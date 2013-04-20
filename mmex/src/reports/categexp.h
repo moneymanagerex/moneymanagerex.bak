@@ -20,7 +20,6 @@
 #define _MM_EX_REPORTCATEGEXP_H_
 
 #include "../reportbase.h"
-#include "../mmex.h"
 
 class mmReportCategoryExpenses : public mmPrintableBase 
 {
