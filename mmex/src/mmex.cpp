@@ -1245,7 +1245,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     }
 
     /* ================================================================================================= */
-
+    bool ignoreFuture = mmIniOptions::instance().ignoreFutureTransactions_;
     wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports
         , _("Where the Money Goes"), 4, 4);
     navTreeCtrl_->SetItemData(categsOverTime, new mmTreeItemData("Where the Money Goes"
@@ -1257,13 +1257,22 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         , new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Last Calendar Month")
         , new mmReportCategoryExpensesGoesLastMonth(m_core.get())));
 
-    wxString currentMonthMsg = _("Current Month");
-    if (mmIniOptions::instance().ignoreFutureTransactions_) currentMonthMsg = _("Current Month to Date");
-
-    wxTreeItemId categsOverTimeCurrentMonth = navTreeCtrl_->AppendItem(categsOverTime, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCurrentMonth
-        , new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Month")
-        , new mmReportCategoryExpensesGoesCurrentMonth(m_core.get())));
+    if (ignoreFuture)
+    {
+        wxTreeItemId categsOverTimeCurrentMonth = navTreeCtrl_->AppendItem(categsOverTime
+            , _("Current Month to Date"), 4, 4);
+        navTreeCtrl_->SetItemData(categsOverTimeCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Month")
+            , new mmReportCategoryExpensesGoesCurrentMonthToDate(m_core.get())));
+    }
+    else
+    {
+        wxTreeItemId categsOverTimeCurrentMonth = navTreeCtrl_->AppendItem(categsOverTime
+            , _("Current Month"), 4, 4);
+        navTreeCtrl_->SetItemData(categsOverTimeCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Month")
+            , new mmReportCategoryExpensesGoesCurrentMonth(m_core.get())));
+    }
 
     wxTreeItemId categsOverTimeLast30 = navTreeCtrl_->AppendItem(categsOverTime
         , _("Last 30 Days"), 4, 4);
@@ -1298,7 +1307,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     }
     ///////////////////////////////////////////////////////////
 
-    wxTreeItemId posCategs = navTreeCtrl_->AppendItem(reports, _("Where the Money Comes From"), 4, 4);
+    wxTreeItemId posCategs = navTreeCtrl_->AppendItem(reports
+        , _("Where the Money Comes From"), 4, 4);
     navTreeCtrl_->SetItemData(posCategs
         , new mmTreeItemData("Where the Money Comes From"
         , new mmReportCategoryExpensesComesCurrentMonth(m_core.get())));
@@ -1309,10 +1319,22 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         , new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Last Calendar Month")
         , new mmReportCategoryExpensesComesLastMonth(m_core.get())));
 
-    wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(posCategsCurrentMonth
-        , new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Month")
-        , new mmReportCategoryExpensesComesCurrentMonth(m_core.get())));
+    if (ignoreFuture)
+    {
+        wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs
+            , _("Current Month to Date"), 4, 4);
+        navTreeCtrl_->SetItemData(posCategsCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Month")
+            , new mmReportCategoryExpensesComesCurrentMonthToDate(m_core.get())));
+    }
+    else
+    {
+        wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs
+            , _("Current Month to Date"), 4, 4);
+        navTreeCtrl_->SetItemData(posCategsCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Where the Money Comes From - Current Month")
+            , new mmReportCategoryExpensesComesCurrentMonth(m_core.get())));
+    }
 
     wxTreeItemId posCategsTimeLast30 = navTreeCtrl_->AppendItem(posCategs
         , _("Last 30 Days"), 4, 4);
@@ -1358,10 +1380,22 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         , new mmTreeItemData(wxTRANSLATE("Categories - Last Calendar Month")
         , new mmReportCategoryExpensesCategoriesLastMonth(m_core.get())));
 
-    wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(categsCurrentMonth
-        , new mmTreeItemData(wxTRANSLATE("Categories - Current Month")
-        , new mmReportCategoryExpensesCategoriesCurrentMonth(m_core.get())));
+    if (ignoreFuture)
+    {
+        wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs
+            , _("Current Month to Date"), 4, 4);
+        navTreeCtrl_->SetItemData(categsCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Categories - Current Month to Date")
+            , new mmReportCategoryExpensesCategoriesCurrentMonthToDate(m_core.get())));
+    }
+    else
+    {
+        wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs
+            , _("Current Month to Date"), 4, 4);
+        navTreeCtrl_->SetItemData(categsCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Categories - Current Month")
+            , new mmReportCategoryExpensesCategoriesCurrentMonth(m_core.get())));
+    }
 
     wxTreeItemId categsTimeLast30 = navTreeCtrl_->AppendItem(categs, _("Last 30 Days"), 4, 4);
     navTreeCtrl_->SetItemData(categsTimeLast30
@@ -1404,10 +1438,22 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         , new mmTreeItemData(wxTRANSLATE("Payees - Last Calendar Month")
         , new mmReportPayeeExpensesLastMonth(m_core.get())));
 
-    wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth
-        , new mmTreeItemData(wxTRANSLATE("Payees - Current Month")
-        , new mmReportPayeeExpensesCurrentMonth(m_core.get())));
+    if (ignoreFuture)
+    {
+        wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime
+            , _("Current Month to Date"), 4, 4);
+        navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Payees - Current Month to Date")
+            , new mmReportPayeeExpensesCurrentMonthToDate(m_core.get())));
+    }
+    else
+    {
+        wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime
+            , _("Current Month"), 4, 4);
+        navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Payees - Current Month")
+            , new mmReportPayeeExpensesCurrentMonth(m_core.get())));
+    }
 
     wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime
         , _("Last 30 Days"), 4, 4);
@@ -1450,9 +1496,20 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(incexpOverTimeCalMonth
         , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Calendar Month")));
 
-    wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime, currentMonthMsg, 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth
-        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Month")));
+    if (ignoreFuture)
+    {
+        wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime
+            , _("Current Month to Date"), 4, 4);
+        navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Month to Date")));
+    }
+    else
+    {
+        wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime
+            , _("Current Month"), 4, 4);
+        navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth
+            , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Month")));
+    }
 
     wxTreeItemId incexpOverTimeLast30 = navTreeCtrl_->AppendItem(incexpOverTime, _("Last 30 Days"), 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeLast30
