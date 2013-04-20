@@ -37,6 +37,7 @@ TTransactionEntry::TTransactionEntry()
 
 /// Copy constructor
 TTransactionEntry::TTransactionEntry(TTransactionEntry* pEntry)
+: TEntryBase()  // id has not been set yet
 {
     id_from_account = pEntry->id_from_account;
     id_to_account_  = pEntry->id_to_account_;
