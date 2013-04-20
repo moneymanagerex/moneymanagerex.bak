@@ -24,7 +24,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, date_range_->start_date_, date_range_->end_date_, !ignoreDate_);   
+    dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), !ignoreDate_);   
 
 	hb.startCenter();
 
@@ -51,7 +51,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     {
         wxString balance;
         double amt = core_->bTransactionList_.getAmountForPayee((*it)->id_,
-            ignoreDate_, date_range_->start_date_, date_range_->end_date_, mmIniOptions::instance().ignoreFutureTransactions_
+            ignoreDate_, date_range_->start_date(), date_range_->end_date(), mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);
 

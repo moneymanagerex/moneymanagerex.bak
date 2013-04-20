@@ -14,22 +14,41 @@ public:
         start_date_ = now_;
         end_date_ = now_;
     }
-public:
+protected:
     wxDateTime now_, start_date_, end_date_;
+
+public:
+    const virtual wxDateTime start_date() const  { return this->start_date_; };
+    const virtual wxDateTime end_date() const  { return this->end_date_; };
 };
 
 class mmCurrentMonth: public mmDateRange
 {
 public:
     mmCurrentMonth(): mmDateRange()
-    {}
+    {
+        this->start_date_ = now_.SetDay(1);
+        this->end_date_ = now_.GetLastMonthDay();
+    }
+};
+
+class mmCurrentMonthToDate: public mmDateRange
+{
+public:
+    mmCurrentMonthToDate(): mmDateRange()
+    {
+        this->start_date_ = now_.SetDay(1);
+        // no change to end_date_
+    }
 };
 
 class mmLastMonth: public mmDateRange
 {
 public:
     mmLastMonth(): mmDateRange()
-    {}
+    {
+        // TODO
+    }
 };
 
 class mmCurrentYear: public mmDateRange
@@ -37,8 +56,7 @@ class mmCurrentYear: public mmDateRange
 public:
     mmCurrentYear(): mmDateRange()
     {
-        this->start_date_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->end_date_ = wxDateTime::Now().GetLastMonthDay();
+        // TODO
     }
 };
 
@@ -47,8 +65,7 @@ class mmCurrentYearToDate: public mmDateRange
 public:
     mmCurrentYearToDate(): mmDateRange()
     {
-        this->start_date_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->end_date_ = wxDateTime::Now().GetLastMonthDay();
+        // TODO
     }
 };
 
@@ -56,7 +73,9 @@ class mmLastYear: public mmDateRange
 {
 public:
     mmLastYear(): mmDateRange()
-    {}
+    {
+        // TODO
+    }
 };
 
 class mmCurrentFinancialYear: public mmDateRange
@@ -64,8 +83,7 @@ class mmCurrentFinancialYear: public mmDateRange
 public:
     mmCurrentFinancialYear(): mmDateRange()
     {
-        this->start_date_ = wxDateTime::Now().Subtract(wxDateSpan::Days(wxDateTime::Now().GetDay() - 1));
-        this->end_date_ = wxDateTime::Now().GetLastMonthDay();
+        // TODO
     }
 };
 
@@ -73,14 +91,18 @@ class mmLastFinancialYear: public mmDateRange
 {
 public:
     mmLastFinancialYear(): mmDateRange()
-    {}
+    {
+        // TODO
+    }
 };
 
 class mmLast30Days: public mmDateRange
 {
 public:
     mmLast30Days(): mmDateRange()
-    {}
+    {
+        // TODO
+    }
 };
 
 #endif // _MM_EX_DATE_RANGE_H_
