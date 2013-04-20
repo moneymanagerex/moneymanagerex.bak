@@ -1,6 +1,9 @@
 /*
     Author: Lisheng Guan (guanlisheng@gmail.com) 
 */
+#ifndef _MM_EX_DATE_RANGE_H_
+#define _MM_EX_DATE_RANGE_H_
+
 #include <wx/datetime.h>
 
 class mmDateRange
@@ -77,3 +80,4 @@ public:
     {}
 };
 
+#endif // _MM_EX_DATE_RANGE_H_
