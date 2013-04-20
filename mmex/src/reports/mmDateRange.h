@@ -52,12 +52,23 @@ public:
     }
 };
 
+class mmLast30Days: public mmDateRange
+{
+public:
+    mmLast30Days(): mmDateRange()
+    {
+        this->start_date_ = wxDateTime(end_date_).Subtract(wxDateSpan::Months(1)).Add(wxDateSpan::Days(1));
+        // no change to end_date_
+    }
+};
+
 class mmCurrentYear: public mmDateRange
 {
 public:
     mmCurrentYear(): mmDateRange()
     {
-        // TODO
+        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);  
     }
 };
 
@@ -66,7 +77,8 @@ class mmCurrentYearToDate: public mmDateRange
 public:
     mmCurrentYearToDate(): mmDateRange()
     {
-        // TODO
+        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
+        // no change to end_date_
     }
 };
 
@@ -75,7 +87,9 @@ class mmLastYear: public mmDateRange
 public:
     mmLastYear(): mmDateRange()
     {
-        // TODO
+        this->start_date_.Subtract(wxDateSpan::Years(1))
+            .SetDay(1).SetMonth(wxDateTime::Jan);
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
     }
 };
 
@@ -85,6 +99,19 @@ public:
     mmCurrentFinancialYear(): mmDateRange()
     {
         // TODO
+        int day = 1; //core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_DAY"), 1);
+        int monthItem = 7; //core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_MONTH"), 7);
+
+        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);  
+        this->start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1));
+        this->end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1));
+
+        if (now_ < start_date_)
+        {
+            start_date_.Subtract(wxDateSpan::Years(1));
+            end_date_.Subtract(wxDateSpan::Years(1));
+        }
     }
 };
 
@@ -93,16 +120,20 @@ class mmLastFinancialYear: public mmDateRange
 public:
     mmLastFinancialYear(): mmDateRange()
     {
-        // TODO
-    }
-};
+        //TODO:
+        int day = 1; //core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_DAY"), 1);
+        int monthItem = 7; //core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_MONTH"), 7);
 
-class mmLast30Days: public mmDateRange
-{
-public:
-    mmLast30Days(): mmDateRange()
-    {
-        // TODO
+        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);  
+        start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1)).Subtract(wxDateSpan::Years(1));
+        end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1)).Subtract(wxDateSpan::Years(1));
+
+        if (now_ >= start_date_)
+        {
+            this->start_date_.Subtract(wxDateSpan::Years(1));
+            this->end_date_.Subtract(wxDateSpan::Years(1));
+        }
     }
 };
 

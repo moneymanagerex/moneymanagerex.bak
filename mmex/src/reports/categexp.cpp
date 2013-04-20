@@ -32,8 +32,7 @@ mmReportCategoryExpenses::mmReportCategoryExpenses(
 ) :
     mmPrintableBase(core),
     ignoreDate_(ignoreDate),
-    dtBegin_(date_range->start_date()),
-    dtEnd_(date_range->end_date()),
+	date_range_(date_range),
     title_(title),
     type_(type),
     ignoreFutureDate_(mmIniOptions::instance().ignoreFutureTransactions_)
@@ -47,7 +46,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, dtBegin_, dtEnd_, !ignoreDate_);
+	dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), !ignoreDate_);
 
     hb.startCenter();
 
@@ -77,8 +76,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
         const wxSharedPtr<mmCategory> category = *it;
         int categID = category->categID_;
         const wxString sCategName = category->categName_;
-        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_,
-            dtBegin_, dtEnd_, false, false, ignoreFutureDate_);
+        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_
+            , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
         if (type_ == 1 && amt < 0.0) amt = 0;
         if (type_ == 2 && amt > 0.0) amt = 0;
 
@@ -107,8 +106,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
             int subcategID = sub_category->categID_;
 
             wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);
-            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate_,
-                dtBegin_, dtEnd_, false, false, ignoreFutureDate_);
+            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate_
+                , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
 
             if (type_ == 1 && amt < 0.0) amt = 0;
             if (type_ == 2 && amt > 0.0) amt = 0;
