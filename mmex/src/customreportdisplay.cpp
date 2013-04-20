@@ -61,10 +61,10 @@ bool mmCustomReport::DisplaySQL_Results(mmHTMLBuilder& hb)
     }
     catch(const wxSQLite3Exception& e)
     {
-        wxSafeShowMessage(wxT("Error"),e.GetMessage().c_str());
+        wxSafeShowMessage("Error",e.GetMessage());
 
         hb.endCenter();
-        hb.addParaText(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        hb.addParaText(wxString::Format(_("Error: %s"), e.GetMessage()));
         hb.endTable();
         return false;
     }
@@ -124,11 +124,11 @@ wxString mmCustomReport::getHTMLText()
     hb.init();
     DisplayReportHeader(hb, _("Custom Report: ") + reportTitle_ );
 
-    if (sScriptType_ == wxT("SQL"))
+    if (sScriptType_ == "SQL")
     {
         DisplaySQL_Results(hb);
     }
-    else if (sScriptType_ == wxT("LUA"))
+    else if (sScriptType_ == "LUA")
     {
         DisplayLua_Results(hb);
     }

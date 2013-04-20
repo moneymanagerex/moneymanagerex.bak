@@ -938,18 +938,17 @@ double mmBankTransactionList::getAmountForCategory(
         {
             continue; // skip
         }
-        if (ignoreFuture)
+
+        wxDateTime trxDate = pBankTransaction->date_.GetDateOnly();
+
+        if (!ignoreDate && !trxDate.IsBetween(dtBegin, dtEnd))
         {
-            if ( pBankTransaction->date_.GetDateOnly() > wxDateTime::Now().GetDateOnly())
-                continue; //skip future dated transactions
+            continue; //skip
         }
-        if (!ignoreDate)
+
+        if (ignoreFuture && (trxDate > wxDateTime::Now().GetDateOnly()))
         {
-            if ((pBankTransaction->date_.GetDateOnly() < dtBegin.GetDateOnly())
-                ||  (pBankTransaction->date_.GetDateOnly() > dtEnd.GetDateOnly()))
-            {
-                continue; //skip
-            }
+            continue; //skip future dated transactions
         }
 
         double convRate = core_->accountList_.getAccountBaseCurrencyConvRate(pBankTransaction->accountID_);

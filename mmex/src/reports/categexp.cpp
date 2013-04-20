@@ -22,7 +22,6 @@
 #include "../htmlbuilder.h"
 #include "../util.h"
 #include "../mmgraphpie.h"
-#include "../mmex.h"
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(
     mmCoreDB* core,
@@ -33,11 +32,12 @@ mmReportCategoryExpenses::mmReportCategoryExpenses(
     int type
 ) :
     mmPrintableBase(core),
+    ignoreDate_(ignoreDate),
     dtBegin_(dtBegin),
     dtEnd_(dtEnd),
-    ignoreDate_(ignoreDate),
     title_(title),
-    type_(type)
+    type_(type),
+    ignoreFutureDate_(mmIniOptions::instance().ignoreFutureTransactions_)
 {
 }
 
@@ -79,7 +79,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         int categID = category->categID_;
         const wxString sCategName = category->categName_;
         double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_,
-            dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_);
+            dtBegin_, dtEnd_, false, false, ignoreFutureDate_);
         if (type_ == 1 && amt < 0.0) amt = 0;
         if (type_ == 2 && amt > 0.0) amt = 0;
 
@@ -109,7 +109,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
             wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);
             amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate_,
-                dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_);
+                dtBegin_, dtEnd_, false, false, ignoreFutureDate_);
 
             if (type_ == 1 && amt < 0.0) amt = 0;
             if (type_ == 2 && amt > 0.0) amt = 0;
@@ -167,19 +167,3 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
     return hb.getHTMLText();
 }
-
-mmReportCategoryExpensesGoesCurrentMonth::mmReportCategoryExpensesGoesCurrentMonth(mmCoreDB* core) : 
-    mmReportCategoryExpensesGoes(core)
-    {
-        this->dtBegin_ = wxDateTime::Now().SetDay(1).GetDateOnly();
-        if (mmIniOptions::instance().ignoreFutureTransactions_)
-        {
-            this->title_ = _("Where the Money Goes - Current Month to Date");
-            this->dtEnd_ = wxDateTime::Now().GetDateOnly();
-        }
-        else
-        {
-            this->title_ = _("Where the Money Goes - Current Month");
-            this->dtEnd_ = wxDateTime(dtBegin_).GetLastMonthDay();
-        }
-    }
