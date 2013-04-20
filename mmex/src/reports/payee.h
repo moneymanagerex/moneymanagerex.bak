@@ -40,49 +40,49 @@ protected:
 class mmReportPayeeExpensesCurrentMonth: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesCurrentMonth(mmCoreDB* core): mmReportPayeeExpenses(core, true,  _("Payee Report"), new mmCurrentMonth())
+    mmReportPayeeExpensesCurrentMonth(mmCoreDB* core): mmReportPayeeExpenses(core, false,  _("Payee Report"), new mmCurrentMonth())
     {}
 };
 
 class mmReportPayeeExpensesLastMonth: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLastMonth(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmLastMonth())
+    mmReportPayeeExpensesLastMonth(mmCoreDB* core): mmReportPayeeExpenses(core, false, _("Payee Report"), new mmLastMonth())
     {}
 };
 
 class mmReportPayeeExpensesLast30Days: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLast30Days(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmLast30Days())
+    mmReportPayeeExpensesLast30Days(mmCoreDB* core): mmReportPayeeExpenses(core, false, _("Payee Report"), new mmLast30Days())
     {}
 };
 
 class mmReportPayeeExpensesLastYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLastYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmLastYear())
+    mmReportPayeeExpensesLastYear(mmCoreDB* core): mmReportPayeeExpenses(core, false, _("Payee Report"), new mmLastYear())
     {}
 };
 
 class mmReportPayeeExpensesCurrentYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesCurrentYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmCurrentYear())
+    mmReportPayeeExpensesCurrentYear(mmCoreDB* core): mmReportPayeeExpenses(core, false, _("Payee Report"), new mmCurrentYear())
     {}
 };
 
 class mmReportPayeeExpensesLastFinancialYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLastFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmLastFinancialYear())
+    mmReportPayeeExpensesLastFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, false, _("Payee Report"), new mmLastFinancialYear())
     {}
 };
 
 class mmReportPayeeExpensesCurrentFinancialYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesCurrentFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmCurrentFinancialYear())
+    mmReportPayeeExpensesCurrentFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, false, _("Payee Report"), new mmCurrentFinancialYear())
     {}
 };
 
