@@ -5,14 +5,17 @@
 #include "../util.h"
 #include "../mmgraphpie.h"
 
-mmReportPayeeExpenses::mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate,
-    const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title)
+mmReportPayeeExpenses::mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate, const wxString& title, mmDateRange* date_range)
 : mmPrintableBase(core)
-, dtBegin_(dtBegin)
-, dtEnd_(dtEnd)
 , ignoreDate_(ignoreDate)
 , title_(title)
+, date_range_(date_range)
 {}
+
+mmReportPayeeExpenses::~mmReportPayeeExpenses()
+{
+    if (date_range_) delete date_range_;
+}
 
 wxString mmReportPayeeExpenses::getHTMLText()
 {
@@ -21,7 +24,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, dtBegin_, dtEnd_, !ignoreDate_);   
+    dateDisplay.DisplayDateHeading(hb, date_range_->start_date_, date_range_->end_date_, !ignoreDate_);   
 
 	hb.startCenter();
 
@@ -48,7 +51,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     {
         wxString balance;
         double amt = core_->bTransactionList_.getAmountForPayee((*it)->id_,
-            ignoreDate_, dtBegin_, dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_
+            ignoreDate_, date_range_->start_date_, date_range_->end_date_, mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);
 

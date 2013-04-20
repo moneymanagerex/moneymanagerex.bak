@@ -20,17 +20,18 @@
 #define _MM_EX_REPORTPAYEE_H_
 
 #include "../reportbase.h"
+#include "mmDateRange.h"
 
 class mmReportPayeeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate, const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title);
+    mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate, const wxString& title, mmDateRange* date_range);
+    ~mmReportPayeeExpenses();
 
     wxString getHTMLText();
 
 protected:
-    wxDateTime dtBegin_;
-    wxDateTime dtEnd_;
+    mmDateRange* date_range_;
     
     bool ignoreDate_;
     wxString title_;
@@ -39,49 +40,49 @@ protected:
 class mmReportPayeeExpensesCurrentMonth: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesCurrentMonth(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    mmReportPayeeExpensesCurrentMonth(mmCoreDB* core): mmReportPayeeExpenses(core, true,  _("Payee Report"), new mmCurrentMonth())
     {}
 };
 
 class mmReportPayeeExpensesLastMonth: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLastMonth(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    mmReportPayeeExpensesLastMonth(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmLastMonth())
     {}
 };
 
 class mmReportPayeeExpensesLast30Days: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLast30Days(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    mmReportPayeeExpensesLast30Days(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmLast30Days())
     {}
 };
 
 class mmReportPayeeExpensesLastYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLastYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    mmReportPayeeExpensesLastYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmLastYear())
     {}
 };
 
 class mmReportPayeeExpensesCurrentYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesCurrentYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    mmReportPayeeExpensesCurrentYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmCurrentYear())
     {}
 };
 
 class mmReportPayeeExpensesLastFinancialYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLastFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    mmReportPayeeExpensesLastFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmLastFinancialYear())
     {}
 };
 
 class mmReportPayeeExpensesCurrentFinancialYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesCurrentFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Payee Report"))
+    mmReportPayeeExpensesCurrentFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core, true, _("Payee Report"), new mmCurrentFinancialYear())
     {}
 };
 

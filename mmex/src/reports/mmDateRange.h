@@ -9,10 +9,13 @@
 class mmDateRange
 {
 public:
-    mmDateRange(): start_date_(wxDateTime::Now()), end_date_(wxDateTime::Now())
-    {}
-protected:
-    wxDateTime start_date_, end_date_;
+    mmDateRange(): now_(wxDateTime::Now())
+    {
+        start_date_ = now_;
+        end_date_ = now_;
+    }
+public:
+    wxDateTime now_, start_date_, end_date_;
 };
 
 class mmCurrentMonth: public mmDateRange
