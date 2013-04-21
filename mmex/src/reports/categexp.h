@@ -43,240 +43,240 @@ protected:
 class mmReportCategoryExpensesGoes: public mmReportCategoryExpenses
 {
 public:
-    mmReportCategoryExpensesGoes(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmAllTime(), _("Where the Money Goes"), 2)
+    mmReportCategoryExpensesGoes(mmCoreDB* core, mmDateRange* date_range = new mmAllTime(), const wxString& title = _("Where the Money Goes"))
+        : mmReportCategoryExpenses(core, date_range, title, 2)
     {}
 };
 
-class mmReportCategoryExpensesGoesCurrentMonth: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesCurrentMonth: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesCurrentMonth(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentMonth(), _("Where the Money Goes - Current Month"), 2)
+    mmReportCategoryExpensesGoesCurrentMonth(mmCoreDB* core): mmReportCategoryExpensesGoes(core
+        , new mmCurrentMonth(), _("Where the Money Goes - Current Month"))
     {}
 };
 
-class mmReportCategoryExpensesGoesCurrentMonthToDate: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesCurrentMonthToDate: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesCurrentMonthToDate(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentMonthToDate(), _("Where the Money Goes - Current Month to Date"), 2)
+    mmReportCategoryExpensesGoesCurrentMonthToDate(mmCoreDB* core): mmReportCategoryExpensesGoes(core
+        , new mmCurrentMonthToDate(), _("Where the Money Goes - Current Month to Date"))
     {}
 };
 
-class mmReportCategoryExpensesGoesLastMonth: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesLastMonth: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesLastMonth(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLastMonth(), _("Where the Money Goes - Last Month"), 2)
+    mmReportCategoryExpensesGoesLastMonth(mmCoreDB* core): mmReportCategoryExpensesGoes(core
+        , new mmLastMonth(), _("Where the Money Goes - Last Month"))
     {}
 };
 
-class mmReportCategoryExpensesGoesLast30Days: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesLast30Days: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesLast30Days(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLast30Days(), _("Where the Money Goes - Last 30 Days"), 2)
+    mmReportCategoryExpensesGoesLast30Days(mmCoreDB* core): mmReportCategoryExpensesGoes(core
+        , new mmLast30Days(), _("Where the Money Goes - Last 30 Days"))
     {}
 };
 
-class mmReportCategoryExpensesGoesLastYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesLastYear: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesLastYear(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLastYear(),  _("Where the Money Goes - Last Year"), 2)
+    mmReportCategoryExpensesGoesLastYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core
+        , new mmLastYear(),  _("Where the Money Goes - Last Year"))
     {}
 };
 
-class mmReportCategoryExpensesGoesCurrentYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesCurrentYear: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesCurrentYear(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentYear(), _("Where the Money Goes - Current Year"), 2)
+    mmReportCategoryExpensesGoesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesGoes(core
+        , new mmCurrentYear(), _("Where the Money Goes - Current Year"))
     {}
 };
 
-class mmReportCategoryExpensesGoesCurrentYearToDate: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesCurrentYearToDate: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesCurrentYearToDate(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentYearToDate(), _("Where the Money Goes - Current Year to Date"), 2)
+    mmReportCategoryExpensesGoesCurrentYearToDate(mmCoreDB* core): mmReportCategoryExpensesGoes(core
+        , new mmCurrentYearToDate(), _("Where the Money Goes - Current Year to Date"))
     {}
 };
 
-class mmReportCategoryExpensesGoesLastFinancialYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesLastFinancialYear: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpenses(core
-        , new mmLastFinancialYear(day, month), _("Where the Money Goes - Last Financial Year"), 2)
+    mmReportCategoryExpensesGoesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpensesGoes(core
+        , new mmLastFinancialYear(day, month), _("Where the Money Goes - Last Financial Year"))
     {}
 };
 
-class mmReportCategoryExpensesGoesCurrentFinancialYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesGoesCurrentFinancialYear: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpenses(core
-        , new mmCurrentFinancialYear(day, month), _("Where the Money Goes - Current Financial Year"), 2)
+    mmReportCategoryExpensesGoesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpensesGoes(core
+        , new mmCurrentFinancialYear(day, month), _("Where the Money Goes - Current Financial Year"))
     {}
 };
 
 class mmReportCategoryExpensesComes: public mmReportCategoryExpenses
 {
 public:
-    mmReportCategoryExpensesComes(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmAllTime(), _("Where the Money Comes From"), 1)
+    mmReportCategoryExpensesComes(mmCoreDB* core, mmDateRange* date_range = new mmAllTime(), const wxString& title = _("Where the Money Comes From"))
+        : mmReportCategoryExpenses(core, date_range, title, 1)
     {}
 };
 
-class mmReportCategoryExpensesComesCurrentMonth: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesCurrentMonth: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesCurrentMonth(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new  mmCurrentMonth(), _("Where the Money Comes From - Current Month"), 1)
+    mmReportCategoryExpensesComesCurrentMonth(mmCoreDB* core): mmReportCategoryExpensesComes(core
+        , new  mmCurrentMonth(), _("Where the Money Comes From - Current Month"))
     {}
 };
 
-class mmReportCategoryExpensesComesCurrentMonthToDate: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesCurrentMonthToDate: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesCurrentMonthToDate(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentMonthToDate(), _("Where the Money Comes From - Current Month to Date"), 1)
+    mmReportCategoryExpensesComesCurrentMonthToDate(mmCoreDB* core): mmReportCategoryExpensesComes(core
+        , new mmCurrentMonthToDate(), _("Where the Money Comes From - Current Month to Date"))
     {}
 };
 
-class mmReportCategoryExpensesComesLastMonth: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesLastMonth: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesLastMonth(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLastMonth(),  _("Where the Money Comes From - Last Month"), 1)
+    mmReportCategoryExpensesComesLastMonth(mmCoreDB* core): mmReportCategoryExpensesComes(core
+        , new mmLastMonth(),  _("Where the Money Comes From - Last Month"))
     {}
 };
 
-class mmReportCategoryExpensesComesLast30Days: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesLast30Days: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesLast30Days(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLast30Days(), _("Where the Money Comes From - Last Month"),1)
+    mmReportCategoryExpensesComesLast30Days(mmCoreDB* core): mmReportCategoryExpensesComes(core
+        , new mmLast30Days(), _("Where the Money Comes From - Last Month"))
     {}
 };
 
-class mmReportCategoryExpensesComesLastYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesLastYear: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesLastYear(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLastYear(), _("Where the Money Comes From - Last Year"), 1)
+    mmReportCategoryExpensesComesLastYear(mmCoreDB* core): mmReportCategoryExpensesComes(core
+        , new mmLastYear(), _("Where the Money Comes From - Last Year"))
     {}
 };
 
-class mmReportCategoryExpensesComesCurrentYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesCurrentYear: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesCurrentYear(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentYear(), _("Where the Money Comes From - Current Year"), 1)
+    mmReportCategoryExpensesComesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesComes(core
+        , new mmCurrentYear(), _("Where the Money Comes From - Current Year"))
     {}
 };
 
-class mmReportCategoryExpensesComesCurrentYearToDate: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesCurrentYearToDate: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesCurrentYearToDate(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentYearToDate(), _("Where the Money Comes From - Current Year to Date"), 1)
+    mmReportCategoryExpensesComesCurrentYearToDate(mmCoreDB* core): mmReportCategoryExpensesComes(core
+        , new mmCurrentYearToDate(), _("Where the Money Comes From - Current Year to Date"))
     {}
 };
 
-class mmReportCategoryExpensesComesLastFinancialYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesLastFinancialYear: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpenses(core
-        , new mmLastFinancialYear(day, month), _("Where the Money Comes From - Last Financial Year"), 1)
+    mmReportCategoryExpensesComesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpensesComes(core
+        , new mmLastFinancialYear(day, month), _("Where the Money Comes From - Last Financial Year"))
     {}
 };
 
-class mmReportCategoryExpensesComesCurrentFinancialYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesComesCurrentFinancialYear: public mmReportCategoryExpensesComes
 {
 public:
-    mmReportCategoryExpensesComesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpenses(core
-        , new mmCurrentFinancialYear(day, month), _("Where the Money Comes From - Current Financial Year"), 1)
+    mmReportCategoryExpensesComesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpensesComes(core
+        , new mmCurrentFinancialYear(day, month), _("Where the Money Comes From - Current Financial Year"))
     {}
 };
 
 class mmReportCategoryExpensesCategories: public mmReportCategoryExpenses
 {
 public:
-    mmReportCategoryExpensesCategories(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmAllTime(), _("Where the Money Categories From"), 0)
+    mmReportCategoryExpensesCategories(mmCoreDB* core, mmDateRange* date_range = new mmAllTime(), const wxString& title = _("Categories"))
+    : mmReportCategoryExpenses(core, date_range, title, 0)
     {}
 };
 
-class mmReportCategoryExpensesCategoriesCurrentMonth: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesCurrentMonth: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesCurrentMonth(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentMonth(), _("Where the Money Categories From - Current Month"), 0)
+    mmReportCategoryExpensesCategoriesCurrentMonth(mmCoreDB* core): mmReportCategoryExpensesCategories(core
+        , new mmCurrentMonth(), _("Categories - Current Month"))
     {}
 };
 
-class mmReportCategoryExpensesCategoriesCurrentMonthToDate: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesCurrentMonthToDate: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesCurrentMonthToDate(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentMonthToDate(), _("Where the Money Categories From - Current Month to Date"), 0)
+    mmReportCategoryExpensesCategoriesCurrentMonthToDate(mmCoreDB* core): mmReportCategoryExpensesCategories(core
+        , new mmCurrentMonthToDate(), _("Categories - Current Month to Date"))
     {}
 };
 
-class mmReportCategoryExpensesCategoriesLastMonth: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesLastMonth: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesLastMonth(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLastMonth(), _("Where the Money Categories From - Last Month"), 0)
+    mmReportCategoryExpensesCategoriesLastMonth(mmCoreDB* core): mmReportCategoryExpensesCategories(core
+        , new mmLastMonth(), _("Categories - Last Month"))
     {}
 };
 
-class mmReportCategoryExpensesCategoriesLast30Days: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesLast30Days: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesLast30Days(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLast30Days(), _("Where the Money Categories From - Last 30 Days"), 0)
+    mmReportCategoryExpensesCategoriesLast30Days(mmCoreDB* core): mmReportCategoryExpensesCategories(core
+        , new mmLast30Days(), _("Categories - Last 30 Days"))
     {}
 };
 
-class mmReportCategoryExpensesCategoriesLastYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesLastYear: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesLastYear(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmLastYear(), _("Where the Money Categories From - Last Year"), 0)
+    mmReportCategoryExpensesCategoriesLastYear(mmCoreDB* core): mmReportCategoryExpensesCategories(core
+        , new mmLastYear(), _("Categories - Last Year"))
     {}
 };
 
-class mmReportCategoryExpensesCategoriesCurrentYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesCurrentYear: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesCurrentYear(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentYear(), _("Where the Money Categories From - Current Year"), 0)
+    mmReportCategoryExpensesCategoriesCurrentYear(mmCoreDB* core): mmReportCategoryExpensesCategories(core
+        , new mmCurrentYear(), _("Categories - Current Year"))
     {}
 };
 
-class mmReportCategoryExpensesCategoriesCurrentYearToDate: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesCurrentYearToDate: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesCurrentYearToDate(mmCoreDB* core): mmReportCategoryExpenses(core
-        , new mmCurrentYearToDate(), _("Where the Money Categories From - Current Year to Date"), 0)
+    mmReportCategoryExpensesCategoriesCurrentYearToDate(mmCoreDB* core): mmReportCategoryExpensesCategories(core
+        , new mmCurrentYearToDate(), _("Categories - Current Year to Date"))
     {}
 };
 
-class mmReportCategoryExpensesCategoriesLastFinancialYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesLastFinancialYear: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpenses(core
-        , new mmLastFinancialYear(day, month), _("Where the Money Categories From - Last Financial Year"), 0)
+    mmReportCategoryExpensesCategoriesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpensesCategories(core
+        , new mmLastFinancialYear(day, month), _("Categories - Last Financial Year"))
     {}
 };
 
-class mmReportCategoryExpensesCategoriesCurrentFinancialYear: public mmReportCategoryExpenses
+class mmReportCategoryExpensesCategoriesCurrentFinancialYear: public mmReportCategoryExpensesCategories
 {
 public:
-    mmReportCategoryExpensesCategoriesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpenses(core
-        , new mmCurrentFinancialYear(day, month), _("Where the Money Categories From - Last Financial Year"), 0)
+    mmReportCategoryExpensesCategoriesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpensesCategories(core
+        , new mmCurrentFinancialYear(day, month), _("Categories - Last Financial Year"))
     {}
 };
 
