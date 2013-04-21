@@ -1856,10 +1856,21 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createHelpPage();
             return;
         }
+        else if (iData->getString() == "Assets")
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
+            AddPendingEvent(evt);
+            return;
+        }
+        else if (iData->getString() == "Bills & Deposits")
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
+            AddPendingEvent(evt);
+            return;
+        }
 
         if (!m_core || !m_db)
             return;
-
         //========================================================================
         int customReportID;      // Define before all the if...else statements
         //========================================================================
