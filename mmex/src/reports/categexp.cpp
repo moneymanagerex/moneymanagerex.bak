@@ -25,13 +25,11 @@
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(
     mmCoreDB* core,
-    bool ignoreDate,
     mmDateRange* date_range,
     const wxString& title,
     int type
 ) :
     mmPrintableBase(core),
-    ignoreDate_(ignoreDate),
 	date_range_(date_range),
     title_(title),
     type_(type),
@@ -46,7 +44,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-	dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), !ignoreDate_);
+	dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
 
     hb.startCenter();
 
@@ -76,7 +74,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         const wxSharedPtr<mmCategory> category = *it;
         int categID = category->categID_;
         const wxString sCategName = category->categName_;
-        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_
+        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, date_range_->is_with_date()
             , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
         if (type_ == 1 && amt < 0.0) amt = 0;
         if (type_ == 2 && amt > 0.0) amt = 0;
@@ -106,7 +104,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             int subcategID = sub_category->categID_;
 
             wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);
-            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate_
+            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, date_range_->is_with_date()
                 , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
 
             if (type_ == 1 && amt < 0.0) amt = 0;
