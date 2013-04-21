@@ -88,16 +88,16 @@ public:
 class mmReportPayeeExpensesLastFinancialYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesLastFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core
-        , false, _("Payee Report - Last Financial Year"), new mmLastFinancialYear())
+    mmReportPayeeExpensesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportPayeeExpenses(core
+        , false, _("Payee Report - Last Financial Year"), new mmLastFinancialYear(day, month))
     {}
 };
 
 class mmReportPayeeExpensesCurrentFinancialYear: public mmReportPayeeExpenses
 {
 public:
-    mmReportPayeeExpensesCurrentFinancialYear(mmCoreDB* core): mmReportPayeeExpenses(core
-        , false, _("Payee Report - Current Financial Year"), new mmCurrentFinancialYear())
+    mmReportPayeeExpensesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportPayeeExpenses(core
+        , false, _("Payee Report - Current Financial Year"), new mmCurrentFinancialYear(day, month))
     {}
 };
 

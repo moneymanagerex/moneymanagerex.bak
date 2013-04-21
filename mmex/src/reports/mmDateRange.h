@@ -20,6 +20,7 @@ protected:
 public:
     const virtual wxDateTime start_date() const  { return this->start_date_; };
     const virtual wxDateTime end_date() const  { return this->end_date_; };
+    const virtual bool is_with_date() const { return true; }
 };
 
 class mmCurrentMonth: public mmDateRange
@@ -96,16 +97,12 @@ public:
 class mmCurrentFinancialYear: public mmDateRange
 {
 public:
-    mmCurrentFinancialYear(): mmDateRange()
+    mmCurrentFinancialYear(int day, int month): mmDateRange()
     {
-        // TODO
-        int day = 1; //core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_DAY"), 1);
-        int monthItem = 7; //core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_MONTH"), 7);
-
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
         this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);  
-        this->start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1));
-        this->end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1));
+        this->start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1));
+        this->end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1));
 
         if (now_ < start_date_)
         {
@@ -118,16 +115,12 @@ public:
 class mmLastFinancialYear: public mmDateRange
 {
 public:
-    mmLastFinancialYear(): mmDateRange()
+    mmLastFinancialYear(int day, int month): mmDateRange()
     {
-        //TODO:
-        int day = 1; //core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_DAY"), 1);
-        int monthItem = 7; //core_->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_MONTH"), 7);
-
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
         this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);  
-        start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1)).Subtract(wxDateSpan::Years(1));
-        end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(monthItem-1)).Subtract(wxDateSpan::Years(1));
+        start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1)).Subtract(wxDateSpan::Years(1));
+        end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1)).Subtract(wxDateSpan::Years(1));
 
         if (now_ >= start_date_)
         {
@@ -135,6 +128,14 @@ public:
             this->end_date_.Subtract(wxDateSpan::Years(1));
         }
     }
+};
+
+class mmAllTime: public mmDateRange
+{
+public:
+    mmAllTime(): mmDateRange()
+    {}
+    const bool is_with_date() const { return false; }
 };
 
 #endif // _MM_EX_DATE_RANGE_H_
