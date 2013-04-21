@@ -30,6 +30,9 @@ public:
 
     wxString getHTMLText();
 
+public:
+    enum TYPE { NONE = 0, GOES, COME, CATEGORY};
+
 protected:
     mmDateRange* date_range_;
     bool ignoreDate_;
