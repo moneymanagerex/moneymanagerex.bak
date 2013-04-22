@@ -5,15 +5,11 @@
 #include "../util.h"
 #include "../mmgraphincexpensesmonth.h"
 
-mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, bool ignoreDate,
-    const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title)
+mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, const wxString& title, mmDateRange* date_range)
 : mmPrintableBase(core)
-, dtBegin_(dtBegin)
-, dtEnd_(dtEnd)
-, ignoreDate_(ignoreDate)
+, date_range_(date_range)
 , title_(title)
 {
-    wxASSERT(dtBegin_ == dtBegin);
 }
 
 wxString mmReportIncomeExpenses::getHTMLText()
@@ -23,7 +19,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, dtBegin_, dtEnd_, !ignoreDate_);
+    dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
 
     hb.addLineBreak();
 
@@ -33,7 +29,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
     double expenses = 0.0;
     double income = 0.0;
-    core_->bTransactionList_.getExpensesIncome(core_, -1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_);
+    core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, date_range_->is_with_date(), date_range_->start_date(), date_range_->end_date(), mmIniOptions::instance().ignoreFutureTransactions_);
 
 	hb.startTable("75%");
 	hb.addTableHeaderRow("", 2);
