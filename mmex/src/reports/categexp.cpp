@@ -30,7 +30,7 @@ mmReportCategoryExpenses::mmReportCategoryExpenses(
     int type
 ) :
     mmPrintableBase(core),
-	date_range_(date_range),
+    date_range_(date_range),
     title_(title),
     type_(type),
     ignoreFutureDate_(mmIniOptions::instance().ignoreFutureTransactions_)
@@ -44,7 +44,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-	dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
+    dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
 
     hb.startCenter();
 
@@ -63,6 +63,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     std::vector<ValuePair> valueList;
 
     double grandtotal = 0.0;
+    bool ignore_date = !date_range_->is_with_date();
 
     wxString sBalance = "?";
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
@@ -74,7 +75,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         const wxSharedPtr<mmCategory> category = *it;
         int categID = category->categID_;
         const wxString sCategName = category->categName_;
-        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, date_range_->is_with_date()
+        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignore_date
             , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
         if (type_ == 1 && amt < 0.0) amt = 0;
         if (type_ == 2 && amt > 0.0) amt = 0;
@@ -104,7 +105,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             int subcategID = sub_category->categID_;
 
             wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);
-            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, date_range_->is_with_date()
+            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignore_date
                 , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
 
             if (type_ == 1 && amt < 0.0) amt = 0;

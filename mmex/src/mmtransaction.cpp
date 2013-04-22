@@ -925,55 +925,46 @@ double mmBankTransactionList::getAmountForCategory(
 ) const
 {
     double amt = 0.0;
+    const wxDateTime dtNow = wxDateTime::Now().GetDateOnly();
 
     for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        const wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
-
-        if (!pBankTransaction || !pBankTransaction->containsCategory(categID, subcategID))
+        if (!i->get()) continue; //skip
+        if (!i->get()->containsCategory(categID, subcategID)) continue;
+        if (i->get()->status_ == wxT("V")) continue;
+        if (!ignoreDate)
         {
-            continue;
-        }
-        if (pBankTransaction->status_ == wxT("V"))
+	        if (!i->get()->date_.GetDateOnly().IsBetween(dtBegin, dtEnd)) continue;
+		}
+        if (ignoreFuture)
         {
-            continue; // skip
-        }
-
-        wxDateTime trxDate = pBankTransaction->date_.GetDateOnly();
-
-        if (!ignoreDate && !trxDate.IsBetween(dtBegin, dtEnd))
-        {
-            continue; //skip
+            //skip future dated transactions
+            if (i->get()->date_.GetDateOnly().IsLaterThan(dtNow)) continue;
         }
 
-        if (ignoreFuture && (trxDate > wxDateTime::Now().GetDateOnly()))
-        {
-            continue; //skip future dated transactions
-        }
-
-        double convRate = core_->accountList_.getAccountBaseCurrencyConvRate(pBankTransaction->accountID_);
-        if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+        double convRate = core_->accountList_.getAccountBaseCurrencyConvRate(i->get()->accountID_);
+        if (i->get()->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             if (evaluateTransfer)
             {
                 if (asDeposit)
                 {
-                    amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+                    amt += i->get()->getAmountForSplit(categID, subcategID) * convRate;
                 }
                 else
                 {
-                    amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+                    amt -= i->get()->getAmountForSplit(categID, subcategID) * convRate;
                 }
             }
             continue;  //skip
         }
-        if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+        if (i->get()->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
         {
-            amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+            amt -= i->get()->getAmountForSplit(categID, subcategID) * convRate;
         }
-        else if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
+        else if (i->get()->transType_ == TRANS_TYPE_DEPOSIT_STR)
         {
-            amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+            amt += i->get()->getAmountForSplit(categID, subcategID) * convRate;
         }
     }
 
