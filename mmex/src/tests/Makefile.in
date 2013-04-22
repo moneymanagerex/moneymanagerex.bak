@@ -171,7 +171,6 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_categovertimeperf.o \
 	mmex_tests_incexpenses.o \
 	mmex_tests_incexpensesfinancialperiod.o \
-	mmex_tests_incexpesestime.o \
 	mmex_tests_payee.o \
 	mmex_tests_summary.o \
 	mmex_tests_summaryassets.o \
@@ -621,9 +620,6 @@ mmex_tests_incexpenses.o: $(srcdir)/../../src/reports/incexpenses.cpp
 
 mmex_tests_incexpensesfinancialperiod.o: $(srcdir)/../../src/reports/incexpensesfinancialperiod.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/incexpensesfinancialperiod.cpp
-
-mmex_tests_incexpesestime.o: $(srcdir)/../../src/reports/incexpesestime.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/incexpesestime.cpp
 
 mmex_tests_payee.o: $(srcdir)/../../src/reports/payee.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/payee.cpp

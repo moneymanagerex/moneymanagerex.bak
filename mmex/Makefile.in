@@ -157,7 +157,6 @@ MMEX_OBJECTS =  \
 	mmex_categovertimeperf.o \
 	mmex_incexpenses.o \
 	mmex_incexpensesfinancialperiod.o \
-	mmex_incexpesestime.o \
 	mmex_payee.o \
 	mmex_summary.o \
 	mmex_summaryassets.o \
@@ -599,9 +598,6 @@ mmex_incexpenses.o: $(srcdir)/src/reports/incexpenses.cpp
 
 mmex_incexpensesfinancialperiod.o: $(srcdir)/src/reports/incexpensesfinancialperiod.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reports/incexpensesfinancialperiod.cpp
-
-mmex_incexpesestime.o: $(srcdir)/src/reports/incexpesestime.cpp
-	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reports/incexpesestime.cpp
 
 mmex_payee.o: $(srcdir)/src/reports/payee.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reports/payee.cpp
