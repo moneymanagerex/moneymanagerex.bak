@@ -13,14 +13,17 @@ public:
     {
         start_date_ = now_;
         end_date_ = now_;
+		title_ = "Date Range";
     }
 protected:
     wxDateTime now_, start_date_, end_date_;
+	wxString title_;
 
 public:
     const virtual wxDateTime start_date() const  { return this->start_date_; };
     const virtual wxDateTime end_date() const  { return this->end_date_; };
     const virtual bool is_with_date() const { return true; }
+	const virtual wxString title() const { return title_;};
 };
 
 class mmCurrentMonth: public mmDateRange
@@ -30,6 +33,7 @@ public:
     {
         this->start_date_ = now_.SetDay(1);
         this->end_date_ = now_.GetLastMonthDay();
+		this->title_ = _("Current Month");
     }
 };
 
@@ -40,6 +44,7 @@ public:
     {
         this->start_date_ = now_.SetDay(1);
         // no change to end_date_
+		this->title_ = _("Current Month to Date");
     }
 };
 
@@ -50,6 +55,7 @@ public:
     {
         this->start_date_.Subtract(wxDateSpan::Months(1)).SetDay(1);
         this->end_date_ = wxDateTime(this->start_date_).GetLastMonthDay();
+		this->title_ = _("Last Month");
     }
 };
 
@@ -60,6 +66,7 @@ public:
     {
         this->start_date_ = wxDateTime(end_date_).Subtract(wxDateSpan::Months(1)).Add(wxDateSpan::Days(1));
         // no change to end_date_
+		this->title_ = _("Last 30 Days");
     }
 };
 
@@ -69,7 +76,8 @@ public:
     mmCurrentYear(): mmDateRange()
     {
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);  
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31); 
+		this->title_ = _("Current Year");
     }
 };
 
@@ -80,6 +88,7 @@ public:
     {
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
         // no change to end_date_
+		this->title_ = _("Current Year to Date");
     }
 };
 
@@ -91,6 +100,7 @@ public:
         this->start_date_.Subtract(wxDateSpan::Years(1))
             .SetDay(1).SetMonth(wxDateTime::Jan);
         this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
+		this->title_ = _("Last Year");
     }
 };
 
@@ -109,6 +119,7 @@ public:
             start_date_.Subtract(wxDateSpan::Years(1));
             end_date_.Subtract(wxDateSpan::Years(1));
         }
+		this->title_ = _("Current Financial Year");
     }
 };
 
@@ -127,6 +138,7 @@ public:
             this->start_date_.Subtract(wxDateSpan::Years(1));
             this->end_date_.Subtract(wxDateSpan::Years(1));
         }
+		this->title_ = _("Last Financial Year");
     }
 };
 
@@ -134,7 +146,9 @@ class mmAllTime: public mmDateRange
 {
 public:
     mmAllTime(): mmDateRange()
-    {}
+    {
+		this->title_ = _("Over Time");
+	}
     const bool is_with_date() const { return false; }
 };
 

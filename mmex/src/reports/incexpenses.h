@@ -25,19 +25,23 @@
 class mmReportIncomeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportIncomeExpenses(mmCoreDB* core, const wxString& title = _("Income vs Expenses - All Time"), mmDateRange* date_range = new mmAllTime());
+    mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date_range = new mmAllTime());
 
     wxString getHTMLText();
 
 protected:
     mmDateRange* date_range_;
     wxString title_;
+
+protected:
+	virtual wxString title() const;
+
 };
 
 class mmReportIncomeExpensesCurrentMonth: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesCurrentMonth(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmCurrentMonth())
+    mmReportIncomeExpensesCurrentMonth(mmCoreDB* core): mmReportIncomeExpenses(core, new mmCurrentMonth())
     {
     }
 };
@@ -45,7 +49,7 @@ public:
 class mmReportIncomeExpensesCurrentMonthToDate: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesCurrentMonthToDate(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmCurrentMonthToDate())
+    mmReportIncomeExpensesCurrentMonthToDate(mmCoreDB* core): mmReportIncomeExpenses(core, new mmCurrentMonthToDate())
     {
     }
 };
@@ -53,7 +57,7 @@ public:
 class mmReportIncomeExpensesLastMonth: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesLastMonth(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmLastMonth())
+    mmReportIncomeExpensesLastMonth(mmCoreDB* core): mmReportIncomeExpenses(core, new mmLastMonth())
     {
     }
 };
@@ -61,7 +65,7 @@ public:
 class mmReportIncomeExpensesCurrentYear: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesCurrentYear(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmCurrentYear())
+    mmReportIncomeExpensesCurrentYear(mmCoreDB* core): mmReportIncomeExpenses(core, new mmCurrentYear())
     {
     }
 };
@@ -69,7 +73,7 @@ public:
 class mmReportIncomeExpensesLastYear: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesLastYear(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmLastYear())
+    mmReportIncomeExpensesLastYear(mmCoreDB* core): mmReportIncomeExpenses(core, new mmLastYear())
     {
     }
 };
@@ -77,7 +81,7 @@ public:
 class mmReportIncomeExpensesCurrentFinancialYear: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmCurrentFinancialYear(day, month))
+    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpenses(core, new mmCurrentFinancialYear(day, month))
     {
     }
 };
@@ -85,7 +89,7 @@ public:
 class mmReportIncomeExpensesLastFinancialYear: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmLastFinancialYear(day, month))
+    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpenses(core, new mmLastFinancialYear(day, month))
     {
     }
 };
@@ -93,7 +97,7 @@ public:
 class mmReportIncomeExpensesLast30Days: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesLast30Days(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmLast30Days())
+    mmReportIncomeExpensesLast30Days(mmCoreDB* core): mmReportIncomeExpenses(core, new mmLast30Days())
     {
     }
 };
