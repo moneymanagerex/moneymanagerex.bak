@@ -1,8 +1,7 @@
 -------------------------------------------------------------------------------
 1. Required Libraries
 -------------------------------------------------------------------------------
-- wxWidgets >= 2.8.10 (www.wxwidgets.org)
-- Boost C++ Libraries
+- wxWidgets >= 2.9.4 (www.wxwidgets.org)
 - GNU GetText
 
 Prepackaged Libraries
@@ -64,7 +63,6 @@ Prepackaged Libraries
     2. Install these packages
        libwxgtk2.X-X, 
        libwxgtk2.X-X-dev
-       libboost-dev
 
     3. Execute step #2 from generic instructions.
 
