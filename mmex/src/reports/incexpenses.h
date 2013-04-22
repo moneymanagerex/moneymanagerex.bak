@@ -38,6 +38,14 @@ protected:
 
 };
 
+class mmReportIncomeExpensesAllTime: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesAllTime(mmCoreDB* core): mmReportIncomeExpenses(core, new mmAllTime())
+    {}
+    wxString getHTMLText();
+};
+
 class mmReportIncomeExpensesCurrentMonth: public mmReportIncomeExpenses
 {
 public:

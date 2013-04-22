@@ -53,7 +53,6 @@
 #include "reports/categovertimeperf.h"
 #include "reports/incexpenses.h"
 #include "reports/incexpensesfinancialperiod.h"
-#include "reports/incexpesestime.h"
 #include "reports/payee.h"
 #include "reports/summary.h"
 #include "reports/summaryassets.h"
@@ -1493,7 +1492,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     ///////////////////////////////////////////////////////////////////
 
     wxTreeItemId incexpOverTime = navTreeCtrl_->AppendItem(reports, _("Income vs Expenses"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData("Income vs Expenses", new mmReportIncomeExpenses(m_core.get())));
+    navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData("Income vs Expenses", new mmReportIncomeExpensesAllTime(m_core.get())));
 
     wxTreeItemId incexpOverTimeCalMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeCalMonth

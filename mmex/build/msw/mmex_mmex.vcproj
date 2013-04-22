@@ -2153,9 +2153,6 @@
 				RelativePath="..\..\src\reports\incexpensesfinancialperiod.cpp">
 			</File>
 			<File
-				RelativePath="..\..\src\reports\incexpesestime.cpp">
-			</File>
-			<File
 				RelativePath="..\..\src\lua_interface.cpp">
 			</File>
 			<File
@@ -2420,9 +2417,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\reports\incexpensesfinancialperiod.h">
-			</File>
-			<File
-				RelativePath="..\..\src\reports\incexpesestime.h">
 			</File>
 			<File
 				RelativePath="..\..\src\lua_interface.h">
