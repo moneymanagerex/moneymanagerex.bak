@@ -25,28 +25,27 @@
 class mmReportIncomeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportIncomeExpenses(mmCoreDB* core, bool ignoreDate, const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title);
+    mmReportIncomeExpenses(mmCoreDB* core, const wxString& title = _("Income vs Expenses - All Time"), mmDateRange* date_range = new mmAllTime());
 
     wxString getHTMLText();
 
 protected:
-    wxDateTime dtBegin_;
-    wxDateTime dtEnd_;
-    bool ignoreDate_;
+    mmDateRange* date_range_;
     wxString title_;
-};
-
-class mmReportIncomeExpensesAllTime: public mmReportIncomeExpenses
-{
-public:
-    mmReportIncomeExpensesAllTime(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
-    {}
 };
 
 class mmReportIncomeExpensesCurrentMonth: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesCurrentMonth(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    mmReportIncomeExpensesCurrentMonth(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmCurrentMonth())
+    {
+    }
+};
+
+class mmReportIncomeExpensesCurrentMonthToDate: public mmReportIncomeExpenses
+{
+public:
+    mmReportIncomeExpensesCurrentMonthToDate(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmCurrentMonthToDate())
     {
     }
 };
@@ -54,7 +53,7 @@ public:
 class mmReportIncomeExpensesLastMonth: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesLastMonth(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    mmReportIncomeExpensesLastMonth(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmLastMonth())
     {
     }
 };
@@ -62,7 +61,7 @@ public:
 class mmReportIncomeExpensesCurrentYear: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesCurrentYear(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    mmReportIncomeExpensesCurrentYear(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmCurrentYear())
     {
     }
 };
@@ -70,7 +69,7 @@ public:
 class mmReportIncomeExpensesLastYear: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesLastYear(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    mmReportIncomeExpensesLastYear(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmLastYear())
     {
     }
 };
@@ -78,7 +77,7 @@ public:
 class mmReportIncomeExpensesCurrentFinancialYear: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmCurrentFinancialYear(day, month))
     {
     }
 };
@@ -86,7 +85,7 @@ public:
 class mmReportIncomeExpensesLastFinancialYear: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmLastFinancialYear(day, month))
     {
     }
 };
@@ -94,7 +93,7 @@ public:
 class mmReportIncomeExpensesLast30Days: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesLast30Days(mmCoreDB* core): mmReportIncomeExpenses(core, true, wxDateTime::Now(), wxDateTime::Now(), _("Income vs Expenses - All Time"))
+    mmReportIncomeExpensesLast30Days(mmCoreDB* core): mmReportIncomeExpenses(core, _("Income vs Expenses - All Time"), new mmLast30Days())
     {
     }
 };
