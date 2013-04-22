@@ -5,9 +5,8 @@
 #include "../util.h"
 #include "../mmgraphpie.h"
 
-mmReportPayeeExpenses::mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate, const wxString& title, mmDateRange* date_range)
+mmReportPayeeExpenses::mmReportPayeeExpenses(mmCoreDB* core, const wxString& title, mmDateRange* date_range)
 : mmPrintableBase(core)
-, ignoreDate_(ignoreDate)
 , title_(title)
 , date_range_(date_range)
 {}
@@ -24,7 +23,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     hb.addHeader(2, title_);
 
     mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), !ignoreDate_);   
+    dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());   
 
 	hb.startCenter();
 
@@ -51,7 +50,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     {
         wxString balance;
         double amt = core_->bTransactionList_.getAmountForPayee((*it)->id_,
-            ignoreDate_, date_range_->start_date(), date_range_->end_date(), mmIniOptions::instance().ignoreFutureTransactions_
+            date_range_->is_with_date(), date_range_->start_date(), date_range_->end_date(), mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);
 

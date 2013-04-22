@@ -25,7 +25,7 @@
 class mmReportPayeeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate, const wxString& title, mmDateRange* date_range);
+    mmReportPayeeExpenses(mmCoreDB* core, const wxString& title = _("Payee Report"), mmDateRange* date_range = new mmAllTime());
     ~mmReportPayeeExpenses();
 
     wxString getHTMLText();
@@ -33,7 +33,6 @@ public:
 protected:
     mmDateRange* date_range_;
     
-    bool ignoreDate_;
     wxString title_;
 };
 
@@ -41,7 +40,7 @@ class mmReportPayeeExpensesCurrentMonth: public mmReportPayeeExpenses
 {
 public:
     mmReportPayeeExpensesCurrentMonth(mmCoreDB* core): mmReportPayeeExpenses(core
-        , false,  _("Payee Report - Current Month"), new mmCurrentMonth())
+        ,  _("Payee Report - Current Month"), new mmCurrentMonth())
     {}
 };
 
@@ -49,7 +48,7 @@ class mmReportPayeeExpensesCurrentMonthToDate: public mmReportPayeeExpenses
 {
 public:
     mmReportPayeeExpensesCurrentMonthToDate(mmCoreDB* core): mmReportPayeeExpenses(core
-        , false,  _("Payee Report - Current Month to Date"), new mmCurrentMonthToDate())
+        ,  _("Payee Report - Current Month to Date"), new mmCurrentMonthToDate())
     {}
 };
 
@@ -57,7 +56,7 @@ class mmReportPayeeExpensesLastMonth: public mmReportPayeeExpenses
 {
 public:
     mmReportPayeeExpensesLastMonth(mmCoreDB* core): mmReportPayeeExpenses(core
-        , false, _("Payee Report - Last Month"), new mmLastMonth())
+        , _("Payee Report - Last Month"), new mmLastMonth())
     {}
 };
 
@@ -65,7 +64,7 @@ class mmReportPayeeExpensesLast30Days: public mmReportPayeeExpenses
 {
 public:
     mmReportPayeeExpensesLast30Days(mmCoreDB* core): mmReportPayeeExpenses(core
-        , false, _("Payee Report - Last 30 Days"), new mmLast30Days())
+        , _("Payee Report - Last 30 Days"), new mmLast30Days())
     {}
 };
 
@@ -73,7 +72,7 @@ class mmReportPayeeExpensesLastYear: public mmReportPayeeExpenses
 {
 public:
     mmReportPayeeExpensesLastYear(mmCoreDB* core): mmReportPayeeExpenses(core
-        , false, _("Payee Report - Last Year"), new mmLastYear())
+        , _("Payee Report - Last Year"), new mmLastYear())
     {}
 };
 
@@ -81,7 +80,7 @@ class mmReportPayeeExpensesCurrentYear: public mmReportPayeeExpenses
 {
 public:
     mmReportPayeeExpensesCurrentYear(mmCoreDB* core): mmReportPayeeExpenses(core
-        , false, _("Payee Report - Current Year"), new mmCurrentYear())
+        , _("Payee Report - Current Year"), new mmCurrentYear())
     {}
 };
 
@@ -89,7 +88,7 @@ class mmReportPayeeExpensesLastFinancialYear: public mmReportPayeeExpenses
 {
 public:
     mmReportPayeeExpensesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportPayeeExpenses(core
-        , false, _("Payee Report - Last Financial Year"), new mmLastFinancialYear(day, month))
+        , _("Payee Report - Last Financial Year"), new mmLastFinancialYear(day, month))
     {}
 };
 
@@ -97,7 +96,7 @@ class mmReportPayeeExpensesCurrentFinancialYear: public mmReportPayeeExpenses
 {
 public:
     mmReportPayeeExpensesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportPayeeExpenses(core
-        , false, _("Payee Report - Current Financial Year"), new mmCurrentFinancialYear(day, month))
+        , _("Payee Report - Current Financial Year"), new mmCurrentFinancialYear(day, month))
     {}
 };
 
