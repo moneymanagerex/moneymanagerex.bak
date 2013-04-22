@@ -5,18 +5,23 @@
 #include "../util.h"
 #include "../mmgraphincexpensesmonth.h"
 
-mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, const wxString& title, mmDateRange* date_range)
+mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date_range)
 : mmPrintableBase(core)
 , date_range_(date_range)
-, title_(title)
+, title_(_("Income vs Expenses"))
 {
+}
+
+wxString mmReportIncomeExpenses::title() const
+{
+	return this->title_ + " - " + date_range_->title();
 }
 
 wxString mmReportIncomeExpenses::getHTMLText()
 {
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(2, title_);
+    hb.addHeader(2, this->title());
 
     mmCommonReportDetails dateDisplay(NULL);
     dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
