@@ -1374,7 +1374,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId categs = navTreeCtrl_->AppendItem(reports, _("Categories"), 4, 4);
     navTreeCtrl_->SetItemData(categs
         , new mmTreeItemData(wxTRANSLATE("Categories - Over Time")
-        , new mmReportCategoryExpensesCategories(m_core.get())));
+        , new mmReportCategoryOverTimePerformance(m_core.get()))); // TODO mmReportCategoryExpensesCategories
 
     wxTreeItemId categsCalMonth = navTreeCtrl_->AppendItem(categs
         , _("Last Calendar Month"), 4, 4);
