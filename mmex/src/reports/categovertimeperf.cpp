@@ -48,8 +48,7 @@ typedef std::vector<std::pair<wxDateTime, wxDateTime> > periods_t;
 typedef std::vector<std::pair<double, double> > columns_totals_t;
 //----------------------------------------------------------------------------
 
-void prepareAndPrintPeriods
-(
+void prepareAndPrintPeriods(
     const wxDateTime &periodBegin,
     const wxDateTime &periodEnd,
     mmHTMLBuilder &hb,
@@ -64,22 +63,9 @@ void prepareAndPrintPeriods
         dtBegin = periodBegin;
         dtBegin += wxDateSpan::Months(std::distance(periods.begin(), i));
 
-        if (i == periods.begin()) {
-            wxASSERT(dtBegin == periodBegin);
-        }
-
-        // --
 
         dtEnd = dtBegin;
         prepareEndDate(dtEnd);
-
-        if (i == --periods.end()) {
-            bool ok = dtEnd == periodEnd; 
-            wxASSERT(ok);
-            wxUnusedVar(ok);
-        }
-
-        // --
 
         wxString yyyy;
         yyyy << dtBegin.GetYear();
