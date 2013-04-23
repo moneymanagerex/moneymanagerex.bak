@@ -289,7 +289,6 @@
     <ClCompile Include="..\..\src\reports\categovertimeperf.cpp" />
     <ClCompile Include="..\..\src\reports\incexpenses.cpp" />
     <ClCompile Include="..\..\src\reports\incexpensesfinancialperiod.cpp" />
-    <ClCompile Include="..\..\src\reports\incexpesestime.cpp" />
     <ClCompile Include="..\..\src\reports\payee.cpp" />
     <ClCompile Include="..\..\src\reports\summary.cpp" />
     <ClCompile Include="..\..\src\reports\summaryassets.cpp" />
@@ -374,7 +373,6 @@
     <ClInclude Include="..\..\src\reports\categovertimeperf.h" />
     <ClInclude Include="..\..\src\reports\incexpenses.h" />
     <ClInclude Include="..\..\src\reports\incexpensesfinancialperiod.h" />
-    <ClInclude Include="..\..\src\reports\incexpesestime.h" />
     <ClInclude Include="..\..\src\reports\payee.h" />
     <ClInclude Include="..\..\src\reports\summary.h" />
     <ClInclude Include="..\..\src\reports\summaryassets.h" />
