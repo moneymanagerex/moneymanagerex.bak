@@ -1990,5 +1990,6 @@ EOF
 dnl ===================== bk-make-pch ends here =====================
 ])
 
+m4_include([m4/ax_cxx_compile_stdcxx_11.m4])
 m4_include([m4/wxpresets.m4])
 m4_include([m4/wxwin.m4])

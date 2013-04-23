@@ -35,6 +35,9 @@ AC_PROG_INSTALL
 
 AC_SYS_LARGEFILE
 
+# Checks C++11
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+
 ##########################################################################
 
 # Add wxConfig Options to Configure
