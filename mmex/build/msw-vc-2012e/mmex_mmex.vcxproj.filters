@@ -237,9 +237,6 @@
     <ClCompile Include="..\..\src\reports\summary.cpp">
       <Filter>Source Files\reports</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\reports\incexpesestime.cpp">
-      <Filter>Source Files\reports</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\reports\budgetcategorysummary.cpp">
       <Filter>Source Files\reports</Filter>
     </ClCompile>
@@ -465,9 +462,6 @@
       <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\payee.h">
-      <Filter>Header Files\reports</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\reports\incexpesestime.h">
       <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\reports\incexpenses.h">
