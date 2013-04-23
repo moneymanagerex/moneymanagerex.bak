@@ -48,33 +48,6 @@ typedef std::vector<std::pair<wxDateTime, wxDateTime> > periods_t;
 typedef std::vector<std::pair<double, double> > columns_totals_t;
 //----------------------------------------------------------------------------
 
-void prepareAndPrintPeriods(
-    const wxDateTime &periodBegin,
-    const wxDateTime &periodEnd,
-    mmHTMLBuilder &hb,
-    periods_t &periods
-)
-{
-    for (periods_t::iterator i = periods.begin(); i != periods.end(); ++i)
-    {
-        wxDateTime &dtBegin = i->first;
-        wxDateTime &dtEnd = i->second;
-
-        dtBegin = periodBegin;
-        dtBegin += wxDateSpan::Months(std::distance(periods.begin(), i));
-
-
-        dtEnd = dtBegin;
-        prepareEndDate(dtEnd);
-
-        wxString yyyy;
-        yyyy << dtBegin.GetYear();
-
-        hb.addTableHeaderCell(mmGetNiceShortMonthName(dtBegin.GetMonth()) + " " + yyyy);
-    }
-}
-//----------------------------------------------------------------------------
-
 void printRow
 (
     const wxDateTime &periodBegin,
@@ -210,10 +183,6 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     const wxDateTime periodBegin = dummy.ResetTime();
 
-    // wxLogDebug("yea_begin=%s, yea_end=%s", periodBegin.Format(), periodEnd.Format());
-
-    // print header of report
-
     hb.startCenter();
     hb.startTable();
 
@@ -221,7 +190,23 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     hb.addTableHeaderCell(_("Category"));
 
     periods_t periods(MONTHS_IN_PERIOD);
-    prepareAndPrintPeriods(periodBegin, periodEnd, hb, periods);
+    for (periods_t::iterator i = periods.begin(); i != periods.end(); ++i)
+    {
+        wxDateTime &dtBegin = i->first;
+        wxDateTime &dtEnd = i->second;
+
+        dtBegin = periodBegin;
+        dtBegin += wxDateSpan::Months(std::distance(periods.begin(), i));
+
+
+        dtEnd = dtBegin;
+        prepareEndDate(dtEnd);
+
+        wxString yyyy;
+        yyyy << dtBegin.GetYear();
+
+        hb.addTableHeaderCell(mmGetNiceShortMonthName(dtBegin.GetMonth()) + " " + yyyy);
+    }
 
     columns_totals_t columns_totals(periods.size());
 
