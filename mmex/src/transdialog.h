@@ -89,7 +89,6 @@ private:
     void changeFocus(wxChildFocusEvent& event);
     void onTextEntered(wxCommandEvent& event);
     void onChoiceTransChar(wxKeyEvent& event);
-    void OnButtonDateChar(wxKeyEvent& event);
     void OnAdvanceChecked(wxCommandEvent& event);
     void SetTransferControls(bool transfer = true);
     void activateSplitTransactionsDlg();

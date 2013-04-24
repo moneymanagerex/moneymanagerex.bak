@@ -168,7 +168,8 @@ void mmTransDialog::dataToControls()
     updateControlsForTransType();
     if (edit_)
     {
-        *split_.get() = *core_->bTransactionList_.getBankTransactionPtr(pBankTransaction_->transactionID())->splitEntries_.get();
+        *split_.get() = *core_->bTransactionList_.getBankTransactionPtr(
+            pBankTransaction_->transactionID())->splitEntries_.get();
     }
     else
     {
@@ -184,7 +185,8 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 {
     wxString sType = sTransaction_type_;
     sTransaction_type_ = TRANS_TYPE_WITHDRAWAL_STR;
-    wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(transaction_type_->GetSelection());
+    wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(
+        transaction_type_->GetSelection());
     if (type_obj) sTransaction_type_ = type_obj->GetData();
     if (sType != TRANS_TYPE_TRANSFER_STR && sTransaction_type_ == TRANS_TYPE_TRANSFER_STR)
     {
@@ -202,7 +204,8 @@ void mmTransDialog::updateControlsForTransType()
     {
         if (mmIniOptions::instance().transPayeeSelectionNone_ > 0)
         {
-            payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_, sTransaction_type_, categID_, subcategID_);
+            payeeID_ = core_->bTransactionList_.getLastUsedPayeeID(accountID_
+                , sTransaction_type_, categID_, subcategID_);
             payee_name_ = core_->payeeList_.GetPayeeName(payeeID_);
             payeeUnknown_ = false;
         }
@@ -210,7 +213,8 @@ void mmTransDialog::updateControlsForTransType()
         wxString categString = resetCategoryString();
         if (mmIniOptions::instance().transCategorySelectionNone_ != 0)
         {
-            categID_ = core_->bTransactionList_.getLastUsedCategoryID(accountID_, payeeID_, sTransaction_type_, subcategID_);
+            categID_ = core_->bTransactionList_.getLastUsedCategoryID(accountID_
+                , payeeID_, sTransaction_type_, subcategID_);
             categString = core_->categoryList_.GetFullCategoryString(categID_, subcategID_);
             categoryName_    = core_->categoryList_.GetCategoryName(categID_);
             subCategoryName_ = core_->categoryList_.GetSubCategoryName(categID_, subcategID_);
@@ -244,9 +248,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
         cbAccount_ ->Append(data[i]);
     }
     cbAccount_->SetStringSelection(core_->accountList_.GetAccountName(accountID_));
-#if wxCHECK_VERSION(2,9,0)
     cbAccount_->AutoComplete(data);
-#endif
 
     if (transfer)
     {
@@ -304,9 +306,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
     {
         cbPayee_ ->Append(data[i]);
     }
-#if wxCHECK_VERSION(2,9,0)
     cbPayee_->AutoComplete(data);
-#endif
 
     if (!cbPayee_ -> SetStringSelection(dataStr))
         cbPayee_ -> SetValue(dataStr);
@@ -319,15 +319,15 @@ void mmTransDialog::CreateControls()
     const int border = 5;
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
-    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();
+    flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxEXPAND).Border(wxALL, border).Proportion(1);
 
     wxBoxSizer* box_sizer1 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* box_sizer2 = new wxBoxSizer(wxVERTICAL);
-    box_sizer1->Add(box_sizer2, flags);
+    box_sizer1->Add(box_sizer2, flagsExpand);
 
     wxStaticBox* static_box = new wxStaticBox(this, wxID_ANY, _("Transaction Details"));
     wxStaticBoxSizer* box_sizer = new wxStaticBoxSizer(static_box, wxVERTICAL);
-    box_sizer2->Add(box_sizer, flags);
+    box_sizer2->Add(box_sizer, flagsExpand);
 
     wxFlexGridSizer* flex_sizer = new wxFlexGridSizer(0, 2, 0, 0);
     box_sizer->Add(flex_sizer, flags);
@@ -337,12 +337,6 @@ void mmTransDialog::CreateControls()
 
     dpc_ = new wxDatePickerCtrl( this, ID_DIALOG_TRANS_BUTTONDATE, wxDateTime::Now(),
                                  wxDefaultPosition, wxSize(110, -1), date_style);
-
-#ifdef __WXGTK__
-    dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KEY_UP,
-        wxKeyEventHandler(mmTransDialog::OnButtonDateChar), NULL, this);
-    dpc_->SetFocus();
-#endif
 
     //Text field for day of the week
     itemStaticTextWeek_ = new wxStaticText(this, wxID_STATIC, "");
@@ -734,6 +728,8 @@ wxString mmTransDialog::resetCategoryString()
 
 void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
+    wxString date1 = dpc_->GetValue().FormatISODate();
+
     wxString sAccountName = cbAccount_->GetValue();
     newAccountID_ = core_->accountList_.GetAccountId(sAccountName);
 
@@ -790,7 +786,10 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         if (advancedToTransAmountSet_)
         {
             wxString amountStr = toTextAmount_->GetValue().Trim();
-            if (amountStr.IsEmpty() || !mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
+            if (amountStr.IsEmpty() 
+                || !mmex::formatCurrencyToDouble(amountStr, toTransAmount_)
+                || (toTransAmount_ < 0.0)
+            )
             {
                 toTextAmount_->SetBackgroundColour("RED");
                 mmShowErrorMessageInvalid(parent_, _("Advanced Amount"));
@@ -857,8 +856,6 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     if (status_obj) status = status_obj->GetData().Left(1);
     status.Replace("N", "");
 
-    wxString date1 = dpc_->GetValue().FormatISODate();
-
     wxSharedPtr<mmBankTransaction> pTransaction;
     if (!edit_)
     {
@@ -867,7 +864,8 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     }
     else
     {
-        pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID());
+        pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_
+            , pBankTransaction_->transactionID());
     }
 
     wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(newAccountID_);
@@ -917,7 +915,8 @@ void mmTransDialog::SetSplitState()
 
     bCategory_->SetLabel(categString);
     cSplit_->SetValue(entries > 0);
-    cSplit_->Enable(((entries == 1) || ((entries == 0) && (categID_ > -1) && (sTransaction_type_ != TRANS_TYPE_TRANSFER_STR))));
+    cSplit_->Enable(((entries == 1) || ((entries == 0) && (categID_ > -1)
+        && (sTransaction_type_ != TRANS_TYPE_TRANSFER_STR))));
 
     textAmount_->Enable(entries < 1);
 }
@@ -1088,33 +1087,6 @@ void mmTransDialog::activateSplitTransactionsDlg()
     }
 }
 
-void mmTransDialog::OnButtonDateChar(wxKeyEvent& event)
-{
-    if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT)) {
-        int i;
-        if (event.GetKeyCode() == WXK_DOWN) i=-1;
-        else if (event.GetKeyCode() == WXK_UP) i=1;
-        else if (event.GetKeyCode() == WXK_TAB) i=2;
-        else return;
-
-        if (i<2)
-        {
-            wxDateTime date = dpc_->GetValue();
-            if (!wxGetKeyState(WXK_SHIFT))
-                date = date.Add(wxDateSpan::Days(i));
-            else
-                date = date.Add(wxDateSpan::Months(i));
-
-            dpc_->SetValue (date);
-            //process date change event for set weekday name
-            wxDateEvent dateEvent(dpc_, date, wxEVT_DATE_CHANGED);
-            GetEventHandler()->ProcessEvent(dateEvent);
-        }
-
-        event.Skip();
-    }
-}
-
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
 {
     int i = transaction_type_->GetSelection();
@@ -1147,6 +1119,7 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
 
     // we need to create a new pointer for Split transactions.
     wxSharedPtr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
-    core_->bTransactionList_.getBankTransactionPtr(accountID_, pBankTransaction_->transactionID())->getSplitTransactions(splitTransEntries.get());
+    core_->bTransactionList_.getBankTransactionPtr(accountID_
+        , pBankTransaction_->transactionID())->getSplitTransactions(splitTransEntries.get());
     split_.get()->entries_ = splitTransEntries->entries_;
 }
