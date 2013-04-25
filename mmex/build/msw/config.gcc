@@ -53,16 +53,13 @@ WX_UNICODE ?= 1
 WX_DEBUG ?= 0
 
 # Version of the wx library to build against. 
-WX_VERSION ?= 28
+WX_VERSION ?= 29
 
 # Use monolithic build of wxWidgets? [0,1]
 WX_MONOLITHIC ?= 1
 
 # Whether or not we're building against wxPython libraries. [0,1]
 WX_PYTHON ?= 0
-
-# The directory where Boost C++ libraries is installed 
-BOOST_DIR ?= $(BOOSTDIR)
 
 # The target processor architecture must be specified when it is not X86.
 # This does not affect the compiler output, so you still need to make sure
