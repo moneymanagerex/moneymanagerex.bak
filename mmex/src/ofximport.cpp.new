@@ -112,9 +112,9 @@ int ofx_proc_security_cb(const struct OfxSecurityData data, void * security_user
 	st.Bind(++i, numShares);
 	st.Bind(++i, tmp_unitprice);
 	st.Bind(++i, tmp_notes);
-	st.Bind(++i, wxT("cPrice"));
-	st.Bind(++i, wxT("cValue"));
-	st.Bind(++i, wxT("commission"));
+	st.Bind(++i, "cPrice");
+	st.Bind(++i, "cValue");
+	st.Bind(++i, "commission");
 	
 	wxASSERT(st.GetParamCount() == i);
 	
@@ -156,7 +156,7 @@ int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_u
 		wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
 		while (q1.NextRow())
 		{
-			as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+			as.Add(q1.GetString("ACCOUNTNAME"));
 		}
 		q1.Finalize();
 		
@@ -217,41 +217,41 @@ int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_u
 			
 			if(data.transactiontype_valid==true){
 				switch(data.transactiontype){
-					case OFX_CREDIT: notes_str = wxT("Generic credit");
+					case OFX_CREDIT: notes_str = "Generic credit";
 						break;
-					case OFX_DEBIT: notes_str = wxT("Generic debit");
+					case OFX_DEBIT: notes_str = "Generic debit";
 						break;
-					case OFX_INT: notes_str = wxT("Interest earned or paid (Note: Depends on signage of amount)");
+					case OFX_INT: notes_str = "Interest earned or paid (Note: Depends on signage of amount)";
 						break;
-					case OFX_DIV: notes_str = wxT("Dividend");
+					case OFX_DIV: notes_str = "Dividend";
 						break;
-					case OFX_FEE: notes_str = wxT("FI fee");
+					case OFX_FEE: notes_str = "FI fee";
 						break;
-					case OFX_SRVCHG: notes_str = wxT("Service charge");
+					case OFX_SRVCHG: notes_str = "Service charge";
 						break;
-					case OFX_DEP: notes_str = wxT("Deposit");
+					case OFX_DEP: notes_str = "Deposit";
 						break;
-					case OFX_ATM: notes_str = wxT("ATM debit or credit (Note: Depends on signage of amount)");
+					case OFX_ATM: notes_str = "ATM debit or credit (Note: Depends on signage of amount)";
 						break;
-					case OFX_POS: notes_str = wxT("Point of sale debit or credit (Note: Depends on signage of amount)");
+					case OFX_POS: notes_str = "Point of sale debit or credit (Note: Depends on signage of amount)";
 						break;
-					case OFX_XFER: notes_str = wxT("Transfer");
+					case OFX_XFER: notes_str = "Transfer";
 						break;
-					case OFX_CHECK: notes_str = wxT("Check");
+					case OFX_CHECK: notes_str = "Check";
 						break;
-					case OFX_PAYMENT: notes_str = wxT("Electronic payment");
+					case OFX_PAYMENT: notes_str = "Electronic payment";
 						break;
-					case OFX_CASH: notes_str = wxT("Cash withdrawal");
+					case OFX_CASH: notes_str = "Cash withdrawal";
 						break;
-					case OFX_DIRECTDEP: notes_str = wxT("Direct deposit");
+					case OFX_DIRECTDEP: notes_str = "Direct deposit";
 						break;
-					case OFX_DIRECTDEBIT: notes_str = wxT("Merchant initiated debit");
+					case OFX_DIRECTDEBIT: notes_str = "Merchant initiated debit";
 						break;
-					case OFX_REPEATPMT: notes_str = wxT("Repeating payment/standing order");
+					case OFX_REPEATPMT: notes_str = "Repeating payment/standing order";
 						break;
-					case OFX_OTHER: notes_str = wxT("Other");
+					case OFX_OTHER: notes_str = "Other";
 						break;
-					default : notes_str = wxT("Unknown transaction type");
+					default : notes_str = "Unknown transaction type";
 						break;
 				}
 				pTransaction->notes_ = notes_str;
@@ -340,7 +340,7 @@ int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_u
 				wxSting payee = data.payee_id;
                 if (payee.Trim().IsEmpty())
                 {
-                    payee = wxT("Unknown");
+                    payee = "Unknown";
                 }
 				
                 if (!core->payeeList_.payeeExists(payee))

@@ -607,7 +607,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         wxString csvline = tkz.GetNextToken();
         updated = true;
         /*** Grab the relevant bits (for now only the symbol and the current price) */
-        wxStringTokenizer csvsimple(csvline,wxT("\","),wxTOKEN_STRTOK);
+        wxStringTokenizer csvsimple(csvline,"\",",wxTOKEN_STRTOK);
         if (csvsimple.HasMoreTokens())
         {
             StockSymbolWithSuffix = csvsimple.GetNextToken();
@@ -779,14 +779,14 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
         //Selected share info
         additionInfo
         << "|" << stockCurrentPriceStr << " - " << stockPurchasePriceStr << "|" << " = " << stockDifferenceStr
-        << " * " << stocknumSharesStr << " = " << stockgainlossStr << " ( " << stockPercentageStr << wxT('%')
+        << " * " << stocknumSharesStr << " = " << stockgainlossStr << " ( " << stockPercentageStr << "%"
         //<< " | "<< stockPercentagePerYearStr << "% "  << _("Yearly")
         << " )" << "\n";
         //Summary for account for selected symbol
         if (trans_[selectedIndex]->purchasedTime_ > 1)
         {
             additionInfo << "|" << stockCurrentPriceStr << " - " << stockavgPurchasePriceStr << "|" << " = " << stocktotalDifferenceStr
-            << " * " << stocktotalnumSharesStr << " = " << stocktotalgainlossStr << " ( " << stocktotalPercentageStr << wxT('%')
+            << " * " << stocktotalnumSharesStr << " = " << stocktotalgainlossStr << " ( " << stocktotalPercentageStr << "%"
             //<< " | "<< stockPercentagePerYearStr << "% " << _("Yearly")
             << " )" //<< "\n"
             << "\n" << getItem(selectedIndex, COL_NOTES);

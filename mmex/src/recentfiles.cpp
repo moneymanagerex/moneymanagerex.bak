@@ -37,8 +37,8 @@ RecentDatabaseFiles::RecentDatabaseFiles(wxSharedPtr<MMEX_IniSettings> pIniSetti
 , menuRecentFiles_(menuRecentFiles)
 , recentListSize_(6)
 {
-    dbIndexName_ = wxT("RECENT_DB_");
-    recentFileList_.Add(pIniSettings->GetStringSetting(wxT("LASTFILENAME"), wxEmptyString));
+    dbIndexName_ = "RECENT_DB_";
+    recentFileList_.Add(pIniSettings->GetStringSetting("LASTFILENAME", wxEmptyString));
     for (int index = 1; index < recentListSize_; ++ index)
     {
         recentFileList_.Add(wxEmptyString);
@@ -57,7 +57,7 @@ void RecentDatabaseFiles::loadRecentList()
     for (int index = 1; index < recentListSize_; ++ index)
     {
         wxString dbIndex = wxString() << dbIndexName_ << index;
-        recentFileList_[index] = pIniSettings_->GetStringSetting(dbIndex, wxT(""));
+        recentFileList_[index] = pIniSettings_->GetStringSetting(dbIndex, "");
     }
 }
 

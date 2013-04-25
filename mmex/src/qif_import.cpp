@@ -172,7 +172,7 @@ void mmQIFImportDialog::CreateControls()
 
     // Date Format Settings
     wxStaticText* dateFormat = new wxStaticText(this, wxID_STATIC, _("Date Format"));
-    choiceDateFormat_ = new wxComboBox(this, wxID_ANY, wxT(""),
+    choiceDateFormat_ = new wxComboBox(this, wxID_ANY, "",
         wxDefaultPosition, wxDefaultSize, date_format());
     choiceDateFormat_->Connect(wxID_ANY, wxEVT_COMMAND_COMBOBOX_SELECTED,
         wxCommandEventHandler(mmQIFImportDialog::OnDateMaskChange), NULL, this);
@@ -235,7 +235,7 @@ void mmQIFImportDialog::CreateControls()
 
 void mmQIFImportDialog::fillControls()
 {
-    dateFormat_ = core_->dbInfoSettings_->GetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    dateFormat_ = core_->dbInfoSettings_->GetStringSetting("DATEFORMAT", mmex::DEFDATEFORMAT);
     choiceDateFormat_->SetStringSelection(FormatDate2DisplayDate(dateFormat_));
 
     wxArrayString accounts_type;
@@ -259,7 +259,7 @@ void mmQIFImportDialog::fillControls()
 
 bool mmQIFImportDialog::isLineOK(const wxString& line)
 {
-    return wxString(wxT("!DNPAT^MLSE$C/UI")).Contains(line.Left(1));
+    return wxString("!DNPAT^MLSE$C/UI").Contains(line.Left(1));
 }
 
 wxString mmQIFImportDialog::getLineData(const wxString& line)
@@ -280,8 +280,8 @@ wxString mmQIFImportDialog::getFileLine(wxTextInputStream& textFile, int& lineNu
 wxString mmQIFImportDialog::getFinancistoProject(wxString& sSubCateg)
 {
     //Additional parsint for Financisto
-    wxString sProject = wxT("");
-    wxStringTokenizer cattkz(sSubCateg, wxT("/"));
+    wxString sProject = "";
+    wxStringTokenizer cattkz(sSubCateg, "/");
 
     sSubCateg = cattkz.GetNextToken();
     if (cattkz.HasMoreTokens())
@@ -292,7 +292,7 @@ wxString mmQIFImportDialog::getFinancistoProject(wxString& sSubCateg)
 bool mmQIFImportDialog::warning_message()
 {
     wxString msgStr;
-    msgStr << _("To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX.") << wxT("\n\n")
+    msgStr << _("To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX.") << "\n\n"
            << _("Are you are sure you want to proceed with the import?");
     wxMessageDialog msgDlg(NULL, msgStr, _("QIF Import"), wxYES_NO|wxICON_QUESTION);
     if (msgDlg.ShowModal() != wxID_YES)
@@ -319,7 +319,7 @@ int mmQIFImportDialog::mmImportQIF()
 
     wxString sDefCurrencyName = core_->currencyList_.getCurrencyName(core_->currencyList_.GetBaseCurrencySettings());
 
-    fileviewer file_dlg(wxT(""), parent_);
+    fileviewer file_dlg("", parent_);
     file_dlg.Show();
     wxTextCtrl*& logWindow = file_dlg.textCtrl_;
     bool canceledbyuser = false;
@@ -362,13 +362,13 @@ int mmQIFImportDialog::mmImportQIF()
             sAmount.clear();
             val = 0.0;
             dSplitAmount = 0.0;
-            transNum = wxT("");
-            notes = wxT("");
+            transNum = "";
+            notes = "";
             convDate = wxDateTime::Now().FormatISODate();
 
             bTrxComplited = false;
             trxNumLine = numLines - 1;
-            sMsg = wxT("-------------------------------------------------------------------------------------------------------------------------\n");
+            sMsg = "-------------------------------------------------------------------------------------------------------------------------\n";
             logWindow->AppendText(sMsg);
         }
         readLine = getFileLine(text, numLines);
@@ -379,27 +379,27 @@ int mmQIFImportDialog::mmImportQIF()
         bool isOK = isLineOK(readLine);
         if (!isOK)
         {
-            sMsg = wxString()<< _("Line: ") << numLines << wxT("  ") << _(" Unknown QIF line: ") << readLine;
-            logWindow->AppendText(wxString() << sMsg << wxT("\n"));
+            sMsg = wxString()<< _("Line: ") << numLines << "  " << _(" Unknown QIF line: ") << readLine;
+            logWindow->AppendText(wxString() << sMsg << "\n");
             continue;
         }
 
         if (lineType(readLine) == AcctType)
         {
             wxString accountType = getLineData(readLine);
-            if  ((!accountType.CmpNoCase(wxT("Type:Bank")))
-                    || (!accountType.CmpNoCase(wxT("Type:Cash")))
-                    || (!accountType.CmpNoCase(wxT("Type:CCard")))
-                    || (!accountType.CmpNoCase(wxT("Type:Oth L")))
+            if  ((!accountType.CmpNoCase("Type:Bank"))
+                    || (!accountType.CmpNoCase("Type:Cash"))
+                    || (!accountType.CmpNoCase("Type:CCard"))
+                    || (!accountType.CmpNoCase("Type:Oth L"))
                 )
             {
-                sMsg = wxString::Format(_("Importing account type: %s"), accountType.c_str());
-                logWindow->AppendText(sMsg << wxT("\n"));
+                sMsg = wxString::Format(_("Importing account type: %s"), accountType);
+                logWindow->AppendText(sMsg << "\n");
                 bTrxComplited = true;
                 continue;
             }
 
-            if ( accountType == wxT("Type:Cat") )
+            if ( accountType == "Type:Cat" )
             {
                 bool reading = true;
                 while(!input.Eof() && reading )
@@ -413,13 +413,13 @@ int mmQIFImportDialog::mmImportQIF()
                 }
             }
 
-            if ( accountType == wxT("Account"))
+            if ( accountType == "Account")
             {
-                wxString sDescription = wxT("");
-                wxString sBalance = wxT("");
+                wxString sDescription = "";
+                wxString sBalance = "";
                 // account information
                 // Need to read till we get to end of account information
-                while( (readLine = getFileLine(text, numLines) ) != wxT("^"))
+                while( (readLine = getFileLine(text, numLines) ) != "^")
                 {
                     numLines++;
 
@@ -465,40 +465,40 @@ int mmQIFImportDialog::mmImportQIF()
                         from_account_id = core_->accountList_.AddAccount(pAccount);
                     accounts_name.Add(pAccount->name_);
                     acctName = pAccount->name_;
-                    sMsg = wxString::Format(_("Added account '%s'"), acctName.c_str())
-                        << wxT("\n") << wxString::Format(_("Initial Balance: %s"), (wxString()<<val).c_str());
-                    logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+                    sMsg = wxString::Format(_("Added account '%s'"), acctName)
+                        << "\n" << wxString::Format(_("Initial Balance: %s"), (wxString()<<val));
+                    logWindow->AppendText(wxString()<< sMsg << "\n");
                 }
 
                 fromAccountID = core_->accountList_.GetAccountId(acctName);
 
-                sMsg = wxString::Format(_("Line: %ld"), numLines) << wxT(" : ")
-                    << wxString::Format(_("Account name: %s"), acctName.c_str());
-                logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+                sMsg = wxString::Format(_("Line: %ld"), numLines) << " : "
+                    << wxString::Format(_("Account name: %s"), acctName);
+                logWindow->AppendText(wxString()<< sMsg << "\n");
 
                 continue;
             }
 
             // ignore these type of lines
-            if ( accountType == wxT("Option:AutoSwitch") )
+            if ( accountType == "Option:AutoSwitch" )
             {
-                while((readLine = getFileLine(text, numLines)) != wxT("^") || input.Eof())
+                while((readLine = getFileLine(text, numLines)) != "^" || input.Eof())
                 {
                     // ignore all lines
                 }
                 continue;
             }
-            else if ( accountType == wxT("Type:Security") || accountType == wxT("Clear:AutoSwitch"))
+            else if ( accountType == "Type:Security" || accountType == "Clear:AutoSwitch")
             {
                 continue;
             }
             // we do not know how to process this type yet
             wxString errMsgStr = _("Cannot process these QIF Account Types yet.");
             wxString errLineMsgStr = wxString::Format(_("Line: %ld"), numLines)
-                << wxT("\n") << readLine;
+                << "\n" << readLine;
 
-            logWindow->AppendText(wxString()<< errLineMsgStr << wxT("\n") << errMsgStr << wxT("\n"));
-            wxMessageBox( errLineMsgStr + wxT("\n\n") + errMsgStr, _("QIF Import"), wxICON_ERROR);
+            logWindow->AppendText(wxString()<< errLineMsgStr << "\n" << errMsgStr << "\n");
+            wxMessageBox( errLineMsgStr + "\n\n" + errMsgStr, _("QIF Import"), wxICON_ERROR);
 
             // exit: while(!input.Eof()) loop and allow to exit routine and allow user to save or abort
             break;
@@ -524,7 +524,7 @@ int mmQIFImportDialog::mmImportQIF()
             if (!sAmount.ToDouble(&val) && !mmex::formatCurrencyToDouble(sAmount, val))
             {
                 sMsg = wxString::Format(_("Line: %ld invalid amount, skipping."), numLines);
-                logWindow->AppendText(sMsg << wxT("\n"));
+                logWindow->AppendText(sMsg << "\n");
             }
             continue;
         }
@@ -540,14 +540,14 @@ int mmQIFImportDialog::mmImportQIF()
         }
         else if (lineType(readLine) == Memo || lineType(readLine) == MemoSplit ) // 'M' // 'E'
         {
-            notes << getLineData(readLine) << wxT("\n");
+            notes << getLineData(readLine) << "\n";
             continue;
         }
         else if (lineType(readLine) == Category || lineType(readLine) == CategorySplit) // 'S' // 'L'
         {
             sFullCateg = getLineData(readLine);
 
-            if (sFullCateg.Left(1).Contains(wxT("[")) && sFullCateg.Right(1).Contains(wxT("]")))
+            if (sFullCateg.Left(1).Contains("[") && sFullCateg.Right(1).Contains("]"))
             {
                 sToAccountName = sFullCateg.substr(1, sFullCateg.Length()-2);
                 sFullCateg = _("Transfer");
@@ -557,22 +557,22 @@ int mmQIFImportDialog::mmImportQIF()
             /* //Trick  for cut non standart qif category usage in Financisto application
             //Category field may contains additional information like Project
             //Format Category[:Subcategory][/Project] //*/
-            if (sFullCateg.Contains(wxT("/")))
-                transNum.Prepend(wxString::Format(wxT("[%s] "), getFinancistoProject(sFullCateg).c_str()));
+            if (sFullCateg.Contains("/"))
+                transNum.Prepend(wxString::Format("[%s] ", getFinancistoProject(sFullCateg)));
 
             core_->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
 
             if (categID == -1 && !sCateg.IsEmpty())
             {
                 categID =  core_->categoryList_.AddCategory(sCateg);
-                sMsg = wxString::Format(_("Added category: %s"), sCateg.c_str());
-                logWindow->AppendText(sMsg << wxT("\n"));
+                sMsg = wxString::Format(_("Added category: %s"), sCateg);
+                logWindow->AppendText(sMsg << "\n");
             }
             if (subCategID == -1 && categID != -1 && !sSubCateg.IsEmpty())
             {
                 subCategID = core_->categoryList_.AddSubCategory(categID, sSubCateg);
-                sMsg = wxString::Format(_("Added subcategory: %s"), sSubCateg.c_str());
-                logWindow->AppendText(sMsg << wxT("\n"));
+                sMsg = wxString::Format(_("Added subcategory: %s"), sSubCateg);
+                logWindow->AppendText(sMsg << "\n");
             }
 
             continue;
@@ -599,38 +599,38 @@ int mmQIFImportDialog::mmImportQIF()
         //MemoSplit
         else if (lineType(readLine) == Address) // 'A'
         {
-            notes << getLineData(readLine) << wxT("\n");
+            notes << getLineData(readLine) << "\n";
             continue;
         }
         else if (lineType(readLine) == EOTLT) // ^
         {
-            wxString status = wxT("F");
+            wxString status = "F";
 
             if (dt.Trim().IsEmpty())
             {
                 sMsg = _("Date is missing");
-                logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+                logWindow->AppendText(wxString()<< sMsg << "\n");
                 bValid = false;
             }
             if (sAmount.Trim().IsEmpty())
             {
                 sMsg = _("Amount is missing");
-                logWindow->AppendText(sMsg << wxT("\n"));
+                logWindow->AppendText(sMsg << "\n");
                 bValid = false;
             }
 
             if (sFullCateg.Trim().IsEmpty() && type != TRANS_TYPE_TRANSFER_STR)
             {
                 sMsg = _("Category is missing");
-                logWindow->AppendText(sMsg << wxT("\n"));
+                logWindow->AppendText(sMsg << "\n");
                 sFullCateg = _("Unknown");
 
                 core_->categoryList_.parseCategoryString(sFullCateg, sCateg, categID, sSubCateg, subCategID);
                 if (categID == -1 && !sCateg.IsEmpty())
                 {
                     categID =  core_->categoryList_.AddCategory(sCateg);
-                    sMsg = wxString::Format(_("Added category: %s"), sCateg.c_str());
-                    logWindow->AppendText(sMsg << wxT("\n"));
+                    sMsg = wxString::Format(_("Added category: %s"), sCateg);
+                    logWindow->AppendText(sMsg << "\n");
                 }
             }
 
@@ -653,8 +653,8 @@ int mmQIFImportDialog::mmImportQIF()
                         to_account_id = core_->accountList_.AddAccount(pAccount);
                     accounts_name.Add(sToAccountName);
 
-                    sMsg = wxString::Format(_("Added account '%s'"), sToAccountName.c_str());
-                    logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+                    sMsg = wxString::Format(_("Added account '%s'"), sToAccountName);
+                    logWindow->AppendText(wxString()<< sMsg << "\n");
                 }
                 to_account_id = core_->accountList_.GetAccountId(sToAccountName);
                 if (val > 0.0)
@@ -666,7 +666,7 @@ int mmQIFImportDialog::mmImportQIF()
                 if (to_account_id == -1 || from_account_id == -1)
                 {
                     sMsg = _("Account missing");
-                    logWindow->AppendText(sMsg << wxT("\n"));
+                    logWindow->AppendText(sMsg << "\n");
                     bValid = false;
                 }
             }
@@ -681,15 +681,15 @@ int mmQIFImportDialog::mmImportQIF()
                 if (sPayee.IsEmpty())
                 {
                     sMsg = _("Payee missing");
-                    logWindow->AppendText(sMsg << wxT("\n"));
+                    logWindow->AppendText(sMsg << "\n");
                     sPayee = _("Unknown");
                 }
 
                 if (!core_->payeeList_.PayeeExists(sPayee))
                 {
                     payeeID = core_->payeeList_.AddPayee(sPayee);
-                    sMsg = wxString::Format(_("Payee Added: %s"), sPayee.c_str());
-                    logWindow->AppendText(wxString()<< sMsg << wxT("\n"));
+                    sMsg = wxString::Format(_("Payee Added: %s"), sPayee);
+                    logWindow->AppendText(wxString()<< sMsg << "\n");
                 }
                 else
                     payeeID = core_->payeeList_.GetPayeeId(sPayee);
@@ -706,27 +706,27 @@ int mmQIFImportDialog::mmImportQIF()
             }
 
             if (bValid)
-                sValid = wxT("OK");
+                sValid = "OK";
             else
-                sValid = wxT("NO");
+                sValid = "NO";
 
             if ((bValid) && (bFromDate) && ((dtdt < fromDate) || (bToDate && (dtdt > toDate))))
             {
-                sValid = wxT("SKIP");
+                sValid = "SKIP";
                 bValid = false;
             }
             sMsg = wxString::Format(
-                wxT("Line:%ld Trx:%ld %s D:%s Acc:'%s' %s P:'%s%s' Amt:%s C:'%s' \n")
+                "Line:%ld Trx:%ld %s D:%s Acc:'%s' %s P:'%s%s' Amt:%s C:'%s' \n"
                 , trxNumLine
                 , vQIF_trxs.size() + 1
-                , sValid.c_str()
-                , convDate.c_str()
-                , core_->accountList_.GetAccountName(from_account_id).c_str()
-                , wxString((type == TRANS_TYPE_TRANSFER_STR ? wxT("<->") : wxT(""))).c_str()
-                , core_->accountList_.GetAccountName(to_account_id).c_str()
-                , core_->payeeList_.GetPayeeName(payeeID).c_str()
-                , (wxString()<<val).c_str()
-                , sFullCateg.c_str()
+                , sValid
+                , convDate
+                , core_->accountList_.GetAccountName(from_account_id)
+                , wxString((type == TRANS_TYPE_TRANSFER_STR ? "<->" : ""))
+                , core_->accountList_.GetAccountName(to_account_id)
+                , core_->payeeList_.GetPayeeName(payeeID)
+                , (wxString()<<val)
+                , sFullCateg
                 );
             logWindow->AppendText(sMsg);
 
@@ -738,7 +738,7 @@ int mmQIFImportDialog::mmImportQIF()
                 wxString cn = core_->categoryList_.GetCategoryName(c);
                 wxString sn = core_->categoryList_.GetSubCategoryName(c, s);
                 double v = mmSplit->entries_[i]->splitAmount_;
-                sMsg = (cn << wxT(":") << sn << wxT(" ") << v << wxT("\n"));
+                sMsg = (cn << ":" << sn << " " << v << "\n");
                 logWindow->AppendText(sMsg);
             }
             bTrxComplited = true;
@@ -771,7 +771,7 @@ int mmQIFImportDialog::mmImportQIF()
                 for (unsigned int index = 0; index < vQIF_trxs.size(); index++)
                 {
                     if (refTrans[index]->transType_ != TRANS_TYPE_TRANSFER_STR) continue;
-                    if (refTrans[index]->status_ == wxT("D")) continue;
+                    if (refTrans[index]->status_ == "D") continue;
                     if (refTrans[index]->date_!= dtdt) continue;
                     if (((refTrans[index]->amt_ < 0) && (val < 0)) || ((refTrans[index]->amt_ > 0) && (val >0))) continue;
                     if (refTrans[index]->accountID_!= from_account_id) continue;
@@ -782,9 +782,9 @@ int mmQIFImportDialog::mmImportQIF()
                         refTrans[index]->toAmt_ = val;
                     else
                         refTrans[index]->amt_ = val;
-                    refTrans[index]->status_ = wxT("D");
+                    refTrans[index]->status_ = "D";
 
-                    sMsg = wxString::Format(wxT("%f -> %f (%f)\n"), refTrans[index]->amt_
+                    sMsg = wxString::Format("%f -> %f (%f)\n", refTrans[index]->amt_
                         , refTrans[index]->toAmt_
                         , (fabs(refTrans[index]->amt_)/fabs(refTrans[index]->toAmt_)<1)
                             ? fabs(refTrans[index]->toAmt_)/fabs(refTrans[index]->amt_)
@@ -804,7 +804,7 @@ int mmQIFImportDialog::mmImportQIF()
     }
 
     sMsg = wxString::Format(_("Transactions imported from QIF: %ld"), vQIF_trxs.size());
-    logWindow->AppendText(sMsg << wxT("\n"));
+    logWindow->AppendText(sMsg << "\n");
 
     canceledbyuser = file_dlg.ShowModal() == wxID_CANCEL;
     // Since all database transactions are only in memory,
@@ -825,9 +825,9 @@ int mmQIFImportDialog::mmImportQIF()
             refTrans[index]->toAmt_ = fabs(refTrans[index]->toAmt_);
             refTrans[index]->updateAllData(core_, fromAccountID, pCurrencyPtr);
             if (!core_->bTransactionList_.checkForExistingTransaction(refTrans[index]))
-                refTrans[index]->status_ = wxT("F");
+                refTrans[index]->status_ = "F";
             else
-                refTrans[index]->status_ = wxT("D");
+                refTrans[index]->status_ = "D";
             core_->bTransactionList_.addTransaction(refTrans[index]);
         }
 
@@ -853,11 +853,11 @@ void mmQIFImportDialog::OnFileSearch(wxCommandEvent& /*event*/)
     const wxString choose_ext = _("QIF Files");
     sFileName_ = wxFileSelector(_("Choose QIF data file to Import"),
         wxEmptyString, sFileName_, wxEmptyString,
-        choose_ext + wxT(" (*.qif)|*.qif;*.QIF")
+        choose_ext + " (*.qif)|*.qif;*.QIF"
             , wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
 
     if (!sFileName_.IsEmpty())
-        correctEmptyFileExt( wxT("qif"), sFileName_);
+        correctEmptyFileExt( "qif", sFileName_);
     file_name_ctrl_->SetValue(sFileName_);
     checkQIFFile(sFileName_);
 }
@@ -894,13 +894,13 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
         {
             wxString sError = wxString()
                 << wxString::Format(_("Line %i"), numLines)
-                << wxT("\n")
+                << "\n"
                 << readLine;
             mmShowErrorMessageInvalid(this, sError);
             return false;
         }
 
-        if ( lineType(readLine) == AcctType && getLineData(readLine) == wxT("Account"))
+        if ( lineType(readLine) == AcctType && getLineData(readLine) == "Account")
         {
             bool reading = true;
             while(!input.Eof() && reading )

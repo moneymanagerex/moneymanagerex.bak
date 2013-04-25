@@ -88,7 +88,7 @@ wxString TLuaInterface::LuaErrorResult()
     wxString error_result;
     if (lua_result_ != 0)
     {
-        error_result = wxString::Format(_("Error: %s\n"), wxString::FromUTF8(lua_tostring(lua_, -1)).c_str());
+        error_result = wxString::Format(_("Error: %s\n"), wxString::FromUTF8(lua_tostring(lua_, -1)));
         lua_pop(lua_, 1); // remove error message from stack
     }
     return error_result;
@@ -251,7 +251,7 @@ int TLuaInterface::SetSqlRestltSet(const wxString& sScript, wxSQLite3ResultSet& 
     catch (const wxSQLite3Exception& e)
     {
         iError = e.GetErrorCode();
-        sOutput = wxString::Format(_("Error: %s"), e.GetMessage().c_str());
+        sOutput = wxString::Format(_("Error: %s"), e.GetMessage());
     }
     return iError;
 }
@@ -265,7 +265,7 @@ int TLuaInterface::cpp2lua_GetSQLResultSet(lua_State *lua)
 {
     wxString sScript = GetLuaString(lua);
     int iError  = 0; //SQLITE_OK;
-    wxString sOutput = wxT("");
+    wxString sOutput = "";
 
     int iRowsCount = 0;
 
@@ -289,13 +289,13 @@ int TLuaInterface::cpp2lua_GetSQLResultSet(lua_State *lua)
                     lua_pushstring(lua, sData.ToUTF8());
                     lua_rawseti(lua, -2, i+1);   // R[i] = Data
 
-                    sOutput<<sData<<wxT("\t|\t");
+                    sOutput << sData << "\t|\t";
                 }
                 // R is at -1, T is at -2
                 lua_rawseti(lua, -2, key); // T[key] = R
 
                 sOutput.RemoveLast(3);
-                sOutput << wxT("<br>\n");
+                sOutput << "<br>\n";
             }
             lua_setglobal(lua,"SQLResultSet");
             lua_pushinteger(lua, iRowsCount);
@@ -318,7 +318,7 @@ int TLuaInterface::cpp2lua_GetSQLResultSet(lua_State *lua)
 int TLuaInterface::cpp2lua_GetTableColumns(lua_State* lua)
 {
     int iError = 0;
-    wxString sError = wxT("");
+    wxString sError = "";
     int iColumCount = -1;
 
     // if all OK, put array of columns on the stack from given SQL statement.
@@ -426,7 +426,7 @@ int TLuaInterface::cpp2lua_GetColumnChoice(lua_State* lua)
 
     int row_id = wxGetSingleChoiceIndex(message, heading, data);
 
-    lua_pushstring(lua, row_id > -1 ? data[row_id].ToUTF8(): wxString(wxT("")).ToUTF8());
+    lua_pushstring(lua, row_id > -1 ? data[row_id].ToUTF8(): wxString("").ToUTF8());
     lua_pushinteger(lua, row_id > -1 ? row_id + 1: -1);
 
     return 2;
@@ -514,7 +514,7 @@ int TLuaInterface::cpp2Lua_CurrencyFormat(lua_State* lua)
     }
     else
     {
-        wxString lua_error = wxString::Format(_("Base conversion for currency symbol: %s has not been set."), currency_symbol.c_str());
+        wxString lua_error = wxString::Format(_("Base conversion for currency symbol: %s has not been set."), currency_symbol);
         ReportLuaError(lua, lua_error);
     }
 
@@ -542,10 +542,10 @@ int TLuaInterface::cpp2Lua_DateFormat(lua_State* lua)
 void TLuaInterface::SetDirSetting(lua_State* lua, wxString dir_setting)
 {
     bool add_slash = ! OptionalParameter(lua, 1);
-    dir_setting.Replace(wxT("\\"),wxT("/"));
+    dir_setting.Replace("\\", "/");
     if (add_slash)
     {
-        dir_setting << wxT("/");
+        dir_setting << "/";
     }
     lua_pushstring(lua, dir_setting.ToUTF8());
 }
@@ -582,10 +582,10 @@ int TLuaInterface::cpp2lua_GetLuaDir(lua_State* lua)
     wxFileName fn(stdpath.GetExecutablePath());
 
     const wxArrayString &dirs = fn.GetDirs();
-    if (dirs.Last().Upper() == wxT("BIN")) // bin\mmex.exe
+    if (dirs.Last().Upper() == "BIN") // bin\mmex.exe
         fn.RemoveLastDir();
 
-    SetDirSetting(lua, fn.GetPath() + wxT("/lua"));
+    SetDirSetting(lua, fn.GetPath() + "/lua");
     return 1;
 }
 
@@ -618,37 +618,37 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
     mmHTMLBuilder hb;
     try
     {
-        if (fn_name == wxT("Init")) hb.init();
-        else if (fn_name == wxT("StartTable")) hb.startTable(value_1, value_2, value_3);
-        else if (fn_name == wxT("EndTable")) hb.endTable();
-        else if (fn_name == wxT("StartTableRow")) hb.startTableRow(value_1);
-        else if (fn_name == wxT("EndTableRow")) hb.endTableRow();
-        else if (fn_name == wxT("StartTableCell")) hb.startTableCell(value_1);
-        else if (fn_name == wxT("EndTableCell")) hb.endTableCell();
-        else if (fn_name == wxT("AddTableHeaderCell")) hb.addTableHeaderCell(value_1, !value_2.IsEmpty());
-        else if (fn_name == wxT("AddTableHeaderRow")) hb.addTableHeaderRow(value_1, wxAtoi(value_2.c_str()));
-        else if (fn_name == wxT("AddTableCell")) hb.addTableCell(value_1, !value_2.IsEmpty()
+        if (fn_name == "Init") hb.init();
+        else if (fn_name == "StartTable") hb.startTable(value_1, value_2, value_3);
+        else if (fn_name == "EndTable") hb.endTable();
+        else if (fn_name == "StartTableRow") hb.startTableRow(value_1);
+        else if (fn_name == "EndTableRow") hb.endTableRow();
+        else if (fn_name == "StartTableCell") hb.startTableCell(value_1);
+        else if (fn_name == "EndTableCell") hb.endTableCell();
+        else if (fn_name == "AddTableHeaderCell") hb.addTableHeaderCell(value_1, !value_2.IsEmpty());
+        else if (fn_name == "AddTableHeaderRow") hb.addTableHeaderRow(value_1, wxAtoi(value_2));
+        else if (fn_name == "AddTableCell") hb.addTableCell(value_1, !value_2.IsEmpty()
             , !value_3.IsEmpty(), !value_4.IsEmpty(), value_5);
-        else if (fn_name == wxT("AddTableCellLink")) hb.addTableCellLink(value_1, value_2
+        else if (fn_name == "AddTableCellLink") hb.addTableCellLink(value_1, value_2
             , !value_3.IsEmpty(), !value_4.IsEmpty()
             , !value_5.IsEmpty(), value_6);
-        else if (fn_name == wxT("AddRowSeparator")) hb.addRowSeparator(wxAtoi(value_1.c_str()));
-        else if (fn_name == wxT("AddTotalRow")) hb.addTotalRow(value_1, wxAtoi(value_2.c_str()), value_3);
-        else if (fn_name == wxT("AddDateNow")) hb.addDateNow();
-        else if (fn_name == wxT("AddParaText")) hb.addParaText(value_1);
-        else if (fn_name == wxT("AddLineBreak")) hb.addLineBreak();
-        else if (fn_name == wxT("AddHorizontalLine")) hb.addHorizontalLine(wxAtoi(value_1.c_str()));
-        else if (fn_name == wxT("StartCenter")) hb.startCenter();
-        else if (fn_name == wxT("EndCenter")) hb.endCenter();
-        else if (fn_name == wxT("End")) hb.end();
+        else if (fn_name == "AddRowSeparator") hb.addRowSeparator(wxAtoi(value_1));
+        else if (fn_name == "AddTotalRow") hb.addTotalRow(value_1, wxAtoi(value_2), value_3);
+        else if (fn_name == "AddDateNow") hb.addDateNow();
+        else if (fn_name == "AddParaText") hb.addParaText(value_1);
+        else if (fn_name == "AddLineBreak") hb.addLineBreak();
+        else if (fn_name == "AddHorizontalLine") hb.addHorizontalLine(wxAtoi(value_1));
+        else if (fn_name == "StartCenter") hb.startCenter();
+        else if (fn_name == "EndCenter") hb.endCenter();
+        else if (fn_name == "End") hb.end();
         else
         {
-            hb.addParaText(wxString::Format(html_error, fn_name.c_str()));
+            hb.addParaText(wxString::Format(html_error, fn_name));
         }
     }
     catch (...)
     {
-        hb.addParaText(wxString::Format(html_error, fn_name.c_str()));
+        hb.addParaText(wxString::Format(html_error, fn_name));
     }
 
     lua_pushstring(lua, hb.getHTMLText().ToUTF8());

@@ -67,7 +67,7 @@ void mmPayeeDialog::do_create(wxWindow* parent)
 
     SetIcon(mmex::getProgramIcon());
 
-    wxString sResult = core_->dbInfoSettings_->GetStringSetting(wxT("HIDDEN_PAYEES_STRING"), wxT(""));
+    wxString sResult = core_->dbInfoSettings_->GetStringSetting("HIDDEN_PAYEES_STRING", "");
     hideTextCtrl_->ChangeValue(sResult);
 
     fillControls();
@@ -102,7 +102,7 @@ void mmPayeeDialog::CreateControls()
     cbShowAll_->Connect(wxID_SELECTALL, wxEVT_COMMAND_CHECKBOX_CLICKED,
         wxCommandEventHandler(mmPayeeDialog::OnShowHiddenChbClick), NULL, this);
 
-    wxArrayString filtd = core_->payeeList_.FilterPayees(wxT(""));
+    wxArrayString filtd = core_->payeeList_.FilterPayees("");
     int vertical_size_ = (filtd.GetCount()>10 ? 320 : 240);
     listBox_ = new wxListBox( this, wxID_ANY,
        wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
@@ -116,7 +116,7 @@ void mmPayeeDialog::CreateControls()
     filter_tab->SetSizer(notes_sizer);
     itemBoxSizer2->Add(payee_notebook, flagsExpand);
 
-    textCtrl_ = new wxTextCtrl( filter_tab, wxID_FIND, wxT(""),
+    textCtrl_ = new wxTextCtrl( filter_tab, wxID_FIND, "",
         wxDefaultPosition, wxSize(240,-1), wxTE_PROCESS_ENTER);
     notes_sizer->Add(textCtrl_, flagsExpand);
     textCtrl_->SetFocus();
@@ -126,7 +126,7 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer *others_sizer = new wxBoxSizer(wxHORIZONTAL);
     hide_tab->SetSizer(others_sizer);
 
-    hideTextCtrl_ = new wxTextCtrl( hide_tab, wxID_ANY, wxT(""),
+    hideTextCtrl_ = new wxTextCtrl( hide_tab, wxID_ANY, "",
         wxDefaultPosition, wxDefaultSize);
     others_sizer->Add(hideTextCtrl_, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
@@ -200,7 +200,7 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 
 void mmPayeeDialog::fillControls()
 {
-    bool bResult = core_->dbInfoSettings_->GetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), true);
+    bool bResult = core_->dbInfoSettings_->GetBoolSetting("SHOW_HIDDEN_PAYEES", true);
     cbShowAll_->SetValue(bResult);
 
     wxArrayString filtd = core_->payeeList_.FilterPayees(textCtrl_->GetValue());
@@ -208,7 +208,7 @@ void mmPayeeDialog::fillControls()
     listBox_->Clear();
 
     for (size_t i = 0; i < filtd.GetCount(); ++i) {
-        bool bHideItem = filtd.Item(i).Matches(hideTextCtrl_->GetValue().Append(wxT("*")))
+        bool bHideItem = filtd.Item(i).Matches(hideTextCtrl_->GetValue().Append("*"))
             && !hideTextCtrl_->GetValue().IsEmpty();
         if (cbShowAll_->IsChecked() || !bHideItem)
         {
@@ -275,9 +275,9 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
     {
         wxString deletePayeeErrMsg = _("Payee in use.");
         deletePayeeErrMsg
-            << wxT("\n\n")
+            << "\n\n"
             << _("Tip: Change all transactions using this Payee to another Payee\nusing the relocate command:")
-            << wxT("\n\n") << _("Tools -> Relocation of -> Payees");
+            << "\n\n" << _("Tools -> Relocation of -> Payees");
         wxMessageBox(deletePayeeErrMsg,_("Organize Payees: Delete Error"),wxOK|wxICON_ERROR);
         return;
     }
@@ -310,7 +310,7 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
     wxString oldname = listBox_->GetStringSelection();
 
     wxString mesg;
-    mesg.Printf(_("Enter a new name for %s"),oldname.c_str());
+    mesg.Printf(_("Enter a new name for %s"),oldname);
     wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
     if (newName != wxGetEmptyString())
     {
@@ -332,10 +332,10 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
     if (dlg->ShowModal() == wxID_OK)
     {
         wxString msgStr;
-        msgStr << _("Payee Relocation Completed.") << wxT("\n\n")
+        msgStr << _("Payee Relocation Completed.") << "\n\n"
             << wxString::Format(_("Records have been updated in the database: %s"),
-                dlg->updatedPayeesCount().c_str())
-            << wxT("\n\n");
+                dlg->updatedPayeesCount())
+            << "\n\n";
         wxMessageBox(msgStr, _("Payee Relocation Result"));
         mmOptions::instance().databaseUpdated_ = true;
     }
@@ -343,7 +343,7 @@ void mmPayeeDialog::OnPayeeRelocate(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::OnShowHiddenChbClick(wxCommandEvent& /*event*/)
 {
-    core_->dbInfoSettings_->SetBoolSetting(wxT("SHOW_HIDDEN_PAYEES"), cbShowAll_->IsChecked());
+    core_->dbInfoSettings_->SetBoolSetting("SHOW_HIDDEN_PAYEES", cbShowAll_->IsChecked());
     fillControls();
 }
 
@@ -362,6 +362,6 @@ void mmPayeeDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::saveFilterSettings(wxCommandEvent& event)
 {
-    core_->dbInfoSettings_->SetStringSetting(wxT("HIDDEN_PAYEES_STRING"), hideTextCtrl_->GetValue());
+    core_->dbInfoSettings_->SetStringSetting("HIDDEN_PAYEES_STRING", hideTextCtrl_->GetValue());
     event.Skip();
 }

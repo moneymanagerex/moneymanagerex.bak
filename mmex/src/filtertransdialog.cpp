@@ -70,8 +70,8 @@ bool mmFilterTransactionsDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmFilterTransactionsDialog::dataToControls()
 {
-    wxStringTokenizer tkz(settings_string_, wxT(";"), wxTOKEN_RET_EMPTY_ALL);
-    wxString value = wxT("");
+    wxStringTokenizer tkz(settings_string_, ";", wxTOKEN_RET_EMPTY_ALL);
+    wxString value = "";
     bool status;
 
     status = get_next_value(tkz, value);
@@ -96,7 +96,7 @@ void mmFilterTransactionsDialog::dataToControls()
     categoryCheckBox_ ->SetValue(status);
     btnCategory_ ->Enable(status);
 
-    wxStringTokenizer categ_token(value, wxT(":"), wxTOKEN_RET_EMPTY_ALL);
+    wxStringTokenizer categ_token(value, ":", wxTOKEN_RET_EMPTY_ALL);
     categID_ = core_->categoryList_.GetCategoryId(categ_token.GetNextToken().Trim());
     wxString subcateg_name = categ_token.GetNextToken().Trim(false);
     if (!subcateg_name.IsEmpty())
@@ -111,11 +111,11 @@ void mmFilterTransactionsDialog::dataToControls()
 
     status = get_next_value(tkz, value);
     typeCheckBox_ ->SetValue(status);
-    cbTypeWithdrawal_ ->SetValue(value.Contains(wxT("W")));
+    cbTypeWithdrawal_ ->SetValue(value.Contains("W"));
     cbTypeWithdrawal_ ->Enable(status);
-    cbTypeDeposit_ ->SetValue(value.Contains(wxT("D")));
+    cbTypeDeposit_ ->SetValue(value.Contains("D"));
     cbTypeDeposit_ ->Enable(status);
-    cbTypeTransfer_ ->SetValue(value.Contains(wxT("T")));
+    cbTypeTransfer_ ->SetValue(value.Contains("T"));
     cbTypeTransfer_ ->Enable(status);
 
     status = get_next_value(tkz, value);
@@ -198,14 +198,14 @@ void mmFilterTransactionsDialog::CreateControls()
                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemPanelSizer->Add(payeeCheckBox_, flags);
 
-    cbPayee_ = new wxComboBox(itemPanel, ID_DIALOG_TRANS_PAYEECOMBO, wxT(""),
+    cbPayee_ = new wxComboBox(itemPanel, ID_DIALOG_TRANS_PAYEECOMBO, "",
         wxDefaultPosition, wxDefaultSize,
-        core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
+        core_->payeeList_.FilterPayees("") /*, wxTE_PROCESS_ENTER*/);
     cbPayee_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(mmFilterTransactionsDialog::OnPayeeUpdated), NULL, this);
 
 #if wxCHECK_VERSION(2,9,0)
-        cbPayee_->AutoComplete(core_->payeeList_.FilterPayees(wxT("")));
+        cbPayee_->AutoComplete(core_->payeeList_.FilterPayees(""));
 #endif
 
     itemPanelSizer->Add(cbPayee_, flagsExpand);
@@ -216,7 +216,7 @@ void mmFilterTransactionsDialog::CreateControls()
     //categoryCheckBox_->SetValue(false);
     itemPanelSizer->Add(categoryCheckBox_, flags);
 
-    btnCategory_ = new wxButton( itemPanel, wxID_ANY, wxT(""),
+    btnCategory_ = new wxButton( itemPanel, wxID_ANY, "",
                                 wxDefaultPosition, wxDefaultSize);
     btnCategory_->Connect(wxID_ANY, wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(mmFilterTransactionsDialog::OnCategs), NULL, this);
@@ -265,9 +265,9 @@ void mmFilterTransactionsDialog::CreateControls()
                                           wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemPanelSizer->Add(amountRangeCheckBox_, flags);
 
-    amountMinEdit_ = new wxTextCtrl( itemPanel, wxID_ANY, wxT(""),
+    amountMinEdit_ = new wxTextCtrl( itemPanel, wxID_ANY, "",
         wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
-    amountMaxEdit_ = new wxTextCtrl( itemPanel, wxID_ANY, wxT(""),
+    amountMaxEdit_ = new wxTextCtrl( itemPanel, wxID_ANY, "",
         wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -281,7 +281,7 @@ void mmFilterTransactionsDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemPanelSizer->Add(transNumberCheckBox_, flags);
 
-    transNumberEdit_ = new wxTextCtrl( itemPanel, wxID_STATIC, wxT(""));
+    transNumberEdit_ = new wxTextCtrl( itemPanel, wxID_STATIC, "");
     itemPanelSizer->Add(transNumberEdit_, flagsExpand);
     //--End of Row --------------------------------------------------------
 
@@ -295,14 +295,14 @@ void mmFilterTransactionsDialog::CreateControls()
 
     wxBoxSizer* settings_box_sizer = new wxBoxSizer(wxHORIZONTAL);
 
-    wxString choices[] = { wxT("0"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6"), wxT("7"), wxT("8"), wxT("9")};
+    wxString choices[] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
     int num = sizeof(choices) / sizeof(wxString);
-    m_radio_box_ = new wxRadioBox(this, wxID_APPLY, wxT(""),
+    m_radio_box_ = new wxRadioBox(this, wxID_APPLY, "",
         wxDefaultPosition, wxDefaultSize, num, choices, num, wxRA_SPECIFY_COLS);
     m_radio_box_->Connect(wxID_APPLY, wxEVT_COMMAND_RADIOBOX_SELECTED,
         wxCommandEventHandler(mmFilterTransactionsDialog::OnSettingsSelected), NULL, this);
 
-    int view_no = core_->iniSettings_->GetIntSetting(wxT("TRANSACTIONS_FILTER_VIEW_NO"), 0);
+    int view_no = core_->iniSettings_->GetIntSetting("TRANSACTIONS_FILTER_VIEW_NO", 0);
     m_radio_box_->SetSelection(view_no);
     m_radio_box_->Show(true);
 
@@ -410,8 +410,8 @@ void mmFilterTransactionsDialog::OnButtoncancelClick( wxCommandEvent& /*event*/ 
     wxWindow *w = FindFocus();
     if (w && w->GetId() == ID_DIALOG_TRANS_PAYEECOMBO && !(cbPayee_->GetValue()).IsEmpty())
     {
-        cbPayee_->SetValue(wxT(""));
-        prev_value_ = wxT("*");
+        cbPayee_->SetValue("");
+        prev_value_ = "*";
         wxCommandEvent evt(wxEVT_COMMAND_TEXT_UPDATED, ID_DIALOG_TRANS_PAYEECOMBO);
         OnPayeeUpdated(evt);
         return;
@@ -471,7 +471,7 @@ wxString mmFilterTransactionsDialog::userDateRangeStr() const
     {
         wxString dtBegin = mmGetDateForDisplay(fromDateCtrl_->GetValue());
         wxString dtEnd = mmGetDateForDisplay(toDateControl_->GetValue());
-        dateStr << wxString::Format(_("From %s till %s"), dtBegin.c_str(), dtEnd.c_str());
+        dateStr << wxString::Format(_("From %s till %s"), dtBegin, dtEnd);
     }
     return dateStr;
 }
@@ -487,14 +487,14 @@ wxString mmFilterTransactionsDialog::userPayeeStr() const
 {
     if (payeeCheckBox_->IsChecked())
         return cbPayee_->GetValue();
-    return wxT("");
+    return "";
 }
 
 wxString mmFilterTransactionsDialog::userCategoryStr() const
 {
     if (categoryCheckBox_->IsChecked())
         return btnCategory_->GetLabelText();
-    return wxT("");
+    return "";
 }
 
 wxString mmFilterTransactionsDialog::getStatus() const
@@ -503,15 +503,15 @@ wxString mmFilterTransactionsDialog::getStatus() const
     wxStringClientData* status_obj =
         (wxStringClientData *)choiceStatus_->GetClientObject(choiceStatus_->GetSelection());
     if (status_obj) status = status_obj->GetData().Left(1);
-    status.Replace(wxT("N"), wxT(""));
+    status.Replace("N", "");
     return status;
 }
 
 wxString mmFilterTransactionsDialog::getType() const
 {
-    wxString withdraval = wxT("");
-    wxString deposit = wxT("");
-    wxString transfer = wxT("");
+    wxString withdraval = "";
+    wxString deposit = "";
+    wxString transfer = "";
     if (cbTypeWithdrawal_->GetValue())
         withdraval = TRANS_TYPE_WITHDRAWAL_STR;
     if (cbTypeDeposit_->GetValue())
@@ -519,7 +519,7 @@ wxString mmFilterTransactionsDialog::getType() const
     if (cbTypeTransfer_->GetValue())
         transfer = TRANS_TYPE_TRANSFER_STR;
 
-    return withdraval+wxT(";")+deposit+wxT(";")+transfer;
+    return withdraval+";"+deposit+";"+transfer;
 }
 
 wxString mmFilterTransactionsDialog::userTypeStr() const
@@ -530,9 +530,9 @@ wxString mmFilterTransactionsDialog::userTypeStr() const
         if (cbTypeWithdrawal_->GetValue())
             transCode = wxGetTranslation(TRANS_TYPE_WITHDRAWAL_STR);
         if (cbTypeDeposit_->GetValue())
-            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << wxGetTranslation(TRANS_TYPE_DEPOSIT_STR);
+            transCode << (transCode.IsEmpty() ? "" : ", ") << wxGetTranslation(TRANS_TYPE_DEPOSIT_STR);
         if (cbTypeTransfer_->GetValue())
-            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
+            transCode << (transCode.IsEmpty() ? "" : ", ") << wxGetTranslation(TRANS_TYPE_TRANSFER_STR);
     }
     return transCode;
 }
@@ -541,7 +541,7 @@ wxString mmFilterTransactionsDialog::userStatusStr() const
 {
     if (statusCheckBox_->IsChecked())
         return choiceStatus_->GetStringSelection();
-    return wxT("");
+    return "";
 }
 
 double mmFilterTransactionsDialog::getAmountMin()
@@ -569,7 +569,7 @@ wxString mmFilterTransactionsDialog::userAmountRangeStr() const
     {
         wxString minamt = amountMinEdit_->GetValue();
         wxString maxamt = amountMaxEdit_->GetValue();
-        amountRangeStr << _("Min: ") << minamt << wxT(" ") << _("Max: ") << maxamt;
+        amountRangeStr << _("Min: ") << minamt << " " << _("Max: ") << maxamt;
     }
     return amountRangeStr;
 }
@@ -578,7 +578,7 @@ void mmFilterTransactionsDialog::OnButtonSaveClick( wxCommandEvent& /*event*/ )
 {
     int i = m_radio_box_->GetSelection();
     settings_string_ = GetCurrentSettings();
-    core_->iniSettings_->SetStringSetting(wxString::Format(wxT("TRANSACTIONS_FILTER_%d"), i), settings_string_);
+    core_->iniSettings_->SetStringSetting(wxString::Format("TRANSACTIONS_FILTER_%d", i), settings_string_);
 }
 
 void mmFilterTransactionsDialog::OnSettingsSelected( wxCommandEvent& event )
@@ -590,20 +590,20 @@ void mmFilterTransactionsDialog::OnSettingsSelected( wxCommandEvent& event )
 wxString mmFilterTransactionsDialog::GetStoredSettings(int id)
 {
     if (id < 0) {
-        id = core_->iniSettings_->GetIntSetting(wxT("TRANSACTIONS_FILTER_VIEW_NO"), 0);
+        id = core_->iniSettings_->GetIntSetting("TRANSACTIONS_FILTER_VIEW_NO", 0);
     } else {
-        core_->iniSettings_->SetIntSetting(wxT("TRANSACTIONS_FILTER_VIEW_NO"), id);
+        core_->iniSettings_->SetIntSetting("TRANSACTIONS_FILTER_VIEW_NO", id);
     }
     settings_string_ = core_->iniSettings_->GetStringSetting(
-                              wxString::Format(wxT("TRANSACTIONS_FILTER_%d"), id),
-                              wxT("0;;0;;0;;0;;0;;0;;0;;0;;0;;0;;0;;"));
+                              wxString::Format("TRANSACTIONS_FILTER_%d", id),
+                              "0;;0;;0;;0;;0;;0;;0;;0;;0;;0;;0;;");
     return settings_string_;
 }
 
 bool mmFilterTransactionsDialog::get_next_value( wxStringTokenizer& tkz, wxString& value)
 {
-    value = wxT("");
-    bool on = wxT("1") == tkz.GetNextToken();
+    value = "";
+    bool on = "1" == tkz.GetNextToken();
     value = tkz.GetNextToken();
     return on;
 }
@@ -612,39 +612,39 @@ wxString mmFilterTransactionsDialog::GetCurrentSettings()
 {
     settings_string_.clear();
 
-    settings_string_ << accountCheckBox_->GetValue() << wxT(";");
-    settings_string_ << accountDropDown_->GetStringSelection() << wxT(";");
+    settings_string_ << accountCheckBox_->GetValue() << ";";
+    settings_string_ << accountDropDown_->GetStringSelection() << ";";
 
-    settings_string_ << dateRangeCheckBox_->GetValue() << wxT(";");
-    settings_string_ << fromDateCtrl_->GetValue().FormatISODate() << wxT(";");
-    settings_string_ << dateRangeCheckBox_->GetValue() << wxT(";");
-    settings_string_ << toDateControl_->GetValue().FormatISODate() << wxT(";");
+    settings_string_ << dateRangeCheckBox_->GetValue() << ";";
+    settings_string_ << fromDateCtrl_->GetValue().FormatISODate() << ";";
+    settings_string_ << dateRangeCheckBox_->GetValue() << ";";
+    settings_string_ << toDateControl_->GetValue().FormatISODate() << ";";
 
-    settings_string_ << payeeCheckBox_->GetValue() << wxT(";");
-    settings_string_ << cbPayee_->GetValue() << wxT(";");
+    settings_string_ << payeeCheckBox_->GetValue() << ";";
+    settings_string_ << cbPayee_->GetValue() << ";";
 
-    settings_string_ << categoryCheckBox_->GetValue() << wxT(";");
-    settings_string_ << btnCategory_ ->GetLabel() << wxT(";");
+    settings_string_ << categoryCheckBox_->GetValue() << ";";
+    settings_string_ << btnCategory_ ->GetLabel() << ";";
 
-    settings_string_ << statusCheckBox_->GetValue() << wxT(";");
-    settings_string_ << choiceStatus_ ->GetStringSelection() << wxT(";");
+    settings_string_ << statusCheckBox_->GetValue() << ";";
+    settings_string_ << choiceStatus_ ->GetStringSelection() << ";";
 
-    settings_string_ << typeCheckBox_->GetValue() << wxT(";")
-    << (cbTypeWithdrawal_->GetValue() && typeCheckBox_->GetValue() ? wxT("W") : wxT(""))
-    << (cbTypeDeposit_->GetValue() && typeCheckBox_->GetValue() ? wxT("D") : wxT(""))
-    << (cbTypeTransfer_->GetValue() && typeCheckBox_->GetValue() ? wxT("T") : wxT(""))
-    << wxT(";");
+    settings_string_ << typeCheckBox_->GetValue() << ";"
+    << (cbTypeWithdrawal_->GetValue() && typeCheckBox_->GetValue() ? "W" : "")
+    << (cbTypeDeposit_->GetValue() && typeCheckBox_->GetValue() ? "D" : "")
+    << (cbTypeTransfer_->GetValue() && typeCheckBox_->GetValue() ? "T" : "")
+    << ";";
 
-    settings_string_ << amountRangeCheckBox_->GetValue() << wxT(";");
-    settings_string_ << amountMinEdit_->GetValue() << wxT(";");
-    settings_string_ << amountRangeCheckBox_->GetValue() << wxT(";");
-    settings_string_ << amountMaxEdit_->GetValue() << wxT(";");
+    settings_string_ << amountRangeCheckBox_->GetValue() << ";";
+    settings_string_ << amountMinEdit_->GetValue() << ";";
+    settings_string_ << amountRangeCheckBox_->GetValue() << ";";
+    settings_string_ << amountMaxEdit_->GetValue() << ";";
 
-    settings_string_ << transNumberCheckBox_->GetValue() << wxT(";");
-    settings_string_ << transNumberEdit_->GetValue() << wxT(";");
+    settings_string_ << transNumberCheckBox_->GetValue() << ";";
+    settings_string_ << transNumberEdit_->GetValue() << ";";
 
-    settings_string_ << notesCheckBox_->GetValue() << wxT(";");
-    settings_string_ << notesEdit_->GetValue() << wxT(";");
+    settings_string_ << notesCheckBox_->GetValue() << ";";
+    settings_string_ << notesEdit_->GetValue() << ";";
 
     return settings_string_;
 }
@@ -667,10 +667,10 @@ void mmFilterTransactionsDialog::OnPayeeUpdated(wxCommandEvent& event)
     cbPayee_->Clear();
     wxArrayString data;
 
-    data = core_->payeeList_.FilterPayees(wxT(""));
+    data = core_->payeeList_.FilterPayees("");
     for (size_t i = 0; i < data.Count(); ++i)
     {
-        if (data[i].Lower().Matches(wxString(value).Append(wxT("*"))))
+        if (data[i].Lower().Matches(wxString(value).Append("*")))
             cbPayee_ ->Append(data[i]);
     }
 

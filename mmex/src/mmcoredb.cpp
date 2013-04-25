@@ -34,7 +34,7 @@ mmCoreDB::mmCoreDB(wxSharedPtr<wxSQLite3Database> db, wxSharedPtr<MMEX_IniSettin
 {
     if (!db_)
     {
-        throw wxSQLite3Exception(WXSQLITE_ERROR, wxT("Null pointer to database"));
+        throw wxSQLite3Exception(WXSQLITE_ERROR, "Null pointer to database");
     }
     
     // Create a global listing for info settings.
@@ -42,12 +42,12 @@ mmCoreDB::mmCoreDB(wxSharedPtr<wxSQLite3Database> db, wxSharedPtr<MMEX_IniSettin
     currencyList_.SetInfoTable(dbInfoSettings_);
 
     // Initialize the database if creating a new one.
-    if (!dbInfoSettings_->Exists(wxT("MMEXVERSION")))
+    if (!dbInfoSettings_->Exists("MMEXVERSION"))
     {
-        dbInfoSettings_->SetStringSetting(wxT("MMEXVERSION"), mmex::getProgramVersion());
-        dbInfoSettings_->SetStringSetting(wxT("DATAVERSION"), mmex::DATAVERSION);
-		dbInfoSettings_->SetStringSetting(wxT("CREATEDATE"), wxDateTime::Now().FormatISODate());
-        dbInfoSettings_->SetStringSetting(wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+        dbInfoSettings_->SetStringSetting("MMEXVERSION", mmex::getProgramVersion());
+        dbInfoSettings_->SetStringSetting("DATAVERSION", mmex::DATAVERSION);
+		dbInfoSettings_->SetStringSetting("CREATEDATE", wxDateTime::Now().FormatISODate());
+        dbInfoSettings_->SetStringSetting("DATEFORMAT", mmex::DEFDATEFORMAT);
         dbInfoSettings_->Save();
     }
     mmOptions::instance().loadOptions(dbInfoSettings_.get());

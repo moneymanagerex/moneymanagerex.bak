@@ -143,7 +143,7 @@ void mmHTMLBuilder::startTable(const wxString& width
     html_+= wxString::Format("bgcolor=\"%s\" "
 		, mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX));
     //Comment line above then uncomment line below for debug homepage
-    //html_+= wxT("<table border=\"2\" cellspacing=\"1\"");
+    //html_+= "<table border=\"2\" cellspacing=\"1\"";
     if(!width.empty())
         html_+= wxString::Format(" width=\"%s\"", width);
     if(!valign.empty())

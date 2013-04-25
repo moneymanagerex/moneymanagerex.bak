@@ -46,7 +46,7 @@ TransFilterDialog::TransFilterDialog( mmCoreDB* core, wxWindow* parent, wxWindow
 
 //TransFilterDialog::~TransFilterDialog( )
 //{
-//    // wxMessageBox(wxT("Testing that dialog being destroyed"), wxT("Transaction Filter Destructor"));
+//    // wxMessageBox("Testing that dialog being destroyed", "Transaction Filter Destructor");
 //}
 
 // Initialize our variables
@@ -179,7 +179,7 @@ void TransFilterDialog::CreateControls()
     cbTransNumber_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Number"),
                                      wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbTransNumber_->SetValue(FALSE);
-    txtTransNumber_ = new wxTextCtrl( itemPanel, wxID_STATIC,  wxT(""), wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
+    txtTransNumber_ = new wxTextCtrl( itemPanel, wxID_STATIC,  "", wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
 
     itemPanelSizer->Add(cbTransNumber_, flags);
     itemPanelSizer->Add(txtTransNumber_, flags);
@@ -188,7 +188,7 @@ void TransFilterDialog::CreateControls()
     cbNotes_ = new wxCheckBox( itemPanel, wxID_STATIC, _("Notes"),
                                      wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbNotes_->SetValue(FALSE);
-    txtNotes_ = new wxTextCtrl( itemPanel, wxID_STATIC, wxT(""),
+    txtNotes_ = new wxTextCtrl( itemPanel, wxID_STATIC, "",
         wxDefaultPosition, wxSize(fieldWidth,-1));
 
     itemPanelSizer->Add(cbNotes_, flags);
@@ -358,7 +358,7 @@ bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
     bool result = false;
     if ( cbCategory_->GetValue() )
     {
-        wxStringTokenizer tz(btnCategory_->GetLabelText(), wxT(":"));
+        wxStringTokenizer tz(btnCategory_->GetLabelText(), ":");
         wxString token = tz.GetNextToken();
         if (category == token)
         {
@@ -389,7 +389,7 @@ bool TransFilterDialog::byStatus( wxString status )
         wxString statusStr;
         wxStringClientData* status_obj = (wxStringClientData *)choiceStatus_->GetClientObject(choiceStatus_->GetSelection());
         if (status_obj) statusStr = status_obj->GetData().Left(1);
-        statusStr.Replace(wxT("N"), wxT(""));
+        statusStr.Replace("N", "");
 
         if (status == statusStr )
         {
@@ -408,7 +408,7 @@ bool TransFilterDialog::byType(wxString type)
     if ( cbType_->GetValue() )
     {
 
-        wxString transaction_type = wxT("");
+        wxString transaction_type = "";
         wxStringClientData* type_obj = (wxStringClientData *)transaction_type_->GetClientObject(transaction_type_->GetSelection());
         if (type_obj) transaction_type = type_obj->GetData();
 

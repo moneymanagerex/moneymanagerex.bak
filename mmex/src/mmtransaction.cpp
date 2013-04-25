@@ -98,11 +98,11 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core, int bdID)
    while (q1.NextRow())
    {
       wxSharedPtr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
-      pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
-      pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+      pSplitEntry->splitEntryID_ = q1.GetInt("SPLITTRANSID");
+      pSplitEntry->splitAmount_  = q1.GetDouble("SPLITTRANSAMOUNT");
 
-      int catID = q1.GetInt(wxT("CATEGID"));
-      int subID = q1.GetInt(wxT("SUBCATEGID"));
+      int catID = q1.GetInt("CATEGID");
+      int subID = q1.GetInt("SUBCATEGID");
 
       pSplitEntry->categID_ = catID;
       pSplitEntry->subCategID_ = subID;
@@ -123,23 +123,23 @@ mmBankTransaction::mmBankTransaction(wxSharedPtr<wxSQLite3Database> db) :
 }
 
 mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
-: mmTransaction(q1.GetInt(wxT("TRANSID"))),
+: mmTransaction(q1.GetInt("TRANSID")),
                 db_(core->db_),
                 isInited_(false),
                 updateRequired_(false)
 {
-    date_        = mmGetStorageStringAsDate(q1.GetString(wxT("TRANSDATE")));
-    transNum_    = q1.GetString(wxT("TRANSACTIONNUMBER"));
-    status_      = q1.GetString(wxT("STATUS"));
-    notes_       = q1.GetString(wxT("NOTES"));
-    transType_   = q1.GetString(wxT("TRANSCODE"));
-    accountID_   = q1.GetInt(wxT("ACCOUNTID"));
-    toAccountID_ = q1.GetInt(wxT("TOACCOUNTID"));
-    payee_       = core->payeeList_.GetPayeeSharedPtr(q1.GetInt(wxT("PAYEEID")));
-    amt_         = q1.GetDouble(wxT("TRANSAMOUNT"));
-    toAmt_       = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-    followupID_  = q1.GetInt(wxT("FOLLOWUPID"));
-    category_    = core->categoryList_.GetCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
+    date_        = mmGetStorageStringAsDate(q1.GetString("TRANSDATE"));
+    transNum_    = q1.GetString("TRANSACTIONNUMBER");
+    status_      = q1.GetString("STATUS");
+    notes_       = q1.GetString("NOTES");
+    transType_   = q1.GetString("TRANSCODE");
+    accountID_   = q1.GetInt("ACCOUNTID");
+    toAccountID_ = q1.GetInt("TOACCOUNTID");
+    payee_       = core->payeeList_.GetPayeeSharedPtr(q1.GetInt("PAYEEID"));
+    amt_         = q1.GetDouble("TRANSAMOUNT");
+    toAmt_       = q1.GetDouble("TOTRANSAMOUNT");
+    followupID_  = q1.GetInt("FOLLOWUPID");
+    category_    = core->categoryList_.GetCategorySharedPtr(q1.GetInt("CATEGID"), q1.GetInt("SUBCATEGID"));
 
     wxSharedPtr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencySharedPtr(accountID_);
     wxASSERT(pCurrencyPtr);
@@ -183,14 +183,14 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
             {
                 wxString errMsg = _("Payee not found in database for Account: ");
                 errMsg << core->accountList_.GetAccountName(accountID_)
-                    << wxT("\n\n")
+                    << "\n\n"
                     << _("Subsequent errors not displayed.");
                 wxMessageBox(errMsg,_("MMEX DATABASE ERROR"), wxOK|wxICON_ERROR);
                 core->displayDatabaseError_ = false;
             }
             payeeID_  = -1;
-            payeeStr_ = wxT("Payee Error");
-            status_ = wxT("V");
+            payeeStr_ = "Payee Error";
+            status_ = "V";
         }
         else
         {
@@ -201,8 +201,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         }
     }
 
-    depositStr_ = wxT("");
-    withdrawalStr_ = wxT("");
+    depositStr_ = "";
+    withdrawalStr_ = "";
     if (transType_ == TRANS_TYPE_DEPOSIT_STR)
     {
         depositStr_ = displayTransAmtString;
@@ -234,8 +234,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     if (!pCategory && !splitEntries_->numEntries())
     {
         // If category is missing, we mark is as unknown
-        int categID = core->categoryList_.GetCategoryId(wxT("Unknown"));
-        if (categID == -1) categID = core->categoryList_.AddCategory(wxT("Unknown"));
+        int categID = core->categoryList_.GetCategoryId("Unknown");
+        if (categID == -1) categID = core->categoryList_.AddCategory("Unknown");
 
         category_ = core->categoryList_.GetCategorySharedPtr(categID, -1);
         pCategory = category_;
@@ -257,7 +257,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         else
         {
             catStr_ = pCategory->categName_;
-            subCatStr_ = wxT("");
+            subCatStr_ = "";
             categID_ = pCategory->categID_;
             subcategID_ = -1;
             fullCatStr_ = catStr_;
@@ -267,8 +267,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     {
         categID_ = -1;
         subcategID_ = -1;
-        catStr_= wxT("");
-        subCatStr_ = wxT("");
+        catStr_= "";
+        subCatStr_ = "";
         fullCatStr_= core->categoryList_.GetFullCategoryString(
             splitEntries_->entries_[0]->categID_, splitEntries_->entries_[0]->subCategID_);
     }
@@ -277,8 +277,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         fullCatStr_ = _("Split Category");
         categID_ = -1;
         subcategID_ = -1;
-        catStr_= wxT("");
-        subCatStr_ = wxT("");
+        catStr_= "";
+        subCatStr_ = "";
     }
 
    isInited_ = true;
@@ -319,11 +319,11 @@ void mmBankTransaction::getSplitTransactions(mmSplitTransactionEntries* splits) 
     {
         wxSharedPtr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
 
-        pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
-        pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+        pSplitEntry->splitEntryID_ = q1.GetInt("SPLITTRANSID");
+        pSplitEntry->splitAmount_  = q1.GetDouble("SPLITTRANSAMOUNT");
 
-        int catID = q1.GetInt(wxT("CATEGID"));
-        int subID = q1.GetInt(wxT("SUBCATEGID"));
+        int catID = q1.GetInt("CATEGID");
+        int subID = q1.GetInt("SUBCATEGID");
 
         pSplitEntry->categID_ = catID;
         pSplitEntry->subCategID_ = subID;
@@ -391,7 +391,7 @@ int mmBankTransactionList::addTransaction(wxSharedPtr<mmBankTransaction> pBankTr
 {
     if (checkForExistingTransaction(pBankTransaction))
     {
-       pBankTransaction->status_ = wxT("D");
+       pBankTransaction->status_ = "D";
     }
 
     if(core_->payeeList_.PayeeExists(pBankTransaction->payeeID_) == false)
@@ -455,7 +455,7 @@ bool mmBankTransactionList::checkForExistingTransaction(wxSharedPtr<mmBankTransa
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     while (q1.NextRow() && !found)
     {
-        int transactionID = q1.GetInt(wxT("TRANSID"));
+        int transactionID = q1.GetInt("TRANSID");
         if (pBankTransaction->categID_ == -1)
         {
             mmSplitTransactionEntries* splits = pBankTransaction->splitEntries_.get();
@@ -522,7 +522,7 @@ wxSharedPtr<mmBankTransaction> mmBankTransactionList::copyTransaction(
     pBankTransaction->getSplitTransactions(splitTransEntries.get());
     pCopyTransaction->splitEntries_.get()->entries_ = splitTransEntries->entries_;
 
-    if (checkForExistingTransaction(pCopyTransaction)) pCopyTransaction->status_ = wxT("D");
+    if (checkForExistingTransaction(pCopyTransaction)) pCopyTransaction->status_ = "D";
 
     wxSQLite3Statement st = core_->db_.get()->PrepareStatement(INSERT_INTO_CHECKINGACCOUNT_V1);
     const mmBankTransaction &r = *pBankTransaction;
@@ -675,7 +675,7 @@ void mmBankTransactionList::UpdateAllTransactionsForCategory(int categID,
             else
             {
                 pBankTransaction->catStr_ = pCategory->categName_;
-                pBankTransaction->subCatStr_ = wxT("");
+                pBankTransaction->subCatStr_ = "";
                 pBankTransaction->categID_ = pCategory->categID_;
                 pBankTransaction->subcategID_ = -1;
             }
@@ -718,7 +718,7 @@ void mmBankTransactionList::getExpensesIncome(const mmCoreDB* core, int accountI
                 if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
                     continue; // skip
             }
-            if (pBankTransaction->status_ == wxT("V"))
+            if (pBankTransaction->status_ == "V")
             {
                 continue; // skip
             }
@@ -762,7 +762,7 @@ void mmBankTransactionList::getTransactionStats(int accountID, int& number,
                 if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
                     continue; // skip
             }
-            if (pBankTransaction->status_ == wxT("V"))
+            if (pBankTransaction->status_ == "V")
             {
                 continue; // skip
             }
@@ -885,7 +885,7 @@ double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate,
         {
             if (pBankTransaction->payeeID_ == payeeID)
             {
-                if (pBankTransaction->status_ == wxT("V"))
+                if (pBankTransaction->status_ == "V")
                 {
                     continue; // skip
                 }
@@ -931,7 +931,7 @@ double mmBankTransactionList::getAmountForCategory(
     {
         if (!i->get()) continue; //skip
         if (!i->get()->containsCategory(categID, subcategID)) continue;
-        if (i->get()->status_ == wxT("V")) continue;
+        if (i->get()->status_ == "V") continue;
         if (!ignoreDate)
         {
 	        if (!i->get()->date_.GetDateOnly().IsBetween(dtBegin, dtEnd)) continue;
@@ -983,7 +983,7 @@ double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture) const
             if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
                 continue; // skip
 
-            if (pBankTransaction->status_ == wxT("V"))
+            if (pBankTransaction->status_ == "V")
                 continue; // skip
 
             if (ignoreFuture)
@@ -1011,7 +1011,7 @@ bool mmBankTransactionList::getDailyBalance(const mmCoreDB* core, int accountID,
             if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
                 continue; // skip
 
-            if (pBankTransaction->status_ == wxT("V"))
+            if (pBankTransaction->status_ == "V")
                 continue; // skip
 
             if (ignoreFuture)
@@ -1044,7 +1044,7 @@ double mmBankTransactionList::getReconciledBalance(int accountID, bool ignoreFut
                     continue; //skip future dated transactions
             }
 
-            if (pBankTransaction->status_ != wxT("R"))
+            if (pBankTransaction->status_ != "R")
                 continue; // skip
 
             balance += pBankTransaction->value(accountID);
@@ -1062,7 +1062,7 @@ int mmBankTransactionList::countFollowupTransactions() const
         wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
-            if (pBankTransaction->status_ != wxT("F"))
+            if (pBankTransaction->status_ != "F")
                 continue; // skip
 
             numFollowup++;

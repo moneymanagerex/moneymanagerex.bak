@@ -798,14 +798,14 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
     //Replace all single quotes first
     line.Replace("'", "SingleQuotesReplacer12345");
     //Replace double quotes that used twice to replacer
-    line.Replace("\"\"\""+delimit+"\"\"\"", wxT("DoubleQuotesReplacer12345\"")+delimit+wxT("\"DoubleQuotesReplacer12345"));
+    line.Replace("\"\"\""+delimit+"\"\"\"", "DoubleQuotesReplacer12345\""+delimit+"\"DoubleQuotesReplacer12345");
     line.Replace("\"\"\""+delimit, "DoubleQuotesReplacer12345\""+delimit);
     line.Replace(delimit+"\"\"\"", delimit+"\"DoubleQuotesReplacer12345");
     line.Replace("\"\""+delimit, "DoubleQuotesReplacer12345"+delimit);
     line.Replace(delimit+"\"\"", delimit+"DoubleQuotesReplacer12345");
 
     //replace delimiter to TAB and double quotes to single quotes
-    line.Replace("\""+delimit+"\"", wxT("'\t'"));
+    line.Replace("\""+delimit+"\"", "'\t'");
     line.Replace("\""+delimit, "'\t");
     line.Replace(delimit+"\"", "\t'");
     line.Replace("\"\"", "DoubleQuotesReplacer12345");

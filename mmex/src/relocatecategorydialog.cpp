@@ -162,8 +162,8 @@ void relocateCategoryDialog::OnOk(wxCommandEvent& /*event*/)
     if ((sourceCatID_ > 0) && (destCatID_ > 0) )
     {
         wxString msgStr = _("Please Confirm:");
-        msgStr << wxT("\n\n") << _("Changing all categories of: ")
-            << sourceBtn_->GetLabelText() << wxT("\n\n") << _("to category: ") << destBtn_->GetLabelText();
+        msgStr << "\n\n" << _("Changing all categories of: ")
+            << sourceBtn_->GetLabelText() << "\n\n" << _("to category: ") << destBtn_->GetLabelText();
 
         int ans = wxMessageBox(msgStr,_("Category Relocation Confirmation"), wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)

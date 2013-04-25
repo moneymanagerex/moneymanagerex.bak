@@ -63,7 +63,7 @@ public:
 
     /** Return index of user selected report title as ID: Custom_Report_xxx.
         sets: validTitle_ currentReportTitle_ currentReportFileName_ currentReportFileIndex_ */
-    wxString GetUserTitleSelection(wxString description = wxT(":"));
+    wxString GetUserTitleSelection(wxString description = ":");
 
     /** Gets the report title from the given ID: Custom_Report_xxx.
         sets: currentReportTitle_ currentReportFileName_ currentReportFileIndex_  */
@@ -71,7 +71,7 @@ public:
 
     /** Adds a new listing to the index file at the currentReportFileIndex_
         call GetUserTitleSelection() or GetSelectedTitleSelection() first. */
-    void AddReportTitle(wxString reportTitle, bool updateIndex, wxString ReportFileName = wxT(""), bool isSub = false);
+    void AddReportTitle(wxString reportTitle, bool updateIndex, wxString ReportFileName = "", bool isSub = false);
 
     /** Returns true if the report list is not empty */
     bool ReportListHasItems();

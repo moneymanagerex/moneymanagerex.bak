@@ -22,7 +22,7 @@
  ****************************************************************************/
 #include "mmex_settings.h"
 
-const wxString INI_TABLE_NAME = wxT("SETTING_V1");
+const wxString INI_TABLE_NAME = "SETTING_V1";
 const char CREATE_INI_TABLE[] =
     "create table SETTING_V1 ("
     "SETTINGID integer not null primary key, "
@@ -34,7 +34,7 @@ const char INSERT_INI_RECORD[] = "insert into SETTING_V1 (SETTINGNAME, SETTINGVA
 const char SELECT_INI_RECORD[] = "select * from SETTING_V1";
 
 //---------------------------------------------------------------------------
-const wxString INFO_TABLE_NAME = wxT("INFOTABLE_V1");
+const wxString INFO_TABLE_NAME = "INFOTABLE_V1";
 const char CREATE_INFO_TABLE[] =
     "create table INFOTABLE_V1 ("
     "INFOID integer not null primary key, "
@@ -65,15 +65,15 @@ MMEX_IniRecord::MMEX_IniRecord(wxSharedPtr<wxSQLite3Database> ini_db
 {
     if (main_db)
     {
-        settingId_    = q1.GetInt(wxT("INFOID"));
-        settingName_  = q1.GetString(wxT("INFONAME"));
-        settingValue_ = q1.GetString(wxT("INFOVALUE"));
+        settingId_    = q1.GetInt("INFOID");
+        settingName_  = q1.GetString("INFONAME");
+        settingValue_ = q1.GetString("INFOVALUE");
     }
     else
     {
-        settingId_    = q1.GetInt(wxT("SETTINGID"));
-        settingName_  = q1.GetString(wxT("SETTINGNAME"));
-        settingValue_ = q1.GetString(wxT("SETTINGVALUE"));
+        settingId_    = q1.GetInt("SETTINGID");
+        settingName_  = q1.GetString("SETTINGNAME");
+        settingValue_ = q1.GetString("SETTINGVALUE");
     }
 }
 
@@ -119,8 +119,8 @@ void MMEX_IniRecord::Save()
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxLogDebug(wxT("MMEX_IniRecord::Save() - Exception: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("MMEX_IniRecord::Save() - Insert/Update. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        wxLogDebug("MMEX_IniRecord::Save() - Exception: %s", e.GetMessage());
+        wxLogError("MMEX_IniRecord::Save() - Insert/Update. " + wxString::Format(_("Error: %s"), e.GetMessage()));
     }
 }
 /****************************************************************************/
@@ -148,8 +148,8 @@ MMEX_IniSettings::MMEX_IniSettings(wxSharedPtr<wxSQLite3Database> ini_db, bool m
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxLogDebug(wxT("MMEX_IniSettings Constructor: Exception: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("MMEX_IniSettings Constructor: create/Load table. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        wxLogDebug("MMEX_IniSettings Constructor: Exception: %s", e.GetMessage());
+        wxLogError("MMEX_IniSettings Constructor: create/Load table. " + wxString::Format(_("Error: %s"), e.GetMessage()));
     }
 }
 
@@ -208,7 +208,7 @@ bool MMEX_IniSettings::GetBoolSetting(const wxString& name, bool default_value)
     MMEX_IniRecord* pRecord = GetRecord(name);
     if (pRecord)
     {
-        if (pRecord->Value() == wxT("TRUE")) return true;
+        if (pRecord->Value() == "TRUE") return true;
         else return false;
     }
     return default_value;
@@ -237,8 +237,8 @@ void MMEX_IniSettings::SetBoolSetting(const wxString& name, bool value)
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
-    if (value) pExistingRecord->SetValue(wxT("TRUE"));
-    else       pExistingRecord->SetValue(wxT("FALSE")); 
+    if (value) pExistingRecord->SetValue("TRUE");
+    else       pExistingRecord->SetValue("FALSE"); 
 }
 
 void MMEX_IniSettings::SetIntSetting(const wxString& name, int value)

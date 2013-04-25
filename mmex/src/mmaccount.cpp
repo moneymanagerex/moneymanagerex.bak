@@ -23,28 +23,28 @@
 
 mmAccount::mmAccount(wxSQLite3ResultSet& q1)
 {
-    id_ = q1.GetInt(wxT("ACCOUNTID"));
-    name_ = q1.GetString(wxT("ACCOUNTNAME"));
-    accountNum_  = q1.GetString(wxT("ACCOUNTNUM"));
-    heldAt_ = q1.GetString(wxT("HELDAT"));
-    website_ = q1.GetString(wxT("WEBSITE"));
-    contactInfo_ = q1.GetString(wxT("CONTACTINFO"));
-    accessInfo_ = q1.GetString(wxT("ACCESSINFO"));
-    notes_ = q1.GetString(wxT("NOTES"));
-    acctType_ = q1.GetString(wxT("ACCOUNTTYPE"));
+    id_ = q1.GetInt("ACCOUNTID");
+    name_ = q1.GetString("ACCOUNTNAME");
+    accountNum_  = q1.GetString("ACCOUNTNUM");
+    heldAt_ = q1.GetString("HELDAT");
+    website_ = q1.GetString("WEBSITE");
+    contactInfo_ = q1.GetString("CONTACTINFO");
+    accessInfo_ = q1.GetString("ACCESSINFO");
+    notes_ = q1.GetString("NOTES");
+    acctType_ = q1.GetString("ACCOUNTTYPE");
 
     status_ =  mmAccount::MMEX_Open;
-    if (q1.GetString(wxT("STATUS")) == wxT("Closed"))
+    if (q1.GetString("STATUS") == "Closed")
         status_ = mmAccount::MMEX_Closed;
 
-    wxString retVal = q1.GetString(wxT("FAVORITEACCT"));
-    if (retVal == wxT("TRUE"))
+    wxString retVal = q1.GetString("FAVORITEACCT");
+    if (retVal == "TRUE")
         favoriteAcct_ = true;
     else
         favoriteAcct_ = false;
 
-    initialBalance_ = q1.GetDouble(wxT("INITIALBAL"));
-    currencyID_ = q1.GetDouble(wxT("CURRENCYID"));
+    initialBalance_ = q1.GetDouble("INITIALBAL");
+    currencyID_ = q1.GetDouble("CURRENCYID");
 }
 
 mmAccountList::mmAccountList(mmCoreDB* core)
@@ -187,7 +187,7 @@ wxString mmAccountList::getAccountType(int accountID) const
     }
 
     wxASSERT(false);
-    return wxT("");
+    return "";
 }
 
 bool mmAccountList::getAccountFavorite(int accountID) const
@@ -230,7 +230,7 @@ wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID) const
     if (pCurrency)
         return pCurrency->decChar_;
 
-    return wxT(".");
+    return ".";
 }
 
 wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
@@ -241,7 +241,7 @@ wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
     if (pCurrency)
         return pCurrency->grpChar_;
 
-    return wxT(",");
+    return ",";
 }
 
 wxString mmAccountList::GetAccountCurrencyName(int accountID) const
@@ -252,7 +252,7 @@ wxString mmAccountList::GetAccountCurrencyName(int accountID) const
     if (pCurrency)
         return pCurrency->currencyName_;
 
-    return wxT("");
+    return "";
 }
 
 
@@ -276,8 +276,8 @@ std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator>
 
 int mmAccountList::UpdateAccount(wxSharedPtr<mmAccount> pAccount)
 {
-    wxString statusStr = pAccount->status_ == mmAccount::MMEX_Closed ? wxT("Closed") : wxT("Open");
-    wxString favStr = pAccount->favoriteAcct_ ? wxT("TRUE") : wxT("FALSE");
+    wxString statusStr = pAccount->status_ == mmAccount::MMEX_Closed ? "Closed" : "Open";
+    wxString favStr = pAccount->favoriteAcct_ ? "TRUE" : "FALSE";
 
     wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
     wxASSERT(pCurrency);
@@ -312,13 +312,13 @@ int mmAccountList::UpdateAccount(wxSharedPtr<mmAccount> pAccount)
 
 int mmAccountList::AddAccount(wxSharedPtr<mmAccount> pAccount)
 {
-    wxString statusStr = wxT("Open");
+    wxString statusStr = "Open";
     if (pAccount->status_ == mmAccount::MMEX_Closed)
-        statusStr = wxT("Closed");
+        statusStr = "Closed";
 
-    wxString favStr = wxT("TRUE");
+    wxString favStr = "TRUE";
     if (!pAccount->favoriteAcct_)
-        favStr = wxT("FALSE");
+        favStr = "FALSE";
 
     wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
     wxASSERT(pCurrency);
@@ -385,7 +385,7 @@ bool mmAccountList::RemoveAccount(int accountID)
     }
 
     st = core_->db_.get()->PrepareStatement("DELETE FROM INFOTABLE_V1 WHERE INFONAME = ?");
-    st.Bind(1, wxString::Format(wxT("ACC_IMAGE_ID_%d"), accountID));
+    st.Bind(1, wxString::Format("ACC_IMAGE_ID_%d", accountID));
     st.ExecuteUpdate();
     st.Finalize();
 
@@ -424,7 +424,7 @@ void mmAccountList::LoadAccounts(const mmCurrencyList& currencyList)
         wxSharedPtr<mmAccount> pAccount(new mmAccount(q1));
 
         wxSharedPtr<mmCurrency> pCurrency =
-            currencyList.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
+            currencyList.getCurrencySharedPtr(q1.GetInt("CURRENCYID"));
         pAccount->currency_ = pCurrency;
 
         accounts_.push_back(pAccount);

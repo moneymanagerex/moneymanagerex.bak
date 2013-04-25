@@ -118,7 +118,7 @@ void mmBillsDepositsPanel::CreateControls()
     int font_size = this->GetFont().GetPointSize() + 2;
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, wxID_ANY,
         _("Repeating Transactions"));
-    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, ""));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
@@ -167,14 +167,14 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlAccount_->InsertColumn(7, _("Notes"));
 
     /* See if we can get data from inidb */
-    int col0 = core_->iniSettings_->GetIntSetting(wxT("BD_COL0_WIDTH"), 150);
-    int col1 = core_->iniSettings_->GetIntSetting(wxT("BD_COL1_WIDTH"), -2);
-    int col2 = core_->iniSettings_->GetIntSetting(wxT("BD_COL2_WIDTH"), -2);
-    int col3 = core_->iniSettings_->GetIntSetting(wxT("BD_COL3_WIDTH"), -2);
-    int col4 = core_->iniSettings_->GetIntSetting(wxT("BD_COL4_WIDTH"), -2);
-    int col5 = core_->iniSettings_->GetIntSetting(wxT("BD_COL5_WIDTH"), -2);
-    int col6 = core_->iniSettings_->GetIntSetting(wxT("BD_COL6_WIDTH"), -2);
-    int col7 = core_->iniSettings_->GetIntSetting(wxT("BD_COL7_WIDTH"), -2);
+    int col0 = core_->iniSettings_->GetIntSetting("BD_COL0_WIDTH", 150);
+    int col1 = core_->iniSettings_->GetIntSetting("BD_COL1_WIDTH", -2);
+    int col2 = core_->iniSettings_->GetIntSetting("BD_COL2_WIDTH", -2);
+    int col3 = core_->iniSettings_->GetIntSetting("BD_COL3_WIDTH", -2);
+    int col4 = core_->iniSettings_->GetIntSetting("BD_COL4_WIDTH", -2);
+    int col5 = core_->iniSettings_->GetIntSetting("BD_COL5_WIDTH", -2);
+    int col6 = core_->iniSettings_->GetIntSetting("BD_COL6_WIDTH", -2);
+    int col7 = core_->iniSettings_->GetIntSetting("BD_COL7_WIDTH", -2);
 
     listCtrlAccount_->SetColumnWidth(0, col0);
     listCtrlAccount_->SetColumnWidth(1, col1);
@@ -225,12 +225,12 @@ void mmBillsDepositsPanel::CreateControls()
     buttonSkipTrans->Enable(false);
 
     //Infobar-mini
-    wxStaticText* itemStaticText444 = new wxStaticText(itemPanel12, ID_PANEL_BD_STATIC_MINI, wxT(""),
+    wxStaticText* itemStaticText444 = new wxStaticText(itemPanel12, ID_PANEL_BD_STATIC_MINI, "",
                                                        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText444, 1, wxGROW|wxTOP, 12);
 
     //Infobar
-    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, wxT(""),
+    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, "",
     wxPoint(-1,-1), wxSize(200, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
     itemBoxSizer4->Add(text, 1, wxGROW|wxLEFT|wxRIGHT, 14);
 
@@ -245,7 +245,7 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
     core_->currencyList_.LoadBaseCurrencySettings();
 
     const  wxString sql = wxString::FromUTF8(SELECT_ALL_FROM_BILLSDEPOSITS_V1)
-        + wxT(" order by ") + (wxT(" NEXTOCCURRENCEDATE"));
+        + " order by " + (" NEXTOCCURRENCEDATE");
 
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql);
 
@@ -254,26 +254,26 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
     {
         mmBDTransactionHolder th;
 
-        th.id_           = q1.GetInt(wxT("BDID"));
-        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
+        th.id_           = q1.GetInt("BDID");
+        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString("NEXTOCCURRENCEDATE"));
         th.nextOccurStr_   = mmGetDateForDisplay(th.nextOccurDate_);
-        int repeats        = q1.GetInt(wxT("REPEATS"));
-        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
-        th.sStatus_        = q1.GetString(wxT("STATUS"));
-        th.transType_      = q1.GetString(wxT("TRANSCODE"));
-        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
-        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+        int repeats        = q1.GetInt("REPEATS");
+        th.payeeID_        = q1.GetInt("PAYEEID");
+        th.sStatus_        = q1.GetString("STATUS");
+        th.transType_      = q1.GetString("TRANSCODE");
+        th.accountID_      = q1.GetInt("ACCOUNTID");
+        th.toAccountID_    = q1.GetInt("TOACCOUNTID");
         th.accountName_    = core_->accountList_.GetAccountName(th.accountID_);
-        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
-        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-        th.sNumber_        = q1.GetString(wxT("TRANSACTIONNUMBER"));
-        th.notes_          = q1.GetString(wxT("NOTES"));
-        th.categID_        = q1.GetInt(wxT("CATEGID"));
+        th.amt_            = q1.GetDouble("TRANSAMOUNT");
+        th.toAmt_          = q1.GetDouble("TOTRANSAMOUNT");
+        th.sNumber_        = q1.GetString("TRANSACTIONNUMBER");
+        th.notes_          = q1.GetString("NOTES");
+        th.categID_        = q1.GetInt("CATEGID");
         th.categoryStr_    = core_->categoryList_.GetCategoryName(th.categID_);
-        th.subcategID_     = q1.GetInt(wxT("SUBCATEGID"));
+        th.subcategID_     = q1.GetInt("SUBCATEGID");
         th.subcategoryStr_ = core_->categoryList_.GetSubCategoryName(th.categID_, th.subcategID_);
 
-        int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
+        int numRepeats     = q1.GetInt("NUMOCCURRENCES");
 
         th.bd_repeat_user_ = false;
         th.bd_repeat_auto_ = false;
@@ -293,7 +293,7 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
 
         th.repeatsStr_ = BILLSDEPOSITS_REPEATS[repeats];
         if ( repeats >10 && repeats<15)
-            th.repeatsStr_ = wxString::Format(th.repeatsStr_, (wxString()<<numRepeats).c_str());
+            th.repeatsStr_ = wxString::Format(th.repeatsStr_, (wxString()<<numRepeats));
 
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
@@ -303,7 +303,7 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
         if (minutesRemaining > 0)
             th.daysRemaining_ += 1;
 
-        th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + _(" days remaining");
+        th.daysRemainingStr_ = wxString::Format("%d", th.daysRemaining_) + _(" days remaining");
 
         if (th.daysRemaining_ == 0)
         {
@@ -313,7 +313,7 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
 
         if (th.daysRemaining_ < 0)
         {
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
+            th.daysRemainingStr_ = wxString::Format("%d", abs(th.daysRemaining_)) + _(" days overdue!");
             if ( ((repeats > 10) && (repeats < 15)) && (numRepeats < 0) )
                 th.daysRemainingStr_ = _("Inactive");
         }
@@ -399,7 +399,7 @@ void mmBillsDepositsPanel::OnSkipBDTransaction(wxCommandEvent& event)
 void billsDepositsListCtrl::OnItemResize(wxListEvent& event)
 {
     int i = event.GetColumn();
-    wxString parameter_name = wxString::Format(wxT("BD_COL%d_WIDTH"), i);
+    wxString parameter_name = wxString::Format("BD_COL%d_WIDTH", i);
     int current_width = cp_->GetListCtrlWidth(i);
     cp_->core_->iniSettings_->SetIntSetting(parameter_name, current_width);
 }
@@ -430,7 +430,7 @@ wxString mmBillsDepositsPanel::getItem(long item, long column)
     else if (column == 6) return trans_[item].daysRemainingStr_;
     else if (column == 7) return trans_[item].notes_;
 
-    return wxT("");
+    return "";
 }
 
 wxString billsDepositsListCtrl::OnGetItemText(long item, long column) const
@@ -557,14 +557,14 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
     if (selIndex !=-1)
     {
         wxString addInfo;
-        addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == wxT("") ? wxT("") : wxT(":") + trans_[selIndex].subcategoryStr_);
+        addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == "" ? "" : ":" + trans_[selIndex].subcategoryStr_);
         stm->SetLabel(addInfo);
         st ->SetLabel (trans_[selIndex].notes_ );
     }
     else
     {
         st-> SetLabel(Tips(TIPS_BILLS));
-        stm-> SetLabel(wxT(""));
+        stm-> SetLabel("");
     }
 }
 

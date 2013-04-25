@@ -85,7 +85,7 @@ void mmStockDialog::dataToControls()
     if ((numShares - static_cast<long>(numShares)) != 0.0 )
     {
         mmex::formatDoubleToCurrencyEdit(numShares, numSharesString);
-        //numSharesString=wxString::Format(wxT("%0.4f"),numShares);
+        //numSharesString=wxString::Format("%0.4f",numShares);
 	}
     else
         numSharesString <<  static_cast<long>(numShares);
@@ -135,7 +135,7 @@ void mmStockDialog::CreateControls()
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Stock Name")), flags);
 
-    stockName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCKNAME, wxT(""));
+    stockName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCKNAME, "");
     itemFlexGridSizer6->Add(stockName_, flagsExpand);
     stockName_->SetToolTip(_("Enter the stock company name"));
     if (!edit_)
@@ -154,47 +154,47 @@ void mmStockDialog::CreateControls()
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Symbol")), flags);
 
     stockSymbol_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_SYMBOL,
-        wxT(""), wxDefaultPosition, wxSize(150, -1), 0 );
+        "", wxDefaultPosition, wxSize(150, -1), 0 );
     itemFlexGridSizer6->Add(stockSymbol_, flags);
     stockSymbol_->SetToolTip(_("Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"));
     //
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Number of Shares")), flags);
 
-    numShares_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_NUMBER_SHARES, wxT(""),
+    numShares_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_NUMBER_SHARES, "",
         wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer6->Add(numShares_, flags);
     numShares_->SetToolTip(_("Enter number of shares held"));
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Purchase Price")), flags);
 
-    purchasePrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_PP, wxT(""),
+    purchasePrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_PP, "",
         wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer6->Add(purchasePrice_, flags);
     purchasePrice_->SetToolTip(_("Enter purchase price for each stock"));
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Current Price")), flags);
 
-    currentPrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_CP, wxT(""),
+    currentPrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_CP, "",
         wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer6->Add(currentPrice_, flags);
     currentPrice_->SetToolTip(_("Enter current stock price"));
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Commission")), flags);
 
-    commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, wxT("0"),
+    commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, "0",
         wxDefaultPosition, wxSize(150, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
     itemFlexGridSizer6->Add(commission_, flags);
     commission_->SetToolTip(_("Enter any commission paid"));
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Value")), flags);
 
-    valueInvestment_ = new wxStaticText( itemPanel5, ID_STATIC_STOCK_VALUE, wxT("--"));
+    valueInvestment_ = new wxStaticText( itemPanel5, ID_STATIC_STOCK_VALUE, "--");
     itemFlexGridSizer6->Add(valueInvestment_, flags);
 
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Notes")), flags);
 
-    notes_ = new wxTextCtrl( this, wxID_STATIC, wxT(""), wxDefaultPosition, wxSize(200, 90), wxTE_MULTILINE );
+    notes_ = new wxTextCtrl( this, wxID_STATIC, "", wxDefaultPosition, wxSize(200, 90), wxTE_MULTILINE );
     itemStaticBoxSizer4->Add(notes_, flagsExpand);
     itemStaticBoxSizer4->AddSpacer(1);
     notes_->SetToolTip(_("Enter notes associated with this investment"));
@@ -234,23 +234,23 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
     if (!stockSymbol.IsEmpty())
     {
         // Use Google for stock quotes
-        wxString stockURL = core_->dbInfoSettings_->GetStringSetting(wxT("STOCKURL"), mmex::DEFSTOCKURL);
-        //wxString paddedURL = wxT("\"") + stockURL + wxT("\"");
+        wxString stockURL = core_->dbInfoSettings_->GetStringSetting("STOCKURL", mmex::DEFSTOCKURL);
+        //wxString paddedURL = "\"" + stockURL + "\"";
         //wxString httpString = wxString::Format(paddedURL, stockSymbol);
         //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL );
 
-        int yahooSite = stockURL.Find(wxT("yahoo"));
+        int yahooSite = stockURL.Find("yahoo");
         if ( yahooSite != wxNOT_FOUND )
         {
-            int hasSuffix = stockSymbol.Find(wxT("."));
+            int hasSuffix = stockSymbol.Find(".");
             if ( hasSuffix == wxNOT_FOUND)
             {
-                wxString stockSuffix = core_->dbInfoSettings_->GetStringSetting(wxT("HTTP_YAHOO_SUFFIX"), wxT(""));
+                wxString stockSuffix = core_->dbInfoSettings_->GetStringSetting("HTTP_YAHOO_SUFFIX", "");
                 if (! stockSuffix.IsEmpty() )
                     stockSymbol << stockSuffix;
             }
         }
-        wxString httpString = wxString::Format(stockURL.c_str(), stockSymbol.c_str());
+        wxString httpString = wxString::Format(stockURL, stockSymbol);
         wxLaunchDefaultBrowser(httpString);
     }
 }

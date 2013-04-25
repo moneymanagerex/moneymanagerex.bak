@@ -1290,8 +1290,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         , new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Year")
         , new mmReportCategoryExpensesGoesCurrentYear(m_core.get())));
 
-    int day = m_core->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_DAY"), 1);
-    int month = m_core->dbInfoSettings_->GetIntSetting(wxT("FINANCIAL_YEAR_START_MONTH"), 7);
+    int day = m_core->dbInfoSettings_->GetIntSetting("FINANCIAL_YEAR_START_DAY", 1);
+    int month = m_core->dbInfoSettings_->GetIntSetting("FINANCIAL_YEAR_START_MONTH", 7);
     if (financialYearIsDifferent())
     {
         wxTreeItemId categsOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(categsOverTime
@@ -1717,7 +1717,7 @@ bool mmGUIFrame::IsCustomReportSelected( int& customSqlReportID, mmTreeItemData*
     customSqlReportID = 0;
     bool result = false;
     wxString sItemName = iData->getString();
-    if (wxNOT_FOUND != sItemName.Index(wxT("Custom_Report_")))
+    if (sItemName.StartsWith("Custom_Report_"))
     {
         sItemName.Replace("Custom_Report_", "");
         long index;

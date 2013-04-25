@@ -40,9 +40,9 @@ CustomReportIndex::CustomReportIndex()
         if (indexFile_->Create())
         {
             indexFile_->AddLine(_("Custom Reports"));
-            indexFile_->AddLine(wxT(""));
+            indexFile_->AddLine("");
             indexFile_->AddLine(_("Report Name[|Report Filename.sql[|SUB]]"));
-            indexFile_->AddLine(wxT("========================================"));
+            indexFile_->AddLine("========================================");
             indexFile_->Write();
             indexFile_->Close();    // need to close to actually save the file contents   
             indexFile_->Open();
@@ -90,7 +90,7 @@ wxString CustomReportIndex::NextReportTitle()
         if (!line.IsEmpty())
         {
             currentReportFileIndex_ ++;
-            wxStringTokenizer tk(line, wxT("|"));
+            wxStringTokenizer tk(line, "|");
             currentReportTitle_    = tk.GetNextToken();
             currentReportFileName_ = tk.GetNextToken();
             SetNewCurrentFileValues();
@@ -156,9 +156,9 @@ void CustomReportIndex::LoadArrays(wxArrayString& titleArray, wxArrayString& fil
         titleArray.Add(currentReportTitle_);
         fileNameArray.Add(currentReportFileName_);
         if (reportIsSubReport_)
-            subArray.Add(wxT("SUB"));
+            subArray.Add("SUB");
         else
-            subArray.Add(wxT("NS"));
+            subArray.Add("NS");
         NextReportTitle();
     }
 }
@@ -173,12 +173,12 @@ void CustomReportIndex::SetNewCurrentFileValues()
     wxFileName fn(currentReportFileName_);
     currentReportFileExt_ = fn.GetExt();
     currentReportFileExt_.MakeUpper();
-    if (currentReportFileExt_ == wxT("SQL"))
-        currentReportFileType_ = wxT("SQL");
-    else if (currentReportFileExt_ == wxT("LUA"))
-        currentReportFileType_ = wxT("LUA");
+    if (currentReportFileExt_ == "SQL")
+        currentReportFileType_ = "SQL";
+    else if (currentReportFileExt_ == "LUA")
+        currentReportFileType_ = "LUA";
     else 
-        currentReportFileType_ = wxT("");
+        currentReportFileType_ = "";
 }
 
 wxString CustomReportIndex::GetUserTitleSelection(wxString description)
@@ -190,7 +190,7 @@ wxString CustomReportIndex::GetUserTitleSelection(wxString description)
     LoadArrays(reportTitles, reportFileNames, reportIsSub);
 
     validTitle_ = false;
-    wxString msgStr = wxString::Format(_("Select the Custom Report %s"), description.c_str());
+    wxString msgStr = wxString::Format(_("Select the Custom Report %s"), description);
     wxSingleChoiceDialog reportTitleSelectionDlg(0,msgStr, UserDialogHeading(), reportTitles);
 
     int selectionIndex = -1;
@@ -203,7 +203,7 @@ wxString CustomReportIndex::GetUserTitleSelection(wxString description)
             currentReportFileName_  = reportFileNames.Item(selectionIndex);
             SetNewCurrentFileValues();
             validTitle_ = true;
-            if ( reportIsSub.Item(selectionIndex) == wxT("SUB"))
+            if ( reportIsSub.Item(selectionIndex) == "SUB")
                 reportIsSubReport_ = true;
             else
                 reportIsSubReport_ = false;
@@ -216,13 +216,13 @@ wxString CustomReportIndex::GetUserTitleSelection(wxString description)
 
     currentReportFileIndex_ = selectionIndex;  // Add File header line Count.
 
-    return wxString() << wxT("Custom_Report_") << selectionIndex;
+    return wxString() << "Custom_Report_" << selectionIndex;
 }
 
 bool CustomReportIndex::GetSelectedTitleSelection(wxString titleIndex)
 {
     long index;
-    wxStringTokenizer tk(titleIndex, wxT("_")); // get the 3rd token 'Custom_Report_xx'
+    wxStringTokenizer tk(titleIndex, "_"); // get the 3rd token 'Custom_Report_xx'
     if (tk.HasMoreTokens()) tk.GetNextToken(); else return false;
     if (tk.HasMoreTokens()) tk.GetNextToken(); else return false;
     wxString indexStr = tk.GetNextToken();
@@ -238,7 +238,7 @@ bool CustomReportIndex::GetSelectedTitleSelection(wxString titleIndex)
     SetNewCurrentFileValues();
     currentReportFileIndex_ = index;  // Add number of header lines in file.
     validTitle_ = true;
-    if ( reportIsSub.Item(index) == wxT("SUB"))
+    if ( reportIsSub.Item(index) == "SUB")
         reportIsSubReport_ = true;
     else
         reportIsSubReport_ = false;
@@ -252,11 +252,11 @@ void CustomReportIndex::AddReportTitle(wxString reportTitle, bool updateIndex, w
         wxString indexLine = reportTitle;
         if (!ReportFileName.IsEmpty())
         {
-            indexLine = indexLine << wxT("|") << ReportFileName;
+            indexLine = indexLine << "|" << ReportFileName;
             reportIsSubReport_ = isSub;
             if (reportIsSubReport_)
             {
-                indexLine = indexLine << wxT("|SUB");
+                indexLine = indexLine << "|SUB";
             }
         }
 
@@ -301,7 +301,7 @@ bool CustomReportIndex::GetReportFileData(wxString& reportText)
     if ( reportFile.Exists() )
     {
         reportFile.Open();
-        reportText << reportFile.GetFirstLine() << wxT("\n");
+        reportText << reportFile.GetFirstLine() << "\n";
 
         size_t currentline = 1;
         while (! reportFile.Eof())
@@ -310,7 +310,7 @@ bool CustomReportIndex::GetReportFileData(wxString& reportText)
             currentline ++;
             if (currentline < reportFile.GetLineCount())
             {
-                reportText << wxT("\n");
+                reportText << "\n";
             }
         }
 
@@ -318,7 +318,7 @@ bool CustomReportIndex::GetReportFileData(wxString& reportText)
     }
     else
     {
-        wxString msg = wxString() << _("Cannot locate file: ") << CurrentReportFileName() << wxT("\n\n");
+        wxString msg = wxString() << _("Cannot locate file: ") << CurrentReportFileName() << "\n\n";
         wxMessageBox(msg,UserDialogHeading(),wxOK|wxICON_ERROR);
     }
 
@@ -328,5 +328,5 @@ bool CustomReportIndex::GetReportFileData(wxString& reportText)
 CustomReportIndex::~CustomReportIndex()
 {
     delete indexFile_;
-//    wxMessageBox(wxT("Testing that CustomReportIndex objects are being destroyed.\nGoodby.."),wxT("CustomReportIndex Dialog Destructor..."));
+//    wxMessageBox("Testing that CustomReportIndex objects are being destroyed.\nGoodby..","CustomReportIndex Dialog Destructor...");
 }
