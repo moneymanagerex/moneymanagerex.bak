@@ -167,7 +167,7 @@ void SplitDetailDialog::OnButtonCategoryClick( wxCommandEvent& /*event*/ )
 
 void SplitDetailDialog::onTextEntered(wxCommandEvent& event)
 {
-    wxString sAmount = wxT("");
+    wxString sAmount = "";
 
     if (mmCalculator(textAmount_->GetValue(), sAmount))
         textAmount_->SetValue(sAmount);

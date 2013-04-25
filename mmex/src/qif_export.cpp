@@ -462,10 +462,10 @@ void mmQIFExportDialog::mmExportQIF()
                         categ = wxString::Format("[%s]", fromAccount);
                         amount = toamount;
                         toamount = amount_temp;
-                        toamount.Prepend(wxT('-'));
+                        toamount.Prepend("-");
                     } else if (fAccountID == fromAccountID) {
                         categ = wxString::Format("[%s]", toAccount);
-                        amount.Prepend(wxT('-'));
+                        amount.Prepend("-");
                     }
                     if (selected_accounts_id.Index(tAccountID) == wxNOT_FOUND)
                         transferTrxId.Add(trans_id);
@@ -475,20 +475,20 @@ void mmQIFExportDialog::mmExportQIF()
                         transNum = wxString::Format("#%ld", trans_id);
                 }
                 else if (type == "Withdrawal")
-                    amount.Prepend(wxT('-'));
+                    amount.Prepend("-");
 
                 if (qif_csv)
                 {
-                    buffer << wxT('D') << dateString << "\n";
-                    buffer << wxT('T') << amount << "\n";
+                    buffer << "D" << dateString << "\n";
+                    buffer << "T" << amount << "\n";
                     if (!payee.IsEmpty())
-                        buffer << wxT('P') << payee << "\n";
+                        buffer << "P" << payee << "\n";
                     if (!transNum.IsEmpty())
-                        buffer << wxT('N') << transNum << "\n";
+                        buffer << "N" << transNum << "\n";
                     if (!categ.IsEmpty())
-                        buffer << wxT('L') << categ << "\n";
+                        buffer << "L" << categ << "\n";
                     if (!notes.IsEmpty())
-                        buffer << wxT('M') << notes << "\n";
+                        buffer << "M" << notes << "\n";
                 }
 
                 //if categ id is empty that mean this is split transaction
@@ -508,8 +508,8 @@ void mmQIFExportDialog::mmExportQIF()
                             splits->entries_[i]->categID_, splits->entries_[i]->subCategID_);
                         if (qif_csv)
                         {
-                            buffer << wxT('S') << split_categ << "\n"
-                                << wxT('$') << split_amount << "\n";
+                            buffer << "S" << split_categ << "\n"
+                                << "$" << split_amount << "\n";
                         }
                         else
                         {
@@ -542,7 +542,7 @@ void mmQIFExportDialog::mmExportQIF()
                         << inQuotes(notes, delimit_)
                         << "\n";
                 }
-                buffer << wxT('^') << "\n";
+                buffer << "^" << "\n";
             }
         }
     }

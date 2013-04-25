@@ -200,7 +200,7 @@ bool mmDBWrapper::initCurrencyV1Table(wxSQLite3Database* db)
     // MS-VC++ 2010: Ignore warning C4428: universal-character-name encountered in source
     #pragma warning( push )
     #pragma warning( disable : 4428 )
-    currencies.Add(wxT("EURO;\u20ac;;.;,;euro;cent;100;1;EUR"));
+    currencies.Add("EURO;\u20ac;;.;,;euro;cent;100;1;EUR");
     #pragma warning( pop )
     wxString fileName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
 

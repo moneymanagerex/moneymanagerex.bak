@@ -184,8 +184,8 @@ public:
     }
     bool financialYearIsDifferent()
     {
-        return (mmOptions::instance().financialYearStartDayString_   != wxT("1") ||
-                mmOptions::instance().financialYearStartMonthString_ != wxT("1"));
+        return (mmOptions::instance().financialYearStartDayString_   != "1" ||
+                mmOptions::instance().financialYearStartMonthString_ != "1");
     }
     bool budgetFinancialYears()
     {
@@ -369,7 +369,7 @@ private:
     /* Custom Report*/
     bool IsCustomReportSelected(int& customSqlReportID, mmTreeItemData* iData );
     void CreateCustomReport(int index);
-    void RunCustomSqlDialog(wxString customSqlReportSelectedItem = wxT(""));
+    void RunCustomSqlDialog(wxString customSqlReportSelectedItem = "");
     bool expandedCustomSqlReportNavTree_;
 
     bool expandedBudgetingNavTree_;

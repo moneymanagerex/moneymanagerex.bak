@@ -30,7 +30,7 @@ void mmCategoryList::LoadCategories()
     wxSharedPtr<mmCategory> pCat;
     while (q1.NextRow())
     {
-        int catID = q1.GetInt(wxT("CATEGID"));
+        int catID = q1.GetInt("CATEGID");
 
         if (!pCat || pCat->categID_ != catID)
         {
@@ -38,16 +38,16 @@ void mmCategoryList::LoadCategories()
             {
                 entries_.push_back(pCat);
             }
-            pCat.reset(new mmCategory(catID, q1.GetString(wxT("CATEGNAME"))));
+            pCat.reset(new mmCategory(catID, q1.GetString("CATEGNAME")));
         }
 
-        int sub_idx = q1.FindColumnIndex(wxT("SUBCATEGID"));
+        int sub_idx = q1.FindColumnIndex("SUBCATEGID");
         wxASSERT(sub_idx);
 
         if (!q1.IsNull(sub_idx))
         {
             int subcatID = q1.GetInt(sub_idx);
-            wxSharedPtr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString(wxT("SUBCATEGNAME"))));
+            wxSharedPtr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString("SUBCATEGNAME")));
 
             pSubCat->parent_ = pCat;
             pCat->children_.push_back(pSubCat);
@@ -118,7 +118,7 @@ wxString mmCategoryList::GetCategoryName(int categ_id) const
         if ((*it)->categID_ == categ_id) return (*it)->categName_;
     }
 
-    return wxT("");
+    return "";
 }
 
 wxString mmCategoryList::GetSubCategoryName(int categID, int subCategID) const
@@ -140,7 +140,7 @@ wxString mmCategoryList::GetSubCategoryName(int categID, int subCategID) const
             }
         }
     }
-    return wxT("");
+    return "";
 }
 
 int mmCategoryList::GetSubCategoryID(int parentID, const wxString& subCategoryName) const
@@ -168,7 +168,7 @@ int mmCategoryList::GetSubCategoryID(int parentID, const wxString& subCategoryNa
 wxString mmCategoryList::GetCategoryString(int categ_id) const
 {
     wxString catName = this->GetCategoryName(categ_id);
-    catName.Replace (wxT("&"), wxT("&&"));
+    catName.Replace ("&", "&&");
 
     return catName;
 }
@@ -176,7 +176,7 @@ wxString mmCategoryList::GetCategoryString(int categ_id) const
 wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID) const
 {
     wxString subcatName = GetSubCategoryName(categID, subCategID);
-    subcatName.Replace (wxT("&"), wxT("&&"));
+    subcatName.Replace ("&", "&&");
     return subcatName;
 }
 
@@ -187,7 +187,7 @@ wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID) cons
     {
         wxString category    = GetCategoryString(categID);
         if (subCategID > -1)
-            category << wxT(":") << GetSubCategoryString(categID, subCategID);
+            category << ":" << GetSubCategoryString(categID, subCategID);
         return category;
     }
     else
@@ -196,13 +196,13 @@ wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID) cons
 
 void mmCategoryList::parseCategoryString(wxString categ, wxString& cat, int& categID, wxString& subcat, int& subCategID)
 {
-    wxStringTokenizer cattkz(categ, wxT(":"));
+    wxStringTokenizer cattkz(categ, ":");
 
     cat = cattkz.GetNextToken();
     if (cattkz.HasMoreTokens())
         subcat = cattkz.GetNextToken();
     else
-        subcat = wxT("");
+        subcat = "";
 
     categID = GetCategoryId(cat);
 

@@ -24,10 +24,10 @@
 // Constructor used when loading a payee from the database
 mmPayee::mmPayee(wxSQLite3ResultSet q1)
 {
-    id_        = q1.GetInt(wxT("PAYEEID"));
-    name_      = q1.GetString(wxT("PAYEENAME"));
-    categoryId_    = q1.GetInt(wxT("CATEGID"));
-    subcategoryId_ = q1.GetInt(wxT("SUBCATEGID"));
+    id_        = q1.GetInt("PAYEEID");
+    name_      = q1.GetString("PAYEENAME");
+    categoryId_    = q1.GetInt("CATEGID");
+    subcategoryId_ = q1.GetInt("SUBCATEGID");
 }
 
 // Constructor when adding a new payee to the database
@@ -108,7 +108,7 @@ wxArrayString mmPayeeList::FilterPayees(const wxString& patt) const
 
     for (size_t idx = 0; idx < (int)entries_.size(); idx++)
     {
-        if (entries_[idx]->name_.Lower().Matches(patt.Lower().Append(wxT("*"))))
+        if (entries_[idx]->name_.Lower().Matches(patt.Lower().Append("*")))
             payee_list.Add(entries_[idx]->name_);
     }
     return payee_list;
@@ -150,8 +150,8 @@ int mmPayeeList::AddPayee(const wxString &payeeName)
 {
     std::vector<wxString> data;
     data.push_back(payeeName);
-    data.push_back(wxT("-1"));
-    data.push_back(wxT("-1"));
+    data.push_back("-1");
+    data.push_back("-1");
     long payeeID = -1;
     wxString sql = wxString::FromUTF8(INSERT_INTO_PAYEE_V1);
     int iError = mmDBWrapper::mmSQLiteExecuteUpdate(core_->db_.get(), data, sql, payeeID);

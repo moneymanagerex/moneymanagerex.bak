@@ -62,7 +62,7 @@ bool mmReportsPanel::Create( wxWindow *parent, wxWindowID winid,
 
 wxString mmReportsPanel::getReportText()
 {
-    return rb_ ?  rb_->getHTMLText(): wxT("coming soon...");
+    return rb_ ?  rb_->getHTMLText(): "coming soon...";
 }
 
 void mmReportsPanel::CreateControls()
@@ -80,7 +80,7 @@ void mmReportsPanel::CreateControls()
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, wxID_ANY,
         _("REPORTS"));
     int font_size = this->GetFont().GetPointSize() + 2;
-    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemStaticText9->SetFont(wxFont(font_size, wxSWISS, wxNORMAL, wxBOLD, FALSE, ""));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     htmlWindow_ = new wxHtmlWindow( this, wxID_ANY,
@@ -94,17 +94,17 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
     wxHtmlLinkInfo link_info = event.GetLinkInfo();
     wxString sInfo = link_info.GetHref();
     wxString sData;
-    bool bIsTrxId = sInfo.StartsWith(wxT("TRXID:"), &sData);
-    bool isAcct = sInfo.StartsWith(wxT("ACCT:"), &sData);
-    bool isStock = sInfo.StartsWith(wxT("STOCK:"), &sData);
-    bool bIsLuaScript = sInfo.StartsWith(wxT("LUA:"), &sData);
-    if (sInfo == wxT("billsdeposits"))
+    bool bIsTrxId = sInfo.StartsWith("TRXID:", &sData);
+    bool isAcct = sInfo.StartsWith("ACCT:", &sData);
+    bool isStock = sInfo.StartsWith("STOCK:", &sData);
+    bool bIsLuaScript = sInfo.StartsWith("LUA:", &sData);
+    if (sInfo == "billsdeposits")
     {
         frame_->setNavTreeSection(_("Repeating Transactions"));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
-    else if (sInfo == wxT("Assets"))
+    else if (sInfo == "Assets")
     {
         frame_->setNavTreeSection(_("Assets"));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
@@ -152,7 +152,7 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
             htmlWindow_->SetPage(lua_result);
         }
         else
-            wxMessageBox(wxString::Format(_("File %s not found"), sData.c_str()), wxT("Lua Script"), wxOK|wxICON_ERROR);
+            wxMessageBox(wxString::Format(_("File %s not found"), sData), "Lua Script", wxOK|wxICON_ERROR);
     }
     else
         wxLaunchDefaultBrowser(sInfo);

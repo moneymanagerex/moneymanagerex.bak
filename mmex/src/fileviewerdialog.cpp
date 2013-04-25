@@ -54,7 +54,7 @@ void fileviewer::CreateControls()
     this->SetSizer(itemBoxSizer2);
 
     textCtrl_ = new wxTextCtrl( this,
-        wxID_ANY, wxT(""),
+        wxID_ANY, "",
         wxDefaultPosition, SYMBOL_FILEVIEWER_SIZE,
         wxTE_MULTILINE|wxTE_READONLY );
 
@@ -69,9 +69,9 @@ void fileviewer::CreateControls()
          {
             wxString line = text.ReadLine();
             if (!line.IsEmpty())
-                *textCtrl_ << line << wxT("\n");
+                *textCtrl_ << line << "\n";
             else
-                *textCtrl_ << wxT("\n");
+                *textCtrl_ << "\n";
         }
     }
     //Scroll to the top of file

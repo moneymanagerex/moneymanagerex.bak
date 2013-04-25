@@ -21,21 +21,21 @@
 
 mmCurrency::mmCurrency(wxSQLite3ResultSet& q1)
 {
-   currencyID_       = q1.GetInt(wxT("CURRENCYID"));
-   currencyName_     = q1.GetString(wxT("CURRENCYNAME"));
-   pfxSymbol_        = q1.GetString(wxT("PFX_SYMBOL"));
-   sfxSymbol_        = q1.GetString(wxT("SFX_SYMBOL"));
-   dec_              = q1.GetString(wxT("DECIMAL_POINT"));
-   grp_              = q1.GetString(wxT("GROUP_SEPARATOR"));
-   unit_             = q1.GetString(wxT("UNIT_NAME"));
-   cent_             = q1.GetString(wxT("CENT_NAME"));
-   scaleDl_          = q1.GetInt(wxT("SCALE"));
-   baseConv_         = q1.GetDouble(wxT("BASECONVRATE"), 1.0);
+   currencyID_       = q1.GetInt("CURRENCYID");
+   currencyName_     = q1.GetString("CURRENCYNAME");
+   pfxSymbol_        = q1.GetString("PFX_SYMBOL");
+   sfxSymbol_        = q1.GetString("SFX_SYMBOL");
+   dec_              = q1.GetString("DECIMAL_POINT");
+   grp_              = q1.GetString("GROUP_SEPARATOR");
+   unit_             = q1.GetString("UNIT_NAME");
+   cent_             = q1.GetString("CENT_NAME");
+   scaleDl_          = q1.GetInt("SCALE");
+   baseConv_         = q1.GetDouble("BASECONVRATE", 1.0);
    if(q1.GetColumnCount() < 11) {
        /* no Currency symbol in the table yet */
        currencySymbol_ = wxEmptyString;
    } else {
-       currencySymbol_ = q1.GetString(wxT("CURRENCY_SYMBOL"));
+       currencySymbol_ = q1.GetString("CURRENCY_SYMBOL");
    }
    decChar_ = 0;
    grpChar_ = 0;
@@ -52,18 +52,18 @@ mmCurrency::mmCurrency(wxSQLite3ResultSet& q1)
 
 mmCurrency::mmCurrency()
 : currencyID_(-1)
-, currencyName_(wxT("US Dollar"))
-, pfxSymbol_(wxT('$'))
+, currencyName_("US Dollar")
+, pfxSymbol_('$')
 , sfxSymbol_()
-, dec_(wxT('.'))
-, grp_(wxT(','))
-, unit_(wxT("dollar"))
-, cent_(wxT("cent"))
+, dec_('.')
+, grp_(',')
+, unit_("dollar")
+, cent_("cent")
 , scaleDl_(100)
 , baseConv_(1)
-, decChar_(wxT('\0'))
-, grpChar_(wxT('\0'))
-, currencySymbol_(wxT("USD"))
+, decChar_('\0')
+, grpChar_('\0')
+, currencySymbol_("USD")
 {}
 
 void mmCurrency::loadCurrencySettings()
@@ -93,7 +93,7 @@ void mmCurrencyList::SetInfoTable(wxSharedPtr<MMEX_IniSettings> info_table)
 void mmCurrencyList::LoadBaseCurrencySettings() const
 {
     wxASSERT(info_table_);
-    int currencyID = info_table_->GetIntSetting(wxT("BASECURRENCYID"), -1);
+    int currencyID = info_table_->GetIntSetting("BASECURRENCYID", -1);
 
     if (currencyID != -1)
     {
@@ -127,7 +127,7 @@ void mmCurrencyList::SetCurrencySetting(wxSharedPtr<mmCurrency> pCurrency) const
 int mmCurrencyList::GetBaseCurrencySettings() const
 {
     wxASSERT(info_table_);
-    int iBaseCurrencyID = info_table_->GetIntSetting(wxT("BASECURRENCYID"), -1);
+    int iBaseCurrencyID = info_table_->GetIntSetting("BASECURRENCYID", -1);
     wxASSERT(iBaseCurrencyID > 0);
     return iBaseCurrencyID;
 
@@ -136,7 +136,7 @@ int mmCurrencyList::GetBaseCurrencySettings() const
 void mmCurrencyList::SetBaseCurrencySettings(int currencyID)
 {
     wxASSERT(info_table_);
-    info_table_->SetIntSetting(wxT("BASECURRENCYID"), currencyID);
+    info_table_->SetIntSetting("BASECURRENCYID", currencyID);
 }
 
 int mmCurrencyList::AddCurrency(wxSharedPtr<mmCurrency> pCurrency)
@@ -296,10 +296,10 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
     {
         const wxString symbol = currencies_[idx]->currencySymbol_.Upper();
 
-        site << symbol << base_symbol << wxT("=X+");
+        site << symbol << base_symbol << "=X+";
     }
-    if (site.Right(1).Contains(wxT("+"))) site.RemoveLast(1);
-    site = wxString::Format(wxT("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv"), site.c_str());
+    if (site.Right(1).Contains("+")) site.RemoveLast(1);
+    site = wxString::Format("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv", site);
 
     wxString sOutput;
     int err_code = site_content(site, sOutput);
@@ -315,13 +315,13 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
     std::map<wxString, std::pair<double, wxString> > currency_data;
 
     // Break it up into lines
-    wxStringTokenizer tkz(sOutput, wxT("\r\n"));
+    wxStringTokenizer tkz(sOutput, "\r\n");
 
     while (tkz.HasMoreTokens())
     {
         wxString csvline = tkz.GetNextToken();
 
-        wxStringTokenizer csvsimple(csvline, wxT("\","),wxTOKEN_STRTOK);
+        wxStringTokenizer csvsimple(csvline, "\",",wxTOKEN_STRTOK);
         if (csvsimple.HasMoreTokens())
         {
             CurrencySymbol = csvsimple.GetNextToken();
@@ -336,7 +336,7 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
     }
 
     wxString msg = _("Currency rate updated");
-    msg << wxT("\n\n");
+    msg << "\n\n";
 
     db_->Begin();
 
@@ -345,7 +345,7 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
         const wxString currency_symbol = currencies_[idx]->currencySymbol_.Upper();
         if (!currency_symbol.IsEmpty())
         {
-            wxString currency_symbols_pair = currency_symbol + base_symbol + wxT("=X");
+            wxString currency_symbols_pair = currency_symbol + base_symbol + "=X";
             std::pair<double, wxString> data = currency_data[currency_symbols_pair];
 
             wxString valueStr, newValueStr;
@@ -355,10 +355,10 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
             double old_rate = currencies_[idx]->baseConv_;
             //mmex::formatDoubleToCurrencyEdit(old_rate, valueStr);
             //mmex::formatDoubleToCurrencyEdit(new_rate, newValueStr);
-            valueStr = wxString::Format(wxT("%0.4f"), old_rate);
-            newValueStr = wxString::Format(wxT("%0.4f"), new_rate);
+            valueStr = wxString::Format("%0.4f", old_rate);
+            newValueStr = wxString::Format("%0.4f", new_rate);
             msg << wxString::Format(_("%s\t: %s -> %s\n"),
-                currency_symbol.c_str(), valueStr.c_str(), newValueStr.c_str());
+                currency_symbol, valueStr, newValueStr);
             currencies_[idx]->baseConv_ = new_rate;
             UpdateCurrency(currencies_[idx]);
         }

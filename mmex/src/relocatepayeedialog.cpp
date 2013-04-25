@@ -77,15 +77,15 @@ void relocatePayeeDialog::CreateControls()
     wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC,
         wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
 
-    cbSourcePayee_ = new wxComboBox(this, wxID_ANY, wxT(""),
+    cbSourcePayee_ = new wxComboBox(this, wxID_ANY, "",
         wxDefaultPosition, btnSize,
-        core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
+        core_->payeeList_.FilterPayees("") /*, wxTE_PROCESS_ENTER*/);
     cbSourcePayee_->Connect(wxID_ANY, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(relocatePayeeDialog::OnPayeeUpdated), NULL, this);
 
-    cbDestPayee_ = new wxComboBox(this, wxID_NEW, wxT(""),
+    cbDestPayee_ = new wxComboBox(this, wxID_NEW, "",
         wxDefaultPosition, btnSize,
-        core_->payeeList_.FilterPayees(wxT("")) /*, wxTE_PROCESS_ENTER*/);
+        core_->payeeList_.FilterPayees("") /*, wxTE_PROCESS_ENTER*/);
     cbDestPayee_->Connect(wxID_NEW, wxEVT_COMMAND_TEXT_UPDATED,
         wxCommandEventHandler(relocatePayeeDialog::OnPayeeUpdated), NULL, this);
 
@@ -135,9 +135,9 @@ void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
     if ((sourcePayeeID_ > 0) &&  (destPayeeID_ > 0) )
     {
         wxString msgStr = _("Please Confirm:") ;
-        msgStr << wxT("\n\n");
+        msgStr << "\n\n";
         msgStr << wxString::Format( _("Changing all payees of: %s \n\n  to payee: %s"),
-             sourcePayeeName.c_str(), destPayeeName.c_str());
+             sourcePayeeName, destPayeeName);
 
         int ans = wxMessageBox(msgStr,_("Payee Relocation Confirmation"), wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)
@@ -168,10 +168,10 @@ void relocatePayeeDialog::OnPayeeUpdated(wxCommandEvent& event)
     cbPayeeInFocus -> Clear();
     wxArrayString data;
 
-    data = core_->payeeList_.FilterPayees(wxT(""));
+    data = core_->payeeList_.FilterPayees("");
     for (size_t i = 0; i < data.Count(); ++i)
     {
-        if (data[i].Lower().Matches(wxString(value).Append(wxT("*"))))
+        if (data[i].Lower().Matches(wxString(value).Append("*")))
             cbPayeeInFocus ->Append(data[i]);
     }
 

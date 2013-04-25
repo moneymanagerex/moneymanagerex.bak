@@ -98,9 +98,9 @@ void mmMainCurrencyDialog::fillControls()
         item.SetData( currencyID );
 
         currencyListBox_->InsertItem( item );
-        wxString mnemo_sign = wxT("");
-        if (baseCurrencyID == currencyID) mnemo_sign = wxT("X");
-        else if (core_->accountList_.currencyInUse(currencyID)) mnemo_sign = wxT("..");
+        wxString mnemo_sign = "";
+        if (baseCurrencyID == currencyID) mnemo_sign = "X";
+        else if (core_->accountList_.currencyInUse(currencyID)) mnemo_sign = "..";
         currencyListBox_->SetItem(idx, 0, (*it)->currencySymbol_);
         currencyListBox_->SetItem(idx, 1, (*it)->currencyName_);
         currencyListBox_->SetItem(idx, 2, mnemo_sign);
@@ -166,7 +166,7 @@ void mmMainCurrencyDialog::CreateControls()
     // Add third column
     wxListItem col2;
     col2.SetId(2);
-    col2.SetText( wxT("") );
+    col2.SetText( "" );
     col2.SetWidth(20);
     currencyListBox_->InsertColumn(2, col2);
 
@@ -280,7 +280,7 @@ void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
     if (selectedIndex_ < 0) return;
 
 //    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
-    int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting(wxT("BASECURRENCYID"), 1);
+    int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting("BASECURRENCYID", 1);
     bool usedAsBase = currencyID_ == baseCurrencyID;
 
     if (core_->accountList_.currencyInUse(currencyID_) || usedAsBase)
@@ -346,7 +346,7 @@ void mmMainCurrencyDialog::OnListItemActivated(wxListEvent& event)
 
 void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 {
-    wxString sMsg = wxT("");
+    wxString sMsg = "";
     if (core_->currencyList_.OnlineUpdateCurRate(sMsg))
     {
         wxMessageDialog msgDlg(this, sMsg, _("Currency rate updated"));
@@ -364,12 +364,12 @@ void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
 {
     currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
 //    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
-    int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting(wxT("BASECURRENCYID"), -1);
+    int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting("BASECURRENCYID", -1);
 
     if (baseCurrencyID == currencyID_) return;
 
 //    core_->currencyList_.setBaseCurrencySettings(currencyID_);
-    core_->dbInfoSettings_->SetIntSetting(wxT("BASECURRENCYID"), currencyID_);
+    core_->dbInfoSettings_->SetIntSetting("BASECURRENCYID", currencyID_);
     core_->dbInfoSettings_->Save();
 
     fillControls();

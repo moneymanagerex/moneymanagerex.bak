@@ -127,12 +127,12 @@ void SplitTransactionDialog::CreateControls()
     wxString totalMessage = _("Total:");
     if (transType_ == DEF_WITHDRAWAL)
     {
-        totalMessage.Prepend(wxT(" "));
+        totalMessage.Prepend(" ");
         totalMessage.Prepend(_("Withdrawal"));
     }
     if (transType_ == DEF_DEPOSIT)
     {
-        totalMessage.Prepend(wxT(" "));
+        totalMessage.Prepend(" ");
         totalMessage.Prepend(_("Deposit"));
     }
     wxStaticText* transAmountText_ = new wxStaticText( this, wxID_STATIC, totalMessage);

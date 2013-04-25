@@ -67,7 +67,7 @@ void mmHelpPanel::CreateControls()
     wxString helpHeader = mmex::getProgramName() + _(" Help");
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         helpHeader, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, ""));
 
     itemBoxSizerHeader->Add(buttonBack, 0, wxLEFT, 5);
     itemBoxSizerHeader->Add(buttonFordward, 0, wxLEFT|wxRIGHT, 5);
@@ -92,7 +92,7 @@ void mmHelpPanel::CreateControls()
     int helpFileIndex = frame_->getHelpFileIndex();
  
     wxFileName helpIndexFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex));
-    if (mmOptions::instance().language_ != wxT("english")) helpIndexFile.AppendDir(mmOptions::instance().language_);
+    if (mmOptions::instance().language_ != "english") helpIndexFile.AppendDir(mmOptions::instance().language_);
 
     if (helpIndexFile.FileExists()) // Load the help file for the given language 
     {
