@@ -1887,90 +1887,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             CreateCustomReport(customReportID);
         }
-        else
-        {
-            createReportsPage(iData->get_report());
-        }
-#if 0
-        else if (sData == "Summary of Accounts")
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData == "Summary of Stocks")
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData == "Summary of Assets")
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData == "Where the Money Goes")
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData.StartsWith("Where the Money Goes -"))
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData == "Where the Money Comes From")
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData.StartsWith("Where the Money Comes From - "))
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData == "Categories - Over Time")
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData.StartsWith("Categories - "))
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData == "Payee Report")
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData.StartsWith("Payees - "))
-        {
-            createReportsPage(iData->get_report());
-        }
-        else if (sData == "Income vs Expenses - All Time")
-        {
-            mmPrintableBase* rs = new mmReportIncomeExpensesAllTime(m_core.get());
-            createReportsPage(rs);
-        }
-        else if (sData == "Income vs Expenses")
-        {
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get(), wxDateTime::Now().GetYear(), 10);
-
-            createReportsPage(rs);
-        }
-        else if (sData.StartsWith("Income vs Expenses - ") && sData.Contains("Year"))
-        {
-            mmPrintableBase* rs;
-            GetDateRange(dtBegin, dtEnd, sData);
-
-            int year = wxDateTime::Now().GetYear();
-            if (sData.Contains("Last")) year --;
-
-            if (sData.Contains("Financial"))
-            {
-                if (wxDateTime::Now().GetMonth() < dtBegin.GetMonth()) year -- ;
-                rs = new mmReportIncExpensesOverFinancialPeriod(m_core.get(), year);
-            }
-            else
-            {
-                rs = new mmReportIncExpensesOverTime(m_core.get(), year);
-            }
-            createReportsPage(rs);
-        }
-        else if (sData.StartsWith("Income vs Expenses - "))
-        {
-            mmPrintableBase* rs = new mmReportIncomeExpensesCurrentMonth(m_core.get());
-            createReportsPage(rs);
-        }
         else if (sData == "Cash Flow")
         {
             mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, 0);
@@ -1986,7 +1902,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             report->activateBankAccounts();
             createReportsPage(report);
         }
-
         else if (sData == "Cash Flow - With Term Accounts")
         {
             mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, 0);
@@ -2016,7 +1931,10 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
             AddPendingEvent(evt);
         }
-#endif
+        else
+        {
+            createReportsPage(iData->get_report());
+        }
     }
 }
 //----------------------------------------------------------------------------
