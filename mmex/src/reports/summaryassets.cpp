@@ -45,11 +45,8 @@ wxString mmReportSummaryAssets::getHTMLText()
     core_->currencyList_.LoadBaseCurrencySettings();
 
     TAssetList asset_list_(core_->db_);
-    for (std::vector<wxSharedPtr<TAssetEntry> >::const_iterator it = asset_list_.entrylist_.begin();
-        it != asset_list_.entrylist_.end(); ++ it)
-    {
-        const wxSharedPtr<TAssetEntry> pEntry = *it;
-
+	for (const auto & pEntry: asset_list_.entrylist_)
+	{
         hb.startTableRow();
         hb.addTableCell(pEntry->display_date_, false, true);
         hb.addTableCell(pEntry->name_, false, true);
