@@ -183,9 +183,6 @@
     <ClCompile Include="..\..\..\src\stockspanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\transactionfilterdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\transdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -244,9 +241,6 @@
       <Filter>Source Files\reports</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\reports\incexpensesfinancialperiod.cpp">
-      <Filter>Source Files\reports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\reports\incexpesestime.cpp">
       <Filter>Source Files\reports</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\reports\payee.cpp">
@@ -479,9 +473,6 @@
     <ClInclude Include="..\..\..\src\stockspanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\transactionfilterdialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\transdialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -525,9 +516,6 @@
       <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\reports\incexpensesfinancialperiod.h">
-      <Filter>Header Files\reports</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\reports\incexpesestime.h">
       <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\reports\payee.h">
@@ -589,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\db\transactionbill.h">
       <Filter>Header Files\db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\reports\mmDateRange.h">
+      <Filter>Header Files\reports</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
