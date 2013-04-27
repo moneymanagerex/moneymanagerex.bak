@@ -4,13 +4,12 @@ sudo apt-get install subversion
 
 mkdir ~/Development
 cd ~/Development
-svn co https://moneymanagerex.svn.sourceforge.net/svnroot/moneymanagerex/trunk/mmex/ mmex
+svn checkout http://svn.code.sf.net/p/moneymanagerex/code/trunk/mmex mmex
 
 #Install wx libs
-sudo apt-get install libwxgtk2.8-dev libwxgtk2.8 libboost-dev
+sudo apt-get install libwxgtk2.9-dev libwxgtk2.9
 
 #Installing Bakefile On Ubuntu 11.04
-
 sudo apt-get install python-dev
 
 #Download archive from link below then unpack it and build
