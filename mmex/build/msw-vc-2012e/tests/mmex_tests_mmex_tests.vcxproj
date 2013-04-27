@@ -181,6 +181,7 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Unicode Debug Multilib WX_PYTHON_0|Win32'">false</ImageHasSafeExceptionHandlers>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Midl>
       <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -195,7 +196,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='wx29 Debug Unicode Multilib WX_PYTHON_0|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswud;$(WXWIN_29)\include;$(BOOSTDIR);..\..\..\lib\sqlite;..\..\..\lib\wxsqlite;..\..\..\lib\lua\src;..\..\..\src;..\..\..\lib\UnitTest++;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WXWIN_29)\lib\vc_lib\mswud;$(WXWIN_29)\include;..\..\..\lib\sqlite;..\..\..\lib\wxsqlite;..\..\..\lib\lua\src;..\..\..\src;..\..\..\lib\UnitTest++;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;NOPCH;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -219,6 +220,7 @@
       <ProgramDatabaseFile>vc-static-29ud\mmex_tests.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Midl>
       <PreprocessorDefinitions>WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -286,7 +288,6 @@
     <ClCompile Include="..\..\..\src\reports\categovertimeperf.cpp" />
     <ClCompile Include="..\..\..\src\reports\incexpenses.cpp" />
     <ClCompile Include="..\..\..\src\reports\incexpensesfinancialperiod.cpp" />
-    <ClCompile Include="..\..\..\src\reports\incexpesestime.cpp" />
     <ClCompile Include="..\..\..\src\reports\payee.cpp" />
     <ClCompile Include="..\..\..\src\reports\summary.cpp" />
     <ClCompile Include="..\..\..\src\reports\summaryassets.cpp" />
@@ -319,7 +320,6 @@
     <ClCompile Include="..\..\..\src\splittransactionsdialog.cpp" />
     <ClCompile Include="..\..\..\src\stockdialog.cpp" />
     <ClCompile Include="..\..\..\src\stockspanel.cpp" />
-    <ClCompile Include="..\..\..\src\transactionfilterdialog.cpp" />
     <ClCompile Include="..\..\..\src\transdialog.cpp" />
     <ClCompile Include="..\..\..\src\univcsvdialog.cpp" />
     <ClCompile Include="..\..\..\src\util.cpp" />
@@ -401,7 +401,7 @@
     <ClInclude Include="..\..\..\src\reports\categovertimeperf.h" />
     <ClInclude Include="..\..\..\src\reports\incexpenses.h" />
     <ClInclude Include="..\..\..\src\reports\incexpensesfinancialperiod.h" />
-    <ClInclude Include="..\..\..\src\reports\incexpesestime.h" />
+    <ClInclude Include="..\..\..\src\reports\mmDateRange.h" />
     <ClInclude Include="..\..\..\src\reports\payee.h" />
     <ClInclude Include="..\..\..\src\reports\summary.h" />
     <ClInclude Include="..\..\..\src\reports\summaryassets.h" />
@@ -415,7 +415,6 @@
     <ClInclude Include="..\..\..\src\stockdialog.h" />
     <ClInclude Include="..\..\..\src\stockspanel.h" />
     <ClInclude Include="..\..\..\src\tests\testing_util.h" />
-    <ClInclude Include="..\..\..\src\transactionfilterdialog.h" />
     <ClInclude Include="..\..\..\src\transdialog.h" />
     <ClInclude Include="..\..\..\src\univcsvdialog.h" />
     <ClInclude Include="..\..\..\src\util.h" />
