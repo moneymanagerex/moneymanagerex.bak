@@ -1587,15 +1587,15 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     ///////////////////////////////////////////////////////////////////
     wxTreeItemId cashFlow = navTreeCtrl_->AppendItem(reports, _("Cash Flow"), 4, 4);
-    navTreeCtrl_->SetItemData(cashFlow, new mmTreeItemData("Cash Flow"));
+    navTreeCtrl_->SetItemData(cashFlow, new mmTreeItemData("Cash Flow", new mmReportCashFlowAllAccounts(m_core.get(), this)));
 
     wxTreeItemId cashflowWithBankAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - With Bank Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(cashflowWithBankAccounts, new mmTreeItemData("Cash Flow - With Bank Accounts"));
+    navTreeCtrl_->SetItemData(cashflowWithBankAccounts, new mmTreeItemData("Cash Flow - With Bank Accounts", new mmReportCashFlowBankAccounts(m_core.get(), this)));
 
     if ( hasActiveTermAccounts() )
     {
         wxTreeItemId cashflowWithTermAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - With Term Accounts"), 4, 4);
-        navTreeCtrl_->SetItemData(cashflowWithTermAccounts, new mmTreeItemData("Cash Flow - With Term Accounts"));
+        navTreeCtrl_->SetItemData(cashflowWithTermAccounts, new mmTreeItemData("Cash Flow - With Term Accounts", new mmReportCashFlowTermAccounts(m_core.get(), this)));
     }
 
     wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - Specific Accounts"), 4, 4);
@@ -1886,27 +1886,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if ( IsCustomReportSelected(customReportID, iData) )
         {
             CreateCustomReport(customReportID);
-        }
-        else if (sData == "Cash Flow")
-        {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, 0);
-
-            report->activateBankAccounts();
-            if (hasActiveTermAccounts())  report->activateTermAccounts();
-
-            createReportsPage(report);
-        }
-        else if (sData == "Cash Flow - With Bank Accounts")
-        {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, 0);
-            report->activateBankAccounts();
-            createReportsPage(report);
-        }
-        else if (sData == "Cash Flow - With Term Accounts")
-        {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, 0);
-            report->activateTermAccounts();
-            createReportsPage(report);
         }
         else if (sData == "Cash Flow - Specific Accounts")
         {
