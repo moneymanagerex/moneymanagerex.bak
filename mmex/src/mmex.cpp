@@ -187,12 +187,6 @@ bool OnInitImpl(mmGUIApp &app)
 
     mmSelectLanguage(0, pIniSettings, false);
 
-
-//removed by omalleypat - can't compile in wxWidgets 2.9
-//#if defined (__WXMAC__) || defined (__WXOSX__)
-//wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL,1);
-//#endif
-
     mmGUIFrame *frame = new mmGUIFrame(mmex::getProgramName(), wxPoint(valx, valy), wxSize(valw, valh), pIniSettings);
     bool ok = frame->Show();
     wxASSERT(ok);
@@ -1881,7 +1875,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         wxDateTime dtBegin, dtEnd;
         wxString sData = iData->getString();
         wxString title = wxGetTranslation(sData);
-//        bool bIgnoreFuture = mmIniOptions::instance().ignoreFutureTransactions_;
 
         if ( IsCustomReportSelected(customReportID, iData) )
         {
