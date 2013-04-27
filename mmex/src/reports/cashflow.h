@@ -34,4 +34,32 @@ private:
    int cashflowreporttype_;
 };
 
+class mmReportCashFlowAllAccounts : public mmReportCashFlow
+{
+public:
+    mmReportCashFlowAllAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0, 0)
+    {
+        this->activateBankAccounts();
+        this->activateTermAccounts();
+    }
+};
+
+class mmReportCashFlowBankAccounts : public mmReportCashFlow
+{
+public:
+    mmReportCashFlowBankAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0, 0)
+    {
+        this->activateBankAccounts();
+    }
+};
+
+class mmReportCashFlowTermAccounts: public mmReportCashFlow
+{
+public:
+    mmReportCashFlowTermAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0, 0)
+    {
+        this->activateTermAccounts();
+    }
+};
+
 #endif // _MM_EX_REPORTCASHFLOW_H_
