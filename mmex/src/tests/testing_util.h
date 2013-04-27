@@ -65,7 +65,7 @@ private:
  Create a single access point for the ini_settings database
  *****************************************************************************************/
 // Returns the user's current working directory for the new inidb database.
-wxString getIniDbPpath();
+// wxString getIniDbPpath();
 
 wxSharedPtr<wxSQLite3Database> get_pInidb();
 
@@ -76,7 +76,7 @@ wxSharedPtr<MMEX_IniSettings> pSettingsList();
  Create a single access point for the database, Remove database on completion.
  *****************************************************************************************/
 // Returns the user's current working directory for the new database.
-wxString getDbPath();
+// wxString getDbPath();
 wxSharedPtr<wxSQLite3Database> get_pDb();
 
 // Create a single access point for the main database, stored in memory.

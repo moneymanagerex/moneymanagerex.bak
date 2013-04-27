@@ -42,7 +42,22 @@
 #include "db/budget_year.h"
 #include "db/budget_table.h"
 
-#if 1
+
+//----------------------------------------------------------------------------
+// This is a way to prevent certain tests occuring during development testing
+#define CENTRALL_DB_TESTS
+#define CURRENCY_TESTS
+#define ACCOUNT_TESTS
+#define CATEGORY_TESTS
+#define SUBCATEGORY_TESTS
+#define PAYEE_TESTS
+#define TRANSACTION_TESTS
+#define REPEAT_TRANSACTION_TESTS
+#define SPLIT_TRANSACTION_TESTS
+#define ASSET_TESTS
+#define STOCK_TESTS
+#define BUDGET_TESTS
+
 //----------------------------------------------------------------------------
 /// Central class holding all major components of the database
 class TDatabase
@@ -86,14 +101,13 @@ wxSharedPtr<TDatabase> main_db()
 
     return pCore;
 }
-#endif
 /*****************************************************************************************
  The tests for the new classes
  *****************************************************************************************/
 SUITE(new_classes_test)
 {
 
-#if 1
+#ifdef CENTRALL_DB_TESTS
 TEST(Central_Database_Test)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -119,7 +133,10 @@ TEST(Central_Database_Test)
 }
 #endif
 
-#if 1
+#ifdef CURRENCY_TESTS
+/****************************************************************************
+ Testing Currency
+ ****************************************************************************/
 TEST(TCurrencyList_Add)
 {
     printf("\nNew_Classes_Test: START");
@@ -151,7 +168,10 @@ TEST(TCurrencyList_Add)
 }
 #endif
 
-#if 1
+#ifdef ACCOUNT_TESTS
+/****************************************************************************
+ Testing Accounts
+ ****************************************************************************/
 TEST(TAccountList_Test_Add)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -178,7 +198,10 @@ TEST(TAccountList_Test_Add)
 }
 #endif
 
-#if 1
+#ifdef CATEGORY_TESTS
+/****************************************************************************
+ Testing Category
+ ****************************************************************************/
 TEST(TCategoryList_Test)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -219,7 +242,12 @@ TEST(TCategoryList_Test)
 
     displayTimeTaken("TCategoryList_Test", start_time);
 }
+#endif
 
+#ifdef SUBCATEGORY_TESTS
+/****************************************************************************
+ Testing Subcategory
+ ****************************************************************************/
 TEST(TSubCategoryList_Test)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -309,7 +337,10 @@ TEST(TCategoryList_SubList_Test)
 }
 #endif
 
-#if 1
+#ifdef PAYEE_TESTS
+/****************************************************************************
+ Testing Payees
+ ****************************************************************************/
 TEST(TPayeeList_Test_1)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -360,7 +391,12 @@ TEST(TPayeeList_Test_2)
 
     displayTimeTaken("TPayeeList_Test_2", start_time);
 }
+#endif
 
+#ifdef TRANSACTION_TESTS
+/****************************************************************************
+ Testing Transactions
+ ****************************************************************************/
 TEST(TTransactionList_Add)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -368,8 +404,8 @@ TEST(TTransactionList_Add)
     TTransactionList transactions(get_pDb());
     TTransactionEntry* pTransEntry_1 = new TTransactionEntry();
     pTransEntry_1->amount_from_  = 1000;
-    pTransEntry_1->trans_status_ = TRANS_STATE_DEF[TRANS_RECONCILED];
-    pTransEntry_1->trans_type_   = TRANS_TYPE_DEF[TRANS_DEPOSIT];
+    pTransEntry_1->trans_status_ = TRANS_STATE_DEF[TTransactionEntry::TRANS_RECONCILED];
+    pTransEntry_1->trans_type_   = TRANS_TYPE_DEF[TTransactionEntry::TRANS_DEPOSIT];
     pTransEntry_1->trans_notes_  = "Transaction Entry";  
     int id_1 = transactions.AddEntry(pTransEntry_1);
 
@@ -384,31 +420,128 @@ TEST(TTransactionList_Add)
 
     displayTimeTaken("TTransactionList_Add", start_time);
 }
+#endif
 
-TEST(TTransactionBillList_Add)
+#ifdef REPEAT_TRANSACTION_TESTS
+/****************************************************************************
+ Testing Repeating Transactions
+ ****************************************************************************/
+TEST(TTransactionBillList_Add_Entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
     TTransactionBillList repeat_transactions(get_pDb());
+
     TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
-    pBillEntry->amount_from_  = 1000;
-    pBillEntry->trans_status_ = TRANS_STATE_DEF[TRANS_RECONCILED];
-    pBillEntry->trans_type_   = TRANS_TYPE_DEF[TRANS_DEPOSIT];
-    pBillEntry->num_repeats_  = 10;
-    pBillEntry->trans_notes_  = "Repeat Transaction Entry";  
+    pBillEntry->amount_from_   = 1000;
+    pBillEntry->trans_status_  = TRANS_STATE_DEF[TTransactionEntry::TRANS_RECONCILED];
+    pBillEntry->trans_type_    = TRANS_TYPE_DEF[TTransactionEntry::TRANS_DEPOSIT];
+    pBillEntry->trans_notes_   = "Repeat Transaction Entry One month in advance";
     pBillEntry->nextOccurDate_ = start_time.Add(wxDateSpan::Month()).FormatISODate();
-    int id_1 = repeat_transactions.AddEntry(pBillEntry);
+    pBillEntry->repeat_type_   = TTransactionBillEntry::WEEKLY;
+    pBillEntry->num_repeats_   = 10;
+
+    // New bill_trans added for one month in advance.
+    int bill_id = repeat_transactions.AddEntry(pBillEntry);
+    CHECK(bill_id > 0);
+
+    int days_remaining = -1;
+    if (!pBillEntry->RequiresExecution(days_remaining))
+    {
+        CHECK(days_remaining > 27);
+    }
+
+    TTransactionBillEntry* pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
+    pBillEntry_1->trans_notes_   = "Repeat Entry: Start- One Month ago";
+    pBillEntry_1->nextOccurDate_ = start_time.Subtract(wxDateSpan::Month()).FormatISODate();
+    pBillEntry_1->repeat_type_   = TTransactionBillEntry::EVERY_X_DAYS;
+    pBillEntry_1->autoExecuteManual_ = true;
+    bill_id = repeat_transactions.AddEntry(pBillEntry_1);
+    CHECK(bill_id > 1);
+
+    pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
+    pBillEntry_1->autoExecuteManual_ = true;
+    pBillEntry_1->autoExecuteSilent_ = true;
+    bill_id = repeat_transactions.AddEntry(pBillEntry_1);
+    CHECK(bill_id > 2);
+
+    displayTimeTaken("TTransactionBillList_Add_Entries", start_time);
+}
+
+TEST(TTransactionBillList_Add_two_entries)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
 
     TTransactionList transactions(get_pDb());
-    int id_2 = transactions.AddEntry(pBillEntry->GetTransaction());
+    TTransactionBillList repeat_transactions(get_pDb());
 
-    CHECK(id_1 != id_2);
+    TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
+    pBillEntry->amount_from_  = 1000;
+    pBillEntry->trans_status_ = TRANS_STATE_DEF[TTransactionBillEntry::TRANS_RECONCILED];
+    pBillEntry->trans_type_   = TRANS_TYPE_DEF[TTransactionBillEntry::TRANS_DEPOSIT];
+    pBillEntry->trans_notes_  = "Repeat Entry: Start- One Month ago, repeat every 10 days";
+    pBillEntry->nextOccurDate_ = start_time.Subtract(wxDateSpan::Month()).FormatISODate();
+    pBillEntry->repeat_type_  = TTransactionBillEntry::EVERY_X_DAYS;
+    pBillEntry->num_repeats_  = 10;
+    int id = repeat_transactions.AddEntry(pBillEntry);
 
-    displayTimeTaken("TTransactionBillList_Add", start_time);
+    TTransactionBillEntry* pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
+    pBillEntry_1->repeat_type_  = TTransactionBillEntry::WEEKLY;
+    pBillEntry_1->trans_notes_  = "Repeat Entry: Start- One Month ago, repeat weekly";
+
+    int id_1 = repeat_transactions.AddEntry(pBillEntry_1);
+
+    CHECK(id != id_1);
+
+    displayTimeTaken("TTransactionBillList_Add_2", start_time);
 }
+
+TEST(TTransactionBillList_Executing_Entries)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TTransactionList transactions(get_pDb());
+    TTransactionBillList repeat_transactions(get_pDb());
+
+    TTransactionBillEntry* pBillEntry;
+    int days_remaining;
+    bool continue_Execution = false;
+
+    for (int i = 0; i < repeat_transactions.CurrentListSize(); ++i)
+    {
+        pBillEntry = repeat_transactions.entrylist_[i].get();
+
+        if (pBillEntry->RequiresExecution(days_remaining))
+        {
+            TTransactionEntry* pTransactionEntry = pBillEntry->GetTransaction();
+            pTransactionEntry->trans_date_ = pBillEntry->nextOccurDate_;
+            transactions.AddEntry(pTransactionEntry);
+
+            pBillEntry->AdjustNextOccuranceDate();
+            CHECK(pTransactionEntry->trans_date_ != pBillEntry->nextOccurDate_);
+
+            pBillEntry->Update(repeat_transactions.ListDatabase());
+            continue_Execution = true;
+        }
+    }
+
+    CHECK(continue_Execution);
+
+#ifdef TRANSACTION_TESTS
+    CHECK_EQUAL(5, transactions.CurrentListSize());
+#else
+    CHECK_EQUAL(3, transactions.CurrentListSize());
 #endif
 
-#if 1
+    displayTimeTaken("TTransactionBillList_Add_2", start_time);
+}
+
+#endif
+
+#ifdef SPLIT_TRANSACTION_TESTS
+/****************************************************************************
+ Testing Split Transactions
+ ****************************************************************************/
 TEST(TSplitTransactionList_Test_Create)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -523,7 +656,10 @@ TEST(TSplitTransactionList_Test_add_after_delete)
 }
 #endif
 
-#if 1
+#ifdef ASSET_TESTS
+/****************************************************************************
+ Testing Assets
+ ****************************************************************************/
 TEST(TAssetList_Test_entry_with_listed_entry)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -643,36 +779,108 @@ TEST(TAssetList_Test_Delete_entries)
 TEST(TAssetList_Test_Add_5_years_of_entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
 
     wxDateTime date = wxDateTime::Now();
 
-    TAssetEntry* first_entry = new TAssetEntry();
-    first_entry->name_       = ASSET_TYPE_DEF[TAssetEntry::AUTO];
-	first_entry->date_       = date.FormatISODate();
-    first_entry->value_      = 20000;
-    first_entry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::DEPRECIATE];
-    first_entry->rate_value_ = 20;
+    TAssetEntry* new_entry = new TAssetEntry();
+    new_entry->name_       = ASSET_TYPE_DEF[TAssetEntry::AUTO];
+	new_entry->date_       = date.FormatISODate();
+    new_entry->value_      = 20000;
+    new_entry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::DEPRECIATE];
+    new_entry->rate_value_ = 20;
 
-    TAssetList asset_list(get_pDb());
-    int asset_id = asset_list.AddEntry(first_entry);
+    int asset_id = asset_list.AddEntry(new_entry);
     CHECK(asset_id > 0);
 
     printf("\nAdding 5 years of asset entries...");
     display_STD_IO_separation_line();
 
     asset_list.ListDatabase()->Begin();
-    TAssetEntry* asset_entry;
-    for (int i = 1; i < 265; ++i)
+    for (int i = 1; i < 263; ++i)
     {
-        asset_entry = new TAssetEntry(first_entry);
-        date = date.Subtract(wxDateSpan::Days(7));
-    	first_entry->date_ = date.FormatISODate();
-        asset_list.AddEntry(asset_entry);
+        date.Subtract(wxDateSpan::Days(7));
+    	new_entry->date_ = date.FormatISODate();
+        asset_list.AddEntry(new TAssetEntry(new_entry));
     }
     asset_list.ListDatabase()->Commit();
 
     displayTimeTaken("TAssetList_Test_Add_5_years_of_entries", start_time);
 }
+
+#if 1
+TEST(TAssetList_Test_Depreciate_Daily)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    const wxString line_feed = wxT("\n");
+    const double init_value = 20000;
+    double new_value = init_value;
+    double dep_rate = (init_value/365) * 0.2; // 20% pa
+    int days = 0;
+    wxSharedPtr<TAssetEntry> pEntry;
+    for (int i = 0; i < asset_list.CurrentListSize(); ++i)
+    {
+        pEntry = asset_list.GetIndexedEntryPtr(i);
+        CHECK_EQUAL(init_value, pEntry->value_);
+
+        new_value = init_value - (dep_rate*days);
+        if (new_value < 0) new_value = 0;
+
+//        CHECK_EQUAL(new_value, pEntry->GetValue());
+
+        wxString str_value = line_feed;
+        str_value << wxT("Date: ") << pEntry->date_;
+        str_value << wxT("   Expected Value: ") << wxString::Format("%.2f", new_value);
+        str_value << wxT("   Value: ") << wxString::Format("%.2f", pEntry->GetValue());
+        printf(str_value.char_str());
+
+        days +=7;
+    }
+
+    printf(line_feed.char_str());
+    displayTimeTaken(wxT("TAssetList_Test_Depreciate_Daily"), start_time);
+    display_STD_IO_separation_line();
+}
+#endif
+
+#if 0
+TEST(TAssetList_Test_Depreciate_Monthly)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    const wxString line_feed = wxT("\n");
+    const double init_value = 20000;
+    double new_value = init_value;
+    double dep_rate = (init_value/12) * 0.2; // 20% pa
+    int months = 0;
+    wxSharedPtr<TAssetEntry> pEntry;
+    for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
+    {
+        pEntry = asset_list.GetIndexedEntryPtr(i);
+        CHECK_EQUAL(init_value, pEntry->value_);
+
+        new_value = init_value - (dep_rate*months);
+        if (new_value < 0) new_value = 0;
+
+//        CHECK_EQUAL(new_value, pEntry->GetValue());
+
+        wxString str_value = line_feed;
+        str_value << wxT("Date: ") << pEntry->date_;
+        str_value << wxT("   Expected Value: ") << wxString::Format("%.2f", new_value);
+        str_value << wxT("   Value: ") << wxString::Format("%.2f", pEntry->GetValue());
+        printf(str_value.char_str());
+
+        months ++;
+    }
+
+    printf(line_feed.char_str());
+    displayTimeTaken(wxT("TAssetList_Test_Depreciate_Monthly"), start_time);
+    display_STD_IO_separation_line();
+}
+#endif
 
 TEST(TAssetList_GetIndexedEntryPtr_Test)
 {
@@ -761,7 +969,10 @@ TEST(TAssetList_Test_GetEntryPtr)
 }
 #endif
 
-#if 1
+#ifdef STOCK_TESTS
+/****************************************************************************
+ Testing Stocks
+ ****************************************************************************/
 TEST(TStockList_Test_Add)
 {
     const wxDateTime start_time(wxDateTime::UNow());
@@ -828,7 +1039,10 @@ TEST(TStockList_Test_Delete)
 }
 #endif
 
-#if 1
+#ifdef BUDGET_TESTS
+/****************************************************************************
+ Testing Budgets
+ ****************************************************************************/
 TEST(TBudgetYearList_Add)
 {
     const wxDateTime start_time(wxDateTime::UNow());

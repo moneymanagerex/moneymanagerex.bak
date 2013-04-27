@@ -21,10 +21,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "testing_util.h"
 #include "util.h"
 //----------------------------------------------------------------------------
+#ifdef UTIL_TEST_INCLUDED_IN_BUILD
+
 #include <boost/unordered_map.hpp>
 #include <wx/log.h>
 //----------------------------------------------------------------------------
-#ifdef UTIL_TEST_INCLUDED_IN_BUILD
 
 namespace
 {
