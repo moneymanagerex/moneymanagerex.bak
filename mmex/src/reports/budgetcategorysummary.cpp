@@ -29,7 +29,7 @@ mmReportBudgetCategorySummary::mmReportBudgetCategorySummary(mmCoreDB* core, mmG
 , budgetYearID_(budgetYearID)
 {}
 
-wxString mmReportBudgetCategorySummary::actualAmountColour( mmBudgetEntryHolder& budEntry, bool total)
+wxString mmReportBudgetCategorySummary::actualAmountColour(const mmBudgetEntryHolder& budEntry, bool total)
 {
     wxString actAmtColStr = "black";
     if (total) {
@@ -48,7 +48,7 @@ wxString mmReportBudgetCategorySummary::actualAmountColour( mmBudgetEntryHolder&
 }
 
 // Displays Row: Category, Sub Category, Period, Amount, Estimated, Actual
-void mmReportBudgetCategorySummary::displayReportLine(mmHTMLBuilder& hb, mmBudgetEntryHolder budEntry)
+void mmReportBudgetCategorySummary::displayReportLine(mmHTMLBuilder& hb, const mmBudgetEntryHolder& budEntry)
 {
     hb.startTableRow();
     hb.addTableCell(budEntry.catStr_, false, true);
