@@ -64,10 +64,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
     double grandtotal = 0.0;
     bool ignore_date = !date_range_->is_with_date();
 
-    std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
-    for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& category: core_->categoryList_.entries_)
     {
-        const wxSharedPtr<mmCategory> category = *it;
         int categs = 0;
         bool grandtotalseparator = true;
         double categtotal = 0.0;
@@ -75,8 +73,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
         const wxString sCategName = category->categName_;
         double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignore_date
             , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
-        if (type_ == 1 && amt < 0.0) amt = 0;
-        if (type_ == 2 && amt > 0.0) amt = 0;
+        if (type_ == GOES && amt < 0.0) amt = 0;
+        if (type_ == COME && amt > 0.0) amt = 0;
 
         categtotal += amt;
         grandtotal += amt;
@@ -102,8 +100,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
             amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignore_date
                 , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
 
-            if (type_ == 1 && amt < 0.0) amt = 0;
-            if (type_ == 2 && amt > 0.0) amt = 0;
+            if (type_ == GOES && amt < 0.0) amt = 0;
+            if (type_ == COME && amt > 0.0) amt = 0;
 
             categtotal += amt;
             grandtotal += amt;
