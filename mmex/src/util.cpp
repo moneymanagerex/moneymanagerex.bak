@@ -149,9 +149,13 @@ wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_
 
 wxString format_cents(const mmex::CurrencyFormatter &f, int cents)
 {
-    wxString s = wxString() << cents << "000000";
-    s.Truncate(log10(f.getScale()));
-    s.Prepend(f.getDecimalPoint());
+    wxString s =""; 
+    if (f.getScale() >= 10)
+    {
+        s << cents << "000000";
+        s.Truncate(log10(f.getScale()));
+        s.Prepend(f.getDecimalPoint());
+    }
     return s;
 }
 //----------------------------------------------------------------------------
