@@ -21,6 +21,8 @@
 #include "../constants.h"
 #include "../htmlbuilder.h"
 #include "../util.h"
+#include <algorithm>
+
 
 mmReportTransactions::mmReportTransactions( std::vector< wxSharedPtr<mmBankTransaction> > trans,
     mmCoreDB* core, int refAccountID, mmFilterTransactionsDialog* transDialog)
@@ -28,7 +30,11 @@ mmReportTransactions::mmReportTransactions( std::vector< wxSharedPtr<mmBankTrans
 , trans_(trans)
 , refAccountID_(refAccountID)
 , transDialog_(transDialog)
-{}
+{
+    std::sort(trans_.begin(), trans_.end(),
+        [] (wxSharedPtr<mmBankTransaction> i, wxSharedPtr<mmBankTransaction> j)
+    { return (i.get()->date_ < j.get()->date_); });
+}
 
 mmReportTransactions::~mmReportTransactions()
 {
@@ -81,12 +87,11 @@ wxString mmReportTransactions::getHTMLText()
     bool transferTransactionFound = false;
     double total = 0;
 
-    for (std::vector<wxSharedPtr<mmBankTransaction> >::const_iterator it = trans_.begin();
-        it != trans_.end(); ++ it)
+    for (const auto& it: trans_)
     {
         // For transfer transactions, we need to fix the data reference point first.
-        if ( refAccountID_ > -1 && it->get()->transType_ == TRANS_TYPE_TRANSFER_STR &&
-             (refAccountID_ == it->get()->accountID_ || refAccountID_ == it->get()->toAccountID_) )
+        if ( refAccountID_ > -1 && it->transType_ == TRANS_TYPE_TRANSFER_STR &&
+             (refAccountID_ == it->accountID_ || refAccountID_ == it->toAccountID_) )
         {
             const wxSharedPtr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(refAccountID_);
             const wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
@@ -98,62 +103,62 @@ wxString mmReportTransactions::getHTMLText()
 
         // Display the data for the selected row
         hb.startTableRow();
-        hb.addTableCell(it->get()->dateStr_, false);
+        hb.addTableCell(it->dateStr_, false);
         hb.addTableCellLink(wxString::Format("TRXID:%d"
-            , it->get()->transactionID()), it->get()->fromAccountStr_, false);
-        hb.addTableCell(it->get()->payeeStr_, false, true);
-        hb.addTableCell(it->get()->status_);
-        hb.addTableCell(it->get()->fullCatStr_, false, true);
+            , it->transactionID()), it->fromAccountStr_, false);
+        hb.addTableCell(it->payeeStr_, false, true);
+        hb.addTableCell(it->status_);
+        hb.addTableCell(it->fullCatStr_, false, true);
 
-        if (it->get()->transType_ == TRANS_TYPE_DEPOSIT_STR)
+        if (it->transType_ == TRANS_TYPE_DEPOSIT_STR)
             hb.addTableCell(_("Deposit"));
-        else if (it->get()->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+        else if (it->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
         {
             hb.addTableCell(_("Withdrawal"));
             negativeTransAmount = true;
         }
-        else if (it->get()->transType_ == TRANS_TYPE_TRANSFER_STR)
+        else if (it->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             hb.addTableCell(_("Transfer"));
             if (refAccountID_ >= 0 )
             {
                 unknownnReferenceAccount = false;
-                if (it->get()->accountID_ == refAccountID_)
+                if (it->accountID_ == refAccountID_)
                     negativeTransAmount   = true;  // transfer is a withdrawl from account
             }
-            else if (it->get()->fromAccountStr_ == it->get()->payeeStr_)
+            else if (it->fromAccountStr_ == it->payeeStr_)
                 negativeTransAmount = true;
         }
 
         // Get the exchange rate for the selected account
-        double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(it->get()->accountID_);
-        double transAmount = it->get()->amt_ * dbRate;
-        if (it->get()->reportCategAmountStr_ != "")
+        double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(it->accountID_);
+        double transAmount = it->amt_ * dbRate;
+        if (it->reportCategAmountStr_ != "")
         {
-            transAmount = it->get()->reportCategAmount_ * dbRate;
-            if (it->get()->transType_ == TRANS_TYPE_WITHDRAWAL_STR && transAmount < 0)
+            transAmount = it->reportCategAmount_ * dbRate;
+            if (it->transType_ == TRANS_TYPE_WITHDRAWAL_STR && transAmount < 0)
                 negativeTransAmount = false;
-            else if (it->get()->transType_ == TRANS_TYPE_DEPOSIT_STR && transAmount < 0)
+            else if (it->transType_ == TRANS_TYPE_DEPOSIT_STR && transAmount < 0)
                 negativeTransAmount = true;
         }
 
         wxString amtColour = negativeTransAmount ? "RED" : "BLACK";
 
-        if (it->get()->reportCategAmountStr_ == "")
-            hb.addTableCell(it->get()->transAmtString_, true, false,false, amtColour);
+        if (it->reportCategAmountStr_ == "")
+            hb.addTableCell(it->transAmtString_, true, false,false, amtColour);
         else
-            hb.addTableCell(it->get()->reportCategAmountStr_, true, false,false, amtColour);
-        hb.addTableCell(it->get()->transNum_);
-        hb.addTableCell(it->get()->notes_, false, true);
+            hb.addTableCell(it->reportCategAmountStr_, true, false,false, amtColour);
+        hb.addTableCell(it->transNum_);
+        hb.addTableCell(it->notes_, false, true);
         hb.endTableRow();
 
-        if (it->get()->status_ != "V")
+        if (it->status_ != "V")
         {
-            if (it->get()->transType_ == TRANS_TYPE_DEPOSIT_STR)
+            if (it->transType_ == TRANS_TYPE_DEPOSIT_STR)
                 total += transAmount;
-            else if (it->get()->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+            else if (it->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
                 total -= transAmount;
-            else if (it->get()->transType_ == TRANS_TYPE_TRANSFER_STR)
+            else if (it->transType_ == TRANS_TYPE_TRANSFER_STR)
             {
                 transferTransactionFound = true;
                 if (negativeTransAmount)
