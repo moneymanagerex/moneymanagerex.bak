@@ -190,18 +190,7 @@ void mmReportBudget::AdjustDateForEndFinancialYear(wxDateTime& date)
     }
 }
 
-/*************************************************************************
- This is a helper class to allow access to common methods.
- *************************************************************************/
-mmCommonReportDetails::mmCommonReportDetails(mmGUIFrame* mainFrame)
-    :mmReportBudget(mainFrame)
+wxString mmReportBudget::getHTMLText()
 {
-}
-
-wxString mmCommonReportDetails::getHTMLText()
-{
-    // This method should never be called;
-    wxASSERT(true);
-
     return wxEmptyString;
 }
