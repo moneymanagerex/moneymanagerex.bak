@@ -87,18 +87,25 @@ private:
     void fillControls();
 
     mmCoreDB* core_;
-    wxComboBox* currencyNameCombo_;
-    wxStaticText* baseRateSample_;
-    wxStaticText* sampleText_;
-    wxComboBox* currencySymbolCombo_;
 
     wxArrayString currency_symbols_;
     wxArrayString currency_names_;
 
     int currencyID_;
 
-public:
-
+    wxComboBox* currencyNameCombo_;
+    wxStaticText* baseRateSample_;
+    wxStaticText* sampleText_;
+    wxComboBox* currencySymbolCombo_;
+    wxTextCtrl* baseConvRate_;
+    wxTextCtrl* pfxTx_;
+    wxTextCtrl* sfxTx_;
+    wxTextCtrl* decTx_;
+    wxTextCtrl* grpTx_;
+    wxTextCtrl* unitTx_;
+    wxTextCtrl* centTx_;
+    wxTextCtrl* scaleTx_;
+    wxTextCtrl* baseConv_;
 };
 
 #endif
