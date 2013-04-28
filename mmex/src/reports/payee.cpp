@@ -47,11 +47,9 @@ wxString mmReportPayeeExpenses::getHTMLText()
     std::pair<mmPayeeList::const_iterator, mmPayeeList::const_iterator> payee_range = core_->payeeList_.Range();
     for (mmPayeeList::const_iterator it = payee_range.first; it != payee_range.second; ++ it)
     {
-        wxString balance;
         double amt = core_->bTransactionList_.getAmountForPayee((*it)->id_,
             date_range_->is_with_date(), date_range_->start_date(), date_range_->end_date(), mmIniOptions::instance().ignoreFutureTransactions_
         );
-        mmex::formatDoubleToCurrency(amt, balance);
 
         if (amt != 0.0)
         {
@@ -72,7 +70,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
             hb.startTableRow();
             hb.addTableCell((*it)->name_, false, true);
 
-            hb.addTableCell(balance, true, true, true, (amt<0.0 ? "RED" : "BLACK"));
+            hb.addMoneyCell(amt);
             hb.endTableRow();
 		}
     }
