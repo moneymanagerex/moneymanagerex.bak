@@ -123,6 +123,7 @@ private:
     bool bgswitch_;
     wxString color0_;
     wxString color1_;
+    wxString color_table_header_;
     int font_size_;
 };
 
