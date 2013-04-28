@@ -357,13 +357,9 @@ wxString mmReportCashFlow::getHTMLText()
             dtEnd   = wxDateTime::Now().Add(wxDateSpan::Days(idx));
         }
            
-        wxString balanceStr;
         double balance = forecastOver12Months[idx] + tInitialBalance;
-        mmex::formatDoubleToCurrency(balance, balanceStr);
-        wxString diffStr;
         double diff;
         diff = (idx==0 ? 0 : forecastOver12Months[idx] - forecastOver12Months[idx-1]) ;
-        mmex::formatDoubleToCurrency(diff, diffStr);
 
         bool addSeparator = false;
         bool addSeparatorAfter = false;
@@ -395,8 +391,8 @@ wxString mmReportCashFlow::getHTMLText()
 
         hb.startTableRow();
         hb.addTableCell(dtStr, false, true);
-        hb.addTableCell(balanceStr, true, true, true, ((balance < 0) ? "RED" : "BLACK"));
-        hb.addTableCell((idx==0 ? "" : diffStr), true, true, true, (diff < 0 ? "RED" : "BLACK")) ;
+        hb.addMoneyCell(balance);
+        hb.addMoneyCell(diff);
         hb.endTableRow();
         
         // Add a separator for each month in daily cash flow report

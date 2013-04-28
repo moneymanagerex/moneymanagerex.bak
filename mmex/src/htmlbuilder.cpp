@@ -240,6 +240,13 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value, const bool& numeri
     bgswitch_ = false;
 }
 
+void mmHTMLBuilder::addMoneyCell(double amount)
+{
+    wxString balance;
+    mmex::formatDoubleToCurrency(amount, balance);
+    this->addTableCell(balance, true, true, true, amount < 0 ? "RED": "BLACK");
+}
+
 void mmHTMLBuilder::addTableCell(const wxString& value
     , const bool& numeric, const bool& italic, const bool& bold, const wxString& fontColor)
 {
