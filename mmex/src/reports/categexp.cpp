@@ -64,14 +64,13 @@ wxString mmReportCategoryExpenses::getHTMLText()
     double grandtotal = 0.0;
     bool ignore_date = !date_range_->is_with_date();
 
-    wxString sBalance = "?";
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
     for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
+        const wxSharedPtr<mmCategory> category = *it;
         int categs = 0;
         bool grandtotalseparator = true;
         double categtotal = 0.0;
-        const wxSharedPtr<mmCategory> category = *it;
         int categID = category->categID_;
         const wxString sCategName = category->categName_;
         double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignore_date
@@ -89,18 +88,14 @@ wxString mmReportCategoryExpenses::getHTMLText()
             vp.amount = amt;
             valueList.push_back(vp);
 
-            mmex::formatDoubleToCurrency(amt, sBalance);
             hb.startTableRow();
             hb.addTableCell(sCategName, false, true);
-            hb.addTableCell(sBalance, true, false, true);
+            hb.addMoneyCell(amt, false);
             hb.endTableRow();
         }
 
-        for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin()
-            ; cit != category->children_.end()
-            ; ++ cit)
+        for (const auto & sub_category: category->children_)
         {
-            const wxSharedPtr<mmCategory> sub_category = *cit;
             int subcategID = sub_category->categID_;
 
             wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);
@@ -121,10 +116,9 @@ wxString mmReportCategoryExpenses::getHTMLText()
                 vp.amount = amt;
                 valueList.push_back(vp);
 
-                mmex::formatDoubleToCurrency(amt, sBalance);
                 hb.startTableRow();
                 hb.addTableCell(sFullCategName, false, true);
-                hb.addTableCell(sBalance, true, false, true);
+                hb.addMoneyCell(amt, false);
                 hb.endTableRow();
             }
         }
