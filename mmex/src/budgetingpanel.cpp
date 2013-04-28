@@ -276,7 +276,7 @@ void mmBudgetingPanel::initVirtualListControl()
     double estExpenses = 0.0;
     double actIncome = 0.0;
     double actExpenses = 0.0;
-    mmCommonReportDetails  budgetDetails( mainFrame_);
+    mmReportBudget  budgetDetails( mainFrame_);
 
     bool evaluateTransfer = false;
     if (mainFrame_->budgetTransferTotal())

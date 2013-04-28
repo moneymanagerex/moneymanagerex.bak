@@ -68,21 +68,10 @@ public:
     /// sets the start and end dates for a budget month
     void SetBudgetMonth(wxString budgetYearStr, wxDateTime& startDate, wxDateTime& endDate);
 
+    wxString getHTMLText();
+
 protected:
     mmGUIFrame* mainFrame_;
-};
-
-
-/*************************************************************************
- Class: mmCommonReportDetails :
-        Allows access to common methods for Reports.
- *************************************************************************/
-class mmCommonReportDetails : public mmReportBudget 
-{
-public:
-    mmCommonReportDetails(mmGUIFrame* mainFrame);
-
-    wxString getHTMLText();
 };
 
 #endif // _MM_EX_REPORTBUDGETING_H_
