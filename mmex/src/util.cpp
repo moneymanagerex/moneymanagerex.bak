@@ -149,31 +149,9 @@ wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_
 
 wxString format_cents(const mmex::CurrencyFormatter &f, int cents)
 {
-    const wxChar* fmt[] = { wxT("%02d"), wxT("%01d"), wxT("%03d"), wxT("%04d") };
-
-    wxASSERT(g_def_scale == 100);
-    size_t i = 0; // "%02d" for g_def_scale
-
-    int scale = f.getScale();
-
-    if (scale >= 10000)
-    {
-        i = 3;
-    }
-    else if (scale >= 1000)
-    {
-        i = 2;
-    }
-    else if (scale < 100)
-    {
-        i = 1;
-    }
-
-    wxASSERT(i < sizeof(fmt)/sizeof(*fmt));
-
-    wxString s = f.getDecimalPoint();
-    s += wxString::Format(fmt[i], cents);
-
+    wxString s = wxString() << cents << "000000";
+    s.Truncate(log10(f.getScale()));
+    s.Prepend(f.getDecimalPoint());
     return s;
 }
 //----------------------------------------------------------------------------

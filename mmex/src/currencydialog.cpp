@@ -254,7 +254,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
     scaleTx_->GetValue().ToLong(&scal);
     if (scal <= 0)
     {
-        wxMessageDialog dlg(this, _("Scale should be greater than zero"), _("Error"), wxICON_ERROR);
+        wxMessageDialog dlg(this, _("Scale should be greater than zero"), _("Error"), wxOK|wxICON_ERROR);
         dlg.ShowModal();
         return;
     }
@@ -263,7 +263,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
     baseConvRate_->GetValue().ToDouble(&convRate);
     if (convRate < 0.0)
     {
-        wxMessageDialog dlg(this, _("Base Conversion Rate should be positive"), _("Error"), wxICON_ERROR);
+        wxMessageDialog dlg(this, _("Base Conversion Rate should be positive"), _("Error"), wxOK|wxICON_ERROR);
         dlg.ShowModal();
         return;
     }
