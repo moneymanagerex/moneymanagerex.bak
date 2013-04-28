@@ -93,7 +93,7 @@ public:
     /** Add a Table header row with link */
     void addTableHeaderRowLink(const wxString& href, const wxString& value, const int cols);
 
-    void addMoneyCell(double amount); 
+    void addMoneyCell(double amount, bool color = true); 
 
     /** Add a Cell value */
     void addTableCell(const wxString& value
