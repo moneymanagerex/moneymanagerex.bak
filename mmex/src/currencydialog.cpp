@@ -170,7 +170,6 @@ void mmCurrencyDialog::CreateControls()
     currencyNameCombo_ = new wxComboBox( this, ID_DIALOG_CURRENCY_CHOICE, "",
         wxDefaultPosition, size, currency_names_);
     itemFlexGridSizer3->Add(currencyNameCombo_, flags);
-    //currencyNameCombo_->Enable(false);
 
     currencyNameCombo_->Connect(ID_DIALOG_CURRENCY_CHOICE, wxEVT_COMMAND_COMBOBOX_SELECTED,
         wxCommandEventHandler(mmCurrencyDialog::OnCurrencyNameSelected), NULL, this);
@@ -181,44 +180,42 @@ void mmCurrencyDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, currency_symbols_);
     itemFlexGridSizer3->Add(currencySymbolCombo_, flagsExpand);
 
-#if wxCHECK_VERSION(2,9,0)
     currencyNameCombo_->AutoComplete(currency_symbols_);
-#endif
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Unit Name")), flags);
-    wxTextCtrl* itemTextCtrl15 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_UNIT, "");
-    itemFlexGridSizer3->Add(itemTextCtrl15, flagsExpand);
+    unitTx_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_UNIT, "");
+    itemFlexGridSizer3->Add(unitTx_, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Cents Name")), flags);
-    wxTextCtrl* itemTextCtrl17 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_CENTS, "");
-    itemFlexGridSizer3->Add(itemTextCtrl17, flagsExpand);
+    centTx_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_CENTS, "");
+    itemFlexGridSizer3->Add(centTx_, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Prefix Symbol")), flags);
-    wxTextCtrl* itemTextCtrl7 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_PFX, "");
-    itemFlexGridSizer3->Add(itemTextCtrl7, flagsExpand);
+    pfxTx_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_PFX, "");
+    itemFlexGridSizer3->Add(pfxTx_, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Suffix Symbol")), flags);
-    wxTextCtrl* itemTextCtrl9 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SFX, "");
-    itemFlexGridSizer3->Add(itemTextCtrl9, flagsExpand);
+    sfxTx_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SFX, "");
+    itemFlexGridSizer3->Add(sfxTx_, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Decimal Char")), flags);
-    wxTextCtrl* itemTextCtrl11 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_DECIMAL, "");
-    itemFlexGridSizer3->Add(itemTextCtrl11, flagsExpand);
+    decTx_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_DECIMAL, "");
+    itemFlexGridSizer3->Add(decTx_, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Grouping Char")), flags);
-    wxTextCtrl* itemTextCtrl13 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_GROUP, "");
-    itemFlexGridSizer3->Add(itemTextCtrl13, flagsExpand);
+    grpTx_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_GROUP, "");
+    itemFlexGridSizer3->Add(grpTx_, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Scale")), flags);
-    wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SCALE, "",
+    scaleTx_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SCALE, "",
         wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
-    itemFlexGridSizer3->Add(itemTextCtrl19, flagsExpand);
+    itemFlexGridSizer3->Add(scaleTx_, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Conversion to Base Rate")), flags);
-    wxTextCtrl* itemTextCtrl82 = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_BASECONVRATE, "",
+    baseConvRate_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_BASECONVRATE, "",
         wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
-    itemFlexGridSizer3->Add(itemTextCtrl82, flagsExpand);
-    itemTextCtrl82->SetToolTip(_("Other currency conversion rate. Set Base Currency to 1."));
+    itemFlexGridSizer3->Add(baseConvRate_, flagsExpand);
+    baseConvRate_ ->SetToolTip(_("Other currency conversion rate. Set Base Currency to 1."));
 
     //--------------------------
     wxStaticBox* itemStaticBox_02 = new wxStaticBox(this, wxID_ANY, _("Base Rate Conversion Sample:"));
