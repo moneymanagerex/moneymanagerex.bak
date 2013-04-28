@@ -93,7 +93,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     mmHTMLBuilder hb;
     hb.init();
     hb.addHeader(2, _("Budget Performance for ") + headingStr );
-    DisplayDateHeading(hb, yearBegin, yearEnd);
+    hb.DisplayDateHeading(yearBegin, yearEnd);
 
     hb.startCenter();
 

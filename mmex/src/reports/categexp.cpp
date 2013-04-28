@@ -43,8 +43,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.init();
     hb.addHeader(2, title_);
 
-    mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
+    hb.DisplayDateHeading(date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
 
     hb.startCenter();
 

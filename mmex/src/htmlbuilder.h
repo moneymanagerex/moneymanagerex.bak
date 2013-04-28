@@ -114,6 +114,7 @@ public:
     wxString getHTMLText() const { return html_; }
 
     void addHTML(const wxString& raw) { html_ += raw; }
+    void DisplayDateHeading(const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange = true);
 
 private:
     wxString html_;
