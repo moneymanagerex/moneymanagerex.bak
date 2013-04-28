@@ -24,6 +24,7 @@ mmHTMLBuilder::mmHTMLBuilder() {
     // init colors from config
     color1_ = mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX);
     color0_ = mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
+    color_table_header_ = "#d5d6de";
     // init font size from config
     font_size_ = mmIniOptions::instance().html_font_size_;
 }
@@ -223,7 +224,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, const int cols
 
 void mmHTMLBuilder::addTableHeaderRow(const wxString& value, const int cols)
 {
-    html_+= "<tr><th align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"";
+    html_+= wxString::Format("<tr><th align=\"left\" valign=\"center\" bgcolor=\"%s\"", color_table_header_);
     if(cols > 1)
         html_+= wxString::Format(" colspan=\"%d\" ", cols);
     html_+= wxString::Format("><font size=\"%d\"><b>&nbsp;", font_size_);
@@ -235,7 +236,7 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, const int cols)
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value, const bool& numeric)
 {
     html_+= numeric ? "<th nowrap align=\"right\" " : "<th align=\"left\" ";
-    html_+= " valign=\"center\" bgcolor=\"#d5d6de\">";
+    html_+= wxString::Format(" valign=\"center\" bgcolor=\"%s\">", color_table_header_);
     html_+= "<b>&nbsp;" + value + "</b></th>\n";
     bgswitch_ = false;
 }
@@ -303,7 +304,7 @@ void mmHTMLBuilder::endTableCell()
 void mmHTMLBuilder::DisplayDateHeading(const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange)
 {
     wxString todaysDate = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()));
-    todaysDate << "<br>" << "<br>";
+    todaysDate << "<br><br>";
     if (withDateRange)
     {
         todaysDate
