@@ -54,8 +54,7 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     hb.init();
     hb.addHeader(2, _("Income vs Expenses for Financial Year: ") + finYearStr );
 
-    mmCommonReportDetails dateDisplay(NULL);
-    dateDisplay.DisplayDateHeading(hb, yearBegin, yearEnd, true);
+    hb.DisplayDateHeading(yearBegin, yearEnd, true);
 
     hb.startCenter();
 

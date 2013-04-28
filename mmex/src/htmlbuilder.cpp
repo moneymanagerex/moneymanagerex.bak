@@ -293,3 +293,19 @@ void mmHTMLBuilder::endTableCell()
     html_+= "</td>\n";
 }
 
+void mmHTMLBuilder::DisplayDateHeading(const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange)
+{
+    wxString todaysDate = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()));
+    todaysDate << "<br>" << "<br>";
+    if (withDateRange)
+    {
+        todaysDate
+        << wxString::Format(_("From %s till %s")
+            , mmGetNiceDateSimpleString(startYear).Prepend("<b>").Append("</b> ")
+            , mmGetNiceDateSimpleString(endYear).Prepend("<b>").Append("</b> "));
+    }
+    this->addHeaderItalic(1, todaysDate);
+    this->addLineBreak();
+    this->addLineBreak();
+}
+

@@ -114,22 +114,6 @@ void mmReportBudget::initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id
     budEntry.actualStr_ = "0.0";
 }
 
-void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange)
-{
-    wxString todaysDate = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()));
-    todaysDate << "<br>" << "<br>";
-    if (withDateRange)
-    {
-        todaysDate
-        << wxString::Format(_("From %s till %s")
-            , mmGetNiceDateSimpleString(startYear).Prepend("<b>").Append("</b> ")
-            , mmGetNiceDateSimpleString(endYear).Prepend("<b>").Append("</b> "));
-    }
-    hb.addHeaderItalic(1, todaysDate);
-    hb.addLineBreak();
-    hb.addLineBreak();
-}
-
 void mmReportBudget::SetDateToEndOfMonth(int month, wxDateTime& date)
 {
     date.SetDay(28);
