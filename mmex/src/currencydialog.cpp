@@ -108,23 +108,14 @@ void mmCurrencyDialog::updateControls()
     wxString currencyName = currencyNameCombo_->GetStringSelection();
     wxSharedPtr<mmCurrency > pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
 
-    wxTextCtrl* pfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_PFX);
-    wxTextCtrl* sfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SFX);
-    wxTextCtrl* decTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_DECIMAL);
-    wxTextCtrl* grpTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_GROUP);
-    wxTextCtrl* unitTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_UNIT);
-    wxTextCtrl* centTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_CENTS);
-    wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
-    wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
-
-    pfxTx->SetValue(pCurrency->pfxSymbol_);
-    sfxTx->SetValue(pCurrency->sfxSymbol_);
-    decTx->SetValue(pCurrency->dec_);
-    grpTx->SetValue(pCurrency->grp_);
-    unitTx->SetValue(pCurrency->unit_);
-    centTx->SetValue(pCurrency->cent_);
-    scaleTx->SetValue(wxString() << pCurrency->scaleDl_);
-    baseConvRate->SetValue(wxString() << pCurrency->baseConv_);
+    pfxTx_->SetValue(pCurrency->pfxSymbol_);
+    sfxTx_->SetValue(pCurrency->sfxSymbol_);
+    decTx_->SetValue(pCurrency->dec_);
+    grpTx_->SetValue(pCurrency->grp_);
+    unitTx_->SetValue(pCurrency->unit_);
+    centTx_->SetValue(pCurrency->cent_);
+    scaleTx_->SetValue(wxString() << pCurrency->scaleDl_);
+    baseConvRate_->SetValue(wxString() << pCurrency->baseConv_);
     currencySymbolCombo_->SetValue(pCurrency->currencySymbol_);
 
     wxString dispAmount;
@@ -262,17 +253,8 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
 {
     wxString currencyName = currencyNameCombo_->GetValue();
 
-    wxTextCtrl* pfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_PFX);
-    wxTextCtrl* sfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SFX);
-    wxTextCtrl* decTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_DECIMAL);
-    wxTextCtrl* grpTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_GROUP);
-    wxTextCtrl* unitTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_UNIT);
-    wxTextCtrl* centTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_CENTS);
-    wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
-    wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
-
     long scal = 0;
-    scaleTx->GetValue().ToLong(&scal);
+    scaleTx_->GetValue().ToLong(&scal);
     if (scal <= 0)
     {
         wxMessageDialog dlg(this, _("Scale should be greater than zero"), _("Error"), wxICON_ERROR);
@@ -281,7 +263,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
     }
 
     double convRate = 1.0;
-    baseConvRate->GetValue().ToDouble(&convRate);
+    baseConvRate_->GetValue().ToDouble(&convRate);
     if (convRate < 0.0)
     {
         wxMessageDialog dlg(this, _("Base Conversion Rate should be positive"), _("Error"), wxICON_ERROR);
@@ -292,12 +274,12 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
     wxSharedPtr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyID_);
     //wxASSERT(pCurrency->currencyID_ == currencyID_);
 
-    pCurrency->pfxSymbol_ = pfxTx->GetValue();
-    pCurrency->sfxSymbol_ = sfxTx->GetValue();
-    pCurrency->dec_ = decTx->GetValue();
-    pCurrency->grp_ =  grpTx->GetValue();
-    pCurrency->unit_ = unitTx->GetValue();
-    pCurrency->cent_ = centTx->GetValue();
+    pCurrency->pfxSymbol_ = pfxTx_->GetValue();
+    pCurrency->sfxSymbol_ = sfxTx_->GetValue();
+    pCurrency->dec_ = decTx_->GetValue();
+    pCurrency->grp_ =  grpTx_->GetValue();
+    pCurrency->unit_ = unitTx_->GetValue();
+    pCurrency->cent_ = centTx_->GetValue();
     pCurrency->scaleDl_ = static_cast<int>(scal);
     pCurrency->baseConv_ = convRate;
     pCurrency->currencySymbol_ = currencySymbolCombo_->GetValue();
