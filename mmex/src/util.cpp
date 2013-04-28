@@ -180,32 +180,20 @@ wxString format_cents(const mmex::CurrencyFormatter &f, int cents)
 
 void DoubleToCurrency(const mmex::CurrencyFormatter &fmt, double val, wxString& rdata, bool for_edit)
 {
-    wxString s;
-    s.Alloc(32);
-
-    if (!for_edit)
-    {
-        wxString pfx = fmt.getPrefix();
-        if (!pfx.empty())
-        {
-            s += pfx;
-            s += ' ';
-        }
-    }
-
-    if (val < 0)
-        s += '-'; // "minus" sign
-
     int scale = fmt.getScale();
     double abs_val = fabs(mmRound(val*scale));
 
-    s += format_groups(fmt, mmMoneyInt(abs_val, scale), 3);
-    s += format_cents(fmt, mmCents(abs_val, scale));
+    rdata = format_groups(fmt, mmMoneyInt(abs_val, scale), 3);
+    rdata += format_cents(fmt, mmCents(abs_val, scale));
+
+    if (val < 0)
+        rdata.Prepend("-"); // "minus" sign
 
     if (!for_edit)
-        s += fmt.getSuffix();
+        rdata += fmt.getSuffix();
 
-    rdata = s;
+    if (!for_edit && !fmt.getPrefix().IsEmpty())
+        rdata.Prepend(fmt.getPrefix().Append(" "));
 }
 //----------------------------------------------------------------------------
 
