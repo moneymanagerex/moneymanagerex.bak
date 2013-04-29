@@ -2,6 +2,7 @@
 #include "cashflow.h"
 #include "../constants.h"
 #include "../htmlbuilder.h"
+#include "mmRepeat.h"
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray)
 : mmPrintableBase(core)
@@ -204,6 +205,8 @@ wxString mmReportCashFlow::getHTMLText()
 
             if (processNumRepeats && (numRepeats <=0))
                 break;
+
+//            nextOccurDate = nextOccurDate.Add(mmRepeat(repeats));
 
             if (repeats == 1)
             {
