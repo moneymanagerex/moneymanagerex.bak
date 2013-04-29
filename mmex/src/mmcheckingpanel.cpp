@@ -23,6 +23,7 @@
 #include "constants.h"
 //----------------------------------------------------------------------------
 #include <wx/srchctrl.h>
+#include <algorithm>
 //----------------------------------------------------------------------------
 
 enum EColumn
@@ -106,7 +107,8 @@ void createColumns(MMEX_IniSettings *pIniSettings, wxListCtrl &lst)
 class TransactionListCtrl : public wxListCtrl
 {
 public:
-    TransactionListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
+    TransactionListCtrl(mmCheckingPanel *cp, wxWindow *parent
+        , const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
 
     bool getSortOrder() const { return m_asc; }
     EColumn getSortColumn() const { return m_sortCol; }
@@ -705,9 +707,8 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     **********************************************************************************/
     int numTransactions = 0;
     std::vector<mmBankTransaction*> account_transPtr;
-    for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
+    for (const auto& pBankTransaction: core_->bTransactionList_.transactions_)
     {
-        wxSharedPtr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
         if (pBankTransaction->accountID_ != m_AccountID
             && (pBankTransaction->toAccountID_ != m_AccountID
             || pBankTransaction->transType_ != TRANS_TYPE_TRANSFER_STR))
@@ -719,7 +720,6 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
         account_transPtr.push_back(pBankTransaction.get());
 
         bool toAdd = true;
-//      bool getBal = false;
         
         if (transFilterActive_)
         {
@@ -761,7 +761,9 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
      Stage 2
      Sort all account transactions by date to, determine balances.
     **********************************************************************************/
-//    std::sort(account_transPtr.begin(), account_transPtr.end(), sortTransByDateAsc);
+    /*std::sort(account_transPtr.begin(), account_transPtr.end()
+        , [&] (const wxSharedPtr<mmBankTransaction>& i, const wxSharedPtr<mmBankTransaction>& j)
+        { return (i->date_ < j->date_); });*/
 
     /**********************************************************************************
      Stage 3
@@ -807,11 +809,14 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
      Find selected item and set focus to it.
     **********************************************************************************/
 
-    for (size_t i=0; i<m_trans.size(); ++i )
+    long i = 0;
+    for (const auto & pTrans : m_trans)
     {
-        if (trans_id == m_trans[i]->transactionID() && trans_id > 0) {
-            m_listCtrlAccount->m_selectedIndex = (int)i;
+        if (trans_id == pTrans->transactionID() && trans_id > 0) {
+            m_listCtrlAccount->m_selectedIndex = i;
+            break;
         }
+        ++i;
     }
 
     if (m_trans.size() > 0 && m_listCtrlAccount->m_selectedIndex < 0)
