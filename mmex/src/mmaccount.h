@@ -95,7 +95,6 @@ public:
     bool currencyInUse(int currencyID) const;
     account_v accounts_;
     typedef std::vector<wxSharedPtr<mmAccount> >::const_iterator const_iterator;
-    std::pair<const_iterator, const_iterator> range() const;
 
     /// Loads database Accounts list into memory
     void LoadAccounts(const mmCurrencyList& currencyList);

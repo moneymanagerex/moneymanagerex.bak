@@ -91,10 +91,8 @@ wxString mmReportCashFlow::getHTMLText()
     double tInitialBalance = 0.0;
     std::map<wxDateTime, double> daily_balance;
           
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->accountList_.range();
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: core_->accountList_.accounts_)
     {
-        const mmAccount* account = it->get();
         if (account->status_ == mmAccount::MMEX_Closed || account->acctType_ == ACCOUNT_TYPE_STOCK) continue;
 
         if (accountArray_) 

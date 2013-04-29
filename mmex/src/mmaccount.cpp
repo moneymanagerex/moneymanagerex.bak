@@ -255,7 +255,6 @@ wxString mmAccountList::GetAccountCurrencyName(int accountID) const
     return "";
 }
 
-
 wxSharedPtr<mmCurrency> mmAccountList::getCurrencySharedPtr(int accountID) const
 {
     int len = (int)accounts_.size();
@@ -266,12 +265,6 @@ wxSharedPtr<mmCurrency> mmAccountList::getCurrencySharedPtr(int accountID) const
     }
     wxASSERT(false);
     return wxSharedPtr<mmCurrency>();
-}
-
-std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator>
-    mmAccountList::range() const
-{
-    return std::make_pair(accounts_.begin(), accounts_.end());
 }
 
 int mmAccountList::UpdateAccount(wxSharedPtr<mmAccount> pAccount)
