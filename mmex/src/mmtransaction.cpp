@@ -363,21 +363,19 @@ double mmBankTransaction::getAmountForSplit(int categID, int subcategID) const
     double splitAmount = 0.0;
     if (splitEntries_->numEntries())
     {
-        for(size_t idx = 0; idx < splitEntries_->numEntries(); ++idx)
+        for (const auto & pSplitEntry: splitEntries_->entries_)
         {
-            if ((splitEntries_->entries_[idx]->categID_ == categID) &&
-                (splitEntries_->entries_[idx]->subCategID_ == subcategID))
+            if ((pSplitEntry->categID_ == categID) &&
+                (pSplitEntry->subCategID_ == subcategID))
             {
-                splitAmount += splitEntries_->entries_[idx]->splitAmount_;
+                splitAmount += pSplitEntry->splitAmount_;
             }
         }
-
-        return splitAmount;
     }
     else if ((categID_ == categID) &&
             (subcategID_ == subcategID))
     {
-        return amt_;
+        splitAmount = amt_;
     }
 
     return splitAmount;
