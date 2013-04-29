@@ -61,10 +61,6 @@ public:
         return entries_.size();
     }
     typedef std::vector< wxSharedPtr<mmPayee> >::const_iterator const_iterator;
-    std::pair<const_iterator, const_iterator> Range() const
-    {
-        return std::make_pair(entries_.begin(), entries_.end());
-    }
 
     /// Loads database Payees into memory
     void LoadPayees();

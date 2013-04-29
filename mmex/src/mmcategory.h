@@ -73,10 +73,6 @@ public:
     /* Public Data */
     std::vector< wxSharedPtr<mmCategory> > entries_;
     typedef std::vector< wxSharedPtr<mmCategory> >::const_iterator const_iterator;
-    std::pair<const_iterator, const_iterator> Range() const
-    {
-        return std::make_pair(entries_.begin(), entries_.end());
-    }
 
 private:
     mmCoreDB* core_;
