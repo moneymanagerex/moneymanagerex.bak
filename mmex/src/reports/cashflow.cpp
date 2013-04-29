@@ -29,20 +29,11 @@ wxString mmReportCashFlow::getHTMLText()
 
     mmHTMLBuilder hb;
     hb.init();
-    int years = -1;
-    if (cashflowreporttype_ == 0) // Monthly for 10 years
-    {
-        years =10; 
-    }
-    else if (cashflowreporttype_ == 1) // Daily for 1 year
-    {
-        years = 1;
-    }
-    
-    wxASSERT(years != -1);
+    int years = cashflowreporttype_ == 0 ? 10: 1;// Monthly for 10 years or Daily for 1 year
+
     
     wxString headerMsg = wxString::Format (_("Cash Flow Forecast for %d Years Ahead"), years);
-        hb.addHeader(2, headerMsg );
+    hb.addHeader(2, headerMsg );
     headerMsg = _("Accounts: ");
     if (accountArray_ == NULL) 
     {
@@ -298,47 +289,23 @@ wxString mmReportCashFlow::getHTMLText()
     q1.Finalize();
 
     // Now we have a vector of dates and amounts over next year
-    int fcstsz = -1;
-    std::vector<double> forecastOver12Months;
-    if (cashflowreporttype_ == 0)
-    {
-        fcstsz = 12 * years;
-    }
-    else if (cashflowreporttype_ == 1)
-    {
-        fcstsz = years * 366;
-    }
-    wxASSERT(fcstsz != -1);
-    forecastOver12Months.resize(fcstsz, 0.0);;
+    int fcstsz = cashflowreporttype_ == 0 ? 12 * years : 366 * years;
+    std::vector<double> forecastOver12Months(fcstsz, 0.0);
 
     for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
     {
         wxDateTime dtBegin = wxDateTime::Now();
-        wxDateTime dtEnd;
-        if (cashflowreporttype_ == 0)
-        {
-            dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx));
-        }
-        else if (cashflowreporttype_ == 1)
-        {
-            dtEnd   = wxDateTime::Now().Add(wxDateSpan::Days(idx));
-        }
+        wxDateTime dtEnd = cashflowreporttype_ == 0 ? wxDateTime::Now().Add(wxDateSpan::Months(idx)): wxDateTime::Now().Add(wxDateSpan::Days(idx));
 
-        for (int fcIdx = 0; fcIdx < (int)fvec.size(); fcIdx++)
-        {
-            if (fvec[fcIdx].date.IsBetween(dtBegin, dtEnd))
-                forecastOver12Months[idx] += fvec[fcIdx].amount;
-        }
-
-        for (std::map<wxDateTime, double>::const_iterator it = daily_balance.begin(); 
-                it != daily_balance.end(); 
-                ++ it)
-        {
-            if (! it->first.IsLaterThan(dtEnd))
-                forecastOver12Months[idx] += it->second;
-            else
-                break;
-        }
+		for (const auto& balance: fvec)
+		{
+			if (balance.date.IsBetween(dtBegin, dtEnd)) forecastOver12Months[idx] += balance.amount;
+		}
+		
+		for (const auto& d_balance: daily_balance)
+		{
+			if (! d_balance.first.IsLaterThan(dtEnd)) forecastOver12Months[idx] += d_balance.second;
+		}
     }
 
     core_->currencyList_.LoadBaseCurrencySettings();
@@ -348,15 +315,7 @@ wxString mmReportCashFlow::getHTMLText()
 
     for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
     {
-        wxDateTime dtEnd;
-        if (cashflowreporttype_ == 0)
-        {
-            dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx));
-        }
-        else if (cashflowreporttype_ == 1)
-        {
-            dtEnd   = wxDateTime::Now().Add(wxDateSpan::Days(idx));
-        }
+		wxDateTime dtEnd = cashflowreporttype_ == 0 ? wxDateTime::Now().Add(wxDateSpan::Months(idx)): wxDateTime::Now().Add(wxDateSpan::Days(idx));
            
         double balance = forecastOver12Months[idx] + tInitialBalance;
         double diff;
