@@ -682,44 +682,6 @@ void mmCheckingPanel::setAccountSummary()
 }
 //----------------------------------------------------------------------------
 
-typedef wxSharedPtr<mmBankTransaction> TransactionPtr;
-struct TransactionPtr_Matcher
-{
-    virtual ~TransactionPtr_Matcher() {}
-    virtual bool Match(const TransactionPtr&) = 0;
-};
-typedef wxSharedPtr<TransactionPtr_Matcher> TransactionPtr_MatcherPtr;
-
-template <class EqualTraits = std::equal_to<wxString> >
-class MatchTransaction_Status: public TransactionPtr_Matcher
-{
-    wxString m_name;
-    EqualTraits m_equalTraits;
-
-public:
-    MatchTransaction_Status(wxString n): m_name(n) {}
-
-    bool Match(const TransactionPtr& pTrans)
-    {
-        return m_equalTraits(pTrans->status_, m_name);
-    }
-};
-
-template <typename DateTimeProvider>
-class MatchTransaction_DateTime: public TransactionPtr_Matcher
-{
-public:
-    bool Match(const TransactionPtr& pTrans)
-    {
-        wxASSERT(pTrans);
-        wxDateTime startRange = DateTimeProvider::StartRange();
-        wxDateTime endRange = DateTimeProvider::EndRange();
-        // ::OutputDebugStringW(("- start: " + startRange.Format(L"%x %X") + ", end: " + endRange.Format(L"%x %X") + "\r\n"));
-        return pTrans->date_.IsBetween(startRange, endRange);
-    }
-};
-//---------------------------------------------------------------------------
-
 void mmCheckingPanel::initVirtualListControl(const int trans_id)
 {
     // clear everything

@@ -102,11 +102,9 @@ void mmCategDialog::fillControls()
     bool bResult = core_->iniSettings_->GetBoolSetting("SHOW_HIDDEN_CATEGS", true);
     cbShowAll_->SetValue(bResult);
 
-    std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
-    for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& category: core_->categoryList_.entries_)
     {
         wxTreeItemId maincat;
-        const wxSharedPtr<mmCategory> category = *it;
         bool bShow = categShowStatus(category->categID_, -1);
         if (cbShowAll_->IsChecked() || bShow)
         {

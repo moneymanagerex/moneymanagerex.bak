@@ -306,11 +306,8 @@ void mmBudgetingPanel::initVirtualListControl()
 
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->categoryList_.Range();
-    for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& category: core_->categoryList_.entries_)
     {
-        const wxSharedPtr<mmCategory> category = *it;
-
         mmBudgetEntryHolder th;
         budgetDetails.initBudgetEntryFields(th, budgetYearID_);
         th.categID_ = category->categID_;

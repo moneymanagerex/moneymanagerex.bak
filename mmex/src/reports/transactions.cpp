@@ -32,8 +32,8 @@ mmReportTransactions::mmReportTransactions( std::vector< wxSharedPtr<mmBankTrans
 , transDialog_(transDialog)
 {
     std::sort(trans_.begin(), trans_.end(),
-        [] (wxSharedPtr<mmBankTransaction> i, wxSharedPtr<mmBankTransaction> j)
-    { return (i.get()->date_ < j.get()->date_); });
+        [&] (const wxSharedPtr<mmBankTransaction>& i, const wxSharedPtr<mmBankTransaction>& j)
+    { return (i->date_ < j->date_); });
 }
 
 mmReportTransactions::~mmReportTransactions()
