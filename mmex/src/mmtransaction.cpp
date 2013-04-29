@@ -293,7 +293,7 @@ double mmBankTransaction::value(int accountID) const
        balance -= amt_;
     else if (transType_ == TRANS_TYPE_TRANSFER_STR)
     {
-      //Bug fix for brocken transactions (as result of wrong import) if account and to account the same
+      //Bug fix for broken transactions (as result of wrong import) if account and to account the same
         if (accountID_ != toAccountID_)
         {
             if (accountID_ == accountID)
@@ -337,21 +337,25 @@ void mmBankTransaction::getSplitTransactions(mmSplitTransactionEntries* splits) 
 
 bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignoreSubCateg) const
 {
-    if (splitEntries_->numEntries())
+    bool found = false;
+    if (!splitEntries_->numEntries())
     {
-        for(size_t idx = 0; idx < splitEntries_->numEntries(); ++idx)
+        found = (categID_ == categID) && (subcategID_ == subcategID || ignoreSubCateg);
+    }
+    else
+    {
+        for (const auto & pSplitEntry: splitEntries_->entries_)
         {
-            if ((splitEntries_->entries_[idx]->categID_ == categID) &&
-                ((ignoreSubCateg) || splitEntries_->entries_[idx]->subCategID_ == subcategID))
+            if ((pSplitEntry->categID_ == categID) &&
+                ((ignoreSubCateg) || pSplitEntry->subCategID_ == subcategID))
             {
-                return true;
+                found = true;
+                break;
             }
         }
     }
-    else if (categID_ == categID)
-        return (subcategID_ == subcategID || ignoreSubCateg);
 
-    return false;
+    return found;
 }
 
 double mmBankTransaction::getAmountForSplit(int categID, int subcategID) const
@@ -880,30 +884,30 @@ double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate,
     double amt = 0.0;
     for (const auto & pBankTransaction: transactions_)
     {
-		if (pBankTransaction->payeeID_ == payeeID)
-		{
-			if (pBankTransaction->status_ == "V")
-			{
-				continue; // skip
-			}
-			if (ignoreFuture)
-			{
-				if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
-					continue; //skip future dated transactions
-			}
-			if (!ignoreDate)
-			{
-				if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-					continue; //skip
-			}
+        if (pBankTransaction->payeeID_ == payeeID)
+        {
+            if (pBankTransaction->status_ == "V")
+            {
+                continue; // skip
+            }
+            if (ignoreFuture)
+            {
+                if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                    continue; //skip future dated transactions
+            }
+            if (!ignoreDate)
+            {
+                if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                    continue; //skip
+            }
 
-			if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-				continue;
+            if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+                continue;
 
-			double convRate = core_->accountList_.getAccountBaseCurrencyConvRate(pBankTransaction->accountID_);
+            double convRate = core_->accountList_.getAccountBaseCurrencyConvRate(pBankTransaction->accountID_);
 
-			amt += pBankTransaction->value(-1) * convRate;
-		}
+            amt += pBankTransaction->value(-1) * convRate;
+        }
     }
 
     return amt;
@@ -929,8 +933,8 @@ double mmBankTransactionList::getAmountForCategory(
         if (pBankTransaction->status_ == "V") continue;
         if (!ignoreDate)
         {
-	        if (!pBankTransaction->date_.GetDateOnly().IsBetween(dtBegin, dtEnd)) continue;
-		}
+            if (!pBankTransaction->date_.GetDateOnly().IsBetween(dtBegin, dtEnd)) continue;
+        }
         if (ignoreFuture)
         {
             //skip future dated transactions
@@ -972,20 +976,20 @@ double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture) const
     wxDateTime now = wxDateTime::Now().GetDateOnly();
     for (const auto & pBankTransaction: transactions_)
     {
-		if ((pBankTransaction->accountID_ != accountID)
-		   && (pBankTransaction->toAccountID_ != accountID))
-			continue; // skip
+        if ((pBankTransaction->accountID_ != accountID)
+           && (pBankTransaction->toAccountID_ != accountID))
+            continue; // skip
 
-		if (pBankTransaction->status_ == "V")
-			continue; // skip
+        if (pBankTransaction->status_ == "V")
+            continue; // skip
 
-		if (ignoreFuture)
-		{
-			if (pBankTransaction->date_.IsLaterThan(now))
-				continue; //skip future dated transactions
-		}
+        if (ignoreFuture)
+        {
+            if (pBankTransaction->date_.IsLaterThan(now))
+                continue; //skip future dated transactions
+        }
 
-		balance += pBankTransaction->value(accountID);
+        balance += pBankTransaction->value(accountID);
     }
 
     return balance;
@@ -997,19 +1001,19 @@ bool mmBankTransactionList::getDailyBalance(const mmCoreDB* core, int accountID,
     double convRate = core->accountList_.getAccountBaseCurrencyConvRate(accountID);
     for (const auto & pBankTransaction: transactions_)
     {
-		if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
-			continue; // skip
+        if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
+            continue; // skip
 
-		if (pBankTransaction->status_ == "V")
-			continue; // skip
+        if (pBankTransaction->status_ == "V")
+            continue; // skip
 
-		if (ignoreFuture)
-		{
-			if (pBankTransaction->date_.IsLaterThan(now))
-				continue; //skip future dated transactions
-		}
+        if (ignoreFuture)
+        {
+            if (pBankTransaction->date_.IsLaterThan(now))
+                continue; //skip future dated transactions
+        }
 
-		daily_balance[pBankTransaction->date_] += pBankTransaction->value(accountID) * convRate;
+        daily_balance[pBankTransaction->date_] += pBankTransaction->value(accountID) * convRate;
     }
 
     return true;
@@ -1020,19 +1024,19 @@ double mmBankTransactionList::getReconciledBalance(int accountID, bool ignoreFut
     double balance = 0.0;
     for (const auto & pBankTransaction: transactions_)
     {
-		if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
-			continue; // skip
+        if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
+            continue; // skip
 
-		if (ignoreFuture)
-		{
-			if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
-				continue; //skip future dated transactions
-		}
+        if (ignoreFuture)
+        {
+            if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                continue; //skip future dated transactions
+        }
 
-		if (pBankTransaction->status_ != "R")
-			continue; // skip
+        if (pBankTransaction->status_ != "R")
+            continue; // skip
 
-		balance += pBankTransaction->value(accountID);
+        balance += pBankTransaction->value(accountID);
     }
 
     return balance;
@@ -1043,10 +1047,10 @@ int mmBankTransactionList::countFollowupTransactions() const
     int numFollowup = 0;
     for (const auto & pBankTransaction: transactions_)
     {
-		if (pBankTransaction->status_ != "F")
-			continue; // skip
+        if (pBankTransaction->status_ != "F")
+            continue; // skip
 
-		numFollowup++;
+        numFollowup++;
     }
     return numFollowup;
 }
@@ -1204,7 +1208,7 @@ void mmBankTransactionList::ChangeDateFormat()
 {
     for (const auto & pBankTransaction: transactions_)
     {
-		pBankTransaction->dateStr_ = (pBankTransaction->date_).Format(mmOptions::instance().dateFormat_);
+        pBankTransaction->dateStr_ = (pBankTransaction->date_).Format(mmOptions::instance().dateFormat_);
     }
 }
 
