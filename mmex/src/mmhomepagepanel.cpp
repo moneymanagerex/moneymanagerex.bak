@@ -203,19 +203,16 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
 
     // Get account balances and display accounts if we want them displayed
     wxString vAccts = core_->iniSettings_->GetStringSetting("VIEWACCOUNTS", "ALL");
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->accountList_.range();
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: core_->accountList_.accounts_)
     {
-        mmAccount* pCA = it->get();
+        if (account->acctType_ != ACCOUNT_TYPE_BANK || account->status_ == mmAccount::MMEX_Closed) continue;
 
-        if (pCA->acctType_ != ACCOUNT_TYPE_BANK || pCA->status_ == mmAccount::MMEX_Closed) continue;
-
-        wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(pCA->id_);
+        wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-        double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
-        double reconciledBal = pCA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+        double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+        double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
         double rate = pCurrencyPtr->baseConv_;
         tBalance += bal * rate; // actual amount in that account in the original rate
         tRecBalance += reconciledBal * rate;
@@ -226,7 +223,7 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
         if ( frame_->expandedBankAccounts()
             || (!frame_->expandedBankAccounts() && !frame_->expandedTermAccounts()) )
         {
-            core_->bTransactionList_.getExpensesIncome(core_, pCA->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
+            core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
             // show the actual amount in that account
             wxString balanceStr;
@@ -234,13 +231,13 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
             mmex::formatDoubleToCurrency(bal, balanceStr);
             mmex::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
 
-            if (((vAccts == "Open" && pCA->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == "Favorites" && pCA->favoriteAcct_) ||
+            if (((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == "Favorites" && account->favoriteAcct_) ||
                 (vAccts == "ALL"))
                 && frame_->expandedBankAccounts())
             {
                 hb.startTableRow();
-                hb.addTableCellLink(wxString::Format("ACCT:%d", pCA->id_), pCA->name_, false, true);
+                hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_), account->name_, false, true);
                 hb.addTableCell(reconciledBalanceStr, true);
                 hb.addTableCell(balanceStr, true);
                 hb.endTableRow();
@@ -278,18 +275,16 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
 
     // Get account balances and add to totals, and display accounts if we want them displayed
     wxString vAccts = core_->iniSettings_->GetStringSetting("VIEWACCOUNTS", "ALL");
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->accountList_.range();
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: core_->accountList_.accounts_)
     {
-        const mmAccount* pTA= it->get();
-        if (pTA && pTA->status_== mmAccount::MMEX_Open && pTA->acctType_ == ACCOUNT_TYPE_TERM)
+        if (account && account->status_== mmAccount::MMEX_Open && account->acctType_ == ACCOUNT_TYPE_TERM)
         {
-            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(pTA->id_);
+            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
-            double reconciledBal = pTA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pTA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+            double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+            double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
             double rate = pCurrencyPtr->baseConv_;
             tTermBalance += bal * rate; // actual amount in that account in the original rate
             tRecBalance  += reconciledBal * rate;
@@ -299,7 +294,7 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
             {
                 double income = 0;
                 double expenses = 0;
-                core_->bTransactionList_.getExpensesIncome(core_, pTA->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
+                core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
                 // show the actual amount in that account
                 wxString balanceStr;
@@ -307,12 +302,12 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
                 mmex::formatDoubleToCurrency(bal, balanceStr);
                 mmex::formatDoubleToCurrency(reconciledBal, reconciledBalStr);
 
-                if ((vAccts == "Open" && pTA->status_ == mmAccount::MMEX_Open) ||
-                    (vAccts == "Favorites" && pTA->favoriteAcct_) ||
+                if ((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
+                    (vAccts == "Favorites" && account->favoriteAcct_) ||
                     (vAccts == "ALL"))
                 {
                     hb.startTableRow();
-                    hb.addTableCellLink(wxString::Format("ACCT:%d", pTA->id_), pTA->name_, false, true);
+                    hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_), account->name_, false, true);
                     hb.addTableCell(reconciledBalStr, true);
                     hb.addTableCell(balanceStr, true);
                     hb.endTableRow();

@@ -45,16 +45,13 @@ wxString mmReportSummary::getHTMLText()
     hb.endTableRow();
 
     /* Checking */
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->accountList_.range();
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: core_->accountList_.accounts_)
     {
-        const mmAccount* pCA = it->get();
-
-        if (pCA->acctType_ == ACCOUNT_TYPE_BANK && pCA->status_ == mmAccount::MMEX_Open)
+        if (account->acctType_ == ACCOUNT_TYPE_BANK && account->status_ == mmAccount::MMEX_Open)
         {
-            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+            double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
 
-            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(pCA->id_);
+            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             double rate = pCurrencyPtr->baseConv_;
@@ -65,7 +62,7 @@ wxString mmReportSummary::getHTMLText()
             mmex::formatDoubleToCurrency(bal, balance);
 
             hb.startTableRow();
-            hb.addTableCellLink(wxString::Format("ACCT:%d", pCA->id_),pCA->name_, false, true);
+            hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_),account->name_, false, true);
             hb.addTableCell(balance, true);
             hb.endTableRow();
         }
@@ -86,15 +83,13 @@ wxString mmReportSummary::getHTMLText()
     /* Terms */
     double tTBalance = 0.0;
 
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: core_->accountList_.accounts_)
     {
-        const mmAccount* pTA = it->get();
-
-        if (pTA->status_== mmAccount::MMEX_Open && pTA->acctType_ == ACCOUNT_TYPE_TERM)
+        if (account->status_== mmAccount::MMEX_Open && account->acctType_ == ACCOUNT_TYPE_TERM)
         {
-            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+            double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
 
-            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(pTA->id_);
+            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             double rate = pCurrencyPtr->baseConv_;
@@ -105,7 +100,7 @@ wxString mmReportSummary::getHTMLText()
             mmex::formatDoubleToCurrency(bal, balance);
 
             hb.startTableRow();
-            hb.addTableCellLink(wxString::Format("ACCT:%d", pTA->id_),pTA->name_, false, true);
+            hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_),account->name_, false, true);
             hb.addTableCell(balance, true);
             hb.endTableRow();
         }

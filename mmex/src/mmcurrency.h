@@ -76,10 +76,6 @@ public:
     std::vector< wxSharedPtr<mmCurrency> > currencies_;
 
     typedef std::vector< wxSharedPtr<mmCurrency> >::const_iterator const_iterator;
-    std::pair<const_iterator, const_iterator> range() const
-    { 
-        return std::make_pair(currencies_.begin(), currencies_.end());
-    }
    
 private:
     wxSharedPtr<wxSQLite3Database> db_;

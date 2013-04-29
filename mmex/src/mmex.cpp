@@ -1621,47 +1621,42 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     wxString vAccts = m_inisettings->GetStringSetting("VIEWACCOUNTS", "ALL");
 
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->accountList_.range();
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: m_core->accountList_.accounts_)
     {
-        const mmAccount* account = it->get();
         // Checking/Bank Accounts
         if (account->acctType_ == ACCOUNT_TYPE_BANK)
         {
-            const mmAccount* pCA = account;
-            if ((vAccts == "Open" && pCA->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == "Favorites" && pCA->favoriteAcct_) ||
+            if ((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == "Favorites" && account->favoriteAcct_) ||
                 (vAccts == "ALL"))
             {
-                int selectedImage = mmIniOptions::instance().account_image_id(m_core.get(), pCA->id_);
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, pCA->name_, selectedImage, selectedImage);
-                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pCA->id_, false));
+                int selectedImage = mmIniOptions::instance().account_image_id(m_core.get(), account->id_);
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, account->name_, selectedImage, selectedImage);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(account->id_, false));
             }
         }
         // Term Accounts
         else if (account->acctType_ == ACCOUNT_TYPE_TERM)
         {
-           const mmAccount* pTA = account;
-            if ((vAccts == "Open" && pTA->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == "Favorites" && pTA->favoriteAcct_) ||
+            if ((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == "Favorites" && account->favoriteAcct_) ||
                 (vAccts == "ALL"))
             {
-                int selectedImage = mmIniOptions::instance().account_image_id(m_core.get(), pTA->id_);
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, pTA->name_, selectedImage, selectedImage);
-                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pTA->id_, false));
+                int selectedImage = mmIniOptions::instance().account_image_id(m_core.get(), account->id_);
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, account->name_, selectedImage, selectedImage);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(account->id_, false));
             }
         }
         // Stock Accounts
         else //if (account->acctType_ == ACCOUNT_TYPE_STOCK)
         {
-            const mmAccount* pIA = account;
-            if ((vAccts == "Open" && pIA->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == "Favorites" && pIA->favoriteAcct_) ||
+            if ((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == "Favorites" && account->favoriteAcct_) ||
                 (vAccts == "ALL"))
             {
-                int selectedImage = mmIniOptions::instance().account_image_id(m_core.get(), pIA->id_);
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->name_, selectedImage, selectedImage);
-                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->id_, false));
+                int selectedImage = mmIniOptions::instance().account_image_id(m_core.get(), account->id_);
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, account->name_, selectedImage, selectedImage);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(account->id_, false));
             }
         }
     }
@@ -3191,11 +3186,8 @@ wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
 {
     wxArrayString accountArray;
 
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->accountList_.range();
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: m_core->accountList_.accounts_)
     {
-        const mmAccount* account = it->get();
-
         if (account->acctType_ == ACCOUNT_TYPE_BANK || (withTermAccounts && account->acctType_ == ACCOUNT_TYPE_TERM))
             accountArray.Add(account->name_);
     }
@@ -3676,11 +3668,9 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
     wxArrayString as;
     std::vector<int> arrAcctID;
 
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->accountList_.range();
     int idx = 0;
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: m_core->accountList_.accounts_)
     {
-        const mmAccount* account = it->get();
         as.Add(account->name_);
         arrAcctID[idx ++] = account->id_;
     }
@@ -3717,11 +3707,9 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
     int num = (int)m_core->accountList_.accounts_.size();
     int* arrAcctID = new int[num];
 
-    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->accountList_.range();
     int idx = 0;
-    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: m_core->accountList_.accounts_)
     {
-        const mmAccount* account = it->get();
         as.Add(account->name_);
         arrAcctID[idx ++] = account->id_;
     }

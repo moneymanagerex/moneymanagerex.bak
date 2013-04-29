@@ -87,11 +87,10 @@ void mmMainCurrencyDialog::fillControls()
     currencyListBox_->DeleteAllItems();
     int baseCurrencyID = core_->currencyList_.GetBaseCurrencySettings();
 
-    std::pair<mmCurrencyList::const_iterator, mmCurrencyList::const_iterator> range = core_->currencyList_.range();
     int idx = 0;
-    for(mmCurrencyList::const_iterator it = range.first; it != range.second; ++ it)
+    for (const auto& account: core_->currencyList_.currencies_)
     {
-        int currencyID         = (*it)->currencyID_;
+        int currencyID = account->currencyID_;
 
         wxListItem item;
         item.SetId(idx);
@@ -101,10 +100,10 @@ void mmMainCurrencyDialog::fillControls()
         wxString mnemo_sign = "";
         if (baseCurrencyID == currencyID) mnemo_sign = "X";
         else if (core_->accountList_.currencyInUse(currencyID)) mnemo_sign = "..";
-        currencyListBox_->SetItem(idx, 0, (*it)->currencySymbol_);
-        currencyListBox_->SetItem(idx, 1, (*it)->currencyName_);
+        currencyListBox_->SetItem(idx, 0, account->currencySymbol_);
+        currencyListBox_->SetItem(idx, 1, account->currencyName_);
         currencyListBox_->SetItem(idx, 2, mnemo_sign);
-        currencyListBox_->SetItem(idx++, 3, wxString()<<(*it)->baseConv_);
+        currencyListBox_->SetItem(idx++, 3, wxString()<<account->baseConv_);
     }
 
     if (idx>0)
