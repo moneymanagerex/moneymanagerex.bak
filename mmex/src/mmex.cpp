@@ -1893,11 +1893,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
             AddPendingEvent(evt);
         }
-        else if (sData == "Assets")
-        {
-            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
-            AddPendingEvent(evt);
-        }
         else
         {
             createReportsPage(iData->get_report());
