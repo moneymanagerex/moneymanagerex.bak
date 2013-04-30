@@ -34,6 +34,7 @@ mmReportTransactions::mmReportTransactions( std::vector< std::shared_ptr<mmBankT
     std::sort(trans_.begin(), trans_.end(),
         [&] (const std::shared_ptr<mmBankTransaction>& i, const std::shared_ptr<mmBankTransaction>& j)
     { return (i->date_ < j->date_); });
+// TODO
 }
 
 mmReportTransactions::~mmReportTransactions()
