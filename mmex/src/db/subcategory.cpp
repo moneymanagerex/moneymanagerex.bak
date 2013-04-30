@@ -79,7 +79,7 @@ void TSubCategoryEntry::Update(wxSQLite3Database* db)
  TSubCategoryList Methods
  ***********************************************************************************/
 /// Constructor
-TSubCategoryList::TSubCategoryList(wxSharedPtr<wxSQLite3Database> db, int cat_id)
+TSubCategoryList::TSubCategoryList(std::shared_ptr<wxSQLite3Database> db, int cat_id)
 : TListBase(db)
 {
     LoadEntries(cat_id);
@@ -107,7 +107,7 @@ void TSubCategoryList::LoadEntries(int cat_id)
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
-            wxSharedPtr<TSubCategoryEntry> pSubCategory(new TSubCategoryEntry(q1));
+            std::shared_ptr<TSubCategoryEntry> pSubCategory(new TSubCategoryEntry(q1));
             entrylist_.push_back(pSubCategory);
         }
         q1.Finalize();
@@ -129,7 +129,7 @@ int TSubCategoryList::AddEntry(int cat_id, const wxString& name)
     }
     else
     {
-        wxSharedPtr<TSubCategoryEntry> pSubCategory(new TSubCategoryEntry(cat_id, name));
+        std::shared_ptr<TSubCategoryEntry> pSubCategory(new TSubCategoryEntry(cat_id, name));
         entrylist_.push_back(pSubCategory);
         subcat_id = pSubCategory->Add(db_.get());
     }
@@ -139,7 +139,7 @@ int TSubCategoryList::AddEntry(int cat_id, const wxString& name)
 
 void TSubCategoryList::UpdateEntry(int cat_id, int subcat_id, const wxString& new_category)
 {
-    wxSharedPtr<TSubCategoryEntry> pSubCategory = GetEntryPtr(cat_id, subcat_id);
+    std::shared_ptr<TSubCategoryEntry> pSubCategory = GetEntryPtr(cat_id, subcat_id);
     pSubCategory->name_ = new_category;
     pSubCategory->Update(db_.get());
 }
@@ -147,14 +147,14 @@ void TSubCategoryList::UpdateEntry(int cat_id, int subcat_id, const wxString& ne
 /// Note: At this level, no checking is done for usage in other tables.
 void TSubCategoryList::DeleteEntry(int cat_id, int subcat_id)
 {
-    wxSharedPtr<TSubCategoryEntry> pSubCatEntry = GetEntryPtr(cat_id, subcat_id);
+    std::shared_ptr<TSubCategoryEntry> pSubCatEntry = GetEntryPtr(cat_id, subcat_id);
     pSubCatEntry->Delete(db_.get());
     entrylist_.erase(entrylist_.begin() + current_index_);    
 }
 
-wxSharedPtr<TSubCategoryEntry> TSubCategoryList::GetEntryPtr(int cat_id, int subcat_id)
+std::shared_ptr<TSubCategoryEntry> TSubCategoryList::GetEntryPtr(int cat_id, int subcat_id)
 {
-    wxSharedPtr<TSubCategoryEntry> pSubCatEntry;
+    std::shared_ptr<TSubCategoryEntry> pSubCatEntry;
     size_t index = 0;
     bool searching = entrylist_.size() != 0;
     while (searching && index < entrylist_.size())
@@ -172,9 +172,9 @@ wxSharedPtr<TSubCategoryEntry> TSubCategoryList::GetEntryPtr(int cat_id, int sub
     return pSubCatEntry;
 }
 
-wxSharedPtr<TSubCategoryEntry> TSubCategoryList::GetEntryPtr(int cat_id, const wxString& name)
+std::shared_ptr<TSubCategoryEntry> TSubCategoryList::GetEntryPtr(int cat_id, const wxString& name)
 {
-    wxSharedPtr<TSubCategoryEntry> pSubCatEntry;
+    std::shared_ptr<TSubCategoryEntry> pSubCatEntry;
     size_t index = 0;
     bool searching = entrylist_.size() != 0;
     while (searching && index < entrylist_.size())
@@ -195,7 +195,7 @@ wxSharedPtr<TSubCategoryEntry> TSubCategoryList::GetEntryPtr(int cat_id, const w
 int TSubCategoryList::GetSubCategoryId(int cat_id, const wxString& name)
 {
     int subcat_id = -1;
-    wxSharedPtr<TSubCategoryEntry> pSubCatEntry = GetEntryPtr(cat_id, name);
+    std::shared_ptr<TSubCategoryEntry> pSubCatEntry = GetEntryPtr(cat_id, name);
     if (pSubCatEntry)
     {
         subcat_id = pSubCatEntry->GetId();
@@ -208,7 +208,7 @@ int TSubCategoryList::GetSubCategoryId(int cat_id, const wxString& name)
 wxString TSubCategoryList::GetSubCategoryName(int cat_id, int subcat_id)
 {
     wxString subcat_name;
-    wxSharedPtr<TSubCategoryEntry> pSubCatEntry = GetEntryPtr(cat_id, subcat_id);
+    std::shared_ptr<TSubCategoryEntry> pSubCatEntry = GetEntryPtr(cat_id, subcat_id);
     if (pSubCatEntry)
     {
         subcat_name = pSubCatEntry->name_;

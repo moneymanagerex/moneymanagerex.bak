@@ -106,7 +106,7 @@ void mmCurrencyDialog::fillControls()
 void mmCurrencyDialog::updateControls()
 {
     wxString currencyName = currencyNameCombo_->GetStringSelection();
-    wxSharedPtr<mmCurrency > pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
+    std::shared_ptr<mmCurrency > pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
 
     pfxTx_->SetValue(pCurrency->pfxSymbol_);
     sfxTx_->SetValue(pCurrency->sfxSymbol_);
@@ -268,7 +268,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
         return;
     }
 
-    wxSharedPtr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyID_);
+    std::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyID_);
     //wxASSERT(pCurrency->currencyID_ == currencyID_);
 
     pCurrency->pfxSymbol_ = pfxTx_->GetValue();

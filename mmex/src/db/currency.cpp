@@ -144,7 +144,7 @@ void TCurrencyEntry::SetCurrencySettings()
  TCurrencyList Methods
  ***********************************************************************************/
 /// Constructor
-TCurrencyList::TCurrencyList(wxSharedPtr<wxSQLite3Database> db)
+TCurrencyList::TCurrencyList(std::shared_ptr<wxSQLite3Database> db)
 : TListBase(db)
 , basecurrency_id_(-1)
 {
@@ -173,7 +173,7 @@ void TCurrencyList::LoadEntries()
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(SQL_SELECT_CURRENCYFORMAT);
         while (q1.NextRow())
         {
-            wxSharedPtr<TCurrencyEntry> pEntry(new TCurrencyEntry(q1));
+            std::shared_ptr<TCurrencyEntry> pEntry(new TCurrencyEntry(q1));
             entrylist_.push_back(pEntry);
         }
         q1.Finalize();
@@ -194,7 +194,7 @@ int TCurrencyList::AddEntry(TCurrencyEntry* pCurrencyEntry)
     }
     else
     {
-        wxSharedPtr<TCurrencyEntry> pEntry(pCurrencyEntry);
+        std::shared_ptr<TCurrencyEntry> pEntry(pCurrencyEntry);
         entrylist_.push_back(pEntry);
         pEntry->Add(ListDatabase());
 
@@ -206,7 +206,7 @@ int TCurrencyList::AddEntry(TCurrencyEntry* pCurrencyEntry)
 
 void TCurrencyList::SetBaseCurrency(int currency_id)
 {
-    wxSharedPtr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
+    std::shared_ptr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
     if (pEntry)
     {
         basecurrency_id_ = currency_id;
@@ -221,7 +221,7 @@ void TCurrencyList::SetBaseCurrency(int currency_id)
 
 void TCurrencyList::DeleteEntry(int currency_id)
 {
-    wxSharedPtr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
+    std::shared_ptr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -236,9 +236,9 @@ void TCurrencyList::DeleteEntry(const wxString& name, bool is_symbol)
 
 //-----------------------------------------------------------------------------
 
-wxSharedPtr<TCurrencyEntry> TCurrencyList::GetEntryPtr(int currency_id)
+std::shared_ptr<TCurrencyEntry> TCurrencyList::GetEntryPtr(int currency_id)
 {
-    wxSharedPtr<TCurrencyEntry> pEntry;
+    std::shared_ptr<TCurrencyEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -256,9 +256,9 @@ wxSharedPtr<TCurrencyEntry> TCurrencyList::GetEntryPtr(int currency_id)
     return pEntry;
 }
 
-wxSharedPtr<TCurrencyEntry> TCurrencyList::GetEntryPtr(const wxString& name, bool is_symbol)
+std::shared_ptr<TCurrencyEntry> TCurrencyList::GetEntryPtr(const wxString& name, bool is_symbol)
 {
-    wxSharedPtr<TCurrencyEntry> pEntry;
+    std::shared_ptr<TCurrencyEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
     bool found = false;
@@ -287,7 +287,7 @@ wxSharedPtr<TCurrencyEntry> TCurrencyList::GetEntryPtr(const wxString& name, boo
     return pEntry;
 }
 
-wxSharedPtr<TCurrencyEntry> TCurrencyList::GetIndexedEntryPtr(int index)
+std::shared_ptr<TCurrencyEntry> TCurrencyList::GetIndexedEntryPtr(int index)
 {
     return entrylist_[index];
 }
@@ -295,7 +295,7 @@ wxSharedPtr<TCurrencyEntry> TCurrencyList::GetIndexedEntryPtr(int index)
 int TCurrencyList::GetCurrencyId(const wxString& name, bool is_symbol)
 {
     int currency_id = -1;
-    wxSharedPtr<TCurrencyEntry> pEntry = GetEntryPtr(name, is_symbol);
+    std::shared_ptr<TCurrencyEntry> pEntry = GetEntryPtr(name, is_symbol);
     if (pEntry)
     {
         currency_id = pEntry->GetId();
@@ -307,7 +307,7 @@ int TCurrencyList::GetCurrencyId(const wxString& name, bool is_symbol)
 wxString TCurrencyList::GetCurrencyName(int currency_id)
 {
     wxString currency_name;
-    wxSharedPtr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
+    std::shared_ptr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
     if (pEntry)
     {
         currency_name = pEntry->name_;

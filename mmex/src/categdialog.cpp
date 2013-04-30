@@ -112,11 +112,11 @@ void mmCategDialog::fillControls()
             treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));
             if (!bShow) treeCtrl_->SetItemTextColour(maincat, wxColour("GREY"));
 
-            for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin();
+            for (std::vector<std::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
                     cit != category->children_.end();
                     ++ cit)
             {
-                const wxSharedPtr<mmCategory> sub_category = *cit;
+                const std::shared_ptr<mmCategory> sub_category = *cit;
                 bShow = categShowStatus(category->categID_, sub_category->categID_);
                 if (cbShowAll_->IsChecked() || bShow)
                 {

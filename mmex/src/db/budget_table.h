@@ -58,9 +58,9 @@ private:
     void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<wxSharedPtr<TBudgetTableEntry> >entrylist_;
+    std::vector<std::shared_ptr<TBudgetTableEntry> >entrylist_;
 
-    TBudgetTableList(wxSharedPtr<wxSQLite3Database> db, bool load_entries = true);
+    TBudgetTableList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
 
     /// Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
@@ -68,8 +68,8 @@ public:
     int AddEntry(TBudgetTableEntry* pAssetEntry);
     void DeleteEntry(int asset_id);
 
-    wxSharedPtr<TBudgetTableEntry> GetEntryPtr(int asset_id);
-    wxSharedPtr<TBudgetTableEntry> GetIndexedEntryPtr(unsigned int list_index);
+    std::shared_ptr<TBudgetTableEntry> GetEntryPtr(int asset_id);
+    std::shared_ptr<TBudgetTableEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
     //double GetAssetBalance(bool value_today = true);

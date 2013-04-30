@@ -25,7 +25,7 @@
 #include <wx/wizard.h>
 
 //----------------------------------------------------------------------------
-#include <wx/sharedptr.h>
+#include <memory>
 
 #include "guiid.h"
 #include "util.h"
@@ -158,7 +158,7 @@ public:
     mmGUIFrame(const wxString& title,
                const wxPoint& pos,
                const wxSize& size,
-               wxSharedPtr<MMEX_IniSettings> pIniSettings);
+               std::shared_ptr<MMEX_IniSettings> pIniSettings);
 
     ~mmGUIFrame();
 
@@ -220,8 +220,8 @@ private:
     wxScopedPtr<mmCoreDB> m_core;
 
     /* handles to SQLite Database */
-    wxSharedPtr<wxSQLite3Database> m_db;
-    wxSharedPtr<MMEX_IniSettings>  m_inisettings;
+    std::shared_ptr<wxSQLite3Database> m_db;
+    std::shared_ptr<MMEX_IniSettings>  m_inisettings;
 
     /* Currently open file name */
     wxString fileName_;

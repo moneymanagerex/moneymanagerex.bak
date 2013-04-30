@@ -24,7 +24,7 @@
 #include <algorithm>
 
 
-mmReportTransactions::mmReportTransactions( std::vector< wxSharedPtr<mmBankTransaction> > trans,
+mmReportTransactions::mmReportTransactions( std::vector< std::shared_ptr<mmBankTransaction> > trans,
     mmCoreDB* core, int refAccountID, mmFilterTransactionsDialog* transDialog)
 : mmPrintableBase(core)
 , trans_(trans)
@@ -32,7 +32,7 @@ mmReportTransactions::mmReportTransactions( std::vector< wxSharedPtr<mmBankTrans
 , transDialog_(transDialog)
 {
     std::sort(trans_.begin(), trans_.end(),
-        [&] (const wxSharedPtr<mmBankTransaction>& i, const wxSharedPtr<mmBankTransaction>& j)
+        [&] (const std::shared_ptr<mmBankTransaction>& i, const std::shared_ptr<mmBankTransaction>& j)
     { return (i->date_ < j->date_); });
 }
 
@@ -93,8 +93,8 @@ wxString mmReportTransactions::getHTMLText()
         if ( refAccountID_ > -1 && it->transType_ == TRANS_TYPE_TRANSFER_STR &&
              (refAccountID_ == it->accountID_ || refAccountID_ == it->toAccountID_) )
         {
-            const wxSharedPtr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(refAccountID_);
-            const wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
+            const std::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(refAccountID_);
+            const std::shared_ptr<mmCurrency> pCurrency = pAccount->currency_;
             wxASSERT(pCurrency);
             pCurrency->loadCurrencySettings();
         }

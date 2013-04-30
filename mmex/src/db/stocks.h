@@ -74,9 +74,9 @@ private:
     void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<wxSharedPtr<TStockEntry> >entrylist_;
+    std::vector<std::shared_ptr<TStockEntry> >entrylist_;
 
-    TStockList(wxSharedPtr<wxSQLite3Database> db, bool load_entries = true);
+    TStockList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
 
     // Allows specialised list loading provided by SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
@@ -84,8 +84,8 @@ public:
     int AddEntry(TStockEntry* pStockEntry);
     void DeleteEntry(int stock_id);
 
-    wxSharedPtr<TStockEntry> GetEntryPtr(int stock_id);
-    wxSharedPtr<TStockEntry> GetIndexedEntryPtr(unsigned int list_index);
+    std::shared_ptr<TStockEntry> GetEntryPtr(int stock_id);
+    std::shared_ptr<TStockEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
     /// return the balance of all the stocks in the list.

@@ -118,7 +118,7 @@ private:
     int bdID_;
     double toTransAmount_;
     bool advancedToTransAmountSet_;
-    wxSharedPtr<mmSplitTransactionEntries> split_;
+    std::shared_ptr<mmSplitTransactionEntries> split_;
 
     wxString payeeDepositTip_;
     wxString payeeWithdrawalTip_;

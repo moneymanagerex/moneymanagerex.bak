@@ -19,7 +19,7 @@
 
 #ifndef _MM_EX_MMCATEGORY_H_
 #define _MM_EX_MMCATEGORY_H_
-#include <wx/sharedptr.h>
+#include <memory>
 
 #include "defs.h"
 
@@ -38,8 +38,8 @@ public:
     /* Public Data */
     int categID_;
     wxString categName_;
-    wxSharedPtr<mmCategory> parent_;
-    std::vector<wxSharedPtr<mmCategory> > children_;
+    std::shared_ptr<mmCategory> parent_;
+    std::vector<std::shared_ptr<mmCategory> > children_;
 };
 
 class mmCategoryList
@@ -59,7 +59,7 @@ public:
     void parseCategoryString(wxString categ, wxString& cat, int& categID, wxString& subcat, int& subCategID);
 
     bool CategoryExists(const wxString& categoryName) const;
-    wxSharedPtr<mmCategory> GetCategorySharedPtr(int category, int subcategory) const;
+    std::shared_ptr<mmCategory> GetCategorySharedPtr(int category, int subcategory) const;
     int GetSubCategoryID(int parentID, const wxString& subCategoryName) const;
 
     void LoadCategories();
@@ -71,8 +71,8 @@ public:
     bool UpdateCategory(int categID, int subCategID, const wxString& text);
 
     /* Public Data */
-    std::vector< wxSharedPtr<mmCategory> > entries_;
-    typedef std::vector< wxSharedPtr<mmCategory> >::const_iterator const_iterator;
+    std::vector< std::shared_ptr<mmCategory> > entries_;
+    typedef std::vector< std::shared_ptr<mmCategory> >::const_iterator const_iterator;
 
 private:
     mmCoreDB* core_;

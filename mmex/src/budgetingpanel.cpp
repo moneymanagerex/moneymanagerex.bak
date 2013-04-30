@@ -361,11 +361,11 @@ void mmBudgetingPanel::initVirtualListControl()
             trans_.push_back(th);
         }
 
-        for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin();
+        for (std::vector<std::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
                 cit != category->children_.end();
                 ++ cit)
         {
-            const wxSharedPtr<mmCategory> sub_category = *cit;
+            const std::shared_ptr<mmCategory> sub_category = *cit;
 
             mmBudgetEntryHolder thsub;
             budgetDetails.initBudgetEntryFields(thsub, budgetYearID_);

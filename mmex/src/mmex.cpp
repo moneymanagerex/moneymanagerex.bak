@@ -166,9 +166,9 @@ bool OnInitImpl(mmGUIApp &app)
     wxImage::AddHandler(new wxJPEGHandler());
     wxImage::AddHandler(new wxPNGHandler());
 
-    wxSharedPtr<wxSQLite3Database> pIniSettingsDb(new wxSQLite3Database);
+    std::shared_ptr<wxSQLite3Database> pIniSettingsDb(new wxSQLite3Database);
     pIniSettingsDb.get()->Open(mmex::getPathUser(mmex::SETTINGS));
-    wxSharedPtr<MMEX_IniSettings> pIniSettings(new MMEX_IniSettings(pIniSettingsDb));
+    std::shared_ptr<MMEX_IniSettings> pIniSettings(new MMEX_IniSettings(pIniSettingsDb));
 
     /* Load Colors from Database */
     mmLoadColorsFromDatabase(pIniSettings);
@@ -500,7 +500,7 @@ bool mmAddAccountPage2::TransferDataFromWindow()
 
     mmAccount* ptrBase = new mmAccount();
 
-    wxSharedPtr<mmAccount> pAccount(ptrBase);
+    std::shared_ptr<mmAccount> pAccount(ptrBase);
 
     pAccount->favoriteAcct_ = true;
     pAccount->status_ = mmAccount::MMEX_Open;
@@ -609,7 +609,7 @@ END_EVENT_TABLE()
 mmGUIFrame::mmGUIFrame(const wxString& title,
                        const wxPoint& pos,
                        const wxSize& size,
-                       wxSharedPtr<MMEX_IniSettings> pIniSettings)
+                       std::shared_ptr<MMEX_IniSettings> pIniSettings)
 : wxFrame(0, -1, title, pos, size)
 , m_inisettings(pIniSettings)
 , gotoAccountID_(-1)
@@ -833,7 +833,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
     int index = 0;
     while (index < bills.CurrentListSize())
     {
-        wxSharedPtr<TTransactionBillEntry> bill_entry = bills.GetIndexedEntryPtr(index);
+        std::shared_ptr<TTransactionBillEntry> bill_entry = bills.GetIndexedEntryPtr(index);
 
         if (bill_entry->RequiresExecution(remaining_days))
         {
@@ -974,11 +974,11 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
             if ( (repeats < 11) || (numRepeats > 0) || (repeats > 14))
             {
                 continueExecution = true;
-                wxSharedPtr<mmBankTransaction> pTransaction;
-                wxSharedPtr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
+                std::shared_ptr<mmBankTransaction> pTransaction;
+                std::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
                 pTransaction = pTemp;
 
-                wxSharedPtr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(th.accountID_);
+                std::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(th.accountID_);
                 wxASSERT(pCurrencyPtr);
 
                 pTransaction->accountID_ = th.accountID_;
@@ -993,7 +993,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                 pTransaction->date_ = th.nextOccurDate_;
                 pTransaction->toAmt_ = th.toAmt_;
 
-                wxSharedPtr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
+                std::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
                 split->loadFromBDDB(m_core.get(),th.id_);
                 *pTransaction->splitEntries_.get() = *split.get();
 
@@ -1792,7 +1792,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else
         {
-           wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+           std::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
            if (pAccount)
            {
                 wxString acctType = pAccount->acctType_;
@@ -1909,7 +1909,7 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& /*event*/)
    if (selectedItemData_)
    {
       int data = selectedItemData_->getData();
-      wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+      std::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
       if (pAccount)
       {
          wxString website = pAccount->website_;
@@ -1925,7 +1925,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+        std::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
         if (pAccount)
         {
            wxString acctType = pAccount->acctType_;
@@ -1948,7 +1948,7 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+        std::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
         if (pAccount)
         {
             wxMessageDialog msgDlg(this,
@@ -1994,7 +1994,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
         int data = iData->getData();
         if (!iData->isBudgetingNode())
         {
-            wxSharedPtr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
+            std::shared_ptr<mmAccount> pAccount = m_core->accountList_.GetAccountSharedPtr(data);
             if (pAccount)
             {
                 wxString acctType = pAccount->acctType_;
@@ -3069,15 +3069,15 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
     if (m_core.get()->accountList_.getNumAccounts() == 0) return;
 
-    std::vector< wxSharedPtr<mmBankTransaction> > trans;
+    std::vector< std::shared_ptr<mmBankTransaction> > trans;
 
     mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
-        std::vector< wxSharedPtr<mmBankTransaction> >::const_iterator i;
+        std::vector< std::shared_ptr<mmBankTransaction> >::const_iterator i;
         for (i = m_core.get()->bTransactionList_.transactions_.begin(); i != m_core.get()->bTransactionList_.transactions_.end(); i++ )
         {
-            wxSharedPtr<mmBankTransaction> pBankTransaction = *i;
+            std::shared_ptr<mmBankTransaction> pBankTransaction = *i;
             if (pBankTransaction)
             {
 
@@ -3159,7 +3159,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
                     {
                         pBankTransaction->reportCategAmount_ = (pBankTransaction->getAmountForSplit(categID, subcategID));
 
-                        wxSharedPtr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(pBankTransaction->accountID_);
+                        std::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(pBankTransaction->accountID_);
                         wxASSERT(pCurrencyPtr);
                         mmex::formatDoubleToCurrency(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
                     }
@@ -3863,7 +3863,7 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
 {
     this->SetEvtHandlerEnabled(false);
     //Use Shared pointer to ensure mmCustomSQLDialog object gets destroyed.
-    wxSharedPtr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customReportSelectedItem, this ));
+    std::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customReportSelectedItem, this ));
 
     int dialogStatus = wxID_MORE;
     while (dialogStatus == wxID_MORE)

@@ -257,7 +257,7 @@ void mmOptions::saveOptions(MMEX_IniSettings* info_table)
 }
 
 // --------------------------------------------------------------------------
-void mmIniOptions::loadOptions(wxSharedPtr<MMEX_IniSettings> pIniSettings)
+void mmIniOptions::loadOptions(std::shared_ptr<MMEX_IniSettings> pIniSettings)
 {
     expandStocksHome_ = pIniSettings->GetBoolSetting("ENABLESTOCKS", true);
     enableAssets_     = pIniSettings->GetBoolSetting("ENABLEASSETS", true);
@@ -304,7 +304,7 @@ void mmIniOptions::loadOptions(wxSharedPtr<MMEX_IniSettings> pIniSettings)
     locale.AddCatalog(lang) calls wxLogWarning and returns true for corrupted .mo file,
     so I should use locale.IsLoaded(lang) also.
 */
-wxString mmSelectLanguage(wxWindow *parent, wxSharedPtr<MMEX_IniSettings> pIniSettings, bool forced_show_dlg, bool save_setting)
+wxString mmSelectLanguage(wxWindow *parent, std::shared_ptr<MMEX_IniSettings> pIniSettings, bool forced_show_dlg, bool save_setting)
 {
     wxString lang;
 
@@ -552,7 +552,7 @@ wxString mmGetStringFromColour(wxColour color)
     return wxString::Format("%d,%d,%d", color.Red(), color.Green(), color.Blue());
 }
 
-void mmLoadColorsFromDatabase(wxSharedPtr<MMEX_IniSettings> pIniSettings)
+void mmLoadColorsFromDatabase(std::shared_ptr<MMEX_IniSettings> pIniSettings)
 {
     mmColors::listAlternativeColor0 = mmGetColourFromString(pIniSettings->GetStringSetting("LISTALT0", "225,237,251"));
     mmColors::listAlternativeColor1 = mmGetColourFromString(pIniSettings->GetStringSetting("LISTALT1", "255,255,255"));
@@ -991,9 +991,9 @@ wxImageList* navtree_images_list_()
     return imageList_;
 }
 
-wxSharedPtr<wxSQLite3Database> static_db_ptr()
+std::shared_ptr<wxSQLite3Database> static_db_ptr()
 {
-    static wxSharedPtr<wxSQLite3Database> db(new wxSQLite3Database);
+    static std::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
 
     return db;
 }

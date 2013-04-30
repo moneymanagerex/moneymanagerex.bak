@@ -27,14 +27,14 @@ class mmBankTransaction;
 class mmReportTransactions : public mmPrintableBase 
 {
 public:
-    mmReportTransactions(std::vector< wxSharedPtr<mmBankTransaction> > trans, 
+    mmReportTransactions(std::vector< std::shared_ptr<mmBankTransaction> > trans, 
         mmCoreDB* core, int refAccountID, mmFilterTransactionsDialog* transDialog);
    ~mmReportTransactions();
 
     wxString getHTMLText();
 
 private:
-    std::vector<wxSharedPtr<mmBankTransaction> > trans_;
+    std::vector<std::shared_ptr<mmBankTransaction> > trans_;
     bool ignoreDate_;
     int refAccountID_;
     mmFilterTransactionsDialog* transDialog_;
