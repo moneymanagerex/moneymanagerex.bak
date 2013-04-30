@@ -43,14 +43,26 @@ public:
     double value_;      // wxT("VALUE")
     double commission_; // wxT("COMMISSION")
 
-    /// Constructor used when loading assets from the database.
+    /* Constructor used when loading stocks from the database. */
     TStockEntry(wxSQLite3ResultSet& q1);
-    /// Copy constructor using a pointer
+    /* Copy constructor using a pointer */
     TStockEntry(TStockEntry* pEntry);
-    /// Constructor for creating a new asset entry.
+    /* Constructor for creating a new stock entry. */
     TStockEntry();
 
+    // Updates the existing data to the SQL file. Add to list first.
     void Update(wxSQLite3Database* db);
+    // returns date formated to user requirements.
+    wxString DisplayDate();
+    // returns number of shares formated to 4 decimal places or whole number.
+    wxString NumberOfShares(bool whole_num = true);
+    // returns current share price formated to 4 decimal places
+    wxString CurrentPrice();
+    // returns the value based on share price and number of shares
+    double GetValue();
+    wxString GetValueCurrencyEditFormat(bool initial_value = false);
+    // returns formatted commission value
+    wxString CommissionCurrencyEditFormat();
 };
 
 /************************************************************************************
@@ -66,7 +78,7 @@ public:
 
     TStockList(wxSharedPtr<wxSQLite3Database> db, bool load_entries = true);
 
-    /// Allows specialised list loading provided by SQL statement
+    // Allows specialised list loading provided by SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
     int AddEntry(TStockEntry* pStockEntry);
@@ -76,6 +88,7 @@ public:
     wxSharedPtr<TStockEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
+    /// return the balance of all the stocks in the list.
     double GetStockBalance();
     wxString GetStockBalanceCurrencyFormat();
     wxString GetStockBalanceCurrencyEditFormat();

@@ -123,6 +123,48 @@ void TStockEntry::Update(wxSQLite3Database* db)
     }
 }
 
+wxString TStockEntry::DisplayDate()
+{
+    return mmGetDateForDisplay(mmGetStorageStringAsDate(pur_date_));
+}
+
+wxString TStockEntry::NumberOfShares(bool whole_num)
+{
+    wxString format = "%.4f";
+    if (whole_num)
+    {
+        format = "%.0f";
+    }
+    return wxString::Format(format, num_shares_);
+}
+
+wxString TStockEntry::CurrentPrice()
+{
+    return wxString::Format("%.4f", cur_price_);
+}
+
+double TStockEntry::GetValue()
+{
+    return (cur_price_ * num_shares_) - commission_; 
+}
+
+wxString TStockEntry::GetValueCurrencyEditFormat(bool initial_value)
+{
+    wxString formatted_value;
+    if (initial_value) mmex::formatDoubleToCurrencyEdit(value_, formatted_value);
+    else mmex::formatDoubleToCurrencyEdit(GetValue(), formatted_value);
+
+    return formatted_value;
+}
+
+wxString TStockEntry::CommissionCurrencyEditFormat()
+{
+    wxString formatted_value;
+    mmex::formatDoubleToCurrencyEdit(value_, formatted_value);
+
+    return formatted_value;
+}
+
 /************************************************************************************
  TStockList Methods
  ***********************************************************************************/
