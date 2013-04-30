@@ -45,18 +45,18 @@
 
 //----------------------------------------------------------------------------
 // This is a way to prevent certain tests occuring during development testing
-#define CENTRALL_DB_TESTS
-#define CURRENCY_TESTS
-#define ACCOUNT_TESTS
-#define CATEGORY_TESTS
-#define SUBCATEGORY_TESTS
-#define PAYEE_TESTS
-#define TRANSACTION_TESTS
-#define REPEAT_TRANSACTION_TESTS
-#define SPLIT_TRANSACTION_TESTS
-#define ASSET_TESTS
+//#define CENTRALL_DB_TESTS
+//#define CURRENCY_TESTS
+//#define ACCOUNT_TESTS
+//#define CATEGORY_TESTS
+//#define SUBCATEGORY_TESTS
+//#define PAYEE_TESTS
+//#define TRANSACTION_TESTS
+//#define REPEAT_TRANSACTION_TESTS
+//#define SPLIT_TRANSACTION_TESTS
+//#define ASSET_TESTS
 #define STOCK_TESTS
-#define BUDGET_TESTS
+//#define BUDGET_TESTS
 
 //----------------------------------------------------------------------------
 /// Central class holding all major components of the database
@@ -949,6 +949,19 @@ TEST(TAssetList_GetIndexedEntryPtr_Retest)
     displayTimeTaken("TAssetList_GetIndexedEntryPtr_Retest", start_time);
 }
 
+TEST(TAssetList_Smart_const_iterator)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    for (const auto& pEntry:asset_list.entrylist_)
+    {
+        CHECK_EQUAL(20000, pEntry->value_);
+    }
+
+    displayTimeTaken("TAssetList_Smart_const_iterator", start_time);
+}
+
 
 TEST(TAssetList_Test_GetEntryPtr)
 {
@@ -988,7 +1001,7 @@ TEST(TStockList_Test_Add)
     stock_entry->name_ = "Stock Name - Should be in Account";
     stock_entry->pur_date_ = date; // date of purchase
     stock_entry->pur_price_ = 1.2275;
-    stock_entry->num_shares_ = 1000;
+    stock_entry->num_shares_ = 2000;
     stock_entry->cur_price_ = 1.575;
     stock_entry->value_ = 2000;
     int id_1 = stock_list.AddEntry(stock_entry);
@@ -1016,12 +1029,26 @@ TEST(TStockList_Test_Update)
     const wxDateTime start_time(wxDateTime::UNow());
 
     TStockList stock_list(get_pDb());
-    wxSharedPtr<TStockEntry> stock_entry = stock_list.GetEntryPtr(2); // 2nd entry from test 1
+    int stock_id = 2;        // 2nd entry from test 1
+    stock_list.GetEntryPtr(stock_id);   // test setting current index
+    wxSharedPtr<TStockEntry> stock_entry = stock_list.GetIndexedEntryPtr(stock_list.GetCurrentIndex());
     stock_entry->value_ = 3000;
     stock_entry->Update(stock_list.ListDatabase());
 
     double value = stock_list.GetStockBalance();
     CHECK_EQUAL(5000, value);
+
+    wxString check_value = "1.5750";
+    wxString return_value = stock_entry->CurrentPrice();
+    CHECK_EQUAL(check_value, return_value);
+
+    check_value = "1,575.00";
+    return_value = stock_entry->GetValueCurrencyEditFormat();
+    CHECK_EQUAL(check_value, return_value);
+
+    check_value = "1000.0000";
+    return_value = stock_entry->NumberOfShares(false);
+    CHECK_EQUAL(check_value, return_value);
 
     displayTimeTaken("TStockList_Test_Update", start_time);
 }
