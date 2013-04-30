@@ -1692,6 +1692,7 @@ void mmGUIFrame::CreateCustomReport(int index)
                 , sScript
                 , custRepIndex_->CurrentReportFileType());
             createReportsPage(csr);
+			delete csr; // CEHCK
         }
     }
     processPendingEvents();         // clear out pending events
@@ -1776,11 +1777,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 int year = data;
                 mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), this, year);
                 createReportsPage(rs);
+				delete rs; // CHECK
             }
             else if (iParentData->getString() == "Budget Setup Performance")
             {
                 mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, year);
                 createReportsPage(rs);
+				delete rs; // CHECK
             }
             else
             {
@@ -3173,6 +3176,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
         mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getAccountID(), dlg);
         createReportsPage(rs);
+		delete rs; // CHECK
     }
 }
 //----------------------------------------------------------------------------
@@ -3216,6 +3220,7 @@ void mmGUIFrame::OnCashFlowSpecificAccounts(int cashflowreporttype)
         if (this->hasActiveTermAccounts()) report->activateTermAccounts();
 
         createReportsPage(report);
+		delete report; // CHECK
     }
 }
 //----------------------------------------------------------------------------
@@ -3869,6 +3874,7 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
             mmCustomReport* csr = new mmCustomReport(this,
                 m_core.get(), dlg->sReportTitle(), dlg->sScript(), dlg->sSctiptType());
             createReportsPage(csr);
+			delete csr; // CHECK
             wxEndBusyCursor();
         }
         dialogStatus = dlg->ShowModal();
