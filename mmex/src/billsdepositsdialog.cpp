@@ -83,7 +83,7 @@ bool mmBDDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
     SetIcon(mmex::getProgramIcon());
 
-    wxSharedPtr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
+    std::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
     split_ = split;
 
     /**********************************************************************************************
@@ -618,7 +618,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
             if (split_->numEntries())
                 return;
 
-            wxSharedPtr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
+            std::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
             bPayee_->SetLabel(mmReadyDisplayString(pPayee->name_));
             payeeUnknown_ = false;
 
@@ -1061,11 +1061,11 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
         // repeats now hold extra info. Need to get repeats from dialog selection
         if ( (itemRepeats_->GetSelection() < 11) || (itemRepeats_->GetSelection() > 14) || (numRepeats > 0) )
         {
-            wxSharedPtr<mmBankTransaction> pTransaction;
-            wxSharedPtr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
+            std::shared_ptr<mmBankTransaction> pTransaction;
+            std::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
             pTransaction = pTemp;
 
-            wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(fromAccountID);
+            std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(fromAccountID);
             wxASSERT(pCurrencyPtr);
 
             pTransaction->accountID_ = fromAccountID;
@@ -1094,7 +1094,7 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 {
     categID_ = -1;
     subcategID_ = -1;
-    split_ = wxSharedPtr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
+    split_ = std::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
 
     bool state = cSplit_->GetValue();
     if (state)

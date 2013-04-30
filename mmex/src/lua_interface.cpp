@@ -24,7 +24,7 @@
 // Constructor: Initialises Lua when an instant is created.
 TLuaInterface::TLuaInterface()
 {
-    wxSharedPtr<MMEX_IniSettings> info_table;
+    std::shared_ptr<MMEX_IniSettings> info_table;
     info_table.reset(new MMEX_IniSettings(static_db_ptr(), true));
     
     g_static_currency_list = new mmCurrencyList(static_db_ptr());
@@ -507,7 +507,7 @@ int TLuaInterface::cpp2Lua_CurrencyFormat(lua_State* lua)
     wxString currency_symbol = GetLuaString(lua).MakeUpper();
     g_static_currency_list->LoadCurrencySetting(currency_symbol);
 
-    wxSharedPtr<mmCurrency> pCurrency = g_static_currency_list->getCurrencySharedPtr(currency_symbol, true);
+    std::shared_ptr<mmCurrency> pCurrency = g_static_currency_list->getCurrencySharedPtr(currency_symbol, true);
     if (pCurrency)
     {
         number = number * pCurrency->baseConv_;

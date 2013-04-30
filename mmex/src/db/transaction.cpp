@@ -148,7 +148,7 @@ void TTransactionEntry::Update(wxSQLite3Database* db)
  TTransactionList Methods
  ***********************************************************************************/
 /// Constructor
-TTransactionList::TTransactionList(wxSharedPtr<wxSQLite3Database> db, bool load_entries)
+TTransactionList::TTransactionList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
@@ -187,7 +187,7 @@ void TTransactionList::LoadEntriesUsing(const wxString& sql_statement)
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        wxSharedPtr<TTransactionEntry> pEntry(new TTransactionEntry(q1));
+        std::shared_ptr<TTransactionEntry> pEntry(new TTransactionEntry(q1));
         entrylist_.push_back(pEntry);
     }
     q1.Finalize();
@@ -195,7 +195,7 @@ void TTransactionList::LoadEntriesUsing(const wxString& sql_statement)
 
 int TTransactionList::AddEntry(TTransactionEntry* pTransEntry)
 {
-    wxSharedPtr<TTransactionEntry> pEntry(pTransEntry);
+    std::shared_ptr<TTransactionEntry> pEntry(pTransEntry);
     entrylist_.push_back(pEntry);
     pEntry->Add(db_.get());
 
@@ -204,7 +204,7 @@ int TTransactionList::AddEntry(TTransactionEntry* pTransEntry)
 
 void TTransactionList::DeleteEntry(int trans_id)
 {
-    wxSharedPtr<TTransactionEntry> pEntry = GetEntryPtr(trans_id);
+    std::shared_ptr<TTransactionEntry> pEntry = GetEntryPtr(trans_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -212,9 +212,9 @@ void TTransactionList::DeleteEntry(int trans_id)
     }
 }
 
-wxSharedPtr<TTransactionEntry> TTransactionList::GetEntryPtr(int trans_id)
+std::shared_ptr<TTransactionEntry> TTransactionList::GetEntryPtr(int trans_id)
 {
-    wxSharedPtr<TTransactionEntry> pEntry;
+    std::shared_ptr<TTransactionEntry> pEntry;
     size_t list_size = entrylist_.size();
     size_t index = 0;
 
@@ -232,9 +232,9 @@ wxSharedPtr<TTransactionEntry> TTransactionList::GetEntryPtr(int trans_id)
     return pEntry;
 }
 
-wxSharedPtr<TTransactionEntry> TTransactionList::GetIndexedEntryPtr(unsigned int list_index)
+std::shared_ptr<TTransactionEntry> TTransactionList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    wxSharedPtr<TTransactionEntry> pEntry;
+    std::shared_ptr<TTransactionEntry> pEntry;
     if (list_index < entrylist_.size())
     {
         pEntry = entrylist_[list_index];

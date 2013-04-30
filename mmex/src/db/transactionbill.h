@@ -94,7 +94,7 @@ public:
     /// Get the transaction entry from the bill transaction entry
     TTransactionEntry* GetTransaction();
     /// Set the bill transaction entry from a transaction
-    void SetTransaction(wxSharedPtr<TTransactionEntry> pEntry);
+    void SetTransaction(std::shared_ptr<TTransactionEntry> pEntry);
 
     void AdjustNextOccuranceDate();
     bool RequiresExecution(int& remaining_days);
@@ -109,9 +109,9 @@ private:
     void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<wxSharedPtr<TTransactionBillEntry> > entrylist_;
+    std::vector<std::shared_ptr<TTransactionBillEntry> > entrylist_;
 
-    TTransactionBillList(wxSharedPtr<wxSQLite3Database> db, bool load_entries = true);
+    TTransactionBillList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
 
     /// Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
@@ -119,8 +119,8 @@ public:
     int AddEntry(TTransactionBillEntry* pTransBillsEntry);
     void DeleteEntry(int trans_bill_id);
 
-    wxSharedPtr<TTransactionBillEntry> GetEntryPtr(int trans_bill_id);
-    wxSharedPtr<TTransactionBillEntry> GetIndexedEntryPtr(unsigned int list_index);
+    std::shared_ptr<TTransactionBillEntry> GetEntryPtr(int trans_bill_id);
+    std::shared_ptr<TTransactionBillEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
 };

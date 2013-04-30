@@ -27,7 +27,7 @@ void mmCategoryList::LoadCategories()
     entries_.clear();
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_CATEGORIES);
 
-    wxSharedPtr<mmCategory> pCat;
+    std::shared_ptr<mmCategory> pCat;
     while (q1.NextRow())
     {
         int catID = q1.GetInt("CATEGID");
@@ -47,7 +47,7 @@ void mmCategoryList::LoadCategories()
         if (!q1.IsNull(sub_idx))
         {
             int subcatID = q1.GetInt(sub_idx);
-            wxSharedPtr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString("SUBCATEGNAME")));
+            std::shared_ptr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString("SUBCATEGNAME")));
 
             pSubCat->parent_ = pCat;
             pCat->children_.push_back(pSubCat);
@@ -62,7 +62,7 @@ void mmCategoryList::LoadCategories()
     }
 }
 
-wxSharedPtr<mmCategory> mmCategoryList::GetCategorySharedPtr(int category, int subcategory) const
+std::shared_ptr<mmCategory> mmCategoryList::GetCategorySharedPtr(int category, int subcategory) const
 {
     if (category != -1)
     {
@@ -85,7 +85,7 @@ wxSharedPtr<mmCategory> mmCategoryList::GetCategorySharedPtr(int category, int s
             }
         }
     }
-    wxSharedPtr<mmCategory> categ;
+    std::shared_ptr<mmCategory> categ;
     return categ;
 }
 
@@ -125,15 +125,15 @@ wxString mmCategoryList::GetSubCategoryName(int categID, int subCategID) const
 {
     for (const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
-        const wxSharedPtr<mmCategory> category = *it;
+        const std::shared_ptr<mmCategory> category = *it;
 
         if (category->categID_ == categID)
         {
-            for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin();
+            for (std::vector<std::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
                 cit != category->children_.end();
                 ++ cit)
             {
-                const wxSharedPtr<mmCategory> sub_category = *cit;
+                const std::shared_ptr<mmCategory> sub_category = *cit;
 
                 if (subCategID == sub_category->categID_)
                     return sub_category->categName_;
@@ -147,15 +147,15 @@ int mmCategoryList::GetSubCategoryID(int parentID, const wxString& subCategoryNa
 {
     for (const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
-        const wxSharedPtr<mmCategory> category = *it;
+        const std::shared_ptr<mmCategory> category = *it;
 
         if (category->categID_ == parentID)
         {
-            for (std::vector<wxSharedPtr<mmCategory> >::const_iterator cit =  category->children_.begin();
+            for (std::vector<std::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
                 cit != category->children_.end();
                 ++ cit)
             {
-                const wxSharedPtr<mmCategory> sub_category = *cit;
+                const std::shared_ptr<mmCategory> sub_category = *cit;
 
                 if (subCategoryName == sub_category->categName_)
                     return sub_category->categID_;

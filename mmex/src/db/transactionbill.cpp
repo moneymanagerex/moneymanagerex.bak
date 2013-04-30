@@ -159,7 +159,7 @@ TTransactionEntry* TTransactionBillEntry::GetTransaction()
     return pEntry;
 }
 
-void TTransactionBillEntry::SetTransaction(wxSharedPtr<TTransactionEntry> pEntry)
+void TTransactionBillEntry::SetTransaction(std::shared_ptr<TTransactionEntry> pEntry)
 {
     id_from_account = pEntry->id_from_account;
     id_to_account_  = pEntry->id_to_account_;
@@ -299,7 +299,7 @@ bool TTransactionBillEntry::RequiresExecution(int& remaining_days)
  TTransactionBillList Methods
  ***********************************************************************************/
 /// Constructor
-TTransactionBillList::TTransactionBillList(wxSharedPtr<wxSQLite3Database> db, bool load_entries)
+TTransactionBillList::TTransactionBillList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
 : TTransactionList(db, false)
 {
     LoadEntries(load_entries);
@@ -338,7 +338,7 @@ void TTransactionBillList::LoadEntriesUsing(const wxString& sql_statement)
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        wxSharedPtr<TTransactionBillEntry> pEntry(new TTransactionBillEntry(q1));
+        std::shared_ptr<TTransactionBillEntry> pEntry(new TTransactionBillEntry(q1));
         entrylist_.push_back(pEntry);
     }
     q1.Finalize();
@@ -346,7 +346,7 @@ void TTransactionBillList::LoadEntriesUsing(const wxString& sql_statement)
 
 int TTransactionBillList::AddEntry(TTransactionBillEntry* pTransBillEntry)
 {
-    wxSharedPtr<TTransactionBillEntry> pEntry(pTransBillEntry);
+    std::shared_ptr<TTransactionBillEntry> pEntry(pTransBillEntry);
     entrylist_.push_back(pEntry);
     pEntry->Add(db_.get());
 
@@ -355,7 +355,7 @@ int TTransactionBillList::AddEntry(TTransactionBillEntry* pTransBillEntry)
 
 void TTransactionBillList::DeleteEntry(int trans_bill_id)
 {
-    wxSharedPtr<TTransactionBillEntry> pEntry = GetEntryPtr(trans_bill_id);
+    std::shared_ptr<TTransactionBillEntry> pEntry = GetEntryPtr(trans_bill_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -363,9 +363,9 @@ void TTransactionBillList::DeleteEntry(int trans_bill_id)
     }
 }
 
-wxSharedPtr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int trans_bill_id)
+std::shared_ptr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int trans_bill_id)
 {
-    wxSharedPtr<TTransactionBillEntry> pEntry;
+    std::shared_ptr<TTransactionBillEntry> pEntry;
     size_t index = 0;
     while (index < entrylist_.size())
     {
@@ -381,9 +381,9 @@ wxSharedPtr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int trans_b
     return pEntry;
 }
 
-wxSharedPtr<TTransactionBillEntry> TTransactionBillList::GetIndexedEntryPtr(unsigned int list_index)
+std::shared_ptr<TTransactionBillEntry> TTransactionBillList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    wxSharedPtr<TTransactionBillEntry> pEntry;
+    std::shared_ptr<TTransactionBillEntry> pEntry;
     if (list_index < entrylist_.size())
     {
         pEntry = entrylist_[list_index];

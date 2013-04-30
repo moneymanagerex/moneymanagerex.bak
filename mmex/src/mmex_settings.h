@@ -24,7 +24,7 @@
 #define _MM_EX_SETTINGS_H_
 
 #include "defs.h"
-#include <wx/sharedptr.h>
+#include <memory>
 #include <vector>
 
 /****************************************************************************
@@ -36,12 +36,12 @@ class MMEX_IniRecord
 {
 public:
     /// Create a new record setting.
-    MMEX_IniRecord(wxSharedPtr<wxSQLite3Database> ini_db
+    MMEX_IniRecord(std::shared_ptr<wxSQLite3Database> ini_db
         , bool main_db
         , wxString name);
 
     /// Create an existing record setting.
-    MMEX_IniRecord(wxSharedPtr<wxSQLite3Database> ini_db
+    MMEX_IniRecord(std::shared_ptr<wxSQLite3Database> ini_db
         , bool main_db
         , wxSQLite3ResultSet& q1);
 
@@ -52,7 +52,7 @@ public:
     wxString Value();
 
 private:
-    wxSharedPtr<wxSQLite3Database> iniDb_;
+    std::shared_ptr<wxSQLite3Database> iniDb_;
     bool main_db_;
     int settingId_;
     wxString settingName_;
@@ -68,7 +68,7 @@ class MMEX_IniSettings
 {
 public:
     /// Constructor
-    MMEX_IniSettings(wxSharedPtr<wxSQLite3Database> ini_db, bool main_db = false);
+    MMEX_IniSettings(std::shared_ptr<wxSQLite3Database> ini_db, bool main_db = false);
     ~MMEX_IniSettings();
 
     bool GetBoolSetting(const wxString& name, bool default_value);
@@ -84,9 +84,9 @@ public:
     void Load();
     void Save();
 private:
-    wxSharedPtr<wxSQLite3Database> ini_db_;
+    std::shared_ptr<wxSQLite3Database> ini_db_;
     bool main_db_;
-    std::vector< wxSharedPtr<MMEX_IniRecord> > ini_records_;
+    std::vector< std::shared_ptr<MMEX_IniRecord> > ini_records_;
 
     MMEX_IniRecord* GetRecord(const wxString& name);
 };

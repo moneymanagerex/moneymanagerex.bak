@@ -54,7 +54,7 @@ class TSettingsList : public TListBase
 {
 public:
     /// Constructor
-    TSettingsList(wxSharedPtr<wxSQLite3Database> db, bool main_db = false);
+    TSettingsList(std::shared_ptr<wxSQLite3Database> db, bool main_db = false);
     ~TSettingsList();
 
     bool GetBoolSetting(const wxString& name, bool default_value);
@@ -71,7 +71,7 @@ public:
     void Save();
 private:
     bool main_db_;
-    std::vector< wxSharedPtr<TSettingsEntry> > ini_records_;
+    std::vector< std::shared_ptr<TSettingsEntry> > ini_records_;
 
     TSettingsEntry* GetRecord(const wxString& name);
 };

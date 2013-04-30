@@ -87,9 +87,9 @@ private:
     void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<wxSharedPtr<TAssetEntry> >entrylist_;
+    std::vector<std::shared_ptr<TAssetEntry> >entrylist_;
 
-    TAssetList(wxSharedPtr<wxSQLite3Database> db, bool load_entries = true);
+    TAssetList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
 
     /// Allows specialised loads by providing the required SQL statement
     void LoadAssetEntriesUsing(const wxString& sql_statement);
@@ -97,8 +97,8 @@ public:
     int AddEntry(TAssetEntry* pAssetEntry);
     void DeleteEntry(int asset_id);
 
-    wxSharedPtr<TAssetEntry> GetEntryPtr(int asset_id);
-    wxSharedPtr<TAssetEntry> GetIndexedEntryPtr(unsigned int list_index);
+    std::shared_ptr<TAssetEntry> GetEntryPtr(int asset_id);
+    std::shared_ptr<TAssetEntry> GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
     double GetAssetBalance(bool value_today = true);

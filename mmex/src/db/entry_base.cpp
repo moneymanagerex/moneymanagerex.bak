@@ -56,7 +56,7 @@ int TEntryBase::GetId()
 /************************************************************************************
  TListBase Methods
  ***********************************************************************************/
-TListBase::TListBase(wxSharedPtr<wxSQLite3Database> db)
+TListBase::TListBase(std::shared_ptr<wxSQLite3Database> db)
 : db_(db)
 , current_index_(0)
 {}

@@ -55,7 +55,7 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
 {
     if (accountID > 0)
     {
-        wxSharedPtr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
+        std::shared_ptr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
 
         wxASSERT(pCurrency);
 
@@ -66,7 +66,7 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
     return 1.0;
 }
 
-wxSharedPtr<mmAccount> mmAccountList::GetAccountSharedPtr(int accountID) const
+std::shared_ptr<mmAccount> mmAccountList::GetAccountSharedPtr(int accountID) const
 {
     account_v::value_type res;
 
@@ -224,7 +224,7 @@ bool mmAccountList::currencyInUse(int currencyID) const
 
 wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID) const
 {
-    wxSharedPtr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID); 
+    std::shared_ptr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID); 
     wxASSERT(pCurrency);
 
     if (pCurrency)
@@ -235,7 +235,7 @@ wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID) const
 
 wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
 {
-    wxSharedPtr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
+    std::shared_ptr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
     wxASSERT(pCurrency);
 
     if (pCurrency)
@@ -246,7 +246,7 @@ wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
 
 wxString mmAccountList::GetAccountCurrencyName(int accountID) const
 {
-    wxSharedPtr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
+    std::shared_ptr<mmCurrency> pCurrency = getCurrencySharedPtr(accountID);
     wxASSERT(pCurrency);
 
     if (pCurrency)
@@ -255,7 +255,7 @@ wxString mmAccountList::GetAccountCurrencyName(int accountID) const
     return "";
 }
 
-wxSharedPtr<mmCurrency> mmAccountList::getCurrencySharedPtr(int accountID) const
+std::shared_ptr<mmCurrency> mmAccountList::getCurrencySharedPtr(int accountID) const
 {
     int len = (int)accounts_.size();
     for (int idx = 0; idx < len; idx++)
@@ -264,15 +264,15 @@ wxSharedPtr<mmCurrency> mmAccountList::getCurrencySharedPtr(int accountID) const
             return accounts_[idx]->currency_;
     }
     wxASSERT(false);
-    return wxSharedPtr<mmCurrency>();
+    return std::shared_ptr<mmCurrency>();
 }
 
-int mmAccountList::UpdateAccount(wxSharedPtr<mmAccount> pAccount)
+int mmAccountList::UpdateAccount(std::shared_ptr<mmAccount> pAccount)
 {
     wxString statusStr = pAccount->status_ == mmAccount::MMEX_Closed ? "Closed" : "Open";
     wxString favStr = pAccount->favoriteAcct_ ? "TRUE" : "FALSE";
 
-    wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
+    std::shared_ptr<mmCurrency> pCurrency = pAccount->currency_;
     wxASSERT(pCurrency);
     int currencyID = pCurrency->currencyID_;
 
@@ -303,7 +303,7 @@ int mmAccountList::UpdateAccount(wxSharedPtr<mmAccount> pAccount)
     return iError;
 }
 
-int mmAccountList::AddAccount(wxSharedPtr<mmAccount> pAccount)
+int mmAccountList::AddAccount(std::shared_ptr<mmAccount> pAccount)
 {
     wxString statusStr = "Open";
     if (pAccount->status_ == mmAccount::MMEX_Closed)
@@ -313,7 +313,7 @@ int mmAccountList::AddAccount(wxSharedPtr<mmAccount> pAccount)
     if (!pAccount->favoriteAcct_)
         favStr = "FALSE";
 
-    wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
+    std::shared_ptr<mmCurrency> pCurrency = pAccount->currency_;
     wxASSERT(pCurrency);
     int currencyID = pCurrency->currencyID_;
 
@@ -392,10 +392,10 @@ bool mmAccountList::RemoveAccount(int accountID)
 
     mmOptions::instance().databaseUpdated_ = true;
 
-    std::vector<wxSharedPtr<mmAccount> >::iterator iter;
+    std::vector<std::shared_ptr<mmAccount> >::iterator iter;
     for (iter = accounts_.begin(); iter != accounts_.end(); )
     {
-        wxSharedPtr<mmAccount> pAccount = (*iter);
+        std::shared_ptr<mmAccount> pAccount = (*iter);
         if (pAccount->id_ == accountID)
         {
             iter = accounts_.erase(iter);
@@ -414,9 +414,9 @@ void mmAccountList::LoadAccounts(const mmCurrencyList& currencyList)
 
     while (q1.NextRow())
     {
-        wxSharedPtr<mmAccount> pAccount(new mmAccount(q1));
+        std::shared_ptr<mmAccount> pAccount(new mmAccount(q1));
 
-        wxSharedPtr<mmCurrency> pCurrency =
+        std::shared_ptr<mmCurrency> pCurrency =
             currencyList.getCurrencySharedPtr(q1.GetInt("CURRENCYID"));
         pAccount->currency_ = pCurrency;
 

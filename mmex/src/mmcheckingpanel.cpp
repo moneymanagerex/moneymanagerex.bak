@@ -546,7 +546,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     double amount = m_trans[selIndex]->amt_;
     wxString amountStr;
 
-    wxSharedPtr<mmCurrency> pCurrency = core_->accountList_.getCurrencySharedPtr(accountId);
+    std::shared_ptr<mmCurrency> pCurrency = core_->accountList_.getCurrencySharedPtr(accountId);
     int currencyid = pCurrency->currencyID_;
     //TODO: FIXME: If base currency does not set bug may happens
     if (basecurrencyid == -1) basecurrencyid = currencyid;
@@ -558,7 +558,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     if (transcodeStr == TRANS_TYPE_TRANSFER_STR)
     {
         double toconvrate = core_->accountList_.getAccountBaseCurrencyConvRate(toaccountId);
-        wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(toaccountId);
+        std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(toaccountId);
         wxASSERT(pCurrencyPtr);
         wxString tocurpfxStr = pCurrencyPtr->pfxSymbol_;
         wxString tocursfxStr = pCurrencyPtr->sfxSymbol_;
@@ -635,7 +635,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         {
             //load settings for base currency
             wxString currencyName = core_->currencyList_.getCurrencyName(basecurrencyid);
-            wxSharedPtr<mmCurrency> pCurrencyBase = core_->currencyList_.getCurrencySharedPtr(currencyName);
+            std::shared_ptr<mmCurrency> pCurrencyBase = core_->currencyList_.getCurrencySharedPtr(currencyName);
             wxASSERT(pCurrencyBase);
             wxString basecuramountStr;
             mmDBWrapper::loadCurrencySettings(core_->db_.get(), pCurrencyBase->currencyID_);
@@ -690,8 +690,8 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     m_trans.clear();
     m_listCtrlAccount->DeleteAllItems();
 
-    wxSharedPtr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(m_AccountID);
-    wxSharedPtr<mmCurrency> pCurrency = pAccount->currency_;
+    std::shared_ptr<mmAccount> pAccount = core_->accountList_.GetAccountSharedPtr(m_AccountID);
+    std::shared_ptr<mmCurrency> pCurrency = pAccount->currency_;
     wxASSERT(pCurrency);
     pCurrency->loadCurrencySettings();
 
@@ -762,7 +762,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
      Sort all account transactions by date to, determine balances.
     **********************************************************************************/
     /*std::sort(account_transPtr.begin(), account_transPtr.end()
-        , [&] (const wxSharedPtr<mmBankTransaction>& i, const wxSharedPtr<mmBankTransaction>& j)
+        , [&] (const std::shared_ptr<mmBankTransaction>& i, const std::shared_ptr<mmBankTransaction>& j)
         { return (i->date_ < j->date_); });*/
 
     /**********************************************************************************
@@ -1392,10 +1392,10 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 
     bool useOriginalDate = m_cp->core_->iniSettings_->GetBoolSetting(INIDB_USE_ORG_DATE_COPYPASTE, false);
 
-    wxSharedPtr<mmBankTransaction> pCopiedTrans =
+    std::shared_ptr<mmBankTransaction> pCopiedTrans =
         m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, m_cp->m_AccountID, useOriginalDate);
 
-    wxSharedPtr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencySharedPtr(m_cp->m_AccountID);
+    std::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencySharedPtr(m_cp->m_AccountID);
     //pCopiedTrans->updateAllData(m_cp->core_, m_cp->m_AccountID, pCurrencyPtr, true);
     int transID = pCopiedTrans->transactionID();
     refreshVisualList(transID);
@@ -1578,7 +1578,7 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
     int toAccountID = DestinationAccountID();
     if (toAccountID != -1)
     {
-        wxSharedPtr<mmBankTransaction> pTransaction;
+        std::shared_ptr<mmBankTransaction> pTransaction;
         pTransaction = m_cp->core_->bTransactionList_.getBankTransactionPtr(
             m_cp->m_AccountID, m_cp->m_trans[m_selectedIndex]->transactionID()
         );
@@ -1652,7 +1652,7 @@ TransactionListCtrl::TransactionListCtrl(
 }
 //----------------------------------------------------------------------------
 
-wxSharedPtr<wxSQLite3Database> mmCheckingPanel::getDb() const
+std::shared_ptr<wxSQLite3Database> mmCheckingPanel::getDb() const
 {
     wxASSERT(core_);
     return core_->db_;

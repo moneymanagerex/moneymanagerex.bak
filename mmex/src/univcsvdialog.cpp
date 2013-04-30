@@ -538,7 +538,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
     if (fromAccountID_ > 0)
     {
 
-        wxSharedPtr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(fromAccountID_);
+        std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(fromAccountID_);
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
@@ -644,7 +644,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 
                 if (categID_ == -1)
                 {
-                   wxSharedPtr<mmPayee> pPayee =  core_->payeeList_.GetPayeeSharedPtr(payeeID_);
+                   std::shared_ptr<mmPayee> pPayee =  core_->payeeList_.GetPayeeSharedPtr(payeeID_);
 
                    categID_ = pPayee->categoryId_;
                    subCategID_ = pPayee->subcategoryId_;
@@ -652,7 +652,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                    // TODO: Test functionality
                    // Category pointer removed from payee. Not sure what this code is trying to achieved here.
 
-                   //wxSharedPtr<mmCategory> pCategory = pPayee->category_;
+                   //std::shared_ptr<mmCategory> pCategory = pPayee->category_;
                    //if (!pCategory)
                    //{
                    //    subCategID_ = -1;
@@ -683,7 +683,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                wxString status = "F";
                int toAccountID = -1;
 
-               wxSharedPtr<mmBankTransaction> pTransaction(new mmBankTransaction(core_->db_));
+               std::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core_->db_));
                pTransaction->accountID_ = fromAccountID_;
                pTransaction->toAccountID_ = toAccountID;
                pTransaction->payee_ = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
@@ -780,7 +780,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
 
         long numRecords = 0;
 
-        for(std::vector< wxSharedPtr<mmBankTransaction> >::const_iterator it = core_->bTransactionList_.transactions_.begin();
+        for(std::vector< std::shared_ptr<mmBankTransaction> >::const_iterator it = core_->bTransactionList_.transactions_.begin();
                 it != core_->bTransactionList_.transactions_.end();
                 ++ it)
         {
@@ -965,7 +965,7 @@ void mmUnivCSVDialog::update_preview()
             int row = 0;
             wxString delimit = this->delimit_;
 
-            for(std::vector< wxSharedPtr<mmBankTransaction> >::const_iterator it = core_->bTransactionList_.transactions_.begin();
+            for(std::vector< std::shared_ptr<mmBankTransaction> >::const_iterator it = core_->bTransactionList_.transactions_.begin();
                 it != core_->bTransactionList_.transactions_.end();
                 ++ it)
             {

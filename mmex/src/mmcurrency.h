@@ -18,7 +18,7 @@
 #define _MM_EX_MMCURRENCY_H_
 
 #include <vector>
-#include <wx/sharedptr.h>
+#include <memory>
 #include <wx/string.h>
 
 class wxSQLite3Database;
@@ -52,20 +52,20 @@ public:
 class mmCurrencyList
 {
 public:
-    mmCurrencyList(wxSharedPtr<wxSQLite3Database> db);
+    mmCurrencyList(std::shared_ptr<wxSQLite3Database> db);
 
     /// Must be called after currency list object is created.
-    void SetInfoTable(wxSharedPtr<MMEX_IniSettings> info_table);
+    void SetInfoTable(std::shared_ptr<MMEX_IniSettings> info_table);
     void LoadCurrencies();
 
     /* Currency Functions */
-    int AddCurrency(wxSharedPtr<mmCurrency> pCurrency);
+    int AddCurrency(std::shared_ptr<mmCurrency> pCurrency);
     void DeleteCurrency(int currencyID);
-    void UpdateCurrency(wxSharedPtr<mmCurrency> pCurrency);
+    void UpdateCurrency(std::shared_ptr<mmCurrency> pCurrency);
     int getCurrencyID(const wxString& currencyName, bool symbol = false) const;
     wxString getCurrencyName(int currencyID, bool symbol = false) const;
-    wxSharedPtr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
-    wxSharedPtr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName, bool symbol = false) const;
+    std::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
+    std::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName, bool symbol = false) const;
 
     void LoadBaseCurrencySettings() const;
     void LoadCurrencySetting(const wxString& currencySymbol);
@@ -73,15 +73,15 @@ public:
     void SetBaseCurrencySettings(int currencyID);
 	bool OnlineUpdateCurRate(wxString& sError);
 
-    std::vector< wxSharedPtr<mmCurrency> > currencies_;
+    std::vector< std::shared_ptr<mmCurrency> > currencies_;
 
-    typedef std::vector< wxSharedPtr<mmCurrency> >::const_iterator const_iterator;
+    typedef std::vector< std::shared_ptr<mmCurrency> >::const_iterator const_iterator;
    
 private:
-    wxSharedPtr<wxSQLite3Database> db_;
-    wxSharedPtr<MMEX_IniSettings> info_table_;
+    std::shared_ptr<wxSQLite3Database> db_;
+    std::shared_ptr<MMEX_IniSettings> info_table_;
 
-    void SetCurrencySetting(wxSharedPtr<mmCurrency> pCurrency) const;
+    void SetCurrencySetting(std::shared_ptr<mmCurrency> pCurrency) const;
 };
 
 #endif

@@ -17,7 +17,7 @@
  ********************************************************/
 
 #pragma once
-#include "wx/sharedptr.h"
+#include "memory"
 #include <vector>
 #include "../defs.h"
 #include "../util.h"
@@ -52,11 +52,11 @@ public:
 class TListBase
 {
 protected:
-    wxSharedPtr<wxSQLite3Database> db_;
+    std::shared_ptr<wxSQLite3Database> db_;
     int current_index_;
 
 public:
-    TListBase(wxSharedPtr<wxSQLite3Database> db);
+    TListBase(std::shared_ptr<wxSQLite3Database> db);
     wxSQLite3Database* ListDatabase();
     int GetCurrentIndex();
 

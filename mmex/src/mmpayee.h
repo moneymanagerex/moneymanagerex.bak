@@ -18,7 +18,7 @@
 #define _MM_EX_MMPAYEE_H_
 
 #include "mmcategory.h"
-#include "wx/sharedptr.h"
+#include "memory"
 
 class mmCoreDB;
 
@@ -51,16 +51,16 @@ public:
     bool PayeeExists(const int payeeid) const;
     int GetPayeeId(const wxString& payeeName) const;
     wxString GetPayeeName(int id) const;
-    wxSharedPtr<mmPayee> GetPayeeSharedPtr(int payeeID);
+    std::shared_ptr<mmPayee> GetPayeeSharedPtr(int payeeID);
     void SortList(void);
     wxArrayString FilterPayees(const wxString& patt) const;
 
-    std::vector< wxSharedPtr<mmPayee> > entries_;
+    std::vector< std::shared_ptr<mmPayee> > entries_;
     int Num() const
     {
         return entries_.size();
     }
-    typedef std::vector< wxSharedPtr<mmPayee> >::const_iterator const_iterator;
+    typedef std::vector< std::shared_ptr<mmPayee> >::const_iterator const_iterator;
 
     /// Loads database Payees into memory
     void LoadPayees();

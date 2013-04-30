@@ -66,9 +66,9 @@ private:
     void LoadEntries();
 
 public:
-    std::vector<wxSharedPtr<TCurrencyEntry> > entrylist_;
+    std::vector<std::shared_ptr<TCurrencyEntry> > entrylist_;
 
-    TCurrencyList(wxSharedPtr<wxSQLite3Database> db);
+    TCurrencyList(std::shared_ptr<wxSQLite3Database> db);
 
     int AddEntry(TCurrencyEntry* pCurrencyEntry);
     void SetBaseCurrency(int currency_id);
@@ -77,9 +77,9 @@ public:
     void DeleteEntry(int currency_id);
     void DeleteEntry(const wxString& name, bool is_symbol = false);
 
-    wxSharedPtr<TCurrencyEntry> GetEntryPtr(const wxString& name, bool is_symbol = false);
-    wxSharedPtr<TCurrencyEntry> GetEntryPtr(int currency_id);
-    wxSharedPtr<TCurrencyEntry> GetIndexedEntryPtr(int index);
+    std::shared_ptr<TCurrencyEntry> GetEntryPtr(const wxString& name, bool is_symbol = false);
+    std::shared_ptr<TCurrencyEntry> GetEntryPtr(int currency_id);
+    std::shared_ptr<TCurrencyEntry> GetIndexedEntryPtr(int index);
 
     int GetCurrencyId(const wxString& name, bool is_symbol = false);
     wxString GetCurrencyName(int currency_id);
