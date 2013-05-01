@@ -180,15 +180,15 @@ TEST(TAccountList_Test_Add)
     TAccountList account_list(get_pDb(), currency_list);
     TAccountEntry* account_entry = new TAccountEntry();
     account_entry->acc_name_    = "Savings";
-    account_entry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::OPEN];
-    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::BANK];
+    account_entry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_OPEN];
+    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TYPE_BANK];
     account_entry->currency_id_ = currency_list.GetCurrencyId("AUD", true);
     int id_1 = account_list.AddEntry(account_entry);
 
     account_entry = new TAccountEntry();
     account_entry->acc_name_    = "Cheque";
-    account_entry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::CLOSED];
-    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TERM];
+    account_entry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_CLOSED];
+    account_entry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TYPE_TERM];
     account_entry->currency_id_ = currency_list.GetCurrencyId("USD", true);
     int id_2 = account_list.AddEntry(account_entry);
 

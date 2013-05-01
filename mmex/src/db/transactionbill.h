@@ -20,7 +20,7 @@
 #include "entry_base.h"
 #include "transaction.h"
 
-const wxString REPEAT_TYPE_DEF[] = {
+const wxString REPEAT_TYPE_TRANSLATE[] = {
     wxTRANSLATE("None"),
     wxTRANSLATE("Weekly"),
     wxTRANSLATE("Bi-Weekly"),

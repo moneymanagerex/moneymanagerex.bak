@@ -45,8 +45,8 @@ private:
     void SetDatabaseValues(wxSQLite3Statement& st, int& db_index);
 
 public:
-    enum ACCOUNT_STATE {OPEN, CLOSED};
-    enum ACCOUNT_TYPE {BANK, TERM, STOCK};
+    enum ACCOUNT_STATE {STATE_OPEN, STATE_CLOSED};
+    enum ACCOUNT_TYPE {TYPE_BANK, TYPE_TERM, TYPE_STOCK};
     
     wxString acc_name_;
     wxString acc_type_;
