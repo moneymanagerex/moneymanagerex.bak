@@ -54,25 +54,25 @@ private:
 
 public:
     enum REPEAT_TYPE {
-        INACTIVE = -1,
-        NONE,
-        WEEKLY,
-        BI_WEEKLY,      // FORTNIGHTLY
-        MONTHLY,
-        BI_MONTHLY,
-        QUARTERLY,      // TRI_MONTHLY
-        HALF_YEARLY,
-        YEARLY,
-        FOUR_MONTHLY,   // QUAD_MONTHLY
-        FOUR_WEEKLY,    // QUAD_WEEKLY
-        DAILY,
-        IN_X_DAYS,
-        IN_X_MONTHS,
-        EVERY_X_DAYS,
-        EVERY_X_MONTHS,
-        MONTHLY_LAST_DAY,
-        MONTHLY_LAST_BUSINESS_DAY,
-        REPEAT_TYPE_SIZE
+        TYPE_INACTIVE = -1,
+        TYPE_NONE,
+        TYPE_WEEKLY,
+        TYPE_BI_WEEKLY,      // FORTNIGHTLY
+        TYPE_MONTHLY,
+        TYPE_BI_MONTHLY,
+        TYPE_QUARTERLY,      // TRI_MONTHLY
+        TYPE_HALF_YEARLY,
+        TYPE_YEARLY,
+        TYPE_FOUR_MONTHLY,   // QUAD_MONTHLY
+        TYPE_FOUR_WEEKLY,    // QUAD_WEEKLY
+        TYPE_DAILY,
+        TYPE_IN_X_DAYS,
+        TYPE_IN_X_MONTHS,
+        TYPE_EVERY_X_DAYS,
+        TYPE_EVERY_X_MONTHS,
+        TYPE_MONTHLY_LAST_DAY,
+        TYPE_MONTHLY_LAST_BUSINESS_DAY,
+        TYPE_REPEAT_TYPE_SIZE
     };
 
     bool autoExecuteManual_;
@@ -81,23 +81,25 @@ public:
     wxString nextOccurDate_;
     int num_repeats_;
 
-    /// Constructor for creating a new transaction entry
+    // Constructor for creating a new transaction entry
     TTransactionBillEntry();
     
-    /// Copy constructor using a pointer
+    // Copy constructor using a pointer
     TTransactionBillEntry(TTransactionBillEntry* pEntry);
 
-    /// Constructor used to load a transaction from the database.
+    // Constructor used to load a transaction from the database.
     TTransactionBillEntry(wxSQLite3ResultSet& q1);
 
     void Update(wxSQLite3Database* db);
-    /// Get the transaction entry from the bill transaction entry
+    // Get the transaction entry from the bill transaction entry
     TTransactionEntry* GetTransaction();
-    /// Set the bill transaction entry from a transaction
+    // Set the bill transaction entry from a transaction
     void SetTransaction(std::shared_ptr<TTransactionEntry> pEntry);
 
     void AdjustNextOccuranceDate();
     bool RequiresExecution(int& remaining_days);
+    // Display next occurance date according to required user format
+    wxString DisplayNextOccurDate();
 };
 
 /************************************************************************************

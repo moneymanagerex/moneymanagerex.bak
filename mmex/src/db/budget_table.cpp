@@ -25,12 +25,12 @@
 TBudgetTableEntry::TBudgetTableEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_             = q1.GetInt(wxT("BudgetEntryID"));
-    id_budget_year_ = q1.GetInt(wxT("BudgetYearID"));
-    id_category_    = q1.GetInt(wxT("CategID"));
-    id_subcategory_ = q1.GetInt(wxT("SubCategID"));
-    period_         = q1.GetString(wxT("Period"));
-    amount_         = q1.GetDouble(wxT("Amount"));
+    id_             = q1.GetInt("BudgetEntryID");
+    id_budget_year_ = q1.GetInt("BudgetYearID");
+    id_category_    = q1.GetInt("CategID");
+    id_subcategory_ = q1.GetInt("SubCategID");
+    period_         = q1.GetString("Period");
+    amount_         = q1.GetDouble("Amount");
 }
 
 /// Copy constructor using a pointer
@@ -79,7 +79,7 @@ int TBudgetTableEntry::Add(wxSQLite3Database* db)
 
 void TBudgetTableEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from BUDGETTABLE_V1 where BUDGETENTRYID = ?")); 
+    DeleteEntry(db, "delete from BUDGETTABLE_V1 where BUDGETENTRYID = ?");
 }
 
 void TBudgetTableEntry::Update(wxSQLite3Database* db)
@@ -101,8 +101,7 @@ void TBudgetTableEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TBudgetTableEntry:Update: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TBudgetTableEntry:Update: %s"), e.GetMessage().c_str());
+        wxLogError("TBudgetTableEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -128,7 +127,7 @@ void TBudgetTableList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists(wxT("BUDGETTABLE_V1")))
+        if (!db_->TableExists("BUDGETTABLE_V1"))
         {
             const char CREATE_TABLE_BUDGETTABLE_V1[] =
             "CREATE TABLE BUDGETTABLE_V1(BUDGETENTRYID integer primary key, "
@@ -140,13 +139,12 @@ void TBudgetTableList::LoadEntries(bool load_entries)
 
         if (load_entries)
         {
-            LoadEntriesUsing(wxT("select * from BUDGETTABLE_V1"));
+            LoadEntriesUsing("select * from BUDGETTABLE_V1");
         }
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TBudgetTableList::LoadEntries %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TBudgetTableList::LoadEntries %s"), e.GetMessage().c_str());
+        wxLogError("TBudgetTableList::LoadEntries %s", e.GetMessage().c_str());
     }
 }
 

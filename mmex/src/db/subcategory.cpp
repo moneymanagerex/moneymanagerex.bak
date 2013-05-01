@@ -24,9 +24,9 @@
 TSubCategoryEntry::TSubCategoryEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_     = q1.GetInt(wxT("SUBCATEGID"));
-    name_   = q1.GetString(wxT("SUBCATEGNAME"));
-    cat_id_ = q1.GetInt(wxT("CATEGID"));
+    id_     = q1.GetInt("SUBCATEGID");
+    name_   = q1.GetString("SUBCATEGNAME");
+    cat_id_ = q1.GetInt("CATEGID");
 }
 
 TSubCategoryEntry::TSubCategoryEntry(int cat_id, const wxString& name)
@@ -51,7 +51,7 @@ int TSubCategoryEntry::Add(wxSQLite3Database* db)
 
 void TSubCategoryEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from SUBCATEGORY_V1 where SUBCATEGID = ?"));
+    DeleteEntry(db, "delete from SUBCATEGORY_V1 where SUBCATEGID = ?");
 }
 
 void TSubCategoryEntry::Update(wxSQLite3Database* db)
@@ -70,8 +70,7 @@ void TSubCategoryEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TSubCategoryEntry:Update: %s "), e.GetMessage().c_str());
-        wxLogError(wxT("TSubCategoryEntry:Update: %s "), e.GetMessage().c_str());
+        wxLogError("TSubCategoryEntry:Update: %s ", e.GetMessage().c_str());
     }
 }
 
@@ -89,7 +88,7 @@ void TSubCategoryList::LoadEntries(int cat_id)
 {
     try
     {
-        if (!db_->TableExists(wxT("SUBCATEGORY_V1")))
+        if (!db_->TableExists("SUBCATEGORY_V1"))
         {
             const char CREATE_TABLE_SUBCATEGORY_V1[]=
             "CREATE TABLE SUBCATEGORY_V1(SUBCATEGID integer primary key, "
@@ -98,10 +97,10 @@ void TSubCategoryList::LoadEntries(int cat_id)
             db_->ExecuteUpdate(CREATE_TABLE_SUBCATEGORY_V1);
         }
 
-        wxString sql_statement = wxT("select SUBCATEGID, SUBCATEGNAME, CATEGID from SUBCATEGORY_V1");
+        wxString sql_statement = "select SUBCATEGID, SUBCATEGNAME, CATEGID from SUBCATEGORY_V1";
         if (cat_id > 0)
         {
-            sql_statement << wxT(" where CATEGID = ") << cat_id;
+            sql_statement << " where CATEGID = " << cat_id;
         }
 
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
@@ -114,9 +113,7 @@ void TSubCategoryList::LoadEntries(int cat_id)
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxString msg = wxT("LoadSubCategoryEntries ");
-        wxLogDebug(msg, e.GetMessage().c_str());
-        wxLogError(msg + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        wxLogError("LoadSubCategoryEntries %s", e.GetMessage().c_str());
     }
 }
 

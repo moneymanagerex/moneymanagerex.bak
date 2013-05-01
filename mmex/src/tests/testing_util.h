@@ -67,20 +67,20 @@ private:
 // Returns the user's current working directory for the new inidb database.
 // wxString getIniDbPpath();
 
-wxSharedPtr<wxSQLite3Database> get_pInidb();
+std::shared_ptr<wxSQLite3Database> get_pInidb();
 
 // Single point access for the test database, stored in memory.
-wxSharedPtr<MMEX_IniSettings> pSettingsList();
+std::shared_ptr<MMEX_IniSettings> pSettingsList();
 
 /*****************************************************************************************
  Create a single access point for the database, Remove database on completion.
  *****************************************************************************************/
 // Returns the user's current working directory for the new database.
 // wxString getDbPath();
-wxSharedPtr<wxSQLite3Database> get_pDb();
+std::shared_ptr<wxSQLite3Database> get_pDb();
 
 // Create a single access point for the main database, stored in memory.
-wxSharedPtr<mmCoreDB> pDb_core();
+std::shared_ptr<mmCoreDB> pDb_core();
  
 void const displayTimeTaken(const wxString msg, const wxDateTime start_time);
 

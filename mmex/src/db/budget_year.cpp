@@ -25,8 +25,8 @@
 TBudgetYearEntry::TBudgetYearEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_   = q1.GetInt(wxT("BudgetYearID"));
-    name_ = q1.GetString(wxT("BudgetYearName"));
+    id_   = q1.GetInt("BudgetYearID");
+    name_ = q1.GetString("BudgetYearName");
 }
 
 void TBudgetYearEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
@@ -56,7 +56,7 @@ int TBudgetYearEntry::Add(wxSQLite3Database* db)
 
 void TBudgetYearEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from BUDGETYEAR_V1 where BudgetYearID = ?")); 
+    DeleteEntry(db, "delete from BUDGETYEAR_V1 where BudgetYearID = ?");
 }
 
 void TBudgetYearEntry::Update(wxSQLite3Database* db)
@@ -76,8 +76,7 @@ void TBudgetYearEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TBudgetYearEntry:Update: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TBudgetYearEntry:Update: %s"), e.GetMessage().c_str());
+        wxLogError("TBudgetYearEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -95,7 +94,7 @@ void TBudgetYearList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists(wxT("BUDGETYEAR_V1")))
+        if (!db_->TableExists("BUDGETYEAR_V1"))
         {
             const char CREATE_TABLE_BUDGETYEAR_V1[] =
             "CREATE TABLE BUDGETYEAR_V1(BUDGETYEARID integer primary key, "
@@ -106,13 +105,12 @@ void TBudgetYearList::LoadEntries(bool load_entries)
 
         if (load_entries)
         {
-            LoadEntriesUsing(wxT("select * from BUDGETYEAR_V1"));
+            LoadEntriesUsing("select * from BUDGETYEAR_V1");
         }
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TBudgetYearList::LoadEntries %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TBudgetYearList::LoadEntries %s"), e.GetMessage().c_str());
+        wxLogError("TBudgetYearList::LoadEntries %s", e.GetMessage().c_str());
     }
 }
 

@@ -19,19 +19,8 @@
 
 #include "entry_base.h"
 
-const wxString TRANS_STATE_DEF[] = {
-    wxT("N"),
-    wxT("R"),
-    wxT("V"),
-    wxT("F"),
-    wxT("D")
-};
-
-const wxString TRANS_TYPE_DEF[] = {
-    wxT("Withdrawal"),
-    wxT("Deposit"),
-    wxT("Transfer")
-};
+const wxString TRANS_STATE_DEF[] = {"N", "R", "V", "F", "D"};
+const wxString TRANS_TYPE_DEF[]  = {"Withdrawal", "Deposit", "Transfer"};
 
 /***********************************************************************************
  This class holds a single transaction entry
@@ -50,17 +39,17 @@ protected:
 
 public:
     enum TRANS_STATE {
-        TRANS_NONE,
-        TRANS_RECONCILED,
-        TRANS_VOID,
-        TRANS_FOLLOWUP,
-        TRANS_DUPLICATE
+        STATE_NONE,
+        STATE_RECONCILED,
+        STATE_VOID,
+        STATE_FOLLOWUP,
+        STATE_DUPLICATE
     };
 
     enum TRANS_TYPE {
-        TRANS_WITHDRAWAL,
-        TRANS_DEPOSIT,
-        TRANS_TRANSFER
+        TYPE_WITHDRAWAL,
+        TYPE_DEPOSIT,
+        TYPE_TRANSFER
     };
 
     int id_from_account;
@@ -79,16 +68,18 @@ public:
     wxString trans_status_;
     wxString trans_notes_;
 
-    /// Constructor for creating a new transaction entry
+    // Constructor for creating a new transaction entry
     TTransactionEntry();
     
-    /// Copy constructor using a pointer
+    // Copy constructor using a pointer
     TTransactionEntry(TTransactionEntry* pEntry);
     
-    /// Constructor used to load a transaction from the database.
+    // Constructor used to load a transaction from the database.
     TTransactionEntry(wxSQLite3ResultSet& q1);
 
     void Update(wxSQLite3Database* db);
+    // Display transaction date according to required user format
+    wxString DisplayTransactionDate();
 };
 
 /************************************************************************************
@@ -104,7 +95,7 @@ public:
 
     TTransactionList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
 
-    /// Allows specialised loads by providing the required SQL statement
+    // Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
     int AddEntry(TTransactionEntry* pTransEntry);

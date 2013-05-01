@@ -25,16 +25,16 @@
 TCurrencyEntry::TCurrencyEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_         = q1.GetInt(wxT("CURRENCYID"));
-    name_       = q1.GetString(wxT("CURRENCYNAME"));
-    pfxSymbol_  = q1.GetString(wxT("PFX_SYMBOL"));
-    sfxSymbol_  = q1.GetString(wxT("SFX_SYMBOL"));
-    dec_        = q1.GetString(wxT("DECIMAL_POINT"));
-    grp_        = q1.GetString(wxT("GROUP_SEPARATOR"));
-    unit_       = q1.GetString(wxT("UNIT_NAME"));
-    cent_       = q1.GetString(wxT("CENT_NAME"));
-    scaleDl_    = q1.GetInt(wxT("SCALE"));
-    baseConv_   = q1.GetDouble(wxT("BASECONVRATE"), 1.0);
+    id_         = q1.GetInt("CURRENCYID");
+    name_       = q1.GetString("CURRENCYNAME");
+    pfxSymbol_  = q1.GetString("PFX_SYMBOL");
+    sfxSymbol_  = q1.GetString("SFX_SYMBOL");
+    dec_        = q1.GetString("DECIMAL_POINT");
+    grp_        = q1.GetString("GROUP_SEPARATOR");
+    unit_       = q1.GetString("UNIT_NAME");
+    cent_       = q1.GetString("CENT_NAME");
+    scaleDl_    = q1.GetInt("SCALE");
+    baseConv_   = q1.GetDouble("BASECONVRATE", 1.0);
     if(q1.GetColumnCount() < 11)
     {
         /* no Currency symbol in the table yet */
@@ -42,7 +42,7 @@ TCurrencyEntry::TCurrencyEntry(wxSQLite3ResultSet& q1)
     }
     else
     {
-        currencySymbol_ = q1.GetString(wxT("CURRENCY_SYMBOL"));
+        currencySymbol_ = q1.GetString("CURRENCY_SYMBOL");
     }
     decChar_ = 0;
     grpChar_ = 0;
@@ -60,18 +60,18 @@ TCurrencyEntry::TCurrencyEntry(wxSQLite3ResultSet& q1)
 /// Constructor for creating a new currency entry
 TCurrencyEntry::TCurrencyEntry()
 : TEntryBase()
-, name_(wxT("US Dollar"))
-, pfxSymbol_(wxT('$'))
+, name_("US Dollar")
+, pfxSymbol_('$')
 , sfxSymbol_()
-, dec_(wxT('.'))
-, grp_(wxT(','))
-, unit_(wxT("dollar"))
-, cent_(wxT("cent"))
+, dec_('.')
+, grp_(',')
+, unit_("dollar")
+, cent_("cent")
 , scaleDl_(100)
 , baseConv_(1)
-, decChar_(wxT('\0'))
-, grpChar_(wxT('\0'))
-, currencySymbol_(wxT("USD"))
+, decChar_('\0')
+, grpChar_('\0')
+, currencySymbol_("USD")
 {}
 
 void TCurrencyEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
@@ -107,7 +107,7 @@ int TCurrencyEntry::Add(wxSQLite3Database* db)
 
 void TCurrencyEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from CURRENCYFORMATS_V1 where CURRENCYID = ?"));
+    DeleteEntry(db, "delete from CURRENCYFORMATS_V1 where CURRENCYID = ?");
 }
 
 void TCurrencyEntry::Update(wxSQLite3Database* db)
@@ -129,8 +129,7 @@ void TCurrencyEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        // wxLogDebug(wxT("TCurrencyEntry:update: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TCurrencyEntry:update: %s"), e.GetMessage().c_str());
+        wxLogError("TCurrencyEntry:update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -156,7 +155,7 @@ void TCurrencyList::LoadEntries()
 {
     try
     {
-        if (!db_->TableExists(wxT("CURRENCYFORMATS_V1")))
+        if (!db_->TableExists("CURRENCYFORMATS_V1"))
         {
             const char SQL_CREATE_TABLE_CURRENCYFORMATS_V1[] =
             "create table CURRENCYFORMATS_V1 "
@@ -180,8 +179,7 @@ void TCurrencyList::LoadEntries()
     }
     catch (const wxSQLite3Exception& e)
     {
-        // wxLogDebug(wxT("TCurrencyList:LoadEntries: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TCurrencyList:LoadEntries: %s"), e.GetMessage().c_str());
+        wxLogError("TCurrencyList:LoadEntries: %s", e.GetMessage().c_str());
     }
 }
 

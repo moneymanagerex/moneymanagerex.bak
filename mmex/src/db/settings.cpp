@@ -18,7 +18,7 @@
  
 #include "settings.h"
 
-const wxString INI_TABLE_NAME = wxT("SETTING_V1");
+const wxString INI_TABLE_NAME = "SETTING_V1";
 const char CREATE_INI_TABLE[] =
     "create table SETTING_V1 ("
     "SETTINGID integer not null primary key, "
@@ -30,7 +30,7 @@ const char INSERT_INI_RECORD[] = "insert into SETTING_V1 (SETTINGNAME, SETTINGVA
 const char SELECT_INI_RECORD[] = "select * from SETTING_V1";
 
 //---------------------------------------------------------------------------
-const wxString INFO_TABLE_NAME = wxT("INFOTABLE_V1");
+const wxString INFO_TABLE_NAME = "INFOTABLE_V1";
 const char CREATE_INFO_TABLE[] =
     "create table INFOTABLE_V1 ("
     "INFOID integer not null primary key, "
@@ -56,15 +56,15 @@ TSettingsEntry::TSettingsEntry(bool main_db, wxSQLite3ResultSet& q1)
 {
     if (main_db)
     {
-        id_    = q1.GetInt(wxT("INFOID"));
-        name_  = q1.GetString(wxT("INFONAME"));
-        value_ = q1.GetString(wxT("INFOVALUE"));
+        id_    = q1.GetInt("INFOID");
+        name_  = q1.GetString("INFONAME");
+        value_ = q1.GetString("INFOVALUE");
     }
     else
     {
-        id_           = q1.GetInt(wxT("SETTINGID"));
-        name_  = q1.GetString(wxT("SETTINGNAME"));
-        value_ = q1.GetString(wxT("SETTINGVALUE"));
+        id_           = q1.GetInt("SETTINGID");
+        name_  = q1.GetString("SETTINGNAME");
+        value_ = q1.GetString("SETTINGVALUE");
     }
 }
 
@@ -110,8 +110,7 @@ void TSettingsEntry::Save(wxSQLite3Database* db)
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TSettingsEntry:Save: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TSettingsEntry:Save: %s"), e.GetMessage().c_str());
+        wxLogError("TSettingsEntry:Save: %s", e.GetMessage().c_str());
     }
 }
 /****************************************************************************/
@@ -139,8 +138,7 @@ TSettingsList::TSettingsList(std::shared_ptr<wxSQLite3Database> db, bool main_db
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TSettingsList Constructor: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TSettingsList Constructor: %s"), e.GetMessage().c_str());
+        wxLogError("TSettingsList Constructor: %s", e.GetMessage().c_str());
     }
 }
 
@@ -199,7 +197,7 @@ bool TSettingsList::GetBoolSetting(const wxString& name, bool default_value)
     TSettingsEntry* pRecord = GetRecord(name);
     if (pRecord)
     {
-        if (pRecord->Value() == wxT("TRUE")) return true;
+        if (pRecord->Value() == "TRUE") return true;
         else return false;
     }
     return default_value;
@@ -228,8 +226,8 @@ void TSettingsList::SetBoolSetting(const wxString& name, bool value)
         ini_records_.push_back(pNewRecord);
         pExistingRecord = pNewRecord.get();
     }
-    if (value) pExistingRecord->SetValue(wxT("TRUE"));
-    else       pExistingRecord->SetValue(wxT("FALSE")); 
+    if (value) pExistingRecord->SetValue("TRUE");
+    else       pExistingRecord->SetValue("FALSE"); 
 }
 
 void TSettingsList::SetIntSetting(const wxString& name, int value)

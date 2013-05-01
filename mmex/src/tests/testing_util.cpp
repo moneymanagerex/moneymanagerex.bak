@@ -61,7 +61,7 @@ wxString getIniDbPpath()
     return fn.GetFullPath();
 }
 
-wxSharedPtr<wxSQLite3Database> get_pInidb()
+std::shared_ptr<wxSQLite3Database> get_pInidb()
 {
 // change order for termination case
 #ifdef DBWRAPPER_TEST_INCLUDED_IN_BUILD
@@ -70,7 +70,7 @@ wxSharedPtr<wxSQLite3Database> get_pInidb()
     static Cleanup temp_IniDatabase(getIniDbPpath());
 #endif
 
-    static wxSharedPtr<wxSQLite3Database> pInidb(new wxSQLite3Database);
+    static std::shared_ptr<wxSQLite3Database> pInidb(new wxSQLite3Database);
 
     if (!pInidb->IsOpen())
     {
@@ -87,9 +87,9 @@ wxSharedPtr<wxSQLite3Database> get_pInidb()
 }
 
 // Single point access for the test database, stored in memory.
-wxSharedPtr<MMEX_IniSettings> pSettingsList()
+std::shared_ptr<MMEX_IniSettings> pSettingsList()
 {
-    static wxSharedPtr<MMEX_IniSettings> pIniList(new MMEX_IniSettings(get_pInidb()));
+    static std::shared_ptr<MMEX_IniSettings> pIniList(new MMEX_IniSettings(get_pInidb()));
 
     return pIniList;
 }
@@ -105,7 +105,7 @@ wxString getDbPath()
     return fn.GetFullPath();
 }
 
-wxSharedPtr<wxSQLite3Database> get_pDb()
+std::shared_ptr<wxSQLite3Database> get_pDb()
 {
 #ifdef DBWRAPPER_TEST_INCLUDED_IN_BUILD
     static Cleanup temp_database(getDbPath());
@@ -113,7 +113,7 @@ wxSharedPtr<wxSQLite3Database> get_pDb()
     static Cleanup temp_database(getDbPath(), true);
 #endif
 
-    wxSharedPtr<wxSQLite3Database> pDb = static_db_ptr();
+    std::shared_ptr<wxSQLite3Database> pDb = static_db_ptr();
 
     if (!pDb->IsOpen())
     {
@@ -130,9 +130,9 @@ wxSharedPtr<wxSQLite3Database> get_pDb()
 }
 
 // Create a single access point for the main database, stored in memory.
-wxSharedPtr<mmCoreDB> pDb_core()
+std::shared_ptr<mmCoreDB> pDb_core()
 {
-    static wxSharedPtr<mmCoreDB> pCore(new mmCoreDB(get_pDb(), pSettingsList()));
+    static std::shared_ptr<mmCoreDB> pCore(new mmCoreDB(get_pDb(), pSettingsList()));
 
     return pCore;
 }

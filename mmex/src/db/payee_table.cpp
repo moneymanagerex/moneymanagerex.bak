@@ -25,10 +25,10 @@
 TPayeeEntry::TPayeeEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_        = q1.GetInt(wxT("PAYEEID"));
-    name_      = q1.GetString(wxT("PAYEENAME"));
-    cat_id_    = q1.GetInt(wxT("CATEGID"));
-    subcat_id_ = q1.GetInt(wxT("SUBCATEGID"));
+    id_        = q1.GetInt("PAYEEID");
+    name_      = q1.GetString("PAYEENAME");
+    cat_id_    = q1.GetInt("CATEGID");
+    subcat_id_ = q1.GetInt("SUBCATEGID");
 }
 
 /// Constructor for creating a new category entry
@@ -56,7 +56,7 @@ int TPayeeEntry::Add(wxSQLite3Database* db)
 
 void TPayeeEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from PAYEE_V1 where PAYEEID = ?"));
+    DeleteEntry(db, "delete from PAYEE_V1 where PAYEEID = ?");
 }
 
 void TPayeeEntry::Update(wxSQLite3Database* db)
@@ -77,8 +77,7 @@ void TPayeeEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TPayeeEntry:Update: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TPayeeEntry:Update: %s"), e.GetMessage().c_str());
+        wxLogError("TPayeeEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -96,7 +95,7 @@ void TPayeeList::LoadEntries()
 {
     try
     {
-        if (!db_->TableExists(wxT("PAYEE_V1")))
+        if (!db_->TableExists("PAYEE_V1"))
         {
             const char CREATE_TABLE_PAYEE_V1[]=
             "CREATE TABLE PAYEE_V1(PAYEEID integer primary key, "
@@ -120,8 +119,7 @@ void TPayeeList::LoadEntries()
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TPayeeList:LoadEntries: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TPayeeList:LoadEntries: %s"), e.GetMessage().c_str());
+        wxLogError("TPayeeList:LoadEntries: %s", e.GetMessage().c_str());
     }
 }
 
