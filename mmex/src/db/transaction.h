@@ -20,7 +20,25 @@
 #include "entry_base.h"
 
 const wxString TRANS_STATE_DEF[] = {"N", "R", "V", "F", "D"};
-const wxString TRANS_TYPE_DEF[]  = {"Withdrawal", "Deposit", "Transfer"};
+const wxString TRANS_STATE_TRANSLATION[] = {
+    wxTRANSLATE("None"),
+    wxTRANSLATE("Reconciled"),
+    wxTRANSLATE("Void"),
+    wxTRANSLATE("Follow up"),
+    wxTRANSLATE("Duplicate")
+};
+
+const wxString TRANS_TYPE_DEF[] = {
+    "Withdrawal",
+    "Deposit",
+    "Transfer"
+};
+
+const wxString TRANS_TYPE_TRANSLATION[] = {
+    wxTRANSLATE("Withdrawal"),
+    wxTRANSLATE("Deposit"),
+    wxTRANSLATE("Transfer")
+};
 
 /***********************************************************************************
  This class holds a single transaction entry

@@ -308,15 +308,15 @@ int TAccountList::NumberOfAccounts(int account_type)
 
 int TAccountList::NumberOfBankAccounts()
 {
-    return NumberOfAccounts(TAccountEntry::BANK);
+    return NumberOfAccounts(TAccountEntry::TYPE_BANK);
 }
 
 int TAccountList::NumberOfTermAccounts()
 {
-    return NumberOfAccounts(TAccountEntry::TERM);
+    return NumberOfAccounts(TAccountEntry::TYPE_TERM);
 }
 
 int TAccountList::NumberOfStockAccounts()
 {
-    return NumberOfAccounts(TAccountEntry::STOCK);
+    return NumberOfAccounts(TAccountEntry::TYPE_STOCK);
 }
