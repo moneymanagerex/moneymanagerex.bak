@@ -45,18 +45,18 @@
 
 //----------------------------------------------------------------------------
 // This is a way to prevent certain tests occuring during development testing
-//#define CENTRALL_DB_TESTS
-//#define CURRENCY_TESTS
-//#define ACCOUNT_TESTS
-//#define CATEGORY_TESTS
-//#define SUBCATEGORY_TESTS
-//#define PAYEE_TESTS
-//#define TRANSACTION_TESTS
-//#define REPEAT_TRANSACTION_TESTS
-//#define SPLIT_TRANSACTION_TESTS
-//#define ASSET_TESTS
+#define CENTRALL_DB_TESTS
+#define CURRENCY_TESTS
+#define ACCOUNT_TESTS
+#define CATEGORY_TESTS
+#define SUBCATEGORY_TESTS
+#define PAYEE_TESTS
+#define TRANSACTION_TESTS
+#define REPEAT_TRANSACTION_TESTS
+#define SPLIT_TRANSACTION_TESTS
+#define ASSET_TESTS
 #define STOCK_TESTS
-//#define BUDGET_TESTS
+#define BUDGET_TESTS
 
 //----------------------------------------------------------------------------
 /// Central class holding all major components of the database
@@ -77,7 +77,7 @@ public:
     TBudgetYearList         budget_year_list_;
     TBudgetTableList        budget_table_list_;
 
-    TDatabase(wxSharedPtr<wxSQLite3Database> db)
+    TDatabase(std::shared_ptr<wxSQLite3Database> db)
     : info_settings_(db, true)
     , currency_list_(db)
     , account_list_(db, currency_list_)
@@ -95,9 +95,9 @@ public:
 };
 
 // Create a single access point for the main database, stored in memory.
-wxSharedPtr<TDatabase> main_db()
+std::shared_ptr<TDatabase> main_db()
 {
-    static wxSharedPtr<TDatabase> pCore(new TDatabase(get_pDb()));
+    static std::shared_ptr<TDatabase> pCore(new TDatabase(get_pDb()));
 
     return pCore;
 }
@@ -114,9 +114,9 @@ TEST(Central_Database_Test)
     printf("\nCentral_Database_Test: START");
     display_STD_IO_separation_line();
 
-    wxSharedPtr<wxSQLite3Database> pDB = get_pDb();
+    std::shared_ptr<wxSQLite3Database> pDB = get_pDb();
     pDB->Begin();
-    wxSharedPtr<TDatabase> pCore = main_db();
+    std::shared_ptr<TDatabase> pCore = main_db();
     pDB->Commit();
 
     if (!pCore->info_settings_.Exists("MMEXVERSION"))
@@ -160,7 +160,7 @@ TEST(TCurrencyList_Add)
     int id_AUD = currency_list.AddEntry(pCurrencyAUD);
     CHECK(id_first != id_AUD);
 
-    wxSharedPtr<TCurrencyEntry> pEntry = currency_list.GetEntryPtr(id_first);
+    std::shared_ptr<TCurrencyEntry> pEntry = currency_list.GetEntryPtr(id_first);
     pEntry->baseConv_ = 1.5;
     pEntry->Update(currency_list.ListDatabase());
 
@@ -228,7 +228,7 @@ TEST(TCategoryList_Test)
     
     cat_list.ListDatabase()->Commit();
 
-    wxSharedPtr<TCategoryEntry> pCatEntry = cat_list.GetEntryPtr(2);
+    std::shared_ptr<TCategoryEntry> pCatEntry = cat_list.GetEntryPtr(2);
     if (pCatEntry)
     {
         CHECK(true);
@@ -294,7 +294,7 @@ TEST(TSubCategoryList_Test)
     }
     cat_list.ListDatabase()->Commit();
 
-    wxSharedPtr<TSubCategoryEntry> pSubCatEntry = subcat_list.GetEntryPtr(cat_id, "Insurance");
+    std::shared_ptr<TSubCategoryEntry> pSubCatEntry = subcat_list.GetEntryPtr(cat_id, "Insurance");
 
     if (pSubCatEntry)
     {
@@ -365,7 +365,7 @@ TEST(TPayeeList_Test_1)
 
     payee_list.UpdateEntry("Coles", 1, 1);
 
-    wxSharedPtr<TPayeeEntry> pEntry = payee_list.GetEntryPtr("Coles");
+    std::shared_ptr<TPayeeEntry> pEntry = payee_list.GetEntryPtr("Coles");
     CHECK_EQUAL("Coles", pEntry->name_);
     CHECK_EQUAL(1, pEntry->subcat_id_);
     CHECK_EQUAL(1, pEntry->cat_id_);
@@ -402,23 +402,57 @@ TEST(TTransactionList_Add)
     const wxDateTime start_time(wxDateTime::UNow());
 
     TTransactionList transactions(get_pDb());
+    transactions.ListDatabase()->Begin();
+
     TTransactionEntry* pTransEntry_1 = new TTransactionEntry();
+    pTransEntry_1->trans_date_   = start_time.Subtract(wxDateSpan::Month()).FormatISODate();
     pTransEntry_1->amount_from_  = 1000;
-    pTransEntry_1->trans_status_ = TRANS_STATE_DEF[TTransactionEntry::TRANS_RECONCILED];
-    pTransEntry_1->trans_type_   = TRANS_TYPE_DEF[TTransactionEntry::TRANS_DEPOSIT];
-    pTransEntry_1->trans_notes_  = "Transaction Entry";  
+    pTransEntry_1->trans_status_ = TRANS_STATE_DEF[TTransactionEntry::STATE_NONE];
+    pTransEntry_1->trans_type_   = TRANS_TYPE_DEF[TTransactionEntry::TYPE_DEPOSIT];
+    pTransEntry_1->trans_notes_  = "Transaction Entry 1";
     int id_1 = transactions.AddEntry(pTransEntry_1);
 
     TTransactionEntry* pTransEntry_2 = new TTransactionEntry(pTransEntry_1);
-
+    pTransEntry_2->amount_from_  = 500;
+    pTransEntry_2->trans_type_   = TRANS_TYPE_DEF[TTransactionEntry::TYPE_WITHDRAWAL];
+    pTransEntry_2->trans_notes_  = "Transaction Entry 2";  
     int id_2 = transactions.AddEntry(pTransEntry_2);
-    pTransEntry_1->amount_from_  = 2000;
-    pTransEntry_1->Update(transactions.ListDatabase());
 
-    CHECK(id_1 != id_2);
-    CHECK(pTransEntry_1->GetId() != pTransEntry_2->GetId());
+    TTransactionEntry* pTransEntry_3 = new TTransactionEntry(pTransEntry_1);
+    pTransEntry_3->amount_from_  = 500;
+    pTransEntry_3->amount_to_    = 500;
+    pTransEntry_3->trans_type_   = TRANS_TYPE_DEF[TTransactionEntry::TYPE_TRANSFER];
+    pTransEntry_3->trans_notes_  = "Transaction Entry 3";
+    int id_3 = transactions.AddEntry(pTransEntry_3);
+    transactions.ListDatabase()->Commit();
+
+    CHECK_EQUAL(1, id_1);
+    CHECK(id_1 == pTransEntry_1->GetId());
+
+    CHECK_EQUAL(2, id_2);
+    CHECK(id_2 == pTransEntry_2->GetId());
+
+    CHECK_EQUAL(3, id_3);
+    CHECK(id_3 == pTransEntry_3->GetId());
 
     displayTimeTaken("TTransactionList_Add", start_time);
+}
+
+TEST(TTransactionList_Update)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TTransactionList transactions(get_pDb());
+    TTransactionEntry* pTransEntry = transactions.GetEntryPtr(2).get();
+
+    CHECK_EQUAL(2, pTransEntry->GetId());
+    CHECK_EQUAL(500, pTransEntry->amount_from_);
+
+    pTransEntry->amount_to_ = 500;
+    pTransEntry->trans_status_ = TRANS_STATE_DEF[TTransactionEntry::STATE_RECONCILED];
+    pTransEntry->Update(transactions.ListDatabase());
+
+    displayTimeTaken("TTransactionList_Update", start_time);
 }
 #endif
 
@@ -426,7 +460,7 @@ TEST(TTransactionList_Add)
 /****************************************************************************
  Testing Repeating Transactions
  ****************************************************************************/
-TEST(TTransactionBillList_Add_Entries)
+TEST(BillList_Add_first_two_entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
@@ -434,11 +468,11 @@ TEST(TTransactionBillList_Add_Entries)
 
     TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
     pBillEntry->amount_from_   = 1000;
-    pBillEntry->trans_status_  = TRANS_STATE_DEF[TTransactionEntry::TRANS_RECONCILED];
-    pBillEntry->trans_type_    = TRANS_TYPE_DEF[TTransactionEntry::TRANS_DEPOSIT];
-    pBillEntry->trans_notes_   = "Repeat Transaction Entry One month in advance";
+    pBillEntry->trans_status_  = TRANS_STATE_DEF[TTransactionEntry::STATE_RECONCILED];
+    pBillEntry->trans_type_    = TRANS_TYPE_DEF[TTransactionEntry::TYPE_DEPOSIT];
+    pBillEntry->trans_notes_   = "Repeat Entry - weekly - start one month in future";
     pBillEntry->nextOccurDate_ = start_time.Add(wxDateSpan::Month()).FormatISODate();
-    pBillEntry->repeat_type_   = TTransactionBillEntry::WEEKLY;
+    pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_WEEKLY;
     pBillEntry->num_repeats_   = 10;
 
     // New bill_trans added for one month in advance.
@@ -452,9 +486,9 @@ TEST(TTransactionBillList_Add_Entries)
     }
 
     TTransactionBillEntry* pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
-    pBillEntry_1->trans_notes_   = "Repeat Entry: Start- One Month ago";
+    pBillEntry_1->trans_notes_   = "Repeat Entry - every 10 days, start one month in past";
     pBillEntry_1->nextOccurDate_ = start_time.Subtract(wxDateSpan::Month()).FormatISODate();
-    pBillEntry_1->repeat_type_   = TTransactionBillEntry::EVERY_X_DAYS;
+    pBillEntry_1->repeat_type_   = TTransactionBillEntry::TYPE_EVERY_X_DAYS;
     pBillEntry_1->autoExecuteManual_ = true;
     bill_id = repeat_transactions.AddEntry(pBillEntry_1);
     CHECK(bill_id > 1);
@@ -462,13 +496,15 @@ TEST(TTransactionBillList_Add_Entries)
     pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
     pBillEntry_1->autoExecuteManual_ = true;
     pBillEntry_1->autoExecuteSilent_ = true;
+    pBillEntry_1->nextOccurDate_ = start_time.Subtract(wxDateSpan::Weeks(2)).FormatISODate();
+    pBillEntry->trans_notes_   = "Repeat Entry - auto-silent, weekly - start two weeks in past";
     bill_id = repeat_transactions.AddEntry(pBillEntry_1);
     CHECK(bill_id > 2);
 
-    displayTimeTaken("TTransactionBillList_Add_Entries", start_time);
+    displayTimeTaken("BillList_Add_first_two_entries", start_time);
 }
 
-TEST(TTransactionBillList_Add_two_entries)
+TEST(BillList_Add_next_two_entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
@@ -476,25 +512,49 @@ TEST(TTransactionBillList_Add_two_entries)
     TTransactionBillList repeat_transactions(get_pDb());
 
     TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
-    pBillEntry->amount_from_  = 1000;
-    pBillEntry->trans_status_ = TRANS_STATE_DEF[TTransactionBillEntry::TRANS_RECONCILED];
-    pBillEntry->trans_type_   = TRANS_TYPE_DEF[TTransactionBillEntry::TRANS_DEPOSIT];
-    pBillEntry->trans_notes_  = "Repeat Entry: Start- One Month ago, repeat every 10 days";
+    pBillEntry->amount_from_   = 1000;
+    pBillEntry->trans_status_  = TRANS_STATE_DEF[TTransactionBillEntry::STATE_RECONCILED];
+    pBillEntry->trans_type_    = TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_DEPOSIT];
+    pBillEntry->trans_notes_   = "Repeat Entry: Start- One Month ago, repeat every 10 days";
     pBillEntry->nextOccurDate_ = start_time.Subtract(wxDateSpan::Month()).FormatISODate();
-    pBillEntry->repeat_type_  = TTransactionBillEntry::EVERY_X_DAYS;
-    pBillEntry->num_repeats_  = 10;
+    pBillEntry->trans_date_    = pBillEntry->nextOccurDate_;
+    pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_EVERY_X_DAYS;
+    pBillEntry->num_repeats_   = 10;
     int id = repeat_transactions.AddEntry(pBillEntry);
 
     TTransactionBillEntry* pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
-    pBillEntry_1->repeat_type_  = TTransactionBillEntry::WEEKLY;
-    pBillEntry_1->trans_notes_  = "Repeat Entry: Start- One Month ago, repeat weekly";
+    pBillEntry_1->repeat_type_ = TTransactionBillEntry::TYPE_WEEKLY;
+    pBillEntry_1->trans_notes_ = "Repeat Entry: Start- One Month ago, repeat weekly";
 
     int id_1 = repeat_transactions.AddEntry(pBillEntry_1);
 
     CHECK(id != id_1);
 
-    displayTimeTaken("TTransactionBillList_Add_2", start_time);
+    displayTimeTaken("BillList_Add_next_two_entries", start_time);
 }
+
+#ifdef TRANSACTION_TESTS
+TEST(BillList_Create_entry_from_transaction)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+
+    TTransactionList transactions(get_pDb());
+    TTransactionBillList repeat_transactions(get_pDb());
+
+    std::shared_ptr<TTransactionEntry> pTransEntry = transactions.GetEntryPtr(2);
+
+    CHECK_EQUAL(2, pTransEntry->GetId());
+    CHECK_EQUAL(500, pTransEntry->amount_from_);
+
+    TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
+    pBillEntry->SetTransaction(pTransEntry);
+    pBillEntry->nextOccurDate_ = start_time.Subtract(wxDateSpan::Weeks(2)).FormatISODate();
+    pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_BI_WEEKLY;
+    repeat_transactions.AddEntry(pBillEntry);
+
+    displayTimeTaken("BillList_Create_entry_from_transaction", start_time);
+}
+#endif
 
 TEST(TTransactionBillList_Executing_Entries)
 {
@@ -517,6 +577,15 @@ TEST(TTransactionBillList_Executing_Entries)
             pTransactionEntry->trans_date_ = pBillEntry->nextOccurDate_;
             transactions.AddEntry(pTransactionEntry);
 
+            wxString date;
+            date = pTransactionEntry->DisplayTransactionDate();
+            date = pBillEntry->DisplayTransactionDate();
+            date = pBillEntry->DisplayNextOccurDate();
+
+            CHECK(pTransactionEntry->trans_date_ != pTransactionEntry->DisplayTransactionDate());
+            CHECK(pBillEntry->trans_date_ != pBillEntry->DisplayTransactionDate());
+            CHECK(pBillEntry->nextOccurDate_ != pBillEntry->DisplayNextOccurDate());
+            
             pBillEntry->AdjustNextOccuranceDate();
             CHECK(pTransactionEntry->trans_date_ != pBillEntry->nextOccurDate_);
 
@@ -528,9 +597,9 @@ TEST(TTransactionBillList_Executing_Entries)
     CHECK(continue_Execution);
 
 #ifdef TRANSACTION_TESTS
-    CHECK_EQUAL(5, transactions.CurrentListSize());
+    CHECK_EQUAL(8, transactions.CurrentListSize());
 #else
-    CHECK_EQUAL(3, transactions.CurrentListSize());
+    CHECK_EQUAL(4, transactions.CurrentListSize());
 #endif
 
     displayTimeTaken("TTransactionBillList_Add_2", start_time);
@@ -594,7 +663,7 @@ TEST(TSplitTransactionList_Test_update)
     int list_size = split_list.GetListSize();
     CHECK_EQUAL(4, list_size);
     // record_id = 3, list_index = 2
-    wxSharedPtr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
+    std::shared_ptr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
 
     pEntry->amount_ = 500;
     split_list.UpdateEntry(pEntry);
@@ -615,7 +684,7 @@ TEST(TSplitTransactionList_Test_delete)
 
     int list_size = split_list.GetListSize();
     CHECK_EQUAL(4, list_size);
-    wxSharedPtr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
+    std::shared_ptr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
     split_list.DeleteEntry(pEntry);
     CHECK_EQUAL(700, split_list.TotalAmount());
     list_size = split_list.GetListSize();
@@ -680,7 +749,7 @@ TEST(TAssetList_Test_entry_with_listed_entry)
     asset_entry->rate_value_ = 50;
     asset_entry->Update(asset_list.ListDatabase());
 
-    wxSharedPtr<TAssetEntry> listed_asset_entry = asset_list.GetEntryPtr(asset_id);
+    std::shared_ptr<TAssetEntry> listed_asset_entry = asset_list.GetEntryPtr(asset_id);
     CHECK(listed_asset_entry->name_ == asset_entry->name_);
 
     displayTimeTaken("TAssetList_Test_entry_with_listed_entry", start_time);
@@ -696,7 +765,7 @@ TEST(TAssetList_Test_Values)
     TAssetList asset_list(get_pDb());
     CHECK_EQUAL(1, asset_list.CurrentListSize());
 
-    wxSharedPtr<TAssetEntry> asset_entry = asset_list.GetIndexedEntryPtr(0);
+    std::shared_ptr<TAssetEntry> asset_entry = asset_list.GetIndexedEntryPtr(0);
     if (asset_entry)
     {
         CHECK_EQUAL(date, asset_entry->date_);
@@ -765,7 +834,7 @@ TEST(TAssetList_Test_Delete_entries)
     const wxDateTime start_time(wxDateTime::UNow());
 
     TAssetList asset_list(get_pDb());
-    wxSharedPtr<TAssetEntry> listed_asset_entry;
+    std::shared_ptr<TAssetEntry> listed_asset_entry;
 
     while (asset_list.CurrentListSize() > 0)
     {
@@ -814,12 +883,12 @@ TEST(TAssetList_Test_Depreciate_Daily)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    const wxString line_feed = wxT("\n");
+    const wxString line_feed = "\n";
     const double init_value = 20000;
     double new_value = init_value;
     double dep_rate = (init_value/365) * 0.2; // 20% pa
     int days = 0;
-    wxSharedPtr<TAssetEntry> pEntry;
+    std::shared_ptr<TAssetEntry> pEntry;
     for (int i = 0; i < asset_list.CurrentListSize(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -831,16 +900,16 @@ TEST(TAssetList_Test_Depreciate_Daily)
 //        CHECK_EQUAL(new_value, pEntry->GetValue());
 
         wxString str_value = line_feed;
-        str_value << wxT("Date: ") << pEntry->date_;
-        str_value << wxT("   Expected Value: ") << wxString::Format("%.2f", new_value);
-        str_value << wxT("   Value: ") << wxString::Format("%.2f", pEntry->GetValue());
+        str_value << "Date: " << pEntry->date_;
+        str_value << "   Expected Value: " << wxString::Format("%.2f", new_value);
+        str_value << "   Value: " << wxString::Format("%.2f", pEntry->GetValue());
         printf(str_value.char_str());
 
         days +=7;
     }
 
     printf(line_feed.char_str());
-    displayTimeTaken(wxT("TAssetList_Test_Depreciate_Daily"), start_time);
+    displayTimeTaken("TAssetList_Test_Depreciate_Daily", start_time);
     display_STD_IO_separation_line();
 }
 #endif
@@ -851,12 +920,12 @@ TEST(TAssetList_Test_Depreciate_Monthly)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    const wxString line_feed = wxT("\n");
+    const wxString line_feed = "\n";
     const double init_value = 20000;
     double new_value = init_value;
     double dep_rate = (init_value/12) * 0.2; // 20% pa
     int months = 0;
-    wxSharedPtr<TAssetEntry> pEntry;
+    std::shared_ptr<TAssetEntry> pEntry;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -868,16 +937,16 @@ TEST(TAssetList_Test_Depreciate_Monthly)
 //        CHECK_EQUAL(new_value, pEntry->GetValue());
 
         wxString str_value = line_feed;
-        str_value << wxT("Date: ") << pEntry->date_;
-        str_value << wxT("   Expected Value: ") << wxString::Format("%.2f", new_value);
-        str_value << wxT("   Value: ") << wxString::Format("%.2f", pEntry->GetValue());
+        str_value << "Date: " << pEntry->date_;
+        str_value << "   Expected Value: " << wxString::Format("%.2f", new_value);
+        str_value << "   Value: " << wxString::Format("%.2f", pEntry->GetValue());
         printf(str_value.char_str());
 
         months ++;
     }
 
     printf(line_feed.char_str());
-    displayTimeTaken(wxT("TAssetList_Test_Depreciate_Monthly"), start_time);
+    displayTimeTaken("TAssetList_Test_Depreciate_Monthly", start_time);
     display_STD_IO_separation_line();
 }
 #endif
@@ -890,7 +959,7 @@ TEST(TAssetList_GetIndexedEntryPtr_Test)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    wxSharedPtr<TAssetEntry> pEntry;
+    std::shared_ptr<TAssetEntry> pEntry;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -906,10 +975,10 @@ TEST(TAssetList_const_iterator_Test)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    for (std::vector<wxSharedPtr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
+    for (std::vector<std::shared_ptr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
         it != asset_list.entrylist_.end(); ++ it)
     {
-        const wxSharedPtr<TAssetEntry> pEntry = *it;
+        const std::shared_ptr<TAssetEntry> pEntry = *it;
 
         CHECK_EQUAL(20000, pEntry->value_);
     }
@@ -922,10 +991,10 @@ TEST(TAssetList_const_iterator_Retest)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    for (std::vector<wxSharedPtr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
+    for (std::vector<std::shared_ptr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
         it != asset_list.entrylist_.end(); ++ it)
     {
-        const wxSharedPtr<TAssetEntry> pEntry = *it;
+        const std::shared_ptr<TAssetEntry> pEntry = *it;
 
         CHECK_EQUAL(20000, pEntry->value_);
     }
@@ -938,7 +1007,7 @@ TEST(TAssetList_GetIndexedEntryPtr_Retest)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    wxSharedPtr<TAssetEntry> pEntry;
+    std::shared_ptr<TAssetEntry> pEntry;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -968,7 +1037,7 @@ TEST(TAssetList_Test_GetEntryPtr)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    wxSharedPtr<TAssetEntry> pEntry;
+    std::shared_ptr<TAssetEntry> pEntry;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -1031,7 +1100,7 @@ TEST(TStockList_Test_Update)
     TStockList stock_list(get_pDb());
     int stock_id = 2;        // 2nd entry from test 1
     stock_list.GetEntryPtr(stock_id);   // test setting current index
-    wxSharedPtr<TStockEntry> stock_entry = stock_list.GetIndexedEntryPtr(stock_list.GetCurrentIndex());
+    std::shared_ptr<TStockEntry> stock_entry = stock_list.GetIndexedEntryPtr(stock_list.GetCurrentIndex());
     stock_entry->value_ = 3000;
     stock_entry->Update(stock_list.ListDatabase());
 

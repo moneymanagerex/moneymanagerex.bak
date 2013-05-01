@@ -29,7 +29,7 @@ TTransactionBillEntry::TTransactionBillEntry()
 : TTransactionEntry()
 , autoExecuteManual_(false)
 , autoExecuteSilent_(false)
-, repeat_type_(NONE)
+, repeat_type_(TYPE_NONE)
 , num_repeats_(0)
 {}
 
@@ -50,11 +50,11 @@ TTransactionBillEntry::TTransactionBillEntry(wxSQLite3ResultSet& q1)
 , autoExecuteManual_(false)
 , autoExecuteSilent_(false)
 {
-    id_ = q1.GetInt(wxT("BDID"));
+    id_ = q1.GetInt("BDID");
     GetDatabaseValues(q1);
-    repeat_type_   = q1.GetInt(wxT("REPEATS"));
-    nextOccurDate_ = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
-    num_repeats_   = q1.GetInt(wxT("NUMOCCURRENCES"));
+    repeat_type_   = q1.GetInt("REPEATS");
+    nextOccurDate_ = q1.GetString("NEXTOCCURRENCEDATE");
+    num_repeats_   = q1.GetInt("NUMOCCURRENCES");
 
     // DeMultiplex the Auto Executable fields from the db entry: REPEATS
     if (repeat_type_ >= REPEAT_TYPE_MULTIPLEX_BASE)    // Auto Execute - User Acknowlegement
@@ -105,7 +105,7 @@ int TTransactionBillEntry::Add(wxSQLite3Database* db)
 
 void TTransactionBillEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from BILLSDEPOSITS_V1 where where BDID = ?"));
+    DeleteEntry(db, "delete from BILLSDEPOSITS_V1 where where BDID = ?");
 }
 
 void TTransactionBillEntry::Update(wxSQLite3Database* db)
@@ -132,7 +132,7 @@ void TTransactionBillEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        wxLogError(wxT("TTransactionBillEntry:update: %s"), e.GetMessage().c_str());
+        wxLogError("TTransactionBillEntry:update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -187,73 +187,73 @@ void TTransactionBillEntry::AdjustNextOccuranceDate()
 {
     wxDateTime new_occur_date = mmGetStorageStringAsDate(nextOccurDate_);
 
-    if (repeat_type_ == NONE)
+    if (repeat_type_ == TYPE_NONE)
     {
         num_repeats_ = 0;
     }
-    else if (repeat_type_ == WEEKLY)
+    else if (repeat_type_ == TYPE_WEEKLY)
     {
         new_occur_date.Add(wxTimeSpan::Week());
     }
-    else if (repeat_type_ == BI_WEEKLY)
+    else if (repeat_type_ == TYPE_BI_WEEKLY)
     {
         new_occur_date.Add(wxTimeSpan::Weeks(2));
     }
-    else if (repeat_type_ == MONTHLY)
+    else if (repeat_type_ == TYPE_MONTHLY)
     {
         new_occur_date.Add(wxDateSpan::Month());
     }
-    else if (repeat_type_ == BI_MONTHLY)
+    else if (repeat_type_ == TYPE_BI_MONTHLY)
     {
         new_occur_date.Add(wxDateSpan::Months(2));
     }
-    else if (repeat_type_ == QUARTERLY)
+    else if (repeat_type_ == TYPE_QUARTERLY)
     {
         new_occur_date.Add(wxDateSpan::Months(3));
     }
-    else if (repeat_type_ == HALF_YEARLY)
+    else if (repeat_type_ == TYPE_HALF_YEARLY)
     {
         new_occur_date.Add(wxDateSpan::Months(6));
     }
-    else if (repeat_type_ == YEARLY)
+    else if (repeat_type_ == TYPE_YEARLY)
     {
         new_occur_date.Add(wxDateSpan::Year());
     }
-    else if (repeat_type_ == FOUR_MONTHLY)
+    else if (repeat_type_ == TYPE_FOUR_MONTHLY)
     {
         new_occur_date.Add(wxDateSpan::Months(4));
     }
-    else if (repeat_type_ == FOUR_WEEKLY)
+    else if (repeat_type_ == TYPE_FOUR_WEEKLY)
     {
         new_occur_date.Add(wxDateSpan::Weeks(4));
     }
-    else if (repeat_type_ == DAILY)
+    else if (repeat_type_ == TYPE_DAILY)
     {
         new_occur_date.Add(wxDateSpan::Day());
     }
-    else if ((repeat_type_ == IN_X_DAYS) || (repeat_type_ == IN_X_MONTHS))
+    else if ((repeat_type_ == TYPE_IN_X_DAYS) || (repeat_type_ == TYPE_IN_X_MONTHS))
     {
-        num_repeats_ = INACTIVE;
+        num_repeats_ = TYPE_INACTIVE;
     }
-    else if (repeat_type_ == EVERY_X_DAYS)
+    else if (repeat_type_ == TYPE_EVERY_X_DAYS)
     {
         if (num_repeats_ > 0)
         {
             new_occur_date.Add(wxDateSpan::Days(num_repeats_));
         }
     }
-    else if (repeat_type_ == EVERY_X_MONTHS)
+    else if (repeat_type_ == TYPE_EVERY_X_MONTHS)
     {
         if (num_repeats_ > 0)
         {
             new_occur_date.Add(wxDateSpan::Months(num_repeats_));
         }
     }
-    else if ((repeat_type_ == MONTHLY_LAST_DAY) || (repeat_type_ == MONTHLY_LAST_BUSINESS_DAY))
+    else if ((repeat_type_ == TYPE_MONTHLY_LAST_DAY) || (repeat_type_ == TYPE_MONTHLY_LAST_BUSINESS_DAY))
     {
         new_occur_date.Add(wxDateSpan::Month());
         new_occur_date.SetToLastMonthDay(new_occur_date.GetMonth(),new_occur_date.GetYear());
-        if (repeat_type_ == MONTHLY_LAST_BUSINESS_DAY) // last weekday of month
+        if (repeat_type_ == TYPE_MONTHLY_LAST_BUSINESS_DAY) // last weekday of month
         {
             if ((new_occur_date.GetWeekDay() == wxDateTime::Sun) ||
                 (new_occur_date.GetWeekDay() == wxDateTime::Sat))
@@ -265,7 +265,7 @@ void TTransactionBillEntry::AdjustNextOccuranceDate()
 
     if (num_repeats_ > 0)
     {
-        if ((repeat_type_ < IN_X_DAYS) || (repeat_type_ > EVERY_X_MONTHS))
+        if ((repeat_type_ < TYPE_IN_X_DAYS) || (repeat_type_ > TYPE_EVERY_X_MONTHS))
         {
             --num_repeats_;
         }
@@ -295,6 +295,11 @@ bool TTransactionBillEntry::RequiresExecution(int& remaining_days)
     return execution_required;
 }
 
+wxString TTransactionBillEntry::DisplayNextOccurDate()
+{
+    return mmGetDateForDisplay(mmGetStorageStringAsDate(nextOccurDate_));
+}
+
 /************************************************************************************
  TTransactionBillList Methods
  ***********************************************************************************/
@@ -309,7 +314,7 @@ void TTransactionBillList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists(wxT("BILLSDEPOSITS_V1")))
+        if (!db_->TableExists("BILLSDEPOSITS_V1"))
         {
             const char CREATE_TABLE_BILLSDEPOSITS_V1[] =
             "CREATE TABLE BILLSDEPOSITS_V1 (BDID INTEGER PRIMARY KEY, "
@@ -323,12 +328,12 @@ void TTransactionBillList::LoadEntries(bool load_entries)
 
         if (load_entries)
         {
-            LoadEntriesUsing(wxT("select * from BILLSDEPOSITS_V1"));
+            LoadEntriesUsing("select * from BILLSDEPOSITS_V1");
         }
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxLogError(wxT("TTransactionBillList:LoadEntries %s"), e.GetMessage().c_str());
+        wxLogError("TTransactionBillList:LoadEntries %s", e.GetMessage().c_str());
     }
 }
 

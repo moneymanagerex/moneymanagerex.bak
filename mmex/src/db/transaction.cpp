@@ -58,25 +58,25 @@ TTransactionEntry::TTransactionEntry(TTransactionEntry* pEntry)
 TTransactionEntry::TTransactionEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_ = q1.GetInt(wxT("TRANSID"));
+    id_ = q1.GetInt("TRANSID");
     GetDatabaseValues(q1);
 }
 
 void TTransactionEntry::GetDatabaseValues(wxSQLite3ResultSet& q1)
 {
-    id_from_account = q1.GetInt(wxT("ACCOUNTID"));
-    id_to_account_  = q1.GetInt(wxT("TOACCOUNTID"));
-    id_payee_       = q1.GetInt(wxT("PAYEEID"));
-    trans_type_     = q1.GetString(wxT("TRANSCODE"));
-    amount_from_    = q1.GetDouble(wxT("TRANSAMOUNT"));
-    trans_status_   = q1.GetString(wxT("STATUS"));
-    trans_num_      = q1.GetString(wxT("TRANSACTIONNUMBER"));
-    trans_notes_    = q1.GetString(wxT("NOTES"));
-    id_category_    = q1.GetInt(wxT("CATEGID"));
-    id_subcategory_ = q1.GetInt(wxT("SUBCATEGID"));
-    trans_date_     = q1.GetString(wxT("TRANSDATE"));
-    id_followup_    = q1.GetInt(wxT("FOLLOWUPID"));
-    amount_to_      = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+    id_from_account = q1.GetInt("ACCOUNTID");
+    id_to_account_  = q1.GetInt("TOACCOUNTID");
+    id_payee_       = q1.GetInt("PAYEEID");
+    trans_type_     = q1.GetString("TRANSCODE");
+    amount_from_    = q1.GetDouble("TRANSAMOUNT");
+    trans_status_   = q1.GetString("STATUS");
+    trans_num_      = q1.GetString("TRANSACTIONNUMBER");
+    trans_notes_    = q1.GetString("NOTES");
+    id_category_    = q1.GetInt("CATEGID");
+    id_subcategory_ = q1.GetInt("SUBCATEGID");
+    trans_date_     = q1.GetString("TRANSDATE");
+    id_followup_    = q1.GetInt("FOLLOWUPID");
+    amount_to_      = q1.GetDouble("TOTRANSAMOUNT");
 }
 
 void TTransactionEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
@@ -116,7 +116,7 @@ int TTransactionEntry::Add(wxSQLite3Database* db)
 
 void TTransactionEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from CHECKINGACCOUNT_V1 where where TRANSID = ?"));
+    DeleteEntry(db, "delete from CHECKINGACCOUNT_V1 where where TRANSID = ?");
 }
 
 void TTransactionEntry::Update(wxSQLite3Database* db)
@@ -138,11 +138,14 @@ void TTransactionEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TTransactionEntry:Update: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TTransactionEntry:Update: %s"), e.GetMessage().c_str());
+        wxLogError("TTransactionEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 
+wxString TTransactionEntry::DisplayTransactionDate()
+{
+    return mmGetDateForDisplay(mmGetStorageStringAsDate(trans_date_));
+}
 
 /************************************************************************************
  TTransactionList Methods
@@ -158,7 +161,7 @@ void TTransactionList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists(wxT("CHECKINGACCOUNT_V1")))
+        if (!db_->TableExists("CHECKINGACCOUNT_V1"))
         {
             const char CREATE_TABLE_CHECKINGACCOUNT_V1[]=
             "CREATE TABLE CHECKINGACCOUNT_V1(TRANSID integer primary key, "
@@ -171,13 +174,12 @@ void TTransactionList::LoadEntries(bool load_entries)
 
         if (load_entries)
         {
-            LoadEntriesUsing(wxT("select * from CHECKINGACCOUNT_V1"));
+            LoadEntriesUsing("select * from CHECKINGACCOUNT_V1");
         }
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TTransactionList:LoadEntries %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TTransactionList:LoadEntries %s"), e.GetMessage().c_str());
+        wxLogError("TTransactionList:LoadEntries %s", e.GetMessage().c_str());
     }
 }
 

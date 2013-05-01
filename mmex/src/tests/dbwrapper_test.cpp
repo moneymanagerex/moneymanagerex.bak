@@ -575,7 +575,7 @@ TEST(addPayee)
     // --
 
     int payeeID = pCore->payeeList_.AddPayee(g_PayeeName);
-    wxSharedPtr<mmPayee> pPayee = pCore->payeeList_.GetPayeeSharedPtr(payeeID);
+    std::shared_ptr<mmPayee> pPayee = pCore->payeeList_.GetPayeeSharedPtr(payeeID);
     pPayee->categoryId_ = cat_id;
     pPayee->subcategoryId_ = sc_id;
     int errCode = pCore->payeeList_.UpdatePayee(pPayee->id_, pPayee->name_);
@@ -619,7 +619,7 @@ TEST(getPayee)
     int payee_id = pCore->payeeList_.GetPayeeId(g_PayeeName);
     CHECK(payee_id != -1);
 
-    wxSharedPtr<mmPayee> pPayee = pCore->payeeList_.GetPayeeSharedPtr(payee_id);
+    std::shared_ptr<mmPayee> pPayee = pCore->payeeList_.GetPayeeSharedPtr(payee_id);
     CHECK(pPayee->name_ == g_PayeeName);
     CHECK(pPayee->categoryId_ != 0);
     CHECK(pPayee->subcategoryId_ != 0);
@@ -639,7 +639,7 @@ TEST(updatePayee)
     int payee_id = pCore->payeeList_.GetPayeeId(g_PayeeName);
     CHECK(payee_id != -1);
 
-    wxSharedPtr<mmPayee> pPayee = pCore->payeeList_.GetPayeeSharedPtr(payee_id);
+    std::shared_ptr<mmPayee> pPayee = pCore->payeeList_.GetPayeeSharedPtr(payee_id);
     int cat    = pPayee->categoryId_;
     int subcat = pPayee->subcategoryId_;
 
@@ -738,7 +738,7 @@ TEST(add_new_transactions)
     int account_id = 1;
 
     // Add a deposit transaction Previous month
-    wxSharedPtr<mmBankTransaction> pBankTransaction_1(new mmBankTransaction(pCore->db_));
+    std::shared_ptr<mmBankTransaction> pBankTransaction_1(new mmBankTransaction(pCore->db_));
     pBankTransaction_1->date_      = wxDateTime::Now().Subtract(wxDateSpan::Days(32));
     pBankTransaction_1->accountID_ = account_id;
     pBankTransaction_1->amt_       = 500;
@@ -749,7 +749,7 @@ TEST(add_new_transactions)
     CHECK(trans_id_1 == 1);
 
     // Add a withdrawal transaction - Today
-    wxSharedPtr<mmBankTransaction> pBankTransaction_2(new mmBankTransaction(pCore->db_));
+    std::shared_ptr<mmBankTransaction> pBankTransaction_2(new mmBankTransaction(pCore->db_));
     pBankTransaction_2->date_      = wxDateTime::Now();
     pBankTransaction_2->accountID_ = account_id;
     pBankTransaction_2->amt_       = 200;
@@ -760,7 +760,7 @@ TEST(add_new_transactions)
     CHECK(trans_id_2 == 2);
 
     // Add a void deposit transaction - 2 days before today;
-    wxSharedPtr<mmBankTransaction> pBankTransaction_3(new mmBankTransaction(pCore->db_));
+    std::shared_ptr<mmBankTransaction> pBankTransaction_3(new mmBankTransaction(pCore->db_));
     pBankTransaction_3->date_      = wxDateTime::Now().Subtract(wxDateSpan::Days(2));
     pBankTransaction_3->accountID_ = account_id;
     pBankTransaction_3->amt_       = 1200;
@@ -821,7 +821,7 @@ TEST(copy_paste_transactions)
 
     int account_id = 1;
 
-    wxSharedPtr<mmBankTransaction> pBankTransaction_1(new mmBankTransaction(pCore->db_));
+    std::shared_ptr<mmBankTransaction> pBankTransaction_1(new mmBankTransaction(pCore->db_));
     pBankTransaction_1->date_      = wxDateTime::Now();
     pBankTransaction_1->accountID_ = account_id;
     pBankTransaction_1->amt_       = 100;
@@ -834,7 +834,7 @@ TEST(copy_paste_transactions)
     bool new_trans_exist = pCore->bTransactionList_.checkForExistingTransaction(pBankTransaction_1);
     CHECK(new_trans_exist);
 
-    wxSharedPtr<mmBankTransaction> pCopiedTrans = pCore->bTransactionList_.copyTransaction(trans_id_1, account_id, true);
+    std::shared_ptr<mmBankTransaction> pCopiedTrans = pCore->bTransactionList_.copyTransaction(trans_id_1, account_id, true);
     int trans_id_2 = pCopiedTrans->transactionID();
     CHECK(trans_id_2 == 2);
 
@@ -871,7 +871,7 @@ TEST(New_INIDB_TEST_1)
 	const wxString TEST_NAME_STR  = "Test 1 STRING";
 	const wxString TEST_VALUE_STR = "String Value Test 1";
 
-    wxSharedPtr<wxSQLite3Database> pInidb = get_pInidb();
+    std::shared_ptr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
 
     bool b = pSettings->GetBoolSetting(TEST_NAME_BOOL, true);
@@ -897,7 +897,7 @@ TEST(New_INIDB_TEST_2)
 	const wxString TEST_NAME_STR  = "Test 2 STRING";
 	const wxString TEST_VALUE_STR = "String Value Test 2";
 
-    wxSharedPtr<wxSQLite3Database> pInidb = get_pInidb();
+    std::shared_ptr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
 
     pSettings->SetBoolSetting(TEST_NAME_BOOL, true);
@@ -928,7 +928,7 @@ TEST(New_INIDB_TEST_3)
     const wxString TEST_VALUE_STR_NEW = "String Value Test 3";
 	const wxString TEST_VALUE_STR_ADJ = "String Value Test 3_adjusted";
 
-    wxSharedPtr<wxSQLite3Database> pInidb = get_pInidb();
+    std::shared_ptr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
 
     // New settings being initialised
@@ -966,7 +966,7 @@ TEST(New_INIDB_TEST_4)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    wxSharedPtr<wxSQLite3Database> pInidb = get_pInidb();
+    std::shared_ptr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
 
     wxString test_name; 
@@ -1011,7 +1011,7 @@ TEST(New_INFO_DB_TEST_1)
     const wxDateTime start_time(wxDateTime::UNow());
 
     //  Using the details from the master table database
-    wxSharedPtr<wxSQLite3Database> pdb = get_pDb();
+    std::shared_ptr<wxSQLite3Database> pdb = get_pDb();
 
     MMEX_IniSettings pdb_settings(pdb, true);
 
@@ -1037,7 +1037,7 @@ TEST(New_INFO_DB_TEST_2)
     const wxDateTime start_time(wxDateTime::UNow());
 
     // Using the details from the global ini database
-    wxSharedPtr<wxSQLite3Database> pdb = get_pInidb();
+    std::shared_ptr<wxSQLite3Database> pdb = get_pInidb();
 
     MMEX_IniSettings pdb_settings(pdb, true);
 
@@ -1063,7 +1063,7 @@ TEST(New_INFO_DB_TEST_3)
     const wxDateTime start_time(wxDateTime::UNow());
 
     //  Save the details in the main database
-    wxSharedPtr<wxSQLite3Database> pdb = get_pDb();
+    std::shared_ptr<wxSQLite3Database> pdb = get_pDb();
 
     MMEX_IniSettings pdb_settings(pdb, true);
 

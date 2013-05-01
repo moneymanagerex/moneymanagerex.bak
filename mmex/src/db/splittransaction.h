@@ -23,8 +23,8 @@
  SplitTransactions_V1 and BudgetSplitTransactions_V1 tables have the same structure.
  The classes TSplitTransactionList and TSplitTransEntry can be used for both tables.
  **********************************************************************************/
-const wxString SPLIT_TRANS_TABLE = wxT("SPLITTRANSACTIONS_V1");
-const wxString BUDGET_SPLIT_TRANS_TABLE = wxT("BUDGETSPLITTRANSACTIONS_V1");
+const wxString SPLIT_TRANS_TABLE = "SPLITTRANSACTIONS_V1";
+const wxString BUDGET_SPLIT_TRANS_TABLE = "BUDGETSPLITTRANSACTIONS_V1";
 
 /***********************************************************************************
  New class TSplitTransEntry

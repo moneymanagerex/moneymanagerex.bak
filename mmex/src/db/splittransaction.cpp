@@ -33,19 +33,19 @@ TSplitEntry::TSplitEntry()
 TSplitEntry::TSplitEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_             = q1.GetInt(wxT("SPLITTRANSID"));
-    id_trans_       = q1.GetInt(wxT("TRANSID"));  
-    id_category_    = q1.GetInt(wxT("CATEGID"));
-    id_subcategory_ = q1.GetInt(wxT("SUBCATEGID"));
-    amount_         = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+    id_             = q1.GetInt("SPLITTRANSID");
+    id_trans_       = q1.GetInt("TRANSID");  
+    id_category_    = q1.GetInt("CATEGID");
+    id_subcategory_ = q1.GetInt("SUBCATEGID");
+    amount_         = q1.GetDouble("SPLITTRANSAMOUNT");
 }
 
 void TSplitEntry::Add(wxSQLite3Database* db, wxString db_table)
 {
     wxString sql_statement;
-    sql_statement << wxT("INSERT INTO ") << db_table
-                  << wxT(" (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT )")
-                  << wxT(" values (?, ?, ?, ?)");
+    sql_statement << "INSERT INTO " << db_table
+                  << " (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT )"
+                  << " values (?, ?, ?, ?)";
     wxSQLite3Statement st = db->PrepareStatement(sql_statement);
     st.Bind(1, id_trans_);
     st.Bind(2, id_category_);
@@ -58,10 +58,10 @@ void TSplitEntry::Add(wxSQLite3Database* db, wxString db_table)
 void TSplitEntry::Update(wxSQLite3Database* db, wxString db_table)
 {
     wxString sql_statement;
-    sql_statement << wxT("UPDATE ") << db_table << wxT(" SET ")
-                  << wxT("TRANSID = ?, CATEGID = ?, SUBCATEGID = ?, ")
-                  << wxT("SPLITTRANSAMOUNT = ? ")
-                  << wxT("WHERE SPLITTRANSID = ?");
+    sql_statement << "UPDATE " << db_table << " SET "
+                  << "TRANSID = ?, CATEGID = ?, SUBCATEGID = ?, "
+                  << "SPLITTRANSAMOUNT = ? "
+                  << "WHERE SPLITTRANSID = ?";
     wxSQLite3Statement st = db->PrepareStatement(sql_statement);
     st.Bind(1, id_trans_);
     st.Bind(2, id_category_);
@@ -75,8 +75,8 @@ void TSplitEntry::Update(wxSQLite3Database* db, wxString db_table)
 void TSplitEntry::Delete(wxSQLite3Database* db, wxString db_table)
 {
     wxString sql_statement;
-    sql_statement << wxT("delete from ") << db_table 
-                  << wxT(" where SPLITTRANSID = ?");
+    sql_statement << "delete from " << db_table 
+                  << " where SPLITTRANSID = ?";
     DeleteEntry(db, sql_statement);
 }
 //-----------------------------------------------------------------------------
@@ -100,18 +100,18 @@ void TSplitEntriesList::LoadSplitEntries()
         if (! db_->TableExists(db_table_))
         {
             wxString sql_statement;
-            sql_statement << wxT("CREATE TABLE ") << db_table_
-                          << wxT("(SPLITTRANSID integer primary key, ")
-                          << wxT(" TRANSID numeric NOT NULL, ")
-                          << wxT(" CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric)");
+            sql_statement << "CREATE TABLE " << db_table_
+                          << "(SPLITTRANSID integer primary key, "
+                          << " TRANSID numeric NOT NULL, "
+                          << " CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric)";
             db_->ExecuteUpdate(sql_statement);
         }
 
         wxString sql_statement;
-        sql_statement << wxT("select SPLITTRANSID, TRANSID,")
-                      << wxT("       CATEGID, SUBCATEGID,")
-                      << wxT("       SPLITTRANSAMOUNT ")
-                      << wxT("from ") << db_table_ << wxT(" order by SPLITTRANSID");
+        sql_statement << "select SPLITTRANSID, TRANSID,"
+                      << "       CATEGID, SUBCATEGID,"
+                      << "       SPLITTRANSAMOUNT "
+                      << "from " << db_table_ << " order by SPLITTRANSID";
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
@@ -122,7 +122,7 @@ void TSplitEntriesList::LoadSplitEntries()
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxString msg = wxT("LoadSplitEntries ") + db_table_ + wxT(" ");
+        wxString msg = "LoadSplitEntries " + db_table_ + " ";
         wxLogDebug(msg, e.GetMessage().c_str());
         wxLogError(msg + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
     }

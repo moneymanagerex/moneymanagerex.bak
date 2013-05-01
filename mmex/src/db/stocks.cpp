@@ -25,17 +25,17 @@
 TStockEntry::TStockEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_         = q1.GetInt(wxT("STOCKID"));
-    heldat_     = q1.GetInt(wxT("HELDAT"));
-    pur_date_   = q1.GetString(wxT("PURCHASEDATE"));
-    name_       = q1.GetString(wxT("STOCKNAME"));
-    symbol_     = q1.GetString(wxT("SYMBOL"));
-    num_shares_ = q1.GetDouble(wxT("NUMSHARES"));
-    pur_price_  = q1.GetDouble(wxT("PURCHASEPRICE"));
-    notes_      = q1.GetString(wxT("NOTES"));
-    cur_price_  = q1.GetDouble(wxT("CURRENTPRICE"));
-    value_      = q1.GetDouble(wxT("VALUE"));
-    commission_ = q1.GetDouble(wxT("COMMISSION"));
+    id_         = q1.GetInt("STOCKID");
+    heldat_     = q1.GetInt("HELDAT");
+    pur_date_   = q1.GetString("PURCHASEDATE");
+    name_       = q1.GetString("STOCKNAME");
+    symbol_     = q1.GetString("SYMBOL");
+    num_shares_ = q1.GetDouble("NUMSHARES");
+    pur_price_  = q1.GetDouble("PURCHASEPRICE");
+    notes_      = q1.GetString("NOTES");
+    cur_price_  = q1.GetDouble("CURRENTPRICE");
+    value_      = q1.GetDouble("VALUE");
+    commission_ = q1.GetDouble("COMMISSION");
 }
 
 /// Copy constructor using a pointer
@@ -56,16 +56,16 @@ TStockEntry::TStockEntry(TStockEntry* pEntry)
 
 void TStockEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 {
-    st.Bind(++db_index, heldat_);    // wxT("HELDAT")
-    st.Bind(++db_index, pur_date_);  // wxT("PURCHASEDATE")
-    st.Bind(++db_index, name_);      // wxT("STOCKNAME")
-    st.Bind(++db_index, symbol_);    // wxT("SYMBOL")
-    st.Bind(++db_index, num_shares_);// wxT("NUMSHARES")
-    st.Bind(++db_index, pur_price_); // wxT("PURCHASEPRICE")
-    st.Bind(++db_index, notes_);     // wxT("NOTES")
-    st.Bind(++db_index, cur_price_); // wxT("CURRENTPRICE")
-    st.Bind(++db_index, value_);     // wxT("VALUE")
-    st.Bind(++db_index, commission_);// wxT("COMMISSION")
+    st.Bind(++db_index, heldat_);    // "HELDAT"
+    st.Bind(++db_index, pur_date_);  // "PURCHASEDATE"
+    st.Bind(++db_index, name_);      // "STOCKNAME"
+    st.Bind(++db_index, symbol_);    // "SYMBOL"
+    st.Bind(++db_index, num_shares_);// "NUMSHARES"
+    st.Bind(++db_index, pur_price_); // "PURCHASEPRICE"
+    st.Bind(++db_index, notes_);     // "NOTES"
+    st.Bind(++db_index, cur_price_); // "CURRENTPRICE"
+    st.Bind(++db_index, value_);     // "VALUE"
+    st.Bind(++db_index, commission_);// "COMMISSION"
 }
 
 /// Constructor for creating a new stock entry.
@@ -98,7 +98,7 @@ int TStockEntry::Add(wxSQLite3Database* db)
 
 void TStockEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from STOCK_V1 where STOCKID = ?")); 
+    DeleteEntry(db, "delete from STOCK_V1 where STOCKID = ?"); 
 }
 
 void TStockEntry::Update(wxSQLite3Database* db)
@@ -119,7 +119,7 @@ void TStockEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        wxLogError(wxT("TStockEntry:Update: %s"), e.GetMessage().c_str());
+        wxLogError("TStockEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -179,7 +179,7 @@ void TStockList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists(wxT("STOCK_V1")))
+        if (!db_->TableExists("STOCK_V1"))
         {
             const char CREATE_TABLE_STOCK_V1[] =
             "CREATE TABLE STOCK_V1(STOCKID integer primary key, "
@@ -192,12 +192,12 @@ void TStockList::LoadEntries(bool load_entries)
 
         if (load_entries)
         {
-            LoadEntriesUsing(wxT("select * from STOCK_V1"));
+            LoadEntriesUsing("select * from STOCK_V1");
         }
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxLogError(wxT("TStockList::LoadEntries: %s"), e.GetMessage().c_str());
+        wxLogError("TStockList::LoadEntries: %s", e.GetMessage().c_str());
     }
 }
 
@@ -216,7 +216,7 @@ void TStockList::LoadEntriesUsing(const wxString& sql_statement)
     }
     catch (const wxSQLite3Exception& e)
     {
-        wxLogError(wxT("TStockList::LoadEntriesUsing: %s"), e.GetMessage().c_str());
+        wxLogError("TStockList::LoadEntriesUsing: %s", e.GetMessage().c_str());
     }
 }
 

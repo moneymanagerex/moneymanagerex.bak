@@ -25,8 +25,8 @@
 TCategoryEntry::TCategoryEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
-    id_   = q1.GetInt(wxT("CATEGID"));
-    name_ = q1.GetString(wxT("CATEGNAME"));
+    id_   = q1.GetInt("CATEGID");
+    name_ = q1.GetString("CATEGNAME");
 }
 
 /// Constructor for creating a new category entry
@@ -50,7 +50,7 @@ int TCategoryEntry::Add(wxSQLite3Database* db)
 
 void TCategoryEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, wxT("delete from CATEGORY_V1 where CATEGID = ?"));
+    DeleteEntry(db, "delete from CATEGORY_V1 where CATEGID = ?");
 }
 
 void TCategoryEntry::Update(wxSQLite3Database* db)
@@ -68,8 +68,7 @@ void TCategoryEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TCategoryEntry::Update %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TCategoryEntry:Update: %s"), e.GetMessage().c_str());
+        wxLogError("TCategoryEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 
@@ -87,7 +86,7 @@ void TCategoryList::LoadEntries()
 {
     try
     {
-        if (!db_->TableExists(wxT("CATEGORY_V1")))
+        if (!db_->TableExists("CATEGORY_V1"))
         {
             const char CREATE_TABLE_CATEGORY_V1[]=
             "CREATE TABLE CATEGORY_V1(CATEGID integer primary key, "
@@ -96,7 +95,7 @@ void TCategoryList::LoadEntries()
             db_->ExecuteUpdate(CREATE_TABLE_CATEGORY_V1);
         }
 
-        wxString sql_statement = wxT("select CATEGID, CATEGNAME from CATEGORY_V1");
+        wxString sql_statement = "select CATEGID, CATEGNAME from CATEGORY_V1";
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
@@ -107,8 +106,7 @@ void TCategoryList::LoadEntries()
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug(wxT("TCategoryList:LoadEntries: %s"), e.GetMessage().c_str());
-        wxLogError(wxT("TCategoryList:LoadEntries: %s"), e.GetMessage().c_str());
+        wxLogError("TCategoryList:LoadEntries: %s", e.GetMessage().c_str());
     }
 }
 
