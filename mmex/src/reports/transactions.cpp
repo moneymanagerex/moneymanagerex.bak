@@ -34,8 +34,8 @@ mmReportTransactions::mmReportTransactions( std::vector< std::shared_ptr<mmBankT
     std::stable_sort (trans_.begin(), trans_.end(),
         [&] (const std::shared_ptr<mmBankTransaction>& i, const std::shared_ptr<mmBankTransaction>& j)
             {  if (i->date_ < j->date_) return true;
-                else if (i->date_ > j->date_) return false;
-               return (core_->accountList_.GetAccountName(i->accountID_) < core_->accountList_.GetAccountName(j->accountID_));
+               else if (i->date_ > j->date_) return false;
+               return (i->accountID_ < j->accountID_);
             }
     );
 // TODO with new database layer support
