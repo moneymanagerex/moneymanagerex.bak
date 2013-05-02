@@ -169,17 +169,12 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     currencyPtr->loadCurrencySettings();
 
     dateStr_ = mmGetDateForDisplay(date_);
-
-    wxString displayTransAmtString;
-    mmex::formatDoubleToCurrencyEdit(amt_, displayTransAmtString);
-    transAmtString_ = displayTransAmtString;
+    mmex::formatDoubleToCurrencyEdit(amt_, transAmtString_);
 
     wxASSERT(toAmt_ >= 0);
     wxASSERT(amt_ >= 0);
     if (toAmt_ < 0) toAmt_ = amt_;
-    wxString displayToTransAmtString;
-    mmex::formatDoubleToCurrencyEdit(toAmt_, displayToTransAmtString);
-    transToAmtString_ = displayToTransAmtString;
+    mmex::formatDoubleToCurrencyEdit(toAmt_, transToAmtString_);
 
     if (transType_ != TRANS_TYPE_TRANSFER_STR)
     {
@@ -212,11 +207,11 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     withdrawalStr_ = "";
     if (transType_ == TRANS_TYPE_DEPOSIT_STR)
     {
-        depositStr_ = displayTransAmtString;
+        depositStr_ = transAmtString_;
     }
     else if (transType_== TRANS_TYPE_WITHDRAWAL_STR)
     {
-        withdrawalStr_ = displayTransAmtString;
+        withdrawalStr_ = transToAmtString_;
     }
     else if (transType_ == TRANS_TYPE_TRANSFER_STR)
     {
@@ -225,12 +220,12 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
 
         if (accountID_ == accountID)
         {
-         withdrawalStr_ = displayTransAmtString;
+         withdrawalStr_ = transAmtString_;
          payeeStr_      = toAccount;
         }
         else if (toAccountID_ == accountID)
         {
-         depositStr_ = displayToTransAmtString;
+         depositStr_ = transToAmtString_;
          payeeStr_   = fromAccount;
         }
     }
