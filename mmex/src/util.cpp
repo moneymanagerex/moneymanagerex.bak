@@ -24,6 +24,7 @@
 #include "singleton.h"
 
 #include <wx/sstream.h>
+#include <wx/numformatter.h>
 //----------------------------------------------------------------------------
 
 namespace
@@ -74,6 +75,7 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
 }
 //----------------------------------------------------------------------------
 
+#if 0
 double mmRound(double x)
 {
     x += (x < 0 ? -0.5 : 0.5);
@@ -149,11 +151,11 @@ wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_
 
 wxString format_cents(const mmex::CurrencyFormatter &f, int cents)
 {
-    wxString s =""; 
+    wxString s ="";
     if (f.getScale() >= 10)
     {
         s << cents << "000000";
-        s.Truncate(log10(f.getScale()));
+        s.Truncate(f.getDec());
         s.Prepend(f.getDecimalPoint());
     }
     return s;
@@ -177,9 +179,84 @@ void DoubleToCurrency(const mmex::CurrencyFormatter &fmt, double val, wxString& 
     if (!for_edit && !fmt.getPrefix().IsEmpty())
         rdata.Prepend(fmt.getPrefix().Append(" "));
 }
+#endif // 0
 //----------------------------------------------------------------------------
 
 } // namespace
+
+//----------------------------------------------------------------------------
+
+mmex::CurrencyFormatter::CurrencyFormatter()
+{
+    loadDefaultSettings();
+}
+
+void mmex::CurrencyFormatter::loadDefaultSettings()
+{
+    m_pfx_symbol = "$";
+    m_sfx_symbol.clear();
+
+    m_decimal_point = g_def_decimal_point;
+    m_group_separator = ',';
+
+    m_unit_name = "dollar";
+    m_cent_name = "cent";
+
+    m_scale = g_def_scale;
+}
+
+void mmex::CurrencyFormatter::loadSettings(
+    const wxString &pfx,
+    const wxString &sfx,
+    wxChar dec,
+    wxChar grp,
+    const wxString &unit,
+    const wxString &cent,
+    int scale)
+
+{
+    m_pfx_symbol = pfx;
+    m_sfx_symbol = sfx;
+
+    m_decimal_point = wxIsprint(dec) ? dec : g_def_decimal_point;
+    m_group_separator = grp;
+
+    m_unit_name = unit;
+    m_cent_name = cent;
+
+    m_scale = scale > 0 ? scale : g_def_scale;
+}
+
+void mmex::CurrencyFormatter::loadSettings(const mmCurrency &cur)
+{
+    wxUniChar dec = cur.dec_.IsEmpty() ? wxUniChar('\0') : cur.dec_.GetChar(0);
+    wxUniChar grp = cur.grp_.IsEmpty() ? wxUniChar('\0') : cur.grp_.GetChar(0);
+
+    loadSettings(cur.pfxSymbol_, cur.sfxSymbol_, dec, grp, cur.unit_, cur.cent_, cur.scaleDl_);
+}
+
+mmex::CurrencyFormatter& mmex::CurrencyFormatter::instance()
+{
+    return Singleton<mmex::CurrencyFormatter>::instance();
+}
+
+void mmex::formatDoubleToCurrencyEdit(double val, wxString& rdata)
+{
+    rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
+}
+
+void mmex::formatDoubleToCurrency(double val, wxString& rdata)
+{
+    const CurrencyFormatter &fmt = CurrencyFormatter::instance();
+    rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
+    rdata.Prepend(fmt.getPrefix());
+    rdata.Append(fmt.getSuffix());
+}
+
+bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
+{
+    return wxNumberFormatter::FromString(str , &val);
+}
 
 //----------------------------------------------------------------------------
 mmIniOptions::mmIniOptions()
@@ -229,9 +306,9 @@ void correctEmptyFileExt(wxString ext, wxString & fileName)
 
 //----------------------------------------------------------------------------
 mmOptions::mmOptions()
-: dateFormat_(mmex::DEFDATEFORMAT)
-, language_("english")
-, databaseUpdated_(false)
+:   dateFormat_(mmex::DEFDATEFORMAT)
+    , language_("english")
+    , databaseUpdated_(false)
 {}
 
 //----------------------------------------------------------------------------
@@ -588,103 +665,7 @@ wxColour mmColors::userDefColor5 = wxColour(0,255,255);
 wxColour mmColors::userDefColor6 = wxColour(0,0,255);
 wxColour mmColors::userDefColor7 = wxColour(0,0,128);
 
-//----------------------------------------------------------------------------
-
-mmex::CurrencyFormatter::CurrencyFormatter()
-{
-    loadDefaultSettings();
-}
-//----------------------------------------------------------------------------
-
-void mmex::CurrencyFormatter::loadDefaultSettings()
-{
-    m_pfx_symbol = "$";
-    m_sfx_symbol.clear();
-
-    m_decimal_point = g_def_decimal_point;
-    m_group_separator = ',';
-
-    m_unit_name = "dollar";
-    m_cent_name = "cent";
-
-    m_scale = g_def_scale;
-}
-//----------------------------------------------------------------------------
-
-void mmex::CurrencyFormatter::loadSettings(
-    const wxString &pfx,
-    const wxString &sfx,
-    wxChar dec,
-    wxChar grp,
-    const wxString &unit,
-    const wxString &cent,
-    int scale)
-
-{
-    m_pfx_symbol = pfx;
-    m_sfx_symbol = sfx;
-
-    m_decimal_point = wxIsprint(dec) ? dec : g_def_decimal_point;
-    m_group_separator = grp;
-
-    m_unit_name = unit;
-    m_cent_name = cent;
-
-    m_scale = scale > 0 ? scale : g_def_scale;
-}
-//----------------------------------------------------------------------------
-
-void mmex::CurrencyFormatter::loadSettings(const mmCurrency &cur)
-{
-#if wxCHECK_VERSION(2,9,0)
-    wxUniChar dec = cur.dec_.IsEmpty() ? wxUniChar('\0') : cur.dec_.GetChar(0);
-    wxUniChar grp = cur.grp_.IsEmpty() ? wxUniChar('\0') : cur.grp_.GetChar(0);
-#else
-    wxChar dec = cur.dec_.IsEmpty() ? wxChar('\0') : cur.dec_.GetChar(0);
-    wxChar grp = cur.grp_.IsEmpty() ? wxChar('\0') : cur.grp_.GetChar(0);
-#endif
-
-    loadSettings(cur.pfxSymbol_, cur.sfxSymbol_, dec, grp, cur.unit_, cur.cent_, cur.scaleDl_);
-}
-//----------------------------------------------------------------------------
-
-mmex::CurrencyFormatter& mmex::CurrencyFormatter::instance()
-{
-    return Singleton<mmex::CurrencyFormatter>::instance();
-}
-//----------------------------------------------------------------------------
-
-void mmex::formatDoubleToCurrencyEdit(double val, wxString& rdata)
-{
-    const CurrencyFormatter &fmt = CurrencyFormatter::instance();
-    DoubleToCurrency(fmt, val, rdata, true);
-}
-//----------------------------------------------------------------------------
-
-void mmex::formatDoubleToCurrency(double val, wxString& rdata)
-{
-    const CurrencyFormatter &fmt = CurrencyFormatter::instance();
-    DoubleToCurrency(fmt, val, rdata, false);
-}
-//----------------------------------------------------------------------------
-
-bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
-{
-    val = 0;
-    const CurrencyFormatter &fmt = CurrencyFormatter::instance();
-    wxString s = str;
-
-    // remove separators from the amount.
-    wxString gs = fmt.getGroupSeparator();
-    if (s.Find(gs)) s.Replace(gs, wxEmptyString);
-
-    // adjust decimal point char to a decimal point.
-    wxString gdp = fmt.getDecimalPoint();
-    if (s.Find(gdp)) s.Replace(gdp, ("."));
-
-    return !s.empty() && s.ToDouble(&val);
-}
-//----------------------------------------------------------------------------
+//*-------------------------------------------------------------------------*//
 
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 {
