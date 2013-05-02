@@ -78,7 +78,7 @@ public:
     mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1);
     mmBankTransaction(std::shared_ptr<wxSQLite3Database> db);
     virtual ~mmBankTransaction() {}
-
+	bool operator < (const mmBankTransaction& tran) const;
     bool containsCategory(int categID, int subcategID, bool ignoreSubCateg = false) const;
     double getAmountForSplit(int categID, int subcategID) const;
 
