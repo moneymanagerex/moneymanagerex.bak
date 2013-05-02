@@ -150,6 +150,13 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
     updateAllData(core, accountID_, pCurrencyPtr);
 }
 
+bool mmBankTransaction::operator < (const mmBankTransaction& tran) const
+{
+	if (this->date_ < tran.date_) return true; else if (this->date_ > tran.date_) return false;
+	if (this->accountID_ < tran.accountID_) return true; else if (this->accountID_ > tran.accountID_) return false;
+	return this->transactionID_ < tran.transactionID_;
+}
+
 void mmBankTransaction::updateAllData(mmCoreDB* core,
                                       int accountID,
                                       std::shared_ptr<mmCurrency> currencyPtr,
