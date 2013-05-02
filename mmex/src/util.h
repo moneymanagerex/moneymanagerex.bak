@@ -62,7 +62,7 @@ public:
         , stringData_(string)
         , report_(report)
     {}
-    ~mmTreeItemData() 
+    ~mmTreeItemData()
     {
         if (report_) delete report_;
     }
@@ -225,6 +225,7 @@ public:
     wxChar getGroupSeparator() const { return m_group_separator; }
 
     int getScale() const { return m_scale; }
+    int getDec() const { return log10(m_scale); }
 
 private:
     wxString m_pfx_symbol;   // Leading currency symbol
