@@ -644,19 +644,19 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
     int i=0;
     //Single quotes will be used instead double quotes
     //Replace all single quotes first
-    line.Replace("'", "SingleQuotesReplacer12345");
+    line.Replace("'", "\6");
     //Replace double quotes that used twice to replacer
-    line.Replace("\"\"\""+delimit+"\"\"\"", "DoubleQuotesReplacer12345\""+delimit+"\"DoubleQuotesReplacer12345");
-    line.Replace("\"\"\""+delimit, "DoubleQuotesReplacer12345\""+delimit);
-    line.Replace(delimit+"\"\"\"", delimit+"\"DoubleQuotesReplacer12345");
-    line.Replace("\"\""+delimit, "DoubleQuotesReplacer12345"+delimit);
-    line.Replace(delimit+"\"\"", delimit+"DoubleQuotesReplacer12345");
+    line.Replace("\"\"\""+delimit+"\"\"\"", "\5\""+delimit+"\"\5");
+    line.Replace("\"\"\""+delimit, "\5\""+delimit);
+    line.Replace(delimit+"\"\"\"", delimit+"\"\5");
+    line.Replace("\"\""+delimit, "\5"+delimit);
+    line.Replace(delimit+"\"\"", delimit+"\5");
 
     //replace delimiter to TAB and double quotes to single quotes
     line.Replace("\""+delimit+"\"", "'\t'");
     line.Replace("\""+delimit, "'\t");
     line.Replace(delimit+"\"", "\t'");
-    line.Replace("\"\"", "DoubleQuotesReplacer12345");
+    line.Replace("\"\"", "\5");
     line.Replace("\"", "'");
 
     wxString temp_line = wxEmptyString;
@@ -672,8 +672,8 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
         i++;
     };
     //Replace back all replacers to the original value
-    temp_line.Replace("DoubleQuotesReplacer12345", "\"");
-    temp_line.Replace("SingleQuotesReplacer12345", "'");
+    temp_line.Replace("\5", "\"");
+    temp_line.Replace("\6", "'");
     line = temp_line;
 
     return line;
