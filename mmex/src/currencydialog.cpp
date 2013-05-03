@@ -115,7 +115,8 @@ void mmCurrencyDialog::updateControls()
     unitTx_->SetValue(pCurrency->unit_);
     centTx_->SetValue(pCurrency->cent_);
     scaleTx_->SetValue(wxString() << pCurrency->scaleDl_);
-    baseConvRate_->SetValue(wxString() << pCurrency->baseConv_);
+    convRate_ = pCurrency->baseConv_;
+    baseConvRate_->SetValue(wxString() << convRate_);
     currencySymbolCombo_->SetValue(pCurrency->currencySymbol_);
 
     wxString dispAmount;
@@ -207,13 +208,16 @@ void mmCurrencyDialog::CreateControls()
     itemFlexGridSizer3->Add(grpTx_, flagsExpand);
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Scale")), flags);
-    scaleTx_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_SCALE, "",
-        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
+    scaleTx_ = new wxTextCtrl( this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize
+        , wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxIntegerValidator<int>() );
     itemFlexGridSizer3->Add(scaleTx_, flagsExpand);
 
+    wxFloatingPointValidator<double> validator(4, &convRate_ , wxNUM_VAL_NO_TRAILING_ZEROES );
+    validator.SetRange(0, 10000);
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Conversion to Base Rate")), flags);
-    baseConvRate_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_BASECONVRATE, "",
-        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxFloatingPointValidator<double>() );
+    baseConvRate_ = new wxTextCtrl( this, ID_DIALOG_CURRENCY_TEXT_BASECONVRATE, ""
+        , wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER
+        , validator );
     itemFlexGridSizer3->Add(baseConvRate_, flagsExpand);
     baseConvRate_ ->SetToolTip(_("Other currency conversion rate. Set Base Currency to 1."));
 
@@ -252,21 +256,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
 
     long scal = 0;
     scaleTx_->GetValue().ToLong(&scal);
-    if (scal <= 0)
-    {
-        wxMessageDialog dlg(this, _("Scale should be greater than zero"), _("Error"), wxOK|wxICON_ERROR);
-        dlg.ShowModal();
-        return;
-    }
-
-    double convRate = 1.0;
-    baseConvRate_->GetValue().ToDouble(&convRate);
-    if (convRate < 0.0)
-    {
-        wxMessageDialog dlg(this, _("Base Conversion Rate should be positive"), _("Error"), wxOK|wxICON_ERROR);
-        dlg.ShowModal();
-        return;
-    }
+    baseConvRate_->GetValue().ToDouble(&convRate_);
 
     std::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyID_);
     //wxASSERT(pCurrency->currencyID_ == currencyID_);
@@ -278,7 +268,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
     pCurrency->unit_ = unitTx_->GetValue();
     pCurrency->cent_ = centTx_->GetValue();
     pCurrency->scaleDl_ = static_cast<int>(scal);
-    pCurrency->baseConv_ = convRate;
+    pCurrency->baseConv_ = convRate_;
     pCurrency->currencySymbol_ = currencySymbolCombo_->GetValue();
     pCurrency->currencyName_ = currencyName;
 
