@@ -1377,7 +1377,8 @@ AC_DEFUN([AC_BAKEFILE_DEPS],
                 *-*-darwin* )
                     dnl -cpp-precomp (the default) conflicts with -MMD option
                     dnl used by bk-deps (see also http://developer.apple.com/documentation/Darwin/Conceptual/PortingUnix/compiling/chapter_4_section_3.html)
-                    DEPSFLAG="-no-cpp-precomp -MMD"
+                    dnl DEPSFLAG="-no-cpp-precomp -MMD"
+                    DEPSFLAG="-MMD"
                 ;;
                 * )
                     DEPSFLAG="-MMD"
