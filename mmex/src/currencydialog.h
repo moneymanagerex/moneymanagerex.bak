@@ -92,6 +92,7 @@ private:
     wxArrayString currency_names_;
 
     int currencyID_;
+    double convRate_;
 
     wxComboBox* currencyNameCombo_;
     wxStaticText* baseRateSample_;
