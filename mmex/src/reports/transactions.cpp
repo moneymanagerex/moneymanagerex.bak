@@ -102,7 +102,7 @@ wxString mmReportTransactions::getHTMLText()
 
         // Display the data for the selected row
         hb.startTableRow();
-        hb.addTableCell(it->dateStr_, false);
+        hb.addTableCell(it->date_);
         hb.addTableCellLink(wxString::Format("TRXID:%d"
             , it->transactionID()), it->fromAccountStr_, false);
         hb.addTableCell(it->payeeStr_, false, true);
