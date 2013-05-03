@@ -75,113 +75,6 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
 }
 //----------------------------------------------------------------------------
 
-#if 0
-double mmRound(double x)
-{
-    x += (x < 0 ? -0.5 : 0.5);
-
-    double n = 0;
-    modf(x, &n);
-
-    return n;
-}
-//----------------------------------------------------------------------------
-
-double mmMoneyInt(double x, int scale)
-{
-    double n = 0;
-    modf(x/scale, &n);
-    return n;
-}
-//----------------------------------------------------------------------------
-
-int mmCents(double x, int scale)
-{
-    x += (x < 0 ? -0.5 : 0.5);
-
-    double dummy = 0;
-    double fract = modf(x/scale, &dummy);
-
-    return static_cast<int>(fract*scale);
-}
-//----------------------------------------------------------------------------
-
-wchar_t get_group_separator(wxChar sep)
-{
-    wxString s(sep);
-    return *s.wc_str(*wxConvCurrent);
-}
-//----------------------------------------------------------------------------
-
-/*
-    Formats groups of 3 digits separated by group_separator.
-
-    Empty separator means zero will be inserted.
-    Thus, if separator is not a printable char, it ignores.
-    The same for decimal point char.
-*/
-wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_sz)
-{
-    wxString val;
-    val.Printf("%.0f", x);
-
-    wxChar grp_sep = fmt.getGroupSeparator();
-
-    if (wxIsprint(grp_sep) && val.length() > grp_sz)
-    {
-        wchar_t sep = get_group_separator(grp_sep);
-
-        std::wstring s;
-        s.reserve(val.length() + val.length()/grp_sz);
-        s.assign(val.wc_str(*wxConvCurrent), val.length());
-
-        for (size_t i = 0, j = i + grp_sz*(i+1); j < s.length(); ++i, j = i + grp_sz*(i+1))
-        {
-            std::wstring::iterator it = s.begin();
-            std::advance(it, s.length() - j);
-            s.insert(it, sep);
-        }
-
-        val = wxString(s.data(), *wxConvCurrent, s.length());
-    }
-
-    return val;
-}
-//----------------------------------------------------------------------------
-
-wxString format_cents(const mmex::CurrencyFormatter &f, int cents)
-{
-    wxString s ="";
-    if (f.getScale() >= 10)
-    {
-        s << cents << "000000";
-        s.Truncate(f.getDec());
-        s.Prepend(f.getDecimalPoint());
-    }
-    return s;
-}
-//----------------------------------------------------------------------------
-
-void DoubleToCurrency(const mmex::CurrencyFormatter &fmt, double val, wxString& rdata, bool for_edit)
-{
-    int scale = fmt.getScale();
-    double abs_val = fabs(mmRound(val*scale));
-
-    rdata = format_groups(fmt, mmMoneyInt(abs_val, scale), 3);
-    rdata += format_cents(fmt, mmCents(abs_val, scale));
-
-    if (val < 0)
-        rdata.Prepend("-"); // "minus" sign
-
-    if (!for_edit)
-        rdata += fmt.getSuffix();
-
-    if (!for_edit && !fmt.getPrefix().IsEmpty())
-        rdata.Prepend(fmt.getPrefix().Append(" "));
-}
-#endif // 0
-//----------------------------------------------------------------------------
-
 } // namespace
 
 //----------------------------------------------------------------------------
@@ -243,6 +136,8 @@ mmex::CurrencyFormatter& mmex::CurrencyFormatter::instance()
 void mmex::formatDoubleToCurrencyEdit(double val, wxString& rdata)
 {
     rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
+    //TODO: Remove it with new wx release
+    rdata.Replace("-,", "-");
 }
 
 void mmex::formatDoubleToCurrency(double val, wxString& rdata)
@@ -251,6 +146,8 @@ void mmex::formatDoubleToCurrency(double val, wxString& rdata)
     rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
     rdata.Prepend(fmt.getPrefix());
     rdata.Append(fmt.getSuffix());
+    //TODO: Remove it with new wx release
+    rdata.Replace("-,", "-");
 }
 
 bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
