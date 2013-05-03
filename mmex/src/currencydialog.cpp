@@ -209,7 +209,7 @@ void mmCurrencyDialog::CreateControls()
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Scale")), flags);
     scaleTx_ = new wxTextCtrl( this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize
-        , wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxIntegerValidator<int>() );
+        , wxALIGN_RIGHT|wxTE_PROCESS_ENTER , wxIntegerValidator<unsigned int>() );
     itemFlexGridSizer3->Add(scaleTx_, flagsExpand);
 
     wxFloatingPointValidator<double> validator(4, &convRate_ , wxNUM_VAL_NO_TRAILING_ZEROES );
