@@ -248,6 +248,12 @@ void mmHTMLBuilder::addMoneyCell(double amount, bool color)
     this->addTableCell(balance, true, true, true, (amount < 0 && color) ? "RED": "");
 }
 
+void mmHTMLBuilder::addTableCell(const wxDateTime& date)
+{
+    wxString date_str = mmGetDateForDisplay(date);
+    this->addTableCell(date_str, false);
+}
+
 void mmHTMLBuilder::addTableCell(const wxString& value
     , const bool& numeric, const bool& italic, const bool& bold, const wxString& fontColor)
 {

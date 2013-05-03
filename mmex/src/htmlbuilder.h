@@ -94,6 +94,7 @@ public:
     void addTableHeaderRowLink(const wxString& href, const wxString& value, const int cols);
 
     void addMoneyCell(double amount, bool color = true); 
+    void addTableCell(const wxDateTime& date);
 
     /** Add a Cell value */
     void addTableCell(const wxString& value
