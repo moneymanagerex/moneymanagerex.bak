@@ -285,6 +285,9 @@
     <ClCompile Include="..\..\src\mmOption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\mmCurrencyFormatter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\aboutdialog.h">
@@ -558,6 +561,9 @@
       <Filter>Header Files\db</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\mmOption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mmCurrencyFormatter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
