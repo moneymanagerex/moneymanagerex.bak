@@ -282,6 +282,7 @@
     <ClCompile Include="..\..\src\mmgraphtopcategories.cpp" />
     <ClCompile Include="..\..\src\mmhelppanel.cpp" />
     <ClCompile Include="..\..\src\mmhomepagepanel.cpp" />
+    <ClCompile Include="..\..\src\mmOption.cpp" />
     <ClCompile Include="..\..\src\mmpayee.cpp" />
     <ClCompile Include="..\..\src\mmreportspanel.cpp" />
     <ClCompile Include="..\..\src\mmtransaction.cpp" />
@@ -370,6 +371,7 @@
     <ClInclude Include="..\..\src\mmgraphtopcategories.h" />
     <ClInclude Include="..\..\src\mmhelppanel.h" />
     <ClInclude Include="..\..\src\mmhomepagepanel.h" />
+    <ClInclude Include="..\..\src\mmOption.h" />
     <ClInclude Include="..\..\src\mmpanelbase.h" />
     <ClInclude Include="..\..\src\mmpayee.h" />
     <ClInclude Include="..\..\src\mmreportspanel.h" />

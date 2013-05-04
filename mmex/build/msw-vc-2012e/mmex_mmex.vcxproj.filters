@@ -282,6 +282,9 @@
     <ClCompile Include="..\..\src\db\subcategory.cpp">
       <Filter>Source Files\db</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\mmOption.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\aboutdialog.h">
@@ -553,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\db\subcategory.h">
       <Filter>Header Files\db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mmOption.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
