@@ -21,6 +21,8 @@
 #include "../constants.h"
 #include "../htmlbuilder.h"
 #include "../stockspanel.h"
+#include "../mmCurrencyFormatter.h"
+#include "../util.h"
 
 mmReportSummaryStocks::mmReportSummaryStocks(mmCoreDB* core)
 : mmPrintableBase(core)

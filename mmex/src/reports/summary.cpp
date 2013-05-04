@@ -20,6 +20,7 @@
 #include "../constants.h"
 #include "../htmlbuilder.h"
 #include "../db/assets.h"
+#include "../mmCurrencyFormatter.h"
 
 mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame)
 : mmPrintableBase(core)

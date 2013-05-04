@@ -3,6 +3,7 @@
 #include "../constants.h"
 #include "../htmlbuilder.h"
 #include "mmRepeat.h"
+#include "../mmCurrencyFormatter.h"
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray)
 : mmPrintableBase(core)

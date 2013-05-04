@@ -1,4 +1,4 @@
-/*******************************************************
+﻿/*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
 
  This program is free software; you can redistribute it and/or modify
@@ -22,18 +22,10 @@
 #include "paths.h"
 #include "constants.h"
 #include "singleton.h"
+#include "mmCurrencyFormatter.h"
 
 #include <wx/sstream.h>
 #include <wx/numformatter.h>
-//----------------------------------------------------------------------------
-
-namespace
-{
-
-//----------------------------------------------------------------------------
-const wxChar g_def_decimal_point = '.';
-const int g_def_scale = 100;
-
 //----------------------------------------------------------------------------
 
 int CaseInsensitiveCmp(const wxString &s1, const wxString &s2)
@@ -74,64 +66,6 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
     return lang.Lower();
 }
 //----------------------------------------------------------------------------
-
-} // namespace
-
-//----------------------------------------------------------------------------
-
-CurrencyFormatter::CurrencyFormatter()
-{
-    loadDefaultSettings();
-}
-
-void CurrencyFormatter::loadDefaultSettings()
-{
-    m_pfx_symbol = "$";
-    m_sfx_symbol.clear();
-
-    m_decimal_point = g_def_decimal_point;
-    m_group_separator = ',';
-
-    m_unit_name = "dollar";
-    m_cent_name = "cent";
-
-    m_scale = g_def_scale;
-}
-
-void CurrencyFormatter::loadSettings(
-    const wxString &pfx,
-    const wxString &sfx,
-    wxChar dec,
-    wxChar grp,
-    const wxString &unit,
-    const wxString &cent,
-    int scale)
-
-{
-    m_pfx_symbol = pfx;
-    m_sfx_symbol = sfx;
-
-    m_decimal_point = wxIsprint(dec) ? dec : g_def_decimal_point;
-    m_group_separator = grp;
-
-    m_unit_name = unit;
-    m_cent_name = cent;
-
-    m_scale = scale > 0 ? scale : g_def_scale;
-}
-
-void CurrencyFormatter::loadSettings(const mmCurrency &cur)
-{
-    wxUniChar dec = cur.dec_.IsEmpty() ? wxUniChar('\0') : cur.dec_.GetChar(0);
-    wxUniChar grp = cur.grp_.IsEmpty() ? wxUniChar('\0') : cur.grp_.GetChar(0);
-
-    loadSettings(cur.pfxSymbol_, cur.sfxSymbol_, dec, grp, cur.unit_, cur.cent_, cur.scaleDl_);
-}
-
-CurrencyFormatter& CurrencyFormatter::instance()
-{
-    return Singleton<CurrencyFormatter>::instance();
-}
 
 void mmex::formatDoubleToCurrencyEdit(double val, wxString& rdata)
 {

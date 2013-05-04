@@ -23,6 +23,7 @@
 #include "htmlbuilder.h"
 #include "billsdepositspanel.h"
 #include "mmgraphincexpensesmonth.h"
+#include "mmCurrencyFormatter.h"
 #include "db/assets.h"
 #include <algorithm>
 

@@ -1,4 +1,4 @@
-/*******************************************************
+﻿/*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
 
  This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 #include "dbwrapper.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "mmOption.h"
 #include "paths.h"
 #include "constants.h"

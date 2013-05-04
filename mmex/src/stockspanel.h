@@ -21,7 +21,6 @@
 
 #include "mmpanelbase.h"
 #include "guiid.h"
-#include "util.h"
 #include <wx/tglbtn.h>
 
 class wxListCtrl;
