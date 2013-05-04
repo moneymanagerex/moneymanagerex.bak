@@ -209,7 +209,7 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
 
         std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
         wxASSERT(pCurrencyPtr);
-        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
         double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
         double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
@@ -281,7 +281,7 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
         {
             std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
             wxASSERT(pCurrencyPtr);
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+            CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
             double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
             double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
@@ -382,7 +382,7 @@ wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, do
 
         std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(stockaccountId);
         wxASSERT(pCurrencyPtr);
-        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
         mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
         mmex::formatDoubleToCurrency(stockGain, tGainStr);
@@ -519,7 +519,7 @@ wxString mmHomePagePanel::displayCurrencies()
             wxASSERT(pCurrencyPtr);
 
             wxString tBalanceStr;
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+            CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
             mmex::formatDoubleToCurrencyEdit(convRate, convRateStr);
 
@@ -756,7 +756,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
 wxString mmHomePagePanel::displayTopTransactions()
 {
     mmHTMLBuilder hb;
-    mmex::CurrencyFormatter::instance().loadDefaultSettings();
+    CurrencyFormatter::instance().loadDefaultSettings();
     core_->currencyList_.LoadBaseCurrencySettings();
 
     static const char sql3[] =

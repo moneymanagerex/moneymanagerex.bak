@@ -540,7 +540,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 
         std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(fromAccountID_);
         wxASSERT(pCurrencyPtr);
-        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
         wxString fileName = m_text_ctrl_->GetValue();
         wxFileName csv_file(fileName);

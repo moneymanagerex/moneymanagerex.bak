@@ -425,7 +425,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
 
     std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(accountID_);
     wxASSERT(pCurrencyPtr);
-    mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+    CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
     //Get Init Value of the account
     double initVal = core_->accountList_.GetAccountSharedPtr(accountID_)->initialBalance_;

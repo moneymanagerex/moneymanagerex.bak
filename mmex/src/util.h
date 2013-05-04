@@ -132,8 +132,6 @@ public:
 };
 //----------------------------------------------------------------------------
 
-namespace mmex
-{
 
 class CurrencyFormatter
 {
@@ -170,6 +168,8 @@ private:
 };
 //----------------------------------------------------------------------------
 
+namespace mmex
+{
 void formatDoubleToCurrency( double val, wxString& rdata );
 void formatDoubleToCurrencyEdit( double val, wxString& rdata );
 bool formatCurrencyToDouble( const wxString& str, double& val );

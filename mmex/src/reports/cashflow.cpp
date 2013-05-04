@@ -102,7 +102,7 @@ wxString mmReportCashFlow::getHTMLText()
 
         std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
         wxASSERT(pCurrencyPtr);
-        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         double rate = pCurrencyPtr->baseConv_;
         tInitialBalance += account->initialBalance_ * rate;
    }

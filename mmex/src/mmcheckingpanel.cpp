@@ -571,13 +571,13 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
             convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
         wxString convertionStr;
 
-        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         mmex::formatDoubleToCurrency(toamount, toamountStr);
         mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
         pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(accountId);
         wxASSERT(pCurrencyPtr);
-        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         mmex::formatDoubleToCurrency(amount, amountStr);
         //if (currencyid == basecurrencyid)
         mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
@@ -643,7 +643,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
 
             pCurrencyBase = core_->accountList_.getCurrencySharedPtr(accountId);
             wxASSERT(pCurrencyBase);
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyBase);
+            CurrencyFormatter::instance().loadSettings(*pCurrencyBase);
             mmex::formatDoubleToCurrency(amount, amountStr);
 
             //output

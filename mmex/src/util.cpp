@@ -79,12 +79,12 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
 
 //----------------------------------------------------------------------------
 
-mmex::CurrencyFormatter::CurrencyFormatter()
+CurrencyFormatter::CurrencyFormatter()
 {
     loadDefaultSettings();
 }
 
-void mmex::CurrencyFormatter::loadDefaultSettings()
+void CurrencyFormatter::loadDefaultSettings()
 {
     m_pfx_symbol = "$";
     m_sfx_symbol.clear();
@@ -98,7 +98,7 @@ void mmex::CurrencyFormatter::loadDefaultSettings()
     m_scale = g_def_scale;
 }
 
-void mmex::CurrencyFormatter::loadSettings(
+void CurrencyFormatter::loadSettings(
     const wxString &pfx,
     const wxString &sfx,
     wxChar dec,
@@ -120,7 +120,7 @@ void mmex::CurrencyFormatter::loadSettings(
     m_scale = scale > 0 ? scale : g_def_scale;
 }
 
-void mmex::CurrencyFormatter::loadSettings(const mmCurrency &cur)
+void CurrencyFormatter::loadSettings(const mmCurrency &cur)
 {
     wxUniChar dec = cur.dec_.IsEmpty() ? wxUniChar('\0') : cur.dec_.GetChar(0);
     wxUniChar grp = cur.grp_.IsEmpty() ? wxUniChar('\0') : cur.grp_.GetChar(0);
@@ -128,9 +128,9 @@ void mmex::CurrencyFormatter::loadSettings(const mmCurrency &cur)
     loadSettings(cur.pfxSymbol_, cur.sfxSymbol_, dec, grp, cur.unit_, cur.cent_, cur.scaleDl_);
 }
 
-mmex::CurrencyFormatter& mmex::CurrencyFormatter::instance()
+CurrencyFormatter& CurrencyFormatter::instance()
 {
-    return Singleton<mmex::CurrencyFormatter>::instance();
+    return Singleton<CurrencyFormatter>::instance();
 }
 
 void mmex::formatDoubleToCurrencyEdit(double val, wxString& rdata)

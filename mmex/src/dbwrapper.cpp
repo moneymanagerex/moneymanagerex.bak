@@ -406,7 +406,7 @@ void mmDBWrapper::loadCurrencySettings(wxSQLite3Database* db, int currencyID)
             grpChar = grp.GetChar(0);
         }
 
-        mmex::CurrencyFormatter::instance().loadSettings(pfxSymbol, sfxSymbol, decChar, grpChar, unit, cent, scaleDl);
+        CurrencyFormatter::instance().loadSettings(pfxSymbol, sfxSymbol, decChar, grpChar, unit, cent, scaleDl);
 
     } else {
         wxASSERT(true);
