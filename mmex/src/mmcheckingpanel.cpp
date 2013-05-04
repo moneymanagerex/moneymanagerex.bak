@@ -21,6 +21,7 @@
 #include "splittransactionsdialog.h"
 #include "mmex.h"
 #include "constants.h"
+#include "mmCurrencyFormatter.h"
 //----------------------------------------------------------------------------
 #include <wx/srchctrl.h>
 #include <algorithm>

@@ -19,6 +19,8 @@
 #include "stockspanel.h"
 #include "stockdialog.h"
 #include "constants.h"
+#include "mmCurrencyFormatter.h"
+#include "util.h"
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(StocksListCtrl, wxListCtrl)

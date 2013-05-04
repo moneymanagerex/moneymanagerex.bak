@@ -130,42 +130,6 @@ public:
 };
 //----------------------------------------------------------------------------
 
-
-class CurrencyFormatter
-{
-public:
-    CurrencyFormatter();
-    static CurrencyFormatter& instance();
-
-    void loadDefaultSettings();
-    void loadSettings(const mmCurrency &cur);
-
-    void loadSettings(const wxString &pfx, const wxString &sfx,
-                wxChar dec, wxChar grp,
-                const wxString &unit, const wxString &cent,
-                int scale
-                );
-
-    wxString getPrefix() const { return m_pfx_symbol; }
-    wxString getSuffix() const { return m_sfx_symbol; }
-
-    wxChar getDecimalPoint() const { return m_decimal_point; }
-    wxChar getGroupSeparator() const { return m_group_separator; }
-
-    int getScale() const { return m_scale; }
-    int getDec() const { return log10(m_scale); }
-
-private:
-    wxString m_pfx_symbol;   // Leading currency symbol
-    wxString m_sfx_symbol;   // Trailing currency symbol
-    wxChar m_decimal_point;  // Character for 100ths
-    wxChar m_group_separator;// Character for 1000nds
-    wxString m_unit_name;    // Name of monetary unit
-    wxString m_cent_name;    // Name of fraction unit
-    int m_scale;
-};
-//----------------------------------------------------------------------------
-
 namespace mmex
 {
 void formatDoubleToCurrency( double val, wxString& rdata );

@@ -8,6 +8,8 @@
 
 template <int N> wxDateSpan mmRepeat(int num = 0) { return wxDateSpan::Day();}
 
+template<> wxDateSpan mmRepeat<0>(int num) { return wxDateSpan::Days(0);}
+
 template<> wxDateSpan mmRepeat<1>(int num) { return wxDateSpan::Week();}
 
 template<> wxDateSpan mmRepeat<2>(int num) { return wxDateSpan::Weeks(2);}

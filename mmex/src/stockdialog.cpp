@@ -19,6 +19,7 @@
 #include "stockdialog.h"
 #include "constants.h"
 #include "paths.h"
+#include "util.h"
 #include <wx/valnum.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmStockDialog, wxDialog )
