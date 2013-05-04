@@ -20,6 +20,7 @@
 #include "constants.h"
 #include "guiid.h"
 #include "util.h"
+#include "mmOption.h"
 
 //----------------------------------------------------------------------------
 mmCoreDB::mmCoreDB(std::shared_ptr<wxSQLite3Database> db, std::shared_ptr<MMEX_IniSettings> iniSettings)

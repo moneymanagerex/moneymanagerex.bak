@@ -149,6 +149,7 @@ MMEX_OBJECTS =  \
 	mmex_transdialog.o \
 	mmex_univcsvdialog.o \
 	mmex_util.o \
+	mmex_option.o \
 	mmex_budget.o \
 	mmex_budgetcategorysummary.o \
 	mmex_budgetingperf.o \
@@ -574,6 +575,9 @@ mmex_univcsvdialog.o: $(srcdir)/src/univcsvdialog.cpp
 
 mmex_util.o: $(srcdir)/src/util.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/util.cpp
+
+mmex_option.o: $(srcdir)/src/option.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmOption.cpp
 
 mmex_budget.o: $(srcdir)/src/reports/budget.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reports/budget.cpp

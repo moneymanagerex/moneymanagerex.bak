@@ -22,6 +22,7 @@
 #include "paths.h"
 #include "constants.h"
 #include "util.h"
+#include "mmOption.h"
 
 /*******************************************************/
 

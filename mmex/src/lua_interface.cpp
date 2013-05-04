@@ -18,6 +18,7 @@
 
 #include "lua_interface.h"
 #include "util.h"
+#include "mmOption.h"
 #include "htmlbuilder.h"
 #include <wx/stdpaths.h>
 

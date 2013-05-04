@@ -19,6 +19,7 @@
 #include "payeedialog.h"
 #include "relocatepayeedialog.h"
 #include "util.h"
+#include "mmOption.h"
 #include "paths.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmPayeeDialog, wxDialog )

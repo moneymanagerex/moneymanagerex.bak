@@ -19,6 +19,7 @@
 
 #include "budgetingpanel.h"
 #include "budgetentrydialog.h"
+#include "mmOption.h"
 #include "mmex.h"
 #include "reports/budget.h"
 

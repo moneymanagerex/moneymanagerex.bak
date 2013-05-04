@@ -20,6 +20,7 @@
 #include "transactionfilterdialog.h"
 #include "paths.h"
 #include "util.h"
+#include "mmOption.h"
 #include "payeedialog.h"
 #include "categdialog.h"
 

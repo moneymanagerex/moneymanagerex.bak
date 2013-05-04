@@ -18,6 +18,7 @@
 
 #include "mmpayee.h"
 #include "util.h"
+#include "mmOption.h"
 #include "mmcoredb.h"
 #include <algorithm>
 

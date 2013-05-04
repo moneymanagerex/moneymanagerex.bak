@@ -20,6 +20,7 @@
 #include "newacctdialog.h"
 #include "maincurrencydialog.h"
 #include "util.h"
+#include "mmOption.h"
 #include "paths.h"
 #include <wx/valnum.h>
 

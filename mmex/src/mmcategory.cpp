@@ -20,6 +20,7 @@
 #include "mmcategory.h"
 #include "dbwrapper.h"
 #include "util.h"
+#include "mmOption.h"
 #include "mmcoredb.h"
 
 void mmCategoryList::LoadCategories()

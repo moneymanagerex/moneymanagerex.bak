@@ -20,6 +20,7 @@
 #include "optionsdialog.h"
 #include "maincurrencydialog.h"
 #include "util.h"
+#include "mmOption.h"
 #include <wx/colordlg.h>
 #include "mmgraphgenerator.h"
 #include "constants.h"

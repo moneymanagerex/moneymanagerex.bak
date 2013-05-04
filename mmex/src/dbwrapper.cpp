@@ -18,6 +18,7 @@
 
 #include "dbwrapper.h"
 #include "util.h"
+#include "mmOption.h"
 #include "paths.h"
 #include "constants.h"
 //----------------------------------------------------------------------------

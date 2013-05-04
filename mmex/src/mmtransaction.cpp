@@ -17,6 +17,7 @@
 #include "constants.h"
 #include "mmtransaction.h"
 #include "util.h"
+#include "mmOption.h"
 #include "mmcoredb.h"
 
 void mmSplitTransactionEntries::addSplit(std::shared_ptr<mmSplitTransactionEntry> split)

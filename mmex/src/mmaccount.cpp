@@ -18,6 +18,7 @@
 
 #include "mmaccount.h"
 #include "util.h"
+#include "mmOption.h"
 #include "constants.h"
 #include "mmcoredb.h"
 
