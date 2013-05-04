@@ -357,6 +357,46 @@ bool mmUnivCSVDialog::ShowToolTips()
     return TRUE;
 }
 
+void mmUnivCSVDialog::csv2tab_separated_values(wxString& line, const wxString& delimit)
+{
+	  //csv line example:
+    //12.02.2010,Payee,-1105.08,Category,Subcategory,,"Fuel ""95"", 42.31 l (24.20) 212366"
+    int i=0;
+    //Single quotes will be used instead double quotes
+    //Replace all single quotes first
+    line.Replace("'", "\6");
+    //Replace double quotes that used twice to replacer
+    line.Replace("\"\"\""+delimit+"\"\"\"", "\5\""+delimit+"\"\5");
+    line.Replace("\"\"\""+delimit, "\5\""+delimit);
+    line.Replace(delimit+"\"\"\"", delimit+"\"\5");
+    line.Replace("\"\""+delimit, "\5"+delimit);
+    line.Replace(delimit+"\"\"", delimit+"\5");
+
+    //replace delimiter to TAB and double quotes to single quotes
+    line.Replace("\""+delimit+"\"", "'\t'");
+    line.Replace("\""+delimit, "'\t");
+    line.Replace(delimit+"\"", "\t'");
+    line.Replace("\"\"", "\5");
+    line.Replace("\"", "'");
+
+    wxString temp_line = wxEmptyString;
+    wxString token;
+    wxStringTokenizer tkz1(line, "'");
+
+    while (tkz1.HasMoreTokens())
+    {
+        token = tkz1.GetNextToken();
+        if (0 == fmod((double)i,2))
+            token.Replace(delimit,"\t");
+        temp_line << token;
+        i++;
+    };
+    //Replace back all replacers to the original value
+    temp_line.Replace("\5", "\"");
+    temp_line.Replace("\6", "'");
+    line = temp_line;
+}
+
 wxBitmap mmUnivCSVDialog::GetBitmapResource(const wxString& /*name*/)
 {
     return wxNullBitmap;
@@ -605,7 +645,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                 subCategID_ = -1;
                 val_ = 0.0;
 
-                line = csv2tab_separated_values(line, delimit_);
+                this->csv2tab_separated_values(line, delimit_);
                 wxStringTokenizer tkz(line, "\t", wxTOKEN_RET_EMPTY_ALL);
                 int numTokens = (int)tkz.CountTokens();
                 if (numTokens < (int)csvFieldOrder_.size())
@@ -926,7 +966,7 @@ void mmUnivCSVDialog::update_preview()
             int row = 0;
             for (line = tFile.GetFirstLine(); !tFile.Eof(); line = tFile.GetNextLine())
             {
-                line = csv2tab_separated_values(line, delimit);
+                this->csv2tab_separated_values(line, delimit);
                 wxStringTokenizer tkz(line, "\t", wxTOKEN_RET_EMPTY_ALL);
 
                 int col = 0;
