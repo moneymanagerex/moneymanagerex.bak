@@ -22,6 +22,7 @@
 #include "defs.h"
 #include "mmcurrency.h"
 #include "reportbase.h"
+#include <wx/valnum.h>
 
 class mmCoreDB;
 class MMEX_IniSettings;
@@ -177,8 +178,6 @@ bool formatCurrencyToDouble( const wxString& str, double& val );
 
 //----------------------------------------------------------------------------
 
-int getTransformedTrxStatus(const wxString& in);
-wxString getTransformedTrxStatus(int in);
 wxString Tips(wxString type);
 int site_content(const wxString& site, wxString& output);
 bool mmCalculator(wxString sInput, wxString& sOutput);
@@ -191,6 +190,22 @@ wxImageList* navtree_images_list_();
 void windowsFreezeThaw(wxWindow* pWindow);
 
 std::shared_ptr<wxSQLite3Database> static_db_ptr();
+
+class mmDoubleValidator : public wxFloatingPointValidator<double> {
+public:
+    mmDoubleValidator() : wxFloatingPointValidator<double> (2, NULL, wxNUM_VAL_NO_TRAILING_ZEROES)
+    {
+        this->SetRange(0, 10000000);
+    }
+};
+
+class mmDoubleValidator4 : public wxFloatingPointValidator<double> {
+public:
+    mmDoubleValidator4() : wxFloatingPointValidator<double> (4, NULL, wxNUM_VAL_NO_TRAILING_ZEROES)
+    {
+        this->SetRange(0, 10000000);
+    }
+};
 
 #endif // _MM_EX_UTIL_H_
 //----------------------------------------------------------------------------
