@@ -129,7 +129,7 @@ wxString mmReportSummaryStocks::getHTMLText()
 
         std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(accountID);
         wxASSERT(pCurrencyPtr);
-        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
         mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
         mmex::formatDoubleToCurrency(gain_loss_sum, gain_loss_sum_str);

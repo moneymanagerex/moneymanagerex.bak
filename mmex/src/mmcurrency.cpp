@@ -68,7 +68,7 @@ mmCurrency::mmCurrency()
 
 void mmCurrency::loadCurrencySettings()
 {
-    mmex::CurrencyFormatter::instance().loadSettings(
+    CurrencyFormatter::instance().loadSettings(
         pfxSymbol_, 
         sfxSymbol_, 
         decChar_, 
@@ -101,7 +101,7 @@ void mmCurrencyList::LoadBaseCurrencySettings() const
     }
     else
     {
-        mmex::CurrencyFormatter::instance().loadDefaultSettings();
+        CurrencyFormatter::instance().loadDefaultSettings();
     }
 }
 
@@ -114,13 +114,13 @@ void mmCurrencyList::SetCurrencySetting(std::shared_ptr<mmCurrency> pCurrency) c
 {
     if (pCurrency)
     {
-        mmex::CurrencyFormatter::instance().loadSettings(
+        CurrencyFormatter::instance().loadSettings(
             pCurrency->pfxSymbol_, pCurrency->sfxSymbol_, pCurrency->decChar_,
             pCurrency->grpChar_, pCurrency->unit_, pCurrency->cent_, pCurrency->scaleDl_);
     }
     else
     {
-        mmex::CurrencyFormatter::instance().loadDefaultSettings();
+        CurrencyFormatter::instance().loadDefaultSettings();
     }
 }
 

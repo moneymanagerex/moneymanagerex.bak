@@ -135,7 +135,7 @@ void TCurrencyEntry::Update(wxSQLite3Database* db)
 
 void TCurrencyEntry::SetCurrencySettings()
 {
-    mmex::CurrencyFormatter::instance().loadSettings(pfxSymbol_, sfxSymbol_,
+    CurrencyFormatter::instance().loadSettings(pfxSymbol_, sfxSymbol_,
         decChar_, grpChar_, unit_, cent_, scaleDl_);
 }
 
@@ -147,7 +147,7 @@ TCurrencyList::TCurrencyList(std::shared_ptr<wxSQLite3Database> db)
 : TListBase(db)
 , basecurrency_id_(-1)
 {
-    mmex::CurrencyFormatter::instance().loadDefaultSettings();
+    CurrencyFormatter::instance().loadDefaultSettings();
     LoadEntries();
 }
 
@@ -213,7 +213,7 @@ void TCurrencyList::SetBaseCurrency(int currency_id)
     else
     {
         basecurrency_id_ = -1;
-        mmex::CurrencyFormatter::instance().loadDefaultSettings();
+        CurrencyFormatter::instance().loadDefaultSettings();
     }
 }
 
