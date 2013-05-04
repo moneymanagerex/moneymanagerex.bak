@@ -102,9 +102,7 @@ const wxArrayString date_format_mask();
 
 wxString inQuotes(wxString label, wxString& delimiter);
 wxString csv2tab_separated_values(wxString line, wxString& delimit);
-wxString mmReadyDisplayString( const wxString& orig );
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);
-void fixFileExt(wxFileName &f, const wxString &ext);
 
 void correctEmptyFileExt(wxString ext, wxString & fileName );
 

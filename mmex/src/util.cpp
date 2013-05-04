@@ -267,18 +267,6 @@ wxString mmSelectLanguage(wxWindow *parent, std::shared_ptr<MMEX_IniSettings> pI
     return lang;
 }
 
-wxString mmReadyDisplayString(const wxString& orig)
-{
-    wxString toReturn = orig;
-    toReturn.Replace("&", "&&");
-    return toReturn;
-}
-
-void fixFileExt(wxFileName &f, const wxString &ext)
-{
-    if (f.GetExt().Lower() != ext) f.SetExt(ext);
-}
-
 wxString mmGetNiceMonthName(int month)
 {
     static const wxString mon[12] =

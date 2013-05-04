@@ -2850,7 +2850,8 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 
     bool encrypt = dlg.GetFilterIndex() != 0; // emb -> Encrypted mMB
     wxFileName newFileName(dlg.GetPath());
-    fixFileExt(newFileName, encrypt ? "emb" : "mmb");
+	wxString ext = encrypt ? "emb" : "mmb";
+	if (newFileName.GetExt().Lower() != ext) newFileName.SetExt(ext);
 
     wxFileName oldFileName(fileName_); // opened db's file
 

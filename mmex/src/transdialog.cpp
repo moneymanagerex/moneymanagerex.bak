@@ -568,7 +568,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
         }
 
         std::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
-        cbPayee_->SetValue(mmReadyDisplayString(pPayee->name_));
+        cbPayee_->SetValue(pPayee->name_);
         payeeUnknown_ = false;
 
         // If this is a Split Transaction, ignore displaying last category for payee

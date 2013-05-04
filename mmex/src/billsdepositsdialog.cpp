@@ -620,7 +620,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
                 return;
 
             std::shared_ptr<mmPayee> pPayee = core_->payeeList_.GetPayeeSharedPtr(payeeID_);
-            bPayee_->SetLabel(mmReadyDisplayString(pPayee->name_));
+            bPayee_->SetLabel(pPayee->name_);
             payeeUnknown_ = false;
 
             if (pPayee->categoryId_ == -1)
