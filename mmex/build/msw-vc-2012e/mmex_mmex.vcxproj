@@ -274,6 +274,7 @@
     <ClCompile Include="..\..\src\mmcheckingpanel.cpp" />
     <ClCompile Include="..\..\src\mmcoredb.cpp" />
     <ClCompile Include="..\..\src\mmcurrency.cpp" />
+    <ClCompile Include="..\..\src\mmCurrencyFormatter.cpp" />
     <ClCompile Include="..\..\src\mmex.cpp" />
     <ClCompile Include="..\..\src\mmex_settings.cpp" />
     <ClCompile Include="..\..\src\mmgraphgenerator.cpp" />
@@ -363,6 +364,7 @@
     <ClInclude Include="..\..\src\mmcheckingpanel.h" />
     <ClInclude Include="..\..\src\mmcoredb.h" />
     <ClInclude Include="..\..\src\mmcurrency.h" />
+    <ClInclude Include="..\..\src\mmCurrencyFormatter.h" />
     <ClInclude Include="..\..\src\mmex.h" />
     <ClInclude Include="..\..\src\mmex_settings.h" />
     <ClInclude Include="..\..\src\mmgraphgenerator.h" />
