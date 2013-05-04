@@ -101,7 +101,6 @@ const wxArrayString date_format();
 const wxArrayString date_format_mask();
 
 wxString inQuotes(wxString label, wxString& delimiter);
-wxString csv2tab_separated_values(wxString line, wxString& delimit);
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);
 
 void correctEmptyFileExt(wxString ext, wxString & fileName );
