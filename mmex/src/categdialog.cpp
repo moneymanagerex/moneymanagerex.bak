@@ -19,6 +19,7 @@
 #include "relocatecategorydialog.h"
 #include "categdialog.h"
 #include "util.h"
+#include "mmOption.h"
 #include "defs.h"
 #include "paths.h"
 

@@ -21,6 +21,7 @@
 
 #include "../htmlbuilder.h"
 #include "../util.h"
+#include "../mmOption.h"
 #include "../mmgraphpie.h"
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(

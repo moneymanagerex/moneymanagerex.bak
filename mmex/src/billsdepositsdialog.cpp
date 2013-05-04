@@ -20,6 +20,7 @@
 #include "billsdepositsdialog.h"
 #include "constants.h"
 #include "util.h"
+#include "mmOption.h"
 #include "paths.h"
 #include "categdialog.h"
 #include "payeedialog.h"
