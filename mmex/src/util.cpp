@@ -155,43 +155,6 @@ bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
     return wxNumberFormatter::FromString(str , &val);
 }
 
-//----------------------------------------------------------------------------
-mmIniOptions::mmIniOptions()
-: enableAssets_(true)
-, enableBudget_(true)
-, enableGraphs_(true)
-, enableAddAccount_(true)
-, enableDeleteAccount_(true)
-, enableRepeatingTransactions_(true)
-, enableCustomLogo_(false)
-, enableCheckForUpdates_(true)
-, enableReportIssues_ (true)
-, enableBeNotifiedForNewReleases_(true)
-, enableVisitWebsite_(true)
-, html_font_size_(3)
-, enableCustomAboutDialog_(false)
-, disableCategoryModify_(false)
-, enableCustomTemplateDB_(false)
-, expandBankHome_(true)
-, expandTermHome_(false)
-, expandStocksHome_(true)
-, expandBankTree_(true)
-, expandTermTree_(false)
-, budgetFinancialYears_(false)
-, budgetIncludeTransfers_(false)
-, budgetSetupWithoutSummaries_(false)
-, budgetSummaryWithoutCategories_(true)
-, ignoreFutureTransactions_(false)
-, transPayeeSelectionNone_(0)
-, transCategorySelectionNone_(0)
-, transStatusReconciled_(0)
-, transDateDefault_(0)
-{}
-
-mmIniOptions& mmIniOptions::instance()
-{
-    return Singleton<mmIniOptions>::instance();
-}
 
 //----------------------------------------------------------------------------
 void correctEmptyFileExt(wxString ext, wxString & fileName)
