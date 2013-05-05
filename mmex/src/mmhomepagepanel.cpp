@@ -169,17 +169,9 @@ wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecB
     // format the totals for display
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxString tRecBalanceStr;
-     CurrencyFormatter::formatDoubleToCurrency(tRecBalance, tRecBalanceStr);
-    wxString tBalanceStr;
-     CurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
-
-    // stocks don't have reconciled balances
-    if (totalsTitle == _("Stocks Total:")) tRecBalanceStr = wxEmptyString;
-
-    std::vector<wxString> data;
-    data.push_back(tRecBalanceStr);
-    data.push_back(tBalanceStr);
+	std::vector<double> data;
+	data.push_back(tRecBalance);
+	data.push_back(tBalance);
 
     hb.startTableRow();
     hb.addTotalRow(totalsTitle, 3, data);
@@ -227,10 +219,6 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
             core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
             // show the actual amount in that account
-            wxString balanceStr;
-            wxString reconciledBalanceStr;
-             CurrencyFormatter::formatDoubleToCurrency(bal, balanceStr);
-             CurrencyFormatter::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
 
             if (((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
                 (vAccts == "Favorites" && account->favoriteAcct_) ||
@@ -239,8 +227,8 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
             {
                 hb.startTableRow();
                 hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_), account->name_, false, true);
-                hb.addTableCell(reconciledBalanceStr, true);
-                hb.addTableCell(balanceStr, true);
+                hb.addMoneyCell(reconciledBal, true);
+				hb.addMoneyCell(bal);
                 hb.endTableRow();
             }
             // if bank accounts being displayed or no accounts displayed, include income/expense totals on home page.
@@ -298,10 +286,6 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
                 core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
                 // show the actual amount in that account
-                wxString balanceStr;
-                wxString reconciledBalStr;
-                 CurrencyFormatter::formatDoubleToCurrency(bal, balanceStr);
-                 CurrencyFormatter::formatDoubleToCurrency(reconciledBal, reconciledBalStr);
 
                 if ((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
                     (vAccts == "Favorites" && account->favoriteAcct_) ||
@@ -309,8 +293,8 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
                 {
                     hb.startTableRow();
                     hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_), account->name_, false, true);
-                    hb.addTableCell(reconciledBalStr, true);
-                    hb.addTableCell(balanceStr, true);
+                    hb.addMoneyCell(reconciledBal, true);
+                    hb.addMoneyCell(bal, true);
                     hb.endTableRow();
                 }
 
@@ -385,9 +369,6 @@ wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, do
         wxASSERT(pCurrencyPtr);
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-         CurrencyFormatter::formatDoubleToCurrency(stockBalance, tBalanceStr);
-         CurrencyFormatter::formatDoubleToCurrency(stockGain, tGainStr);
-
         // if Stock accounts being displayed, include income/expense totals on home page.
         //tIncome += income * baseconvrate;
         //tExpenses += expenses * baseconvrate;
@@ -399,8 +380,8 @@ wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, do
             //////
             //hb.addTableCell(stocknameStr, false,true);
             hb.addTableCellLink(wxString::Format("STOCK:%d", stockaccountId), stocknameStr, false, true);
-            hb.addTableCell(tGainStr, true);
-            hb.addTableCell(tBalanceStr, true);
+            hb.addMoneyCell(stockGain, true);
+            hb.addMoneyCell(stockBalance, true);
             hb.endTableRow();
         }
     }
@@ -521,13 +502,11 @@ wxString mmHomePagePanel::displayCurrencies()
 
             wxString tBalanceStr;
             CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-             CurrencyFormatter::formatDoubleToCurrency(currBalance, tBalanceStr);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(convRate, convRateStr);
 
             hb.startTableRow();
             hb.addTableCell(currencyStr);
-            hb.addTableCell(convRateStr, true);
-            hb.addTableCell(tBalanceStr, true);
+            hb.addMoneyCell(convRate);
+            hb.addMoneyCell(currBalance);
             hb.endTableRow();
         }
         hb.endTable();
@@ -550,11 +529,6 @@ wxString mmHomePagePanel::displayCurrencies()
 wxString mmHomePagePanel::displayIncomeVsExpenses(double& tincome, double& texpenses)
 {
     mmHTMLBuilder hb;
-
-    wxString incStr, expStr, difStr;
-     CurrencyFormatter::formatDoubleToCurrency(tincome, incStr); // must use LoadBaseCurrencySettings (called above)
-     CurrencyFormatter::formatDoubleToCurrency(texpenses, expStr);
-     CurrencyFormatter::formatDoubleToCurrency(tincome-texpenses, difStr);
 
     mmGraphIncExpensesMonth gg;
     gg.init(tincome, texpenses);
@@ -586,17 +560,17 @@ wxString mmHomePagePanel::displayIncomeVsExpenses(double& tincome, double& texpe
 
             hb.startTableRow();
             hb.addTableCell(_("Income:"), false, true);
-            hb.addTableCell(incStr, true);
+			hb.addMoneyCell(tincome);
             hb.endTableRow();
 
             hb.startTableRow();
             hb.addTableCell(_("Expenses:"), false, true);
-            hb.addTableCell(expStr, true);
+			hb.addMoneyCell(texpenses);
             hb.endTableRow();
 
             hb.startTableRow();
             hb.addTableCell(_("Difference:"), false, true, true);
-            hb.addTableCell(difStr, true, true, true, (tincome-texpenses < 0.0 ? "RED":""));
+			hb.addMoneyCell(tincome - texpenses);
             hb.endTableRow();
 
             hb.endTable();
