@@ -77,9 +77,11 @@ public:
 
     /** Add a special row that will format total values */
     void addTotalRow(const wxString& caption, const int cols, const wxString& value);
+	void addTotalRow(const wxString& caption, int cols, double value);
 
     /** Add a special row that will format total values */
     void addTotalRow(const wxString& caption, const int cols, const std::vector<wxString>& data);
+	void addTotalRow(const wxString& caption, int cols, const std::vector<double>& data);
 
     /** Add a Table header cell */
     void addTableHeaderCell(const wxString& value, const bool& numeric = false);

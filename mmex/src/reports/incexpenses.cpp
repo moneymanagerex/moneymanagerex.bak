@@ -57,11 +57,9 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
     wxString incString;
     wxString expString;
-    wxString diffString;
 
      CurrencyFormatter::formatDoubleToCurrency(expenses, expString);
      CurrencyFormatter::formatDoubleToCurrency(income, incString);
-     CurrencyFormatter::formatDoubleToCurrency(income - expenses, diffString);
 
 	hb.startTableRow();
 	hb.addTableCell(_("Income:"), false, true);
@@ -74,7 +72,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
     hb.endTableRow();
 
     hb.addRowSeparator(2);
-    hb.addTotalRow(_("Difference:"), 2, diffString);
+    hb.addTotalRow(_("Difference:"), 2, income - expenses);
 
     hb.endTable();
 
@@ -165,21 +163,11 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
     expenses = 0.0;
     income = 0.0;
     core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
-        
-    wxString actualExpStr;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
 
-    wxString actualIncStr;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
-
-    balance = income - expenses;
-    wxString actualBalStr;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
-
-    std::vector<wxString> data;
-    data.push_back(actualIncStr);
-    data.push_back(actualExpStr);
-    data.push_back(actualBalStr);
+    std::vector<double> data;
+    data.push_back(income);
+    data.push_back(expenses);
+    data.push_back(balance);
 
     hb.addRowSeparator(5);
     hb.addTotalRow(_("Total:"), 5, data);
