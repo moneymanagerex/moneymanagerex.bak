@@ -398,6 +398,7 @@
     <ClInclude Include="..\..\src\reports\incexpenses.h" />
     <ClInclude Include="..\..\src\reports\incexpensesfinancialperiod.h" />
     <ClInclude Include="..\..\src\reports\mmDateRange.h" />
+    <ClInclude Include="..\..\src\reports\mmRepeat.h" />
     <ClInclude Include="..\..\src\reports\payee.h" />
     <ClInclude Include="..\..\src\reports\summary.h" />
     <ClInclude Include="..\..\src\reports\summaryassets.h" />

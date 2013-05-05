@@ -566,6 +566,9 @@
     <ClInclude Include="..\..\src\mmCurrencyFormatter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\reports\mmRepeat.h">
+      <Filter>Header Files\reports</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\resources\mmex.rc">
