@@ -51,6 +51,7 @@ private:
     int Add(wxSQLite3Database* db);
     void Delete(wxSQLite3Database* db);
     int MultiplexedRepeatType();
+    wxString nextOccurDate_;
 
 public:
     enum REPEAT_TYPE {
@@ -78,7 +79,6 @@ public:
     bool autoExecuteManual_;
     bool autoExecuteSilent_;
     int repeat_type_;
-    wxString nextOccurDate_;
     int num_repeats_;
 
     // Constructor for creating a new transaction entry
@@ -98,6 +98,10 @@ public:
 
     void AdjustNextOccuranceDate();
     bool RequiresExecution(int& remaining_days);
+    void SetNextOccurDate(const wxDateTime date);
+    // return the next occurance date
+    wxDateTime NextOccurDate();
+    
     // Display next occurance date according to required user format
     wxString DisplayNextOccurDate();
 };

@@ -45,18 +45,18 @@
 
 //----------------------------------------------------------------------------
 // This is a way to prevent certain tests occuring during development testing
-#define CENTRALL_DB_TESTS
-#define CURRENCY_TESTS
-#define ACCOUNT_TESTS
-#define CATEGORY_TESTS
-#define SUBCATEGORY_TESTS
-#define PAYEE_TESTS
+//#define CENTRALL_DB_TESTS
+//#define CURRENCY_TESTS
+//#define ACCOUNT_TESTS
+//#define CATEGORY_TESTS
+//#define SUBCATEGORY_TESTS
+//#define PAYEE_TESTS
 #define TRANSACTION_TESTS
 #define REPEAT_TRANSACTION_TESTS
-#define SPLIT_TRANSACTION_TESTS
-#define ASSET_TESTS
-#define STOCK_TESTS
-#define BUDGET_TESTS
+//#define SPLIT_TRANSACTION_TESTS
+//#define ASSET_TESTS
+//#define STOCK_TESTS
+//#define BUDGET_TESTS
 
 //----------------------------------------------------------------------------
 /// Central class holding all major components of the database
@@ -460,9 +460,10 @@ TEST(TTransactionList_Update)
 /****************************************************************************
  Testing Repeating Transactions
  ****************************************************************************/
-TEST(BillList_Add_first_two_entries)
+TEST(BillList_Add_first_four_entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
+    wxString start_time_str = start_time.FormatISOTime();
 
     TTransactionBillList repeat_transactions(get_pDb());
 
@@ -470,38 +471,63 @@ TEST(BillList_Add_first_two_entries)
     pBillEntry->amount_from_   = 1000;
     pBillEntry->trans_status_  = TRANS_STATE_DEF[TTransactionEntry::STATE_RECONCILED];
     pBillEntry->trans_type_    = TRANS_TYPE_DEF[TTransactionEntry::TYPE_DEPOSIT];
-    pBillEntry->trans_notes_   = "Repeat Entry - weekly - start one month in future";
-    pBillEntry->nextOccurDate_ = start_time.Add(wxDateSpan::Month()).FormatISODate();
+    pBillEntry->trans_notes_   = "Repeat - weekly for 10 weeks. Start one month in future";
+    pBillEntry->SetNextOccurDate(start_time.Add(wxDateSpan::Month()));
     pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_WEEKLY;
     pBillEntry->num_repeats_   = 10;
-
-    // New bill_trans added for one month in advance.
     int bill_id = repeat_transactions.AddEntry(pBillEntry);
     CHECK(bill_id > 0);
+    pBillEntry->AdjustNextOccuranceDate();
+    CHECK_EQUAL(start_time.Add(wxDateSpan::Month().Add(wxDateSpan::Week())).FormatISODate(),
+                pBillEntry->NextOccurDate().FormatISODate());
 
     int days_remaining = -1;
-    if (!pBillEntry->RequiresExecution(days_remaining))
-    {
-        CHECK(days_remaining > 27);
-    }
+    bool exec_required = pBillEntry->RequiresExecution(days_remaining);
+    CHECK(!exec_required);
+    CHECK(days_remaining > 27);
 
     TTransactionBillEntry* pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
-    pBillEntry_1->trans_notes_   = "Repeat Entry - every 10 days, start one month in past";
-    pBillEntry_1->nextOccurDate_ = start_time.Subtract(wxDateSpan::Month()).FormatISODate();
+    pBillEntry_1->trans_notes_   = "Repeat - every 10 days. Start one month in past";
+    pBillEntry_1->SetNextOccurDate(start_time.Subtract(wxDateSpan::Month()));
     pBillEntry_1->repeat_type_   = TTransactionBillEntry::TYPE_EVERY_X_DAYS;
     pBillEntry_1->autoExecuteManual_ = true;
     bill_id = repeat_transactions.AddEntry(pBillEntry_1);
     CHECK(bill_id > 1);
 
+    exec_required = pBillEntry_1->RequiresExecution(days_remaining);
+    CHECK(exec_required);
+    CHECK(days_remaining < -27);
+    pBillEntry_1->AdjustNextOccuranceDate();
+
     pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
     pBillEntry_1->autoExecuteManual_ = true;
     pBillEntry_1->autoExecuteSilent_ = true;
-    pBillEntry_1->nextOccurDate_ = start_time.Subtract(wxDateSpan::Weeks(2)).FormatISODate();
-    pBillEntry->trans_notes_   = "Repeat Entry - auto-silent, weekly - start two weeks in past";
+    pBillEntry_1->SetNextOccurDate(start_time.Subtract(wxDateSpan::Weeks(2)));
+    pBillEntry_1->trans_notes_   = "Repeat in 10 days - auto-silent. Start two weeks in past";
+    pBillEntry_1->repeat_type_ = TTransactionBillEntry::TYPE_IN_X_DAYS;
     bill_id = repeat_transactions.AddEntry(pBillEntry_1);
     CHECK(bill_id > 2);
 
-    displayTimeTaken("BillList_Add_first_two_entries", start_time);
+    exec_required = pBillEntry_1->RequiresExecution(days_remaining);
+    CHECK(exec_required);
+    CHECK(days_remaining > -17);
+    pBillEntry_1->AdjustNextOccuranceDate();
+
+    pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
+    pBillEntry_1->autoExecuteManual_ = true;
+    pBillEntry_1->autoExecuteSilent_ = true;
+    pBillEntry_1->SetNextOccurDate(start_time.Subtract(wxDateSpan::Weeks(2)));
+    pBillEntry_1->trans_notes_   = "Repeat weekly - auto-silent. Start two weeks in past";
+    pBillEntry_1->num_repeats_   = -1;    // repeat indefinately
+    bill_id = repeat_transactions.AddEntry(pBillEntry_1);
+    CHECK(bill_id > 3);
+
+    exec_required = pBillEntry_1->RequiresExecution(days_remaining);
+    CHECK(exec_required);
+    CHECK(days_remaining > -17);
+    pBillEntry_1->AdjustNextOccuranceDate();
+
+    displayTimeTaken("BillList_Add_first_four_entries", start_time);
 }
 
 TEST(BillList_Add_next_two_entries)
@@ -516,8 +542,8 @@ TEST(BillList_Add_next_two_entries)
     pBillEntry->trans_status_  = TRANS_STATE_DEF[TTransactionBillEntry::STATE_RECONCILED];
     pBillEntry->trans_type_    = TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_DEPOSIT];
     pBillEntry->trans_notes_   = "Repeat Entry: Start- One Month ago, repeat every 10 days";
-    pBillEntry->nextOccurDate_ = start_time.Subtract(wxDateSpan::Month()).FormatISODate();
-    pBillEntry->trans_date_    = pBillEntry->nextOccurDate_;
+    pBillEntry->SetNextOccurDate(start_time.Subtract(wxDateSpan::Month()));
+    pBillEntry->trans_date_    = pBillEntry->NextOccurDate().FormatISODate();
     pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_EVERY_X_DAYS;
     pBillEntry->num_repeats_   = 10;
     int id = repeat_transactions.AddEntry(pBillEntry);
@@ -548,7 +574,7 @@ TEST(BillList_Create_entry_from_transaction)
 
     TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
     pBillEntry->SetTransaction(pTransEntry);
-    pBillEntry->nextOccurDate_ = start_time.Subtract(wxDateSpan::Weeks(2)).FormatISODate();
+    pBillEntry->SetNextOccurDate(start_time.Subtract(wxDateSpan::Weeks(2)));
     pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_BI_WEEKLY;
     repeat_transactions.AddEntry(pBillEntry);
 
@@ -556,25 +582,27 @@ TEST(BillList_Create_entry_from_transaction)
 }
 #endif
 
-TEST(TTransactionBillList_Executing_Entries)
+TEST(BillList_Executing_Entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
     TTransactionList transactions(get_pDb());
     TTransactionBillList repeat_transactions(get_pDb());
 
-    TTransactionBillEntry* pBillEntry;
     int days_remaining;
     bool continue_Execution = false;
 
-    for (int i = 0; i < repeat_transactions.CurrentListSize(); ++i)
-    {
-        pBillEntry = repeat_transactions.entrylist_[i].get();
+//  TTransactionBillEntry* pBillEntry;
+//  for (int i = 0; i < repeat_transactions.CurrentListSize(); ++i)
+//  {
+//      pBillEntry = repeat_transactions.entrylist_[i].get();
 
+    for (auto& pBillEntry:repeat_transactions.entrylist_)
+    {
         if (pBillEntry->RequiresExecution(days_remaining))
         {
             TTransactionEntry* pTransactionEntry = pBillEntry->GetTransaction();
-            pTransactionEntry->trans_date_ = pBillEntry->nextOccurDate_;
+            pTransactionEntry->trans_date_ = pBillEntry->NextOccurDate().FormatISODate();
             transactions.AddEntry(pTransactionEntry);
 
             wxString date;
@@ -584,10 +612,10 @@ TEST(TTransactionBillList_Executing_Entries)
 
             CHECK(pTransactionEntry->trans_date_ != pTransactionEntry->DisplayTransactionDate());
             CHECK(pBillEntry->trans_date_ != pBillEntry->DisplayTransactionDate());
-            CHECK(pBillEntry->nextOccurDate_ != pBillEntry->DisplayNextOccurDate());
-            
+            CHECK(pBillEntry->NextOccurDate().FormatISODate() != pBillEntry->DisplayNextOccurDate());
+
             pBillEntry->AdjustNextOccuranceDate();
-            CHECK(pTransactionEntry->trans_date_ != pBillEntry->nextOccurDate_);
+//            CHECK(pTransactionEntry->trans_date_ != pBillEntry->NextOccurDate().FormatISODate());
 
             pBillEntry->Update(repeat_transactions.ListDatabase());
             continue_Execution = true;
@@ -597,12 +625,12 @@ TEST(TTransactionBillList_Executing_Entries)
     CHECK(continue_Execution);
 
 #ifdef TRANSACTION_TESTS
-    CHECK_EQUAL(8, transactions.CurrentListSize());
+    CHECK_EQUAL(9, transactions.CurrentListSize());
 #else
-    CHECK_EQUAL(4, transactions.CurrentListSize());
+    CHECK_EQUAL(5, transactions.CurrentListSize());
 #endif
 
-    displayTimeTaken("TTransactionBillList_Add_2", start_time);
+    displayTimeTaken("BillList_Executing_Entries", start_time);
 }
 
 #endif
