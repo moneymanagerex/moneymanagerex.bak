@@ -3,7 +3,6 @@
 
 #include "../htmlbuilder.h"
 #include "../util.h"
-#include "../mmCurrencyFormatter.h"
 #include "../mmgraphincexpensesmonth.h"
 
 mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date_range)
@@ -55,20 +54,14 @@ wxString mmReportIncomeExpenses::getHTMLText()
 	hb.addTableHeaderCell(_("Amount"), true);
 	hb.endTableRow();
 
-    wxString incString;
-    wxString expString;
-
-     CurrencyFormatter::formatDoubleToCurrency(expenses, expString);
-     CurrencyFormatter::formatDoubleToCurrency(income, incString);
-
 	hb.startTableRow();
 	hb.addTableCell(_("Income:"), false, true);
-	hb.addTableCell(incString, true, false, true);
+	hb.addMoneyCell(income);
 	hb.endTableRow();
 
 	hb.startTableRow();
 	hb.addTableCell(_("Expenses:"), false, true);
-	hb.addTableCell(expString, true, true, true, (expenses > income ? "RED" : ""));
+	hb.addMoneyCell(expenses);
     hb.endTableRow();
 
     hb.addRowSeparator(2);
@@ -128,25 +121,12 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
         bool ignoreDate = false;
         income = 0.0;
         expenses = 0.0;
-        core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
-            
-        wxString actualExpStr;
-        CurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
-            
-        wxString actualIncStr;
-        CurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
+        core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);                  
 
-        hb.startTableRow();
-        hb.addTableCell(yearStr, false, true);
-        hb.addTableCell(monName, false, true);
-            
-        balance = income - expenses;
-        wxString actualBalStr;
-        CurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
+		hb.addMoneyCell(income);
+		hb.addMoneyCell(expenses);
+		hb.addMoneyCell(income - expenses);
 
-        hb.addTableCell(actualIncStr, true, true, true);
-        hb.addTableCell(actualExpStr, true, true, true);
-        hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? "RED" : ""));
 
         hb.endTableRow();
     }
