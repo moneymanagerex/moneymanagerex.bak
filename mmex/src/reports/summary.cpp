@@ -93,7 +93,7 @@ wxString mmReportSummary::getHTMLText()
 
             hb.startTableRow();
             hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_),account->name_, false, true);
-            hb.addTableCell(bal);
+            hb.addMoneyCell(bal);
             hb.endTableRow();
         }
     }
@@ -127,7 +127,7 @@ wxString mmReportSummary::getHTMLText()
 
     hb.startTableRow();
     hb.addTableCell(_("Stocks Total:"));
-    hb.addTableCell(stockBalance);
+    hb.addMoneyCell(stockBalance);
     hb.endTableRow();
     hb.addRowSeparator(2);
 
