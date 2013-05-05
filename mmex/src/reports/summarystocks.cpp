@@ -21,7 +21,6 @@
 #include "../constants.h"
 #include "../htmlbuilder.h"
 #include "../stockspanel.h"
-#include "../mmCurrencyFormatter.h"
 #include "../util.h"
 
 mmReportSummaryStocks::mmReportSummaryStocks(mmCoreDB* core)
@@ -97,28 +96,16 @@ wxString mmReportSummaryStocks::getHTMLText()
             gain_loss_sum += th.gainLoss_;
             gain_loss_sum_total += th.gainLoss_ * base_conv_rate;
 
-            wxString commString;
-             CurrencyFormatter::formatDoubleToCurrencyEdit(commission, commString);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(th.purchasePrice_, th.pPriceStr_);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
-
             hb.startTableRow();
             hb.addTableCell(th.shareName_, false, true);
             hb.addTableCell(th.stockSymbol_);
             hb.addTableCell(dt);
-            hb.addTableCell(th.numSharesStr_, true);
-            hb.addTableCell(th.pPriceStr_, true);
-            hb.addTableCell(th.cPriceStr_, true);
-            hb.addTableCell(commString, true);
-
-            if(th.gainLoss_ < 0.0)
-                hb.addTableCell(th.gainLossStr_, true, true, true, "RED");
-            else
-                hb.addTableCell(th.gainLossStr_, true, false, true);
-
-            hb.addTableCell(th.valueStr_, true);
+			hb.addMoneyCell(th.numShares_);
+            hb.addMoneyCell(th.purchasePrice_);
+            hb.addMoneyCell(th.currentPrice_);
+			hb.addMoneyCell(commission);
+			hb.addMoneyCell(th.gainLoss_);
+            hb.addMoneyCell(th.value_);
             hb.endTableRow();
 
         }
@@ -126,29 +113,17 @@ wxString mmReportSummaryStocks::getHTMLText()
 
         double invested = 0;
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(core_->db_.get(), accountID, invested);
-        wxString stockBalanceStr;
-        wxString gain_loss_sum_str;
-
-        std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(accountID);
-        wxASSERT(pCurrencyPtr);
-        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-
-         CurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
-         CurrencyFormatter::formatDoubleToCurrency(gain_loss_sum, gain_loss_sum_str);
 
         hb.addRowSeparator(9);
-        hb.addTotalRow(_("Total:"), 8, gain_loss_sum_str);
-        hb.addTableCell(stockBalanceStr, true, true, true); //numeric, italic, bold
+        hb.addTotalRow(_("Total:"), 8, gain_loss_sum);
+		hb.addMoneyCell(stockBalance);
     }
 
     core_->currencyList_.LoadBaseCurrencySettings();
-    wxString sStockBalance, sGainLossTotal;
-     CurrencyFormatter::formatDoubleToCurrency(gain_loss_sum_total, sGainLossTotal);
-     CurrencyFormatter::formatDoubleToCurrency(stockBalance, sStockBalance);
 
     hb.addRowSeparator(9);
-    hb.addTotalRow(_("Grand Total:"), 8, sGainLossTotal);
-    hb.addTableCell(sStockBalance, true, true, true); //numeric, italic, bold
+    hb.addTotalRow(_("Grand Total:"), 8, gain_loss_sum_total);
+    hb.addMoneyCell(stockBalance);
     hb.endTableRow();
     hb.endTable();
 
