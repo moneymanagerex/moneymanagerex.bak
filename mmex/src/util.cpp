@@ -404,78 +404,71 @@ wxString Tips(wxString type)
     return tipsStr;
 }
 
-wxString DisplayDate2FormatDate(wxString strDate)
+//*--------------------------------------------------------------------------*//
+std::map<wxString,wxString> date_formats_map()
 {
-    int i = date_format().Index(strDate.Upper());
-    if (i == wxNOT_FOUND)
-        return strDate;
-    return date_format_mask()[i];
+    std::map<wxString, wxString> date_formats;
+    date_formats["%d/%m/%y"]="DD/MM/YY";
+    date_formats["%d/%m/%Y"]="DD/MM/YYYY";
+    date_formats["%d-%m-%y"]="DD-MM-YY";
+    date_formats["%d-%m-%Y"]="DD-MM-YYYY";
+    date_formats["%d.%m.%y"]="DD.MM.YY";
+    date_formats["%d.%m.%Y"]="DD.MM.YYYY";
+    date_formats["%d,%m,%y"]="DD,MM,YY";
+    date_formats["%d/%m'%Y"]="DD/MM'YYYY";
+    date_formats["%d/%m %Y"]="DD/MM YYYY";
+    date_formats["%m/%d/%y"]="MM/DD/YY";
+    date_formats["%m/%d/%Y"]="MM/DD/YYYY";
+    date_formats["%m-%d-%y"]="MM-DD-YY";
+    date_formats["%m-%d-%Y"]="MM-DD-YYYY";
+    date_formats["%m/%d'%y"]="MM/DD'YY";
+    date_formats["%m/%d'%Y"]="MM/DD'YYYY";
+    date_formats["%y/%m/%d"]="YY/MM/DD";
+    date_formats["%y-%m-%d"]="YY-MM-DD";
+    date_formats["%Y/%m/%d"]="YYYY/MM/DD";
+    date_formats["%Y-%m-%d"]="YYYY-MM-DD";
+    date_formats["%Y.%m.%d"]="YYYY.MM.DD";
+    date_formats["%Y%m%d"]="YYYYMMDD";
+
+	return date_formats;
 }
 
-wxString FormatDate2DisplayDate(wxString strDate)
+wxString DisplayDate2FormatDate(const wxString sDateMask)
 {
-    int i = date_format_mask().Index(strDate);
-    if (i == wxNOT_FOUND) i = 0;
-    return date_format()[i];
+    for (const auto& date_mask: date_formats_map())
+    {
+		if (date_mask.second == sDateMask) return date_mask.first;
+	};
+	wxASSERT(false);
+	return mmex::DEFDATEFORMAT;
+}
+
+wxString FormatDate2DisplayDate(const wxString sDateMask)
+{
+    return date_formats_map()[sDateMask];
 }
 
 const wxArrayString date_format_mask()
 {
     wxArrayString mask;
-
-    mask.Add("%d/%m/%y");
-    mask.Add("%d/%m/%Y");
-    mask.Add("%d-%m-%y");
-    mask.Add("%d-%m-%Y");
-    mask.Add("%d.%m.%y");
-    mask.Add("%d.%m.%Y");
-    mask.Add("%d,%m,%y");
-    mask.Add("%d/%m'%Y");
-    mask.Add("%d/%m %Y");
-    mask.Add("%m/%d/%y");
-    mask.Add("%m/%d/%Y");
-    mask.Add("%m-%d-%y");
-    mask.Add("%m-%d-%Y");
-    mask.Add("%m/%d'%y");
-    mask.Add("%m/%d'%Y");
-    mask.Add("%y/%m/%d");
-    mask.Add("%y-%m-%d");
-    mask.Add("%Y/%m/%d");
-    mask.Add("%Y-%m-%d");
-    mask.Add("%Y.%m.%d");
-    mask.Add("%Y%m%d");
-
+    for (const auto& date_mask: date_formats_map())
+    {
+		mask.Add(date_mask.first);
+	};
     return mask;
 }
 
 const wxArrayString date_format()
 {
-    wxArrayString date_format;
+    wxArrayString format;
+    for (const auto& date_mask: date_formats_map())
+    {
+		format.Add(date_mask.second);
+	};
+    return format;
 
-    date_format.Add("DD/MM/YY");
-    date_format.Add("DD/MM/YYYY");
-    date_format.Add("DD-MM-YY");
-    date_format.Add("DD-MM-YYYY");
-    date_format.Add("DD.MM.YY");
-    date_format.Add("DD.MM.YYYY");
-    date_format.Add("DD,MM,YY");
-    date_format.Add("DD/MM'YYYY");
-    date_format.Add("DD/MM YYYY");
-    date_format.Add("MM/DD/YY");
-    date_format.Add("MM/DD/YYYY");
-    date_format.Add("MM-DD-YY");
-    date_format.Add("MM-DD-YYYY");
-    date_format.Add("MM/DD'YY");
-    date_format.Add("MM/DD'YYYY");
-    date_format.Add("YY/MM/DD");
-    date_format.Add("YY-MM-DD");
-    date_format.Add("YYYY/MM/DD");
-    date_format.Add("YYYY-MM-DD");
-    date_format.Add("YYYY.MM.DD");
-    date_format.Add("YYYYMMDD");
-
-    return date_format;
 }
+//*--------------------------------------------------------------------------*//
 
 // FIXME: Freeze - Thaw is ok for wx2.8.x but not for wx2.9.x
 // Located here as a function to allow removal in WXGTK
