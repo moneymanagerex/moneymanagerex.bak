@@ -295,6 +295,16 @@ bool TTransactionBillEntry::RequiresExecution(int& remaining_days)
     return execution_required;
 }
 
+void TTransactionBillEntry::SetNextOccurDate(wxDateTime date)
+{
+    nextOccurDate_ = date.FormatISODate();
+}
+
+wxDateTime TTransactionBillEntry::NextOccurDate()
+{
+    return mmGetStorageStringAsDate(nextOccurDate_);
+}
+
 wxString TTransactionBillEntry::DisplayNextOccurDate()
 {
     return mmGetDateForDisplay(mmGetStorageStringAsDate(nextOccurDate_));
