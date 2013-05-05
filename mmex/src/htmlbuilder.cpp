@@ -202,6 +202,13 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption
 		, font_size_, value);
 }
 
+void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, double value)
+{
+	wxString value_str;
+    CurrencyFormatter::formatDoubleToCurrency(value, value_str);
+	this->addTotalRow(caption, cols, value_str);
+}
+
 void mmHTMLBuilder::addTotalRow(const wxString& caption, const int cols
 	, const std::vector<wxString>& data)
 {
@@ -222,6 +229,18 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, const int cols
         html_+= "</i></b></font>";
     }
     html_+= "</td></tr>\n";
+}
+
+void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const std::vector<double>& data)
+{
+	std::vector<wxString> data_str;
+	for (const auto& value: data)
+	{
+		wxString value_str;
+		CurrencyFormatter::formatDoubleToCurrency(value, value_str);
+		data_str.push_back(value_str);
+	}
+	this->addTotalRow(caption, cols, data_str);
 }
 
 void mmHTMLBuilder::addTableHeaderRow(const wxString& value, const int cols)
