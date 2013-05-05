@@ -59,12 +59,9 @@ wxString mmReportSummary::getHTMLText()
 
             tBalance += bal * rate;
 
-            wxString balance;
-             CurrencyFormatter::formatDoubleToCurrency(bal, balance);
-
             hb.startTableRow();
             hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_),account->name_, false, true);
-            hb.addTableCell(balance, true);
+			hb.addMoneyCell(bal);
             hb.endTableRow();
         }
     }
@@ -72,11 +69,8 @@ wxString mmReportSummary::getHTMLText()
     // all sums below will be in base currency!
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxString tBalanceStr;
-     CurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
-
     hb.startTableRow();
-    hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalanceStr);
+    hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalance);
     hb.endTableRow();
 
     hb.addRowSeparator(2);
@@ -97,12 +91,9 @@ wxString mmReportSummary::getHTMLText()
 
             tTBalance += bal * rate;
 
-            wxString balance;
-             CurrencyFormatter::formatDoubleToCurrency(bal, balance);
-
             hb.startTableRow();
             hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_),account->name_, false, true);
-            hb.addTableCell(balance, true);
+            hb.addTableCell(bal);
             hb.endTableRow();
         }
     }
@@ -110,13 +101,10 @@ wxString mmReportSummary::getHTMLText()
     // all sums below will be in base currency!
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxString tTBalanceStr;
-     CurrencyFormatter::formatDoubleToCurrency(tTBalance, tTBalanceStr);
-
     if ( frame_->hasActiveTermAccounts() )
     {
         hb.startTableRow();
-        hb.addTotalRow(_("Term Accounts Total:"), 2, tTBalanceStr);
+        hb.addTotalRow(_("Term Accounts Total:"), 2, tTBalance);
         hb.endTableRow();
         hb.addRowSeparator(2);
     }
@@ -137,12 +125,9 @@ wxString mmReportSummary::getHTMLText()
         stockBalance += amount * base_conv_rate;
     }
 
-    wxString stockBalanceStr;
-     CurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
-
     hb.startTableRow();
     hb.addTableCell(_("Stocks Total:"));
-    hb.addTableCell(stockBalanceStr, true);
+    hb.addTableCell(stockBalance);
     hb.endTableRow();
     hb.addRowSeparator(2);
 
@@ -156,11 +141,10 @@ wxString mmReportSummary::getHTMLText()
 
     tBalance += stockBalance;
     tBalance += asset_list.GetAssetBalance();
-     CurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     hb.addRowSeparator(2);
 
-    hb.addTotalRow(_("Total Balance on all Accounts"), 2, tBalanceStr);
+    hb.addTotalRow(_("Total Balance on all Accounts"), 2, tBalance);
     hb.endTable();
 
     hb.endCenter();

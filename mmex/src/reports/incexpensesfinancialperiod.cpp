@@ -29,7 +29,6 @@
 
 #include "../htmlbuilder.h"
 #include "../mmex.h"
-#include "../mmCurrencyFormatter.h"
 
 mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year)
 : mmPrintableBase(core)
@@ -107,23 +106,15 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
         expenses = 0.0;
         core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
-        wxString actualExpStr;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
-
-        wxString actualIncStr;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
-
         hb.startTableRow();
         hb.addTableCell(yearStr, false, true);
         hb.addTableCell(monName, false, true);
 
         balance = income - expenses;
-        wxString actualBalStr;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
-        hb.addTableCell(actualIncStr, true, true, true);
-        hb.addTableCell(actualExpStr, true, true, true);
-        hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? "RED" : ""));
+		hb.addMoneyCell(income);
+		hb.addMoneyCell(expenses);
+		hb.addMoneyCell(balance);
 
         hb.endTableRow();
     }
@@ -133,20 +124,10 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     income = 0.0;
     core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income,  false, yearBegin, yearEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
-    wxString actualExpStr;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
-
-    wxString actualIncStr;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
-
-    balance = income - expenses;
-    wxString actualBalStr;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
-
-    std::vector<wxString> data;
-    data.push_back(actualIncStr);
-    data.push_back(actualExpStr);
-    data.push_back(actualBalStr);
+	std::vector<double> data;
+	data.push_back(income);
+	data.push_back(expenses);
+	data.push_back(balance);
 
     hb.addRowSeparator(5);
     hb.addTotalRow(_("Total:"), 5, data);
