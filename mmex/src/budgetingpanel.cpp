@@ -20,6 +20,7 @@
 #include "budgetingpanel.h"
 #include "budgetentrydialog.h"
 #include "mmOption.h"
+#include "mmCurrencyFormatter.h"
 #include "mmex.h"
 #include "reports/budget.h"
 
@@ -337,9 +338,9 @@ void mmBudgetingPanel::initVirtualListControl()
         else
             actIncome += th.actual_;
 
-        mmex::formatDoubleToCurrencyEdit(th.amt_, th.amtString_);
-        mmex::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
-        mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.amtString_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
         /***************************************************************************
          Create a TOTALS entry for the category.
@@ -354,9 +355,9 @@ void mmBudgetingPanel::initVirtualListControl()
         catTotals.amt_       = th.amt_;
         catTotals.estimated_ = th.estimated_;
         catTotals.actual_    = th.actual_;
-        mmex::formatDoubleToCurrencyEdit(catTotals.amt_, catTotals.amtString_);
-        mmex::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
-        mmex::formatDoubleToCurrencyEdit(catTotals.actual_, catTotals.actualStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.amt_, catTotals.amtString_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.actual_, catTotals.actualStr_);
 
         if (DisplayEntryAllowed(th)) {
             trans_.push_back(th);
@@ -396,9 +397,9 @@ void mmBudgetingPanel::initVirtualListControl()
             else
                 actIncome += thsub.actual_;
 
-            mmex::formatDoubleToCurrencyEdit(thsub.amt_, thsub.amtString_);
-            mmex::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
-            mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, thsub.amtString_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
 
             /***************************************************************************
              Update the TOTALS entry for the subcategory.
@@ -406,8 +407,8 @@ void mmBudgetingPanel::initVirtualListControl()
             catTotals.estimated_    += thsub.estimated_;
             catTotals.actual_       += thsub.actual_;
             catTotals.amtString_ = wxEmptyString;
-            mmex::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
-            mmex::formatDoubleToCurrencyEdit(catTotals.actual_,    catTotals.actualStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.actual_,    catTotals.actualStr_);
 
             if (DisplayEntryAllowed(thsub)) {
                 trans_.push_back(thsub);
@@ -425,9 +426,9 @@ void mmBudgetingPanel::initVirtualListControl()
     listCtrlBudget_->SetItemCount((int)trans_.size());
 
     wxString est_amount, act_amount, diff_amount;
-    mmex::formatDoubleToCurrency(estIncome, est_amount);
-    mmex::formatDoubleToCurrency(actIncome, act_amount);
-    mmex::formatDoubleToCurrency(estIncome - actIncome, diff_amount);
+     CurrencyFormatter::formatDoubleToCurrency(estIncome, est_amount);
+     CurrencyFormatter::formatDoubleToCurrency(actIncome, act_amount);
+     CurrencyFormatter::formatDoubleToCurrency(estIncome - actIncome, diff_amount);
 
     income_estimated_->SetLabel(est_amount);
     income_actual_->SetLabel(act_amount);
@@ -435,9 +436,9 @@ void mmBudgetingPanel::initVirtualListControl()
 
     if (estExpenses < 0.0) estExpenses = -estExpenses;
     if (actExpenses < 0.0) actExpenses = -actExpenses;
-    mmex::formatDoubleToCurrency(estExpenses, est_amount);
-    mmex::formatDoubleToCurrency(actExpenses, act_amount);
-    mmex::formatDoubleToCurrency(estExpenses -actExpenses, diff_amount);
+     CurrencyFormatter::formatDoubleToCurrency(estExpenses, est_amount);
+     CurrencyFormatter::formatDoubleToCurrency(actExpenses, act_amount);
+     CurrencyFormatter::formatDoubleToCurrency(estExpenses -actExpenses, diff_amount);
 
     expences_estimated_->SetLabel(est_amount);
     expences_actual_->SetLabel(act_amount);

@@ -17,6 +17,7 @@
 #include "constants.h"
 #include "mmtransaction.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "mmOption.h"
 #include "mmcoredb.h"
 
@@ -170,12 +171,12 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     currencyPtr->loadCurrencySettings();
 
     dateStr_ = mmGetDateForDisplay(date_);
-    mmex::formatDoubleToCurrencyEdit(amt_, transAmtString_);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(amt_, transAmtString_);
 
     wxASSERT(toAmt_ >= 0);
     wxASSERT(amt_ >= 0);
     if (toAmt_ < 0) toAmt_ = amt_;
-    mmex::formatDoubleToCurrencyEdit(toAmt_, transToAmtString_);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(toAmt_, transToAmtString_);
 
     if (transType_ != TRANS_TYPE_TRANSFER_STR)
     {

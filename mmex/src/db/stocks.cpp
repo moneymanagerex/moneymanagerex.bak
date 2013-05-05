@@ -17,6 +17,7 @@
  ********************************************************/
 
 #include "stocks.h"
+#include "../mmCurrencyFormatter.h"
 
 /************************************************************************************
  TStockEntry Methods
@@ -151,8 +152,8 @@ double TStockEntry::GetValue()
 wxString TStockEntry::GetValueCurrencyEditFormat(bool initial_value)
 {
     wxString formatted_value;
-    if (initial_value) mmex::formatDoubleToCurrencyEdit(value_, formatted_value);
-    else mmex::formatDoubleToCurrencyEdit(GetValue(), formatted_value);
+    if (initial_value)  CurrencyFormatter::formatDoubleToCurrencyEdit(value_, formatted_value);
+    else  CurrencyFormatter::formatDoubleToCurrencyEdit(GetValue(), formatted_value);
 
     return formatted_value;
 }
@@ -160,7 +161,7 @@ wxString TStockEntry::GetValueCurrencyEditFormat(bool initial_value)
 wxString TStockEntry::CommissionCurrencyEditFormat()
 {
     wxString formatted_value;
-    mmex::formatDoubleToCurrencyEdit(value_, formatted_value);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(value_, formatted_value);
 
     return formatted_value;
 }
@@ -289,7 +290,7 @@ double TStockList::GetStockBalance()
 wxString TStockList::GetStockBalanceCurrencyFormat()
 {
     wxString balance_str;
-    mmex::formatDoubleToCurrency(GetStockBalance(), balance_str);
+     CurrencyFormatter::formatDoubleToCurrency(GetStockBalance(), balance_str);
 
     return balance_str;
 }
@@ -297,7 +298,7 @@ wxString TStockList::GetStockBalanceCurrencyFormat()
 wxString TStockList::GetStockBalanceCurrencyEditFormat()
 {
     wxString balance_str;
-    mmex::formatDoubleToCurrencyEdit(GetStockBalance(), balance_str);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(GetStockBalance(), balance_str);
 
     return balance_str;
 }

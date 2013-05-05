@@ -19,6 +19,7 @@
 #include "stockdialog.h"
 #include "constants.h"
 #include "paths.h"
+#include "mmCurrencyFormatter.h"
 #include "util.h"
 #include <wx/valnum.h>
 
@@ -85,7 +86,7 @@ void mmStockDialog::dataToControls()
     //I wish see integer if it integer else double
     if ((numShares - static_cast<long>(numShares)) != 0.0 )
     {
-        mmex::formatDoubleToCurrencyEdit(numShares, numSharesString);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(numShares, numSharesString);
         //numSharesString=wxString::Format("%0.4f",numShares);
 	}
     else
@@ -94,16 +95,16 @@ void mmStockDialog::dataToControls()
     numShares_->SetValue(numSharesString);
 
     wxString dispAmount;
-    mmex::formatDoubleToCurrencyEdit(stock_holder_->value_, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(stock_holder_->value_, dispAmount);
     valueInvestment_->SetLabel(dispAmount);
 
-    mmex::formatDoubleToCurrencyEdit(stock_holder_->purchasePrice_, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(stock_holder_->purchasePrice_, dispAmount);
     purchasePrice_->SetValue(dispAmount);
 
-    mmex::formatDoubleToCurrencyEdit(stock_holder_->currentPrice_, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(stock_holder_->currentPrice_, dispAmount);
     currentPrice_->SetValue(dispAmount);
 
-    mmex::formatDoubleToCurrencyEdit(stock_holder_->commission_, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(stock_holder_->commission_, dispAmount);
     commission_->SetValue(dispAmount);
 }
 
@@ -287,7 +288,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString pPriceStr    = purchasePrice_->GetValue().Trim();
     double pPrice;
-    if (!mmex::formatCurrencyToDouble(pPriceStr, pPrice) || (pPrice < 0.0))
+    if (! CurrencyFormatter::formatCurrencyToDouble(pPriceStr, pPrice) || (pPrice < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid purchase price entered "), _("Error"));
         return;
@@ -295,7 +296,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString currentPriceStr = currentPrice_->GetValue().Trim();
     double cPrice;
-    if (!mmex::formatCurrencyToDouble(currentPriceStr, cPrice) || (cPrice < 0.0))
+    if (! CurrencyFormatter::formatCurrencyToDouble(currentPriceStr, cPrice) || (cPrice < 0.0))
     {
         //mmShowErrorMessage(this, _("Invalid current price entered "), _("Error"));
         //return;
@@ -305,7 +306,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString commissionStr = commission_->GetValue().Trim();
     double commission;
-    if (!mmex::formatCurrencyToDouble(commissionStr, commission) || (commission < 0.0))
+    if (! CurrencyFormatter::formatCurrencyToDouble(commissionStr, commission) || (commission < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid commission entered "), _("Error"));
         return;

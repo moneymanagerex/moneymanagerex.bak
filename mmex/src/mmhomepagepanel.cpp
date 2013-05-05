@@ -170,9 +170,9 @@ wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecB
     core_->currencyList_.LoadBaseCurrencySettings();
 
     wxString tRecBalanceStr;
-    mmex::formatDoubleToCurrency(tRecBalance, tRecBalanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(tRecBalance, tRecBalanceStr);
     wxString tBalanceStr;
-    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     // stocks don't have reconciled balances
     if (totalsTitle == _("Stocks Total:")) tRecBalanceStr = wxEmptyString;
@@ -229,8 +229,8 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
             // show the actual amount in that account
             wxString balanceStr;
             wxString reconciledBalanceStr;
-            mmex::formatDoubleToCurrency(bal, balanceStr);
-            mmex::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
+             CurrencyFormatter::formatDoubleToCurrency(bal, balanceStr);
+             CurrencyFormatter::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
 
             if (((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
                 (vAccts == "Favorites" && account->favoriteAcct_) ||
@@ -300,8 +300,8 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
                 // show the actual amount in that account
                 wxString balanceStr;
                 wxString reconciledBalStr;
-                mmex::formatDoubleToCurrency(bal, balanceStr);
-                mmex::formatDoubleToCurrency(reconciledBal, reconciledBalStr);
+                 CurrencyFormatter::formatDoubleToCurrency(bal, balanceStr);
+                 CurrencyFormatter::formatDoubleToCurrency(reconciledBal, reconciledBalStr);
 
                 if ((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
                     (vAccts == "Favorites" && account->favoriteAcct_) ||
@@ -385,8 +385,8 @@ wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, do
         wxASSERT(pCurrencyPtr);
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-        mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
-        mmex::formatDoubleToCurrency(stockGain, tGainStr);
+         CurrencyFormatter::formatDoubleToCurrency(stockBalance, tBalanceStr);
+         CurrencyFormatter::formatDoubleToCurrency(stockGain, tGainStr);
 
         // if Stock accounts being displayed, include income/expense totals on home page.
         //tIncome += income * baseconvrate;
@@ -521,8 +521,8 @@ wxString mmHomePagePanel::displayCurrencies()
 
             wxString tBalanceStr;
             CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-            mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
-            mmex::formatDoubleToCurrencyEdit(convRate, convRateStr);
+             CurrencyFormatter::formatDoubleToCurrency(currBalance, tBalanceStr);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(convRate, convRateStr);
 
             hb.startTableRow();
             hb.addTableCell(currencyStr);
@@ -552,9 +552,9 @@ wxString mmHomePagePanel::displayIncomeVsExpenses(double& tincome, double& texpe
     mmHTMLBuilder hb;
 
     wxString incStr, expStr, difStr;
-    mmex::formatDoubleToCurrency(tincome, incStr); // must use LoadBaseCurrencySettings (called above)
-    mmex::formatDoubleToCurrency(texpenses, expStr);
-    mmex::formatDoubleToCurrency(tincome-texpenses, difStr);
+     CurrencyFormatter::formatDoubleToCurrency(tincome, incStr); // must use LoadBaseCurrencySettings (called above)
+     CurrencyFormatter::formatDoubleToCurrency(texpenses, expStr);
+     CurrencyFormatter::formatDoubleToCurrency(tincome-texpenses, difStr);
 
     mmGraphIncExpensesMonth gg;
     gg.init(tincome, texpenses);
@@ -668,7 +668,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
         th.amt_            = q1.GetDouble("TRANSAMOUNT");
         th.toAmt_          = q1.GetDouble("TOTRANSAMOUNT");
 
-        mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
         //for Withdrawal amount should be negative
         if (th.transType_== TRANS_TYPE_WITHDRAWAL_STR)
         {
@@ -676,7 +676,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
             th.amt_ = -th.amt_;
         }
 
-        mmex::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
 
         th.payeeStr_ = core_->payeeList_.GetPayeeName(th.payeeID_);
 
@@ -735,7 +735,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
                     pCurrency->loadCurrencySettings();
 
                 wxString displayBDAmtString;
-                mmex::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
+                 CurrencyFormatter::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
 
                 hb.startTableRow();
                 hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
@@ -811,7 +811,7 @@ wxString mmHomePagePanel::displayTopTransactions()
         double category_total = q1.GetDouble("AMOUNT");
         wxString category_total_str = wxEmptyString;
         core_->currencyList_.LoadBaseCurrencySettings();
-        mmex::formatDoubleToCurrency(category_total, category_total_str);
+         CurrencyFormatter::formatDoubleToCurrency(category_total, category_total_str);
 
         hb.startTableRow();
         hb.addTableCell(q1.GetString("SUBCATEGORY"), false, true);
@@ -922,7 +922,7 @@ wxString mmHomePagePanel::displayGrandTotals(double& tBalance)
     //  Display the grand total from all sections
     wxString tBalanceStr;
     core_->currencyList_.LoadBaseCurrencySettings();
-    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     hb.startTable("100%", "", "1");
     hb.startTableRow();

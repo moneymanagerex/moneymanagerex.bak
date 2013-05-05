@@ -16,7 +16,7 @@
 
 #include "assetdialog.h"
 #include "paths.h"
-#include <wx/valnum.h>
+#include "mmCurrencyFormatter.h"
 #include <wx/valnum.h>
 
 namespace
@@ -236,7 +236,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
     double value = 0;
-    if (!mmex::formatCurrencyToDouble(valueStr, value))
+    if (! CurrencyFormatter::formatCurrencyToDouble(valueStr, value))
     {
         wxMessageBox(_("Invalid Value "), _("Invalid Entry"), wxOK|wxICON_ERROR);
         return;

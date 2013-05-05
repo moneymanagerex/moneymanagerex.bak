@@ -21,6 +21,7 @@
 #include "../constants.h"
 #include "../htmlbuilder.h"
 #include "../util.h"
+#include "../mmCurrencyFormatter.h"
 #include <algorithm>
 
 
@@ -171,7 +172,7 @@ wxString mmReportTransactions::getHTMLText()
     // work out the total balance for all the data at base rate
     wxString balanceStr;
     core_->currencyList_.LoadBaseCurrencySettings();
-    mmex::formatDoubleToCurrency(total, balanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(total, balanceStr);
 
     // display the total balance.
     hb.addRowSeparator(9);

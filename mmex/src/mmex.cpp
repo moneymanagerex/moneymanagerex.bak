@@ -64,6 +64,7 @@
 #include "transdialog.h"
 #include "univcsvdialog.h"
 #include "db/transactionbill.h"
+#include "mmcurrencyFormatter.h"
 
 //----------------------------------------------------------------------------
 #include <wx/debugrpt.h>
@@ -936,8 +937,8 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
             requireExecution = true;
         }
 
-        mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
-        mmex::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
 
         th.payeeStr_ = m_core.get()->payeeList_.GetPayeeName(th.payeeID_);
 
@@ -3162,7 +3163,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
                         std::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(pBankTransaction->accountID_);
                         wxASSERT(pCurrencyPtr);
-                        mmex::formatDoubleToCurrency(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
+                         CurrencyFormatter::formatDoubleToCurrency(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
                     }
                     else
                     {

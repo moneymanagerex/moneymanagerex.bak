@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "categovertimeperf.h"
 #include "../htmlbuilder.h"
 #include "../util.h"
+#include "../mmCurrencyFormatter.h"
 //----------------------------------------------------------------------------
 
 namespace
@@ -96,7 +97,7 @@ void printRow
         if (month_amount != 0)
         {
             period_amount_sum += month_amount;
-            mmex::formatDoubleToCurrencyEdit(month_amount, month_amount_str);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(month_amount, month_amount_str);
 
             periods_t::const_iterator::difference_type j = std::distance(periods.begin(), i);
             columns_totals_t::reference r = columns_totals[j];
@@ -112,7 +113,7 @@ void printRow
     // summary of period for category\subcategory
 
     wxString period_amount_str;
-    mmex::formatDoubleToCurrencyEdit(period_amount, period_amount_str);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(period_amount, period_amount_str);
     hb.addTableCell(period_amount_str, true);
 
     hb.endTableRow();
@@ -141,7 +142,7 @@ void printColumnsTotals
         wxString str;
 
         if (val != 0) {
-            mmex::formatDoubleToCurrencyEdit(val, str);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(val, str);
         }
 
         hb.addTableCell(str, true, false, true);

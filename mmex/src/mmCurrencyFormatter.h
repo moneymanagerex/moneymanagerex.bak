@@ -54,6 +54,11 @@ private:
     wxString m_unit_name;    // Name of monetary unit
     wxString m_cent_name;    // Name of fraction unit
     int m_scale;
+
+public:
+	static void formatDoubleToCurrency(double val, wxString& rdata );
+	static void formatDoubleToCurrencyEdit(double val, wxString& rdata );
+	static bool formatCurrencyToDouble(const wxString& str, double& val );
 };
 
 #endif // _MM_EX_CURRENCY_FORMATEER_H_

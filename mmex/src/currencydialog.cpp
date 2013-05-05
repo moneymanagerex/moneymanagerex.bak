@@ -19,6 +19,7 @@
 #include "currencydialog.h"
 #include "constants.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "defs.h"
 #include "paths.h"
 
@@ -124,7 +125,7 @@ void mmCurrencyDialog::updateControls()
     double amount = 1000;
 
     core_->currencyList_.LoadBaseCurrencySettings();
-    mmex::formatDoubleToCurrency(amount, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
     dispAmount2 = wxString() << dispAmount << " " << _("Converted to:") << " ";
 
     mmDBWrapper::loadCurrencySettings(core_->db_.get(), pCurrency->currencyID_);
@@ -132,11 +133,11 @@ void mmCurrencyDialog::updateControls()
         amount = amount / pCurrency->baseConv_;
     else
         amount = 0.0;
-    mmex::formatDoubleToCurrency(amount, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
     baseRateSample_->SetLabel(dispAmount2 + dispAmount);
 
     amount = 123456.78;
-    mmex::formatDoubleToCurrency(amount, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
     dispAmount = wxString() << "123456.78 " << _("Shown As: ") << dispAmount;
     sampleText_->SetLabel(dispAmount);
 

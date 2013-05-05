@@ -20,6 +20,7 @@
 #include "billsdepositsdialog.h"
 #include "constants.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "mmOption.h"
 #include "paths.h"
 #include "categdialog.h"
@@ -220,7 +221,7 @@ void mmBDDialog::dataToControls()
             textAmount_->Enable(false);
         }
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(transAmount, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(transAmount, dispAmount);
         textAmount_->SetValue(dispAmount);
 
         wxString payeeString = core_->payeeList_.GetPayeeName(payeeID_);
@@ -834,7 +835,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     else
     {
         wxString amountStr = textAmount_->GetValue().Trim();
-        if (!mmex::formatCurrencyToDouble(amountStr, amount) || (amount < 0.0))
+        if (! CurrencyFormatter::formatCurrencyToDouble(amountStr, amount) || (amount < 0.0))
         {
             mmShowErrorMessageInvalid(this, _("Amount"));
             return;
@@ -844,7 +845,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     if (advancedToTransAmountSet_)
     {
         wxString amountStr = toTextAmount_->GetValue().Trim();
-        if (!mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
+        if (! CurrencyFormatter::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
         {
             mmShowErrorMessageInvalid(this, _("Advanced Amount"));
             return;
@@ -1103,7 +1104,7 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
         bCategory_->SetLabel(_("Split Category"));
         textAmount_->Enable(false);
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
         textAmount_->SetValue(dispAmount);
         activateSplitTransactionsDlg();
     }
@@ -1112,7 +1113,7 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
         bCategory_->SetLabel(_("Select Category"));
         textAmount_->Enable(true);
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(0.0, dispAmount);
         textAmount_->SetValue(dispAmount);
     }
 }
@@ -1191,7 +1192,7 @@ void mmBDDialog::SetAdvancedTransferControls(bool advanced)
         if (toTransAmount_ >= 0)
         {
             wxString dispAmount;
-            mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
             toTextAmount_->SetValue(dispAmount);
         }
         else
@@ -1338,7 +1339,7 @@ void mmBDDialog::activateSplitTransactionsDlg()
         double amount = split_->getTotalSplits();
         if (transaction_type_->GetSelection() == DEF_TRANSFER && amount < 0) amount = - amount;
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(amount, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(amount, dispAmount);
         textAmount_->SetValue(dispAmount);
      }
 }

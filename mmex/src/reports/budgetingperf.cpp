@@ -2,6 +2,7 @@
 #include "../budgetingpanel.h"
 #include "../htmlbuilder.h"
 #include "../mmex.h"
+#include "../mmCurrencyFormatter.h"
 
 mmReportBudgetingPerformance::mmReportBudgetingPerformance(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
 : mmReportBudget(mainFrame, core)
@@ -20,7 +21,7 @@ void mmReportBudgetingPerformance::DisplayEstimateMonths(mmHTMLBuilder& hb, mmBu
         }
         // Set the estimate for each month
         wxString monthEstimateStr;
-        mmex::formatDoubleToCurrencyEdit(budgetEntry.estimated_ / 12, monthEstimateStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(budgetEntry.estimated_ / 12, monthEstimateStr);
 		hb.addTableCell(monthEstimateStr, true, true);
     }
 }
@@ -55,7 +56,7 @@ void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudg
             false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
         wxString actualMonthValStr;
-        mmex::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
 
         if(actualMonthVal < budgetEntry.estimated_)
 		{
@@ -133,7 +134,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         setBudgetYearlyEstimate(th);
         double totalEstimated_ = th.estimated_;
         wxString totalEstimatedStr_;
-        mmex::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
 
         // set the actual amount for the year
         bool transferAsDeposit = true;
@@ -144,10 +145,10 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,
             yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
-        mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
         wxString displayAmtString;
-        mmex::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
         th.amtString_ = displayAmtString;
 
         // estimated stuff
@@ -213,7 +214,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             // Set the estimated amount for the year
             setBudgetYearlyEstimate(thsub);
             totalEstimated_ = thsub.estimated_;
-            mmex::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
 
             // set the actual abount for the year
             transferAsDeposit = true;
@@ -224,9 +225,9 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
                 yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
             );
-            mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
             
-            mmex::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
             thsub.amtString_ = displayAmtString;
 
             if ((totalEstimated_ != 0.0) || (thsub.actual_ != 0.0))

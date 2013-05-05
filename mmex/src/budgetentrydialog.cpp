@@ -18,6 +18,7 @@
 
 #include "budgetentrydialog.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "paths.h"
 #include <wx/valnum.h>
 
@@ -113,7 +114,7 @@ void mmBudgetEntryDialog::fillControls()
     else
         type_->SetSelection(DEF_TYPE_INCOME);
     
-    mmex::formatDoubleToCurrencyEdit(amt, displayAmtString);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(amt, displayAmtString);
     textAmount_->SetValue(displayAmtString);
 }
 
@@ -245,7 +246,7 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
 
     wxString displayAmtString = textAmount_->GetValue().Trim();
     double amt = 0.0;
-    if (!mmex::formatCurrencyToDouble(displayAmtString, amt)
+    if (! CurrencyFormatter::formatCurrencyToDouble(displayAmtString, amt)
         || (amt < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));

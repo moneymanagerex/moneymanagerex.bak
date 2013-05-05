@@ -3,6 +3,7 @@
 
 #include "../htmlbuilder.h"
 #include "../util.h"
+#include "../mmCurrencyFormatter.h"
 #include "../mmgraphincexpensesmonth.h"
 
 mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date_range)
@@ -58,9 +59,9 @@ wxString mmReportIncomeExpenses::getHTMLText()
     wxString expString;
     wxString diffString;
 
-    mmex::formatDoubleToCurrency(expenses, expString);
-    mmex::formatDoubleToCurrency(income, incString);
-    mmex::formatDoubleToCurrency(income - expenses, diffString);
+     CurrencyFormatter::formatDoubleToCurrency(expenses, expString);
+     CurrencyFormatter::formatDoubleToCurrency(income, incString);
+     CurrencyFormatter::formatDoubleToCurrency(income - expenses, diffString);
 
 	hb.startTableRow();
 	hb.addTableCell(_("Income:"), false, true);
@@ -132,10 +133,10 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
         core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
             
         wxString actualExpStr;
-        mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
             
         wxString actualIncStr;
-        mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
         hb.startTableRow();
         hb.addTableCell(yearStr, false, true);
@@ -143,7 +144,7 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
             
         balance = income - expenses;
         wxString actualBalStr;
-        mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
         hb.addTableCell(actualIncStr, true, true, true);
         hb.addTableCell(actualExpStr, true, true, true);
@@ -166,14 +167,14 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
     core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
         
     wxString actualExpStr;
-    mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
 
     wxString actualIncStr;
-    mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
     balance = income - expenses;
     wxString actualBalStr;
-    mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
     std::vector<wxString> data;
     data.push_back(actualIncStr);

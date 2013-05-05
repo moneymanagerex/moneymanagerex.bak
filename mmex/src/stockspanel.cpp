@@ -436,14 +436,14 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     //Get Stock Investment Account Balance as Init Amount + sum (Value) - sum (Purchase Price)
     double total = mmDBWrapper::getStockInvestmentBalance(core_->db_.get(), accountID_, originalVal);
     wxString balance;
-    mmex::formatDoubleToCurrency(total+initVal, balance);
+     CurrencyFormatter::formatDoubleToCurrency(total+initVal, balance);
 
     wxString original;
-    mmex::formatDoubleToCurrency(originalVal, original);
+     CurrencyFormatter::formatDoubleToCurrency(originalVal, original);
 
     //
     wxString diffStr;
-    mmex::formatDoubleToCurrency((total > originalVal ? total - originalVal : originalVal - total), diffStr);
+     CurrencyFormatter::formatDoubleToCurrency((total > originalVal ? total - originalVal : originalVal - total), diffStr);
 
     wxString lbl;
     lbl << _("Total: ") << balance << "     " << _("Invested: ") << original;
@@ -456,7 +456,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
         else
             lbl << "     " << _("Loss: ");
         double diffPercents = (total > originalVal ? total/originalVal*100.0-100.0 : -(total/originalVal*100.0-100.0));
-        mmex::formatDoubleToCurrencyEdit(diffPercents, diffStrPercents);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(diffPercents, diffStrPercents);
         lbl << diffStr << "  ( " << diffStrPercents << " %)";
     }
 
@@ -497,12 +497,12 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
 
         if (th.id_ == id) selected_item = cnt;
         th.gainLoss_          = th.value_ - ((th.numShares_ * th.purchasePrice_) + th.commission_);
-        mmex::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_) + th.commission_)-1.0)*100.0 * 365.0 / th.stockDays_), th.stockPercentagePerYearStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_) + th.commission_)-1.0)*100.0 * 365.0 / th.stockDays_), th.stockPercentagePerYearStr_);
 
-        mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
-        mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
-        mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-        mmex::formatDoubleToCurrencyEdit(th.avgpurchasePrice_, th.avgpurchasePriceStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.avgpurchasePrice_, th.avgpurchasePriceStr_);
 
         //I wish see integer if it integer else double
         if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0)
@@ -511,7 +511,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
             th.numSharesStr_ <<  static_cast<long>(th.numShares_);
 
         if ((th.totalnumShares_ - static_cast<long>(th.totalnumShares_)) != 0.0)
-            mmex::formatDoubleToCurrencyEdit(th.totalnumShares_, th.totalnumSharesStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(th.totalnumShares_, th.totalnumSharesStr_);
         else
             th.totalnumSharesStr_ <<  static_cast<long>(th.totalnumShares_);
 
@@ -757,16 +757,16 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
         double stocktotalnumShares = trans_[selectedIndex]->totalnumShares_;
         double stocktotalgainloss = stocktotalDifference * stocktotalnumShares;
 
-        mmex::formatDoubleToCurrencyEdit(stockPurchasePrice, stockPurchasePriceStr);
-        mmex::formatDoubleToCurrencyEdit(stockavgPurchasePrice, stockavgPurchasePriceStr);
-        mmex::formatDoubleToCurrencyEdit(stockCurrentPrice, stockCurrentPriceStr);
-        mmex::formatDoubleToCurrencyEdit(stockDifference , stockDifferenceStr);
-        mmex::formatDoubleToCurrencyEdit(stocktotalDifference , stocktotalDifferenceStr);
-        mmex::formatDoubleToCurrencyEdit(stockPercentage, stockPercentageStr);
-        mmex::formatDoubleToCurrencyEdit(stockPercentagePerYear, stockPercentagePerYearStr);
-        mmex::formatDoubleToCurrencyEdit(stocktotalPercentage, stocktotalPercentageStr);
-        mmex::formatDoubleToCurrencyEdit(stocktotalgainloss, stocktotalgainlossStr);
-        //mmex::formatDoubleToCurrencyEdit(stocknumShares, stocknumSharesStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stockPurchasePrice, stockPurchasePriceStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stockavgPurchasePrice, stockavgPurchasePriceStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stockCurrentPrice, stockCurrentPriceStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stockDifference , stockDifferenceStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalDifference , stocktotalDifferenceStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stockPercentage, stockPercentageStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stockPercentagePerYear, stockPercentagePerYearStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalPercentage, stocktotalPercentageStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalgainloss, stocktotalgainlossStr);
+        // CurrencyFormatter::formatDoubleToCurrencyEdit(stocknumShares, stocknumSharesStr);
 
         wxString miniInfo = "";
         if (trans_[selectedIndex]->stockSymbol_ != "")

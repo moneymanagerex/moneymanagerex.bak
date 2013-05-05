@@ -16,6 +16,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+#include <wx/sstream.h>
+
 #include "util.h"
 #include "mmex.h"
 #include "univcsvdialog.h"
@@ -23,9 +25,6 @@
 #include "constants.h"
 #include "singleton.h"
 #include "mmCurrencyFormatter.h"
-
-#include <wx/sstream.h>
-#include <wx/numformatter.h>
 //----------------------------------------------------------------------------
 
 int CaseInsensitiveCmp(const wxString &s1, const wxString &s2)
@@ -64,29 +63,6 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
     lang = wxGetSingleChoice("Please choose language", "Languages", lang_files, parent);
 
     return lang.Lower();
-}
-//----------------------------------------------------------------------------
-
-void mmex::formatDoubleToCurrencyEdit(double val, wxString& rdata)
-{
-    rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
-    //TODO: Remove it with new wx release
-    rdata.Replace("-,", "-");
-}
-
-void mmex::formatDoubleToCurrency(double val, wxString& rdata)
-{
-    const CurrencyFormatter &fmt = CurrencyFormatter::instance();
-    rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
-    rdata.Prepend(fmt.getPrefix());
-    rdata.Append(fmt.getSuffix());
-    //TODO: Remove it with new wx release
-    rdata.Replace("-,", "-");
-}
-
-bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
-{
-    return wxNumberFormatter::FromString(str , &val);
 }
 
 
@@ -550,7 +526,7 @@ int mmIniOptions::account_image_id(mmCoreDB* core, int account_id)
     double selectedImage = 9;
     wxString image_num_str = core->dbInfoSettings_->GetStringSetting(
         wxString::Format("ACC_IMAGE_ID_%d", account_id), "");
-    if (mmex::formatCurrencyToDouble(image_num_str, selectedImage))
+    if ( CurrencyFormatter::formatCurrencyToDouble(image_num_str, selectedImage))
     {
         if (selectedImage > 0)
             return selectedImage;
@@ -686,7 +662,7 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
                 wxString sSign = sElement.Mid(0,1);
                 sElement.Remove(0,1);
 
-                if (sElement.ToDouble(&dTempAmount) || mmex::formatCurrencyToDouble(sElement, dTempAmount))
+                if (sElement.ToDouble(&dTempAmount) ||  CurrencyFormatter::formatCurrencyToDouble(sElement, dTempAmount))
                 {
                     if (sSign == "*") dSubtotal = dSubtotal*dTempAmount;
                     else if (sSign == "M") dSubtotal = -dSubtotal*dTempAmount;
@@ -702,7 +678,7 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
         sTemp.Replace(midBrackets, wxString()<<dAmount);
     }
     if (sTemp.Contains("(")||sTemp.Contains(")")) bResult = false;
-    if (bResult) mmex::formatDoubleToCurrencyEdit(dAmount, sOutput);
+    if (bResult)  CurrencyFormatter::formatDoubleToCurrencyEdit(dAmount, sOutput);
 
     return bResult;
 }

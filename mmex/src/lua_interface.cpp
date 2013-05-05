@@ -18,6 +18,7 @@
 
 #include "lua_interface.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "mmOption.h"
 #include "htmlbuilder.h"
 #include <wx/stdpaths.h>
@@ -473,11 +474,11 @@ void TLuaInterface::SetCurrencyFormat(lua_State* lua, double number, bool for_ed
 
     if (for_edit)
     {
-        mmex::formatDoubleToCurrencyEdit(number, number_string);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(number, number_string);
     }
     else
     {
-        mmex::formatDoubleToCurrency(number, number_string);
+         CurrencyFormatter::formatDoubleToCurrency(number, number_string);
     }
   
     lua_pushstring(lua, number_string.ToUTF8());

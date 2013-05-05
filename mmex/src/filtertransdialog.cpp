@@ -17,6 +17,7 @@
 #include "filtertransdialog.h"
 #include "constants.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "categdialog.h"
 #include "paths.h"
 #include <wx/valnum.h>
@@ -384,7 +385,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
         if (!minamt.IsEmpty())
         {
             double amount;
-            if (!mmex::formatCurrencyToDouble(minamt, amount) || (amount < 0.0))
+            if (! CurrencyFormatter::formatCurrencyToDouble(minamt, amount) || (amount < 0.0))
             {
                 mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
                 return;
@@ -394,7 +395,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
         if (!maxamt.IsEmpty())
         {
             double amount;
-            if (!mmex::formatCurrencyToDouble(maxamt, amount) || (amount < 0.0))
+            if (! CurrencyFormatter::formatCurrencyToDouble(maxamt, amount) || (amount < 0.0))
             {
                 mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
                 return;
@@ -547,7 +548,7 @@ wxString mmFilterTransactionsDialog::userStatusStr() const
 double mmFilterTransactionsDialog::getAmountMin()
 {
     double amount = 0;
-    if (!mmex::formatCurrencyToDouble(amountMinEdit_->GetValue(), amount) || (amount < 0.0))
+    if (! CurrencyFormatter::formatCurrencyToDouble(amountMinEdit_->GetValue(), amount) || (amount < 0.0))
         amount = 0;
 
     return amount;
@@ -556,7 +557,7 @@ double mmFilterTransactionsDialog::getAmountMin()
 double mmFilterTransactionsDialog::getAmountMax()
 {
     double amount = 0;
-    if (!mmex::formatCurrencyToDouble(amountMaxEdit_->GetValue(), amount) || (amount < 0.0))
+    if (! CurrencyFormatter::formatCurrencyToDouble(amountMaxEdit_->GetValue(), amount) || (amount < 0.0))
         amount = 0;
 
     return amount;
