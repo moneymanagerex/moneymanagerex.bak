@@ -256,7 +256,7 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
         mmBDTransactionHolder th;
 
         th.id_           = q1.GetInt("BDID");
-        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString("NEXTOCCURRENCEDATE"));
+        th.nextOccurDate_  = q1.GetDate("NEXTOCCURRENCEDATE");
         th.nextOccurStr_   = mmGetDateForDisplay(th.nextOccurDate_);
         int repeats        = q1.GetInt("REPEATS");
         th.payeeID_        = q1.GetInt("PAYEEID");

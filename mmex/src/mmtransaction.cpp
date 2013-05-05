@@ -130,7 +130,7 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
                 isInited_(false),
                 updateRequired_(false)
 {
-    date_        = mmGetStorageStringAsDate(q1.GetString("TRANSDATE"));
+    date_        = q1.GetDate("TRANSDATE");
     transNum_    = q1.GetString("TRANSACTIONNUMBER");
     status_      = q1.GetString("STATUS");
     notes_       = q1.GetString("NOTES");

@@ -86,8 +86,7 @@ wxString mmReportSummaryStocks::getHTMLText()
             th.purchasePrice_   = q2.GetDouble("PURCHASEPRICE");
             th.value_           = q2.GetDouble("VALUE");
             double commission   = q2.GetDouble("COMMISSION");
-            wxString dateString = q2.GetString("PURCHASEDATE");
-            wxDateTime dtdt     = mmGetStorageStringAsDate(dateString);
+            wxDateTime dtdt     = q2.GetDateTime("PURCHASEDATE");
             wxString dt         = mmGetDateForDisplay(dtdt);
 
             th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);

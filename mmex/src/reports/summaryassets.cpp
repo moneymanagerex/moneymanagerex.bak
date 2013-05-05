@@ -51,7 +51,7 @@ wxString mmReportSummaryAssets::getHTMLText()
         hb.addTableCell(pEntry->DisplayDate(), false, true);
         hb.addTableCell(pEntry->name_, false, true);
         hb.addTableCell(wxGetTranslation(pEntry->rate_type_));
-        hb.addTableCell(pEntry->GetValueCurrencyEditFormat(), true);
+		hb.addMoneyCell(pEntry->value_);
         hb.addTableCell(pEntry->notes_);
         hb.endTableRow();
     }

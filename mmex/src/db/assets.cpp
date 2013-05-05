@@ -27,7 +27,7 @@ TAssetEntry::TAssetEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
     id_         = q1.GetInt("ASSETID");
-    date_       = mmGetStorageStringAsDate(q1.GetString("STARTDATE"));
+    date_       = q1.GetDate("STARTDATE");
     name_       = q1.GetString("ASSETNAME");
     value_      = q1.GetDouble("VALUE");
     rate_type_  = q1.GetString("VALUECHANGE");
@@ -51,7 +51,7 @@ TAssetEntry::TAssetEntry(TAssetEntry* pEntry)
 
 void TAssetEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 {
-    st.Bind(++db_index, mmGetDateForStorage(date_)); // q1.GetString("STARTDATE");
+    st.BindDate(++db_index, date_); // q1.GetString("STARTDATE");
     st.Bind(++db_index, name_);                 // q1.GetString("ASSETNAME");
     st.Bind(++db_index, value_);                // q1.GetDouble("VALUE");
     st.Bind(++db_index, rate_type_);            // q1.GetString("VALUECHANGE");
