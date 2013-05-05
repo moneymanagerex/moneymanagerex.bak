@@ -19,7 +19,6 @@
 #ifndef _MM_EX_CURRENCY_FORMATEER_H_
 #define _MM_EX_CURRENCY_FORMATEER_H_
 
-#include "defs.h"
 #include "mmcurrency.h"
 
 class CurrencyFormatter

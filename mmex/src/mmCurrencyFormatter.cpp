@@ -17,7 +17,6 @@
  ********************************************************/
 
 #include "mmCurrencyFormatter.h"
-#include "constants.h"
 #include "singleton.h"
 #include <wx/numformatter.h>
 

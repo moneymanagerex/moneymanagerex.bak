@@ -18,15 +18,9 @@
 
 
 #include "mmOption.h"
-#include "util.h"
-#include "mmex.h"
 #include "univcsvdialog.h"
-#include "paths.h"
 #include "constants.h"
 #include "singleton.h"
-
-#include <wx/sstream.h>
-#include <wx/numformatter.h>
 
 //----------------------------------------------------------------------------
 mmOptions::mmOptions()
