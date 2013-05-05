@@ -23,7 +23,6 @@
 #include "../budgetingpanel.h"
 #include "../htmlbuilder.h"
 #include "../mmex.h"
-#include "../mmCurrencyFormatter.h"
 
 mmReportBudgetCategorySummary::mmReportBudgetCategorySummary(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
 : mmReportBudget(mainFrame, core)
@@ -54,10 +53,10 @@ void mmReportBudgetCategorySummary::displayReportLine(mmHTMLBuilder& hb, const m
     hb.startTableRow();
     hb.addTableCell(budEntry.catStr_, false, true);
     hb.addTableCell(budEntry.subCatStr_, false, true);
-    hb.addTableCell(budEntry.amtString_, true);
+	hb.addMoneyCell(budEntry.amt_);
     hb.addTableCell(budEntry.period_, false, true);
-    hb.addTableCell(budEntry.estimatedStr_, true);
-    hb.addTableCell(budEntry.actualStr_, true, false, false, actualAmountColour(budEntry));
+	hb.addMoneyCell(budEntry.estimated_);
+	hb.addMoneyCell(budEntry.actual_, this->actualAmountColour(budEntry));
     hb.endTableRow();
 }
 
@@ -134,7 +133,6 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         } else {
             estIncome += th.estimated_;
         }
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
 
         bool transferAsDeposit = true;
         if (th.amt_ < 0)
@@ -144,16 +142,12 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,
             yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
         if (th.actual_ < 0) {
             actExpenses += th.actual_;
         } else {
             actIncome += th.actual_;
         }
-        wxString displayAmtString;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
-        th.amtString_ = displayAmtString;
 
         if (mainFrame_->budgetCategoryTotal())
         {
@@ -173,9 +167,6 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         catTotals.amt_       = th.amt_;
         catTotals.estimated_ = th.estimated_;
         catTotals.actual_    = th.actual_;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.amt_, catTotals.amtString_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.actual_, catTotals.actualStr_);
         /***************************************************************************/
 
         //START: SUBCATEGORY ROW
@@ -193,7 +184,6 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             mmDBWrapper::getBudgetEntry(core_->db_.get(), budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
 
             setBudgetEstimate(thsub,monthlyBudget);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
             if (thsub.estimated_ < 0) {
                 estExpenses += thsub.estimated_;
             } else {
@@ -208,14 +198,11 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
                 yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
             );
-             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
             if (thsub.actual_ < 0) {
                 actExpenses += thsub.actual_;
             } else {
                 actIncome += thsub.actual_;
             }
-             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
-            thsub.amtString_ = displayAmtString;
 
             if (mainFrame_->budgetCategoryTotal())
             {
@@ -228,9 +215,6 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             catTotals.amt_       += thsub.amt_;
             catTotals.estimated_ += thsub.estimated_;
             catTotals.actual_    += thsub.actual_;
-             CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.amt_,       catTotals.amtString_);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.actual_,    catTotals.actualStr_);
         }
         //END: SUBCATEGORY ROW
         st.Reset();
@@ -246,10 +230,9 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         hb.addTableCell(catTotals.catStr_, false, true, true, "blue");
         hb.addTableCell("", false, true, true, "blue");
         hb.addTableCell(wxEmptyString, true, false,true, "blue");
-//        hb.addTableCell(catTotals.amtString_, true, false,true, "blue");
         hb.addTableCell(catTotals.period_, false, true, true, "blue");
-        hb.addTableCell(catTotals.estimatedStr_, true, false, true, "blue");
-        hb.addTableCell(catTotals.actualStr_, true, false, true, actualAmountColour(catTotals,true));
+		hb.addMoneyCell(catTotals.estimated_, "blue");
+		hb.addMoneyCell(catTotals.actual_, this->actualAmountColour(catTotals, true));
         hb.endTableRow();
         hb.addRowSeparator(6);
         /***************************************************************************/
@@ -260,43 +243,8 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     hb.endTable();
     hb.endCenter();
 
-    wxString estIncomeStr, actIncomeStr,  estExpensesStr, actExpensesStr;
-     CurrencyFormatter::formatDoubleToCurrency(estIncome, estIncomeStr);
-     CurrencyFormatter::formatDoubleToCurrency(actIncome, actIncomeStr);
-    if (estExpenses < 0.0) {
-        estExpenses = -estExpenses;
-    }
-    if (actExpenses < 0.0) {
-        actExpenses = -actExpenses;
-    }
-     CurrencyFormatter::formatDoubleToCurrency(estExpenses, estExpensesStr);
-     CurrencyFormatter::formatDoubleToCurrency(actExpenses, actExpensesStr);
-
     double difIncome = estIncome - actIncome;
-    wxString difIncomeStr;
-    wxString incomeDiferenceColour = "red";
-    if (difIncome < 0) {
-        difIncome = -difIncome;
-        incomeDiferenceColour = "black";
-    }
-     CurrencyFormatter::formatDoubleToCurrency(difIncome, difIncomeStr);
-
     double difExpense = estExpenses - actExpenses;
-    wxString difExpenseStr;
-    wxString expenseDiferenceColour = "black";
-    if (difExpense < 0) {
-        difExpense = -difExpense;
-        expenseDiferenceColour = "red";
-    }
-     CurrencyFormatter::formatDoubleToCurrency(difExpense, difExpenseStr);
-
-    wxString incEstStr = wxString() << _("Estimated Income: ") << estIncomeStr;
-    wxString incActStr = wxString() << _("Actual Income: ")    << actIncomeStr;
-    wxString incDifStr = wxString() << _("Difference Income: ") << difIncomeStr;
-
-    wxString expEstStr = wxString() << _("Estimated Expenses: ") << estExpensesStr;
-    wxString expActStr = wxString() << _("Actual Expenses: ")    << actExpensesStr;
-    wxString expDifStr = wxString() << _("Difference Expenses: ") << difExpenseStr;
 
     //Summary of Estimated Vs Actual totals
     hb.addLineBreak();
@@ -304,15 +252,15 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     hb.startTable("50%");
 //    hb.addRowSeparator(3);
     hb.startTableRow();
-    hb.addTableCell(incEstStr, true, true);
-    hb.addTableCell(incActStr, true, true);
-    hb.addTableCell(incDifStr, true, true, false, incomeDiferenceColour);
+	hb.addTableCell(estIncome); 
+	hb.addTableCell(actIncome);
+	hb.addTableCell(difIncome);
     hb.endTableRow();
 
     hb.startTableRow();
-    hb.addTableCell(expEstStr, true, true);
-    hb.addTableCell(expActStr, true, true);
-    hb.addTableCell(expDifStr, true, true, false, expenseDiferenceColour);
+	hb.addTableCell(estExpenses);
+	hb.addTableCell(actExpenses);
+	hb.addTableCell(difExpense);
     hb.endTableRow();
     hb.addRowSeparator(3);
     hb.endTable();
