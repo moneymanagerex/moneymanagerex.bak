@@ -468,7 +468,7 @@ wxString mmAssetsPanel::getItem(long item, long column)
     if (column == COL_NAME)  return asset_list_.entrylist_[item]->name_;
     if (column == COL_TYPE)  return wxGetTranslation(asset_list_.entrylist_[item]->type_);
     if (column == COL_VALUE) return wxString() << asset_list_.entrylist_[item]->GetValueCurrencyEditFormat();
-    if (column == COL_DATE)  return asset_list_.entrylist_[item]->display_date_;
+    if (column == COL_DATE)  return asset_list_.entrylist_[item]->DisplayDate();
     if (column == COL_NOTES) return asset_list_.entrylist_[item]->notes_;
 
     return wxGetEmptyString();

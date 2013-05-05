@@ -88,8 +88,7 @@ void mmAssetDialog::dataToControls()
     m_assetName->SetValue(pAssetEntry_->name_);
     m_notes->SetValue(pAssetEntry_->notes_);
 
-    wxDateTime dtdt = mmGetStorageStringAsDate(pAssetEntry_->date_);
-    m_dpc->SetValue(dtdt);
+    m_dpc->SetValue(pAssetEntry_->date_);
 
     m_value->SetValue(pAssetEntry_->GetValueCurrencyEditFormat(true));
 
@@ -274,7 +273,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         pAssetEntry_ = new TAssetEntry();
     }
 
-    pAssetEntry_->date_       = m_dpc->GetValue().FormatISODate();
+    pAssetEntry_->date_       = m_dpc->GetValue();
     pAssetEntry_->notes_      = m_notes->GetValue().Trim();
     pAssetEntry_->name_       = m_assetName->GetValue().Trim();
     pAssetEntry_->value_      = value;
