@@ -27,15 +27,13 @@ TAssetEntry::TAssetEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
     id_         = q1.GetInt("ASSETID");
-    date_       = q1.GetString("STARTDATE");
+    date_       = mmGetStorageStringAsDate(q1.GetString("STARTDATE"));
     name_       = q1.GetString("ASSETNAME");
     value_      = q1.GetDouble("VALUE");
     rate_type_  = q1.GetString("VALUECHANGE");
     notes_      = q1.GetString("NOTES");
     rate_value_ = q1.GetDouble("VALUECHANGERATE");
     type_       = q1.GetString("ASSETTYPE");
-    // calculated value
-    display_date_ = mmGetDateForDisplay(mmGetStorageStringAsDate(date_));
 }
 
 /// Copy constructor using a pointer
@@ -53,13 +51,13 @@ TAssetEntry::TAssetEntry(TAssetEntry* pEntry)
 
 void TAssetEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 {
-    st.Bind(++db_index, date_);      // q1.GetString("STARTDATE");
-    st.Bind(++db_index, name_);      // q1.GetString("ASSETNAME");
-    st.Bind(++db_index, value_);     // q1.GetDouble("VALUE");
-    st.Bind(++db_index, rate_type_); // q1.GetString("VALUECHANGE");
-    st.Bind(++db_index, notes_);     // q1.GetString("NOTES");
-    st.Bind(++db_index, rate_value_);// q1.GetDouble("VALUECHANGERATE");
-    st.Bind(++db_index, type_);      // q1.GetString("ASSETTYPE");
+    st.Bind(++db_index, mmGetDateForStorage(date_)); // q1.GetString("STARTDATE");
+    st.Bind(++db_index, name_);                 // q1.GetString("ASSETNAME");
+    st.Bind(++db_index, value_);                // q1.GetDouble("VALUE");
+    st.Bind(++db_index, rate_type_);            // q1.GetString("VALUECHANGE");
+    st.Bind(++db_index, notes_);                // q1.GetString("NOTES");
+    st.Bind(++db_index, rate_value_);           // q1.GetDouble("VALUECHANGERATE");
+    st.Bind(++db_index, type_);                 // q1.GetString("ASSETTYPE");
 }
 
 /// Constructor for creating a new asset entry.
@@ -108,7 +106,6 @@ void TAssetEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        //wxLogDebug("TAssetEntry:Update: %s", e.GetMessage());
         wxLogError("TAssetEntry:Update: %s", e.GetMessage().c_str());
     }
 }
@@ -165,17 +162,16 @@ double TAssetEntry::GetDepreciatedValue(const wxDateTime& startDate, double valu
 
 double TAssetEntry::GetValue()
 {
-    wxDateTime start_date = mmGetStorageStringAsDate(date_);
     double asset_value = value_;
 
     if (rate_type_ == ASSET_RATE_DEF[APPRECIATE])
     {
-        asset_value = GetAppreciatedValue(start_date, value_, rate_value_);
+        asset_value = GetAppreciatedValue(date_, value_, rate_value_);
     }
 
     if (rate_type_ == ASSET_RATE_DEF[DEPRECIATE])
     {
-        asset_value = GetDepreciatedValue(start_date, value_, rate_value_);
+        asset_value = GetDepreciatedValue(date_, value_, rate_value_);
     }
 
     return asset_value;
@@ -192,7 +188,7 @@ wxString TAssetEntry::GetValueCurrencyEditFormat(bool initial_value)
 
 wxString TAssetEntry::DisplayDate()
 {
-    return mmGetDateForDisplay(mmGetStorageStringAsDate(date_));
+    return mmGetDateForDisplay(date_);
 }
 
 /************************************************************************************
@@ -227,7 +223,6 @@ void TAssetList::LoadEntries(bool load_entries)
     }
     catch (const wxSQLite3Exception& e)
     {
-        //wxLogDebug("TAssetList::LoadEntries %s", e.GetMessage());
         wxLogError("TAssetList::LoadEntries %s", e.GetMessage().c_str());
     }
 }

@@ -54,7 +54,7 @@
 #define TRANSACTION_TESTS
 #define REPEAT_TRANSACTION_TESTS
 //#define SPLIT_TRANSACTION_TESTS
-//#define ASSET_TESTS
+#define ASSET_TESTS
 //#define STOCK_TESTS
 //#define BUDGET_TESTS
 
@@ -761,8 +761,7 @@ TEST(TAssetList_Test_entry_with_listed_entry)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    wxDateTime dt = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
-	wxString date = dt.FormatISODate();
+    wxDateTime date = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
 
     TAssetEntry* asset_entry = new TAssetEntry();
 	asset_entry->date_ = date;
@@ -787,16 +786,14 @@ TEST(TAssetList_Test_Values)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-	wxDateTime dt = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
-	wxString date = dt.FormatISODate();
-
+	wxDateTime date = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
     TAssetList asset_list(get_pDb());
     CHECK_EQUAL(1, asset_list.CurrentListSize());
 
     std::shared_ptr<TAssetEntry> asset_entry = asset_list.GetIndexedEntryPtr(0);
     if (asset_entry)
     {
-        CHECK_EQUAL(date, asset_entry->date_);
+        CHECK_EQUAL(date.FormatISODate(), asset_entry->date_.FormatISODate());
         CHECK_EQUAL(ASSET_TYPE_DEF[TAssetEntry::AUTO], asset_entry->name_);
         CHECK_EQUAL(2000, asset_entry->value_);
 
@@ -831,8 +828,7 @@ TEST(TAssetList_Test_Balance)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    wxDateTime dt = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
-	wxString date = dt.FormatISODate();
+    wxDateTime date = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
 
     TAssetList asset_list(get_pDb());
     TAssetEntry* asset_entry = new TAssetEntry();
@@ -878,11 +874,9 @@ TEST(TAssetList_Test_Add_5_years_of_entries)
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    wxDateTime date = wxDateTime::Now();
-
     TAssetEntry* new_entry = new TAssetEntry();
     new_entry->name_       = ASSET_TYPE_DEF[TAssetEntry::AUTO];
-	new_entry->date_       = date.FormatISODate();
+	new_entry->date_       = start_time;
     new_entry->value_      = 20000;
     new_entry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::DEPRECIATE];
     new_entry->rate_value_ = 20;
@@ -896,8 +890,7 @@ TEST(TAssetList_Test_Add_5_years_of_entries)
     asset_list.ListDatabase()->Begin();
     for (int i = 1; i < 263; ++i)
     {
-        date.Subtract(wxDateSpan::Days(7));
-    	new_entry->date_ = date.FormatISODate();
+    	new_entry->date_ = start_time.Subtract(wxDateSpan::Days(7));
         asset_list.AddEntry(new TAssetEntry(new_entry));
     }
     asset_list.ListDatabase()->Commit();
@@ -928,7 +921,7 @@ TEST(TAssetList_Test_Depreciate_Daily)
 //        CHECK_EQUAL(new_value, pEntry->GetValue());
 
         wxString str_value = line_feed;
-        str_value << "Date: " << pEntry->date_;
+        str_value << "Date: " << pEntry->DisplayDate();
         str_value << "   Expected Value: " << wxString::Format("%.2f", new_value);
         str_value << "   Value: " << wxString::Format("%.2f", pEntry->GetValue());
         printf(str_value.char_str());

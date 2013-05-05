@@ -48,7 +48,7 @@ wxString mmReportSummaryAssets::getHTMLText()
 	for (const auto & pEntry: asset_list_.entrylist_)
 	{
         hb.startTableRow();
-        hb.addTableCell(pEntry->display_date_, false, true);
+        hb.addTableCell(pEntry->DisplayDate(), false, true);
         hb.addTableCell(pEntry->name_, false, true);
         hb.addTableCell(wxGetTranslation(pEntry->rate_type_));
         hb.addTableCell(pEntry->GetValueCurrencyEditFormat(), true);

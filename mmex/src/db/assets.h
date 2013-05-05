@@ -56,14 +56,11 @@ public:
 
     wxString name_;         // "ASSETNAME"
     wxString type_;         // "ASSETTYPE"
-    wxString date_;         // "STARTDATE"
+    wxDateTime date_;       // "STARTDATE"
     wxString notes_;        // "NOTES"
     double value_;          // "VALUE"
     wxString rate_type_;    // "VALUECHANGE"
     double rate_value_;     // "VALUECHANGERATE"
-
-    /// Calculated value
-    wxString display_date_;
 
     /// Constructor used when loading assets from the database.
     TAssetEntry(wxSQLite3ResultSet& q1);
