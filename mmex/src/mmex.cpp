@@ -33,6 +33,7 @@
 #include "htmlbuilder.h"
 #include "maincurrencydialog.h"
 #include "mmcheckingpanel.h"
+#include "mmCurrencyFormatter.h"
 #include "mmgraphtopcategories.h"
 #include "mmhelppanel.h"
 #include "mmhomepagepanel.h"
@@ -64,7 +65,6 @@
 #include "transdialog.h"
 #include "univcsvdialog.h"
 #include "db/transactionbill.h"
-#include "mmcurrencyFormatter.h"
 
 //----------------------------------------------------------------------------
 #include <wx/debugrpt.h>

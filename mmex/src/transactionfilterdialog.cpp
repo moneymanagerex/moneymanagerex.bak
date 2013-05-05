@@ -260,7 +260,7 @@ void TransFilterDialog::OnPayeeSelect(wxCommandEvent& /*event*/)
         if (dlg.getPayeeId() != -1)
         {
             wxString payeeName = core_->payeeList_.GetPayeeName(dlg.getPayeeId());
-            btnPayee_->SetLabel(mmReadyDisplayString(payeeName));
+            btnPayee_->SetLabel((payeeName));
         }
     }
 }
@@ -273,7 +273,7 @@ void TransFilterDialog::OnCategorySelect(wxCommandEvent& /*event*/)
     {
         //categID_ = dlg.categID_;
         //subcategID_ = dlg.subcategID_;
-        catName_ = mmReadyDisplayString(core_->categoryList_.GetCategoryName(dlg.getCategId()));
+        catName_ = (core_->categoryList_.GetCategoryName(dlg.getCategId()));
         subCatName_ = core_->categoryList_.GetSubCategoryName(dlg.getCategId(), dlg.getSubCategId());
 
         btnCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(dlg.getCategId(), dlg.getSubCategId()));
