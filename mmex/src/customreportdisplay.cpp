@@ -19,6 +19,7 @@
 #include "customreportdisplay.h"
 #include "lua_interface.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 
 mmCustomReport::mmCustomReport(wxWindow* parent, mmCoreDB* core
 , const wxString& reportTitle, const wxString& sScript, const wxString& sScriptType)
@@ -90,7 +91,7 @@ bool mmCustomReport::DisplaySQL_Results(mmHTMLBuilder& hb)
             wxString displayData = sqlQueryResult.GetAsString(index);
             if ( sqlQueryResult.GetColumnType(index) == WXSQLITE_FLOAT )
             {
-                mmex::formatDoubleToCurrencyEdit(sqlQueryResult.GetDouble(index), displayData);
+                 CurrencyFormatter::formatDoubleToCurrencyEdit(sqlQueryResult.GetDouble(index), displayData);
             }
 
             //Right justify numeric data.

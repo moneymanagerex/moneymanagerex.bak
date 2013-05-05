@@ -16,6 +16,7 @@
 #include "splittransactionsdialog.h"
 #include "splitdetailsdialog.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include <wx/statline.h>
 
 /*!
@@ -91,7 +92,7 @@ void SplitTransactionDialog::DataToControls()
         lcSplit_->InsertItem((long)idx,fullCatStr, -1);
 
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(split_->entries_[idx]->splitAmount_, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(split_->entries_[idx]->splitAmount_, dispAmount);
 
         lcSplit_->SetItem((long)idx, 1, dispAmount);
     }
@@ -182,7 +183,7 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& /*event*/ )
         lcSplit_->InsertItem(numToInsert, sdd.m_categString_, -1);
        
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(*sdd.m_amount_, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(*sdd.m_amount_, dispAmount);
         
         lcSplit_->SetItem(numToInsert, 1, dispAmount);
 
@@ -233,11 +234,11 @@ void SplitTransactionDialog::UpdateSplitTotal()
     wxString splitTotal;
     if (split_->numEntries() > 0)
     {
-        mmex::formatDoubleToCurrencyEdit(split_->getUpdatedTotalSplits(), splitTotal);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(split_->getUpdatedTotalSplits(), splitTotal);
     }
     else
     {
-        mmex::formatDoubleToCurrencyEdit(0.0, splitTotal);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(0.0, splitTotal);
     }
     transAmount_->SetLabel(splitTotal);
 }

@@ -29,6 +29,7 @@
 
 #include "../htmlbuilder.h"
 #include "../mmex.h"
+#include "../mmCurrencyFormatter.h"
 
 mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year)
 : mmPrintableBase(core)
@@ -107,10 +108,10 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
         core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
         wxString actualExpStr;
-        mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
 
         wxString actualIncStr;
-        mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
         hb.startTableRow();
         hb.addTableCell(yearStr, false, true);
@@ -118,7 +119,7 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 
         balance = income - expenses;
         wxString actualBalStr;
-        mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
         hb.addTableCell(actualIncStr, true, true, true);
         hb.addTableCell(actualExpStr, true, true, true);
@@ -133,14 +134,14 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income,  false, yearBegin, yearEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
     wxString actualExpStr;
-    mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
 
     wxString actualIncStr;
-    mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
     balance = income - expenses;
     wxString actualBalStr;
-    mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
     std::vector<wxString> data;
     data.push_back(actualIncStr);

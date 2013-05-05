@@ -855,18 +855,18 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                         value = -value;
                     }
                     toamount = adjustedExportAmount(amtSeparator,wxString()<<tovalue);
-                    mmex::formatCurrencyToDouble(toamount, tovalue);
-                    mmex::formatDoubleToCurrencyEdit(tovalue, toamount);
+                     CurrencyFormatter::formatCurrencyToDouble(toamount, tovalue);
+                     CurrencyFormatter::formatDoubleToCurrencyEdit(tovalue, toamount);
                 }
                 else if (type == "Withdrawal")
                     value = -value;
 
                 wxString amount = adjustedExportAmount(amtSeparator, wxString()<<value);
-                mmex::formatCurrencyToDouble(amount, value);
-                mmex::formatDoubleToCurrencyEdit(value, amount);
+                 CurrencyFormatter::formatCurrencyToDouble(amount, value);
+                 CurrencyFormatter::formatDoubleToCurrencyEdit(value, amount);
 
                 wxString amount_tmp;
-                mmex::formatDoubleToCurrencyEdit(-value, amount_tmp);
+                 CurrencyFormatter::formatDoubleToCurrencyEdit(-value, amount_tmp);
 
                 buffer = "";
                 for (std::vector<int>::const_iterator sit = csvFieldOrder_.begin(); sit != csvFieldOrder_.end(); ++ sit)
@@ -1040,18 +1040,18 @@ void mmUnivCSVDialog::update_preview()
                             value = -value;
                         }
                         toamount = adjustedExportAmount(amtSeparator,wxString()<<tovalue);
-                        mmex::formatCurrencyToDouble(toamount, tovalue);
-                        mmex::formatDoubleToCurrencyEdit(tovalue, toamount);
+                         CurrencyFormatter::formatCurrencyToDouble(toamount, tovalue);
+                         CurrencyFormatter::formatDoubleToCurrencyEdit(tovalue, toamount);
                     }
                     else if (type == "Withdrawal")
                         value = -value;
 
                     wxString amount = adjustedExportAmount(amtSeparator, wxString()<<value);
-                    mmex::formatCurrencyToDouble(amount, value);
-                    mmex::formatDoubleToCurrencyEdit(value, amount);
+                     CurrencyFormatter::formatCurrencyToDouble(amount, value);
+                     CurrencyFormatter::formatDoubleToCurrencyEdit(value, amount);
 
                     wxString amount_tmp;
-                    mmex::formatDoubleToCurrencyEdit(-value, amount_tmp);
+                     CurrencyFormatter::formatDoubleToCurrencyEdit(-value, amount_tmp);
 
                     int col = 0;
                     wxString buf;
@@ -1292,7 +1292,7 @@ void mmUnivCSVDialog::parseToken(int index, wxString& token)
         case UNIV_CSV_AMOUNT:
             token.Replace(" ", wxEmptyString);
 
-            if (!mmex::formatCurrencyToDouble(token, val_)) return;
+            if (! CurrencyFormatter::formatCurrencyToDouble(token, val_)) return;
 
             if (val_ <= 0.0)
                 type_ = TRANS_TYPE_WITHDRAWAL_STR;

@@ -17,6 +17,7 @@
  ********************************************************/
 
 #include "assets.h"
+#include "../mmCurrencyFormatter.h"
 
 /************************************************************************************
  TAssetEntry Methods
@@ -183,8 +184,8 @@ double TAssetEntry::GetValue()
 wxString TAssetEntry::GetValueCurrencyEditFormat(bool initial_value)
 {
     wxString formatted_value;
-    if (initial_value) mmex::formatDoubleToCurrencyEdit(value_, formatted_value);
-    else mmex::formatDoubleToCurrencyEdit(GetValue(), formatted_value);
+    if (initial_value)  CurrencyFormatter::formatDoubleToCurrencyEdit(value_, formatted_value);
+    else  CurrencyFormatter::formatDoubleToCurrencyEdit(GetValue(), formatted_value);
 
     return formatted_value;
 }
@@ -315,7 +316,7 @@ double TAssetList::GetAssetBalance(bool value_today)
 wxString TAssetList::GetAssetBalanceCurrencyFormat(bool value_today)
 {
     wxString balance_str;
-    mmex::formatDoubleToCurrency(GetAssetBalance(value_today), balance_str);
+     CurrencyFormatter::formatDoubleToCurrency(GetAssetBalance(value_today), balance_str);
 
     return balance_str;
 }
@@ -323,7 +324,7 @@ wxString TAssetList::GetAssetBalanceCurrencyFormat(bool value_today)
 wxString TAssetList::GetAssetBalanceCurrencyEditFormat(bool value_today)
 {
     wxString balance_str;
-    mmex::formatDoubleToCurrencyEdit(GetAssetBalance(value_today), balance_str);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(GetAssetBalance(value_today), balance_str);
 
     return balance_str;
 }

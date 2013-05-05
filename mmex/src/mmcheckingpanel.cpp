@@ -573,15 +573,15 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         wxString convertionStr;
 
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-        mmex::formatDoubleToCurrency(toamount, toamountStr);
-        mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
+         CurrencyFormatter::formatDoubleToCurrency(toamount, toamountStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
         pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(accountId);
         wxASSERT(pCurrencyPtr);
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-        mmex::formatDoubleToCurrency(amount, amountStr);
+         CurrencyFormatter::formatDoubleToCurrency(amount, amountStr);
         //if (currencyid == basecurrencyid)
-        mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
         infoStr << amountStr << " ";
         if (amount!=toamount || tocurrencyid != currencyid)
@@ -622,7 +622,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
                 amount = splits->entries_[i]->splitAmount_;
                 if (m_trans[selIndex]->transType_ != TRANS_TYPE_DEPOSIT_STR)
                     amount = -amount;
-                mmex::formatDoubleToCurrency(amount , amountStr);
+                 CurrencyFormatter::formatDoubleToCurrency(amount , amountStr);
                 infoStr << core_->categoryList_.GetFullCategoryString(
                     splits->entries_[i]->categID_, splits->entries_[i]->subCategID_
                     )
@@ -640,12 +640,12 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
             wxASSERT(pCurrencyBase);
             wxString basecuramountStr;
             mmDBWrapper::loadCurrencySettings(core_->db_.get(), pCurrencyBase->currencyID_);
-            mmex::formatDoubleToCurrency(amount*convrate, basecuramountStr);
+             CurrencyFormatter::formatDoubleToCurrency(amount*convrate, basecuramountStr);
 
             pCurrencyBase = core_->accountList_.getCurrencySharedPtr(accountId);
             wxASSERT(pCurrencyBase);
             CurrencyFormatter::instance().loadSettings(*pCurrencyBase);
-            mmex::formatDoubleToCurrency(amount, amountStr);
+             CurrencyFormatter::formatDoubleToCurrency(amount, amountStr);
 
             //output
             infoStr << amountStr << " = " << basecuramountStr;
@@ -666,10 +666,10 @@ void mmCheckingPanel::setAccountSummary()
     double acctInitBalance = core_->accountList_.GetAccountSharedPtr(m_AccountID)->initialBalance_;
 
     wxString balance, recbalance, diffbal, filteredBalanceStr;
-    mmex::formatDoubleToCurrency(checking_bal + acctInitBalance, balance);
-    mmex::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
-    mmex::formatDoubleToCurrency(checking_bal - reconciledBal, diffbal);
-    mmex::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(checking_bal + acctInitBalance, balance);
+     CurrencyFormatter::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
+     CurrencyFormatter::formatDoubleToCurrency(checking_bal - reconciledBal, diffbal);
+     CurrencyFormatter::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);
 
     bool show_displayed_balance_ = (transFilterActive_ || (currentView_ != VIEW_TRANS_ALL_STR));
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER1);
@@ -850,7 +850,7 @@ void mmCheckingPanel::setBalance(mmBankTransaction* transPtr, double currentBala
 {
     transPtr->balance_ = currentBalance;
     wxString balanceStr;
-    mmex::formatDoubleToCurrencyEdit(currentBalance, balanceStr);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(currentBalance, balanceStr);
     transPtr->balanceStr_ = balanceStr;
 }
 
@@ -1670,7 +1670,7 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
     if (search_string.IsEmpty()) return;
 
     double amount= 0, deposit = 0, withdrawal = 0;
-    bool valid_amount = mmex::formatCurrencyToDouble(search_string, amount);
+    bool valid_amount =  CurrencyFormatter::formatCurrencyToDouble(search_string, amount);
     bool withdrawal_only = false;
     if (valid_amount && amount < 0)
     {
@@ -1688,8 +1688,8 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
     {
         g_asc ?  selectedItem-- : selectedItem++;
         const wxString t = getItem(selectedItem, COL_NOTES);
-        if (valid_amount) mmex::formatCurrencyToDouble(getItem(selectedItem, COL_DEPOSIT), deposit);
-        if (valid_amount) mmex::formatCurrencyToDouble(getItem(selectedItem, COL_WITHDRAWAL), withdrawal);
+        if (valid_amount)  CurrencyFormatter::formatCurrencyToDouble(getItem(selectedItem, COL_DEPOSIT), deposit);
+        if (valid_amount)  CurrencyFormatter::formatCurrencyToDouble(getItem(selectedItem, COL_WITHDRAWAL), withdrawal);
         if (t.Lower().Matches(search_string)
             || (valid_amount && amount == deposit && !withdrawal_only)
             || (valid_amount && amount == withdrawal))

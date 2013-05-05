@@ -130,18 +130,6 @@ public:
 };
 //----------------------------------------------------------------------------
 
-namespace mmex
-{
-void formatDoubleToCurrency( double val, wxString& rdata );
-void formatDoubleToCurrencyEdit( double val, wxString& rdata );
-bool formatCurrencyToDouble( const wxString& str, double& val );
-
-//----------------------------------------------------------------------------
-
-} // namespace mmex
-
-//----------------------------------------------------------------------------
-
 wxString Tips(wxString type);
 int site_content(const wxString& site, wxString& output);
 bool mmCalculator(wxString sInput, wxString& sOutput);

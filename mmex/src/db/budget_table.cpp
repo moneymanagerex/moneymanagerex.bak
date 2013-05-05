@@ -17,6 +17,7 @@
  ********************************************************/
 
 #include "budget_table.h"
+#include "../mmCurrencyFormatter.h"
 
 /************************************************************************************
  TBudgetTableEntry Methods
@@ -108,7 +109,7 @@ void TBudgetTableEntry::Update(wxSQLite3Database* db)
 wxString TBudgetTableEntry::GetAmountCurrencyEditFormat()
 {
     wxString formatted_value;
-    mmex::formatDoubleToCurrencyEdit(amount_, formatted_value);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(amount_, formatted_value);
 
     return formatted_value;
 }
@@ -232,7 +233,7 @@ int TBudgetTableList::CurrentListSize()
 //wxString TBudgetTableList::GetAssetBalanceCurrencyFormat(bool value_today)
 //{
 //    wxString balance_str;
-//    mmex::formatDoubleToCurrency(GetAssetBalance(value_today), balance_str);
+//     CurrencyFormatter::formatDoubleToCurrency(GetAssetBalance(value_today), balance_str);
 //
 //    return balance_str;
 //}
@@ -240,7 +241,7 @@ int TBudgetTableList::CurrentListSize()
 //wxString TBudgetTableList::GetAssetBalanceCurrencyEditFormat(bool value_today)
 //{
 //    wxString balance_str;
-//    mmex::formatDoubleToCurrencyEdit(GetAssetBalance(value_today), balance_str);
+//     CurrencyFormatter::formatDoubleToCurrencyEdit(GetAssetBalance(value_today), balance_str);
 //
 //    return balance_str;
 //}

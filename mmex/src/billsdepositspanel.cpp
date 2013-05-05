@@ -20,6 +20,7 @@
 #include "billsdepositsdialog.h"
 #include "constants.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)
@@ -318,8 +319,8 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
                 th.daysRemainingStr_ = _("Inactive");
         }
 
-        mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
-        mmex::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
 
         th.payeeStr_ = core_->payeeList_.GetPayeeName(th.payeeID_);
 
@@ -633,4 +634,3 @@ void mmBillsDepositsPanel::OnFilterTransactions(wxMouseEvent& event)
 
     initVirtualListControl();
 }
-

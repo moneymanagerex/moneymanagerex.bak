@@ -2,6 +2,7 @@
 #include "qif_import.h"
 #include "constants.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "fileviewerdialog.h"
 #include "paths.h"
 
@@ -438,7 +439,7 @@ int mmQIFImportDialog::mmImportQIF()
                     else if (i == Balance)
                     {
                         sBalance = getLineData(readLine);
-                        if (!sBalance.ToDouble(&val) && !mmex::formatCurrencyToDouble(sBalance, val))
+                        if (!sBalance.ToDouble(&val) && ! CurrencyFormatter::formatCurrencyToDouble(sBalance, val))
                             val = 0;
                         continue;
                     }
@@ -521,7 +522,7 @@ int mmQIFImportDialog::mmImportQIF()
         {
             sAmount = getLineData(readLine);
 
-            if (!sAmount.ToDouble(&val) && !mmex::formatCurrencyToDouble(sAmount, val))
+            if (!sAmount.ToDouble(&val) && ! CurrencyFormatter::formatCurrencyToDouble(sAmount, val))
             {
                 sMsg = wxString::Format(_("Line: %ld invalid amount, skipping."), numLines);
                 logWindow->AppendText(sMsg << "\n");
@@ -582,7 +583,7 @@ int mmQIFImportDialog::mmImportQIF()
             sSplitAmount = getLineData(readLine);
 
             //get amount
-            if (!sSplitAmount.ToDouble(&dSplitAmount) && !mmex::formatCurrencyToDouble(sSplitAmount, dSplitAmount))
+            if (!sSplitAmount.ToDouble(&dSplitAmount) && ! CurrencyFormatter::formatCurrencyToDouble(sSplitAmount, dSplitAmount))
                 dSplitAmount = 0; //wrong amount
             //
             if (type == TRANS_TYPE_WITHDRAWAL_STR)

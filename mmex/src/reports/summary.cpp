@@ -60,7 +60,7 @@ wxString mmReportSummary::getHTMLText()
             tBalance += bal * rate;
 
             wxString balance;
-            mmex::formatDoubleToCurrency(bal, balance);
+             CurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
             hb.startTableRow();
             hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_),account->name_, false, true);
@@ -73,7 +73,7 @@ wxString mmReportSummary::getHTMLText()
     core_->currencyList_.LoadBaseCurrencySettings();
 
     wxString tBalanceStr;
-    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     hb.startTableRow();
     hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalanceStr);
@@ -98,7 +98,7 @@ wxString mmReportSummary::getHTMLText()
             tTBalance += bal * rate;
 
             wxString balance;
-            mmex::formatDoubleToCurrency(bal, balance);
+             CurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
             hb.startTableRow();
             hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_),account->name_, false, true);
@@ -111,7 +111,7 @@ wxString mmReportSummary::getHTMLText()
     core_->currencyList_.LoadBaseCurrencySettings();
 
     wxString tTBalanceStr;
-    mmex::formatDoubleToCurrency(tTBalance, tTBalanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(tTBalance, tTBalanceStr);
 
     if ( frame_->hasActiveTermAccounts() )
     {
@@ -138,7 +138,7 @@ wxString mmReportSummary::getHTMLText()
     }
 
     wxString stockBalanceStr;
-    mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
     hb.startTableRow();
     hb.addTableCell(_("Stocks Total:"));
@@ -156,7 +156,7 @@ wxString mmReportSummary::getHTMLText()
 
     tBalance += stockBalance;
     tBalance += asset_list.GetAssetBalance();
-    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
+     CurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     hb.addRowSeparator(2);
 

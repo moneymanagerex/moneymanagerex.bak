@@ -20,6 +20,7 @@
 #include "transdialog.h"
 #include "constants.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "mmOption.h"
 #include "paths.h"
 #include "categdialog.h"
@@ -137,9 +138,9 @@ void mmTransDialog::dataToControls()
         toTransAmount_ = pBankTransaction_->toAmt_;
         advancedToTransAmountSet_ = (transAmount_ != toTransAmount_);
 
-        mmex::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
         textAmount_->SetValue(dispAmount);
-        mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
         toTextAmount_->SetValue(dispAmount);
     }
     else
@@ -655,7 +656,7 @@ void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
             textAmount_->SetValue(amountStr);
         }
 
-        mmex::formatCurrencyToDouble(amountStr, transAmount_);
+         CurrencyFormatter::formatCurrencyToDouble(amountStr, transAmount_);
 
         if (toID_ > 0) {
             double rateFrom = core_->accountList_.getAccountBaseCurrencyConvRate(accountID_);
@@ -674,7 +675,7 @@ void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
         toTransAmount_ = transAmount_;
     }
 
-    mmex::formatDoubleToCurrencyEdit(toTransAmount_, amountStr);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(toTransAmount_, amountStr);
     toTextAmount_->SetValue(amountStr);
 
     SetTransferControls();
@@ -766,7 +767,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     else
     {
         wxString amountStr = textAmount_->GetValue().Trim();
-        if (!mmex::formatCurrencyToDouble(amountStr, transAmount_) || (transAmount_ < 0.0))
+        if (! CurrencyFormatter::formatCurrencyToDouble(amountStr, transAmount_) || (transAmount_ < 0.0))
         {
             textAmount_->SetBackgroundColour("RED");
             mmShowErrorMessageInvalid(parent_, _("Amount"));
@@ -788,7 +789,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         {
             wxString amountStr = toTextAmount_->GetValue().Trim();
             if (amountStr.IsEmpty() 
-                || !mmex::formatCurrencyToDouble(amountStr, toTransAmount_)
+                || ! CurrencyFormatter::formatCurrencyToDouble(amountStr, toTransAmount_)
                 || (toTransAmount_ < 0.0)
             )
             {
@@ -950,7 +951,7 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
             split_->removeSplitByIndex(0);
         }
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(transAmount_, dispAmount);
         textAmount_->SetValue(dispAmount);
     }
     SetSplitState();
@@ -1066,7 +1067,7 @@ void mmTransDialog::activateSplitTransactionsDlg()
     if (categID_ > -1)
     {
         wxString sAmount = textAmount_->GetValue();
-        if (!mmex::formatCurrencyToDouble(sAmount, transAmount_))
+        if (! CurrencyFormatter::formatCurrencyToDouble(sAmount, transAmount_))
             transAmount_ = 0;
         pSplitEntry->splitAmount_  = bDeposit ? transAmount_ : transAmount_;
         pSplitEntry->categID_      = categID_;
@@ -1083,7 +1084,7 @@ void mmTransDialog::activateSplitTransactionsDlg()
         if (transaction_type_->GetSelection() == DEF_TRANSFER && amount < 0)
             amount = - amount;
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(amount, dispAmount);
+         CurrencyFormatter::formatDoubleToCurrencyEdit(amount, dispAmount);
         textAmount_->SetValue(dispAmount);
     }
 }

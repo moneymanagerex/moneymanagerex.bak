@@ -18,6 +18,7 @@
 
 #include "htmlbuilder.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "mmOption.h"
 #include "constants.h"
 
@@ -245,7 +246,7 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value, const bool& numeri
 void mmHTMLBuilder::addMoneyCell(double amount, bool color)
 {
     wxString balance;
-    mmex::formatDoubleToCurrency(amount, balance);
+     CurrencyFormatter::formatDoubleToCurrency(amount, balance);
     this->addTableCell(balance, true, true, true, (amount < 0 && color) ? "RED": "");
 }
 

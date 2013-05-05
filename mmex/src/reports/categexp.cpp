@@ -21,6 +21,7 @@
 
 #include "../htmlbuilder.h"
 #include "../util.h"
+#include "../mmCurrencyFormatter.h"
 #include "../mmOption.h"
 #include "../mmgraphpie.h"
 
@@ -125,7 +126,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         if (categs>1)
         {
             wxString categtotalStr;
-            mmex::formatDoubleToCurrency(categtotal, categtotalStr);
+             CurrencyFormatter::formatDoubleToCurrency(categtotal, categtotalStr);
             hb.addRowSeparator(0);
             hb.startTableRow();
             hb.addTableCell(_("Category Total: "),false, true, true, "GRAY");
@@ -141,7 +142,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     }
 
     wxString grandtotalStr;
-    mmex::formatDoubleToCurrency(grandtotal, grandtotalStr);
+     CurrencyFormatter::formatDoubleToCurrency(grandtotal, grandtotalStr);
     hb.startTableRow();
     hb.addTableCell(_("Grand Total: "),false, true, true);
     hb.addTableCell(grandtotalStr, true, false, true);

@@ -20,6 +20,7 @@
 #include "newacctdialog.h"
 #include "maincurrencydialog.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "mmOption.h"
 #include "paths.h"
 #include <wx/valnum.h>
@@ -131,7 +132,7 @@ void mmNewAcctDialog::fillControlsWithData()
 
     mmDBWrapper::loadCurrencySettings(core_->db_.get(), currencyID_);
     wxString dispAmount;
-    mmex::formatDoubleToCurrencyEdit(initBal, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(initBal, dispAmount);
     textCtrl->SetValue(dispAmount);
 
     int selectedImage = mmIniOptions::instance().account_image_id(core_, accountID_);
@@ -398,7 +399,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     pAccount->initialBalance_ = 0.0;
     if (!bal.IsEmpty())
     {
-        if (!mmex::formatCurrencyToDouble(bal, pAccount->initialBalance_))
+        if (! CurrencyFormatter::formatCurrencyToDouble(bal, pAccount->initialBalance_))
         {
             mmShowErrorMessageInvalid(this, wxString::Format(_("Initial Balance: %s"), bal));
             return;

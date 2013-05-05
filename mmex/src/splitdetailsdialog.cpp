@@ -13,6 +13,7 @@
 #include "splitdetailsdialog.h"
 #include "categdialog.h"
 #include "util.h"
+#include "mmCurrencyFormatter.h"
 #include "constants.h"
 
 #include <wx/valnum.h>
@@ -85,7 +86,7 @@ bool SplitDetailDialog::Create( wxWindow* parent, wxWindowID id,
     Centre();
 
     wxString dispAmount;
-    mmex::formatDoubleToCurrencyEdit(*m_amount_, dispAmount);
+     CurrencyFormatter::formatDoubleToCurrencyEdit(*m_amount_, dispAmount);
     textAmount_->SetValue(dispAmount);
 
     return TRUE;
@@ -187,7 +188,7 @@ void SplitDetailDialog::OnButtonOKClick( wxCommandEvent& /*event*/ )
 
     wxString amountStr = textAmount_->GetValue().Trim();
     double amount;
-    if (!mmex::formatCurrencyToDouble(amountStr, amount) || (amount < 0.0))
+    if (! CurrencyFormatter::formatCurrencyToDouble(amountStr, amount) || (amount < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
         textAmount_->SetFocus();

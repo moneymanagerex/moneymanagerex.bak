@@ -98,11 +98,11 @@ wxString mmReportSummaryStocks::getHTMLText()
             gain_loss_sum_total += th.gainLoss_ * base_conv_rate;
 
             wxString commString;
-            mmex::formatDoubleToCurrencyEdit(commission, commString);
-            mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
-            mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-            mmex::formatDoubleToCurrencyEdit(th.purchasePrice_, th.pPriceStr_);
-            mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(commission, commString);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(th.purchasePrice_, th.pPriceStr_);
+             CurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
 
             hb.startTableRow();
             hb.addTableCell(th.shareName_, false, true);
@@ -133,8 +133,8 @@ wxString mmReportSummaryStocks::getHTMLText()
         wxASSERT(pCurrencyPtr);
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-        mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
-        mmex::formatDoubleToCurrency(gain_loss_sum, gain_loss_sum_str);
+         CurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+         CurrencyFormatter::formatDoubleToCurrency(gain_loss_sum, gain_loss_sum_str);
 
         hb.addRowSeparator(9);
         hb.addTotalRow(_("Total:"), 8, gain_loss_sum_str);
@@ -143,8 +143,8 @@ wxString mmReportSummaryStocks::getHTMLText()
 
     core_->currencyList_.LoadBaseCurrencySettings();
     wxString sStockBalance, sGainLossTotal;
-    mmex::formatDoubleToCurrency(gain_loss_sum_total, sGainLossTotal);
-    mmex::formatDoubleToCurrency(stockBalance, sStockBalance);
+     CurrencyFormatter::formatDoubleToCurrency(gain_loss_sum_total, sGainLossTotal);
+     CurrencyFormatter::formatDoubleToCurrency(stockBalance, sStockBalance);
 
     hb.addRowSeparator(9);
     hb.addTotalRow(_("Grand Total:"), 8, sGainLossTotal);

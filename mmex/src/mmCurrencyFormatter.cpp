@@ -19,7 +19,7 @@
 #include "mmCurrencyFormatter.h"
 #include "constants.h"
 #include "singleton.h"
-#include "util.h"
+#include <wx/numformatter.h>
 
 //----------------------------------------------------------------------------
 const wxChar g_def_decimal_point = '.';
@@ -78,4 +78,26 @@ void CurrencyFormatter::loadSettings(const mmCurrency &cur)
 CurrencyFormatter& CurrencyFormatter::instance()
 {
     return Singleton<CurrencyFormatter>::instance();
+}
+
+void CurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata)
+{
+    rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
+    //TODO: Remove it with new wx release
+    rdata.Replace("-,", "-");
+}
+
+void CurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
+{
+    const CurrencyFormatter &fmt = CurrencyFormatter::instance();
+    rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
+    rdata.Prepend(fmt.getPrefix());
+    rdata.Append(fmt.getSuffix());
+    //TODO: Remove it with new wx release
+    rdata.Replace("-,", "-");
+}
+
+bool CurrencyFormatter::formatCurrencyToDouble(const wxString& str, double& val)
+{
+    return wxNumberFormatter::FromString(str , &val);
 }
