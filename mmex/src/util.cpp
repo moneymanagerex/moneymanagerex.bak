@@ -280,11 +280,6 @@ bool mmParseDisplayStringToDate(wxDateTime& date, wxString sDate, wxString sDate
     return bResult;
 }
 
-wxString mmGetDateForStorage(const wxDateTime &dt)
-{
-    return dt.FormatISODate();
-}
-
 wxDateTime mmGetStorageStringAsDate(const wxString& str)
 {
     wxDateTime dt = wxDateTime::Now();

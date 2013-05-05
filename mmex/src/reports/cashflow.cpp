@@ -181,8 +181,7 @@ wxString mmReportCashFlow::getHTMLText()
 
     while (q1.NextRow())
     {
-        wxString nextOccurrString = q1.GetString("NEXTOCCURRENCEDATE");
-        wxDateTime nextOccurDate = mmGetStorageStringAsDate(nextOccurrString);
+        wxDateTime nextOccurDate = q1.GetDateTime("NEXTOCCURRENCEDATE");
            
         int repeats             = q1.GetInt("REPEATS");
         int numRepeats          = q1.GetInt("NUMOCCURRENCES");

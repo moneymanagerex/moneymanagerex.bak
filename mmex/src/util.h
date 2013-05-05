@@ -87,7 +87,6 @@ void mmShowErrorMessage( wxWindow *parent, const wxString &message, const wxStri
 
 wxString mmSelectLanguage(wxWindow *parent, std::shared_ptr<MMEX_IniSettings> pIniSettings, bool forced_show_dlg, bool save_setting = true);
 
-wxString mmGetDateForStorage( const wxDateTime &dt );
 wxDateTime mmGetStorageStringAsDate( const wxString& str );
 wxString mmGetDateForDisplay( const wxDateTime &dt );
 bool mmParseDisplayStringToDate(wxDateTime& date, const wxString sDate, wxString sDateMask );

@@ -150,12 +150,11 @@ void mmBDDialog::dataToControls()
         if (statusString == "") statusString = "N";
         choiceStatus_->SetSelection(wxString("NRVFD").Find(statusString));
 
-        wxString nextOccurrString = q1.GetString("NEXTOCCURRENCEDATE");
         wxString numRepeatStr  = q1.GetString("NUMOCCURRENCES");
         if (numRepeatStr != "-1")
             textNumRepeats_->SetValue(numRepeatStr);
 
-        wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
+        wxDateTime dtno =  q1.GetDateTime("NEXTOCCURRENCEDATE");
         wxString dtnostr = mmGetDateForDisplay(dtno);
         dpcbd_->SetValue(dtno);
         dpc_->SetValue(dtno);
