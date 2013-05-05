@@ -20,7 +20,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "categovertimeperf.h"
 #include "../htmlbuilder.h"
 #include "../util.h"
-#include "../mmCurrencyFormatter.h"
 //----------------------------------------------------------------------------
 
 namespace
@@ -92,12 +91,10 @@ void printRow
         double month_amount = core->bTransactionList_.getAmountForCategory(cat_id, subcat_id, false,
             dtBegin, dtEnd, false, false, mmIniOptions::instance().ignoreFutureTransactions_
         );
-        wxString month_amount_str;
 
         if (month_amount != 0)
         {
             period_amount_sum += month_amount;
-             CurrencyFormatter::formatDoubleToCurrencyEdit(month_amount, month_amount_str);
 
             periods_t::const_iterator::difference_type j = std::distance(periods.begin(), i);
             columns_totals_t::reference r = columns_totals[j];
@@ -105,16 +102,14 @@ void printRow
             (month_amount < 0 ? r.second : r.first) += month_amount;
         }
 
-        hb.addTableCell(month_amount_str, true);
+		hb.addMoneyCell(month_amount);
     }
 
     wxASSERT(fabs(period_amount_sum - period_amount) < 0.01);
 
     // summary of period for category\subcategory
 
-    wxString period_amount_str;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(period_amount, period_amount_str);
-    hb.addTableCell(period_amount_str, true);
+	hb.addMoneyCell(period_amount);
 
     hb.endTableRow();
 }
@@ -139,13 +134,7 @@ void printColumnsTotals
                      what == OVERALL  ? (i->first + i->second) :
                      0;
 
-        wxString str;
-
-        if (val != 0) {
-             CurrencyFormatter::formatDoubleToCurrencyEdit(val, str);
-        }
-
-        hb.addTableCell(str, true, false, true);
+		hb.addMoneyCell(val);
     }
 
     hb.addTableHeaderCell(wxGetEmptyString());
