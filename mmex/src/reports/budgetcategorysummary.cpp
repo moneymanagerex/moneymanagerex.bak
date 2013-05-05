@@ -252,15 +252,15 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     hb.startTable("50%");
 //    hb.addRowSeparator(3);
     hb.startTableRow();
-	hb.addTableCell(estIncome); 
-	hb.addTableCell(actIncome);
-	hb.addTableCell(difIncome);
+	hb.addMoneyCell(estIncome); 
+	hb.addMoneyCell(actIncome);
+	hb.addMoneyCell(difIncome);
     hb.endTableRow();
 
     hb.startTableRow();
-	hb.addTableCell(estExpenses);
-	hb.addTableCell(actExpenses);
-	hb.addTableCell(difExpense);
+	hb.addMoneyCell(estExpenses);
+	hb.addMoneyCell(actExpenses);
+	hb.addMoneyCell(difExpense);
     hb.endTableRow();
     hb.addRowSeparator(3);
     hb.endTable();
