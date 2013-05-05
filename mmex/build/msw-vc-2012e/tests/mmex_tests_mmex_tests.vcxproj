@@ -266,6 +266,8 @@
     <ClCompile Include="..\..\..\src\db\transaction.cpp" />
     <ClCompile Include="..\..\..\src\db\transactionbill.cpp" />
     <ClCompile Include="..\..\..\src\lua_interface.cpp" />
+    <ClCompile Include="..\..\..\src\mmCurrencyFormatter.cpp" />
+    <ClCompile Include="..\..\..\src\mmOption.cpp" />
     <ClCompile Include="..\..\..\src\qif_export.cpp" />
     <ClCompile Include="..\..\..\src\qif_import.cpp" />
     <ClCompile Include="..\..\..\src\fileviewerdialog.cpp" />
@@ -370,6 +372,7 @@
     <ClInclude Include="..\..\..\src\mmcheckingpanel.h" />
     <ClInclude Include="..\..\..\src\mmcoredb.h" />
     <ClInclude Include="..\..\..\src\mmcurrency.h" />
+    <ClInclude Include="..\..\..\src\mmCurrencyFormatter.h" />
     <ClInclude Include="..\..\..\src\mmex.h" />
     <ClInclude Include="..\..\..\src\mmex_settings.h" />
     <ClInclude Include="..\..\..\src\mmgraphgenerator.h" />
@@ -378,6 +381,7 @@
     <ClInclude Include="..\..\..\src\mmgraphtopcategories.h" />
     <ClInclude Include="..\..\..\src\mmhelppanel.h" />
     <ClInclude Include="..\..\..\src\mmhomepagepanel.h" />
+    <ClInclude Include="..\..\..\src\mmOption.h" />
     <ClInclude Include="..\..\..\src\mmpanelbase.h" />
     <ClInclude Include="..\..\..\src\mmpayee.h" />
     <ClInclude Include="..\..\..\src\mmreportspanel.h" />
@@ -402,6 +406,7 @@
     <ClInclude Include="..\..\..\src\reports\incexpenses.h" />
     <ClInclude Include="..\..\..\src\reports\incexpensesfinancialperiod.h" />
     <ClInclude Include="..\..\..\src\reports\mmDateRange.h" />
+    <ClInclude Include="..\..\..\src\reports\mmRepeat.h" />
     <ClInclude Include="..\..\..\src\reports\payee.h" />
     <ClInclude Include="..\..\..\src\reports\summary.h" />
     <ClInclude Include="..\..\..\src\reports\summaryassets.h" />
