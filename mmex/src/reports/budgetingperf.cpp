@@ -2,7 +2,6 @@
 #include "../budgetingpanel.h"
 #include "../htmlbuilder.h"
 #include "../mmex.h"
-#include "../mmCurrencyFormatter.h"
 
 mmReportBudgetingPerformance::mmReportBudgetingPerformance(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
 : mmReportBudget(mainFrame, core)
@@ -20,9 +19,7 @@ void mmReportBudgetingPerformance::DisplayEstimateMonths(mmHTMLBuilder& hb, mmBu
             month = month - 12;
         }
         // Set the estimate for each month
-        wxString monthEstimateStr;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(budgetEntry.estimated_ / 12, monthEstimateStr);
-		hb.addTableCell(monthEstimateStr, true, true);
+		hb.addMoneyCell(budgetEntry.estimated_ / 12);
     }
 }
 
@@ -55,16 +52,14 @@ void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudg
         double actualMonthVal = core_->bTransactionList_.getAmountForCategory(budgetEntry.categID_, budgetEntry.subcategID_,
             false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
-        wxString actualMonthValStr;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
 
         if(actualMonthVal < budgetEntry.estimated_)
 		{
-            hb.addTableCell(actualMonthValStr, true, true, true, "#ff0000");
+			hb.addMoneyCell(actualMonthVal, "RED");
         }
         else
         {
-            hb.addTableCell(actualMonthValStr, true);
+			hb.addMoneyCell(actualMonthVal);
         }
     }
 }
@@ -133,8 +128,6 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         // Set the estimated amount for the year
         setBudgetYearlyEstimate(th);
         double totalEstimated_ = th.estimated_;
-        wxString totalEstimatedStr_;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
 
         // set the actual amount for the year
         bool transferAsDeposit = true;
@@ -145,11 +138,6 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,
             yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
-
-        wxString displayAmtString;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
-        th.amtString_ = displayAmtString;
 
         // estimated stuff
         if ((totalEstimated_ != 0.0) || (th.actual_ != 0.0))
@@ -160,7 +148,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             
             DisplayEstimateMonths(hb, th, startMonth);
            
-            hb.addTableCell(totalEstimatedStr_, true, true, true);
+			hb.addMoneyCell(totalEstimated_);
             hb.addTableCell("-");
             hb.endTableRow();
 
@@ -174,11 +162,11 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             // year end
 			if(th.actual_ < totalEstimated_)
 			{
-				hb.addTableCell(th.actualStr_, true, true, true, "#ff0000");
+				hb.addMoneyCell(th.actual_, "RED");
 			}
 			else
 			{
-				hb.addTableCell(th.actualStr_, true, false, true);
+				hb.addMoneyCell(th.actual_);
 			}
 
             if (((totalEstimated_ < 0) && (th.actual_ < 0)) ||
@@ -214,7 +202,6 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             // Set the estimated amount for the year
             setBudgetYearlyEstimate(thsub);
             totalEstimated_ = thsub.estimated_;
-             CurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
 
             // set the actual abount for the year
             transferAsDeposit = true;
@@ -225,11 +212,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
                 yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
             );
-             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
             
-             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
-            thsub.amtString_ = displayAmtString;
-
             if ((totalEstimated_ != 0.0) || (thsub.actual_ != 0.0))
             {
                 hb.startTableRow();
@@ -238,7 +221,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
 			
                 DisplayEstimateMonths(hb, thsub, startMonth);
 
-                hb.addTableCell(totalEstimatedStr_, true, true, true);
+				hb.addMoneyCell(totalEstimated_);
                 hb.addTableCell("-");
                 hb.endTableRow();
 
@@ -251,11 +234,11 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                 // year end
                 if(thsub.actual_ < totalEstimated_)
                 {
-                    hb.addTableCell(thsub.actualStr_, true, true, true, "#ff0000");
+					hb.addMoneyCell(thsub.actual_, "RED");
                 }
                 else
                 {
-                    hb.addTableCell(thsub.actualStr_, true, false, true);
+					hb.addMoneyCell(thsub.actual_);
                 }
 
                 if (((totalEstimated_ < 0) && (thsub.actual_ < 0)) ||
