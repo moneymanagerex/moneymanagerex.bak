@@ -1,4 +1,4 @@
-/*******************************************************
+﻿/*******************************************************
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -192,10 +192,11 @@ void mmCurrencyList::UpdateCurrency(std::shared_ptr<mmCurrency> pCurrency)
     st.Finalize();
 }
 
-void mmCurrencyList::DeleteCurrency(int currencyID)
+bool mmCurrencyList::DeleteCurrency(int currencyID)
 {
     wxASSERT(currencyID > 0);
 
+    bool result = false;
     if (mmDBWrapper::deleteCurrency(db_.get(), currencyID))
     {
         std::vector <std::shared_ptr<mmCurrency> >::iterator Iter;
@@ -204,10 +205,12 @@ void mmCurrencyList::DeleteCurrency(int currencyID)
             if ((*Iter)->currencyID_ == currencyID)
             {
                 currencies_.erase(Iter);
+                result = true;
                 break;
             }
         }
     }
+    return result;
 }
 
 int mmCurrencyList::getCurrencyID(const wxString& currencyName, bool symbol) const
@@ -225,11 +228,11 @@ int mmCurrencyList::getCurrencyID(const wxString& currencyName, bool symbol) con
 
 wxString mmCurrencyList::getCurrencyName(int currencyID, bool symbol) const
 {
-    for(const_iterator it = currencies_.begin(); it != currencies_.end(); ++ it)
+    for (const auto &currency: currencies_)
     {
-        if ((*it)->currencyID_ == currencyID)
+        if (currency->currencyID_ == currencyID)
         {
-            return symbol ? (*it)->currencySymbol_ : (*it)->currencyName_;
+            return symbol ? currency->currencySymbol_ : currency->currencyName_;
         }
     }
 
@@ -238,10 +241,10 @@ wxString mmCurrencyList::getCurrencyName(int currencyID, bool symbol) const
 
 std::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyID) const
 {
-    for (size_t i = 0; i < currencies_.size(); ++i)
+    for (const auto &currency: currencies_)
     {
-        if (currencies_[i]->currencyID_ == currencyID)
-            return currencies_[i];
+        if (currency->currencyID_ == currencyID)
+            return currency;
     }
 
     wxASSERT(false);
@@ -250,17 +253,17 @@ std::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyID)
 
 std::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(const wxString& currencyName, bool symbol) const
 {
-    for (size_t i = 0; i < currencies_.size(); ++i)
+    for (const auto &currency: currencies_)
     {
         if (symbol)
         {
-            if (currencies_[i]->currencySymbol_ == currencyName)
-            return currencies_[i];
+            if (currency->currencySymbol_ == currencyName)
+            return currency;
         }
         else
         {
-            if (currencies_[i]->currencyName_ == currencyName)
-            return currencies_[i];
+            if (currency->currencyName_ == currencyName)
+            return currency;
         }
     }
 
@@ -293,10 +296,9 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
     wxString base_symbol = getCurrencySharedPtr(currencyID)->currencySymbol_;
 
     wxString site;
-    for (int idx = 0; idx < (int)currencies_.size(); idx++)
+    for (const auto &currency : currencies_)
     {
-        const wxString symbol = currencies_[idx]->currencySymbol_.Upper();
-
+        const wxString symbol = currency->currencySymbol_.Upper();
         site << symbol << base_symbol << "=X+";
     }
     if (site.Right(1).Contains("+")) site.RemoveLast(1);
@@ -341,9 +343,9 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
 
     db_->Begin();
 
-    for (int idx = 0; idx < (int)currencies_.size(); idx++)
+    for (const auto &currency : currencies_)
     {
-        const wxString currency_symbol = currencies_[idx]->currencySymbol_.Upper();
+        const wxString currency_symbol = currency->currencySymbol_.Upper();
         if (!currency_symbol.IsEmpty())
         {
             wxString currency_symbols_pair = currency_symbol + base_symbol + "=X";
@@ -353,15 +355,15 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
             double new_rate = data.first;
             if (base_symbol == currency_symbol) new_rate = 1;
 
-            double old_rate = currencies_[idx]->baseConv_;
+            double old_rate = currency->baseConv_;
             // CurrencyFormatter::formatDoubleToCurrencyEdit(old_rate, valueStr);
             // CurrencyFormatter::formatDoubleToCurrencyEdit(new_rate, newValueStr);
             valueStr = wxString::Format("%0.4f", old_rate);
             newValueStr = wxString::Format("%0.4f", new_rate);
             msg << wxString::Format(_("%s\t: %s -> %s\n"),
                 currency_symbol, valueStr, newValueStr);
-            currencies_[idx]->baseConv_ = new_rate;
-            UpdateCurrency(currencies_[idx]);
+            currency->baseConv_ = new_rate;
+            UpdateCurrency(currency);
         }
     }
 

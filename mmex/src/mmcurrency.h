@@ -60,7 +60,7 @@ public:
 
     /* Currency Functions */
     int AddCurrency(std::shared_ptr<mmCurrency> pCurrency);
-    void DeleteCurrency(int currencyID);
+    bool DeleteCurrency(int currencyID);
     void UpdateCurrency(std::shared_ptr<mmCurrency> pCurrency);
     int getCurrencyID(const wxString& currencyName, bool symbol = false) const;
     wxString getCurrencyName(int currencyID, bool symbol = false) const;
