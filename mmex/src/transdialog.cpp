@@ -614,8 +614,7 @@ void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 
 void mmTransDialog::OnSpin(wxSpinEvent& event)
 {
-    wxString dateStr = dpc_->GetValue().FormatISODate();
-    wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+    wxDateTime date = dpc_->GetValue();
     int value = event.GetPosition();
 
     date = date.Add(wxDateSpan::Days(value));

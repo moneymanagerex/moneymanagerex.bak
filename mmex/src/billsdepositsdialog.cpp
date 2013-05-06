@@ -1214,9 +1214,7 @@ void mmBDDialog::SetNewDate(wxDatePickerCtrl* dpc, bool forward)
     int day = -1;
     if (forward) day = 1;
 
-    wxString dateStr = dpc->GetValue().FormatISODate();
-    wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
-    date = date.Add(wxDateSpan::Days(day));
+	wxDateTime date = dpc->GetValue().Add(wxDateSpan::Days(day));
 
     dpc_->SetValue( date );
     dpcbd_->SetValue( date );
@@ -1302,8 +1300,7 @@ void mmBDDialog::OnsetNextRepeatDate(wxCommandEvent& /*event*/)
     if (valueStr.IsNumber())
     {
         int value = wxAtoi(valueStr);
-        wxString dateStr = dpcbd_->GetValue().FormatISODate();
-        wxDateTime  date = mmGetStorageStringAsDate(dateStr);
+        wxDateTime  date = dpcbd_->GetValue();
 
         int repeats = itemRepeats_->GetSelection();
         if (repeats == 11)
