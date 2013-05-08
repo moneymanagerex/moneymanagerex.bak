@@ -8,13 +8,13 @@
 mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date_range)
 : mmPrintableBase(core)
 , date_range_(date_range)
-, title_(_("Income vs Expenses"))
+, title_(_("Income vs Expenses: %s"))
 {
 }
 
 wxString mmReportIncomeExpenses::title() const
 {
-    return this->title_ + " - " + date_range_->title();
+    return wxString::Format(this->title_, date_range_->title());
 }
 
 wxString mmReportIncomeExpenses::getHTMLText()
@@ -22,18 +22,24 @@ wxString mmReportIncomeExpenses::getHTMLText()
     mmHTMLBuilder hb;
     hb.init();
     hb.addHeader(2, this->title());
-
     hb.DisplayDateHeading(date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
-
     hb.addLineBreak();
-
     hb.startCenter();
 
+    std::map<int, std::pair<double, double> > incomeExpensesStats;
+    double expenses = 0.0, income = 0.0;
+    core_->bTransactionList_.getExpensesIncomeStats(core_
+        , incomeExpensesStats
+        , date_range_
+        , mmIniOptions::instance().ignoreFutureTransactions_
+        , false);                  
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    double expenses = 0.0;
-    double income = 0.0;
-    core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, date_range_->is_with_date(), date_range_->start_date(), date_range_->end_date(), mmIniOptions::instance().ignoreFutureTransactions_);
+    for (const auto &stats: incomeExpensesStats)
+    {
+        income = stats.second.first;
+        expenses = stats.second.second;
+    }
 
     hb.startTable("75%");
     hb.addTableHeaderRow("", 2);
@@ -84,11 +90,11 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
     double total_expenses = 0.0;
     double total_income = 0.0;
     std::map<int, std::pair<double, double> > incomeExpensesStats;
-    mmDateRange *date_range = new mmLast12Months();
+    date_range_ = new mmLast12Months();
 
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(2, wxString::Format(_("Income vs Expenses: %s"), date_range->title()) );
+    hb.addHeader(2, wxString::Format(_("Income vs Expenses: %s"), date_range_->title()) );
     hb.addDateNow();
 
     hb.startCenter();
@@ -105,7 +111,7 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
 
     core_->bTransactionList_.getExpensesIncomeStats(core_
         , incomeExpensesStats
-        , date_range
+        , date_range_
         , mmIniOptions::instance().ignoreFutureTransactions_);                  
     core_->currencyList_.LoadBaseCurrencySettings();
 
