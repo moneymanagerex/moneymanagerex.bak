@@ -14,7 +14,7 @@ mmReportIncomeExpenses::mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date
 
 wxString mmReportIncomeExpenses::title() const
 {
-	return this->title_ + " - " + date_range_->title();
+    return this->title_ + " - " + date_range_->title();
 }
 
 wxString mmReportIncomeExpenses::getHTMLText()
@@ -27,7 +27,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
     hb.addLineBreak();
 
-	hb.startCenter();
+    hb.startCenter();
 
     core_->currencyList_.LoadBaseCurrencySettings();
 
@@ -35,33 +35,33 @@ wxString mmReportIncomeExpenses::getHTMLText()
     double income = 0.0;
     core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, date_range_->is_with_date(), date_range_->start_date(), date_range_->end_date(), mmIniOptions::instance().ignoreFutureTransactions_);
 
-	hb.startTable("75%");
-	hb.addTableHeaderRow("", 2);
-	hb.startTableRow();
-	hb.startTableCell();
+    hb.startTable("75%");
+    hb.addTableHeaderRow("", 2);
+    hb.startTableRow();
+    hb.startTableCell();
 
     mmGraphIncExpensesMonth gg;
     gg.init(income, expenses);
     gg.Generate(_("Income vs Expenses"));
     hb.addImage(gg.getOutputFileName());
 
-	hb.endTableCell();
-	hb.startTableCell();
+    hb.endTableCell();
+    hb.startTableCell();
 
-	hb.startTable("95%");
-	hb.startTableRow();
-	hb.addTableHeaderCell(_("Type"));
-	hb.addTableHeaderCell(_("Amount"), true);
-	hb.endTableRow();
+    hb.startTable("95%");
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Type"));
+    hb.addTableHeaderCell(_("Amount"), true);
+    hb.endTableRow();
 
-	hb.startTableRow();
-	hb.addTableCell(_("Income:"), false, true);
-	hb.addMoneyCell(income);
-	hb.endTableRow();
+    hb.startTableRow();
+    hb.addTableCell(_("Income:"), false, true);
+    hb.addMoneyCell(income);
+    hb.endTableRow();
 
-	hb.startTableRow();
-	hb.addTableCell(_("Expenses:"), false, true);
-	hb.addMoneyCell(expenses);
+    hb.startTableRow();
+    hb.addTableCell(_("Expenses:"), false, true);
+    hb.addMoneyCell(expenses);
     hb.endTableRow();
 
     hb.addRowSeparator(2);
@@ -69,34 +69,31 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
     hb.endTable();
 
-	hb.endTableCell();
-	hb.endTableRow();
-	hb.addRowSeparator(2);
+    hb.endTableCell();
+    hb.endTableRow();
+    hb.addRowSeparator(2);
     hb.endTable();
 
     hb.endCenter();
-
     hb.end();
     return hb.getHTMLText();
 }
 
 wxString mmReportIncomeExpensesAllTime::getHTMLText()
 {
-    int year = wxDateTime::Now().GetYear();
-    core_->currencyList_.LoadBaseCurrencySettings();
-
-    wxDateTime yearBegin(1, wxDateTime::Jan, year);
-    wxDateTime yearEnd(31, wxDateTime::Dec, year);
-
-    wxString yearStr = wxString::Format(_("Income vs Expenses for Year: %d"), year);
+    double total_expenses = 0.0;
+    double total_income = 0.0;
+    std::map<int, std::pair<double, double> > incomeExpensesStats;
+    mmDateRange *date_range = new mmLast12Months();
 
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(2, yearStr );
+    hb.addHeader(2, wxString::Format(_("Income vs Expenses: %s"), date_range->title()) );
     hb.addDateNow();
 
     hb.startCenter();
 
+    hb.addHorizontalLine();
     hb.startTable("75%");
     hb.startTableRow();
     hb.addTableHeaderCell(_("Year"));
@@ -106,48 +103,30 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
     hb.addTableHeaderCell(_("Difference"), true);
     hb.endTableRow();
 
-    double income = 0.0;
-    double expenses = 0.0;
-    double balance = 0.0;
-        
-    for (int yidx = 0; yidx < 12; yidx++)
+    core_->bTransactionList_.getExpensesIncomeStats(core_
+        , incomeExpensesStats
+        , date_range
+        , mmIniOptions::instance().ignoreFutureTransactions_);                  
+    core_->currencyList_.LoadBaseCurrencySettings();
+
+    for (const auto &stats: incomeExpensesStats)
     {
-        wxDateTime dtBegin = wxDateTime(yearBegin).Add(wxDateSpan::Months(yidx));
-        wxDateTime dtEnd = dtBegin.GetLastMonthDay();
+        total_expenses += stats.second.first;
+        total_income += stats.second.second;
 
-        yearStr = wxString()<< dtBegin.GetYear();
-        wxString monName = mmGetNiceMonthName(dtBegin.GetMonth());
-            
-        bool ignoreDate = false;
-        income = 0.0;
-        expenses = 0.0;
-        core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);                  
-
-		hb.addMoneyCell(income);
-		hb.addMoneyCell(expenses);
-		hb.addMoneyCell(income - expenses);
-
-
+        hb.startTableRow();
+        hb.addTableCell(wxString()<< (int)(stats.first/100));
+        hb.addTableCell(mmGetNiceMonthName(stats.first%100));
+        hb.addMoneyCell(stats.second.first);
+        hb.addMoneyCell(stats.second.second);
+        hb.addMoneyCell(stats.second.first - stats.second.second);
         hb.endTableRow();
     }
 
-    wxDateTime today = wxDateTime::Now();
-    wxDateTime prevYearEnd = wxDateTime(today);
-    prevYearEnd.SetYear(year);
-    prevYearEnd.SetMonth(wxDateTime::Dec);
-    prevYearEnd.SetDay(31);
-        
-    wxDateTime dtEnd = prevYearEnd;
-    wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-        
-    expenses = 0.0;
-    income = 0.0;
-    core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
-
     std::vector<double> data;
-    data.push_back(income);
-    data.push_back(expenses);
-    data.push_back(balance);
+    data.push_back(total_income);
+    data.push_back(total_expenses);
+    data.push_back(total_income - total_expenses);
 
     hb.addRowSeparator(5);
     hb.addTotalRow(_("Total:"), 5, data);
