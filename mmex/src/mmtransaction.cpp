@@ -713,7 +713,8 @@ int mmBankTransactionList::UpdateAllTransactionsForPayee(int payeeID)
 
 void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
     , std::map<int, std::pair<double, double> > &incomeExpensesStats
-    , mmDateRange* date_range, bool ignoreFuture) const
+    , mmDateRange* date_range, bool ignoreFuture
+    , bool group_by_month) const
 {
     //Initialization
     //Get base currency rates for all accounts
@@ -732,10 +733,11 @@ void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
     incomeExpensesPair.first = 0;
     incomeExpensesPair.second = 0;
     wxDateTime start_date = wxDateTime(date_range->end_date()).SetDay(1);
-    for (int m = 0; m < 12; m++)
+    int i = group_by_month ? 12 : 1;
+    for (int m = 0; m < i; m++)
     {
         wxDateTime d = wxDateTime(start_date).Subtract(wxDateSpan::Months(m));
-        int idx = d.GetYear()*100 + (int)d.GetMonth();
+        int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
         incomeExpensesStats[idx] = incomeExpensesPair;
     }
     //Calculations
@@ -756,7 +758,7 @@ void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
         convRate = acc_conv_rates.find(pBankTransaction->accountID_)->second;
 
         wxDateTime d = pBankTransaction->date_;
-        int idx = d.GetYear()*100 + (int)d.GetMonth();
+        int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
         std::pair<double, double>& pIncomeExpenses = incomeExpensesStats.find(idx)->second;
         
         if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
@@ -770,6 +772,7 @@ void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
     }
 }
 
+//TODO: Deprecated function. Replace it with getExpensesIncomeStats
 void mmBankTransactionList::getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses, double& income,
     bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture) const
 {

@@ -175,7 +175,7 @@ public:
     void getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses
         , double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
     void getExpensesIncomeStats(const mmCoreDB* core, std::map<int, std::pair<double, double> > &incomeExpensesStats
-        , mmDateRange* date_range, bool ignoreFuture) const;
+        , mmDateRange* date_range, bool ignoreFuture, bool group_by_month = true) const;
     // The setting asDeposit is only valid if evaluateTransfer is true
     double getAmountForCategory(int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool evaluateTransfer = false, bool asDeposit = false, bool ignoreFuture = false) const;
     double getAmountForPayee(int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
