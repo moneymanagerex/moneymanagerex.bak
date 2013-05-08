@@ -60,6 +60,11 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     // begin of table
 
+    std::map<int, std::map<int, std::map<int, double> > > categoryStats;
+    core_->bTransactionList_.getCategoryStats(core_
+        , categoryStats
+        , date_range_
+        , mmIniOptions::instance().ignoreFutureTransactions_);   
     core_->currencyList_.LoadBaseCurrencySettings();
 
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_CATEGORIES);
@@ -75,10 +80,11 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
             hb.startTableRow();
             hb.addTableCell(core_->categoryList_.GetFullCategoryString(categID, -1));
             overall = 0;
-            for (int i = 0; i < MONTHS_IN_PERIOD; i++)
+            for (const auto &i : categoryStats[categID][-1])
             {
-                hb.addMoneyCell(categID);
-                overall += categID; //fake amount
+                double value = i.second;
+                hb.addMoneyCell(value);
+                overall += value;
             }
             hb.addMoneyCell(overall);
             hb.endTableRow();
@@ -87,10 +93,11 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
         hb.startTableRow();
         hb.addTableCell(core_->categoryList_.GetFullCategoryString(categID, subcategID));
         overall = 0;
-        for (int i = 0; i < 12; i++)
+        for (const auto &i : categoryStats[categID][subcategID])
         {
-            hb.addMoneyCell(subcategID*(i+1));
-            overall += subcategID*(i+1); //fake amount
+            double value = i.second;
+            hb.addMoneyCell(value);
+            overall += value;
         }
         hb.addMoneyCell(overall);
         hb.endTableRow();

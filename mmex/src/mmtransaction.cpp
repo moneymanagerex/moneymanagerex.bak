@@ -771,6 +771,77 @@ void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
     }
 }
 
+void mmBankTransactionList::getCategoryStats(const mmCoreDB* core
+    , std::map<int, std::map<int, std::map<int, double> > > &categoryStats
+    , mmDateRange* date_range, bool ignoreFuture
+    , bool group_by_month) const
+{
+    //Initialization
+    //Get base currency rates for all accounts
+    std::map<int, double> acc_conv_rates;
+    double convRate = 1;
+    for (const auto& account: core_->accountList_.accounts_)
+    {
+        std::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencySharedPtr(account->id_);
+        wxASSERT(pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        double rate = pCurrencyPtr->baseConv_;
+        acc_conv_rates[account->id_] = rate;
+    }
+    //Set std::map with zerros
+    double value = 0;
+    for (const auto& category: core_->categoryList_.entries_)
+    {
+        for (int i = -1; i<1; i++)
+        {
+            for (const auto & sub_category: category->children_)
+            {
+                int subcategID = (i == 0) ? sub_category->categID_ : -1;
+                wxDateTime start_date = wxDateTime(date_range->end_date()).SetDay(1);
+                int i = group_by_month ? 12 : 1;
+                for (int m = 0; m < i; m++)
+                {
+                    wxDateTime d = wxDateTime(start_date).Subtract(wxDateSpan::Months(m));
+                    int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
+                    categoryStats[category->categID_][subcategID][idx] = value;
+                }
+                if (i == -1) break;
+            }
+        }
+    }
+    //Calculations
+    for (const auto& pBankTransaction : transactions_)
+    {
+        if (pBankTransaction->status_ == "V") continue; // skip
+
+        if (ignoreFuture)
+        {
+            if (pBankTransaction->date_.GetDateOnly().IsLaterThan(wxDateTime::Now().GetDateOnly()))
+                continue; //skip future dated transactions
+        }
+
+        if (!pBankTransaction->date_.IsBetween(date_range->start_date(), date_range->end_date()))
+            continue; //skip
+
+        // We got this far, get the currency conversion rate for this account
+        convRate = acc_conv_rates[pBankTransaction->accountID_];
+
+        wxDateTime d = pBankTransaction->date_;
+        int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
+        int categID = pBankTransaction->categID_;
+        int subcategID = pBankTransaction->subcategID_;
+        
+        if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
+            categoryStats[categID][subcategID][idx] += pBankTransaction->amt_ * convRate;
+        else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+            categoryStats[categID][subcategID][idx] -= pBankTransaction->amt_ * convRate;
+        else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+        {
+            categoryStats[categID][subcategID][idx] = 0;
+        }
+    }
+}
+
 void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int> > &stats, int start_year) const
 {
     //Initialization

@@ -32,8 +32,6 @@ public:
 protected:
     mmDateRange* date_range_;
     wxString title_;
-
-protected:
 	virtual wxString title() const;
 
 };
