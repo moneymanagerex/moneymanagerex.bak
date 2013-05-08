@@ -154,9 +154,9 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
 
 bool mmBankTransaction::operator < (const mmBankTransaction& tran) const
 {
-	if (this->date_ < tran.date_) return true; else if (this->date_ > tran.date_) return false;
-	if (this->accountID_ < tran.accountID_) return true; else if (this->accountID_ > tran.accountID_) return false;
-	return this->transactionID_ < tran.transactionID_;
+    if (this->date_ < tran.date_) return true; else if (this->date_ > tran.date_) return false;
+    if (this->accountID_ < tran.accountID_) return true; else if (this->accountID_ > tran.accountID_) return false;
+    return this->transactionID_ < tran.transactionID_;
 }
 
 void mmBankTransaction::updateAllData(mmCoreDB* core,
@@ -754,37 +754,32 @@ void mmBankTransactionList::getExpensesIncome(const mmCoreDB* core, int accountI
     }
 }
 
-void mmBankTransactionList::getTransactionStats(int accountID, int& number,
-    bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture) const
+void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int> > &stats, int start_year) const
 {
-    for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
+    //Initialization
+    for (int i = 1; i < 13; i++)
     {
-        const std::shared_ptr<mmBankTransaction> pBankTransaction = *i;
-
-        if (pBankTransaction)
+        std::map<int, int> month_stat; 
+        for (int y = start_year; y <= wxDateTime::Now().GetYear(); y++)
         {
-            if (accountID != -1)
-            {
-                if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
-                    continue; // skip
-            }
-            if (pBankTransaction->status_ == "V")
-            {
-                continue; // skip
-            }
-            if (ignoreFuture)
-            {
-                if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
-                    continue; //skip future dated transactions
-            }
-            if (!ignoreDate)
-            {
-                if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                    continue; //skip
-            }
-
-            ++number;
+            month_stat[y] = 0;
         }
+        stats[i] = month_stat;
+    }
+    
+    //Calculations  
+    for (const auto &pBankTransaction : transactions_)
+    {
+        if (pBankTransaction->date_.GetYear() < start_year) continue;
+        if (pBankTransaction->status_ == "V") continue; // skip
+
+        if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now().SetMonth(wxDateTime::Dec).GetLastMonthDay().GetDateOnly()))
+                continue; //skip future dated transactions
+
+        int year = pBankTransaction->date_.GetYear();
+        int month = (int)pBankTransaction->date_.GetMonth()+1;
+        std::map <int, int> &temp = stats.find(month)->second;
+        temp.find(year)->second += 1;
     }
 }
 
