@@ -21,16 +21,20 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define _MM_EX_REPORTCATEGOVERTIME_H_
 //----------------------------------------------------------------------------
 #include "../reportbase.h"
-//----------------------------------------------------------------------------
-//class wxSQLite3Database;
+#include "mmDateRange.h"
 //----------------------------------------------------------------------------
 
 class mmReportCategoryOverTimePerformance : public mmPrintableBase 
 {
 public:
-    mmReportCategoryOverTimePerformance(mmCoreDB *core);
+    mmReportCategoryOverTimePerformance(mmCoreDB *core, mmDateRange* date_range = new mmLast12Months());
 
     wxString getHTMLText();
+
+protected:
+    mmDateRange* date_range_;
+    wxString title_;
+
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_REPORTCATEGOVERTIME_H_
