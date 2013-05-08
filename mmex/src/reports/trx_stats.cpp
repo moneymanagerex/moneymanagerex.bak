@@ -10,61 +10,56 @@ mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)
 
 wxString mmReportTransactionStats::getHTMLText()
 {
-    int yearsHist = 10; //How many years should show the report 
-    core_->currencyList_.LoadBaseCurrencySettings();
+    const int yearsHist = 10; //How many years should show the report 
 
-    wxString rangeStr = wxString::Format("%d - %d", year_ - yearsHist + 1, year_);
-
-    mmHTMLBuilder hb;
+	mmHTMLBuilder hb;
     hb.init();
-
-    hb.addHeader(2, _("Transaction Statistics for ") + rangeStr );
+    hb.addHeader(2, wxString::Format(_("Transaction Statistics for %i - %i")
+		, year_ - yearsHist + 1, year_ )
+	);
     hb.addDateNow();
-
-    wxDateTime yearBegin(1, wxDateTime::Jan, year_ - yearsHist);
-    wxDateTime yearEnd(31, wxDateTime::Dec, year_ - yearsHist);
-
     hb.startCenter();
     hb.startTable("50%");
+
+	std::map<int, int> grand_total;
+	std::map<int, std::map<int, int> > totals;
+    core_->bTransactionList_.getTransactionStats(totals, year_ - yearsHist +1);
+
     //Header 
-    // Month 2011 2010 2009.....
+    // Month 2014 2013 2012 2011 .....
     hb.startTableRow();
     hb.addTableHeaderCell(_("Month"));
-    for (int y = 1; y <= yearsHist; y++) 
+	for (const auto &y : totals.begin()->second) 
     {
-        hb.addTableHeaderCell(wxString::Format("%d", year_ - y + 1));
+		hb.addTableHeaderCell(wxString::Format("%i", y.first));
     }
     hb.endTableRow();
     //Table
-    std::map<int, int> grand_total;
-    for (int yidx = 0; yidx < 12; yidx++)
+
+    for (const auto & month_stat : totals)
     {
-        wxString monName = mmGetNiceMonthName(yidx);
+		int month = month_stat.first;
+		wxString monName = mmGetNiceMonthName(month -1);
         //
         hb.startTableRow();
         hb.addTableCell(monName, false, true);
-        // Totals for monthes
-        for (int y = 1; y <= yearsHist; y++) 
-        {
-            wxDateTime dtThisBegin(1, (wxDateTime::Month)yidx, year_- y + 1);
-            wxDateTime dtThisEnd  = dtThisBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_-y + 1);
-
-            bool ignoreDate = false;
-            int numThis = 0;
-            core_->bTransactionList_.getTransactionStats(-1, numThis, ignoreDate, dtThisBegin, dtThisEnd);
-            hb.addTableCell(wxString::Format("%d", numThis), true);
-            grand_total[y] += numThis;
+        // Totals for month
+		for (const auto &y : month_stat.second ) 
+        {		
+			int year = y.first;
+			hb.addTableCell(wxString::Format("%i", y.second), true);
+			grand_total[year] += y.second; //calculation totals for year
         }
         hb.endTableRow();
     }
     hb.addRowSeparator(yearsHist + 1);
     hb.startTableRow();
-    hb.addTableCell(_("Total"), true);
+    hb.addTableCell(_("Total"), true, true);
 
     //Grand Totals
-    for (std::map<int, int>::const_iterator it = grand_total.begin(); it != grand_total.end(); ++ it)
+    for (const auto &grand_totals : grand_total)
     {
-        hb.addTableCell(wxString::Format("%d", it->second), true);
+	    hb.addTableCell(wxString::Format("%i", grand_totals.second), true, true);
     }
     //------------
     hb.endTable();
