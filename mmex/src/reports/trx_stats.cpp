@@ -18,8 +18,9 @@ wxString mmReportTransactionStats::getHTMLText()
 		, year_ - yearsHist + 1, year_ )
 	);
     hb.addDateNow();
+    hb.addHorizontalLine();
     hb.startCenter();
-    hb.startTable("50%");
+    hb.startTable("75%");
 
 	std::map<int, int> grand_total;
 	std::map<int, std::map<int, int> > totals;

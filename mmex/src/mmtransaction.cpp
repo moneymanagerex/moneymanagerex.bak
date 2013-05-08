@@ -711,6 +711,65 @@ int mmBankTransactionList::UpdateAllTransactionsForPayee(int payeeID)
     return 0;
 }
 
+void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
+    , std::map<int, std::pair<double, double> > &incomeExpensesStats
+    , mmDateRange* date_range, bool ignoreFuture) const
+{
+    //Initialization
+    //Get base currency rates for all accounts
+    std::map<int, double> acc_conv_rates;
+    double convRate = 1;
+    for (const auto& account: core_->accountList_.accounts_)
+    {
+        std::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencySharedPtr(account->id_);
+        wxASSERT(pCurrencyPtr);
+        CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        double rate = pCurrencyPtr->baseConv_;
+        acc_conv_rates[account->id_] = rate;
+    }
+    //Set std::map with zerros
+    std::pair<double, double> incomeExpensesPair;
+    incomeExpensesPair.first = 0;
+    incomeExpensesPair.second = 0;
+    wxDateTime start_date = wxDateTime(date_range->end_date()).SetDay(1);
+    for (int m = 0; m < 12; m++)
+    {
+        wxDateTime d = wxDateTime(start_date).Subtract(wxDateSpan::Months(m));
+        int idx = d.GetYear()*100 + (int)d.GetMonth();
+        incomeExpensesStats[idx] = incomeExpensesPair;
+    }
+    //Calculations
+    for (const auto& pBankTransaction : transactions_)
+    {
+        if (pBankTransaction->status_ == "V") continue; // skip
+
+        if (ignoreFuture)
+        {
+            if (pBankTransaction->date_.GetDateOnly().IsLaterThan(wxDateTime::Now().GetDateOnly()))
+                continue; //skip future dated transactions
+        }
+
+        if (!pBankTransaction->date_.IsBetween(date_range->start_date(), date_range->end_date()))
+            continue; //skip
+
+        // We got this far, get the currency conversion rate for this account
+        convRate = acc_conv_rates.find(pBankTransaction->accountID_)->second;
+
+        wxDateTime d = pBankTransaction->date_;
+        int idx = d.GetYear()*100 + (int)d.GetMonth();
+        std::pair<double, double>& pIncomeExpenses = incomeExpensesStats.find(idx)->second;
+        
+        if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
+            pIncomeExpenses.first += pBankTransaction->amt_ * convRate;
+        else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+            pIncomeExpenses.second += pBankTransaction->amt_ * convRate;
+        else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+        {
+            // transfers are not considered in income/expenses calculations
+        }
+    }
+}
+
 void mmBankTransactionList::getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses, double& income,
     bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture) const
 {
@@ -754,6 +813,8 @@ void mmBankTransactionList::getExpensesIncome(const mmCoreDB* core, int accountI
     }
 }
 
+
+
 void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int> > &stats, int start_year) const
 {
     //Initialization
@@ -773,13 +834,13 @@ void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int>
         if (pBankTransaction->date_.GetYear() < start_year) continue;
         if (pBankTransaction->status_ == "V") continue; // skip
 
-        if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now().SetMonth(wxDateTime::Dec).GetLastMonthDay().GetDateOnly()))
-                continue; //skip future dated transactions
+        if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()
+            .SetMonth(wxDateTime::Dec).GetLastMonthDay().GetDateOnly()))
+            continue; //skip future dated transactions
 
         int year = pBankTransaction->date_.GetYear();
         int month = (int)pBankTransaction->date_.GetMonth()+1;
-        std::map <int, int> &temp = stats.find(month)->second;
-        temp.find(year)->second += 1;
+        stats.find(month)->second.find(year)->second += 1;
     }
 }
 
