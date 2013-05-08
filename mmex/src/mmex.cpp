@@ -3071,109 +3071,103 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
     if (m_core.get()->accountList_.getNumAccounts() == 0) return;
 
-    std::vector< std::shared_ptr<mmBankTransaction> > trans;
+    std::vector<mmBankTransaction> trans;
 
     mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
-        std::vector< std::shared_ptr<mmBankTransaction> >::const_iterator i;
-        for (i = m_core.get()->bTransactionList_.transactions_.begin(); i != m_core.get()->bTransactionList_.transactions_.end(); i++ )
+		for (const auto& tran: m_core.get()->bTransactionList_.transactions_)
         {
-            std::shared_ptr<mmBankTransaction> pBankTransaction = *i;
-            if (pBankTransaction)
+            if (dlg->getAmountRangeCheckBox())
             {
+                double minamt = dlg->getAmountMin();
+                double maxamt = dlg->getAmountMax();
 
-                if (dlg->getAmountRangeCheckBox())
-                {
-                    double minamt = dlg->getAmountMin();
-                    double maxamt = dlg->getAmountMax();
-
-                    if (pBankTransaction->amt_ < minamt)
-                        continue; // skip
-                    if (pBankTransaction->amt_ > maxamt)
-                        continue; // skip
-                }
-
-                if (dlg->getAccountCheckBox())
-                {
-                    int fromAccountID = dlg->getAccountID();
-
-                    if ((pBankTransaction->accountID_ != fromAccountID) && (pBankTransaction->toAccountID_ != fromAccountID))
-                        continue; // skip
-                }
-
-                if (dlg->getDateRangeCheckBox())
-                {
-                    wxDateTime dtBegin = dlg->getFromDateCtrl();
-                    wxDateTime dtEnd = dlg->getToDateControl();
-
-                    if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                        continue; // skip
-                }
-
-                if (dlg->getPayeeCheckBox())
-                {
-                    if (pBankTransaction->payeeID_ != dlg->getPayeeID())
-                        continue; // skip
-                }
-
-                if (dlg->getStatusCheckBox())
-                {
-                    if (dlg->getStatus() != pBankTransaction->status_) continue; //skip
-                }
-
-                if (dlg->getTypeCheckBox())
-                {
-                    if (!dlg->getType().Contains(pBankTransaction->transType_)) continue;
-                }
-
-                if (dlg->getNumberCheckBox())
-                {
-                    const wxString transNumber = dlg->getNumber().Trim().Lower();
-                    const wxString orig = pBankTransaction->transNum_.Lower();
-                    if (!orig.Matches(transNumber))
-                        continue;
-                }
-
-                if (dlg->getNotesCheckBox())
-                {
-                    wxString filter_notes = dlg->getNotes().Trim().Lower();
-                    wxString trx_notes = pBankTransaction->notes_.Lower();
-
-                    if (!trx_notes.Matches(filter_notes))
-                        continue;
-                }
-
-                if (dlg->getCategoryCheckBox())
-                {
-                    bool ignoreSubCateg = false;
-                    int subcategID = dlg->getSubCategoryID();
-                    int categID = dlg->getCategoryID();
-                    if (subcategID == -1)
-                        ignoreSubCateg = dlg->getExpandStatus();
-                    if (!pBankTransaction->containsCategory(categID, subcategID, ignoreSubCateg))
-                    {
-                        pBankTransaction->reportCategAmountStr_ = "";
-                        continue;
-                    }
-
-                    if (pBankTransaction->splitEntries_->numEntries() > 0)
-                    {
-                        pBankTransaction->reportCategAmount_ = (pBankTransaction->getAmountForSplit(categID, subcategID));
-
-                        std::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(pBankTransaction->accountID_);
-                        wxASSERT(pCurrencyPtr);
-                         CurrencyFormatter::formatDoubleToCurrency(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
-                    }
-                    else
-                    {
-                        pBankTransaction->reportCategAmount_ = -1;
-                        pBankTransaction->reportCategAmountStr_.clear();
-                    }
-                }
-
-                trans.push_back(pBankTransaction);
+                if (tran->amt_ < minamt)
+                    continue; // skip
+                if (tran->amt_ > maxamt)
+                    continue; // skip
             }
+
+            if (dlg->getAccountCheckBox())
+            {
+                int fromAccountID = dlg->getAccountID();
+
+                if ((tran->accountID_ != fromAccountID) && (tran->toAccountID_ != fromAccountID))
+                    continue; // skip
+            }
+
+            if (dlg->getDateRangeCheckBox())
+            {
+                wxDateTime dtBegin = dlg->getFromDateCtrl();
+                wxDateTime dtEnd = dlg->getToDateControl();
+
+                if (!tran->date_.IsBetween(dtBegin, dtEnd))
+                    continue; // skip
+            }
+
+            if (dlg->getPayeeCheckBox())
+            {
+                if (tran->payeeID_ != dlg->getPayeeID())
+                    continue; // skip
+            }
+
+            if (dlg->getStatusCheckBox())
+            {
+                if (dlg->getStatus() != tran->status_) continue; //skip
+            }
+
+            if (dlg->getTypeCheckBox())
+            {
+                if (!dlg->getType().Contains(tran->transType_)) continue;
+            }
+
+            if (dlg->getNumberCheckBox())
+            {
+                const wxString transNumber = dlg->getNumber().Trim().Lower();
+                const wxString orig = tran->transNum_.Lower();
+                if (!orig.Matches(transNumber))
+                    continue;
+            }
+
+            if (dlg->getNotesCheckBox())
+            {
+                wxString filter_notes = dlg->getNotes().Trim().Lower();
+                wxString trx_notes = tran->notes_.Lower();
+
+                if (!trx_notes.Matches(filter_notes))
+                    continue;
+            }
+
+            if (dlg->getCategoryCheckBox())
+            {
+                bool ignoreSubCateg = false;
+                int subcategID = dlg->getSubCategoryID();
+                int categID = dlg->getCategoryID();
+                if (subcategID == -1)
+                    ignoreSubCateg = dlg->getExpandStatus();
+                if (!tran->containsCategory(categID, subcategID, ignoreSubCateg))
+                {
+                    tran->reportCategAmountStr_ = "";
+                    continue;
+                }
+
+                if (tran->splitEntries_->numEntries() > 0)
+                {
+                    tran->reportCategAmount_ = tran->getAmountForSplit(categID, subcategID);
+
+                    std::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(tran->accountID_);
+                    wxASSERT(pCurrencyPtr);
+                        CurrencyFormatter::formatDoubleToCurrency(tran->reportCategAmount_, tran->reportCategAmountStr_);
+                }
+                else
+                {
+                    tran->reportCategAmount_ = -1;
+                    tran->reportCategAmountStr_.clear();
+                }
+            }
+
+            trans.push_back(*tran);
         }
 
         mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getAccountID(), dlg);
