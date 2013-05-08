@@ -755,68 +755,21 @@ void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
             continue; //skip
 
         // We got this far, get the currency conversion rate for this account
-        convRate = acc_conv_rates.find(pBankTransaction->accountID_)->second;
+        convRate = acc_conv_rates[pBankTransaction->accountID_];
 
         wxDateTime d = pBankTransaction->date_;
         int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
-        std::pair<double, double>& pIncomeExpenses = incomeExpensesStats.find(idx)->second;
         
         if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
-            pIncomeExpenses.first += pBankTransaction->amt_ * convRate;
+            incomeExpensesStats[idx].first += pBankTransaction->amt_ * convRate;
         else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-            pIncomeExpenses.second += pBankTransaction->amt_ * convRate;
+            incomeExpensesStats[idx].second += pBankTransaction->amt_ * convRate;
         else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             // transfers are not considered in income/expenses calculations
         }
     }
 }
-
-//TODO: Deprecated function. Replace it with getExpensesIncomeStats
-void mmBankTransactionList::getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses, double& income,
-    bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture) const
-{
-    for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
-    {
-        const std::shared_ptr<mmBankTransaction> pBankTransaction = *i;
-        if (pBankTransaction)
-        {
-            if (accountID != -1)
-            {
-                if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
-                    continue; // skip
-            }
-            if (pBankTransaction->status_ == "V")
-            {
-                continue; // skip
-            }
-            if (ignoreFuture)
-            {
-                if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
-                    continue; //skip future dated transactions
-            }
-            if (!ignoreDate)
-            {
-                if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                    continue; //skip
-            }
-
-            // We got this far, get the currency conversion rate for this account
-            double convRate = core->accountList_.getAccountBaseCurrencyConvRate(pBankTransaction->accountID_);
-
-            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
-                income += pBankTransaction->amt_ * convRate;
-            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-                expenses += pBankTransaction->amt_ * convRate;
-            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-            {
-                // transfers are not considered in income/expenses calculations
-            }
-        }
-    }
-}
-
-
 
 void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int> > &stats, int start_year) const
 {
@@ -843,7 +796,7 @@ void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int>
 
         int year = pBankTransaction->date_.GetYear();
         int month = (int)pBankTransaction->date_.GetMonth()+1;
-        stats.find(month)->second.find(year)->second += 1;
+        stats[month][year] += 1;
     }
 }
 
@@ -1331,4 +1284,48 @@ bool mmBankTransactionList::IsPayeeUsed(const int iPayeeID) const
         index --;
     }
     return searching;
+}
+
+//TODO: Deprecated function. Replace it with getExpensesIncomeStats
+void mmBankTransactionList::getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses, double& income,
+    bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture) const
+{
+    for (const_iterator i = transactions_.begin(); i != transactions_.end(); ++i)
+    {
+        const std::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+            if (accountID != -1)
+            {
+                if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
+                    continue; // skip
+            }
+            if (pBankTransaction->status_ == "V")
+            {
+                continue; // skip
+            }
+            if (ignoreFuture)
+            {
+                if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                    continue; //skip future dated transactions
+            }
+            if (!ignoreDate)
+            {
+                if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                    continue; //skip
+            }
+
+            // We got this far, get the currency conversion rate for this account
+            double convRate = core->accountList_.getAccountBaseCurrencyConvRate(pBankTransaction->accountID_);
+
+            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
+                income += pBankTransaction->amt_ * convRate;
+            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+                expenses += pBankTransaction->amt_ * convRate;
+            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+            {
+                // transfers are not considered in income/expenses calculations
+            }
+        }
+    }
 }
