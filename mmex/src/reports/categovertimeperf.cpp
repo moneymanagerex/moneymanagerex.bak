@@ -20,135 +20,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "categovertimeperf.h"
 #include "../htmlbuilder.h"
 #include "../util.h"
-//----------------------------------------------------------------------------
-
-namespace
-{
-
-const int g_NullCategory = -1;
-const int g_NullSubCat = g_NullCategory;
-//----------------------------------------------------------------------------
-enum EWhat { INCOME, EXPENSES, OVERALL, WHAT_MAX };
-//----------------------------------------------------------------------------
-
-/*
-    Set last day of months 23:59:59.999
-*/
-wxDateTime& prepareEndDate(wxDateTime &dt)
-{
-    wxDateTime::Month mon = dt.GetMonth();
-    int year = dt.GetYear();
-
-    dt.Set(dt.GetNumberOfDays(mon, year), mon, year, 23, 59, 59, 999);
-
-    return dt;
-}
-//----------------------------------------------------------------------------
-typedef std::vector<std::pair<wxDateTime, wxDateTime> > periods_t;
-typedef std::vector<std::pair<double, double> > columns_totals_t;
-//----------------------------------------------------------------------------
-
-void printRow
-(
-    const wxDateTime &periodBegin,
-    const wxDateTime &periodEnd,
-    const periods_t &periods,
-    wxSQLite3ResultSet &q1,
-    int cat_id,
-    int subcat_id,
-    const mmCoreDB* core,
-    mmHTMLBuilder &hb,
-    columns_totals_t &columns_totals
-)
-{
-    double period_amount = core->bTransactionList_.getAmountForCategory(cat_id, subcat_id, false,
-        periodBegin, periodEnd, false, false, mmIniOptions::instance().ignoreFutureTransactions_
-    );
-    if (period_amount == 0) {
-        return;
-    }
-
-    hb.startTableRow();
-
-    wxString categ = q1.GetString("CATEGNAME");
-
-    if (subcat_id != g_NullSubCat) {
-        categ += ": ";
-        categ += q1.GetString("SUBCATEGNAME");
-    }
-
-    hb.addTableCell(categ, false, true);
-
-    double period_amount_sum = 0; // row summary
-
-    for (periods_t::const_iterator i = periods.begin(); i != periods.end(); ++i)
-    {
-        const wxDateTime &dtBegin = i->first;
-        const wxDateTime &dtEnd = i->second;
-
-        // wxLogDebug("begin=%s, end=%s", dtBegin.Format(), dtEnd.Format());
-
-        double month_amount = core->bTransactionList_.getAmountForCategory(cat_id, subcat_id, false,
-            dtBegin, dtEnd, false, false, mmIniOptions::instance().ignoreFutureTransactions_
-        );
-
-        if (month_amount != 0)
-        {
-            period_amount_sum += month_amount;
-
-            periods_t::const_iterator::difference_type j = std::distance(periods.begin(), i);
-            columns_totals_t::reference r = columns_totals[j];
-            
-            (month_amount < 0 ? r.second : r.first) += month_amount;
-        }
-
-		hb.addMoneyCell(month_amount);
-    }
-
-    wxASSERT(fabs(period_amount_sum - period_amount) < 0.01);
-
-    // summary of period for category\subcategory
-
-	hb.addMoneyCell(period_amount);
-
-    hb.endTableRow();
-}
-//----------------------------------------------------------------------------
-
-void printColumnsTotals
-(
-    const columns_totals_t &columns_totals, 
-    EWhat what, 
-    mmHTMLBuilder &hb
-)
-{
-    hb.startTableRow();
-
-    const wxString title[WHAT_MAX] = { _("Income"), _("Expenses"), _("Overall") };
-    hb.addTableHeaderCell(title[what]);
-
-    for (columns_totals_t::const_iterator i = columns_totals.begin(); i != columns_totals.end(); ++i)
-    {
-        double val = what == INCOME   ?  i->first  :
-                     what == EXPENSES ? -i->second : // print as positive value in report
-                     what == OVERALL  ? (i->first + i->second) :
-                     0;
-
-		hb.addMoneyCell(val);
-    }
-
-    hb.addTableHeaderCell(wxGetEmptyString());
-    hb.endTableRow();
-}
-//----------------------------------------------------------------------------
-
-} // namespace
 
 //----------------------------------------------------------------------------
 
-mmReportCategoryOverTimePerformance::mmReportCategoryOverTimePerformance(mmCoreDB *core) : 
+mmReportCategoryOverTimePerformance::mmReportCategoryOverTimePerformance(mmCoreDB *core
+, mmDateRange* date_range) :
     mmPrintableBase(core)
-{ 
+    , date_range_(date_range)
+    , title_(_("Category Income/Expenses: %s (UNDER CONSTRACTION)"))
+{
     wxASSERT(core_);
 }
 //----------------------------------------------------------------------------
@@ -159,47 +39,22 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     mmHTMLBuilder hb;
     hb.init();
-    
-    hb.addHeader(2, wxString::Format(_("Category Income/Expenses Over Last %d Months "), MONTHS_IN_PERIOD));
+
+    hb.addHeader(2, wxString::Format(title_, date_range_->title()));
     hb.addDateNow();
     hb.addLineBreak();
-
-    // setup period
-    wxDateTime dummy = wxDateTime::Now();
-    const wxDateTime periodEnd = prepareEndDate(dummy);
-
-    dummy.SetDay(1);
-    dummy -= wxDateSpan::Months(MONTHS_IN_PERIOD - 1); // X months before current one
-
-    const wxDateTime periodBegin = dummy.ResetTime();
 
     hb.startCenter();
     hb.startTable();
 
     hb.startTableRow();
     hb.addTableHeaderCell(_("Category"));
-
-    periods_t periods(MONTHS_IN_PERIOD);
-    for (periods_t::iterator i = periods.begin(); i != periods.end(); ++i)
+    wxDateTime start_date = date_range_->start_date();
+    for (int i = 0; i < MONTHS_IN_PERIOD; i++)
     {
-        wxDateTime &dtBegin = i->first;
-        wxDateTime &dtEnd = i->second;
-
-        dtBegin = periodBegin;
-        dtBegin += wxDateSpan::Months(std::distance(periods.begin(), i));
-
-
-        dtEnd = dtBegin;
-        prepareEndDate(dtEnd);
-
-        wxString yyyy;
-        yyyy << dtBegin.GetYear();
-
-        hb.addTableHeaderCell(mmGetNiceShortMonthName(dtBegin.GetMonth()) + " " + yyyy);
+        wxDateTime d = wxDateTime(start_date).Add(wxDateSpan::Months(i));
+        hb.addTableHeaderCell(mmGetNiceShortMonthName(d.GetMonth()) << "<br>\n" << d.GetYear());
     }
-
-    columns_totals_t columns_totals(periods.size());
-
     hb.addTableHeaderCell(_("Overall"));
     hb.endTableRow();
 
@@ -209,32 +64,42 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_CATEGORIES);
 
-    for (int last_cat_id = g_NullCategory; q1.NextRow();)
+    double overall = 0;
+    for (int last_cat_id = -1; q1.NextRow();)
     {
-        int cat_id = q1.GetInt("CATEGID");
-        
-        if (last_cat_id != cat_id) { // category changed
-            last_cat_id = cat_id;
-            printRow(periodBegin, periodEnd, periods, q1, cat_id, g_NullSubCat, core_, hb, columns_totals);
+        int categID = q1.GetInt("CATEGID");
+        int subcategID = q1.GetInt("SUBCATEGID");
+        if (last_cat_id != categID)
+        {
+            last_cat_id = categID;
+            hb.startTableRow();
+            hb.addTableCell(core_->categoryList_.GetFullCategoryString(categID, -1));
+            overall = 0;
+            for (int i = 0; i < MONTHS_IN_PERIOD; i++)
+            {
+                hb.addMoneyCell(categID);
+                overall += categID; //fake amount
+            }
+            hb.addMoneyCell(overall);
+            hb.endTableRow();
         }
 
-        int sc_idx = q1.FindColumnIndex("SUBCATEGID");
-        
-        if (!q1.IsNull(sc_idx)) {
-            int subcat_id = q1.GetInt(sc_idx);
-            printRow(periodBegin, periodEnd, periods, q1, cat_id, subcat_id, core_, hb, columns_totals);
+        hb.startTableRow();
+        hb.addTableCell(core_->categoryList_.GetFullCategoryString(categID, subcategID));
+        overall = 0;
+        for (int i = 0; i < 12; i++)
+        {
+            hb.addMoneyCell(subcategID*(i+1));
+            overall += subcategID*(i+1); //fake amount
         }
+        hb.addMoneyCell(overall);
+        hb.endTableRow();
     }
 
     q1.Finalize();
 
-    printColumnsTotals(columns_totals, INCOME, hb);
-    printColumnsTotals(columns_totals, EXPENSES, hb);
-    printColumnsTotals(columns_totals, OVERALL, hb);
-
     hb.endTable();
     hb.endCenter();
-
     hb.end();
     return hb.getHTMLText();
 }
