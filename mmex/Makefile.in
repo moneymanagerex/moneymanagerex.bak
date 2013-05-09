@@ -116,6 +116,8 @@ MMEX_OBJECTS =  \
 	mmex_htmlbuilder.o \
 	mmex_lua_interface.o \
 	mmex_maincurrencydialog.o \
+	mmex_mmCurrencyFormatter.o \
+	mmex_mmOption.o \
 	mmex_mmaccount.o \
 	mmex_mmcategory.o \
 	mmex_mmcheckingpanel.o \
@@ -149,7 +151,6 @@ MMEX_OBJECTS =  \
 	mmex_transdialog.o \
 	mmex_univcsvdialog.o \
 	mmex_util.o \
-	mmex_option.o \
 	mmex_budget.o \
 	mmex_budgetcategorysummary.o \
 	mmex_budgetingperf.o \
@@ -158,6 +159,7 @@ MMEX_OBJECTS =  \
 	mmex_categovertimeperf.o \
 	mmex_incexpenses.o \
 	mmex_incexpensesfinancialperiod.o \
+	mmex_mmRepeat.o \
 	mmex_payee.o \
 	mmex_summary.o \
 	mmex_summaryassets.o \
@@ -477,6 +479,12 @@ mmex_lua_interface.o: $(srcdir)/src/lua_interface.cpp
 mmex_maincurrencydialog.o: $(srcdir)/src/maincurrencydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/maincurrencydialog.cpp
 
+mmex_mmCurrencyFormatter.o: $(srcdir)/src/mmCurrencyFormatter.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmCurrencyFormatter.cpp
+
+mmex_mmOption.o: $(srcdir)/src/mmOption.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmOption.cpp
+
 mmex_mmaccount.o: $(srcdir)/src/mmaccount.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmaccount.cpp
 
@@ -576,9 +584,6 @@ mmex_univcsvdialog.o: $(srcdir)/src/univcsvdialog.cpp
 mmex_util.o: $(srcdir)/src/util.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/util.cpp
 
-mmex_option.o: $(srcdir)/src/option.cpp
-	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmOption.cpp
-
 mmex_budget.o: $(srcdir)/src/reports/budget.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reports/budget.cpp
 
@@ -602,6 +607,9 @@ mmex_incexpenses.o: $(srcdir)/src/reports/incexpenses.cpp
 
 mmex_incexpensesfinancialperiod.o: $(srcdir)/src/reports/incexpensesfinancialperiod.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reports/incexpensesfinancialperiod.cpp
+
+mmex_mmRepeat.o: $(srcdir)/src/reports/mmRepeat.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reports/mmRepeat.cpp
 
 mmex_payee.o: $(srcdir)/src/reports/payee.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reports/payee.cpp
