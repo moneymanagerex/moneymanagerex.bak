@@ -43,7 +43,8 @@ protected:
 class mmReportCategoryExpensesGoes: public mmReportCategoryExpenses
 {
 public:
-    mmReportCategoryExpensesGoes(mmCoreDB* core, mmDateRange* date_range = new mmAllTime(), const wxString& title = _("Where the Money Goes"))
+    mmReportCategoryExpensesGoes(mmCoreDB* core, mmDateRange* date_range = new mmAllTime()
+        , const wxString& title = _("Where the Money Goes"))
         : mmReportCategoryExpenses(core, date_range, title, 2)
     {}
 };
