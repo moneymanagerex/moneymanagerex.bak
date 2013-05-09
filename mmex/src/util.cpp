@@ -290,36 +290,29 @@ wxDateTime mmGetStorageStringAsDate(const wxString& str)
 
 wxColour mmGetColourFromString(const wxString& str)
 {
-    wxStringTokenizer tkz(str, ",", wxTOKEN_RET_EMPTY_ALL);
-    unsigned char red = 0xFF;
-    unsigned char blue = 0xFF;
-    unsigned char green = 0xFF;
-
-    if (tkz.HasMoreTokens())
+    wxColor color = wxNullColour;
+    wxRegEx pattern = "([0-9]{1,3})([,])([0-9]{1,3})([,])([0-9]{1,3})";
+    if (pattern.Matches(str))
     {
-        long longVal;
-        tkz.GetNextToken().ToLong(&longVal);
-        red = longVal;
+        wxString red = pattern.GetMatch(str, 1);
+        wxString green = pattern.GetMatch(str, 3);
+        wxString blue = pattern.GetMatch(str, 5);
 
-        if (tkz.HasMoreTokens())
-        {
-            tkz.GetNextToken().ToLong(&longVal);
-            green = longVal;
-
-            if (tkz.HasMoreTokens())
-            {
-                tkz.GetNextToken().ToLong(&longVal);
-                blue = longVal;
-            }
-        }
+        color = wxColour(wxAtoi(red), wxAtoi(green), wxAtoi(blue));
     }
-
-    return wxColour(red, green, blue);
+    else
+    {
+        color = wxColor(str);
+    }
+    return color;
 }
 
 wxString mmGetStringFromColour(wxColour color)
 {
+    //TODO: In next releases color settings wtring may be changed
+    //return color.GetAsString(wxC2S_HTML_SYNTAX);
     return wxString::Format("%d,%d,%d", color.Red(), color.Green(), color.Blue());
+
 }
 
 void mmLoadColorsFromDatabase(std::shared_ptr<MMEX_IniSettings> pIniSettings)
@@ -425,17 +418,17 @@ std::map<wxString,wxString> date_formats_map()
     date_formats["%Y.%m.%d"]="YYYY.MM.DD";
     date_formats["%Y%m%d"]="YYYYMMDD";
 
-	return date_formats;
+    return date_formats;
 }
 
 wxString DisplayDate2FormatDate(const wxString sDateMask)
 {
     for (const auto& date_mask: date_formats_map())
     {
-		if (date_mask.second == sDateMask) return date_mask.first;
-	};
-	wxASSERT(false);
-	return mmex::DEFDATEFORMAT;
+        if (date_mask.second == sDateMask) return date_mask.first;
+    };
+    wxASSERT(false);
+    return mmex::DEFDATEFORMAT;
 }
 
 wxString FormatDate2DisplayDate(const wxString sDateMask)
@@ -448,8 +441,8 @@ const wxArrayString date_format_mask()
     wxArrayString mask;
     for (const auto& date_mask: date_formats_map())
     {
-		mask.Add(date_mask.first);
-	};
+        mask.Add(date_mask.first);
+    };
     return mask;
 }
 
@@ -458,8 +451,8 @@ const wxArrayString date_format()
     wxArrayString format;
     for (const auto& date_mask: date_formats_map())
     {
-		format.Add(date_mask.second);
-	};
+        format.Add(date_mask.second);
+    };
     return format;
 
 }
