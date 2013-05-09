@@ -178,7 +178,7 @@ public:
         , bool group_by_month = true) const;
     void getCategoryStats(std::map<int, std::map<int, std::map<int, double> > > &categoryStats
         , mmDateRange* date_range, bool ignoreFuture
-        , bool group_by_month = true) const;
+        , bool group_by_month = true, bool with_date = true) const;
     void getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses
         , double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
     // The setting asDeposit is only valid if evaluateTransfer is true

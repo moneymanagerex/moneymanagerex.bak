@@ -759,7 +759,7 @@ void mmBankTransactionList::getExpensesIncomeStats
 
         wxDateTime d = pBankTransaction->date_;
         int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
-        
+
         if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
             incomeExpensesStats[idx].first += pBankTransaction->amt_ * convRate;
         else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
@@ -774,7 +774,7 @@ void mmBankTransactionList::getExpensesIncomeStats
 void mmBankTransactionList::getCategoryStats
     (std::map<int, std::map<int, std::map<int, double> > > &categoryStats
     , mmDateRange* date_range, bool ignoreFuture
-    , bool group_by_month) const
+    , bool group_by_month, bool with_date) const
 {
     //Initialization
     //Get base currency rates for all accounts
@@ -820,8 +820,11 @@ void mmBankTransactionList::getCategoryStats
                 continue; //skip future dated transactions
         }
 
-        if (!pBankTransaction->date_.IsBetween(date_range->start_date(), date_range->end_date()))
-            continue; //skip
+        if (with_date)
+        {
+            if (!pBankTransaction->date_.IsBetween(date_range->start_date(), date_range->end_date()))
+                continue; //skip
+        }
 
         // We got this far, get the currency conversion rate for this account
         convRate = acc_conv_rates[pBankTransaction->accountID_];
@@ -830,7 +833,7 @@ void mmBankTransactionList::getCategoryStats
         int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
         int categID = pBankTransaction->categID_;
         int subcategID = pBankTransaction->subcategID_;
-        
+
         if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
             categoryStats[categID][subcategID][idx] += pBankTransaction->amt_ * convRate;
         else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
@@ -847,15 +850,15 @@ void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int>
     //Initialization
     for (int i = 1; i < 13; i++)
     {
-        std::map<int, int> month_stat; 
+        std::map<int, int> month_stat;
         for (int y = start_year; y <= wxDateTime::Now().GetYear(); y++)
         {
             month_stat[y] = 0;
         }
         stats[i] = month_stat;
     }
-    
-    //Calculations  
+
+    //Calculations
     for (const auto &pBankTransaction : transactions_)
     {
         if (pBankTransaction->date_.GetYear() < start_year) continue;

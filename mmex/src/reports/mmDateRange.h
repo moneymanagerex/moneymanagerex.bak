@@ -1,5 +1,5 @@
 /*
-    Author: Lisheng Guan (guanlisheng@gmail.com) 
+    Author: Lisheng Guan (guanlisheng@gmail.com)
 */
 #ifndef _MM_EX_DATE_RANGE_H_
 #define _MM_EX_DATE_RANGE_H_
@@ -87,7 +87,7 @@ public:
     mmCurrentYear(): mmDateRange()
     {
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31); 
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
         this->title_ = _("Current Year");
     }
 };
@@ -121,7 +121,7 @@ public:
     mmCurrentFinancialYear(int day, int month): mmDateRange()
     {
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);  
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
         this->start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1));
         this->end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1));
 
@@ -140,7 +140,7 @@ public:
     mmLastFinancialYear(int day, int month): mmDateRange()
     {
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);  
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
         start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1)).Subtract(wxDateSpan::Years(1));
         end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1)).Subtract(wxDateSpan::Years(1));
 
@@ -159,6 +159,7 @@ public:
     mmAllTime(): mmDateRange()
     {
         this->title_ = _("Over Time");
+        this->start_date_.Subtract(now_);
     }
     const bool is_with_date() const { return false; }
 };

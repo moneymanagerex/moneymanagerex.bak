@@ -44,7 +44,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.init();
     hb.addHeader(2, title_);
 
-    hb.DisplayDateHeading(date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
+    bool with_date = date_range_->is_with_date();
+    hb.DisplayDateHeading(date_range_->start_date(), date_range_->end_date(), with_date);
 
     hb.startCenter();
 
@@ -59,15 +60,15 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.endTableRow();
 
     double grandtotal = 0.0;
-    bool ignore_date = !date_range_->is_with_date();
 
     std::vector<ValuePair> valueList;
     std::map<int, std::map<int, std::map<int, double> > > categoryStats;
     core_->bTransactionList_.getCategoryStats(categoryStats
         , date_range_
         , ignoreFutureDate_
-        , false);   
-    core_->currencyList_.LoadBaseCurrencySettings();            
+        , false
+        , with_date);
+    core_->currencyList_.LoadBaseCurrencySettings();
 
     for (const auto& category: core_->categoryList_.entries_)
     {
