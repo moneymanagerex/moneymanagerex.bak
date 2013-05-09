@@ -63,8 +63,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
     std::vector<ValuePair> valueList;
     std::map<int, std::map<int, std::map<int, double> > > categoryStats;
-    core_->bTransactionList_.getCategoryStats(core_
-        , categoryStats
+    core_->bTransactionList_.getCategoryStats(categoryStats
         , date_range_
         , ignoreFutureDate_
         , false);   

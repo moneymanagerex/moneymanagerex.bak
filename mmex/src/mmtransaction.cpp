@@ -711,8 +711,8 @@ int mmBankTransactionList::UpdateAllTransactionsForPayee(int payeeID)
     return 0;
 }
 
-void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
-    , std::map<int, std::pair<double, double> > &incomeExpensesStats
+void mmBankTransactionList::getExpensesIncomeStats
+    (std::map<int, std::pair<double, double> > &incomeExpensesStats
     , mmDateRange* date_range, bool ignoreFuture
     , bool group_by_month) const
 {
@@ -722,7 +722,7 @@ void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
     double convRate = 1;
     for (const auto& account: core_->accountList_.accounts_)
     {
-        std::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencySharedPtr(account->id_);
+        std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
         wxASSERT(pCurrencyPtr);
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         double rate = pCurrencyPtr->baseConv_;
@@ -771,8 +771,8 @@ void mmBankTransactionList::getExpensesIncomeStats(const mmCoreDB* core
     }
 }
 
-void mmBankTransactionList::getCategoryStats(const mmCoreDB* core
-    , std::map<int, std::map<int, std::map<int, double> > > &categoryStats
+void mmBankTransactionList::getCategoryStats
+    (std::map<int, std::map<int, std::map<int, double> > > &categoryStats
     , mmDateRange* date_range, bool ignoreFuture
     , bool group_by_month) const
 {
@@ -782,7 +782,7 @@ void mmBankTransactionList::getCategoryStats(const mmCoreDB* core
     double convRate = 1;
     for (const auto& account: core_->accountList_.accounts_)
     {
-        std::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencySharedPtr(account->id_);
+        std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
         wxASSERT(pCurrencyPtr);
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         double rate = pCurrencyPtr->baseConv_;

@@ -28,8 +28,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
     std::map<int, std::pair<double, double> > incomeExpensesStats;
     double expenses = 0.0, income = 0.0;
-    core_->bTransactionList_.getExpensesIncomeStats(core_
-        , incomeExpensesStats
+    core_->bTransactionList_.getExpensesIncomeStats(incomeExpensesStats
         , date_range_
         , mmIniOptions::instance().ignoreFutureTransactions_
         , false);                  
@@ -109,8 +108,7 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
     hb.addTableHeaderCell(_("Difference"), true);
     hb.endTableRow();
 
-    core_->bTransactionList_.getExpensesIncomeStats(core_
-        , incomeExpensesStats
+    core_->bTransactionList_.getExpensesIncomeStats(incomeExpensesStats
         , date_range_
         , mmIniOptions::instance().ignoreFutureTransactions_);                  
     core_->currencyList_.LoadBaseCurrencySettings();
