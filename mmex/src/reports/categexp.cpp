@@ -58,12 +58,17 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.addTableHeaderCell(_("Amount"), true);
     hb.endTableRow();
 
-    core_->currencyList_.LoadBaseCurrencySettings();
-
-    std::vector<ValuePair> valueList;
-
     double grandtotal = 0.0;
     bool ignore_date = !date_range_->is_with_date();
+
+    std::vector<ValuePair> valueList;
+    std::map<int, std::map<int, std::map<int, double> > > categoryStats;
+    core_->bTransactionList_.getCategoryStats(core_
+        , categoryStats
+        , date_range_
+        , ignoreFutureDate_
+        , false);   
+    core_->currencyList_.LoadBaseCurrencySettings();            
 
     for (const auto& category: core_->categoryList_.entries_)
     {
@@ -72,8 +77,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         double categtotal = 0.0;
         int categID = category->categID_;
         const wxString sCategName = category->categName_;
-        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignore_date
-            , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
+        double amt = categoryStats[categID][-1][0];
         if (type_ == GOES && amt < 0.0) amt = 0;
         if (type_ == COME && amt > 0.0) amt = 0;
 
@@ -98,8 +102,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             int subcategID = sub_category->categID_;
 
             wxString sFullCategName = core_->categoryList_.GetFullCategoryString(categID, subcategID);
-            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignore_date
-                , date_range_->start_date(), date_range_->end_date(), false, false, ignoreFutureDate_);
+            amt = categoryStats[categID][subcategID][0];
 
             if (type_ == GOES && amt < 0.0) amt = 0;
             if (type_ == COME && amt > 0.0) amt = 0;
@@ -127,7 +130,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             hb.addRowSeparator(0);
             hb.startTableRow();
             hb.addTableCell(_("Category Total: "),false, true, true, "GRAY");
-			hb.addMoneyCell(categtotal, "GRAY");
+            hb.addMoneyCell(categtotal, "GRAY");
             hb.endTableRow();
         }
 
@@ -138,10 +141,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         }
     }
 
-    hb.startTableRow();
-    hb.addTableCell(_("Grand Total: "),false, true, true);
-	hb.addMoneyCell(grandtotal);
-    hb.endTableRow();
+    hb.addTotalRow(_("Grand Total: "), 1, grandtotal);
 
     hb.endTable();
     hb.endCenter();
