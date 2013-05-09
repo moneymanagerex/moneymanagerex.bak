@@ -61,8 +61,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     // begin of table
 
     std::map<int, std::map<int, std::map<int, double> > > categoryStats;
-    core_->bTransactionList_.getCategoryStats(core_
-        , categoryStats
+    core_->bTransactionList_.getCategoryStats(categoryStats
         , date_range_
         , mmIniOptions::instance().ignoreFutureTransactions_);   
     core_->currencyList_.LoadBaseCurrencySettings();
