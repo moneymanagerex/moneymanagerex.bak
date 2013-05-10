@@ -87,9 +87,9 @@ void mmHomePagePanel::createFrames()
     if (!core_->db_.get()) return;
 
     if (mmIniOptions::instance().ignoreFutureTransactions_)
-        date_range_ = new mmCurrentMonth;
-    else
         date_range_ = new mmCurrentMonthToDate;
+    else
+        date_range_ = new mmCurrentMonth;
     vAccts_ = core_->iniSettings_->GetStringSetting("VIEWACCOUNTS", VIEW_ACCOUNTS_ALL_STR);
 
     mmHTMLBuilder hb;
