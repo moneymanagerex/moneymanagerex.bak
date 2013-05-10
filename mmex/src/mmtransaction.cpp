@@ -762,13 +762,14 @@ void mmBankTransactionList::getExpensesIncomeStats
                 continue; //skip future dated transactions
         }
 
-        if (trxDate.IsBetween(date_range->start_date(), date_range->end_date()))
+        if (!trxDate.IsBetween(date_range->start_date(), date_range->end_date()))
             continue; //skip
 
         // We got this far, get the currency conversion rate for this account
         convRate = acc_conv_rates[pBankTransaction->accountID_];
 
-        int idx = group_by_month ? (trxDate.GetYear()*100 + (int)trxDate.GetMonth()) : 0;
+        int idx = group_by_account ? (1000000 * pBankTransaction->accountID_) : 0;
+        idx += group_by_month ? (trxDate.GetYear()*100 + (int)trxDate.GetMonth()) : 0;
 
         if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
             incomeExpensesStats[idx].first += pBankTransaction->amt_ * convRate;

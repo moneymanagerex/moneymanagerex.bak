@@ -82,15 +82,17 @@ private:
     void createFrames();
     wxString topCategories_;
     wxString html_text_;
+    wxString vAccts_;
+
 
     wxString displaySummaryHeader(wxString summaryTitle );
     wxString displaySectionTotal(wxString totalsTitle, double tRecBalance, double& tBalance);
 
-    wxString displayAccounts(double& tBalance, double& tIncome, double& tExpenses, wxString type = ACCOUNT_TYPE_BANK);
+    wxString displayAccounts(double& tBalance, wxString type = ACCOUNT_TYPE_BANK);
     wxString displayStocks(double& tBalance /*, double& tIncome, double& tExpenses */);
     wxString displayAssets(double& tBalance);
     wxString displayCurrencies();
-    wxString displayIncomeVsExpenses(double& tincome, double& texpenses);
+    wxString displayIncomeVsExpenses();
     wxString displayBillsAndDeposits();
     wxString displayTopTransactions();
     wxString getStatWidget();
