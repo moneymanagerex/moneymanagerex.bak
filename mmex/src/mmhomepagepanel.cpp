@@ -89,7 +89,6 @@ void mmHomePagePanel::createFrames()
         return;
 
     date_range_ = new mmCurrentMonth;
-    wxDateTime today = date_range_->today();
     double tBalance = 0.0, tIncome = 0.0, tExpenses = 0.0;
 
     mmHTMLBuilder hb;
@@ -814,7 +813,7 @@ wxString mmHomePagePanel::displayTopTransactions()
 
 wxString mmHomePagePanel::getCalendarWidget()
 {
-    const wxDateTime &now = date_range_->today();
+    const wxDateTime &today = date_range_->today();
     int font_size = mmIniOptions::instance().html_font_size_;
     mmHTMLBuilder hb;
     hb.startTable("100%", "", "1");
@@ -826,7 +825,7 @@ wxString mmHomePagePanel::getCalendarWidget()
     //hb.addTableCell(wxString()<<wxDateTime::Now().GetYear());
     hb.startTableCell(wxString::Format("1"));
     hb.addText( wxString("<b>")
-        << wxGetTranslation(wxDateTime::GetMonthName(now.GetMonth()))
+        << wxGetTranslation(wxDateTime::GetMonthName(today.GetMonth()))
         << "</b>");
     hb.endTableCell();
     hb.addTableCell("");
@@ -835,7 +834,7 @@ wxString mmHomePagePanel::getCalendarWidget()
     {
         selectedMonthDay.SetDay(d);
         wxString sColor = "", sBgColor = "";
-        if (d == now.GetDay()) sBgColor = "YELLOW";
+        if (d == today.GetDay()) sBgColor = "YELLOW";
         hb.startTableCell(wxString::Format("1\" bgcolor=\"%s", sBgColor));
         if (wxDateTime::GetWeekDayName(selectedMonthDay.GetWeekDay())=="Sunday") sColor = "#FF0000";
         else if (wxDateTime::GetWeekDayName(selectedMonthDay.GetWeekDay())=="Saturday") sColor = "#FF0000";
@@ -844,7 +843,7 @@ wxString mmHomePagePanel::getCalendarWidget()
         hb.endTableCell();
     }
     hb.addTableCell(wxString::Format(_("Week&nbsp;#%d")
-        , now.GetWeekOfYear())
+        , today.GetWeekOfYear())
         , false, false, true);
 
     hb.endTableRow();
