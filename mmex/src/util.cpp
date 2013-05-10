@@ -291,12 +291,12 @@ wxDateTime mmGetStorageStringAsDate(const wxString& str)
 wxColour mmGetColourFromString(const wxString& str)
 {
     wxColor color = wxNullColour;
-    wxRegEx pattern = "([0-9]{1,3})([,])([0-9]{1,3})([,])([0-9]{1,3})";
+    wxRegEx pattern("([0-9]{1,3}),([0-9]{1,3}),([0-9]{1,3})");
     if (pattern.Matches(str))
     {
         wxString red = pattern.GetMatch(str, 1);
-        wxString green = pattern.GetMatch(str, 3);
-        wxString blue = pattern.GetMatch(str, 5);
+        wxString green = pattern.GetMatch(str, 2);
+        wxString blue = pattern.GetMatch(str, 3);
 
         color = wxColour(wxAtoi(red), wxAtoi(green), wxAtoi(blue));
     }
