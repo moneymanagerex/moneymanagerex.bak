@@ -20,9 +20,11 @@
 #define _MM_EX_HOMEPAGEPANEL_H_
 
 #include "mmpanelbase.h"
+#include "reports/mmDateRange.h"
 
 class mmGUIFrame;
 class mmHTMLBuilder;
+class mmDateRange;
 
 class mmHtmlWindow: public wxHtmlWindow
 {
@@ -72,18 +74,19 @@ public:
     wxString GetHomePageText();
 
 private:
-    void CreateControls();
-    void createFrames();
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;
+    mmDateRange* date_range_;
+    void CreateControls();
+    void createFrames();
     wxString topCategories_;
     wxString html_text_;
 
     wxString displaySummaryHeader(wxString summaryTitle );
     wxString displaySectionTotal(wxString totalsTitle, double tRecBalance, double& tBalance);
 
-    wxString displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
-    wxString displayTermAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
+    wxString displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses);
+    wxString displayTermAccounts(double& tBalance, double& tIncome, double& tExpenses);
     wxString displayStocks(double& tBalance /*, double& tIncome, double& tExpenses */);
     wxString displayAssets(double& tBalance);
     wxString displayCurrencies();
