@@ -30,31 +30,27 @@
 #include "../htmlbuilder.h"
 #include "../mmex.h"
 
-mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year)
+mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, mmDateRange* date_range)
 : mmPrintableBase(core)
-, year_(year)
-, printYear_(year)
+, date_range_(date_range)
 {}
 
 wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 {
+    date_range_ = new mmLast12Months();
+    std::map<int, std::pair<double, double> > incomeExpensesStats;
+    core_->bTransactionList_.getExpensesIncomeStats(incomeExpensesStats
+        , date_range_
+        , -1
+    );
+
     core_->currencyList_.LoadBaseCurrencySettings();
-
-    wxString yearStr = wxString::Format("%d", year_);
-    wxString finYearStr = yearStr + " - " + wxString::Format("%d", (year_ + 1));
-
-    wxDateTime sofy = wxDateTime( getUserDefinedFinancialYear() );
-    int startDay = sofy.GetDay();
-
-    wxDateTime yearBegin(sofy.GetDay(), sofy.GetMonth(), year_);
-    wxDateTime yearEnd(sofy.GetDay(), sofy.GetMonth(), (year_ + 1));
-    yearEnd.Subtract(wxDateSpan::Day());
 
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(2, _("Income vs Expenses for Financial Year: ") + finYearStr );
+    hb.addHeader(2, wxString::Format(_("Income vs Expenses for Financial Year: %s"), date_range_->title()) );
 
-    hb.DisplayDateHeading(yearBegin, yearEnd, true);
+    hb.DisplayDateHeading(date_range_->start_date(), date_range_->start_date(), true);
 
     hb.startCenter();
 
@@ -67,67 +63,35 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     hb.addTableHeaderCell(_("Difference"), true);
     hb.endTableRow();
 
-    double income = 0.0;
-    double expenses = 0.0;
-    double balance = 0.0;
+    double tIncome = 0.0, tExpenses = 0.0;
 
-    int yidx = sofy.GetMonth() -1 ;
-    int monthCorrection = 1;
-    if ( sofy.GetDay() != 1)    // allow to display 13 months - first and last are part months
-        monthCorrection ++;
-
-    int dayStart = 1;           // correct day for when not first of month
-    for (int yearIndex = wxDateTime::Jan; yearIndex < wxDateTime::Dec + monthCorrection; yearIndex++)
+    for (const auto &stats : incomeExpensesStats)
     {
-        yidx++;
-        if (yidx > wxDateTime::Dec)
-        {
-            yidx = wxDateTime::Jan;
-            year_ ++ ;
-            yearStr = wxString::Format("%d", year_);
-        }
-
-        wxString monName = mmGetNiceMonthName(yidx);
-
-        if (yearIndex == 0)
-            dayStart = startDay;
-        else
-            dayStart = 1;
-
-        wxDateTime dtBegin(dayStart, (wxDateTime::Month)yidx, year_);
-        wxDateTime dtEnd;
-        if (yearIndex > 11)
-            dtEnd = yearEnd;
-        else
-            dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);
-
-        bool ignoreDate = false;
-        income = 0.0;
-        expenses = 0.0;
-        core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
+        double income = 0, expenses = 0;
+        wxString monName = mmGetNiceMonthName((int)stats.first%100);
+        wxString yearStr = wxString()<<((int)stats.first/100);
 
         hb.startTableRow();
         hb.addTableCell(yearStr, false, true);
         hb.addTableCell(monName, false, true);
 
-        balance = income - expenses;
-
-		hb.addMoneyCell(income);
-		hb.addMoneyCell(expenses);
-		hb.addMoneyCell(balance);
+        income = stats.second.first;
+        expenses = stats.second.second;
+        tIncome += income;
+        tExpenses += expenses;
+        hb.addMoneyCell(income);
+        hb.addMoneyCell(expenses);
+        hb.addMoneyCell(income - expenses);
 
         hb.endTableRow();
     }
 
     // Now we get the totals for the financial year period
-    expenses = 0.0;
-    income = 0.0;
-    core_->bTransactionList_.getExpensesIncome(core_, -1, expenses, income,  false, yearBegin, yearEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
-	std::vector<double> data;
-	data.push_back(income);
-	data.push_back(expenses);
-	data.push_back(balance);
+    std::vector<double> data;
+    data.push_back(tIncome);
+    data.push_back(tExpenses);
+    data.push_back(tIncome - tExpenses);
 
     hb.addRowSeparator(5);
     hb.addTotalRow(_("Total:"), 5, data);
@@ -137,6 +101,6 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     hb.end();
 
     // restore year value for printing purposes.
-    year_ = printYear_;
+    //year_ = printYear_;
     return hb.getHTMLText();
 }
