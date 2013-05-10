@@ -1,6 +1,6 @@
 /*************************************************************************
  Copyright (C) 2006 Madhan Kanagavel
- Modified: Copyright (C) 2010 Stefano Giorgio      
+ Modified: Copyright (C) 2010 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -28,17 +28,19 @@
 #define _MM_EX_REPORTINCEXPENSESFINANCIALPERIOD_H_
 
 #include "../reportbase.h"
+#include "mmDateRange.h"
 
-class mmReportIncExpensesOverFinancialPeriod : public mmPrintableBase 
+class mmDateRange;
+
+class mmReportIncExpensesOverFinancialPeriod : public mmPrintableBase
 {
 public:
-    mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year);
+    mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, mmDateRange* date_range);
 
     wxString getHTMLText();
 
 private:
-    int year_;
-    int printYear_;
+    mmDateRange* date_range_;
 };
 
 #endif //_MM_EX_REPORTINCEXPENSESFINANCIALPERIOD_H_
