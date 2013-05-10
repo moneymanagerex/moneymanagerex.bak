@@ -20,6 +20,7 @@
 #define _MM_EX_HOMEPAGEPANEL_H_
 
 #include "mmpanelbase.h"
+#include "constants.h"
 #include "reports/mmDateRange.h"
 
 class mmGUIFrame;
@@ -85,8 +86,7 @@ private:
     wxString displaySummaryHeader(wxString summaryTitle );
     wxString displaySectionTotal(wxString totalsTitle, double tRecBalance, double& tBalance);
 
-    wxString displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses);
-    wxString displayTermAccounts(double& tBalance, double& tIncome, double& tExpenses);
+    wxString displayAccounts(double& tBalance, double& tIncome, double& tExpenses, wxString type = ACCOUNT_TYPE_BANK);
     wxString displayStocks(double& tBalance /*, double& tIncome, double& tExpenses */);
     wxString displayAssets(double& tBalance);
     wxString displayCurrencies();
