@@ -713,11 +713,18 @@ int mmBankTransactionList::UpdateAllTransactionsForPayee(int payeeID)
 
 void mmBankTransactionList::getExpensesIncomeStats
     (std::map<int, std::pair<double, double> > &incomeExpensesStats
-    , mmDateRange* date_range, bool ignoreFuture
+    , mmDateRange* date_range
+    , int accountID
+    , bool group_by_account
     , bool group_by_month) const
 {
     //Initialization
-    //Get base currency rates for all accounts
+    bool ignoreFuture = mmIniOptions::instance().ignoreFutureTransactions_;
+    std::pair<double, double> incomeExpensesPair;
+    incomeExpensesPair.first = 0;
+    incomeExpensesPair.second = 0;
+    wxDateTime start_date = wxDateTime(date_range->end_date()).SetDay(1);
+    //Store base currency rates for all accounts
     std::map<int, double> acc_conv_rates;
     double convRate = 1;
     for (const auto& account: core_->accountList_.accounts_)
@@ -727,38 +734,41 @@ void mmBankTransactionList::getExpensesIncomeStats
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         double rate = pCurrencyPtr->baseConv_;
         acc_conv_rates[account->id_] = rate;
+
+        //Set std::map with zerros
+        int i = group_by_month ? 12 : 1;
+        for (int m = 0; m < i; m++)
+        {
+            wxDateTime d = wxDateTime(start_date).Subtract(wxDateSpan::Months(m));
+            int idx = group_by_account ? (1000000 * account->id_) : 0;
+            idx += group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
+            incomeExpensesStats[idx] = incomeExpensesPair;
+        }
     }
-    //Set std::map with zerros
-    std::pair<double, double> incomeExpensesPair;
-    incomeExpensesPair.first = 0;
-    incomeExpensesPair.second = 0;
-    wxDateTime start_date = wxDateTime(date_range->end_date()).SetDay(1);
-    int i = group_by_month ? 12 : 1;
-    for (int m = 0; m < i; m++)
-    {
-        wxDateTime d = wxDateTime(start_date).Subtract(wxDateSpan::Months(m));
-        int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
-        incomeExpensesStats[idx] = incomeExpensesPair;
-    }
+
     //Calculations
     for (const auto& pBankTransaction : transactions_)
     {
         if (pBankTransaction->status_ == "V") continue; // skip
-
+        if (accountID != -1)
+        {
+            if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
+                continue; // skip
+        }
+        wxDateTime trxDate = pBankTransaction->date_.GetDateOnly();
         if (ignoreFuture)
         {
-            if (pBankTransaction->date_.GetDateOnly().IsLaterThan(wxDateTime::Now().GetDateOnly()))
+            if (trxDate.IsLaterThan(wxDateTime::Now().GetDateOnly()))
                 continue; //skip future dated transactions
         }
 
-        if (!pBankTransaction->date_.IsBetween(date_range->start_date(), date_range->end_date()))
+        if (trxDate.IsBetween(date_range->start_date(), date_range->end_date()))
             continue; //skip
 
         // We got this far, get the currency conversion rate for this account
         convRate = acc_conv_rates[pBankTransaction->accountID_];
 
-        wxDateTime d = pBankTransaction->date_;
-        int idx = group_by_month ? (d.GetYear()*100 + (int)d.GetMonth()) : 0;
+        int idx = group_by_month ? (trxDate.GetYear()*100 + (int)trxDate.GetMonth()) : 0;
 
         if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
             incomeExpensesStats[idx].first += pBankTransaction->amt_ * convRate;

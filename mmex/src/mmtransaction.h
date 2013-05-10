@@ -173,14 +173,18 @@ public:
 
     /* Query Functions */
     void getTransactionStats(std::map<int, std::map<int, int> > &stats, int start_year) const;
+
+    void getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses
+        , double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
     void getExpensesIncomeStats(std::map<int, std::pair<double, double> > &incomeExpensesStats
-        , mmDateRange* date_range, bool ignoreFuture
-        , bool group_by_month = true) const;
+        , mmDateRange* date_range
+        , int accountID
+        , bool group_by_account = false
+        , bool group_by_month = false) const;
+
     void getCategoryStats(std::map<int, std::map<int, std::map<int, double> > > &categoryStats
         , mmDateRange* date_range, bool ignoreFuture
         , bool group_by_month = true, bool with_date = true) const;
-    void getExpensesIncome(const mmCoreDB* core, int accountID, double& expenses
-        , double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
     // The setting asDeposit is only valid if evaluateTransfer is true
     double getAmountForCategory(int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool evaluateTransfer = false, bool asDeposit = false, bool ignoreFuture = false) const;
     double getAmountForPayee(int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
