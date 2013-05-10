@@ -18,7 +18,6 @@
 
 #include "mmhomepagepanel.h"
 #include "mmex.h"
-#include "constants.h"
 
 #include "htmlbuilder.h"
 #include "billsdepositspanel.h"
@@ -108,10 +107,14 @@ void mmHomePagePanel::createFrames()
 
     hb.startTableCell("50%\" valign=\"top\" align=\"center");
 
-    hb.addText(displayCheckingAccounts(tBalance, tIncome, tExpenses));
+    hb.addText(displayAccounts(tBalance, tIncome, tExpenses));
 
+    double termBalance = 0.0;
     if ( frame_->hasActiveTermAccounts())
-         hb.addText(displayTermAccounts(tBalance,tIncome,tExpenses));
+    {
+        hb.addText(displayAccounts(termBalance, tIncome, tExpenses, ACCOUNT_TYPE_TERM));
+        tBalance += termBalance;
+    }
 
     if (core_->accountList_.has_stock_account())
          hb.addText(displayStocks(tBalance /*,tIncome,tExpenses */));
@@ -120,7 +123,8 @@ void mmHomePagePanel::createFrames()
 
     hb.addText(displayGrandTotals(tBalance));
 
-    hb.addParaText(displayCurrencies()); // Will display Currency summary when more than one currency is used.
+    // Display Currencies summary if more than one currency is used.
+    hb.addParaText(displayCurrencies());
 
     hb.addText(displayTopTransactions());
     hb.endTableCell();
@@ -172,9 +176,12 @@ wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecB
     return hb.getHTMLText();
 }
 
-/* Checking Accounts */
-wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses)
+/* Accounts */
+wxString mmHomePagePanel::displayAccounts(double& tBalance, double& tIncome, double& tExpenses, wxString type)
 {
+    bool type_is_bank = type == ACCOUNT_TYPE_BANK;
+    double tRecBalance = 0.0, income = 0.0, expenses = 0.0;
+
     mmHTMLBuilder hb;
     hb.startTable("100%", "top", "1");
     hb.startTableRow();
@@ -182,16 +189,16 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
 
     hb.startTable("100%");
     // Only Show the account titles if we want to display Bank accounts.
-    if ( frame_->expandedBankAccounts() )
+    if ( frame_->expandedBankAccounts() && type_is_bank)
         hb.addText(displaySummaryHeader(_("Bank Account")));
-
-    double tRecBalance = 0.0;
+    else if (frame_->expandedTermAccounts() && !type_is_bank)
+        hb.addText(displaySummaryHeader(_("Term account")));
 
     // Get account balances and display accounts if we want them displayed
     wxString vAccts = core_->iniSettings_->GetStringSetting("VIEWACCOUNTS", "ALL");
     for (const auto& account: core_->accountList_.accounts_)
     {
-        if (account->acctType_ != ACCOUNT_TYPE_BANK || account->status_ == mmAccount::MMEX_Closed) continue;
+        if (account->acctType_ != type || account->status_ == mmAccount::MMEX_Closed) continue;
 
         std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
         wxASSERT(pCurrencyPtr);
@@ -205,10 +212,10 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
         tBalance += bal * rate; // actual amount in that account in the original rate
         tRecBalance += reconciledBal * rate;
 
-        double income = 0.0;
-        double expenses = 0.0;
-        // Display the individual Checking account links if we want to display them
-        if ( frame_->expandedBankAccounts()
+        income = 0.0;
+        expenses = 0.0;
+        // Display the individual account links if we want to display them
+        if ( ((type_is_bank) ? frame_->expandedBankAccounts() : frame_->expandedTermAccounts())
             || (!frame_->expandedBankAccounts() && !frame_->expandedTermAccounts()) )
         {
             core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income
@@ -220,7 +227,7 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
             if (((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
                 (vAccts == "Favorites" && account->favoriteAcct_) ||
                 (vAccts == "ALL"))
-                && frame_->expandedBankAccounts())
+                && ((type_is_bank) ? frame_->expandedBankAccounts() : frame_->expandedTermAccounts()))
             {
                 hb.startTableRow();
                 hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_), account->name_, false, true);
@@ -233,83 +240,8 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
             tExpenses += expenses;
         }
     }
-    hb.addText(displaySectionTotal(_("Bank Accounts Total:"), tRecBalance, tBalance));
-    hb.endTable();
-
-    hb.endTableCell();
-    hb.endTableRow();
-    hb.endTable();
-
-    return hb.getHTMLText();
-}
-
-/* Term Accounts */
-wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome, double& tExpenses)
-{
-    mmHTMLBuilder hb;
-    double tTermBalance = 0.0;
-    double tRecBalance  = 0.0;
-
-    hb.startTable("100%", "top", "1");
-    hb.startTableRow();
-    hb.startTableCell();
-
-    hb.startTable("100%");
-    // Only Show the account titles if Term accounts are active and we want them displayed.
-    if ( frame_->expandedTermAccounts() )
-        hb.addText(displaySummaryHeader(_("Term Account")));
-
-    // Get account balances and add to totals, and display accounts if we want them displayed
-    wxString vAccts = core_->iniSettings_->GetStringSetting("VIEWACCOUNTS", "ALL");
-    for (const auto& account: core_->accountList_.accounts_)
-    {
-        if (account && account->status_== mmAccount::MMEX_Open && account->acctType_ == ACCOUNT_TYPE_TERM)
-        {
-            std::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(account->id_);
-            wxASSERT(pCurrencyPtr);
-            CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-
-            double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_
-                , mmIniOptions::instance().ignoreFutureTransactions_);
-            double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_
-                , mmIniOptions::instance().ignoreFutureTransactions_);
-            double rate = pCurrencyPtr->baseConv_;
-            tTermBalance += bal * rate; // actual amount in that account in the original rate
-            tRecBalance  += reconciledBal * rate;
-
-            // Display the individual Term account links if we want to display them
-            if ( frame_->expandedTermAccounts() )
-            {
-                double income = 0;
-                double expenses = 0;
-                core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income
-                    , false, date_range_->start_date(), date_range_->end_date()
-                    , mmIniOptions::instance().ignoreFutureTransactions_);
-
-                // show the actual amount in that account
-
-                if ((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
-                    (vAccts == "Favorites" && account->favoriteAcct_) ||
-                    (vAccts == "ALL"))
-                {
-                    hb.startTableRow();
-                    hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_), account->name_, false, true);
-                    hb.addMoneyCell(reconciledBal, true);
-                    hb.addMoneyCell(bal, true);
-                    hb.endTableRow();
-                }
-
-                // if Term accounts being displayed, include income/expense totals on home page.
-                tIncome += income;
-                tExpenses += expenses;
-            }
-        }
-    }
-
-    hb.addText(displaySectionTotal(_("Term Accounts Total:"), tRecBalance, tTermBalance));
-
-    // Add Term balance to Grand Total balance
-    tBalance += tTermBalance;
+    const wxString totalStr = (type_is_bank) ? _("Bank Accounts Total:") : _("Term Accounts Total:");
+    hb.addText(displaySectionTotal(totalStr, tRecBalance, tBalance));
     hb.endTable();
 
     hb.endTableCell();
@@ -323,9 +255,8 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
 wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, double& tExpenses */)
 {
     mmHTMLBuilder hb;
-    double stTotalBalance = 0.0;
-    wxString tBalanceStr;
-    wxString tGainStr;
+    double stTotalBalance = 0.0, stTotalGain = 0.0;
+    wxString tBalanceStr, tGainStr;
 
     hb.startTable("100%", "", "1");
     hb.startTableRow();
@@ -374,13 +305,15 @@ wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, do
         //tIncome += income * baseconvrate;
         //tExpenses += expenses * baseconvrate;
         stTotalBalance += stockBalance * baseconvrate;
+        stTotalGain += stockGain * baseconvrate;
         //We can hide or show Stocks on Home Page
         if (frame_->expandedStockAccounts())
         {
             hb.startTableRow();
             //////
             //hb.addTableCell(stocknameStr, false,true);
-            hb.addTableCellLink(wxString::Format("STOCK:%d", stockaccountId), stocknameStr, false, true);
+            hb.addTableCellLink(wxString::Format("STOCK:%d"
+                , stockaccountId), stocknameStr, false, true);
             hb.addMoneyCell(stockGain, true);
             hb.addMoneyCell(stockBalance, true);
             hb.endTableRow();
@@ -388,7 +321,7 @@ wxString mmHomePagePanel::displayStocks(double& tBalance /*, double& tIncome, do
     }
     q1.Finalize();
 
-    hb.addText(displaySectionTotal(_("Stocks Total:"), 0.0, stTotalBalance));
+    hb.addText(displaySectionTotal(_("Stocks Total:"), stTotalGain, stTotalBalance));
     hb.endTable();
 
     hb.endTableCell();
