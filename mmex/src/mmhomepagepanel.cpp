@@ -84,11 +84,13 @@ bool mmHomePagePanel::Create( wxWindow *parent,
 
 void mmHomePagePanel::createFrames()
 {
-    if (!core_->db_.get())
-        return;
+    if (!core_->db_.get()) return;
 
-    date_range_ = new mmCurrentMonth;
-    double tBalance = 0.0, tIncome = 0.0, tExpenses = 0.0;
+    if (mmIniOptions::instance().ignoreFutureTransactions_)
+        date_range_ = new mmCurrentMonth;
+    else
+        date_range_ = new mmCurrentMonthToDate;
+    vAccts_ = core_->iniSettings_->GetStringSetting("VIEWACCOUNTS", VIEW_ACCOUNTS_ALL_STR);
 
     mmHTMLBuilder hb;
     hb.init();
@@ -107,17 +109,17 @@ void mmHomePagePanel::createFrames()
 
     hb.startTableCell("50%\" valign=\"top\" align=\"center");
 
-    hb.addText(displayAccounts(tBalance, tIncome, tExpenses));
+    double tBalance = 0.0, termBalance = 0.0;
+    hb.addText(displayAccounts(tBalance));
 
-    double termBalance = 0.0;
     if ( frame_->hasActiveTermAccounts())
     {
-        hb.addText(displayAccounts(termBalance, tIncome, tExpenses, ACCOUNT_TYPE_TERM));
+        hb.addText(displayAccounts(termBalance, ACCOUNT_TYPE_TERM));
         tBalance += termBalance;
     }
 
     if (core_->accountList_.has_stock_account())
-         hb.addText(displayStocks(tBalance /*,tIncome,tExpenses */));
+         hb.addText(displayStocks(tBalance));
 
     hb.addText(displayAssets(tBalance));
 
@@ -130,7 +132,8 @@ void mmHomePagePanel::createFrames()
     hb.endTableCell();
 
     hb.startTableCell("50%\" valign=\"top\" align=\"center");
-    hb.addText(displayIncomeVsExpenses(tIncome, tExpenses)); //Also displays the Income vs Expenses graph.
+    //Also displays the Income vs Expenses graph.
+    hb.addText(displayIncomeVsExpenses());
     hb.addText(displayBillsAndDeposits());
     hb.addText(getStatWidget());
 
@@ -177,10 +180,10 @@ wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecB
 }
 
 /* Accounts */
-wxString mmHomePagePanel::displayAccounts(double& tBalance, double& tIncome, double& tExpenses, wxString type)
+wxString mmHomePagePanel::displayAccounts(double& tBalance, wxString type)
 {
     bool type_is_bank = type == ACCOUNT_TYPE_BANK;
-    double tRecBalance = 0.0, income = 0.0, expenses = 0.0;
+    double tRecBalance = 0.0;
 
     mmHTMLBuilder hb;
     hb.startTable("100%", "top", "1");
@@ -195,7 +198,6 @@ wxString mmHomePagePanel::displayAccounts(double& tBalance, double& tIncome, dou
         hb.addText(displaySummaryHeader(_("Term account")));
 
     // Get account balances and display accounts if we want them displayed
-    wxString vAccts = core_->iniSettings_->GetStringSetting("VIEWACCOUNTS", "ALL");
     for (const auto& account: core_->accountList_.accounts_)
     {
         if (account->acctType_ != type || account->status_ == mmAccount::MMEX_Closed) continue;
@@ -212,21 +214,15 @@ wxString mmHomePagePanel::displayAccounts(double& tBalance, double& tIncome, dou
         tBalance += bal * rate; // actual amount in that account in the original rate
         tRecBalance += reconciledBal * rate;
 
-        income = 0.0;
-        expenses = 0.0;
         // Display the individual account links if we want to display them
         if ( ((type_is_bank) ? frame_->expandedBankAccounts() : frame_->expandedTermAccounts())
             || (!frame_->expandedBankAccounts() && !frame_->expandedTermAccounts()) )
         {
-            core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income
-                , false, date_range_->start_date(), date_range_->end_date()
-                , mmIniOptions::instance().ignoreFutureTransactions_);
 
             // show the actual amount in that account
-
-            if (((vAccts == "Open" && account->status_ == mmAccount::MMEX_Open) ||
-                (vAccts == "Favorites" && account->favoriteAcct_) ||
-                (vAccts == "ALL"))
+            if (((vAccts_ == "Open" && account->status_ == mmAccount::MMEX_Open) ||
+                (vAccts_ == "Favorites" && account->favoriteAcct_) ||
+                (vAccts_ == VIEW_ACCOUNTS_ALL_STR))
                 && ((type_is_bank) ? frame_->expandedBankAccounts() : frame_->expandedTermAccounts()))
             {
                 hb.startTableRow();
@@ -235,9 +231,6 @@ wxString mmHomePagePanel::displayAccounts(double& tBalance, double& tIncome, dou
                 hb.addMoneyCell(bal);
                 hb.endTableRow();
             }
-            // if bank accounts being displayed or no accounts displayed, include income/expense totals on home page.
-            tIncome += income;
-            tExpenses += expenses;
         }
     }
     const wxString totalStr = (type_is_bank) ? _("Bank Accounts Total:") : _("Term Accounts Total:");
@@ -460,24 +453,49 @@ wxString mmHomePagePanel::displayCurrencies()
 }
 
 //* Income vs Expenses *//
-wxString mmHomePagePanel::displayIncomeVsExpenses(double& tincome, double& texpenses)
+wxString mmHomePagePanel::displayIncomeVsExpenses()
 {
+    bool group_by_account = true;
+    double tIncome = 0.0, tExpenses = 0.0;
+    std::map<int, std::pair<double, double> > incomeExpensesStats;
+    core_->bTransactionList_.getExpensesIncomeStats(incomeExpensesStats
+        , date_range_
+        , -1
+        , group_by_account
+    );
+    core_->currencyList_.LoadBaseCurrencySettings();
+
+    bool show_nothing = !frame_->expandedBankAccounts() && !frame_->expandedTermAccounts();
+    bool show_all = (frame_->expandedBankAccounts() && frame_->expandedTermAccounts()) || show_nothing;
+    bool show_bank = frame_->expandedBankAccounts();
+    for (const auto& account: core_->accountList_.accounts_)
+    {
+        //if (account->status_ == mmAccount::MMEX_Closed && vAccts_ == VIEW_ACCOUNTS_OPEN_STR) continue;
+        //if (!account->favoriteAcct_ && vAccts_ == VIEW_ACCOUNTS_FAVORITES_STR) continue;
+        if (!show_all)
+        {
+            if (show_bank && account->acctType_ != ACCOUNT_TYPE_BANK) continue;
+            if (frame_->expandedTermAccounts() && account->acctType_ != ACCOUNT_TYPE_TERM) continue;
+        }
+        int idx = group_by_account ? (1000000 * account->id_) : 0;
+        tIncome += incomeExpensesStats[idx].first;
+        tExpenses += incomeExpensesStats[idx].second;
+        if (!group_by_account) break;
+    }
+
     mmHTMLBuilder hb;
 
     mmGraphIncExpensesMonth gg;
-    gg.init(tincome, texpenses);
+    gg.init(tIncome, tExpenses);
     gg.Generate("");
 
     hb.startTable("100%", "top", "1");
     hb.startTableRow();
     hb.startTableCell();
 
+        wxString monthHeading = date_range_->title();
         hb.startTable("100%");
-
-            wxString monthHeading = _("Current Month");
-            if (mmIniOptions::instance().ignoreFutureTransactions_) monthHeading = _("Current Month to Date");
-
-            hb.addTableHeaderRow(wxString::Format(_("Income vs Expenses: %s"), monthHeading), 2);
+        hb.addTableHeaderRow(wxString::Format(_("Income vs Expenses: %s"), monthHeading), 2);
 
             hb.startTableRow();
             hb.startTableCell();
@@ -494,19 +512,29 @@ wxString mmHomePagePanel::displayIncomeVsExpenses(double& tincome, double& texpe
 
             hb.startTableRow();
             hb.addTableCell(_("Income:"), false, true);
-            hb.addMoneyCell(tincome);
+            hb.addMoneyCell(tIncome);
             hb.endTableRow();
 
             hb.startTableRow();
             hb.addTableCell(_("Expenses:"), false, true);
-            hb.addMoneyCell(texpenses);
+            hb.addMoneyCell(tExpenses);
             hb.endTableRow();
 
+            hb.addRowSeparator(2);
             hb.startTableRow();
             hb.addTableCell(_("Difference:"), false, true, true);
-            hb.addMoneyCell(tincome - texpenses);
+            hb.addMoneyCell(tIncome - tExpenses);
             hb.endTableRow();
 
+            if (!show_all)
+            {
+                wxString accounts_type = show_bank ? _("Bank Accounts") : _("Term Accounts");
+                hb.addRowSeparator(2);
+                hb.startTableRow();
+                hb.addTableCell(_("Accounts: "), false, true, false);
+                hb.addTableCell(accounts_type, false, true, false);
+                hb.endTableRow();
+            }
             hb.endTable();
 
         hb.endTableCell();
@@ -533,7 +561,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
     {
         mmBDTransactionHolder th;
 
-        th.id_           = q1.GetInt("BDID");
+        th.id_             = q1.GetInt("BDID");
         th.nextOccurDate_  = q1.GetDate("NEXTOCCURRENCEDATE");
         th.nextOccurStr_   = mmGetDateForDisplay(th.nextOccurDate_);
         int numRepeats     = q1.GetInt("NUMOCCURRENCES");
