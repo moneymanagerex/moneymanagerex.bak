@@ -30,8 +30,8 @@ wxString mmReportIncomeExpenses::getHTMLText()
     double expenses = 0.0, income = 0.0;
     core_->bTransactionList_.getExpensesIncomeStats(incomeExpensesStats
         , date_range_
-        , mmIniOptions::instance().ignoreFutureTransactions_
-        , false);                  
+        , -1
+    );
     core_->currencyList_.LoadBaseCurrencySettings();
 
     for (const auto &stats: incomeExpensesStats)
@@ -109,8 +109,7 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
     hb.endTableRow();
 
     core_->bTransactionList_.getExpensesIncomeStats(incomeExpensesStats
-        , date_range_
-        , mmIniOptions::instance().ignoreFutureTransactions_);                  
+        , date_range_, -1, false, true);
     core_->currencyList_.LoadBaseCurrencySettings();
 
     for (const auto &stats: incomeExpensesStats)
