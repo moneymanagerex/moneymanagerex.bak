@@ -88,17 +88,12 @@ void mmHomePagePanel::createFrames()
     if (!core_->db_.get())
         return;
 
+    date_range_ = new mmCurrentMonth;
+    wxDateTime today = date_range_->today();
+    double tBalance = 0.0, tIncome = 0.0, tExpenses = 0.0;
+
     mmHTMLBuilder hb;
     hb.init();
-    wxDateTime today = wxDateTime::Now();
-    wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-    wxDateTime dtBegin = prevMonthEnd;
-    wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
-
-    double tBalance = 0.0;
-    double tIncome = 0.0;
-    double tExpenses = 0.0;
-
     hb.startCenter();
 
     hb.startTable("100%", "top");
@@ -112,13 +107,12 @@ void mmHomePagePanel::createFrames()
     hb.endTableRow();
     hb.startTableRow();
 
-
     hb.startTableCell("50%\" valign=\"top\" align=\"center");
 
-    hb.addText(displayCheckingAccounts(tBalance, tIncome, tExpenses, dtBegin, dtEnd));
+    hb.addText(displayCheckingAccounts(tBalance, tIncome, tExpenses));
 
     if ( frame_->hasActiveTermAccounts())
-         hb.addText(displayTermAccounts(tBalance,tIncome,tExpenses, dtBegin, dtEnd));
+         hb.addText(displayTermAccounts(tBalance,tIncome,tExpenses));
 
     if (core_->accountList_.has_stock_account())
          hb.addText(displayStocks(tBalance /*,tIncome,tExpenses */));
@@ -169,9 +163,9 @@ wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecB
     // format the totals for display
     core_->currencyList_.LoadBaseCurrencySettings();
 
-	std::vector<double> data;
-	data.push_back(tRecBalance);
-	data.push_back(tBalance);
+    std::vector<double> data;
+    data.push_back(tRecBalance);
+    data.push_back(tBalance);
 
     hb.startTableRow();
     hb.addTotalRow(totalsTitle, 3, data);
@@ -180,7 +174,7 @@ wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecB
 }
 
 /* Checking Accounts */
-wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
+wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tIncome, double& tExpenses)
 {
     mmHTMLBuilder hb;
     hb.startTable("100%", "top", "1");
@@ -204,8 +198,10 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
         wxASSERT(pCurrencyPtr);
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-        double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
-        double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+        double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_
+            , mmIniOptions::instance().ignoreFutureTransactions_);
+        double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_
+            , mmIniOptions::instance().ignoreFutureTransactions_);
         double rate = pCurrencyPtr->baseConv_;
         tBalance += bal * rate; // actual amount in that account in the original rate
         tRecBalance += reconciledBal * rate;
@@ -216,7 +212,9 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
         if ( frame_->expandedBankAccounts()
             || (!frame_->expandedBankAccounts() && !frame_->expandedTermAccounts()) )
         {
-            core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
+            core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income
+                , false, date_range_->start_date(), date_range_->end_date()
+                , mmIniOptions::instance().ignoreFutureTransactions_);
 
             // show the actual amount in that account
 
@@ -228,7 +226,7 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
                 hb.startTableRow();
                 hb.addTableCellLink(wxString::Format("ACCT:%d", account->id_), account->name_, false, true);
                 hb.addMoneyCell(reconciledBal, true);
-				hb.addMoneyCell(bal);
+                hb.addMoneyCell(bal);
                 hb.endTableRow();
             }
             // if bank accounts being displayed or no accounts displayed, include income/expense totals on home page.
@@ -247,7 +245,7 @@ wxString mmHomePagePanel::displayCheckingAccounts(double& tBalance, double& tInc
 }
 
 /* Term Accounts */
-wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
+wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome, double& tExpenses)
 {
     mmHTMLBuilder hb;
     double tTermBalance = 0.0;
@@ -272,8 +270,10 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
             wxASSERT(pCurrencyPtr);
             CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-            double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
-            double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+            double bal = account->initialBalance_ + core_->bTransactionList_.getBalance(account->id_
+                , mmIniOptions::instance().ignoreFutureTransactions_);
+            double reconciledBal = account->initialBalance_ + core_->bTransactionList_.getReconciledBalance(account->id_
+                , mmIniOptions::instance().ignoreFutureTransactions_);
             double rate = pCurrencyPtr->baseConv_;
             tTermBalance += bal * rate; // actual amount in that account in the original rate
             tRecBalance  += reconciledBal * rate;
@@ -283,7 +283,9 @@ wxString mmHomePagePanel::displayTermAccounts(double& tBalance, double& tIncome,
             {
                 double income = 0;
                 double expenses = 0;
-                core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
+                core_->bTransactionList_.getExpensesIncome(core_, account->id_, expenses, income
+                    , false, date_range_->start_date(), date_range_->end_date()
+                    , mmIniOptions::instance().ignoreFutureTransactions_);
 
                 // show the actual amount in that account
 
@@ -560,17 +562,17 @@ wxString mmHomePagePanel::displayIncomeVsExpenses(double& tincome, double& texpe
 
             hb.startTableRow();
             hb.addTableCell(_("Income:"), false, true);
-			hb.addMoneyCell(tincome);
+            hb.addMoneyCell(tincome);
             hb.endTableRow();
 
             hb.startTableRow();
             hb.addTableCell(_("Expenses:"), false, true);
-			hb.addMoneyCell(texpenses);
+            hb.addMoneyCell(texpenses);
             hb.endTableRow();
 
             hb.startTableRow();
             hb.addTableCell(_("Difference:"), false, true, true);
-			hb.addMoneyCell(tincome - texpenses);
+            hb.addMoneyCell(tincome - texpenses);
             hb.endTableRow();
 
             hb.endTable();
@@ -593,6 +595,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(
         "select BDID, NEXTOCCURRENCEDATE, NUMOCCURRENCES, REPEATS, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
 
+    const wxDateTime &today = date_range_->today();
     bool visibleEntries = false;
     while (q1.NextRow())
     {
@@ -611,7 +614,6 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
             repeats -= BD_REPEATS_MULTIPLEX_BASE;
 
-        wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
         th.daysRemaining_ = ts.GetDays();
         int minutesRemaining_ = ts.GetMinutes();
@@ -689,7 +691,6 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
         for (size_t bdidx = 0; bdidx < trans_.size(); ++bdidx)
         {
             data4.clear();
-            wxDateTime today = wxDateTime::Now();
             wxTimeSpan ts = trans_[bdidx].nextOccurDate_.Subtract(today);
             //int hoursRemaining_ = ts.GetHours();
 
@@ -813,6 +814,7 @@ wxString mmHomePagePanel::displayTopTransactions()
 
 wxString mmHomePagePanel::getCalendarWidget()
 {
+    const wxDateTime &now = date_range_->today();
     int font_size = mmIniOptions::instance().html_font_size_;
     mmHTMLBuilder hb;
     hb.startTable("100%", "", "1");
@@ -824,25 +826,25 @@ wxString mmHomePagePanel::getCalendarWidget()
     //hb.addTableCell(wxString()<<wxDateTime::Now().GetYear());
     hb.startTableCell(wxString::Format("1"));
     hb.addText( wxString("<b>")
-        << wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Now().GetMonth()))
+        << wxGetTranslation(wxDateTime::GetMonthName(now.GetMonth()))
         << "</b>");
     hb.endTableCell();
     hb.addTableCell("");
-    wxDateTime thisMonth = wxDateTime::Now().SetDay(1);
-    for (int d = 1; d <= wxDateTime::Now().GetLastMonthDay().GetDay(); d++)
+    wxDateTime selectedMonthDay = date_range_->start_date();
+    for (int d = 1; d <= selectedMonthDay.GetLastMonthDay().GetDay(); d++)
     {
-        thisMonth.SetDay(d);
+        selectedMonthDay.SetDay(d);
         wxString sColor = "", sBgColor = "";
-        if (d == wxDateTime::Now().GetDay()) sBgColor = "YELLOW";
+        if (d == now.GetDay()) sBgColor = "YELLOW";
         hb.startTableCell(wxString::Format("1\" bgcolor=\"%s", sBgColor));
-        if (wxDateTime::GetWeekDayName(thisMonth.GetWeekDay())=="Sunday") sColor = "#FF0000";
-        else if (wxDateTime::GetWeekDayName(thisMonth.GetWeekDay())=="Saturday") sColor = "#FF0000";
+        if (wxDateTime::GetWeekDayName(selectedMonthDay.GetWeekDay())=="Sunday") sColor = "#FF0000";
+        else if (wxDateTime::GetWeekDayName(selectedMonthDay.GetWeekDay())=="Saturday") sColor = "#FF0000";
         hb.addText(wxString::Format("<font color=\"%s\" > %d </font>"
             , sColor, d));
         hb.endTableCell();
     }
     hb.addTableCell(wxString::Format(_("Week&nbsp;#%d")
-        , wxDateTime::Now().GetWeekOfYear())
+        , now.GetWeekOfYear())
         , false, false, true);
 
     hb.endTableRow();

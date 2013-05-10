@@ -9,19 +9,21 @@
 class mmDateRange
 {
 public:
-    mmDateRange(): now_(wxDateTime::Now().GetDateOnly())
+    mmDateRange(): today_(wxDateTime::Now().GetDateOnly())
     {
-        start_date_ = now_;
-        end_date_ = now_;
+        start_date_ = today_;
+        end_date_ = today_;
         title_ = "Date Range";
     }
 protected:
-    wxDateTime now_, start_date_, end_date_;
+    const wxDateTime today_;
+    wxDateTime start_date_, end_date_;
     wxString title_;
 
 public:
     const virtual wxDateTime start_date() const  { return this->start_date_; };
     const virtual wxDateTime end_date() const  { return this->end_date_; };
+    const virtual wxDateTime today() const  { return this->today_; };
     const virtual bool is_with_date() const { return true; }
     const virtual wxString title() const { return title_;};
 };
@@ -31,8 +33,8 @@ class mmCurrentMonth: public mmDateRange
 public:
     mmCurrentMonth(): mmDateRange()
     {
-        this->start_date_ = now_.SetDay(1);
-        this->end_date_ = now_.GetLastMonthDay();
+        this->start_date_ = wxDateTime(today_).SetDay(1);
+        this->end_date_ = today_.GetLastMonthDay();
         this->title_ = _("Current Month");
     }
 };
@@ -42,7 +44,7 @@ class mmCurrentMonthToDate: public mmDateRange
 public:
     mmCurrentMonthToDate(): mmDateRange()
     {
-        this->start_date_ = now_.SetDay(1);
+        this->start_date_ = wxDateTime(today_).SetDay(1);
         // no change to end_date_
         this->title_ = _("Current Month to Date");
     }
@@ -64,7 +66,8 @@ class mmLast30Days: public mmDateRange
 public:
     mmLast30Days(): mmDateRange()
     {
-        this->start_date_ = wxDateTime(end_date_).Subtract(wxDateSpan::Months(1)).Add(wxDateSpan::Days(1));
+        this->start_date_ = wxDateTime(end_date_)
+            .Subtract(wxDateSpan::Months(1)).Add(wxDateSpan::Days(1));
         // no change to end_date_
         this->title_ = _("Last 30 Days");
     }
@@ -75,7 +78,8 @@ class mmLast12Months: public mmDateRange
 public:
     mmLast12Months(): mmDateRange()
     {
-        this->start_date_ = wxDateTime(end_date_).SetDay(1).Add(wxDateSpan::Months(1)).Subtract(wxDateSpan::Years(1));
+        this->start_date_ = wxDateTime(end_date_).SetDay(1)
+            .Add(wxDateSpan::Months(1)).Subtract(wxDateSpan::Years(1));
         // no change to end_date_
         this->title_ = _("Last 12 Months");
     }
@@ -125,7 +129,7 @@ public:
         this->start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1));
         this->end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1));
 
-        if (now_ < start_date_)
+        if (today_ < start_date_)
         {
             start_date_.Subtract(wxDateSpan::Years(1));
             end_date_.Subtract(wxDateSpan::Years(1));
@@ -139,12 +143,16 @@ class mmLastFinancialYear: public mmDateRange
 public:
     mmLastFinancialYear(int day, int month): mmDateRange()
     {
-        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
-        start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1)).Subtract(wxDateSpan::Years(1));
-        end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1)).Subtract(wxDateSpan::Years(1));
+        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan)
+            .Add(wxDateSpan::Days(day-1))
+            .Add(wxDateSpan::Months(month-1))
+            .Subtract(wxDateSpan::Years(1));;
+        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec)
+            .SetDay(31).Add(wxDateSpan::Days(day-1))
+            .Add(wxDateSpan::Months(month-1))
+            .Subtract(wxDateSpan::Years(1));
 
-        if (now_ >= start_date_)
+        if (today_ >= start_date_)
         {
             this->start_date_.Subtract(wxDateSpan::Years(1));
             this->end_date_.Subtract(wxDateSpan::Years(1));
@@ -159,7 +167,7 @@ public:
     mmAllTime(): mmDateRange()
     {
         this->title_ = _("Over Time");
-        this->start_date_.Subtract(now_);
+        this->start_date_.Subtract(today_);
     }
     const bool is_with_date() const { return false; }
 };
