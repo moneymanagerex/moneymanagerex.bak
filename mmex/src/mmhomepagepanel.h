@@ -85,10 +85,10 @@ private:
     wxString vAccts_;
 
 
-    wxString displaySummaryHeader(wxString summaryTitle );
-    wxString displaySectionTotal(wxString totalsTitle, double tRecBalance, double& tBalance);
+    wxString displaySummaryHeader(const wxString& summaryTitle );
+    wxString displaySectionTotal(const wxString& totalsTitle, double tRecBalance, double& tBalance);
 
-    wxString displayAccounts(double& tBalance, wxString type = ACCOUNT_TYPE_BANK);
+    wxString displayAccounts(double& tBalance, const wxString& type = ACCOUNT_TYPE_BANK);
     wxString displayStocks(double& tBalance /*, double& tIncome, double& tExpenses */);
     wxString displayAssets(double& tBalance);
     wxString displayCurrencies();

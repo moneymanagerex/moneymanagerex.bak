@@ -152,7 +152,7 @@ bool sortTransactionsByRemainingDaysHP(const mmBDTransactionHolder& elem1,
     return elem1.daysRemaining_ < elem2.daysRemaining_;
 }
 
-wxString mmHomePagePanel::displaySummaryHeader(wxString summaryTitle)
+wxString mmHomePagePanel::displaySummaryHeader(const wxString& summaryTitle)
 {
     mmHTMLBuilder hb;
     hb.startTableRow();
@@ -163,7 +163,7 @@ wxString mmHomePagePanel::displaySummaryHeader(wxString summaryTitle)
     return hb.getHTMLText();
 }
 
-wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecBalance, double& tBalance)
+wxString mmHomePagePanel::displaySectionTotal(const wxString& totalsTitle, double tRecBalance, double& tBalance)
 {
     mmHTMLBuilder hb;
     // format the totals for display
@@ -180,7 +180,7 @@ wxString mmHomePagePanel::displaySectionTotal(wxString totalsTitle, double tRecB
 }
 
 /* Accounts */
-wxString mmHomePagePanel::displayAccounts(double& tBalance, wxString type)
+wxString mmHomePagePanel::displayAccounts(double& tBalance, const wxString& type)
 {
     bool type_is_bank = type == ACCOUNT_TYPE_BANK;
     double tRecBalance = 0.0;
