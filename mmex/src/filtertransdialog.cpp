@@ -282,7 +282,7 @@ void mmFilterTransactionsDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemPanelSizer->Add(transNumberCheckBox_, flags);
 
-    transNumberEdit_ = new wxTextCtrl( itemPanel, wxID_STATIC, "");
+    transNumberEdit_ = new wxTextCtrl( itemPanel, wxID_ANY);
     itemPanelSizer->Add(transNumberEdit_, flagsExpand);
     //--End of Row --------------------------------------------------------
 
@@ -290,7 +290,7 @@ void mmFilterTransactionsDialog::CreateControls()
                                     wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemPanelSizer->Add(notesCheckBox_, flags);
 
-    notesEdit_ = new wxTextCtrl( itemPanel, wxID_ANY, _T(""));
+    notesEdit_ = new wxTextCtrl( itemPanel, wxID_ANY);
     itemPanelSizer->Add(notesEdit_, flagsExpand);
     //--End of Row --------------------------------------------------------
 

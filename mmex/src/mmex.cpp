@@ -326,11 +326,11 @@ mmNewDatabaseWizardPage1::mmNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     mainSizer->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxStaticText* itemStaticText6 = new wxStaticText( this, wxID_STATIC, _("User Name"));
+    wxStaticText* itemStaticText6 = new wxStaticText(this, wxID_STATIC, _("User Name"));
     itemBoxSizer5->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    itemUserName_ = new wxTextCtrl( this, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, _T(""), wxDefaultPosition, wxSize(130,-1), 0 );
-    itemBoxSizer5->Add(itemUserName_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemUserName_ = new wxTextCtrl(this, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME);
+    itemBoxSizer5->Add(itemUserName_, 1, wxALIGN_CENTER_VERTICAL|wxGROW|wxALL, 5);
 
     helpMsg.Empty();
     helpMsg << _("(Optional) Specify a title or your name.") << "\n"
