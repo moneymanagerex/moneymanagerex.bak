@@ -856,18 +856,18 @@ void mmBankTransactionList::getCategoryStats
     }
 }
 
-void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int> > &stats, int start_year) const
+void mmBankTransactionList::getTransactionStats(std::map<wxDateTime::Month, std::map<int, int> > &stats, int start_year) const
 {
     //Initialization
-    for (int i = 1; i < 13; i++)
-    {
-        std::map<int, int> month_stat;
+	for (wxDateTime::Month m = wxDateTime::Jan; m != wxDateTime::Inv_Month; m = wxDateTime::Month(m + 1))
+	{
+		std::map<int, int> month_stat;
         for (int y = start_year; y <= wxDateTime::Now().GetYear(); y++)
         {
             month_stat[y] = 0;
         }
-        stats[i] = month_stat;
-    }
+		stats[m] = month_stat;
+	}
 
     //Calculations
     for (const auto &pBankTransaction : transactions_)
@@ -880,7 +880,7 @@ void mmBankTransactionList::getTransactionStats(std::map<int, std::map<int, int>
             continue; //skip future dated transactions
 
         int year = pBankTransaction->date_.GetYear();
-        int month = (int)pBankTransaction->date_.GetMonth()+1;
+        wxDateTime::Month month = pBankTransaction->date_.GetMonth();
         stats[month][year] += 1;
     }
 }
