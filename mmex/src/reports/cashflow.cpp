@@ -120,15 +120,13 @@ wxString mmReportCashFlow::getHTMLText()
     New code not working correctly at present and still under test.
 */
 
-//#define Using_New_classes   // Remove starting comments to test new classes.
-#ifdef Using_New_classes
+//#define USING_NEW_DB_CLASSES		// Remove starting comments to activate new code.
+#ifdef USING_NEW_DB_CLASSES
     // load a fresh list of repeating transactions.
     TTransactionBillList repeat_trans_list(core_->db_);
 
     for (const auto& repeat_entry:repeat_trans_list.entrylist_)
     {
-        if (repeat_entry->NextOccurDate() > yearFromNow) continue;  // Skip entry
-
         bool from_account_found = true, to_account_found = true;
         if (accountArray_ != NULL)
         {
@@ -138,50 +136,57 @@ wxString mmReportCashFlow::getHTMLText()
             if (wxNOT_FOUND == accountArray_->Index(core_->accountList_.GetAccountName(repeat_entry->id_to_account_))) //linear search
                 to_account_found = false;
         }
-
         if (!from_account_found && !to_account_found) continue; // skip account
 
         double convRate = core_->accountList_.getAccountBaseCurrencyConvRate(repeat_entry->id_from_account);
-        double toConvRate = core_->accountList_.getAccountBaseCurrencyConvRate(repeat_entry->id_to_account_);
-
-        if (repeat_entry->repeat_type_ == TTransactionBillEntry::TYPE_NONE)
+        double amount = 0.0;
+        if (repeat_entry->trans_type_ == TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_WITHDRAWAL])
         {
-            repeat_entry->num_repeats_ = 1;
+            amount = -repeat_entry->amount_from_ * convRate;
+        }
+        else if (repeat_entry->trans_type_ == TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_DEPOSIT])
+        {
+            amount = +repeat_entry->amount_from_ * convRate;
+        }
+        else //if (transType == TRANS_TYPE_TRANSFER_STR)
+        {
+            double toConvRate = core_->accountList_.getAccountBaseCurrencyConvRate(repeat_entry->id_to_account_);
+            if (from_account_found) amount -= repeat_entry->amount_from_ * convRate;
+            if (to_account_found)   amount += repeat_entry->amount_to_ * toConvRate;
         }
 
-        while((repeat_entry->NextOccurDate() < yearFromNow) && (repeat_entry->num_repeats_ >= 0))
+        if (repeat_entry->UsingRepeatProcessing())
         {
-            mmRepeatForecast rf;
-            rf.date = repeat_entry->NextOccurDate();
-            rf.amount = 0.0;
+            while (repeat_entry->num_repeats_ > 0)
+            {
+                mmRepeatForecast rf;
+                rf.date = repeat_entry->NextOccurDate();
+                rf.amount = amount;
 
-            if (repeat_entry->trans_type_ == TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_WITHDRAWAL])
-            {
-                rf.amount = -repeat_entry->amount_from_ * convRate;
+                fvec.push_back(rf);
+                repeat_entry->AdjustNextOccuranceDate();
             }
-            else if (repeat_entry->trans_type_ == TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_DEPOSIT])
+        }
+        else
+        {
+            while((repeat_entry->NextOccurDate() < yearFromNow))
             {
-                rf.amount = +repeat_entry->amount_from_ * convRate;
-            }
-            else //if (transType == TRANS_TYPE_TRANSFER_STR)
-            {
-                if (from_account_found) rf.amount -= repeat_entry->amount_from_ * convRate;
-                if (to_account_found)   rf.amount += repeat_entry->amount_to_ * toConvRate;
-            }
+                mmRepeatForecast rf;
+                rf.date = repeat_entry->NextOccurDate();
+                rf.amount = amount;
 
-            fvec.push_back(rf);   
-            repeat_entry->AdjustNextOccuranceDate();
-        } // end while
+                fvec.push_back(rf);
+                repeat_entry->AdjustNextOccuranceDate();
+            }
+        }
     }
 
-#endif
-
-#ifndef Using_New_classes
+#else
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_BILLSDEPOSITS_V1);
 
     while (q1.NextRow())
     {
-        wxDateTime nextOccurDate = q1.GetDateTime("NEXTOCCURRENCEDATE");
+        wxDateTime nextOccurDate = q1.GetDate("NEXTOCCURRENCEDATE");
            
         int repeats             = q1.GetInt("REPEATS");
         int numRepeats          = q1.GetInt("NUMOCCURRENCES");
