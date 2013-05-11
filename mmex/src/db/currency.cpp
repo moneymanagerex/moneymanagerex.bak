@@ -91,17 +91,24 @@ void TCurrencyEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 
 int TCurrencyEntry::Add(wxSQLite3Database* db)
 {
-    const char INSERT_INTO_CURRENCYFORMATS_V1[] =
-    "insert into CURRENCYFORMATS_V1 "
-    "(CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR,"
-    " UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL) "
-    "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-    
-    wxSQLite3Statement st = db->PrepareStatement(INSERT_INTO_CURRENCYFORMATS_V1);
-    int db_index = 0;
-    SetDatabaseValues(st, db_index);
+    try
+    {
+        const char SQL_STATEMENT[] =
+        "insert into CURRENCYFORMATS_V1 "
+        "(CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR,"
+        " UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL) "
+        "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-    FinaliseAdd(db, st);
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
+        int db_index = 0;
+        SetDatabaseValues(st, db_index);
+
+        FinaliseAdd(db, st);
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogError("TCurrencyEntry:Add: %s", e.GetMessage().c_str());
+    }
 
     return id_;
 }
@@ -113,15 +120,15 @@ void TCurrencyEntry::Delete(wxSQLite3Database* db)
 
 void TCurrencyEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_CURRENCYFORMATS_V1[] =
-    "update CURRENCYFORMATS_V1 set"
-    " CURRENCYNAME = ?, PFX_SYMBOL = ?, SFX_SYMBOL = ?, DECIMAL_POINT = ?, GROUP_SEPARATOR = ?,"
-    " UNIT_NAME = ?, CENT_NAME = ?, SCALE = ?, BASECONVRATE = ?, CURRENCY_SYMBOL = ? "
-    "where CURRENCYID = ?";
-
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_CURRENCYFORMATS_V1);
+        const char SQL_STATEMENT[] =
+        "update CURRENCYFORMATS_V1 set"
+        " CURRENCYNAME = ?, PFX_SYMBOL = ?, SFX_SYMBOL = ?, DECIMAL_POINT = ?, GROUP_SEPARATOR = ?,"
+        " UNIT_NAME = ?, CENT_NAME = ?, SCALE = ?, BASECONVRATE = ?, CURRENCY_SYMBOL = ? "
+        "where CURRENCYID = ?";
+        
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         int db_index = 0;
         SetDatabaseValues(st, db_index);
         st.Bind(++db_index, id_);
@@ -130,7 +137,7 @@ void TCurrencyEntry::Update(wxSQLite3Database* db)
     }
     catch(const wxSQLite3Exception& e)
     {
-        wxLogError("TCurrencyEntry:update: %s", e.GetMessage().c_str());
+        wxLogError("TCurrencyEntry:Update: %s", e.GetMessage().c_str());
     }
 }
 

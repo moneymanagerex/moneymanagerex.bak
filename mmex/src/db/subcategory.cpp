@@ -56,12 +56,13 @@ void TSubCategoryEntry::Delete(wxSQLite3Database* db)
 
 void TSubCategoryEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_ALL_SUBCATEGORY_V1[] =
-    "update SUBCATEGORY_V1 set SUBCATEGNAME = ?, CATEGID = ? "
-    "where SUBCATEGID = ?";
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_ALL_SUBCATEGORY_V1);
+        const char SQL_STATEMENT[] =
+        "update SUBCATEGORY_V1 set SUBCATEGNAME = ?, CATEGID = ? "
+        "where SUBCATEGID = ?";
+        
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         st.Bind(1, name_);
         st.Bind(2, cat_id_);
         st.Bind(3, id_);
