@@ -68,7 +68,8 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     for (const auto &stats : incomeExpensesStats)
     {
         double income = 0, expenses = 0;
-        wxString monName = mmGetNiceMonthName((int)stats.first%100);
+        wxDateTime dummy = wxDateTime::Now();
+        wxString monName = wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Month(stats.first%100)));
         wxString yearStr = wxString()<<((int)stats.first/100);
 
         hb.startTableRow();

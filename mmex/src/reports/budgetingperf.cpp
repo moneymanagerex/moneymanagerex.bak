@@ -19,7 +19,7 @@ void mmReportBudgetingPerformance::DisplayEstimateMonths(mmHTMLBuilder& hb, mmBu
             month = month - 12;
         }
         // Set the estimate for each month
-		hb.addMoneyCell(budgetEntry.estimated_ / 12);
+        hb.addMoneyCell(budgetEntry.estimated_ / 12);
     }
 }
 
@@ -54,12 +54,12 @@ void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudg
         );
 
         if(actualMonthVal < budgetEntry.estimated_)
-		{
-			hb.addMoneyCell(actualMonthVal, "RED");
+        {
+            hb.addMoneyCell(actualMonthVal, "RED");
         }
         else
         {
-			hb.addMoneyCell(actualMonthVal);
+            hb.addMoneyCell(actualMonthVal);
         }
     }
 }
@@ -94,21 +94,21 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     hb.startCenter();
 
     hb.startTable();
-	hb.startTableRow();
-	hb.addTableHeaderCell(_("Category"));
-	hb.addTableHeaderCell(_("Type"));
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Category"));
+    hb.addTableHeaderCell(_("Type"));
 
-	for (wxDateTime::Month m = wxDateTime::Jan; m <= wxDateTime::Dec; m = wxDateTime::Month(m + 1))
-		hb.addTableHeaderCell(wxDateTime::GetMonthName(m, wxDateTime::Name_Abbr));
-	hb.addTableHeaderCell(_("Overall"));
+    for (wxDateTime::Month m = wxDateTime::Jan; m <= wxDateTime::Dec; m = wxDateTime::Month(m + 1))
+        hb.addTableHeaderCell(wxGetTranslation(wxDateTime::GetMonthName(m, wxDateTime::Name_Abbr)));
+    hb.addTableHeaderCell(_("Overall"));
     hb.addTableHeaderCell(_("%"));
-	hb.endTableRow();
+    hb.endTableRow();
 
     core_->currencyList_.LoadBaseCurrencySettings();
 
     wxSQLite3Statement st = core_->db_.get()->PrepareStatement(SELECT_SUBCATEGS_FROM_SUBCATEGORY_V1);
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_FROM_CATEGORY_V1);
-        
+
     while (q1.NextRow())
     {
         mmBudgetEntryHolder th;
@@ -135,31 +135,31 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         if ((totalEstimated_ != 0.0) || (th.actual_ != 0.0))
         {
             hb.startTableRow();
-			hb.addTableCell(th.catStr_, false, true);
-			hb.addTableCell(_("Estimated"));
-            
+            hb.addTableCell(th.catStr_, false, true);
+            hb.addTableCell(_("Estimated"));
+
             DisplayEstimateMonths(hb, th, startMonth);
-           
-			hb.addMoneyCell(totalEstimated_);
+
+            hb.addMoneyCell(totalEstimated_);
             hb.addTableCell("-");
             hb.endTableRow();
 
             // actual stuff
             hb.startTableRow();
-			hb.addTableCell(th.catStr_, false, true);
-			hb.addTableCell(_("Actual"));
+            hb.addTableCell(th.catStr_, false, true);
+            hb.addTableCell(_("Actual"));
 
             DisplayActualMonths(hb, th, startMonth, startYear);
 
             // year end
-			if(th.actual_ < totalEstimated_)
-			{
-				hb.addMoneyCell(th.actual_, "RED");
-			}
-			else
-			{
-				hb.addMoneyCell(th.actual_);
-			}
+            if(th.actual_ < totalEstimated_)
+            {
+                hb.addMoneyCell(th.actual_, "RED");
+            }
+            else
+            {
+                hb.addMoneyCell(th.actual_);
+            }
 
             if (((totalEstimated_ < 0) && (th.actual_ < 0)) ||
                 ((totalEstimated_ > 0) && (th.actual_ > 0)))
@@ -171,14 +171,14 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             {
                 hb.addTableCell("-");
             }
-				
+
             hb.endTableRow();
 
-			hb.addRowSeparator(16);
+            hb.addRowSeparator(16);
         }
 
         st.Bind(1, th.categID_);
-        wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
+        wxSQLite3ResultSet q2 = st.ExecuteQuery();
 
         while(q2.NextRow())
         {
@@ -190,7 +190,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             thsub.subCatStr_  = q2.GetString("SUBCATEGNAME");
 
             mmDBWrapper::getBudgetEntry(core_->db_.get(), budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
- 
+
             // Set the estimated amount for the year
             setBudgetYearlyEstimate(thsub);
             totalEstimated_ = thsub.estimated_;
@@ -204,16 +204,16 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
                 yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
             );
-            
+
             if ((totalEstimated_ != 0.0) || (thsub.actual_ != 0.0))
             {
                 hb.startTableRow();
                 hb.addTableCell(thsub.catStr_+ ": " + thsub.subCatStr_, false, true);
                 hb.addTableCell(_("Estimated"));
-			
+
                 DisplayEstimateMonths(hb, thsub, startMonth);
 
-				hb.addMoneyCell(totalEstimated_);
+                hb.addMoneyCell(totalEstimated_);
                 hb.addTableCell("-");
                 hb.endTableRow();
 
@@ -226,11 +226,11 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                 // year end
                 if(thsub.actual_ < totalEstimated_)
                 {
-					hb.addMoneyCell(thsub.actual_, "RED");
+                    hb.addMoneyCell(thsub.actual_, "RED");
                 }
                 else
                 {
-					hb.addMoneyCell(thsub.actual_);
+                    hb.addMoneyCell(thsub.actual_);
                 }
 
                 if (((totalEstimated_ < 0) && (thsub.actual_ < 0)) ||
@@ -246,7 +246,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
 
                 hb.endTableRow();
                 hb.addRowSeparator(16);
-            } 
+            }
         }
         st.Reset();
     }
@@ -255,7 +255,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     q1.Finalize();
 
     hb.endTable();
-	hb.endCenter();
+    hb.endCenter();
 
     hb.end();
     return hb.getHTMLText();
