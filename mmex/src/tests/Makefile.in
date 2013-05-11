@@ -130,6 +130,8 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_htmlbuilder.o \
 	mmex_tests_lua_interface.o \
 	mmex_tests_maincurrencydialog.o \
+	mmex_tests_mmCurrencyFormatter.o \
+	mmex_tests_mmOption.o \
 	mmex_tests_mmaccount.o \
 	mmex_tests_mmcategory.o \
 	mmex_tests_mmcheckingpanel.o \
@@ -171,6 +173,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_categovertimeperf.o \
 	mmex_tests_incexpenses.o \
 	mmex_tests_incexpensesfinancialperiod.o \
+	mmex_tests_mmRepeat.o \
 	mmex_tests_payee.o \
 	mmex_tests_summary.o \
 	mmex_tests_summaryassets.o \
@@ -498,6 +501,12 @@ mmex_tests_lua_interface.o: $(srcdir)/../../src/lua_interface.cpp
 mmex_tests_maincurrencydialog.o: $(srcdir)/../../src/maincurrencydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/maincurrencydialog.cpp
 
+mmex_tests_mmCurrencyFormatter.o: $(srcdir)/../../src/mmCurrencyFormatter.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmCurrencyFormatter.cpp
+
+mmex_tests_mmOption.o: $(srcdir)/../../src/mmOption.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmOption.cpp
+
 mmex_tests_mmaccount.o: $(srcdir)/../../src/mmaccount.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmaccount.cpp
 
@@ -620,6 +629,9 @@ mmex_tests_incexpenses.o: $(srcdir)/../../src/reports/incexpenses.cpp
 
 mmex_tests_incexpensesfinancialperiod.o: $(srcdir)/../../src/reports/incexpensesfinancialperiod.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/incexpensesfinancialperiod.cpp
+
+mmex_tests_mmRepeat.o: $(srcdir)/../../src/reports/mmRepeat.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/mmRepeat.cpp
 
 mmex_tests_payee.o: $(srcdir)/../../src/reports/payee.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/payee.cpp
