@@ -633,7 +633,7 @@ void mmTransDialog::OnDateChanged(wxDateEvent& event)
     //get weekday name
     wxDateTime date = dpc_->GetValue();
     if (event.GetDate().IsValid())
-		itemStaticTextWeek_->SetLabel(wxDateTime::GetWeekDayName(date.GetWeekDay()));
+        itemStaticTextWeek_->SetLabel(wxGetTranslation(date.GetWeekDayName(date.GetWeekDay())));
     event.Skip();
 }
 
@@ -784,7 +784,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         if (advancedToTransAmountSet_)
         {
             wxString amountStr = toTextAmount_->GetValue().Trim();
-            if (amountStr.IsEmpty() 
+            if (amountStr.IsEmpty()
                 || ! CurrencyFormatter::formatCurrencyToDouble(amountStr, toTransAmount_)
                 || (toTransAmount_ < 0.0)
             )
