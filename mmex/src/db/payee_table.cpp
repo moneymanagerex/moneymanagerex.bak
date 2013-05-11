@@ -41,15 +41,23 @@ TPayeeEntry::TPayeeEntry(const wxString& name)
 
 int TPayeeEntry::Add(wxSQLite3Database* db)
 {
-    const char INSERT_INTO_PAYEE_V1[] =
-    "INSERT INTO PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) VALUES(?, ?, ?)";
+    try
+    {
+        const char SQL_STATEMENT[] =
+        "INSERT INTO PAYEE_V1"
+        " (PAYEENAME, CATEGID, SUBCATEGID) VALUES(?, ?, ?)";
     
-    wxSQLite3Statement st = db->PrepareStatement(INSERT_INTO_PAYEE_V1);
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         st.Bind(1, name_);
         st.Bind(2, cat_id_);
         st.Bind(3, subcat_id_);
 
-    this->FinaliseAdd(db, st);
+        FinaliseAdd(db, st);
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogError("TPayeeEntry:Add: %s", e.GetMessage().c_str());
+    }
 
     return id_;
 }
@@ -61,13 +69,14 @@ void TPayeeEntry::Delete(wxSQLite3Database* db)
 
 void TPayeeEntry::Update(wxSQLite3Database* db)
 {
-    static const char UPDATE_PAYEE_V1[] =
-    "UPDATE PAYEE_V1 SET PAYEENAME = ?, "
-        "CATEGID = ?, SUBCATEGID = ? "
-    "WHERE PAYEEID = ?";
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_PAYEE_V1);
+        const char SQL_STATEMENT[] =
+        "UPDATE PAYEE_V1 SET"
+        " PAYEENAME = ?, CATEGID = ?, SUBCATEGID = ? "
+        "WHERE PAYEEID = ?";
+        
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         st.Bind(1, name_);
         st.Bind(2, cat_id_);
         st.Bind(3, subcat_id_);

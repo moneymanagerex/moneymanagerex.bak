@@ -89,15 +89,15 @@ void TAssetEntry::Delete(wxSQLite3Database* db)
 
 void TAssetEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_ASSETS_V1[] =
-    "update ASSETS_V1 set"
-    " STARTDATE = ?, ASSETNAME = ?, VALUE = ?, "
-    " VALUECHANGE = ?, NOTES = ?, VALUECHANGERATE = ?, ASSETTYPE = ? "
-    "where ASSETID = ?";
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_ASSETS_V1);
-        
+        const char SQL_STATEMENT[] =
+        "update ASSETS_V1 set"
+        " STARTDATE = ?, ASSETNAME = ?, VALUE = ?, "
+        " VALUECHANGE = ?, NOTES = ?, VALUECHANGERATE = ?, ASSETTYPE = ? "
+        "where ASSETID = ?";
+
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         int db_index = 0;
         SetDatabaseValues(st, db_index);
         st.Bind(++db_index, id_);

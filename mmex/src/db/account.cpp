@@ -72,17 +72,24 @@ TAccountEntry::TAccountEntry()
 
 int TAccountEntry::Add(wxSQLite3Database* db)
 {
-    const char INSERT_INTO_ACCOUNTLIST_V1[] =       
-    "insert into ACCOUNTLIST_V1 "
-    "(ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, STATUS, NOTES,"
-    " HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO, "
-    " INITIALBAL, FAVORITEACCT, CURRENCYID) "
-    "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+    try
+    {
+        const char SQL_STATEMENT[] =
+        "insert into ACCOUNTLIST_V1 "
+        "(ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, STATUS, NOTES,"
+        " HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO, "
+        " INITIALBAL, FAVORITEACCT, CURRENCYID) "
+        "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-    wxSQLite3Statement st = db->PrepareStatement(INSERT_INTO_ACCOUNTLIST_V1);
-    int db_index = 0;
-    SetDatabaseValues(st, db_index);
-    this->FinaliseAdd(db, st);
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
+        int db_index = 0;
+        SetDatabaseValues(st, db_index);
+        this->FinaliseAdd(db, st);
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogError("TAccountEntry:Add: %s", e.GetMessage().c_str());
+    }
 
     return id_;
 }
@@ -94,17 +101,16 @@ void TAccountEntry::Delete(wxSQLite3Database* db)
 
 void TAccountEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_ACCOUNT_V1[] =
-    "update ACCOUNTLIST_V1 set "
-    " ACCOUNTNAME = ?, ACCOUNTTYPE = ?, ACCOUNTNUM = ?, STATUS = ?, NOTES = ?, "
-    " HELDAT = ?, WEBSITE = ?, CONTACTINFO=?,  ACCESSINFO = ?, INITIALBAL = ?, "
-    " FAVORITEACCT = ?, CURRENCYID = ? "
-    "where ACCOUNTID = ?";
-
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_ACCOUNT_V1);
-        
+        const char SQL_STATEMENT[] =
+        "update ACCOUNTLIST_V1 set "
+        " ACCOUNTNAME = ?, ACCOUNTTYPE = ?, ACCOUNTNUM = ?, STATUS = ?, NOTES = ?, "
+        " HELDAT = ?, WEBSITE = ?, CONTACTINFO=?,  ACCESSINFO = ?, INITIALBAL = ?, "
+        " FAVORITEACCT = ?, CURRENCYID = ? "
+        "where ACCOUNTID = ?";
+    
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         int db_index = 0;
         SetDatabaseValues(st, db_index);
         st.Bind(++db_index, id_);

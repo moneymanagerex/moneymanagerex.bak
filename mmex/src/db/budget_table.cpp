@@ -65,15 +65,22 @@ TBudgetTableEntry::TBudgetTableEntry()
 
 int TBudgetTableEntry::Add(wxSQLite3Database* db)
 {
-    const char INSERT_INTO_BUDGETTABLE_V1[] =
-    "INSERT INTO BUDGETTABLE_V1 "
-    "(BudgetYearID, CategID, SubCategID, Period, Amount) "
-    "values (?, ?, ?, ?, ?)";
+    try
+    {
+        const char SQL_STATEMENT[] =
+        "INSERT INTO BUDGETTABLE_V1 "
+        "(BudgetYearID, CategID, SubCategID, Period, Amount) "
+        "values (?, ?, ?, ?, ?)";
 
-    wxSQLite3Statement st = db->PrepareStatement(INSERT_INTO_BUDGETTABLE_V1);
-    int db_index = 0;
-    SetDatabaseValues(st, db_index);
-    FinaliseAdd(db, st);
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
+        int db_index = 0;
+        SetDatabaseValues(st, db_index);
+        FinaliseAdd(db, st);
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogError("TBudgetTableEntry:Add: %s", e.GetMessage().c_str());
+    }
 
     return id_;
 }
@@ -85,15 +92,15 @@ void TBudgetTableEntry::Delete(wxSQLite3Database* db)
 
 void TBudgetTableEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_BUDGETTABLE_V1[] =
-    "update BUDGETTABLE_V1 set"
-    " BudgetYearID = ?, CategID = ?, SubCategID = ?, "
-    " Period = ?, Amount = ? "
-    "where BUDGETENTRYID = ?";
     try
     {
+        const char UPDATE_BUDGETTABLE_V1[] =
+        "update BUDGETTABLE_V1 set"
+        " BudgetYearID = ?, CategID = ?, SubCategID = ?, "
+        " Period = ?, Amount = ? "
+        "where BUDGETENTRYID = ?";
+
         wxSQLite3Statement st = db->PrepareStatement(UPDATE_BUDGETTABLE_V1);
-        
         int db_index = 0;
         SetDatabaseValues(st, db_index);
         st.Bind(++db_index, id_);

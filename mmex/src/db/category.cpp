@@ -37,13 +37,20 @@ TCategoryEntry::TCategoryEntry(const wxString& name)
 
 int TCategoryEntry::Add(wxSQLite3Database* db)
 {
-    const char INSERT_INTO_CATEGORY_V1[] =
-    "INSERT INTO CATEGORY_V1 (CATEGNAME) VALUES(?)";
-    
-    wxSQLite3Statement st = db->PrepareStatement(INSERT_INTO_CATEGORY_V1);
-    st.Bind(1, name_);
+    try
+    {
+        const char SQL_STATEMENT[] =
+        "INSERT INTO CATEGORY_V1 (CATEGNAME) VALUES(?)";
 
-    this->FinaliseAdd(db, st);
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
+        st.Bind(1, name_);
+
+        FinaliseAdd(db, st);
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogError("TCategoryEntry:Add: %s", e.GetMessage().c_str());
+    }
 
     return id_;
 }
@@ -55,16 +62,17 @@ void TCategoryEntry::Delete(wxSQLite3Database* db)
 
 void TCategoryEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_CATEGORY_V1[] =
-    "UPDATE CATEGORY_V1 SET CATEGNAME = ? "
-    "WHERE CATEGID = ?";
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_CATEGORY_V1);
+        const char SQL_STATEMENT[] =
+        "UPDATE CATEGORY_V1 SET CATEGNAME = ? "
+        "WHERE CATEGID = ?";
+
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         st.Bind(1, name_);
         st.Bind(2, id_);
 
-        this->FinaliseStatement(st);
+        FinaliseStatement(st);
     }
     catch(const wxSQLite3Exception& e)
     {
