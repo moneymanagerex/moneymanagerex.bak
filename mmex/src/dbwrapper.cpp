@@ -1029,7 +1029,7 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
 
         if (q1.NextRow())
         {
-            wxDateTime dtno = q1.GetDateTime("NEXTOCCURRENCEDATE");
+            wxDateTime dtno = q1.GetDate("NEXTOCCURRENCEDATE");
             updateOccur = dtno;
 
             int repeats = q1.GetInt("REPEATS");

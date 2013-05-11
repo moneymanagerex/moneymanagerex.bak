@@ -518,7 +518,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
         //sqlite does not support %y date mask therefore null value should be replaces
         if (th.stockPDate_ == "")
         {
-            wxDateTime dtdt = q1.GetDateTime("PURCHASEDATE");
+            wxDateTime dtdt = q1.GetDate("PURCHASEDATE");
             th.stockPDate_ = mmGetDateForDisplay(dtdt);
         }
 

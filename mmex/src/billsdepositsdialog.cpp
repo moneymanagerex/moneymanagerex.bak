@@ -154,7 +154,7 @@ void mmBDDialog::dataToControls()
         if (numRepeatStr != "-1")
             textNumRepeats_->SetValue(numRepeatStr);
 
-        wxDateTime dtno =  q1.GetDateTime("NEXTOCCURRENCEDATE");
+        wxDateTime dtno =  q1.GetDate("NEXTOCCURRENCEDATE");
         wxString dtnostr = mmGetDateForDisplay(dtno);
         dpcbd_->SetValue(dtno);
         dpc_->SetValue(dtno);
