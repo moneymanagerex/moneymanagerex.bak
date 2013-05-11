@@ -51,10 +51,10 @@
 //#define CATEGORY_TESTS
 //#define SUBCATEGORY_TESTS
 //#define PAYEE_TESTS
-#define TRANSACTION_TESTS
-#define REPEAT_TRANSACTION_TESTS
+//#define TRANSACTION_TESTS
+//#define REPEAT_TRANSACTION_TESTS
 //#define SPLIT_TRANSACTION_TESTS
-//#define ASSET_TESTS
+#define ASSET_TESTS
 //#define STOCK_TESTS
 //#define BUDGET_TESTS
 
@@ -758,7 +758,7 @@ TEST(TSplitTransactionList_Test_add_after_delete)
 /****************************************************************************
  Testing Assets
  ****************************************************************************/
-TEST(TAssetList_Test_entry_with_listed_entry)
+TEST(TAssetList_Add_Update_Entry)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
@@ -780,7 +780,7 @@ TEST(TAssetList_Test_entry_with_listed_entry)
     std::shared_ptr<TAssetEntry> listed_asset_entry = asset_list.GetEntryPtr(asset_id);
     CHECK(listed_asset_entry->name_ == asset_entry->name_);
 
-    displayTimeTaken("TAssetList_Test_entry_with_listed_entry", start_time);
+    displayTimeTaken("TAssetList_Add_Update_Entry", start_time);
 }
 
 TEST(TAssetList_Test_Values)
@@ -791,20 +791,20 @@ TEST(TAssetList_Test_Values)
     TAssetList asset_list(get_pDb());
     CHECK_EQUAL(1, asset_list.CurrentListSize());
 
-    std::shared_ptr<TAssetEntry> asset_entry = asset_list.GetIndexedEntryPtr(0);
-    if (asset_entry)
+    std::shared_ptr<TAssetEntry> pEntry = asset_list.GetIndexedEntryPtr(0);
+    if (pEntry)
     {
-        CHECK_EQUAL(date.FormatISODate(), asset_entry->date_.FormatISODate());
-        CHECK_EQUAL(ASSET_TYPE_DEF[TAssetEntry::AUTO], asset_entry->name_);
-        CHECK_EQUAL(2000, asset_entry->value_);
+        CHECK_EQUAL(date.FormatISODate(), pEntry->date_.FormatISODate());
+        CHECK_EQUAL(ASSET_TYPE_DEF[TAssetEntry::AUTO], pEntry->name_);
+        CHECK_EQUAL(2000, pEntry->value_);
 
-        double depreciation_value = asset_entry->GetValue();
-        CHECK_EQUAL(500, depreciation_value);
+        double depreciation_value = pEntry->GetValue();
+        CHECK_EQUAL(0, depreciation_value);
  
-        asset_entry->rate_type_ = ASSET_RATE_DEF[TAssetEntry::APPRECIATE];
-        double appreciation_value = asset_entry->GetValue();
-        CHECK_EQUAL(4500, appreciation_value);
-
+        pEntry->rate_type_ = ASSET_RATE_DEF[TAssetEntry::APPRECIATE];
+        double appreciation_value = pEntry->GetValue();
+        CHECK((appreciation_value > 4000) && (appreciation_value < 4002));
+      
         // wxString str_value;
         // str_value << "\n\nAsset Value: " << asset_entry->value_;
         // str_value << "     Rate: " << asset_entry->rate_value_;
@@ -817,7 +817,7 @@ TEST(TAssetList_Test_Values)
         CHECK(false);
     }
 
-    int asset_id = asset_entry->GetId();
+    int asset_id = pEntry->GetId();
     asset_list.DeleteEntry(asset_id);
 
     CHECK_EQUAL(0, asset_list.CurrentListSize());
@@ -854,7 +854,7 @@ TEST(TAssetList_Test_Balance)
     displayTimeTaken("TAssetList_Test_Balance", start_time);
 }
 
-TEST(TAssetList_Test_Delete_entries)
+TEST(TAssetList_Delete_entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
@@ -867,12 +867,13 @@ TEST(TAssetList_Test_Delete_entries)
         asset_list.DeleteEntry(listed_asset_entry->GetId());
     }
 
-    displayTimeTaken("TAssetList_Test_Delete_entries", start_time);
+    displayTimeTaken("TAssetList_Delete_entries", start_time);
 }
 
-TEST(TAssetList_Test_Add_5_years_of_entries)
+TEST(TAssetList_Add_5_years_of_entries)
 {
     const wxDateTime start_time(wxDateTime::UNow());
+    mmOptions::instance().dateFormat_ = wxT("%d-%m-%y");
     TAssetList asset_list(get_pDb());
 
     TAssetEntry* new_entry = new TAssetEntry();
@@ -891,50 +892,83 @@ TEST(TAssetList_Test_Add_5_years_of_entries)
     asset_list.ListDatabase()->Begin();
     for (int i = 1; i < 263; ++i)
     {
-    	new_entry->date_ = start_time.Subtract(wxDateSpan::Days(7));
+    	new_entry->date_ = new_entry->date_.Subtract(wxDateSpan::Days(7));
         asset_list.AddEntry(new TAssetEntry(new_entry));
     }
     asset_list.ListDatabase()->Commit();
 
-    displayTimeTaken("TAssetList_Test_Add_5_years_of_entries", start_time);
+    displayTimeTaken("TAssetList_Add_5_years_of_entries", start_time);
 }
 
-#if 1
-TEST(TAssetList_Test_Depreciate_Daily)
+TEST(TAssetList_Depreciate_Daily)
 {
     const wxDateTime start_time(wxDateTime::UNow());
     TAssetList asset_list(get_pDb());
 
-    const wxString line_feed = "\n";
     const double init_value = 20000;
     double new_value = init_value;
-    double dep_rate = (init_value/365) * 0.2; // 20% pa
+    double dep_rate = (init_value/365.25) * 0.2; // 20% pa
+    const int precision = init_value * 0.001;   // 0.01% error
+
     int days = 0;
-    std::shared_ptr<TAssetEntry> pEntry;
-    for (int i = 0; i < asset_list.CurrentListSize(); ++i)
+    for (const auto& pEntry:asset_list.entrylist_)
     {
-        pEntry = asset_list.GetIndexedEntryPtr(i);
         CHECK_EQUAL(init_value, pEntry->value_);
+        new_value = init_value - (dep_rate * days);
+        if (new_value < 0)
+        {
+            new_value = 0;
+        }
 
-        new_value = init_value - (dep_rate*days);
-        if (new_value < 0) new_value = 0;
-
-//        CHECK_EQUAL(new_value, pEntry->GetValue());
-
-        wxString str_value = line_feed;
-        str_value << "Date: " << pEntry->DisplayDate();
-        str_value << "   Expected Value: " << wxString::Format("%.2f", new_value);
-        str_value << "   Value: " << wxString::Format("%.2f", pEntry->GetValue());
-        printf(str_value.char_str());
+        double depreciation_value = pEntry->GetValue();
+        CHECK((depreciation_value > (new_value - precision)) && (depreciation_value < (new_value + precision)));
 
         days +=7;
     }
 
-    printf(line_feed.char_str());
-    displayTimeTaken("TAssetList_Test_Depreciate_Daily", start_time);
-    display_STD_IO_separation_line();
+    displayTimeTaken("TAssetList_Depreciate_Daily", start_time);
 }
-#endif
+
+TEST(TAssetList_Change_Entries_Apreciate)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+    get_pDb()->Begin();
+    for (const auto& pEntry:asset_list.entrylist_)
+    {
+        pEntry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::APPRECIATE];
+        pEntry->Update(asset_list.ListDatabase());
+    }
+    get_pDb()->Commit();
+
+    displayTimeTaken("TAssetList_Change_Entries_Apreciate", start_time);
+}
+
+TEST(TAssetList_Apreciate_Daily)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TAssetList asset_list(get_pDb());
+
+    const double init_value = 20000;
+    double new_value = init_value;
+    double dep_rate = (init_value/365.25) * 0.2; // 20% pa
+    const int precision = init_value * 0.001;   // 0.1% error
+
+    int days = 0;
+    for (const auto& pEntry:asset_list.entrylist_)
+    {
+        CHECK_EQUAL(init_value, pEntry->value_);
+        new_value = init_value + (dep_rate * days);
+
+        double apreciation_value = pEntry->GetValue();
+        CHECK((apreciation_value > (new_value - precision)) && (apreciation_value < (new_value + precision)));
+
+        days +=7;
+    }
+
+    displayTimeTaken("TAssetList_Apreciate_Daily", start_time);
+}
+
 
 #if 0
 TEST(TAssetList_Test_Depreciate_Monthly)

@@ -110,51 +110,26 @@ void TAssetEntry::Update(wxSQLite3Database* db)
     }
 }
 
+double TAssetEntry::PeriodValueAtRate(const wxDateTime startDate, double value, double rate)
+{
+    int diff_days = abs(startDate.Subtract(wxDateTime::Now()).GetDays());
+
+    return ((value * (rate/100))/365.25) * diff_days;
+}
+
 double TAssetEntry::GetAppreciatedValue(const wxDateTime& startDate, double value, double rate)
 {
-    double asset_value = 0.0;
-    wxDateTime todayDate = wxDateTime::Now();
-
-    if (todayDate > startDate)
-    {
-        int numYears = todayDate.GetYear() - startDate.GetYear();
-
-        int numMonths = todayDate.GetMonth() - startDate.GetMonth();
-        int numDays   = todayDate.GetDay() - startDate.GetDay();
-        if ( (numMonths >= 0 ) && (numDays < 0) )   numMonths --;
-        if ( (numYears > 0 )   && (numMonths < 0 )) numYears -- ;
-
-        if (numYears > 0)
-        {
-            while (numYears > 0)
-            {
-                asset_value = value + (rate * value / 100);
-                value = asset_value;
-                -- numYears;
-            }
-        }
-    }
+    value = value + PeriodValueAtRate(startDate, value, rate);
 
     return value;
 }
 
 double TAssetEntry::GetDepreciatedValue(const wxDateTime& startDate, double value, double rate)
 {
-    double asset_value = 0.0;
-    wxDateTime todayDate = wxDateTime::Now();
-
-    if (todayDate > startDate)
+    value = value - PeriodValueAtRate(startDate, value, rate);
+    if (value < 0)
     {
-        int numYears = todayDate.GetYear() - startDate.GetYear();
-        if (numYears > 0)
-        {
-            while (numYears > 0)
-            {
-                asset_value = value - (rate * value / 100);
-                value = asset_value;
-                numYears --;
-            }
-        }
+        value = 0;
     }
 
     return value;
