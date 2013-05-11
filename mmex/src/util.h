@@ -94,7 +94,6 @@ wxString mmGetNiceDateString( const wxDateTime &dt );
 wxString mmGetNiceDateSimpleString( const wxDateTime &dt );
 wxString mmGetNiceMonthName( int month );
 wxString mmGetNiceShortMonthName( int month );
-wxString mmGetNiceWeekDayName( int week_day );
 wxString DisplayDate2FormatDate(const wxString strDate);
 wxString FormatDate2DisplayDate(const wxString strDate);
 const wxArrayString date_format();

@@ -136,17 +136,6 @@ static const wxString TRANSACTION_TYPE[] =
     wxTRANSLATE("Transfer")
 };
 
-static const wxString gDaysInWeek[7] =
-{
-    wxTRANSLATE("Sunday"),
-    wxTRANSLATE("Monday"),
-    wxTRANSLATE("Tuesday"),
-    wxTRANSLATE("Wednesday"),
-    wxTRANSLATE("Thursday"),
-    wxTRANSLATE("Friday"),
-    wxTRANSLATE("Saturday")
-};
-
 static const wxString TIPS[] = {
     wxTRANSLATE("Recommendation: Always backup your .mmb database file regularly."),
     wxTRANSLATE("Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."),

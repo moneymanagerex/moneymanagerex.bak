@@ -164,15 +164,9 @@ wxString mmGetNiceShortMonthName(int month)
     return mon[month];
 }
 
-wxString mmGetNiceWeekDayName(int week_day)
-{
-    wxASSERT(week_day >= 0 && week_day < 7);
-    return wxGetTranslation(gDaysInWeek[week_day]);
-}
-
 wxString mmGetNiceDateString(const wxDateTime &dt)
 {
-    wxString dts = wxString() << mmGetNiceWeekDayName(dt.GetWeekDay())
+    wxString dts = wxString() << wxDateTime::GetWeekDayName(dt.GetWeekDay())
                               << ", " << mmGetNiceDateSimpleString(dt);
     return dts;
 }

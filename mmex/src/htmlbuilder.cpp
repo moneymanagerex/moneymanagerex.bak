@@ -93,8 +93,7 @@ void mmHTMLBuilder::addHeaderItalic(const int level, const wxString& header)
 
 void mmHTMLBuilder::addDateNow()
 {
-    wxString dt = wxString::Format(_("Today's Date: %s")
-        , mmGetNiceDateString(wxDateTime::Now()));
+    wxString dt = wxString::Format(_("Today's Date: %s"), wxDateTime::GetWeekDayName(wxDateTime::Now().GetWeekDay()));
     addHeaderItalic(1, dt);
     addLineBreak();
 }
@@ -337,7 +336,8 @@ void mmHTMLBuilder::endTableCell()
 
 void mmHTMLBuilder::DisplayDateHeading(const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange)
 {
-    wxString todaysDate = wxString::Format(_("Today's Date: %s"), mmGetNiceDateString(wxDateTime::Now()));
+	wxString todaysDate = wxString::Format(_("Today's Date: %s"), wxDateTime::GetWeekDayName(wxDateTime::Now().GetWeekDay()));
+
     todaysDate << "<br><br>";
     if (withDateRange)
     {
