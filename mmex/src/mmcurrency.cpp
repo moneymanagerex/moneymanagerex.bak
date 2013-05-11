@@ -3,12 +3,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -70,12 +70,12 @@ mmCurrency::mmCurrency()
 void mmCurrency::loadCurrencySettings()
 {
     CurrencyFormatter::instance().loadSettings(
-        pfxSymbol_, 
-        sfxSymbol_, 
-        decChar_, 
-        grpChar_, 
-        unit_, 
-        cent_, 
+        pfxSymbol_,
+        sfxSymbol_,
+        decChar_,
+        grpChar_,
+        unit_,
+        cent_,
         scaleDl_
     );
 }
@@ -222,7 +222,7 @@ int mmCurrencyList::getCurrencyID(const wxString& currencyName, bool symbol) con
     {
         currencyID = pCurrency->currencyID_;
     }
-   
+
    return currencyID;
 }
 
@@ -269,7 +269,7 @@ std::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(const wxString&
 
     return std::shared_ptr<mmCurrency>();
 }
-  
+
 void mmCurrencyList::LoadCurrencies()
 {
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_CURRENCYFORMATS_V1);
@@ -299,7 +299,7 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
     for (const auto &currency : currencies_)
     {
         const wxString symbol = currency->currencySymbol_.Upper();
-        site << symbol << base_symbol << "=X+";
+        if (!symbol.IsEmpty()) site << symbol << base_symbol << "=X+";
     }
     if (site.Right(1).Contains("+")) site.RemoveLast(1);
     site = wxString::Format("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv", site);
@@ -312,7 +312,7 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
         return false;
     }
 
-    wxString CurrencySymbol, dName;
+    wxString CurrencySymbol, sName;
     double dRate = 1;
 
     std::map<wxString, std::pair<double, wxString> > currency_data;
@@ -324,18 +324,16 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
     {
         wxString csvline = tkz.GetNextToken();
 
-        wxStringTokenizer csvsimple(csvline, "\",",wxTOKEN_STRTOK);
-        if (csvsimple.HasMoreTokens())
+        wxRegEx pattern("\"(...)...=X\",([^,][0-9.]+),\"([^\"]*)\"");
+        if (pattern.Matches(csvline))
         {
-            CurrencySymbol = csvsimple.GetNextToken();
-            if (csvsimple.HasMoreTokens())
-            {
-                csvsimple.GetNextToken().ToDouble(&dRate);
-                if (csvsimple.HasMoreTokens())
-                    dName = csvsimple.GetNextToken();
-            }
+            CurrencySymbol = pattern.GetMatch(csvline, 1);
+            pattern.GetMatch(csvline, 2).ToDouble(&dRate);
+            sName = pattern.GetMatch(csvline, 3);
+            //wxSafeShowMessage(CurrencySymbol+"|"<< dRate << "|"+sName , csvline);
         }
-        currency_data.insert(std::make_pair(CurrencySymbol, std::make_pair(dRate, dName)));
+
+        currency_data.insert(std::make_pair(CurrencySymbol, std::make_pair(dRate, sName)));
     }
 
     wxString msg = _("Currency rate updated");
@@ -348,16 +346,15 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
         const wxString currency_symbol = currency->currencySymbol_.Upper();
         if (!currency_symbol.IsEmpty())
         {
-            wxString currency_symbols_pair = currency_symbol + base_symbol + "=X";
-            std::pair<double, wxString> data = currency_data[currency_symbols_pair];
+            std::pair<double, wxString> &data = currency_data[currency_symbol];
 
             wxString valueStr, newValueStr;
             double new_rate = data.first;
             if (base_symbol == currency_symbol) new_rate = 1;
 
             double old_rate = currency->baseConv_;
-            // CurrencyFormatter::formatDoubleToCurrencyEdit(old_rate, valueStr);
-            // CurrencyFormatter::formatDoubleToCurrencyEdit(new_rate, newValueStr);
+            //CurrencyFormatter::formatDoubleToCurrencyEdit(old_rate, valueStr);
+            //CurrencyFormatter::formatDoubleToCurrencyEdit(new_rate, newValueStr);
             valueStr = wxString::Format("%0.4f", old_rate);
             newValueStr = wxString::Format("%0.4f", new_rate);
             msg << wxString::Format(_("%s\t: %s -> %s\n"),
