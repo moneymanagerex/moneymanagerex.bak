@@ -80,7 +80,7 @@ public:
     double amount_from_;
     double amount_to_;
 
-    wxString trans_date_;
+    wxDateTime trans_date_;
     wxString trans_num_;
     wxString trans_type_;   // transcode in database
     wxString trans_status_;

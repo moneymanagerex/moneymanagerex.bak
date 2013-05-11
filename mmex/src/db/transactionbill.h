@@ -48,10 +48,14 @@ class TTransactionBillEntry : public TTransactionEntry
 private:
     friend class TTransactionBillList;
 
+    // wxString nextOccurDate_;
+    // date of next transaction occurance
+    wxDateTime trans_repeat_date_;
+    
     int Add(wxSQLite3Database* db);
     void Delete(wxSQLite3Database* db);
+    void SetBillDatabaseValues(wxSQLite3Statement& st, int& db_index);
     int MultiplexedRepeatType();
-    wxString nextOccurDate_;
 
 public:
     enum REPEAT_TYPE {
@@ -104,6 +108,8 @@ public:
     
     // Display next occurance date according to required user format
     wxString DisplayNextOccurDate();
+    // Used for cash flows to check for repeat transactions.
+    bool UsingRepeatProcessing();
 };
 
 /************************************************************************************

@@ -28,7 +28,7 @@ TStockEntry::TStockEntry(wxSQLite3ResultSet& q1)
 {
     id_         = q1.GetInt("STOCKID");
     heldat_     = q1.GetInt("HELDAT");
-    pur_date_   = q1.GetString("PURCHASEDATE");
+    pur_date_   = q1.GetDate("PURCHASEDATE");
     name_       = q1.GetString("STOCKNAME");
     symbol_     = q1.GetString("SYMBOL");
     num_shares_ = q1.GetDouble("NUMSHARES");
@@ -57,16 +57,16 @@ TStockEntry::TStockEntry(TStockEntry* pEntry)
 
 void TStockEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 {
-    st.Bind(++db_index, heldat_);    // "HELDAT"
-    st.Bind(++db_index, pur_date_);  // "PURCHASEDATE"
-    st.Bind(++db_index, name_);      // "STOCKNAME"
-    st.Bind(++db_index, symbol_);    // "SYMBOL"
-    st.Bind(++db_index, num_shares_);// "NUMSHARES"
-    st.Bind(++db_index, pur_price_); // "PURCHASEPRICE"
-    st.Bind(++db_index, notes_);     // "NOTES"
-    st.Bind(++db_index, cur_price_); // "CURRENTPRICE"
-    st.Bind(++db_index, value_);     // "VALUE"
-    st.Bind(++db_index, commission_);// "COMMISSION"
+    st.Bind(++db_index, heldat_);       // "HELDAT"
+    st.BindDate(++db_index, pur_date_); // "PURCHASEDATE"
+    st.Bind(++db_index, name_);         // "STOCKNAME"
+    st.Bind(++db_index, symbol_);       // "SYMBOL"
+    st.Bind(++db_index, num_shares_);   // "NUMSHARES"
+    st.Bind(++db_index, pur_price_);    // "PURCHASEPRICE"
+    st.Bind(++db_index, notes_);        // "NOTES"
+    st.Bind(++db_index, cur_price_);    // "CURRENTPRICE"
+    st.Bind(++db_index, value_);        // "VALUE"
+    st.Bind(++db_index, commission_);   // "COMMISSION"
 }
 
 /// Constructor for creating a new stock entry.
@@ -104,14 +104,15 @@ void TStockEntry::Delete(wxSQLite3Database* db)
 
 void TStockEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_STOCK_V1_ROW[]  =
-    "update STOCK_V1 set"
-    " HELDAT = ?, PURCHASEDATE = ?, STOCKNAME = ?, SYMBOL = ?, NUMSHARES = ?,"
-    " PURCHASEPRICE = ?, NOTES = ?, CURRENTPRICE = ?, VALUE = ?, COMMISSION = ? "
-    "where STOCKID = ?";
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_STOCK_V1_ROW);
+        const char SQL_STATEMENT[] =
+        "update STOCK_V1 set"
+        " HELDAT = ?, PURCHASEDATE = ?, STOCKNAME = ?, SYMBOL = ?, NUMSHARES = ?,"
+        " PURCHASEPRICE = ?, NOTES = ?, CURRENTPRICE = ?, VALUE = ?, COMMISSION = ? "
+        "where STOCKID = ?";
+        
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         int db_index = 0;
         SetDatabaseValues(st, db_index);
         st.Bind(++db_index, id_);
@@ -126,7 +127,7 @@ void TStockEntry::Update(wxSQLite3Database* db)
 
 wxString TStockEntry::DisplayDate()
 {
-    return mmGetDateForDisplay(mmGetStorageStringAsDate(pur_date_));
+    return mmGetDateForDisplay(pur_date_);
 }
 
 wxString TStockEntry::NumberOfShares(bool whole_num)
@@ -290,7 +291,7 @@ double TStockList::GetStockBalance()
 wxString TStockList::GetStockBalanceCurrencyFormat()
 {
     wxString balance_str;
-     CurrencyFormatter::formatDoubleToCurrency(GetStockBalance(), balance_str);
+    CurrencyFormatter::formatDoubleToCurrency(GetStockBalance(), balance_str);
 
     return balance_str;
 }
@@ -298,7 +299,7 @@ wxString TStockList::GetStockBalanceCurrencyFormat()
 wxString TStockList::GetStockBalanceCurrencyEditFormat()
 {
     wxString balance_str;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(GetStockBalance(), balance_str);
+    CurrencyFormatter::formatDoubleToCurrencyEdit(GetStockBalance(), balance_str);
 
     return balance_str;
 }

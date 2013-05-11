@@ -32,16 +32,16 @@ private:
     void SetDatabaseValues(wxSQLite3Statement& st, int& db_index);
 
 public:
-    int heldat_;        // "HELDAT"
-    wxString pur_date_; // "PURCHASEDATE"
-    wxString name_;     // "STOCKNAME"
-    wxString symbol_;   // "SYMBOL"
-    double num_shares_; // "NUMSHARES"
-    double pur_price_;  // "PURCHASEPRICE"
-    wxString notes_;    // "NOTES"
-    double cur_price_;  // "CURRENTPRICE"
-    double value_;      // "VALUE"
-    double commission_; // "COMMISSION"
+    int heldat_;            // "HELDAT"
+    wxDateTime pur_date_;   // "PURCHASEDATE"
+    wxString name_;         // "STOCKNAME"
+    wxString symbol_;       // "SYMBOL"
+    double num_shares_;     // "NUMSHARES"
+    double pur_price_;      // "PURCHASEPRICE"
+    wxString notes_;        // "NOTES"
+    double cur_price_;      // "CURRENTPRICE"
+    double value_;          // "VALUE"
+    double commission_;     // "COMMISSION"
 
     /* Constructor used when loading stocks from the database. */
     TStockEntry(wxSQLite3ResultSet& q1);
