@@ -565,22 +565,28 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 {
     if(trans_.size() < 1) return;
 
-    wxString YSymbols = "";
+    //Symbol, (Amount, Name)
+    std::map<wxString, std::pair<double, wxString> > stocks_data;
+    wxString site = "";
     wxSortedArrayString symbols_array;
 
-    for (size_t i = 0; i < trans_.size(); ++i)
+    for (const auto &stock : trans_)
     {
-        wxString symbol = trans_[i]->stockSymbol_.Upper();
-        if (symbols_array.Index(symbol) == wxNOT_FOUND) {
-            symbols_array.Add(symbol);
-            YSymbols += symbol + "+";
+        const wxString symbol = stock->stockSymbol_.Upper();
+        if (!symbol.IsEmpty())
+        {
+            if (stocks_data.find(symbol) == stocks_data.end())
+            {
+                stocks_data[symbol] = std::make_pair(stock->currentPrice_, "");
+                site << symbol << "+";
+            }
         }
     }
-    YSymbols.RemoveLast(1);
+    if (site.Right(1).Contains("+")) site.RemoveLast(1);
 
-    //http://finance.yahoo.com/d/quotes.csv?s=SBER03.ME+GZPR.ME&f=sl1n&e=.csv
-    wxString site = wxString::Format("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv",
-        YSymbols);
+    //Sample : http://finance.yahoo.com/d/quotes.csv?s=SBER.ME+GAZP.ME&f=sl1n&e=.csv
+    site = wxString::Format("http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=sl1n&e=.csv"
+        , site);
 
     refresh_button_->SetBitmapLabel(wxBitmap(wxImage(led_yellow_xpm).Scale(16,16)));
     stock_details_->SetLabel(_("Connecting..."));
@@ -596,35 +602,26 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     }
 
     //--//
-    wxStringTokenizer tkz(quotes, "\r\n");
-    wxString StockSymbolWithSuffix, dName;
-    bool updated;
+    wxString StockSymbolWithSuffix, sName;
+    bool updated = false;
     double dPrice = 0.0;
-    //Symbol, Amount, Name
-    std::map<wxString, std::pair<double, wxString> > stocks_data;
 
+    wxStringTokenizer tkz(quotes, "\r\n");
     while (tkz.HasMoreTokens())
     {
-        wxString csvline = tkz.GetNextToken();
-        updated = true;
-        /*** Grab the relevant bits (for now only the symbol and the current price) */
-        wxStringTokenizer csvsimple(csvline,"\",",wxTOKEN_STRTOK);
-        if (csvsimple.HasMoreTokens())
+        const wxString csvline = tkz.GetNextToken();
+        StockSymbolWithSuffix = "";
+        wxRegEx pattern("\"([^\"]+)\",([^,][0-9.]+),\"([^\"]*)\"");
+        if (pattern.Matches(csvline))
         {
-            StockSymbolWithSuffix = csvsimple.GetNextToken();
-            if (csvsimple.HasMoreTokens())
-            {
-                csvsimple.GetNextToken().ToDouble(&dPrice);
-                if (csvsimple.HasMoreTokens())
-                    dName = csvsimple.GetNextToken();
-                else
-                    updated = false;
-            }
-            else
-                updated = false;
+            StockSymbolWithSuffix = pattern.GetMatch(csvline, 1);
+            pattern.GetMatch(csvline, 2).ToDouble(&dPrice);
+            sName = pattern.GetMatch(csvline, 3);
         }
         else
             updated = false;
+
+        updated = !StockSymbolWithSuffix.IsEmpty();
 
         //**** HACK HACK HACK
         // Note:
@@ -640,27 +637,28 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         {
             if(StockSymbolWithSuffix.substr(StockSymbolWithSuffix.Find(".")) == ".L")
                 dPrice = dPrice / 100;
-            stocks_data.insert(std::make_pair(StockSymbolWithSuffix, std::make_pair(dPrice, dName)));
+            stocks_data[StockSymbolWithSuffix].first = dPrice;
+            stocks_data[StockSymbolWithSuffix].second = sName;
         }
     }
 
     typedef std::vector<mmStockTransactionHolder> vec_t;
     vec_t stockVec;
 
-    for (size_t i = 0; i < trans_.size(); ++i)
+    for (const auto &stock : trans_)
     {
         mmStockTransactionHolder sh;
 
-        std::pair<double, wxString> data = stocks_data[trans_[i]->stockSymbol_.Upper()];
+        std::pair<double, wxString> &data = stocks_data[stock->stockSymbol_.Upper()];
         dPrice = data.first;
 
-        sh.id_ = trans_[i]->id_;
-        sh.numShares_ = trans_[i]->numShares_; //q1.GetDouble("NUMSHARES");
+        sh.id_ = stock->id_;
+        sh.numShares_ = stock->numShares_;
         // If the stock's symbol is not found, Yahoo CSV will return 0 for the current price.
         // Therefore, we assume the current price of all existing stock's symbols are greater
         // than zero and we will not update any stock if its curreny price is zero.
-        if(dPrice == 0 || sh.numShares_ < 0.0) dPrice = trans_[i]->currentPrice_ /*q1.GetDouble("CURRENTPRICE"*/;
-        sh.shareName_ = trans_[i]->shareName_; //q1.GetString ("STOCKNAME");
+        if(dPrice == 0 || sh.numShares_ < 0.0) dPrice = stock->currentPrice_;
+        sh.shareName_ = stock->shareName_;
         if (sh.shareName_.IsEmpty()) sh.shareName_ = data.second;
 
         sh.currentPrice_ = dPrice;
@@ -703,7 +701,6 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
     stock_details_->SetLabel(_("Stock prices successfully updated"));
     stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_));
-
 }
 
 wxString mmStocksPanel::getItem(long item, long column)
