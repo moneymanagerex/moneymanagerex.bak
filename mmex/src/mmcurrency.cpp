@@ -330,10 +330,8 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
             CurrencySymbol = pattern.GetMatch(csvline, 1);
             pattern.GetMatch(csvline, 2).ToDouble(&dRate);
             sName = pattern.GetMatch(csvline, 3);
-            //wxSafeShowMessage(CurrencySymbol+"|"<< dRate << "|"+sName , csvline);
+            currency_data[CurrencySymbol] = std::make_pair(dRate, sName);
         }
-
-        currency_data.insert(std::make_pair(CurrencySymbol, std::make_pair(dRate, sName)));
     }
 
     wxString msg = _("Currency rate updated");
@@ -346,17 +344,22 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
         const wxString currency_symbol = currency->currencySymbol_.Upper();
         if (!currency_symbol.IsEmpty())
         {
-            std::pair<double, wxString> &data = currency_data[currency_symbol];
-
             wxString valueStr, newValueStr;
-            double new_rate = data.first;
-            if (base_symbol == currency_symbol) new_rate = 1;
-
             double old_rate = currency->baseConv_;
-            //CurrencyFormatter::formatDoubleToCurrencyEdit(old_rate, valueStr);
-            //CurrencyFormatter::formatDoubleToCurrencyEdit(new_rate, newValueStr);
+            double new_rate = old_rate;
+            if (currency_data.find(currency_symbol) != currency_data.end())
+            {
+                new_rate = currency_data[currency_symbol].first;
+                if (base_symbol == currency_symbol) new_rate = 1;
+                newValueStr = wxString::Format("%0.4f", new_rate);          }
+            else
+            {
+                new_rate = old_rate;
+                newValueStr = _("Invalid Value ");
+            }
+
             valueStr = wxString::Format("%0.4f", old_rate);
-            newValueStr = wxString::Format("%0.4f", new_rate);
+
             msg << wxString::Format(_("%s\t: %s -> %s\n"),
                 currency_symbol, valueStr, newValueStr);
             currency->baseConv_ = new_rate;
