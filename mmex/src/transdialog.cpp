@@ -632,11 +632,8 @@ void mmTransDialog::OnDateChanged(wxDateEvent& event)
 {
     //get weekday name
     wxDateTime date = dpc_->GetValue();
-    wxString dateStr = "";
     if (event.GetDate().IsValid())
-        dateStr = mmGetNiceWeekDayName( date.GetWeekDay() /*event.GetDate()*/); //fix for wx2.9.x
-
-    itemStaticTextWeek_->SetLabel(dateStr);
+		itemStaticTextWeek_->SetLabel(wxDateTime::GetWeekDayName(date.GetWeekDay()));
     event.Skip();
 }
 
