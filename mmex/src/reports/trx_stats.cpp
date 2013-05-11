@@ -10,45 +10,45 @@ mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)
 
 wxString mmReportTransactionStats::getHTMLText()
 {
-    const int yearsHist = 10; //How many years should show the report 
+    const int yearsHist = 10; //How many years should show the report
 
-	mmHTMLBuilder hb;
+    mmHTMLBuilder hb;
     hb.init();
     hb.addHeader(2, wxString::Format(_("Transaction Statistics for %i - %i")
-		, year_ - yearsHist + 1, year_ )
-	);
+        , year_ - yearsHist + 1, year_ )
+    );
     hb.addDateNow();
     hb.addHorizontalLine();
     hb.startCenter();
     hb.startTable("75%");
 
-	std::map<int, int> grand_total;
-	std::map<wxDateTime::Month, std::map<int, int> > totals;
+    std::map<int, int> grand_total;
+    std::map<wxDateTime::Month, std::map<int, int> > totals;
     core_->bTransactionList_.getTransactionStats(totals, year_ - yearsHist +1);
 
-    //Header 
+    //Header
     // Month 2014 2013 2012 2011 .....
     hb.startTableRow();
     hb.addTableHeaderCell(_("Month"));
-	for (const auto &y : totals.begin()->second) 
+    for (const auto &y : totals.begin()->second)
     {
-		hb.addTableHeaderCell(wxString::Format("%i", y.first));
+        hb.addTableHeaderCell(wxString::Format("%i", y.first));
     }
     hb.endTableRow();
     //Table
 
     for (const auto & month_stat : totals)
     {
-		wxDateTime::Month month = month_stat.first;
+        wxDateTime::Month month = month_stat.first;
         //
         hb.startTableRow();
-		hb.addTableCell(wxDateTime::GetMonthName(month), false, true);
+        hb.addTableCell(wxGetTranslation(wxDateTime::GetMonthName(month)), false, true);
         // Totals for month
-		for (const auto &y : month_stat.second ) 
-        {		
-			int year = y.first;
-			hb.addTableCell(wxString::Format("%i", y.second), true);
-			grand_total[year] += y.second; //calculation totals for year
+        for (const auto &y : month_stat.second )
+        {
+            int year = y.first;
+            hb.addTableCell(wxString::Format("%i", y.second), true);
+            grand_total[year] += y.second; //calculation totals for year
         }
         hb.endTableRow();
     }
@@ -59,7 +59,7 @@ wxString mmReportTransactionStats::getHTMLText()
     //Grand Totals
     for (const auto &grand_totals : grand_total)
     {
-	    hb.addTableCell(wxString::Format("%i", grand_totals.second), true, true);
+        hb.addTableCell(wxString::Format("%i", grand_totals.second), true, true);
     }
     //------------
     hb.endTable();

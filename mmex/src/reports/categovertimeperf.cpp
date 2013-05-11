@@ -53,7 +53,8 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     for (int i = 0; i < MONTHS_IN_PERIOD; i++)
     {
         wxDateTime d = wxDateTime(start_date).Add(wxDateSpan::Months(i));
-		hb.addTableHeaderCell(wxDateTime::GetMonthName(d.GetMonth(), wxDateTime::Name_Abbr) << "<br>\n" << d.GetYear());
+        hb.addTableHeaderCell(wxGetTranslation(wxDateTime::GetMonthName(d.GetMonth(), wxDateTime::Name_Abbr))
+            + wxString::Format("<br>%i", d.GetYear()));
     }
     hb.addTableHeaderCell(_("Overall"));
     hb.endTableRow();
@@ -63,7 +64,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     std::map<int, std::map<int, std::map<int, double> > > categoryStats;
     core_->bTransactionList_.getCategoryStats(categoryStats
         , date_range_
-        , mmIniOptions::instance().ignoreFutureTransactions_);   
+        , mmIniOptions::instance().ignoreFutureTransactions_);
     core_->currencyList_.LoadBaseCurrencySettings();
 
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_CATEGORIES);
