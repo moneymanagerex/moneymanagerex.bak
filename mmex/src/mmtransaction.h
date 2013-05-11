@@ -172,7 +172,7 @@ public:
     void ChangeDateFormat();
 
     /* Query Functions */
-    void getTransactionStats(std::map<int, std::map<int, int> > &stats, int start_year) const;
+    void getTransactionStats(std::map<wxDateTime::Month, std::map<int, int> > &stats, int start_year) const;
 
     void getExpensesIncomeStats(std::map<int, std::pair<double, double> > &incomeExpensesStats
         , mmDateRange* date_range

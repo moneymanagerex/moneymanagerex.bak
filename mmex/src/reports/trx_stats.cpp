@@ -23,7 +23,7 @@ wxString mmReportTransactionStats::getHTMLText()
     hb.startTable("75%");
 
 	std::map<int, int> grand_total;
-	std::map<int, std::map<int, int> > totals;
+	std::map<wxDateTime::Month, std::map<int, int> > totals;
     core_->bTransactionList_.getTransactionStats(totals, year_ - yearsHist +1);
 
     //Header 
@@ -39,11 +39,10 @@ wxString mmReportTransactionStats::getHTMLText()
 
     for (const auto & month_stat : totals)
     {
-		int month = month_stat.first;
-		wxString monName = mmGetNiceMonthName(month -1);
+		wxDateTime::Month month = month_stat.first;
         //
         hb.startTableRow();
-        hb.addTableCell(monName, false, true);
+		hb.addTableCell(wxDateTime::GetMonthName(month), false, true);
         // Totals for month
 		for (const auto &y : month_stat.second ) 
         {		

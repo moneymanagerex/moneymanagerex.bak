@@ -241,9 +241,9 @@ void mmOptionsDialog::CreateControls()
     financialYearStaticBoxSizerGrid->Add(new wxStaticText(generalPanel, wxID_STATIC, _("Start Month")), flags);
 
     wxArrayString financialMonthsSelection;
-    for(int i=0; i<12; i++) {
-        financialMonthsSelection.Add(mmGetNiceShortMonthName(i));
-    };
+	for (wxDateTime::Month m = wxDateTime::Jan; m <= wxDateTime::Dec; m = wxDateTime::Month(m + 1))
+		financialMonthsSelection.Add(wxDateTime::GetMonthName(m, wxDateTime::Name_Abbr));
+
     monthSelection_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH,
         wxDefaultPosition, wxSize(100, -1), financialMonthsSelection);
     financialYearStaticBoxSizerGrid->Add(monthSelection_, flags);

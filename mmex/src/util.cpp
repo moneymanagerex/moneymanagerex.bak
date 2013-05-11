@@ -152,18 +152,6 @@ wxString mmGetNiceMonthName(int month)
     return mon[month];
 }
 
-wxString mmGetNiceShortMonthName(int month)
-{
-    static const wxString mon[12] =
-    {
-        _("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
-        _("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec")
-    };
-
-    wxASSERT(month >= 0 && month < 12);
-    return mon[month];
-}
-
 wxString mmGetNiceDateString(const wxDateTime &dt)
 {
     wxString dts = wxString() << wxDateTime::GetWeekDayName(dt.GetWeekDay())
