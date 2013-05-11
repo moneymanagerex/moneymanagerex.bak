@@ -77,11 +77,11 @@ public:
 
     /** Add a special row that will format total values */
     void addTotalRow(const wxString& caption, const int cols, const wxString& value);
-	void addTotalRow(const wxString& caption, int cols, double value);
+    void addTotalRow(const wxString& caption, int cols, double value);
 
     /** Add a special row that will format total values */
     void addTotalRow(const wxString& caption, const int cols, const std::vector<wxString>& data);
-	void addTotalRow(const wxString& caption, int cols, const std::vector<double>& data);
+    void addTotalRow(const wxString& caption, int cols, const std::vector<double>& data);
 
     /** Add a Table header cell */
     void addTableHeaderCell(const wxString& value, const bool& numeric = false);
@@ -96,7 +96,7 @@ public:
     void addTableHeaderRowLink(const wxString& href, const wxString& value, const int cols);
 
     void addMoneyCell(double amount, bool color = true);
-	void addMoneyCell(double amount, const wxString& color);
+    void addMoneyCell(double amount, const wxString& color);
     void addTableCell(const wxDateTime& date);
 
     /** Add a Cell value */
@@ -124,6 +124,7 @@ public:
 
 private:
     wxString html_;
+    const wxDateTime today_;
     bool bgswitch_;
     wxString color0_;
     wxString color1_;

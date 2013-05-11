@@ -22,7 +22,8 @@
 #include "mmOption.h"
 #include "constants.h"
 
-mmHTMLBuilder::mmHTMLBuilder() {
+mmHTMLBuilder::mmHTMLBuilder() : today_(wxDateTime::Now().GetDateOnly())
+{
     // init colors from config
     color1_ = mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX);
     color0_ = mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
@@ -93,7 +94,8 @@ void mmHTMLBuilder::addHeaderItalic(const int level, const wxString& header)
 
 void mmHTMLBuilder::addDateNow()
 {
-    wxString dt = wxString::Format(_("Today's Date: %s"), wxDateTime::GetWeekDayName(wxDateTime::Now().GetWeekDay()));
+    wxString dt = wxString::Format(_("Today's Date: %s")
+        , wxGetTranslation(today_.GetWeekDayName(today_.GetWeekDay())));
     addHeaderItalic(1, dt);
     addLineBreak();
 }
@@ -336,7 +338,8 @@ void mmHTMLBuilder::endTableCell()
 
 void mmHTMLBuilder::DisplayDateHeading(const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange)
 {
-	wxString todaysDate = wxString::Format(_("Today's Date: %s"), wxDateTime::GetWeekDayName(wxDateTime::Now().GetWeekDay()));
+    wxString todaysDate = wxString::Format(_("Today's Date: %s")
+        , wxGetTranslation(today_.GetWeekDayName(today_.GetWeekDay())));
 
     todaysDate << "<br><br>";
     if (withDateRange)

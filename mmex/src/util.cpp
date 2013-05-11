@@ -140,25 +140,6 @@ wxString mmSelectLanguage(wxWindow *parent, std::shared_ptr<MMEX_IniSettings> pI
     return lang;
 }
 
-wxString mmGetNiceMonthName(int month)
-{
-    static const wxString mon[12] =
-    {
-        _("January"), _("February"), _("March"), _("April"), _("May "), _("June"),
-        _("July"), _("August"), _("September"), _("October"), _("November"), _("December")
-    };
-
-    wxASSERT(month >= 0 && month < 12);
-    return mon[month];
-}
-
-wxString mmGetNiceDateString(const wxDateTime &dt)
-{
-    wxString dts = wxString() << wxDateTime::GetWeekDayName(dt.GetWeekDay())
-                              << ", " << mmGetNiceDateSimpleString(dt);
-    return dts;
-}
-
 wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
 {
     wxString dateFmt = mmOptions::instance().dateFormat_;
@@ -170,7 +151,7 @@ wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
     dateFmt.Replace("%d", wxString::Format("%d", dt.GetDay()));
     dateFmt.Replace("%Y", wxString::Format("%d", dt.GetYear()));
     dateFmt.Replace("%y", wxString::Format("%d", dt.GetYear()).Mid(2,2));
-    dateFmt.Replace("%m", mmGetNiceMonthName(dt.GetMonth()));
+    dateFmt.Replace("%m", wxGetTranslation(wxDateTime::GetMonthName(dt.GetMonth())));
 
     return dateFmt;
 }

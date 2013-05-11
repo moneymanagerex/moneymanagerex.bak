@@ -90,9 +90,7 @@ wxString mmSelectLanguage(wxWindow *parent, std::shared_ptr<MMEX_IniSettings> pI
 wxDateTime mmGetStorageStringAsDate( const wxString& str );
 wxString mmGetDateForDisplay( const wxDateTime &dt );
 bool mmParseDisplayStringToDate(wxDateTime& date, const wxString sDate, wxString sDateMask );
-wxString mmGetNiceDateString( const wxDateTime &dt );
 wxString mmGetNiceDateSimpleString( const wxDateTime &dt );
-wxString mmGetNiceMonthName( int month );
 wxString DisplayDate2FormatDate(const wxString strDate);
 wxString FormatDate2DisplayDate(const wxString strDate);
 const wxArrayString date_format();

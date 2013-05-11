@@ -162,6 +162,29 @@ static const wxString TIPS[] = {
     wxTRANSLATE("Before going to a shop and buy something: take the time making a list of what you really need. In the shop buy what is in your list.")
 };
 
+static const wxString MONTHS[12] =
+{
+    wxTRANSLATE("January"), wxTRANSLATE("February"), wxTRANSLATE("March")
+    , wxTRANSLATE("April"), wxTRANSLATE("May "), wxTRANSLATE("June")
+    , wxTRANSLATE("July"), wxTRANSLATE("August"), wxTRANSLATE("September")
+    , wxTRANSLATE("October"), wxTRANSLATE("November"), wxTRANSLATE("December")
+};
+
+static const wxString MONTHS_SHORT[12] =
+{
+    wxTRANSLATE("Jan"), wxTRANSLATE("Feb"), wxTRANSLATE("Mar")
+    , wxTRANSLATE("Apr"), wxTRANSLATE("May"), wxTRANSLATE("Jun")
+    , wxTRANSLATE("Jul"), wxTRANSLATE("Aug"), wxTRANSLATE("Sep")
+    , wxTRANSLATE("Oct"), wxTRANSLATE("Nov"), wxTRANSLATE("Dec")
+};
+
+static const wxString gDaysInWeek[7] =
+{
+    wxTRANSLATE("Sunday"), wxTRANSLATE("Monday"), wxTRANSLATE("Tuesday")
+    , wxTRANSLATE("Wednesday"), wxTRANSLATE("Thursday"), wxTRANSLATE("Friday")
+    , wxTRANSLATE("Saturday")
+};
+
 static const wxString CURRENCIES[] = {
     "AFN",  "Afghanistan Afghani",
     "ALL",  "Albania Lek",
