@@ -74,7 +74,7 @@ void TTransactionEntry::GetDatabaseValues(wxSQLite3ResultSet& q1)
     trans_notes_    = q1.GetString("NOTES");
     id_category_    = q1.GetInt("CATEGID");
     id_subcategory_ = q1.GetInt("SUBCATEGID");
-    trans_date_     = q1.GetString("TRANSDATE");
+    trans_date_     = q1.GetDate("TRANSDATE");
     id_followup_    = q1.GetInt("FOLLOWUPID");
     amount_to_      = q1.GetDouble("TOTRANSAMOUNT");
 }
@@ -91,7 +91,7 @@ void TTransactionEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
     st.Bind(++db_index, trans_notes_);      // NOTES
     st.Bind(++db_index, id_category_);      // CATEGID
     st.Bind(++db_index, id_subcategory_);   // SUBCATEGID
-    st.Bind(++db_index, trans_date_);       // TRANSDATE
+    st.BindDate(++db_index, trans_date_);   // TRANSDATE
     st.Bind(++db_index, id_followup_);      // FOLLOWUPID
     st.Bind(++db_index, amount_to_);        // TOTRANSAMOUNT    
 }
@@ -121,15 +121,16 @@ void TTransactionEntry::Delete(wxSQLite3Database* db)
 
 void TTransactionEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_CHECKINGACCOUNT_V1_ROW[] =
-    "update CHECKINGACCOUNT_V1 set"
-    " ACCOUNTID = ?, TOACCOUNTID = ?, PAYEEID = ?, TRANSCODE = ?, TRANSAMOUNT = ?,"
-    " STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?,"
-    " TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ? "
-    "where TRANSID = ? ";
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_CHECKINGACCOUNT_V1_ROW);
+        const char SQL_STATEMENT[] =
+        "update CHECKINGACCOUNT_V1 set"
+        " ACCOUNTID = ?, TOACCOUNTID = ?, PAYEEID = ?, TRANSCODE = ?, TRANSAMOUNT = ?,"
+        " STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?,"
+        " TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ? "
+        "where TRANSID = ? ";
+    
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         int db_index = 0;
         SetDatabaseValues(st, db_index);
         st.Bind(++db_index, id_);
@@ -144,7 +145,7 @@ void TTransactionEntry::Update(wxSQLite3Database* db)
 
 wxString TTransactionEntry::DisplayTransactionDate()
 {
-    return mmGetDateForDisplay(mmGetStorageStringAsDate(trans_date_));
+    return mmGetDateForDisplay(trans_date_);
 }
 
 /************************************************************************************

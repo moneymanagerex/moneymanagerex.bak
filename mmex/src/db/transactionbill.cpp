@@ -40,8 +40,10 @@ TTransactionBillEntry::TTransactionBillEntry(TTransactionBillEntry* pEntry)
     autoExecuteManual_ = pEntry->autoExecuteManual_;
     autoExecuteSilent_ = pEntry->autoExecuteSilent_;
     repeat_type_       = pEntry->repeat_type_;
-    nextOccurDate_     = pEntry->nextOccurDate_;
+    trans_repeat_date_ = pEntry->trans_repeat_date_;
     num_repeats_       = pEntry->num_repeats_;
+
+    //nextOccurDate_ = trans_repeat_date_.FormatISOCombined(' ');
 }
 
 /// Constructor used to load a transaction from the database.
@@ -52,9 +54,9 @@ TTransactionBillEntry::TTransactionBillEntry(wxSQLite3ResultSet& q1)
 {
     id_ = q1.GetInt("BDID");
     GetDatabaseValues(q1);
-    repeat_type_   = q1.GetInt("REPEATS");
-    nextOccurDate_ = q1.GetString("NEXTOCCURRENCEDATE");
-    num_repeats_   = q1.GetInt("NUMOCCURRENCES");
+    repeat_type_       = q1.GetInt("REPEATS");
+    trans_repeat_date_ = q1.GetDate("NEXTOCCURRENCEDATE");
+    num_repeats_       = q1.GetInt("NUMOCCURRENCES");
 
     // DeMultiplex the Auto Executable fields from the db entry: REPEATS
     if (repeat_type_ >= REPEAT_TYPE_MULTIPLEX_BASE)    // Auto Execute - User Acknowlegement
@@ -69,6 +71,8 @@ TTransactionBillEntry::TTransactionBillEntry(wxSQLite3ResultSet& q1)
         autoExecuteManual_ = false;               // Can only be manual or auto. Not both
         autoExecuteSilent_ = true;
     }
+
+//    nextOccurDate_ = trans_repeat_date_.FormatISOCombined(' ');
 }
 
 int TTransactionBillEntry::MultiplexedRepeatType()
@@ -82,24 +86,27 @@ int TTransactionBillEntry::MultiplexedRepeatType()
 
 int TTransactionBillEntry::Add(wxSQLite3Database* db)
 {
-    const char ADD_BILLSDEPOSITS_V1_ROW[] =
-    "insert into BILLSDEPOSITS_V1"
-    " (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT,"
-    " STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID,"
-    " TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT,"
-    " REPEATS, NEXTOCCURRENCEDATE, NUMOCCURRENCES)"
-    " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    try
+    {
+        const char SQL_STATEMENT[] =
+        "insert into BILLSDEPOSITS_V1"
+        " (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT,"
+        " STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, SUBCATEGID,"
+        " TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT,"
+        " REPEATS, NEXTOCCURRENCEDATE, NUMOCCURRENCES)"
+        " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    wxSQLite3Statement st = db->PrepareStatement(ADD_BILLSDEPOSITS_V1_ROW);
-    int db_index = 0;
-    SetDatabaseValues(st, db_index);
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
+        int db_index = 0;
+        SetDatabaseValues(st, db_index);        // call to inherited Database Values
+        SetBillDatabaseValues(st, db_index);
 
-    st.Bind(++db_index, MultiplexedRepeatType());
-    st.Bind(++db_index, nextOccurDate_);
-    st.Bind(++db_index, num_repeats_);
-    
-    FinaliseAdd(db, st);
-
+        FinaliseAdd(db, st);
+    }
+    catch(const wxSQLite3Exception& e)
+    {
+        wxLogError("TTransactionBillEntry:Add: %s", e.GetMessage().c_str());
+    }
     return id_;
 }
 
@@ -108,24 +115,28 @@ void TTransactionBillEntry::Delete(wxSQLite3Database* db)
     DeleteEntry(db, "delete from BILLSDEPOSITS_V1 where where BDID = ?");
 }
 
+void TTransactionBillEntry::SetBillDatabaseValues(wxSQLite3Statement& st, int& db_index)
+{
+    st.Bind(++db_index, MultiplexedRepeatType());
+    st.BindDate(++db_index, trans_repeat_date_);
+    st.Bind(++db_index, num_repeats_);
+}
+
 void TTransactionBillEntry::Update(wxSQLite3Database* db)
 {
-    const char UPDATE_BILLSDEPOSITS_V1_ROW[] =
-    "update BILLSDEPOSITS_V1 set"
-    " ACCOUNTID = ?, TOACCOUNTID = ?, PAYEEID = ?, TRANSCODE = ?, TRANSAMOUNT = ?,"
-    " STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?,"
-    " TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ?,"
-    " REPEATS = ?, NEXTOCCURRENCEDATE = ?, NUMOCCURRENCES = ? "
-    "where BDID = ?";
     try
     {
-        wxSQLite3Statement st = db->PrepareStatement(UPDATE_BILLSDEPOSITS_V1_ROW);
+        const char SQL_STATEMENT[] =
+        "update BILLSDEPOSITS_V1 set"
+        " ACCOUNTID = ?, TOACCOUNTID = ?, PAYEEID = ?, TRANSCODE = ?, TRANSAMOUNT = ?,"
+        " STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?,"
+        " TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ?,"
+        " REPEATS = ?, NEXTOCCURRENCEDATE = ?, NUMOCCURRENCES = ? "
+        "where BDID = ?";
+        wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         int db_index = 0;
-        SetDatabaseValues(st, db_index);
-
-        st.Bind(++db_index, MultiplexedRepeatType());
-        st.Bind(++db_index, nextOccurDate_);
-        st.Bind(++db_index, num_repeats_);
+        SetDatabaseValues(st, db_index);    // call to inherited SetDatabaseValues()
+        SetBillDatabaseValues(st, db_index);
         st.Bind(++db_index, id_);
 
         FinaliseStatement(st);
@@ -185,51 +196,49 @@ void TTransactionBillEntry::SetTransaction(std::shared_ptr<TTransactionEntry> pE
 */
 void TTransactionBillEntry::AdjustNextOccuranceDate()
 {
-    wxDateTime new_occur_date = mmGetStorageStringAsDate(nextOccurDate_);
-
     if (repeat_type_ == TYPE_NONE)
     {
         num_repeats_ = 0;
     }
     else if (repeat_type_ == TYPE_WEEKLY)
     {
-        new_occur_date.Add(wxTimeSpan::Week());
+        trans_repeat_date_.Add(wxTimeSpan::Week());
     }
     else if (repeat_type_ == TYPE_BI_WEEKLY)
     {
-        new_occur_date.Add(wxTimeSpan::Weeks(2));
+        trans_repeat_date_.Add(wxTimeSpan::Weeks(2));
     }
     else if (repeat_type_ == TYPE_MONTHLY)
     {
-        new_occur_date.Add(wxDateSpan::Month());
+        trans_repeat_date_.Add(wxDateSpan::Month());
     }
     else if (repeat_type_ == TYPE_BI_MONTHLY)
     {
-        new_occur_date.Add(wxDateSpan::Months(2));
+        trans_repeat_date_.Add(wxDateSpan::Months(2));
     }
     else if (repeat_type_ == TYPE_QUARTERLY)
     {
-        new_occur_date.Add(wxDateSpan::Months(3));
+        trans_repeat_date_.Add(wxDateSpan::Months(3));
     }
     else if (repeat_type_ == TYPE_HALF_YEARLY)
     {
-        new_occur_date.Add(wxDateSpan::Months(6));
+        trans_repeat_date_.Add(wxDateSpan::Months(6));
     }
     else if (repeat_type_ == TYPE_YEARLY)
     {
-        new_occur_date.Add(wxDateSpan::Year());
+        trans_repeat_date_.Add(wxDateSpan::Year());
     }
     else if (repeat_type_ == TYPE_FOUR_MONTHLY)
     {
-        new_occur_date.Add(wxDateSpan::Months(4));
+        trans_repeat_date_.Add(wxDateSpan::Months(4));
     }
     else if (repeat_type_ == TYPE_FOUR_WEEKLY)
     {
-        new_occur_date.Add(wxDateSpan::Weeks(4));
+        trans_repeat_date_.Add(wxDateSpan::Weeks(4));
     }
     else if (repeat_type_ == TYPE_DAILY)
     {
-        new_occur_date.Add(wxDateSpan::Day());
+        trans_repeat_date_.Add(wxDateSpan::Day());
     }
     else if ((repeat_type_ == TYPE_IN_X_DAYS) || (repeat_type_ == TYPE_IN_X_MONTHS))
     {
@@ -239,26 +248,26 @@ void TTransactionBillEntry::AdjustNextOccuranceDate()
     {
         if (num_repeats_ > 0)
         {
-            new_occur_date.Add(wxDateSpan::Days(num_repeats_));
+            trans_repeat_date_.Add(wxDateSpan::Days(num_repeats_));
         }
     }
     else if (repeat_type_ == TYPE_EVERY_X_MONTHS)
     {
         if (num_repeats_ > 0)
         {
-            new_occur_date.Add(wxDateSpan::Months(num_repeats_));
+            trans_repeat_date_.Add(wxDateSpan::Months(num_repeats_));
         }
     }
     else if ((repeat_type_ == TYPE_MONTHLY_LAST_DAY) || (repeat_type_ == TYPE_MONTHLY_LAST_BUSINESS_DAY))
     {
-        new_occur_date.Add(wxDateSpan::Month());
-        new_occur_date.SetToLastMonthDay(new_occur_date.GetMonth(),new_occur_date.GetYear());
+        trans_repeat_date_.Add(wxDateSpan::Month());
+        trans_repeat_date_.SetToLastMonthDay(trans_repeat_date_.GetMonth(), trans_repeat_date_.GetYear());
         if (repeat_type_ == TYPE_MONTHLY_LAST_BUSINESS_DAY) // last weekday of month
         {
-            if ((new_occur_date.GetWeekDay() == wxDateTime::Sun) ||
-                (new_occur_date.GetWeekDay() == wxDateTime::Sat))
+            if ((trans_repeat_date_.GetWeekDay() == wxDateTime::Sun) ||
+                (trans_repeat_date_.GetWeekDay() == wxDateTime::Sat))
             {
-                new_occur_date.SetToPrevWeekDay(wxDateTime::Fri);
+                trans_repeat_date_.SetToPrevWeekDay(wxDateTime::Fri);
             }
         }
     }
@@ -271,13 +280,12 @@ void TTransactionBillEntry::AdjustNextOccuranceDate()
         }
     }
 
-    nextOccurDate_ = new_occur_date.FormatISODate();
+    //nextOccurDate_ = trans_repeat_date_.FormatISOCombined(' ');
 }
 
 bool TTransactionBillEntry::RequiresExecution(int& remaining_days)
 {
-    wxDateTime next_occur_date = mmGetStorageStringAsDate(nextOccurDate_);
-    wxTimeSpan ts = next_occur_date.Subtract(wxDateTime::Now());
+    wxTimeSpan ts = trans_repeat_date_.Subtract(wxDateTime::Now());
     
     remaining_days = ts.GetDays();
     int remaining_minutes = ts.GetMinutes();
@@ -295,19 +303,33 @@ bool TTransactionBillEntry::RequiresExecution(int& remaining_days)
     return execution_required;
 }
 
+bool TTransactionBillEntry::UsingRepeatProcessing()
+{
+    bool result = false;
+    if ((repeat_type_ < TYPE_IN_X_DAYS) || (repeat_type_ > TYPE_EVERY_X_MONTHS))
+    {
+        if (num_repeats_ > 0)
+        {
+            result = true;
+        }
+    }
+    return result;
+}
+
 void TTransactionBillEntry::SetNextOccurDate(wxDateTime date)
 {
-    nextOccurDate_ = date.FormatISODate();
+    trans_repeat_date_ = date;
+    //nextOccurDate_ = trans_repeat_date_.FormatISOCombined(' ');
 }
 
 wxDateTime TTransactionBillEntry::NextOccurDate()
 {
-    return mmGetStorageStringAsDate(nextOccurDate_);
+    return trans_repeat_date_;
 }
 
 wxString TTransactionBillEntry::DisplayNextOccurDate()
 {
-    return mmGetDateForDisplay(mmGetStorageStringAsDate(nextOccurDate_));
+    return mmGetDateForDisplay(trans_repeat_date_);
 }
 
 /************************************************************************************
