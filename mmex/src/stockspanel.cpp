@@ -497,12 +497,13 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
 
         if (th.id_ == id) selected_item = cnt;
         th.gainLoss_          = th.value_ - ((th.numShares_ * th.purchasePrice_) + th.commission_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_) + th.commission_)-1.0)*100.0 * 365.0 / th.stockDays_), th.stockPercentagePerYearStr_);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_)
+            + th.commission_)-1.0)*100.0 * 365.0 / th.stockDays_), th.sPercentagePerYear_);
 
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.avgpurchasePrice_, th.avgpurchasePriceStr_);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(th.avgpurchasePrice_, th.avgPurchasePriceStr_);
 
         //I wish see integer if it integer else double
         if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0)
@@ -530,11 +531,6 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     return selected_item;
 }
 
-void mmStocksPanel::OnRefreshQuotes(wxCommandEvent& WXUNUSED(event))
-{
-    OrderQuoteRefresh();
-}
-
 void mmStocksPanel::OnDeleteStocks(wxCommandEvent& event)
 {
     listCtrlAccount_->OnDeleteStocks(event);
@@ -555,15 +551,34 @@ void mmStocksPanel::OnEditStocks(wxCommandEvent& event)
     listCtrlAccount_->OnEditStocks(event);
 }
 
-void mmStocksPanel::OrderDownloadIfRequired(void)
+void mmStocksPanel::OnRefreshQuotes(wxCommandEvent& WXUNUSED(event))
 {
-    OrderQuoteRefresh();
+    wxString sError = "";
+    if (onlineQuoteRefresh(sError))
+    {
+        const wxString header = _("Stock prices successfully updated");
+        stock_details_->SetLabel(header);
+        stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_));
+        wxMessageDialog msgDlg(this, sError, header, wxOK|wxICON_EXCLAMATION);
+        msgDlg.ShowModal();
+    }
+    else
+    {
+        refresh_button_->SetBitmapLabel(wxBitmap(wxImage(led_red_xpm).Scale(16,16)));
+        stock_details_->SetLabel(sError);
+        stock_details_short_->SetLabel(_("Error"));
+        mmShowErrorMessage(this, sError, _("Error"));
+    }
 }
 
 /*** Trigger a quote download ***/
-void mmStocksPanel::OrderQuoteRefresh(void)
+bool mmStocksPanel::onlineQuoteRefresh(wxString& sError)
 {
-    if(trans_.size() < 1) return;
+    if(trans_.size() < 1)
+    {
+        sError = _("Nothing to update");
+        return false;
+    }
 
     //Symbol, (Amount, Name)
     std::map<wxString, std::pair<double, wxString> > stocks_data;
@@ -590,15 +605,13 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
     refresh_button_->SetBitmapLabel(wxBitmap(wxImage(led_yellow_xpm).Scale(16,16)));
     stock_details_->SetLabel(_("Connecting..."));
-    wxString quotes;
+    wxString sOutput;
 
-    int err_code = site_content(site, quotes);
+    int err_code = site_content(site, sOutput);
     if (err_code != wxURL_NOERR)
     {
-        refresh_button_->SetBitmapLabel(wxBitmap(wxImage(led_red_xpm).Scale(16,16)));
-        stock_details_->SetLabel(quotes);
-        stock_details_short_->SetLabel("");
-        return;
+        sError = sOutput;
+        return false;
     }
 
     //--//
@@ -606,7 +619,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     bool updated = false;
     double dPrice = 0.0;
 
-    wxStringTokenizer tkz(quotes, "\r\n");
+    wxStringTokenizer tkz(sOutput, "\r\n");
     while (tkz.HasMoreTokens())
     {
         const wxString csvline = tkz.GetNextToken();
@@ -639,6 +652,8 @@ void mmStocksPanel::OrderQuoteRefresh(void)
                 dPrice = dPrice / 100;
             stocks_data[StockSymbolWithSuffix].first = dPrice;
             stocks_data[StockSymbolWithSuffix].second = sName;
+            sError << wxString::Format(_("%s\t -> %s\n")
+                , StockSymbolWithSuffix, wxString::Format("%0.4f", dPrice));
         }
     }
 
@@ -699,8 +714,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
                              LastRefreshDT_.FormatDate());
     core_->dbInfoSettings_->SetStringSetting("STOCKS_LAST_REFRESH_DATETIME", strLastUpdate_);
 
-    stock_details_->SetLabel(_("Stock prices successfully updated"));
-    stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_));
+    return true;
 }
 
 wxString mmStocksPanel::getItem(long item, long column)
@@ -725,18 +739,18 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
     }
     else
     {
-        wxString stockPurchasePriceStr;
-        wxString stockCurrentPriceStr;
-        wxString stockDifferenceStr;
-        wxString stocktotalDifferenceStr;
-        wxString stockPercentageStr;
-        wxString stocktotalPercentageStr;
-        wxString stockPercentagePerYearStr;
-        wxString stockavgPurchasePriceStr;
-        wxString stocknumSharesStr = trans_[selectedIndex]->numSharesStr_;
-        wxString stocktotalnumSharesStr = trans_[selectedIndex]->totalnumSharesStr_;
-        wxString stockgainlossStr = trans_[selectedIndex]->gainLossStr_;
-        wxString stocktotalgainlossStr;
+        wxString sPurchasePrice;
+        wxString sCurrentPrice;
+        wxString sDifference;
+        wxString sTotalDifference;
+        wxString sPercentage;
+        wxString sTotalPercentage;
+        wxString sPercentagePerYear;
+        wxString sAvgPurchasePrice;
+        wxString sNumShares = trans_[selectedIndex]->numSharesStr_;
+        wxString sTotalNumShares = trans_[selectedIndex]->totalnumSharesStr_;
+        wxString sGainLoss = trans_[selectedIndex]->gainLossStr_;
+        wxString sTotalGainLoss;
 
         double stockPurchasePrice = trans_[selectedIndex]->purchasePrice_;
         double stockCurrentPrice = trans_[selectedIndex]->currentPrice_;
@@ -753,16 +767,16 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
         double stocktotalnumShares = trans_[selectedIndex]->totalnumShares_;
         double stocktotalgainloss = stocktotalDifference * stocktotalnumShares;
 
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stockPurchasePrice, stockPurchasePriceStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stockavgPurchasePrice, stockavgPurchasePriceStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stockCurrentPrice, stockCurrentPriceStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stockDifference , stockDifferenceStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalDifference , stocktotalDifferenceStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stockPercentage, stockPercentageStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stockPercentagePerYear, stockPercentagePerYearStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalPercentage, stocktotalPercentageStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalgainloss, stocktotalgainlossStr);
-        // CurrencyFormatter::formatDoubleToCurrencyEdit(stocknumShares, stocknumSharesStr);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stockPurchasePrice, sPurchasePrice);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stockavgPurchasePrice, sAvgPurchasePrice);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stockCurrentPrice, sCurrentPrice);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stockDifference , sDifference);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalDifference , sTotalDifference);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stockPercentage, sPercentage);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stockPercentagePerYear, sPercentagePerYear);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalPercentage, sTotalPercentage);
+        CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalgainloss, sTotalGainLoss);
+        // CurrencyFormatter::formatDoubleToCurrencyEdit(stocknumShares, sNumShares);
 
         wxString miniInfo = "";
         if (trans_[selectedIndex]->stockSymbol_ != "")
@@ -770,22 +784,22 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
         miniInfo << _ ("Total:") << " (" << trans_[selectedIndex]->totalnumSharesStr_ << ") ";
         //If some share has been bot for a short period we don't need that info because the forecast may be too optimistic
         //if (stockDaysOwn > 182.5)
-        //miniInfo << "\t\t" << _("Percent/Year: ") << trans_[selectedIndex]->stockPercentagePerYearStr_;
+        //miniInfo << "\t\t" << _("Percent/Year: ") << trans_[selectedIndex]->sPercentagePerYear_;
         stock_details_short_->SetLabel(miniInfo);
 
         wxString additionInfo = "";
         //Selected share info
         additionInfo
-        << "|" << stockCurrentPriceStr << " - " << stockPurchasePriceStr << "|" << " = " << stockDifferenceStr
-        << " * " << stocknumSharesStr << " = " << stockgainlossStr << " ( " << stockPercentageStr << "%"
-        //<< " | "<< stockPercentagePerYearStr << "% "  << _("Yearly")
+        << "|" << sCurrentPrice << " - " << sPurchasePrice << "|" << " = " << sDifference
+        << " * " << sNumShares << " = " << sGainLoss << " ( " << sPercentage << "%"
+        //<< " | "<< sPercentagePerYear << "% "  << _("Yearly")
         << " )" << "\n";
         //Summary for account for selected symbol
         if (trans_[selectedIndex]->purchasedTime_ > 1)
         {
-            additionInfo << "|" << stockCurrentPriceStr << " - " << stockavgPurchasePriceStr << "|" << " = " << stocktotalDifferenceStr
-            << " * " << stocktotalnumSharesStr << " = " << stocktotalgainlossStr << " ( " << stocktotalPercentageStr << "%"
-            //<< " | "<< stockPercentagePerYearStr << "% " << _("Yearly")
+            additionInfo << "|" << sCurrentPrice << " - " << sAvgPurchasePrice << "|" << " = " << sTotalDifference
+            << " * " << sTotalNumShares << " = " << sTotalGainLoss << " ( " << sTotalPercentage << "%"
+            //<< " | "<< sPercentagePerYear << "% " << _("Yearly")
             << " )" //<< "\n"
             << "\n" << getItem(selectedIndex, COL_NOTES);
         }

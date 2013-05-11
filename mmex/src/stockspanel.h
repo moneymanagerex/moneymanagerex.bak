@@ -78,14 +78,14 @@ struct mmStockTransactionHolder: public mmHolderBase
     wxString stockPDate_;
     wxString shareName_;
     wxString stockSymbol_;
-    wxString stockPercentagePerYearStr_;
+    wxString sPercentagePerYear_;
     wxString shareNotes_;
     wxString numSharesStr_;
     wxString totalnumSharesStr_;
     wxString gainLossStr_;
     wxString cPriceStr_;
     wxString pPriceStr_;
-    wxString avgpurchasePriceStr_;
+    wxString avgPurchasePriceStr_;
 
     double currentPrice_;
     double purchasePrice_;
@@ -171,11 +171,8 @@ private:
     wxStaticText* header_total_;
     wxBitmapButton* refresh_button_;
 
-    void OnScheduleTimer( wxTimerEvent &event );
-    void OrderDownloadIfRequired(void);
-
     bool DownloadIsRequired(void);
-    void OrderQuoteRefresh(void);
+    bool onlineQuoteRefresh(wxString& sError);
 
     wxToggleButton* TempProxyButton;
     wxString strLastUpdate_;
