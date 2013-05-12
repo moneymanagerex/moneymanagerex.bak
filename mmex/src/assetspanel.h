@@ -53,7 +53,8 @@ private:
     virtual int OnGetItemImage(long item) const;
     virtual wxListItemAttr *OnGetItemAttr(long item) const;
 
-    void OnItemRightClick(wxListEvent& event);
+    void OnMouseRightClick(wxMouseEvent& event);
+    void OnMouseLeftClick(wxMouseEvent& event);
     void OnListItemActivated(wxListEvent& event);
     void OnListKeyDown(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);

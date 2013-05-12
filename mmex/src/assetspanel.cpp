@@ -22,7 +22,8 @@
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmAssetsListCtrl, wxListCtrl)
     EVT_LIST_ITEM_ACTIVATED(IDC_PANEL_STOCKS_LISTCTRL,   mmAssetsListCtrl::OnListItemActivated)
-    EVT_LIST_ITEM_RIGHT_CLICK(IDC_PANEL_STOCKS_LISTCTRL, mmAssetsListCtrl::OnItemRightClick)
+    EVT_RIGHT_DOWN(mmAssetsListCtrl::OnMouseRightClick)
+    EVT_LEFT_DOWN(mmAssetsListCtrl::OnMouseLeftClick)
     EVT_LIST_ITEM_SELECTED(IDC_PANEL_STOCKS_LISTCTRL,    mmAssetsListCtrl::OnListItemSelected)
     EVT_LIST_ITEM_DESELECTED(IDC_PANEL_STOCKS_LISTCTRL,  mmAssetsListCtrl::OnListItemDeselected)
     EVT_LIST_COL_END_DRAG(IDC_PANEL_STOCKS_LISTCTRL,     mmAssetsListCtrl::OnItemResize)
@@ -60,10 +61,8 @@ void mmAssetsListCtrl::InitVariables()
     cp_->SetFilter(" 'Property','Automobile','Household Object','Art','Jewellery','Cash','Other' ");
 }
 
-void mmAssetsListCtrl::OnItemRightClick(wxListEvent& event)
+void mmAssetsListCtrl::OnMouseRightClick(wxMouseEvent& event)
 {
-    selectedIndex_ = event.GetIndex();
-
     wxMenu menu;
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Asset"));
     menu.AppendSeparator();
@@ -71,7 +70,19 @@ void mmAssetsListCtrl::OnItemRightClick(wxListEvent& event)
     menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Asset"));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Asset"));
-    PopupMenu(&menu, event.GetPoint());
+    if (selectedIndex_ < 0)
+    {
+        menu.Enable(MENU_ON_DUPLICATE_TRANSACTION, false);
+        menu.Enable(MENU_TREEPOPUP_EDIT, false);
+        menu.Enable(MENU_TREEPOPUP_DELETE, false);
+    }
+    PopupMenu(&menu, event.GetPosition());
+}
+
+void mmAssetsListCtrl::OnMouseLeftClick(wxMouseEvent& event)
+{
+    selectedIndex_ = -1;
+    event.Skip();
 }
 
 wxString mmAssetsListCtrl::OnGetItemText(long item, long column) const
