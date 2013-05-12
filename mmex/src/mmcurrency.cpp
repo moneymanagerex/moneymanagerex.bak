@@ -344,26 +344,18 @@ bool mmCurrencyList::OnlineUpdateCurRate(wxString& sError)
         const wxString currency_symbol = currency->currencySymbol_.Upper();
         if (!currency_symbol.IsEmpty())
         {
-            wxString valueStr, newValueStr;
-            double old_rate = currency->baseConv_;
-            double new_rate = old_rate;
             if (currency_data.find(currency_symbol) != currency_data.end())
             {
-                new_rate = currency_data[currency_symbol].first;
-                if (base_symbol == currency_symbol) new_rate = 1;
-                newValueStr = wxString::Format("%0.4f", new_rate);          }
+                if (base_symbol == currency_symbol) currency->baseConv_ = 1;
+                msg << wxString::Format(_("%s\t: %0.4f -> %0.4f\n"),
+                    currency_symbol, currency->baseConv_, currency_data[currency_symbol].first);
+                currency->baseConv_ = currency_data[currency_symbol].first;
+                UpdateCurrency(currency);
+            }
             else
             {
-                new_rate = old_rate;
-                newValueStr = _("Invalid Value ");
+                 msg << wxString::Format(_("%s\t: %s\n"),currency_symbol ,_("Invalid Value "));
             }
-
-            valueStr = wxString::Format("%0.4f", old_rate);
-
-            msg << wxString::Format(_("%s\t: %s -> %s\n"),
-                currency_symbol, valueStr, newValueStr);
-            currency->baseConv_ = new_rate;
-            UpdateCurrency(currency);
         }
     }
 
