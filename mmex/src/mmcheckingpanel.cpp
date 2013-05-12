@@ -149,7 +149,7 @@ private:
     virtual int OnGetItemColumnImage(long item, long column) const;
     virtual wxListItemAttr *OnGetItemAttr(long item) const;
 
-    void OnItemRightClick(wxListEvent& event);
+    void OnListRightClick(wxMouseEvent& event);
     void OnItemResize(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
     void OnListItemDeselected(wxListEvent& event);
@@ -165,7 +165,7 @@ private:
     /* Sort Columns */
     void OnColClick(wxListEvent& event);
 
-	/// Called when moving a transaction to a new account.
+    /// Called when moving a transaction to a new account.
     int DestinationAccountID();
     long topItemIndex_;
 };
@@ -187,7 +187,8 @@ BEGIN_EVENT_TABLE(TransactionListCtrl, wxListCtrl)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemSelected)
     EVT_LIST_ITEM_DESELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemDeselected)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemActivated)
-    EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnItemRightClick)
+    //EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnItemRightClick)
+    EVT_MOUSE_EVENTS(TransactionListCtrl::OnListRightClick)
     EVT_LIST_COL_END_DRAG(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnItemResize)
     EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnColClick)
     EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT,  TransactionListCtrl::OnListKeyDown)
@@ -1057,10 +1058,18 @@ void TransactionListCtrl::OnItemResize(wxListEvent& event)
     int current_width = m_cp->m_listCtrlAccount->GetColumnWidth(i);
     m_cp->core_->iniSettings_->SetIntSetting(parameter_name, current_width);
 }
-void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
+void TransactionListCtrl::OnListRightClick(wxMouseEvent& event)
 {
-    m_selectedIndex = event.GetIndex();
 
+    if (event.GetButton() != wxMOUSE_BTN_RIGHT)
+    {
+        event.Skip();
+        return;
+    }
+
+    //TODO:
+    //GET Selected Item status if not wxLIST_STATE_FOCUSED then m_selectedIndex = -1
+    
     wxMenu menu;
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Transaction"));
     menu.AppendSeparator();
@@ -1114,7 +1123,7 @@ void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
     subGlobalOpMenu->Append(MENU_TREEPOPUP_MARKDUPLICATE_ALL, _("as Duplicate"));
     menu.Append(MENU_SUBMENU_MARK_ALL, _("Mark all being viewed"), subGlobalOpMenu);
 
-    PopupMenu(&menu, event.GetPoint());
+    PopupMenu(&menu, event.GetPosition());
 }
 //----------------------------------------------------------------------------
 
