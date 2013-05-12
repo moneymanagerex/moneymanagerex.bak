@@ -1062,4 +1062,3 @@ void mmOptionsDialog::OnOk(wxCommandEvent& /*event*/)
     changesApplied_ = true;
     EndModal(wxOK);
 }
-
