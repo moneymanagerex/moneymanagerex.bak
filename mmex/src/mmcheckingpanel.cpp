@@ -1067,35 +1067,37 @@ void TransactionListCtrl::OnListRightClick(wxMouseEvent& event)
         return;
     }
 
-    //TODO:
-    //GET Selected Item status if not wxLIST_STATE_FOCUSED then m_selectedIndex = -1
-    
+    long selectedIndex = m_selectedIndex;
+    if (m_cp->m_listCtrlAccount->GetItemState(m_selectedIndex, wxLIST_STATE_SELECTED) == 0)
+        selectedIndex = -1;
+    bool hide_menu_item = (selectedIndex < 0);
+
     wxMenu menu;
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Transaction"));
     menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Transaction"));
-    if (m_selectedIndex < 0) menu.Enable(MENU_TREEPOPUP_EDIT, false);
+    if (hide_menu_item) menu.Enable(MENU_TREEPOPUP_EDIT, false);
     menu.Append(MENU_ON_COPY_TRANSACTION, _("&Copy Transaction"));
-    if (m_selectedIndex <0) menu.Enable(MENU_ON_COPY_TRANSACTION, false);
+    if (hide_menu_item) menu.Enable(MENU_ON_COPY_TRANSACTION, false);
     menu.Append(MENU_ON_DUPLICATE_TRANSACTION, _("D&uplicate Transaction"));
-    if (m_selectedIndex <0) menu.Enable(MENU_ON_DUPLICATE_TRANSACTION, false);
+    if (hide_menu_item) menu.Enable(MENU_ON_DUPLICATE_TRANSACTION, false);
     menu.Append(MENU_TREEPOPUP_MOVE, _("&Move Transaction"));
-    if (m_selectedIndex <0 || (m_cp->core_->accountList_.getNumBankAccounts() < 2))
+    if (hide_menu_item || (m_cp->core_->accountList_.getNumBankAccounts() < 2))
         menu.Enable(MENU_TREEPOPUP_MOVE, false);
     menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
-    if (m_selectedForCopy <0) menu.Enable(MENU_ON_PASTE_TRANSACTION, false);
+    if (m_selectedForCopy < 0) menu.Enable(MENU_ON_PASTE_TRANSACTION, false);
 
     menu.AppendSeparator();
 
     menu.Append(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, _("&View Split Categories"));
-    if (m_selectedIndex <0 || (m_cp->m_trans[m_selectedIndex]->categID_ > -1))
+    if (hide_menu_item || (m_cp->m_trans[m_selectedIndex]->categID_ > -1))
         menu.Enable(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, false);
 
     menu.AppendSeparator();
 
     wxMenu* subGlobalOpMenuDelete = new wxMenu;
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
-    if (m_selectedIndex <0) subGlobalOpMenuDelete->Enable(MENU_TREEPOPUP_DELETE, false);
+    if (hide_menu_item) subGlobalOpMenuDelete->Enable(MENU_TREEPOPUP_DELETE, false);
     subGlobalOpMenuDelete->AppendSeparator();
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_VIEWED, _("Delete all transactions in current view"));
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete Viewed \"Follow Up\" Trans."));
@@ -1104,15 +1106,15 @@ void TransactionListCtrl::OnListRightClick(wxMouseEvent& event)
     menu.AppendSeparator();
 
     menu.Append(MENU_TREEPOPUP_MARKRECONCILED, _("Mark As &Reconciled"));
-    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARKRECONCILED, false);
+    if (hide_menu_item) menu.Enable(MENU_TREEPOPUP_MARKRECONCILED, false);
     menu.Append(MENU_TREEPOPUP_MARKUNRECONCILED, _("Mark As &Unreconciled"));
-    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARKUNRECONCILED, false);
+    if (hide_menu_item) menu.Enable(MENU_TREEPOPUP_MARKUNRECONCILED, false);
     menu.Append(MENU_TREEPOPUP_MARKVOID, _("Mark As &Void"));
-    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARKVOID, false);
+    if (hide_menu_item) menu.Enable(MENU_TREEPOPUP_MARKVOID, false);
     menu.Append(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, _("Mark For &Followup"));
-    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, false);
+    if (hide_menu_item) menu.Enable(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, false);
     menu.Append(MENU_TREEPOPUP_MARKDUPLICATE, _("Mark As &Duplicate"));
-    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARKDUPLICATE, false);
+    if (hide_menu_item) menu.Enable(MENU_TREEPOPUP_MARKDUPLICATE, false);
     menu.AppendSeparator();
 
     wxMenu* subGlobalOpMenu = new wxMenu;
