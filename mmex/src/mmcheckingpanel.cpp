@@ -1068,8 +1068,11 @@ void TransactionListCtrl::OnListRightClick(wxMouseEvent& event)
     }
 
     long selectedIndex = m_selectedIndex;
-    if (m_cp->m_listCtrlAccount->GetItemState(m_selectedIndex, wxLIST_STATE_SELECTED) == 0)
-        selectedIndex = -1;
+    if (m_selectedIndex > -1)
+    { 
+        if (m_cp->m_listCtrlAccount->GetItemState(m_selectedIndex, wxLIST_STATE_SELECTED) == 0)
+            selectedIndex = -1;
+    }
     bool hide_menu_item = (selectedIndex < 0);
 
     wxMenu menu;

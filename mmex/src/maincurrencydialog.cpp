@@ -146,7 +146,7 @@ void mmMainCurrencyDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
     currencyListBox_ = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200),
-        wxLC_REPORT);
+        wxLC_REPORT | wxLC_SINGLE_SEL);
 
     // Add first column
     wxListItem col0;
