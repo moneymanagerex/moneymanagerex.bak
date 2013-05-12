@@ -150,6 +150,7 @@ private:
     virtual wxListItemAttr *OnGetItemAttr(long item) const;
 
     void OnListRightClick(wxMouseEvent& event);
+    void OnListLeftClick(wxMouseEvent& event);
     void OnItemResize(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
     void OnListItemDeselected(wxListEvent& event);
@@ -188,7 +189,8 @@ BEGIN_EVENT_TABLE(TransactionListCtrl, wxListCtrl)
     EVT_LIST_ITEM_DESELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemDeselected)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemActivated)
     //EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnItemRightClick)
-    EVT_MOUSE_EVENTS(TransactionListCtrl::OnListRightClick)
+    EVT_RIGHT_DOWN(TransactionListCtrl::OnListRightClick)
+    EVT_LEFT_DOWN(TransactionListCtrl::OnListLeftClick)
     EVT_LIST_COL_END_DRAG(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnItemResize)
     EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnColClick)
     EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT,  TransactionListCtrl::OnListKeyDown)
@@ -722,7 +724,7 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
         account_transPtr.push_back(pBankTransaction.get());
 
         bool toAdd = true;
-        
+
         if (transFilterActive_)
         {
             toAdd  = transFilterDlg_->somethingSelected();  // remove transaction from list and add if wanted.
@@ -1058,23 +1060,28 @@ void TransactionListCtrl::OnItemResize(wxListEvent& event)
     int current_width = m_cp->m_listCtrlAccount->GetColumnWidth(i);
     m_cp->core_->iniSettings_->SetIntSetting(parameter_name, current_width);
 }
+
+void TransactionListCtrl::OnListLeftClick(wxMouseEvent& event)
+{
+    if (m_selectedIndex > -1)
+    {
+        if (m_cp->m_listCtrlAccount->GetItemState(m_selectedIndex, wxLIST_STATE_SELECTED) == 0)
+            m_cp->updateExtraTransactionData(-1);
+    }
+    event.Skip();
+}
+
 void TransactionListCtrl::OnListRightClick(wxMouseEvent& event)
 {
 
-    if (event.GetButton() != wxMOUSE_BTN_RIGHT)
-    {
-        event.Skip();
-        return;
-    }
-
     long selectedIndex = m_selectedIndex;
     if (m_selectedIndex > -1)
-    { 
+    {
         if (m_cp->m_listCtrlAccount->GetItemState(m_selectedIndex, wxLIST_STATE_SELECTED) == 0)
             selectedIndex = -1;
     }
-    bool hide_menu_item = (selectedIndex < 0);
 
+    bool hide_menu_item = (selectedIndex < 0);
     wxMenu menu;
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Transaction"));
     menu.AppendSeparator();
@@ -1597,7 +1604,7 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
         pTransaction = m_cp->core_->bTransactionList_.getBankTransactionPtr(
             m_cp->m_AccountID, m_cp->m_trans[m_selectedIndex]->transactionID()
         );
-        
+
         // Looking at transaction from A end. Transaction is a deposit, withdrawal or transfer.
         if (m_cp->m_AccountID == pTransaction->accountID_)
             pTransaction->accountID_ = toAccountID;
@@ -1605,7 +1612,7 @@ void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
         // Looking at transaction from b end. Transaction is a transfer
         if (m_cp->m_AccountID == pTransaction->toAccountID_)
             pTransaction->toAccountID_ = toAccountID;
-        
+
         // Update the transaction
         m_cp->core_->bTransactionList_.UpdateTransaction(pTransaction);
         refreshVisualList();
