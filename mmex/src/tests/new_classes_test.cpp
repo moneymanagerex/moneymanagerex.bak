@@ -52,9 +52,9 @@
 //#define SUBCATEGORY_TESTS
 //#define PAYEE_TESTS
 //#define TRANSACTION_TESTS
-//#define REPEAT_TRANSACTION_TESTS
+#define REPEAT_TRANSACTION_TESTS
 //#define SPLIT_TRANSACTION_TESTS
-#define ASSET_TESTS
+//#define ASSET_TESTS
 //#define STOCK_TESTS
 //#define BUDGET_TESTS
 
@@ -633,6 +633,30 @@ TEST(BillList_Executing_Entries)
 
     displayTimeTaken("BillList_Executing_Entries", start_time);
 }
+
+
+TEST(BillList_Deleting_First_Entry)
+{
+    const wxDateTime start_time(wxDateTime::UNow());
+    TTransactionBillList repeat_transactions(get_pDb());
+
+    int currentsize = repeat_transactions.CurrentListSize();
+    if ( currentsize > 0)
+    {
+        // remove the first bill transaction.
+        repeat_transactions.DeleteEntry(1);
+
+        // removed from memory
+        CHECK(currentsize != repeat_transactions.CurrentListSize());
+
+        TTransactionBillList bill_transactions(get_pDb());
+        // removed from database
+        CHECK(currentsize != bill_transactions.CurrentListSize());
+    }
+
+    displayTimeTaken("BillList_Deleting_First_Entry", start_time);
+}
+
 
 #endif
 

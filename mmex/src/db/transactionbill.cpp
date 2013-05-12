@@ -112,7 +112,7 @@ int TTransactionBillEntry::Add(wxSQLite3Database* db)
 
 void TTransactionBillEntry::Delete(wxSQLite3Database* db)
 {
-    DeleteEntry(db, "delete from BILLSDEPOSITS_V1 where where BDID = ?");
+    DeleteEntry(db, "delete from BILLSDEPOSITS_V1 where BDID = ?");
 }
 
 void TTransactionBillEntry::SetBillDatabaseValues(wxSQLite3Statement& st, int& db_index)
