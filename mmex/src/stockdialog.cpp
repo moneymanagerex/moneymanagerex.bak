@@ -78,32 +78,24 @@ void mmStockDialog::dataToControls()
 
     wxString dateString = stock_holder_-> stockPDate_;
     wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+    dpc_->SetValue(dtdt);
 
     double numShares = stock_holder_->numShares_;
     wxString numSharesString;
     //I wish see integer if it integer else double
     if ((numShares - static_cast<long>(numShares)) != 0.0 )
     {
-         CurrencyFormatter::formatDoubleToCurrencyEdit(numShares, numSharesString);
+        numSharesString = CurrencyFormatter::float2String(numShares);
         //numSharesString=wxString::Format("%0.4f",numShares);
-	}
+    }
     else
         numSharesString <<  static_cast<long>(numShares);
 
     numShares_->SetValue(numSharesString);
-
-    wxString dispAmount;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(stock_holder_->value_, dispAmount);
-    valueInvestment_->SetLabel(dispAmount);
-
-     CurrencyFormatter::formatDoubleToCurrencyEdit(stock_holder_->purchasePrice_, dispAmount);
-    purchasePrice_->SetValue(dispAmount);
-
-     CurrencyFormatter::formatDoubleToCurrencyEdit(stock_holder_->currentPrice_, dispAmount);
-    currentPrice_->SetValue(dispAmount);
-
-     CurrencyFormatter::formatDoubleToCurrencyEdit(stock_holder_->commission_, dispAmount);
-    commission_->SetValue(dispAmount);
+    valueInvestment_->SetLabel(CurrencyFormatter::float2String(stock_holder_->value_));
+    purchasePrice_->SetValue(CurrencyFormatter::float2String(stock_holder_->purchasePrice_));
+    currentPrice_->SetValue(CurrencyFormatter::float2String(stock_holder_->currentPrice_));
+    commission_->SetValue(CurrencyFormatter::float2String(stock_holder_->commission_));
 }
 
 void mmStockDialog::fillControls()

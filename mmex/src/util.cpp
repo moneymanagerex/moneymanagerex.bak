@@ -246,9 +246,10 @@ bool mmParseDisplayStringToDate(wxDateTime& date, wxString sDate, wxString sDate
 wxDateTime mmGetStorageStringAsDate(const wxString& str)
 {
     wxDateTime dt = wxDateTime::Now();
-    if (!str.IsEmpty()) dt.ParseDate(str.GetData());
-    if (dt.IsValid()) return dt;
-    return wxDateTime::Now();
+    if (!str.IsEmpty()) dt.ParseDate(str);
+    if (!dt.IsValid()) dt = wxDateTime::Now();
+    if (dt.GetYear()<100) dt.Add(wxDateSpan::Years(2000));
+    return dt;
 }
 
 wxColour mmGetColourFromString(const wxString& str)
