@@ -825,56 +825,88 @@ void mmGUIFrame::setHomePageActive(bool active)
 //----------------------------------------------------------------------------
 void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 {
-// preparing new code to replace old code when other sections are completed.
-#if 0
-    bool continueExecution = false;
-
+/*  TODO: Activate new AutoRepeatTransactions code
+    when other sections are completed and tested.
+*/
+//#define USING_NEW_DB_CLASSES   // Activation switch
+#ifdef USING_NEW_DB_CLASSES
+    
+    /*  Use local list for testing.  Convert to global list in final version.
+        For now, we only want to add new transactions.
+    */
+    TTransactionList transactions(m_db, false);
     TTransactionBillList bills(m_db);
-    int remaining_days;
-    int index = 0;
-    while (index < bills.CurrentListSize())
+
+    bool continueExecution = true;  // allow the process to start
+    while (continueExecution)
     {
-        std::shared_ptr<TTransactionBillEntry> bill_entry = bills.GetIndexedEntryPtr(index);
-
-        if (bill_entry->RequiresExecution(remaining_days))
+        continueExecution = false;
+        int index = 0;
+        while (index < bills.CurrentListSize())
         {
-            if (remaining_days > 0)
-            {
-                continueExecution = true;
-            }
-            if (bill_entry->autoExecuteManual_ || bill_entry->autoExecuteSilent_)
-            {
-                TTransactionEntry trans_entry = bill_entry->GetTransaction();
+            TTransactionBillEntry* pBillEntry = bills.entrylist_[index].get();
 
-                if (bill_entry->autoExecuteManual_)
+            int remaining_days;
+            if (pBillEntry->RequiresExecution(remaining_days))
+            {
+                /*  TODO: Obtain split transactions for the repeat transaction
+                    and apply to main list.
+                */
+                bool using_repeats = false;
+                if (pBillEntry->UsingRepeatProcessing())
                 {
-                    // TODO:
-                    // Allow the user to adjust the values of the transaction
+                    using_repeats = true;
                 }
 
-                // TODO:
-                // Add the new transaction to the transaction list.
+                if (pBillEntry->autoExecuteSilent_)
+                {
+                    TTransactionEntry* pTransactionEntry = pBillEntry->GetTransaction();
+                    pTransactionEntry->trans_date_ = pBillEntry->NextOccurDate();
+                    pBillEntry->AdjustNextOccuranceDate();
+                    transactions.AddEntry(pTransactionEntry);
+                    //ProcessSplitTransactionForTransaction(int trans_id)
+                    pBillEntry->Update(bills.ListDatabase());
+                    if (pBillEntry->num_repeats_ != 0)
+                    {
+                        continueExecution = true;
+                    }
+                }
+                
+                if (pBillEntry->autoExecuteManual_)
+                {
+                    /*  TODO: Set up the transaction dialog to accept a TTransactionEntry
+                        and return wx_OK to allow a save from a a possible updated transaction.
+                    */
+                    int style = wxOK|wxCANCEL|wxICON_EXCLAMATION;
+                    if (wxMessageBox(_("Tempoary message."), _("Repeat Transaction Auto Execution Check"), style) == wxOK)
+                    {
+                        TTransactionEntry* pTransactionEntry = pBillEntry->GetTransaction();
+                        pTransactionEntry->trans_date_ = pBillEntry->NextOccurDate();
+                        pBillEntry->AdjustNextOccuranceDate();
+                        transactions.AddEntry(pTransactionEntry);
+                        //ProcessSplitTransactionForTransaction(trans_id)
+                        pBillEntry->Update(bills.ListDatabase());
+                        if (pBillEntry->num_repeats_ != 0)
+                        {
+                            continueExecution = true;
+                        }
+                    }
+                }
 
-                bill_entry->AdjustNextOccuranceDate();
-                bill_entry->Update(bills.ListDatabase());
-
+                if (using_repeats && pBillEntry->num_repeats_ == 0)
+                {
+                    bills.DeleteEntry(pBillEntry->GetId());
+                }
             }
-        }
-        ++index;
-
-        if (activeHomePage_)
-        {
-            createHomePage(); // Update home page details only if it is being displayed
+            ++index;
         }
     }
-
-    if (continueExecution)
+    if (activeHomePage_)
     {
-        autoRepeatTransactionsTimer_.Start(5, wxTIMER_ONE_SHOT);
+        createHomePage(); // Update home page details only if it is being displayed
     }
-#endif
 
-#if 1
+#else
     bool autoExecuteManual = false; // Used when decoding: REPEATS
     bool autoExecuteSilent = false;
     bool requireExecution  = false;
