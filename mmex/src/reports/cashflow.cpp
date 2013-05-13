@@ -115,12 +115,10 @@ wxString mmReportCashFlow::getHTMLText()
     wxDateTime yearFromNow = wxDateTime::Now().Add(wxDateSpan::Years(years));
     forecastVec fvec;
 
-/*
-    Preparing new code to replace old code when testing other sections are completed.
-    New code not working correctly at present and still under test.
+/*  TODO: Activate code using TTransactionBillList
+    when other sections are completed and tested.
 */
-
-//#define USING_NEW_DB_CLASSES		// Remove starting comments to activate new code.
+//#define USING_NEW_DB_CLASSES  // Activation switch
 #ifdef USING_NEW_DB_CLASSES
     // load a fresh list of repeating transactions.
     TTransactionBillList repeat_trans_list(core_->db_);
