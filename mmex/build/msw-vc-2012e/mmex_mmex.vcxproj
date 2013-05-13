@@ -265,7 +265,6 @@
     <ClCompile Include="..\..\src\db\transactionbill.cpp" />
     <ClCompile Include="..\..\src\fileviewerdialog.cpp" />
     <ClCompile Include="..\..\src\filtertransdialog.cpp" />
-    <ClCompile Include="..\..\src\guiid.cpp" />
     <ClCompile Include="..\..\src\htmlbuilder.cpp" />
     <ClCompile Include="..\..\src\lua_interface.cpp" />
     <ClCompile Include="..\..\src\maincurrencydialog.cpp" />
