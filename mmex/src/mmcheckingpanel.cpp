@@ -389,11 +389,11 @@ void mmCheckingPanel::CreateControls()
 
     wxFlexGridSizer* balances_header = new wxFlexGridSizer(0,8,5,10);
     itemBoxSizerVHeader->Add(balances_header);
-    balances_header->Add(new wxStaticText( headerPanel, wxID_STATIC, _("Account Bal: ")));
+    balances_header->Add(new wxStaticText(headerPanel, wxID_STATIC, _("Account Bal: ")));
     balances_header->Add(itemStaticText12);
-    balances_header->Add(new wxStaticText( headerPanel,  wxID_STATIC, _("Reconciled Bal: ")));
+    balances_header->Add(new wxStaticText(headerPanel,  wxID_STATIC, _("Reconciled Bal: ")));
     balances_header->Add(itemStaticText14);
-    balances_header->Add(new wxStaticText( headerPanel, wxID_STATIC, _("Diff: ")));
+    balances_header->Add(new wxStaticText(headerPanel, wxID_STATIC, _("Diff: ")));
     balances_header->Add(itemStaticText16);
     balances_header->Add(itemStaticText17);
     balances_header->Add(itemStaticText18);
@@ -569,22 +569,21 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
 
         int tocurrencyid = pCurrencyPtr->currencyID_;
         double toamount = m_trans[selIndex]->toAmt_;
-        wxString toamountStr;
         double convertion = 0.0;
         if (toamount != 0.0 && amount != 0.0)
             convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
-        wxString convertionStr;
+        wxString toamountStr, convertionStr;
 
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-         CurrencyFormatter::formatDoubleToCurrency(toamount, toamountStr);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(convertion, convertionStr);
+        toamountStr = CurrencyFormatter::float2Money(toamount);
+        convertionStr = CurrencyFormatter::float2String(convertion);
 
         pCurrencyPtr = core_->accountList_.getCurrencySharedPtr(accountId);
         wxASSERT(pCurrencyPtr);
         CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-         CurrencyFormatter::formatDoubleToCurrency(amount, amountStr);
+        amountStr = CurrencyFormatter::float2Money(amount);
         //if (currencyid == basecurrencyid)
-         CurrencyFormatter::formatDoubleToCurrencyEdit(convertion, convertionStr);
+        convertionStr = CurrencyFormatter::float2String(convertion);
 
         infoStr << amountStr << " ";
         if (amount!=toamount || tocurrencyid != currencyid)
@@ -595,21 +594,13 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         {
             infoStr << " ( ";
             if (accountId == m_AccountID && convrate < toconvrate)
-            {
                 infoStr  << tocurpfxStr << "1" << tocursfxStr << " = " << curpfxStr << convertionStr << cursfxStr << " ";
-            }
             else if (accountId == m_AccountID && convrate > toconvrate)
-            {
                 infoStr << curpfxStr << "1" << cursfxStr << " = " << tocurpfxStr << convertionStr << tocursfxStr << " ";
-            }
             else if (accountId != m_AccountID && convrate < toconvrate)
-            {
                 infoStr << tocurpfxStr << "1" << tocursfxStr << " = " << curpfxStr << convertionStr << cursfxStr << " ";
-            }
             else
-            {
                 infoStr << curpfxStr << "1" << cursfxStr << " = " << tocurpfxStr << convertionStr << tocursfxStr << " ";
-            }
             infoStr << " )";
         }
     }
@@ -625,7 +616,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
                 amount = splits->entries_[i]->splitAmount_;
                 if (m_trans[selIndex]->transType_ != TRANS_TYPE_DEPOSIT_STR)
                     amount = -amount;
-                 CurrencyFormatter::formatDoubleToCurrency(amount , amountStr);
+                amountStr = CurrencyFormatter::float2Money(amount);
                 infoStr << core_->categoryList_.GetFullCategoryString(
                     splits->entries_[i]->categID_, splits->entries_[i]->subCategID_
                     )
@@ -643,12 +634,12 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
             wxASSERT(pCurrencyBase);
             wxString basecuramountStr;
             mmDBWrapper::loadCurrencySettings(core_->db_.get(), pCurrencyBase->currencyID_);
-             CurrencyFormatter::formatDoubleToCurrency(amount*convrate, basecuramountStr);
+            basecuramountStr = CurrencyFormatter::float2Money(amount*convrate);
 
             pCurrencyBase = core_->accountList_.getCurrencySharedPtr(accountId);
             wxASSERT(pCurrencyBase);
             CurrencyFormatter::instance().loadSettings(*pCurrencyBase);
-             CurrencyFormatter::formatDoubleToCurrency(amount, amountStr);
+            amountStr = CurrencyFormatter::float2Money(amount);
 
             //output
             infoStr << amountStr << " = " << basecuramountStr;
@@ -668,23 +659,21 @@ void mmCheckingPanel::setAccountSummary()
     double reconciledBal = core_->bTransactionList_.getReconciledBalance(m_AccountID);
     double acctInitBalance = core_->accountList_.GetAccountSharedPtr(m_AccountID)->initialBalance_;
 
-    wxString balance, recbalance, diffbal, filteredBalanceStr;
-     CurrencyFormatter::formatDoubleToCurrency(checking_bal + acctInitBalance, balance);
-     CurrencyFormatter::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
-     CurrencyFormatter::formatDoubleToCurrency(checking_bal - reconciledBal, diffbal);
-     CurrencyFormatter::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);
-
     bool show_displayed_balance_ = (transFilterActive_ || (currentView_ != VIEW_TRANS_ALL_STR));
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER1);
-    header->SetLabel(balance);
+    header->SetLabel(CurrencyFormatter::float2Money(checking_bal + acctInitBalance));
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER2);
-    header->SetLabel(recbalance);
+    header->SetLabel(CurrencyFormatter::float2Money(reconciledBal + acctInitBalance));
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER3);
-    header->SetLabel(diffbal);
+    header->SetLabel(CurrencyFormatter::float2Money(checking_bal - reconciledBal));
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER4);
-    header->SetLabel(show_displayed_balance_ ? _("Displayed Bal: ") : "                                 ");
+    header->SetLabel(show_displayed_balance_
+        ? _("Displayed Bal: ")
+        : "                                 ");
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER5);
-    header->SetLabel(show_displayed_balance_ ? filteredBalanceStr : "                                 ");
+    header->SetLabel(show_displayed_balance_
+        ? CurrencyFormatter::float2Money(filteredBalance_)
+        : "                                 ");
 }
 //----------------------------------------------------------------------------
 
@@ -852,9 +841,7 @@ double mmCheckingPanel::getBalance(mmBankTransaction* transPtr, double currentBa
 void mmCheckingPanel::setBalance(mmBankTransaction* transPtr, double currentBalance )
 {
     transPtr->balance_ = currentBalance;
-    wxString balanceStr;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(currentBalance, balanceStr);
-    transPtr->balanceStr_ = balanceStr;
+    transPtr->balanceStr_ = CurrencyFormatter::float2String(currentBalance);
 }
 
 void mmCheckingPanel::OnDeleteTransaction(wxCommandEvent& event)
