@@ -96,6 +96,25 @@ void CurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
     rdata.Replace("-,", "-");
 }
 
+wxString CurrencyFormatter::float2String(double val)
+{
+    wxString d2s = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
+    //TODO: Remove it with new wx release
+    d2s.Replace("-,", "-");
+    return d2s;
+}
+
+wxString CurrencyFormatter::float2Money(double val)
+{
+    const CurrencyFormatter &fmt = CurrencyFormatter::instance();
+    wxString d2s = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
+    d2s.Prepend(fmt.getPrefix());
+    d2s.Append(fmt.getSuffix());
+    //TODO: Remove it with new wx release
+    d2s.Replace("-,", "-");
+    return d2s;
+}
+
 bool CurrencyFormatter::formatCurrencyToDouble(const wxString& str, double& val)
 {
     return wxNumberFormatter::FromString(str , &val);
