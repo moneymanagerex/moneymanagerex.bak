@@ -48,9 +48,14 @@ void TEntryBase::FinaliseStatement(wxSQLite3Statement& st)
     mmOptions::instance().databaseUpdated_ = true;
 }
 
-int TEntryBase::GetId()
+int TEntryBase::GetId() const
 {
     return id_;
+}
+
+bool TEntryBase::operator < (const TEntryBase& entry) const
+{
+	return this->GetId() < entry.GetId();
 }
 
 /************************************************************************************
