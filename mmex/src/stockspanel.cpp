@@ -346,7 +346,7 @@ void mmStocksPanel::CreateControls()
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     wxListItem itemCol;
 
-    const wxChar* columns[] = {
+    const wxString columns[] = {
         _("Purchase Date"),
         _("Share Name"),
         _("Number of Shares"),
