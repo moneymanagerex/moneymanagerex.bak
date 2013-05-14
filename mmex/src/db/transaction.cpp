@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -93,7 +93,7 @@ void TTransactionEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
     st.Bind(++db_index, id_subcategory_);   // SUBCATEGID
     st.BindDate(++db_index, trans_date_);   // TRANSDATE
     st.Bind(++db_index, id_followup_);      // FOLLOWUPID
-    st.Bind(++db_index, amount_to_);        // TOTRANSAMOUNT    
+    st.Bind(++db_index, amount_to_);        // TOTRANSAMOUNT
 }
 
 int TTransactionEntry::Add(wxSQLite3Database* db)
@@ -108,7 +108,7 @@ int TTransactionEntry::Add(wxSQLite3Database* db)
     wxSQLite3Statement st = db->PrepareStatement(ADD_CHECKINGACCOUNT_V1_ROW);
     int db_index = 0;
     SetDatabaseValues(st, db_index);
-    
+
     FinaliseAdd(db, st);
 
     return id_;
@@ -129,7 +129,7 @@ void TTransactionEntry::Update(wxSQLite3Database* db)
         " STATUS = ?, TRANSACTIONNUMBER = ?, NOTES = ?, CATEGID = ?, SUBCATEGID = ?,"
         " TRANSDATE = ?, FOLLOWUPID = ?, TOTRANSAMOUNT = ? "
         "where TRANSID = ? ";
-    
+
         wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
         int db_index = 0;
         SetDatabaseValues(st, db_index);
@@ -146,6 +146,13 @@ void TTransactionEntry::Update(wxSQLite3Database* db)
 wxString TTransactionEntry::DisplayTransactionDate()
 {
     return mmGetDateForDisplay(trans_date_);
+}
+
+bool TTransactionEntry::operator < (const TTransactionEntry& trans) const
+{
+    if (this->trans_date_ < trans.trans_date_) return true;
+    else if (this->trans_date_ > trans.trans_date_) return false;
+    return this->GetId() < trans.GetId();
 }
 
 /************************************************************************************
@@ -250,3 +257,4 @@ int TTransactionList::CurrentListSize()
 {
     return entrylist_.size();
 }
+

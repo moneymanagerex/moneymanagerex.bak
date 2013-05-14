@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -29,12 +29,6 @@ const wxString TRANS_STATE_TRANSLATION[] = {
 };
 
 const wxString TRANS_TYPE_DEF[] = {
-    "Withdrawal",
-    "Deposit",
-    "Transfer"
-};
-
-const wxString TRANS_TYPE_TRANSLATION[] = {
     wxTRANSLATE("Withdrawal"),
     wxTRANSLATE("Deposit"),
     wxTRANSLATE("Transfer")
@@ -76,7 +70,7 @@ public:
     int id_category_;
     int id_subcategory_;
     int id_followup_;
-    
+
     double amount_from_;
     double amount_to_;
 
@@ -86,12 +80,14 @@ public:
     wxString trans_status_;
     wxString trans_notes_;
 
+    virtual bool operator <(const TTransactionEntry& trans) const ;
+
     // Constructor for creating a new transaction entry
     TTransactionEntry();
-    
+
     // Copy constructor using a pointer
     TTransactionEntry(TTransactionEntry* pEntry);
-    
+
     // Constructor used to load a transaction from the database.
     TTransactionEntry(wxSQLite3ResultSet& q1);
 
