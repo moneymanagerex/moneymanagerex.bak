@@ -52,6 +52,8 @@ private:
     double GetDepreciatedValue(const wxDateTime& startDate, double value, double rate);
 
 public:
+	bool operator <(const TAssetEntry& asset) const ;
+public:
     enum ASSET_RATE {NONE, APPRECIATE, DEPRECIATE};
     enum ASSET_TYPE {PROPERTY, AUTO, HOUSE, ART, JEWELLERY, CASH, OTHER};
 

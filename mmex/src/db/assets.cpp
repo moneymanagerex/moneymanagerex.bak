@@ -135,6 +135,12 @@ double TAssetEntry::GetDepreciatedValue(const wxDateTime& startDate, double valu
     return value;
 }
 
+bool TAssetEntry::operator < (const TAssetEntry& asset) const
+{
+	if (this->date_ < asset.date_) return true; else if (this->date_ > asset.date_) return false;
+	return this->GetId() < asset.GetId();
+}
+
 double TAssetEntry::GetValue()
 {
     double asset_value = value_;

@@ -40,9 +40,12 @@ protected:
     void DeleteEntry(wxSQLite3Database* db, const wxString& sql_statement);
 
 public:
+	virtual bool operator < (const TEntryBase& entry) const;
+
+public:
     TEntryBase();
 
-    int GetId();
+    int GetId() const;
 };
 
 /************************************************************************************
