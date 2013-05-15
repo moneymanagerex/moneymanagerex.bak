@@ -2144,9 +2144,6 @@
 				RelativePath="..\..\..\src\filtertransdialog.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\src\guiid.cpp">
-			</File>
-			<File
 				RelativePath="..\..\..\src\htmlbuilder.cpp">
 			</File>
 			<File
@@ -2160,6 +2157,15 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\maincurrencydialog.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\mmCurrencyFormatter.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\mmOption.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\reports\mmRepeat.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\mmaccount.cpp">
@@ -2443,7 +2449,19 @@
 				RelativePath="..\..\..\src\maincurrencydialog.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\mmCurrencyFormatter.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\reports\mmDateRange.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\mmOption.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\reports\mmRepeat.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\mm_Scriptable_Objects.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\mmaccount.h">
