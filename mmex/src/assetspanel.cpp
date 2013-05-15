@@ -215,8 +215,9 @@ void mmAssetsListCtrl::OnDuplicateAsset(wxCommandEvent& /*event*/)
     }
 }
 
-void mmAssetsListCtrl::OnListItemActivated(wxListEvent& /*event*/)
+void mmAssetsListCtrl::OnListItemActivated(wxListEvent& event)
 {
+    selectedIndex_ = event.GetIndex();
     EditAsset(cp_->AssetList().entrylist_[selectedIndex_].get());
 }
 
