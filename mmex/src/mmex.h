@@ -270,7 +270,6 @@ private:
     /* Homepage panel logic */
     wxString m_topCategories;
     bool activeTermAccounts_;
-    wxArrayString getAccountsArray(bool withTermAccounts = false) const;
 
     void cleanup();
     wxSizer* cleanupHomePanel(bool new_sizer = true);
@@ -347,7 +346,6 @@ private:
     void OnBudgetSetupDialog(wxCommandEvent& event);
     void OnCurrency(wxCommandEvent& event);
     void OnTransactionReport(wxCommandEvent& event);
-    void OnCashFlowSpecificAccounts(int cashflowreporttype);
 
     void OnHelp(wxCommandEvent& event);
     void OnShowAppStartDialog(wxCommandEvent& WXUNUSED(event));
