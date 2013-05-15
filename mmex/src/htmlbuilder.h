@@ -22,6 +22,34 @@
 #include "defs.h"
 #include <vector>
 
+namespace tags
+{
+static const char HTML[] = 
+    "<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
+    "<title>%s - Report</title>\n""</head>";
+static const wxString TABLE_ROW = "<tr bgcolor=\"%s\" >";
+static const wxString TABLE_CELL = "<td width=\"%s\" >";
+static const wxString TABLE_CELL_SPAN = "<td colspan=\"%d\" >";
+static const wxString TABLE_CELL_LINK = "<a href=\"%s\">%s</a>\n";
+static const wxString TABLE_HEADER_CELL_LINK = "<a href=\"%s\">%s</a>\n";
+static const wxString TABLE_HEADER_ROW_LINK = "<a href=\"%s\">%s</a>\n";
+static const wxString TABLE_CELL_RIGHT_BI = "<td nowrap align=\"right\"><font size=\"%d\"><b><i>%s</i></b></font></td>\n";
+static const wxString HEADER = "<font size=\"%i\"><b>%s</b></font><br>\n";
+static const wxString HEADER_ITALIC = "<font size=\"%i\"><i>%s</i></font>\n";
+static const wxString PARAGRAPH = "<p><font size=\"%d\">%s</font></p>\n";
+static const wxString BI = "<b><i>%s</i></b>";
+static const wxString BOLD = "<b>%s</b>";
+static const wxString ITALIC = "<i>%s</i>";
+static const wxString FONT_COLOR = "<font color=\"%s\">";
+static const wxString FONT_SIZE = "<font size=\"%d\">";
+static const wxString HOR_LINE = "<hr size=\"%d\">\n";
+static const wxString IMAGE = "<img src=\"%s\" border=\"0\">";
+static const wxString END = "\n</font></body>\n</html>\n";
+static const wxString BR = "<br>\n";
+static const wxString CENTER = "<center>";
+static const wxString CENTER_END = "</center>";
+}
+
 class mmHTMLBuilder
 {
 public:
@@ -70,7 +98,7 @@ public:
     void startTableRow(const wxString& custom_color = wxGetEmptyString());
 
     /** Starts a table cell (use only if want to nest other elements inside */
-    void startTableCell(const wxString& width = wxGetEmptyString());
+    void startTableCell(const wxString& width = "");
 
     /** Add a special row that is a separator, cols is the number of columns the row has to spread along */
     void addRowSeparator(const int cols);
@@ -124,12 +152,22 @@ public:
 
 private:
     wxString html_;
-    const wxDateTime today_;
-    bool bgswitch_;
-    wxString color0_;
-    wxString color1_;
-    wxString color_table_header_;
+
     int font_size_;
+    struct color_ {
+        wxString color0;
+        wxString color1;
+        wxString table_header;
+        wxString link;
+        wxString vlink;
+        wxString alink;
+        bool bgswitch;
+    } color_;
+    struct today_ {
+        wxDateTime date;
+        wxString date_str;
+        wxString todays_date;
+    } today_;
 };
 
 #endif
