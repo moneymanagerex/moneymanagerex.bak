@@ -355,11 +355,8 @@ wxString mmQIFExportDialog::exportCategories(bool qif)
             << "^" << "\n";
         buffer_csv << categ_name <<  delimit_ << "\n";
 
-        for (std::vector<std::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin();
-                cit != category->children_.end();
-                ++ cit)
+        for (const auto& sub_category: category->children_)
         {
-            const std::shared_ptr<mmCategory> sub_category = *cit;
             bIncome = false;
             bool bSubcateg = sub_category->categID_ != -1;
             core_->bTransactionList_.IsCategoryUsed(category->categID_
