@@ -1626,11 +1626,11 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     }
 
     wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - Specific Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(cashflowSpecificAccounts, new mmTreeItemData("Cash Flow - Specific Accounts"));
+    navTreeCtrl_->SetItemData(cashflowSpecificAccounts, new mmTreeItemData("Cash Flow - Specific Accounts", new mmReportCashFlowSpecificAccounts(m_core.get(), this)));
 
 
     wxTreeItemId cashflowSpecificAccountsDaily = navTreeCtrl_->AppendItem(cashFlow, _("Daily Cash Flow - Specific Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(cashflowSpecificAccountsDaily, new mmTreeItemData("Daily Cash Flow - Specific Accounts"));
+    navTreeCtrl_->SetItemData(cashflowSpecificAccountsDaily, new mmTreeItemData("Daily Cash Flow - Specific Accounts", new mmReportDailyCashFlowSpecificAccounts(m_core.get(), this)));
 
     ///////////////////////////////////////////////////////
     wxTreeItemId transactionStats = navTreeCtrl_->AppendItem(reports, _("Transaction Statistics"), 4, 4);
@@ -1910,14 +1910,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if ( IsCustomReportSelected(customReportID, iData) )
         {
             CreateCustomReport(customReportID);
-        }
-        else if (sData == "Cash Flow - Specific Accounts")
-        {
-            OnCashFlowSpecificAccounts(0);
-        }
-        else if (sData == "Daily Cash Flow - Specific Accounts")
-        {
-            OnCashFlowSpecificAccounts(1);
         }
         else if (sData == "Transaction Report")
         {
@@ -3207,50 +3199,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 		delete rs; // CHECK
     }
 }
-//----------------------------------------------------------------------------
 
-wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
-{
-    wxArrayString accountArray;
-
-    for (const auto& account: m_core->accountList_.accounts_)
-    {
-        if (account->acctType_ == ACCOUNT_TYPE_BANK || (withTermAccounts && account->acctType_ == ACCOUNT_TYPE_TERM))
-            accountArray.Add(account->name_);
-    }
-
-    return accountArray;
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::OnCashFlowSpecificAccounts(int cashflowreporttype)
-{
-    if (!m_db.get()) return;
-    if (m_core.get()->accountList_.getNumAccounts() == 0) return;
-
-    wxArrayString accountArray = getAccountsArray(true);
-
-    wxMultiChoiceDialog mcd(this, _("Choose Accounts"), _("Cash Flow"), accountArray);
-    if (mcd.ShowModal() == wxID_OK)
-    {
-        wxArrayInt arraySel = mcd.GetSelections();
-
-        wxArrayString* selections = new wxArrayString();
-        for (size_t i = 0; i < arraySel.size(); ++i)
-        {
-            selections->Add(accountArray.Item(arraySel[i]));
-        }
-
-        // mmReportCashFlow is a mmPrintableBase
-        mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, cashflowreporttype, selections);
-
-        report->activateBankAccounts();
-        if (this->hasActiveTermAccounts()) report->activateTermAccounts();
-
-        createReportsPage(report);
-		delete report; // CHECK
-    }
-}
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)

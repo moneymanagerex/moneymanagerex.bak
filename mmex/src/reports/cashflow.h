@@ -9,14 +9,17 @@ class wxArrayString;
 class mmReportCashFlow : public mmPrintableBase 
 {
 public:
-    mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray = 0);
+    mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype);
 
-    wxString getHTMLText();
+    virtual wxString getHTMLText();
     
+protected:
+    wxString getHTMLText_i();
     void activateTermAccounts(); 
     void activateBankAccounts();
+    void getSpecificAccounts();
 
-private:
+protected:
    
    struct mmRepeatForecast 
    {
@@ -37,7 +40,7 @@ private:
 class mmReportCashFlowAllAccounts : public mmReportCashFlow
 {
 public:
-    mmReportCashFlowAllAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0, 0)
+    mmReportCashFlowAllAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0)
     {
         this->activateBankAccounts();
         this->activateTermAccounts();
@@ -47,7 +50,7 @@ public:
 class mmReportCashFlowBankAccounts : public mmReportCashFlow
 {
 public:
-    mmReportCashFlowBankAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0, 0)
+    mmReportCashFlowBankAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0)
     {
         this->activateBankAccounts();
     }
@@ -56,10 +59,29 @@ public:
 class mmReportCashFlowTermAccounts: public mmReportCashFlow
 {
 public:
-    mmReportCashFlowTermAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0, 0)
+    mmReportCashFlowTermAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0)
     {
         this->activateTermAccounts();
     }
 };
 
+class mmReportCashFlowSpecificAccounts: public mmReportCashFlow
+{
+public:
+    mmReportCashFlowSpecificAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0)
+    {
+        this->cashflowreporttype_ = 0;
+    }
+    virtual wxString getHTMLText();
+
+};
+
+class mmReportDailyCashFlowSpecificAccounts: public mmReportCashFlowSpecificAccounts
+{
+public:
+    mmReportDailyCashFlowSpecificAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlowSpecificAccounts(core, frame)
+    {
+        this->cashflowreporttype_ = 1;
+    }
+};
 #endif // _MM_EX_REPORTCASHFLOW_H_

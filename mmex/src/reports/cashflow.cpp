@@ -6,10 +6,10 @@
 #include "../mmCurrencyFormatter.h"
 #include "../db/transactionbill.h"
 
-mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype, const wxArrayString* accountArray)
+mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, int cashflowreporttype)
 : mmPrintableBase(core)
 , frame_(frame)
-, accountArray_(accountArray)
+, accountArray_(0)
 , activeTermAccounts_(false)
 , activeBankAccounts_(false)
 , cashflowreporttype_(cashflowreporttype)
@@ -25,7 +25,33 @@ void mmReportCashFlow::activateBankAccounts()
     activeBankAccounts_ = true;
 }
 
+void mmReportCashFlow::getSpecificAccounts()
+{
+    wxArrayString accountArray;
+    wxArrayString* selections = new wxArrayString();
+
+    for (const auto& account: core_->accountList_.accounts_) accountArray.Add(account->name_);
+
+    wxMultiChoiceDialog mcd(this->frame_, _("Choose Accounts"), _("Cash Flow"), accountArray);
+    if (mcd.ShowModal() == wxID_OK)
+    {
+        wxArrayInt arraySel = mcd.GetSelections();
+
+        for (size_t i = 0; i < arraySel.size(); ++i)
+        {
+            selections->Add(accountArray.Item(arraySel[i]));
+        }
+    }
+
+    this->accountArray_ = selections;
+}
+
 wxString mmReportCashFlow::getHTMLText()
+{
+    return this->getHTMLText_i();
+}
+
+wxString mmReportCashFlow::getHTMLText_i()
 {
     core_->currencyList_.LoadBaseCurrencySettings();
 
@@ -440,4 +466,11 @@ wxString mmReportCashFlow::getHTMLText()
     hb.end();
 
     return hb.getHTMLText();
+}
+
+
+wxString mmReportCashFlowSpecificAccounts::getHTMLText()
+{
+    this->getSpecificAccounts();
+    return this->getHTMLText_i();
 }
