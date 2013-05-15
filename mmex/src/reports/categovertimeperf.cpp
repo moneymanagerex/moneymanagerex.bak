@@ -67,20 +67,31 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
         , mmIniOptions::instance().ignoreFutureTransactions_);
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(SELECT_ALL_CATEGORIES);
-
     double overall = 0;
-    for (int last_cat_id = -1; q1.NextRow();)
+
+    for (const auto& category: core_->categoryList_.entries_)
     {
-        int categID = q1.GetInt("CATEGID");
-        int subcategID = q1.GetInt("SUBCATEGID");
-        if (last_cat_id != categID)
+        int categID = category->categID_;
+
+        hb.startTableRow();
+        hb.addTableCell(core_->categoryList_.GetFullCategoryString(categID, -1));
+        overall = 0;
+        for (const auto &i : categoryStats[categID][-1])
         {
-            last_cat_id = categID;
+            double value = i.second;
+            hb.addMoneyCell(value);
+            overall += value;
+        }
+        hb.addMoneyCell(overall);
+        hb.endTableRow();
+
+        for (const auto& sub_category: category->children_)
+        {
+            int subcategID = sub_category->categID_;
             hb.startTableRow();
-            hb.addTableCell(core_->categoryList_.GetFullCategoryString(categID, -1));
+            hb.addTableCell(core_->categoryList_.GetFullCategoryString(categID, subcategID));
             overall = 0;
-            for (const auto &i : categoryStats[categID][-1])
+            for (const auto &i : categoryStats[categID][subcategID])
             {
                 double value = i.second;
                 hb.addMoneyCell(value);
@@ -89,21 +100,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
             hb.addMoneyCell(overall);
             hb.endTableRow();
         }
-
-        hb.startTableRow();
-        hb.addTableCell(core_->categoryList_.GetFullCategoryString(categID, subcategID));
-        overall = 0;
-        for (const auto &i : categoryStats[categID][subcategID])
-        {
-            double value = i.second;
-            hb.addMoneyCell(value);
-            overall += value;
-        }
-        hb.addMoneyCell(overall);
-        hb.endTableRow();
     }
-
-    q1.Finalize();
 
     hb.endTable();
     hb.endCenter();
