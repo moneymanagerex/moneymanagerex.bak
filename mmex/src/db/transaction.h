@@ -21,17 +21,17 @@
 
 const wxString TRANS_STATE_DEF[] = {"N", "R", "V", "F", "D"};
 const wxString TRANS_STATE_TRANSLATION[] = {
-    wxTRANSLATE("None"),
-    wxTRANSLATE("Reconciled"),
-    wxTRANSLATE("Void"),
-    wxTRANSLATE("Follow up"),
-    wxTRANSLATE("Duplicate")
+    "None",
+    "Reconciled",
+    "Void",
+    "Follow up",
+    "Duplicate"
 };
 
 const wxString TRANS_TYPE_DEF[] = {
-    wxTRANSLATE("Withdrawal"),
-    wxTRANSLATE("Deposit"),
-    wxTRANSLATE("Transfer")
+    "Withdrawal",
+    "Deposit",
+    "Transfer"
 };
 
 /***********************************************************************************
