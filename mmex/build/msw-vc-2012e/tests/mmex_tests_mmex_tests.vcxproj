@@ -272,7 +272,6 @@
     <ClCompile Include="..\..\..\src\qif_import.cpp" />
     <ClCompile Include="..\..\..\src\fileviewerdialog.cpp" />
     <ClCompile Include="..\..\..\src\filtertransdialog.cpp" />
-    <ClCompile Include="..\..\..\src\guiid.cpp" />
     <ClCompile Include="..\..\..\src\htmlbuilder.cpp" />
     <ClCompile Include="..\..\..\src\maincurrencydialog.cpp" />
     <ClCompile Include="..\..\..\src\mmaccount.cpp" />

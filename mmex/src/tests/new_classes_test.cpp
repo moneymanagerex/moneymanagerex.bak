@@ -52,9 +52,9 @@
 //#define SUBCATEGORY_TESTS
 //#define PAYEE_TESTS
 //#define TRANSACTION_TESTS
-#define REPEAT_TRANSACTION_TESTS
+//#define REPEAT_TRANSACTION_TESTS
 //#define SPLIT_TRANSACTION_TESTS
-//#define ASSET_TESTS
+#define ASSET_TESTS
 //#define STOCK_TESTS
 //#define BUDGET_TESTS
 
@@ -790,14 +790,14 @@ TEST(TAssetList_Add_Update_Entry)
 
     TAssetEntry* asset_entry = new TAssetEntry();
 	asset_entry->date_ = date;
-    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::AUTO];
+    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::TYPE_AUTO];
     asset_entry->value_ = 2000;
 
     TAssetList asset_list(get_pDb());
     int asset_id = asset_list.AddEntry(asset_entry);
     CHECK(asset_id > 0);
 
-    asset_entry->rate_type_ = ASSET_RATE_DEF[TAssetEntry::DEPRECIATE];
+    asset_entry->rate_type_ = ASSET_RATE_DEF[TAssetEntry::RATE_DEPRECIATE];
     asset_entry->rate_value_ = 50;
     asset_entry->Update(asset_list.ListDatabase());
 
@@ -819,13 +819,13 @@ TEST(TAssetList_Test_Values)
     if (pEntry)
     {
         CHECK_EQUAL(date.FormatISODate(), pEntry->date_.FormatISODate());
-        CHECK_EQUAL(ASSET_TYPE_DEF[TAssetEntry::AUTO], pEntry->name_);
+        CHECK_EQUAL(ASSET_TYPE_DEF[TAssetEntry::TYPE_AUTO], pEntry->name_);
         CHECK_EQUAL(2000, pEntry->value_);
 
         double depreciation_value = pEntry->GetValue();
         CHECK_EQUAL(0, depreciation_value);
  
-        pEntry->rate_type_ = ASSET_RATE_DEF[TAssetEntry::APPRECIATE];
+        pEntry->rate_type_ = ASSET_RATE_DEF[TAssetEntry::RATE_APPRECIATE];
         double appreciation_value = pEntry->GetValue();
         CHECK((appreciation_value > 4000) && (appreciation_value < 4002));
       
@@ -858,14 +858,14 @@ TEST(TAssetList_Test_Balance)
     TAssetList asset_list(get_pDb());
     TAssetEntry* asset_entry = new TAssetEntry();
 	asset_entry->date_ = date;
-    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::HOUSE];
+    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::TYPE_HOUSE];
     asset_entry->value_ = 2000;
     
     int id_1 = asset_list.AddEntry(asset_entry);
 
     asset_entry = new TAssetEntry();
 	asset_entry->date_ = date;
-    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::OTHER];
+    asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::TYPE_OTHER];
     asset_entry->value_ = 1000;
     
     int id_2 = asset_list.AddEntry(asset_entry);
@@ -901,10 +901,10 @@ TEST(TAssetList_Add_5_years_of_entries)
     TAssetList asset_list(get_pDb());
 
     TAssetEntry* new_entry = new TAssetEntry();
-    new_entry->name_       = ASSET_TYPE_DEF[TAssetEntry::AUTO];
+    new_entry->name_       = ASSET_TYPE_DEF[TAssetEntry::TYPE_AUTO];
 	new_entry->date_       = start_time;
     new_entry->value_      = 20000;
-    new_entry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::DEPRECIATE];
+    new_entry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::RATE_DEPRECIATE];
     new_entry->rate_value_ = 20;
 
     int asset_id = asset_list.AddEntry(new_entry);
@@ -960,7 +960,7 @@ TEST(TAssetList_Change_Entries_Apreciate)
     get_pDb()->Begin();
     for (const auto& pEntry:asset_list.entrylist_)
     {
-        pEntry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::APPRECIATE];
+        pEntry->rate_type_  = ASSET_RATE_DEF[TAssetEntry::RATE_APPRECIATE];
         pEntry->Update(asset_list.ListDatabase());
     }
     get_pDb()->Commit();

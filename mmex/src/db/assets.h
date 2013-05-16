@@ -54,8 +54,20 @@ private:
 public:
 	bool operator <(const TAssetEntry& asset) const ;
 public:
-    enum ASSET_RATE {NONE, APPRECIATE, DEPRECIATE};
-    enum ASSET_TYPE {PROPERTY, AUTO, HOUSE, ART, JEWELLERY, CASH, OTHER};
+    enum ASSET_RATE {
+        RATE_NONE,
+        RATE_APPRECIATE,
+        RATE_DEPRECIATE
+    };
+    enum ASSET_TYPE {
+        TYPE_PROPERTY,
+        TYPE_AUTO,
+        TYPE_HOUSE,
+        TYPE_ART,
+        TYPE_JEWELLERY,
+        TYPE_CASH,
+        TYPE_OTHER
+    };
 
     wxString name_;         // "ASSETNAME"
     wxString type_;         // "ASSETTYPE"

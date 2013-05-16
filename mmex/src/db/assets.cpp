@@ -145,12 +145,12 @@ double TAssetEntry::GetValue()
 {
     double asset_value = value_;
 
-    if (rate_type_ == ASSET_RATE_DEF[APPRECIATE])
+    if (rate_type_ == ASSET_RATE_DEF[RATE_APPRECIATE])
     {
         asset_value = GetAppreciatedValue(date_, value_, rate_value_);
     }
 
-    if (rate_type_ == ASSET_RATE_DEF[DEPRECIATE])
+    if (rate_type_ == ASSET_RATE_DEF[RATE_DEPRECIATE])
     {
         asset_value = GetDepreciatedValue(date_, value_, rate_value_);
     }
