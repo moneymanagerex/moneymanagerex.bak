@@ -24,28 +24,36 @@
 
 namespace tags
 {
-static const char HTML[] = 
+static const char HTML[] =
     "<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
     "<title>%s - Report</title>\n""</head>";
+static const wxString TABLE_START = "<table cellspacing=\"1\" bgcolor=\"%s\" width=\"%s\" valign=\"%s\" border=\"%s\">\n";
+static const wxString TABLE_END = "</table>\n";
 static const wxString TABLE_ROW = "<tr bgcolor=\"%s\" >";
+static const wxString TABLE_ROW_END = "</tr>";
 static const wxString TABLE_CELL = "<td width=\"%s\" >";
+static const wxString TABLE_CELL_RIGHT = "<td nowrap align=\"right\">";
 static const wxString TABLE_CELL_SPAN = "<td colspan=\"%d\" >";
+static const wxString TABLE_CELL_END = "</td>\n";
 static const wxString TABLE_CELL_LINK = "<a href=\"%s\">%s</a>\n";
-static const wxString TABLE_HEADER_CELL_LINK = "<a href=\"%s\">%s</a>\n";
-static const wxString TABLE_HEADER_ROW_LINK = "<a href=\"%s\">%s</a>\n";
 static const wxString TABLE_CELL_RIGHT_BI = "<td nowrap align=\"right\"><font size=\"%d\"><b><i>%s</i></b></font></td>\n";
+static const wxString TABLE_HEADER = "<th align=\"%s\" valign=\"center\" bgcolor=\"%s\" colspan=\"%i\">";
+static const wxString TABLE_HEADER_END = "</th>\n";
 static const wxString HEADER = "<font size=\"%i\"><b>%s</b></font><br>\n";
 static const wxString HEADER_ITALIC = "<font size=\"%i\"><i>%s</i></font>\n";
 static const wxString PARAGRAPH = "<p><font size=\"%d\">%s</font></p>\n";
+static const wxString LINK = "<a href=\"%s\">%s</a>\n";
 static const wxString BI = "<b><i>%s</i></b>";
 static const wxString BOLD = "<b>%s</b>";
 static const wxString ITALIC = "<i>%s</i>";
 static const wxString FONT_COLOR = "<font color=\"%s\">";
-static const wxString FONT_SIZE = "<font size=\"%d\">";
+static const wxString FONT_SIZE = "<font size=\"%i\">";
+static const wxString FONT_END = "</font>";
 static const wxString HOR_LINE = "<hr size=\"%d\">\n";
 static const wxString IMAGE = "<img src=\"%s\" border=\"0\">";
 static const wxString END = "\n</font></body>\n</html>\n";
 static const wxString BR = "<br>\n";
+static const wxString NBSP = "&nbsp;";
 static const wxString CENTER = "<center>";
 static const wxString CENTER_END = "</center>";
 }
@@ -57,48 +65,25 @@ public:
     ~mmHTMLBuilder() {}
 
 public:
+    void DisplayDateHeading(const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange = true);
+
     /** Starts a new HMTL report */
     void init();
 
-    /** Closes the HMTL report */
-    void end();
-
     /** Clears the current HTML document */
-    void clear() { html_ = wxGetEmptyString(); }
+    virtual void clear() { html_ = wxGetEmptyString(); }
 
     /** Create an HTML header and returns as a wxString */
     void addHeader(const int level, const wxString& header);
     void addHeaderItalic(const int level, const wxString& header);
     void addDateNow();
 
-    /** Create an HTML paragrapth */
-    void addParaText(const wxString& text);
-    void addText(const wxString& text);
-
-    /** Create an HTML line break */
-    void addLineBreak();
-
-    /** Create an HTML HorizontalLine */
-    void addHorizontalLine(const int size = 0);
-
     /** Create an HTML Image tag */
     void addImage(const wxString& src);
 
-    /** Centers the content from this point on */
-    void startCenter();
-
-    /** Stops the centering of content */
-    void endCenter();
-
     /** Start a table element */
-    void startTable(const wxString& width = wxGetEmptyString()
-        , const wxString& valign = wxGetEmptyString(), const wxString& border = wxGetEmptyString());
-
-    /** Starts a table row */
-    void startTableRow(const wxString& custom_color = wxGetEmptyString());
-
-    /** Starts a table cell (use only if want to nest other elements inside */
-    void startTableCell(const wxString& width = "");
+    void startTable(const wxString& width = "0"
+        , const wxString& valign = "left", const wxString& border = "0");
 
     /** Add a special row that is a separator, cols is the number of columns the row has to spread along */
     void addRowSeparator(const int cols);
@@ -118,10 +103,10 @@ public:
     void addTableHeaderCellLink(const wxString& href, const wxString& value);
 
     /** Add a Table header row */
-    void addTableHeaderRow(const wxString& value, const int cols);
+    void addTableHeaderRow(const wxString& value, const int cols = 0);
 
     /** Add a Table header row with link */
-    void addTableHeaderRowLink(const wxString& href, const wxString& value, const int cols);
+    void addTableHeaderRowLink(const wxString& href, const wxString& value, const int cols = 0);
 
     void addMoneyCell(double amount, bool color = true);
     void addMoneyCell(double amount, const wxString& color);
@@ -141,14 +126,36 @@ public:
         , const bool& bold = false
         , const wxString& fontColor = wxGetEmptyString());
 
-    void endTable();
-    void endTableRow();
-    void endTableCell();
+    virtual void end() { html_+= tags::END; };
+    virtual void endTable() { html_+= tags::TABLE_END; };
+	virtual void startTableRow() { html_ += wxString::Format(tags::TABLE_ROW, (color_.bgswitch ? color_.color0 : color_.color1)); }
+	virtual void startTableRow(const wxString& custom_color) { html_ += wxString::Format(tags::TABLE_ROW, custom_color); }
+    virtual void endTableRow() { html_+= tags::TABLE_ROW_END;
+        color_.bgswitch = !color_.bgswitch; }
 
-    wxString getHTMLText() const { return html_; }
+    /** Create an HTML paragrapth */
+    virtual void addParaText(const wxString& text) { html_+= wxString::Format(tags::PARAGRAPH, font_size_, text); }
+    virtual void addText(const wxString& text) { html_+= text; }
 
-    void addHTML(const wxString& raw) { html_ += raw; }
-    void DisplayDateHeading(const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange = true);
+    /** Create an HTML line break */
+    virtual void addLineBreak() { html_+= tags::BR; }
+
+    /** Create an HTML HorizontalLine */
+    virtual void addHorizontalLine(const int size = 0) { html_+= wxString::Format(tags::HOR_LINE, size); }
+
+    /** Starts a table cell (use only if want to nest other elements inside */
+    virtual void startTableCell(const wxString& width = "0") { html_+= wxString::Format(tags::TABLE_CELL, width); }
+    virtual void endTableCell() { html_+= tags::TABLE_CELL_END; }
+
+    virtual void bold_italic(const wxString value) { html_+= wxString::Format(tags::BI, value); }
+    virtual void bold(const wxString value) { html_+= wxString::Format(tags::BOLD, value); }
+    virtual void italic(const wxString value) { html_+= wxString::Format(tags::ITALIC, value); }
+    virtual void font_size(int size) { wxString::Format(tags::FONT_SIZE, size); }
+    virtual void font_end() { html_+= tags::FONT_END; }
+    virtual wxString getHTMLText() const { return html_; }
+    /** Centers the content from this point on */
+    virtual void startCenter() { html_+= tags::CENTER; }
+    virtual void endCenter() { html_+= tags::CENTER_END; }
 
 private:
     wxString html_;
@@ -157,6 +164,7 @@ private:
     struct color_ {
         wxString color0;
         wxString color1;
+        wxString bgcolor;
         wxString table_header;
         wxString link;
         wxString vlink;

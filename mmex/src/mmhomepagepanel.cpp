@@ -431,8 +431,8 @@ wxString mmHomePagePanel::displayCurrencies()
             CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
             hb.startTableRow();
-            hb.addTableCell(currencyStr);
-            hb.addMoneyCell(convRate);
+            hb.addTableCell(currencyStr, false, false, true);
+            hb.addTableCell(CurrencyFormatter::float2String(convRate), true);
             hb.addMoneyCell(currBalance);
             hb.endTableRow();
         }
