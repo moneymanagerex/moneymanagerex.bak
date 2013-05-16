@@ -21,6 +21,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "../htmlbuilder.h"
 #include "../util.h"
 
+enum TYPE {INCOME = 0, EXPENCES, TOTAL, MAX};
+static const wxString type_names[] = {_("Incomes"), _("Expences"), _("Total")};
+
 //----------------------------------------------------------------------------
 
 mmReportCategoryOverTimePerformance::mmReportCategoryOverTimePerformance(mmCoreDB *core
@@ -47,6 +50,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     hb.startCenter();
     hb.startTable();
 
+    //Add header
     hb.startTableRow();
     hb.addTableHeaderCell(_("Category"));
     wxDateTime start_date = date_range_->start_date();
@@ -59,16 +63,19 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     hb.addTableHeaderCell(_("Overall"));
     hb.endTableRow();
 
-    // begin of table
-
+    //Get statistic
     std::map<int, std::map<int, std::map<int, double> > > categoryStats;
     core_->bTransactionList_.getCategoryStats(categoryStats
         , date_range_
         , mmIniOptions::instance().ignoreFutureTransactions_);
     core_->currencyList_.LoadBaseCurrencySettings();
 
+    //Init totals
+    //Type(Withdrawal/Income/Summ), month, value
+    std::map<int, std::map<int, double> > totals;
     double overall = 0;
 
+    //Begin of table
     for (const auto& category: core_->categoryList_.entries_)
     {
         int categID = category->categID_;
@@ -101,7 +108,21 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
             hb.endTableRow();
         }
     }
-
+    //Totals
+    for (int i = 0; i < MAX; ++i)
+    {
+        hb.startTableRow();
+        hb.addTableHeaderCell(type_names[i]);
+        overall = 0;
+        for (int i = 0; i < MONTHS_IN_PERIOD; i++)
+        {
+            double amount = 1; //TODO:
+            overall += amount;
+            hb.addMoneyCell(amount);
+        }
+        hb.addMoneyCell(overall);
+        hb.endTableRow();
+    }
     hb.endTable();
     hb.endCenter();
     hb.end();
