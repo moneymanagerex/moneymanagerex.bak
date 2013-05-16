@@ -30,7 +30,7 @@ mmReportCategoryOverTimePerformance::mmReportCategoryOverTimePerformance(mmCoreD
 , mmDateRange* date_range) :
     mmPrintableBase(core)
     , date_range_(date_range)
-    , title_(_("Category Income/Expenses: %s (UNDER CONSTRACTION)"))
+    , title_(_("Category Income/Expenses: %s"))
 {
     wxASSERT(core_);
 }
@@ -92,6 +92,8 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
             double value = i.second;
             hb.addMoneyCell(value);
             overall += value;
+            totals[value<0][i.first] += value;
+            totals[TOTAL][i.first] += value;
         }
         hb.addMoneyCell(overall);
         hb.endTableRow();
@@ -107,26 +109,30 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
                 double value = i.second;
                 hb.addMoneyCell(value);
                 overall += value;
+                totals[value<0][i.first] += value;
+                totals[TOTAL][i.first] += value;
             }
             hb.addMoneyCell(overall);
             hb.endTableRow();
         }
     }
+    hb.addRowSeparator(MONTHS_IN_PERIOD+2);
     //Totals
-    for (int i = 0; i < MAX; ++i)
+    for (const auto& print_totals : totals)
     {
         hb.startTableRow();
-        hb.addTableHeaderCell(type_names[i]);
+        hb.addTableCell(type_names[print_totals.first]);
         overall = 0;
-        for (int i = 0; i < MONTHS_IN_PERIOD; i++)
+        for (const auto& range : totals[print_totals.first])
         {
-            double amount = 1; //TODO:
+            double amount = range.second;
             overall += amount;
             hb.addMoneyCell(amount);
         }
         hb.addMoneyCell(overall);
         hb.endTableRow();
     }
+    hb.addRowSeparator(MONTHS_IN_PERIOD+2);
     hb.endTable();
     hb.endCenter();
     hb.end();
