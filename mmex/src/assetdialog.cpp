@@ -98,7 +98,7 @@ void mmAssetDialog::dataToControls()
 
     wxString valueChangeTypeStr = pAssetEntry_->rate_type_;
 	m_valueChange->SetStringSelection(wxGetTranslation(valueChangeTypeStr));
-	enableDisableRate(valueChangeTypeStr != ASSET_RATE_DEF[TAssetEntry::NONE]);
+	enableDisableRate(valueChangeTypeStr != ASSET_RATE_DEF[TAssetEntry::RATE_NONE]);
     m_assetType->SetStringSelection(wxGetTranslation(pAssetEntry_->type_));
 }
 
@@ -148,7 +148,7 @@ void mmAssetDialog::CreateControls()
             new wxStringClientData(ASSET_TYPE_DEF[i]));
 
     m_assetType->SetToolTip(_("Select type of asset"));
-    m_assetType->SetSelection(TAssetEntry::PROPERTY);
+    m_assetType->SetSelection(TAssetEntry::TYPE_PROPERTY);
     itemFlexGridSizer6->Add(m_assetType, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -169,7 +169,7 @@ void mmAssetDialog::CreateControls()
     }
 
     m_valueChange->SetToolTip(_("Specify if the value of the asset changes over time"));
-    m_valueChange->SetSelection(TAssetEntry::NONE);
+    m_valueChange->SetSelection(TAssetEntry::RATE_NONE);
     itemFlexGridSizer6->Add(m_valueChange, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_valueChangeRateLabel = new wxStaticText( itemPanel5, wxID_STATIC, _("% Rate"));
@@ -206,7 +206,7 @@ void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& /*event*/)
 {
     int selection = m_valueChange->GetSelection();
     // Disable for "None", Enable for "Appreciates" or "Depreciates"
-    enableDisableRate(selection != TAssetEntry::NONE);
+    enableDisableRate(selection != TAssetEntry::RATE_NONE);
 }
 
 void mmAssetDialog::enableDisableRate(bool en)
@@ -247,7 +247,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     if (value_change_obj) valueChangeTypeStr = value_change_obj->GetData();
 
     wxString valueChangeRateStr = m_valueChangeRate->GetValue().Trim();
-    if (valueChangeRateStr.IsEmpty() && valueChangeType != TAssetEntry::NONE)
+    if (valueChangeRateStr.IsEmpty() && valueChangeType != TAssetEntry::RATE_NONE)
     {
         wxMessageBox(_("Rate of Change in Value"), _("Invalid Entry"), wxOK|wxICON_ERROR);
         return;
@@ -258,7 +258,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         valueChangeRate = -1.0;
     }
     //This should be unnecessary with hidden controls
-    if ((valueChangeType != TAssetEntry::NONE) && (valueChangeRate < 0.0))
+    if ((valueChangeType != TAssetEntry::RATE_NONE) && (valueChangeRate < 0.0))
     {
         wxMessageBox(_("Invalid Value "), _("Invalid Entry"), wxOK|wxICON_ERROR);
         return;

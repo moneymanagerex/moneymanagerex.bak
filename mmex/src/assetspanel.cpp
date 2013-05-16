@@ -513,7 +513,7 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
         miniInfo << "\t" << _("Change in Value") << ": "
         << wxGetTranslation(asset_list_.entrylist_[selIndex]->rate_type_);
 
-        if (asset_list_.entrylist_[selIndex]->rate_type_ != ASSET_RATE_DEF[TAssetEntry::NONE])
+        if (asset_list_.entrylist_[selIndex]->rate_type_ != ASSET_RATE_DEF[TAssetEntry::RATE_NONE])
             miniInfo<< " = " << asset_list_.entrylist_[selIndex]->rate_value_ << "%";
 
         st->SetLabel(asset_list_.entrylist_[selIndex]->notes_);
