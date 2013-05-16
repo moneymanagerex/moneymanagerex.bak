@@ -28,13 +28,13 @@ class mmReportCategoryOverTimePerformance : public mmPrintableBase
 {
 public:
     mmReportCategoryOverTimePerformance(mmCoreDB *core, mmDateRange* date_range = new mmLast12Months());
+    ~mmReportCategoryOverTimePerformance();
 
     wxString getHTMLText();
 
 protected:
     mmDateRange* date_range_;
     wxString title_;
-
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_REPORTCATEGOVERTIME_H_

@@ -35,6 +35,10 @@ mmReportCategoryOverTimePerformance::mmReportCategoryOverTimePerformance(mmCoreD
     wxASSERT(core_);
 }
 //----------------------------------------------------------------------------
+mmReportCategoryOverTimePerformance::~mmReportCategoryOverTimePerformance()
+{
+    if (date_range_) delete date_range_;
+}
 
 wxString mmReportCategoryOverTimePerformance::getHTMLText()
 {
