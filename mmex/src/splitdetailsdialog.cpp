@@ -85,10 +85,8 @@ bool SplitDetailDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->SetSizeHints(this);
     Centre();
 
-    wxString dispAmount;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(*m_amount_, dispAmount);
-    textAmount_->SetValue(dispAmount);
-
+    textAmount_->SetValue( *m_amount_ != 0 ? CurrencyFormatter::float2String(*m_amount_) : "" );
+    textAmount_->SetFocus();
     return TRUE;
 }
 
@@ -120,20 +118,19 @@ void SplitDetailDialog::CreateControls()
     choiceType_->SetToolTip(_("Specify the type of transactions to be created."));
     controlSizer->Add(choiceType_, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
-    wxStaticText* staticTextCategory = new wxStaticText( itemPanel7, wxID_STATIC, _("Category"));
-    controlSizer->Add(staticTextCategory, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
-    bCategory_ = new wxButton( itemPanel7, ID_BUTTONCATEGORY, m_categString_,
-        wxDefaultPosition, wxSize(200, -1), 0 );
-    controlSizer->Add(bCategory_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
-
     wxStaticText* staticTextAmount = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount"));
     controlSizer->Add(staticTextAmount, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     textAmount_ = new wxTextCtrl( itemPanel7, ID_TEXTCTRLAMOUNT, ""
         , wxDefaultPosition, wxSize(110,-1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER
-		, wxFloatingPointValidator<double>());
+        , wxFloatingPointValidator<double>());
     controlSizer->Add(textAmount_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
-    textAmount_->SetFocus();
+
+    wxStaticText* staticTextCategory = new wxStaticText( itemPanel7, wxID_STATIC, _("Category"));
+    controlSizer->Add(staticTextCategory, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    bCategory_ = new wxButton( itemPanel7, ID_BUTTONCATEGORY, m_categString_,
+        wxDefaultPosition, wxSize(200, -1), 0 );
+    controlSizer->Add(bCategory_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     /**************************************************************************
      Control Buttons
@@ -141,10 +138,10 @@ void SplitDetailDialog::CreateControls()
     wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(buttonSizer, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxButton* itemButtonOK = new wxButton( this, wxID_OK);
+    wxButton* itemButtonOK = new wxButton( this, wxID_OK, _("&OK"));
     buttonSizer->Add(itemButtonOK, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButtonCancel = new wxButton( this, wxID_CANCEL);
+    wxButton* itemButtonCancel = new wxButton( this, wxID_CANCEL, _("&Cancel"));
     buttonSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
