@@ -213,6 +213,32 @@ void mmCategoryList::parseCategoryString(wxString categ, wxString& cat, int& cat
         subCategID = -1;
 }
 
+bool mmCategoryList::GetCategoryLikeString(wxString& str, int& categID, int& subcategID)
+{
+    bool found = false;
+    for (const auto& category: core_->categoryList_.entries_)
+    {
+        if (category->categName_.Upper().StartsWith(str))
+        {
+            categID = category->categID_;
+            subcategID = -1;
+            found = true;
+            break;
+        }
+        for (const auto& sub_category: category->children_)
+        {
+            if (sub_category->categName_.Upper().StartsWith(str))
+            {
+                categID = category->categID_;
+                subcategID = sub_category->categID_;
+                found = true;
+                break;
+            }
+        }
+    }
+    return found;
+}
+
 int mmCategoryList::AddCategory(const wxString& category)
 {
     if (category.IsEmpty()) return -1;
