@@ -39,6 +39,7 @@ class mmTransDialog : public wxDialog
 
 public:
     mmTransDialog() {}
+    virtual ~mmTransDialog();
 
     mmTransDialog( mmCoreDB* core,
         int accountID, mmBankTransaction* pBankTransaction,
@@ -77,6 +78,7 @@ private:
     void OnCancel(wxCommandEvent& event);
     void OnQuit(wxCloseEvent& event);
     void OnCategs(wxCommandEvent& event);
+    void OnCategoryKey(wxKeyEvent& event);
     void OnPayee(wxCommandEvent& event);
     void OnPayeeUpdated(wxCommandEvent& event);
     void OnAccountUpdated(wxCommandEvent& event);
@@ -112,6 +114,7 @@ private:
     wxButton* itemButtonCancel_;
 
     wxString categoryName_;
+    wxString categStrykes_;
     wxString subCategoryName_;
     wxString sTransaction_type_;
 
@@ -147,6 +150,10 @@ private:
 
     wxString resetPayeeString(/*bool normal = true*/);
     wxString resetCategoryString();
+
+    wxTimer* timer_;
+    static const int INTERVAL = 1000;
+    void ResetKeyStrikes(wxTimerEvent& /*event*/);
 };
 
 #endif

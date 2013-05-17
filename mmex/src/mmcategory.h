@@ -59,6 +59,8 @@ public:
     void parseCategoryString(wxString categ, wxString& cat, int& categID, wxString& subcat, int& subCategID);
 
     bool CategoryExists(const wxString& categoryName) const;
+    bool GetCategoryLikeString(wxString& str, int& categID, int& subcategID);
+
     std::shared_ptr<mmCategory> GetCategorySharedPtr(int category, int subcategory) const;
     int GetSubCategoryID(int parentID, const wxString& subCategoryName) const;
 

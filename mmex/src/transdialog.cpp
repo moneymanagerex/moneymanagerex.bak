@@ -42,6 +42,7 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_CHILD_FOCUS(mmTransDialog::changeFocus)
     EVT_SPIN(wxID_ANY,mmTransDialog::OnSpin)
     EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmTransDialog::OnDateChanged)
+    EVT_TIMER(wxID_ANY, mmTransDialog::ResetKeyStrikes)
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog(
@@ -73,6 +74,11 @@ mmTransDialog::mmTransDialog(
     Create(parent, id, caption, pos, size, style);
 }
 
+mmTransDialog::~mmTransDialog()
+{
+    timer_->Stop();
+}
+
 bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
                            const wxPoint& pos, const wxSize& size, long style )
 {
@@ -92,6 +98,7 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 
     Centre();
     Fit();
+    timer_ = new wxTimer(this, wxID_ANY);
 
     return TRUE;
 }
@@ -453,6 +460,9 @@ void mmTransDialog::CreateControls()
     flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Category")), flags);
     flex_sizer->Add(bCategory_, flags);
 
+    bCategory_->Connect(wxID_ANY, wxEVT_CHAR
+        , wxKeyEventHandler(mmTransDialog::OnCategoryKey), NULL, this);
+
     // Number  ---------------------------------------------
     textNumber_ = new wxTextCtrl(this,
         ID_DIALOG_TRANS_TEXTNUMBER, "", wxDefaultPosition,
@@ -675,6 +685,23 @@ void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
     toTextAmount_->SetValue(amountStr);
 
     SetTransferControls();
+}
+
+void mmTransDialog::OnCategoryKey(wxKeyEvent& event)
+{
+    categStrykes_ << event.GetUnicodeKey();
+
+    if (!timer_->IsRunning ())
+        timer_->Start(INTERVAL, true);
+    core_->categoryList_.GetCategoryLikeString(categStrykes_, categID_, subcategID_);
+
+    //wxLogDebug(categStrykes_ + " | " + core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
+    bCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
+}
+
+void mmTransDialog::ResetKeyStrikes(wxTimerEvent& /*event*/)
+{
+    categStrykes_.clear();
 }
 
 void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
