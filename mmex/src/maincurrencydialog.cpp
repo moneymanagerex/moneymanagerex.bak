@@ -18,6 +18,7 @@
 
 #include "maincurrencydialog.h"
 #include "currencydialog.h"
+#include "mmCurrencyFormatter.h"
 #include "constants.h"
 #include "util.h"
 #include "defs.h"
@@ -33,12 +34,22 @@ BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
 
     EVT_MENU_RANGE(0, 1, mmMainCurrencyDialog::OnMenuSelected)
 
-    EVT_LIST_ITEM_ACTIVATED(wxID_ANY,   mmMainCurrencyDialog::OnListItemActivated)
-    EVT_LIST_ITEM_SELECTED(wxID_ANY,    mmMainCurrencyDialog::OnListItemSelected)
-    EVT_LIST_ITEM_DESELECTED(wxID_ANY,  mmMainCurrencyDialog::OnListItemDeselected)
-    EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, mmMainCurrencyDialog::OnItemRightClick)
+    EVT_DATAVIEW_ITEM_ACTIVATED(wxID_ANY,   mmMainCurrencyDialog::OnListItemActivated)
+    EVT_DATAVIEW_SELECTION_CHANGED(wxID_ANY,    mmMainCurrencyDialog::OnListItemSelected)
+    EVT_DATAVIEW_ITEM_VALUE_CHANGED(wxID_ANY,    mmMainCurrencyDialog::OnValueChanged)
+    EVT_DATAVIEW_ITEM_CONTEXT_MENU(wxID_ANY, mmMainCurrencyDialog::OnItemRightClick)
 END_EVENT_TABLE()
 
+namespace
+{
+    enum cols
+    {
+        CURR_BASE = 0,
+        CURR_SYMBOL,
+        CURR_NAME,
+        BASE_RATE
+    };
+}
 
 mmMainCurrencyDialog::mmMainCurrencyDialog(
     mmCoreDB* core,
@@ -54,6 +65,11 @@ mmMainCurrencyDialog::mmMainCurrencyDialog(
     currencyListBox_(),
     bEnableSelect_(bEnableSelect)
 {
+    ColName_[CURR_BASE]   = " ";
+    ColName_[CURR_SYMBOL] = _("Symbol");
+    ColName_[CURR_NAME]   = _("Name");
+    ColName_[BASE_RATE]   = _("Base Rate");
+
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -87,35 +103,16 @@ void mmMainCurrencyDialog::fillControls()
     currencyListBox_->DeleteAllItems();
     int baseCurrencyID = core_->currencyList_.GetBaseCurrencySettings();
 
-    int idx = 0;
-    for (const auto& account: core_->currencyList_.currencies_)
+    for (const auto& currency: core_->currencyList_.currencies_)
     {
-        int currencyID = account->currencyID_;
+        int currencyID = currency->currencyID_;
 
-        wxListItem item;
-        item.SetId(idx);
-        item.SetData( currencyID );
-
-        currencyListBox_->InsertItem( item );
-        wxString mnemo_sign = "";
-        if (baseCurrencyID == currencyID) mnemo_sign = "X";
-        else if (core_->accountList_.currencyInUse(currencyID)) mnemo_sign = "..";
-        currencyListBox_->SetItem(idx, 0, account->currencySymbol_);
-        currencyListBox_->SetItem(idx, 1, account->currencyName_);
-        currencyListBox_->SetItem(idx, 2, mnemo_sign);
-        currencyListBox_->SetItem(idx++, 3, wxString()<<account->baseConv_);
-    }
-
-    if (idx>0)
-        currencyListBox_->RefreshItems(0, --idx);
-    else
-        selectedIndex_ = -1;
-
-    if (selectedIndex_ >= 0 )
-    {
-        currencyListBox_->SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-        currencyListBox_->SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        currencyListBox_->EnsureVisible(selectedIndex_);
+        wxVector<wxVariant> data;
+        data.push_back( wxVariant(baseCurrencyID == currencyID) );
+        data.push_back( wxVariant(currency->currencySymbol_) );
+        data.push_back( wxVariant(currency->currencyName_) );
+        data.push_back( wxVariant(wxString()<<currency->baseConv_) );
+        currencyListBox_->AppendItem(data,(wxUIntPtr)currencyID);
     }
 }
 
@@ -145,36 +142,14 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-    currencyListBox_ = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200),
-        wxLC_REPORT | wxLC_SINGLE_SEL);
+    currencyListBox_ = new wxDataViewListCtrl( this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200));
 
-    // Add first column
-    wxListItem col0;
-    col0.SetId(0);
-    col0.SetText( _("Symbol") );
-    col0.SetWidth(50);
-    currencyListBox_->InsertColumn(0, col0);
-
-    // Add second column
-    wxListItem col1;
-    col1.SetId(1);
-    col1.SetText( _("Name") );
-    col1.SetWidth(150);
-    currencyListBox_->InsertColumn(1, col1);
-
-    // Add third column
-    wxListItem col2;
-    col2.SetId(2);
-    col2.SetText( "" );
-    col2.SetWidth(20);
-    currencyListBox_->InsertColumn(2, col2);
-
-    // Add third column
-    wxListItem col3;
-    col3.SetId(3);
-    col3.SetText( _("Base Rate") );
-    col3.SetWidth(120);
-    currencyListBox_->InsertColumn(3, col3);
+    currencyListBox_ ->AppendToggleColumn( ColName_[CURR_BASE], wxDATAVIEW_CELL_INERT, 30 );
+    currencyListBox_ ->AppendTextColumn( ColName_[CURR_SYMBOL], wxDATAVIEW_CELL_INERT, 60);
+    currencyListBox_ ->AppendTextColumn( ColName_[CURR_NAME], wxDATAVIEW_CELL_INERT, 170);
+    currencyListBox_ ->AppendTextColumn( ColName_[BASE_RATE], wxDATAVIEW_CELL_EDITABLE, 60 );
+    wxFloatingPointValidator<double> validator(4, NULL , wxNUM_VAL_NO_TRAILING_ZEROES );
+    currencyListBox_ ->SetValidator(validator);
 
     itemBoxSizer3->Add(currencyListBox_, 1, wxGROW|wxALL, 1);
 
@@ -208,17 +183,12 @@ void mmMainCurrencyDialog::CreateControls()
     }
 
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
-    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL);
+    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer9->Add(itemCancelButton,  flags);
     itemCancelButton->SetFocus();
 
     this->SetMinSize(wxSize(350,450));
     this->Fit();
-}
-
-bool mmMainCurrencyDialog::ShowToolTips()
-{
-    return TRUE;
 }
 
 void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
@@ -230,7 +200,8 @@ void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
        currency_symbols.Add(CURRENCIES[i]);
        currency_names.Add(CURRENCIES[++i]);
     }
-    wxString currText = wxGetSingleChoice (_("Name of Currency to Add"), _("Add Currency"), currency_names);
+    wxString currText = wxGetSingleChoice (_("Name of Currency to Add")
+        , _("Add Currency"), currency_names);
     if (!currText.IsEmpty())
     {
         wxString currency_symbol = currency_symbols[currency_names.Index(currText)];
@@ -255,7 +226,7 @@ void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
         else
         {
             wxMessageBox(_("Attempt to Add a currency which already exists!")
-                ,_("Currency Dialog"), wxOK|wxICON_ERROR);
+                , _("Currency Dialog"), wxOK|wxICON_ERROR);
         }
     }
     fillControls();
@@ -270,8 +241,7 @@ void mmMainCurrencyDialog::OnBtnEdit(wxCommandEvent& /*event*/)
 
 void mmMainCurrencyDialog::OnBtnSelect(wxCommandEvent& /*event*/)
 {
-    if (selectedIndex_ < 0) return;
-    EndModal(wxID_OK);
+    if (selectedIndex_ > -1) EndModal(wxID_OK);
 }
 
 void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
@@ -313,34 +283,62 @@ bool mmMainCurrencyDialog::Execute(mmCoreDB* core, wxWindow* parent, int& curren
     return result;
 }
 
-void mmMainCurrencyDialog::OnListItemDeselected(wxListEvent& /*event*/)
+void mmMainCurrencyDialog::OnListItemSelected(wxDataViewEvent& event)
 {
-    selectedIndex_ = -1;
-    currencyID_ = -1;
-    itemButtonEdit_->Enable(false);
-    itemButtonDelete_->Enable(false);
-}
+    wxDataViewItem item = event.GetItem();
+    selectedIndex_ = currencyListBox_->ItemToRow(item);
+    currencyID_ = currencyListBox_->GetItemData(item);
+    wxString currency_name = core_->currencyList_.getCurrencyName(currencyID_);
+    std::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyID_);
+    curr_rate_ = pCurrency->baseConv_;
 
-void mmMainCurrencyDialog::OnListItemSelected(wxListEvent& event)
-{
-    selectedIndex_ = event.GetIndex();
-    currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
+    wxLogDebug(wxString::Format("selected item:%i currency:%s", selectedIndex_, currency_name));
 
     itemButtonEdit_->Enable();
     if (!bEnableSelect_)    // prevent user deleting currencies when editing accounts.
         itemButtonDelete_->Enable(!core_->accountList_.currencyInUse(currencyID_));
 }
 
-void mmMainCurrencyDialog::OnListItemActivated(wxListEvent& event)
+void mmMainCurrencyDialog::OnListItemActivated(wxDataViewEvent& event)
 {
-    selectedIndex_ = event.GetIndex();
-    currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
+    wxDataViewItem item = event.GetItem();
+    selectedIndex_ = currencyListBox_->ItemToRow(item);
+    currencyID_ = currencyListBox_->GetItemData(item);
+    wxString currency_name = core_->currencyList_.getCurrencyName(currencyID_);
+    wxLogDebug(wxString::Format("activated item:%i currency:%s", selectedIndex_, currency_name));
+
     wxCommandEvent evt(wxEVT_COMMAND_BUTTON_CLICKED, wxID_ANY);
 
     if (bEnableSelect_)
-        OnBtnSelect(event);
+        OnBtnSelect(evt);
     else
-        OnBtnEdit(event);
+        OnBtnEdit(evt);
+}
+
+void mmMainCurrencyDialog::OnValueChanged(wxDataViewEvent& event)
+{
+    int col = event.GetColumn();
+    wxDataViewItem item = event.GetItem();
+    int row = currencyListBox_->ItemToRow(item);
+    wxVariant var;
+    currencyListBox_->GetValue(var, row, col);
+    wxString val = var.GetString();
+
+    wxLogDebug(wxString::Format("col:%i row:%i value:%s", col, row, val));
+
+    double convRate;
+    if (val.ToDouble(&convRate))
+    {
+        std::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyID_);
+        pCurrency->baseConv_ = convRate;
+        core_->currencyList_.UpdateCurrency(pCurrency);
+    }
+    else
+    {
+        wxString value = CurrencyFormatter::float2String(curr_rate_);
+        currencyListBox_->SetValue(wxVariant(value), row, BASE_RATE);
+    }
+
 }
 
 void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
@@ -361,7 +359,7 @@ void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 
 void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
 {
-    currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
+    //currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
 //    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
     int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting("BASECURRENCYID", -1);
 
@@ -375,7 +373,7 @@ void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
     event.Skip();
 }
 
-void mmMainCurrencyDialog::OnItemRightClick(wxListEvent& event)
+void mmMainCurrencyDialog::OnItemRightClick(wxDataViewEvent& event)
 {
     wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, wxID_ANY) ;
     ev.SetEventObject( this );
