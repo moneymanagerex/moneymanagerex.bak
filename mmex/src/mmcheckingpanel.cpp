@@ -691,7 +691,8 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
     header_text_->SetLabel(wxString::Format(_("Account View : %s"), pAccount->name_));
 
     filteredBalance_ = 0.0;
-
+    
+    //TODO: Stages 1-4 go away to proper place (TTransactionList)
     /**********************************************************************************
      Stage 1
      For the account being viewed, we need to get:
@@ -801,15 +802,17 @@ void mmCheckingPanel::initVirtualListControl(const int trans_id)
      Stage 5
      Find selected item and set focus to it.
     **********************************************************************************/
-
-    long i = 0;
-    for (const auto & pTrans : m_trans)
+    if (m_listCtrlAccount->m_selectedIndex > -1)
     {
-        if (trans_id == pTrans->transactionID() && trans_id > 0) {
-            m_listCtrlAccount->m_selectedIndex = i;
-            break;
+        long i = 0;
+        for (const auto & pTrans : m_trans)
+        {
+            if (trans_id == pTrans->transactionID() && trans_id > 0) {
+                m_listCtrlAccount->m_selectedIndex = i;
+                break;
+            }
+            ++i;
         }
-        ++i;
     }
 
     if (m_trans.size() > 0 && m_listCtrlAccount->m_selectedIndex < 0)
@@ -1546,6 +1549,11 @@ void TransactionListCtrl::refreshVisualList(const int trans_id)
 
     if (m_selectedIndex >= (long)m_cp->m_trans.size() || m_selectedIndex < 0)
         m_selectedIndex = g_asc ? (long)m_cp->m_trans.size() - 1 : 0;
+
+    if (topItemIndex_ < m_selectedIndex) topItemIndex_ = m_selectedIndex;
+
+    //debuger
+    //wxLogDebug(wxString("id:")<<trans_id<<"|top:"<<topItemIndex_<<"|selected:"<<m_selectedIndex);
 
     if (m_cp->m_trans.size() > 0) {
         RefreshItems(0, m_cp->m_trans.size() - 1);
