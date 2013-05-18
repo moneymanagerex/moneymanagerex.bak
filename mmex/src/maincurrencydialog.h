@@ -23,6 +23,7 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include "mmcoredb.h"
+#include <wx/dataview.h>
 
 #define ID_MYDIALOG8 10040
 #define SYMBOL_MAINCURRENCYDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
@@ -67,9 +68,11 @@ public:
 
 private:
     mmCoreDB* core_;
-    wxListCtrl* currencyListBox_;
+    wxDataViewListCtrl* currencyListBox_;
+    std::map<int, wxString> ColName_;
     bool bEnableSelect_;
-    static bool ShowToolTips();
+    double curr_rate_;
+    virtual bool ShowToolTips() { return TRUE; }
 
     /// Creation
     bool Create( wxWindow* parent,
@@ -84,18 +87,18 @@ private:
     void OnBtnEdit(wxCommandEvent& event);
     void OnBtnSelect(wxCommandEvent& event);
     void OnBtnDelete(wxCommandEvent& event);
-    void OnListItemActivated(wxListEvent& event);
-    void OnListItemDeselected(wxListEvent& event);
-    void OnListItemSelected(wxListEvent& event);
+    void OnListItemActivated(wxDataViewEvent& event);
+    void OnListItemSelected(wxDataViewEvent& event);
+    void OnValueChanged(wxDataViewEvent& event);
     void fillControls();
     wxButton* itemButtonEdit_;
     wxButton* itemButtonDelete_;
 
     int currencyID_;
-    double selectedIndex_;
+    int selectedIndex_;
 
     void OnOnlineUpdateCurRate(wxCommandEvent& event);
-    void OnItemRightClick(wxListEvent& event);
+    void OnItemRightClick(wxDataViewEvent& event);
     void OnMenuSelected(wxCommandEvent& event);
 };
 
