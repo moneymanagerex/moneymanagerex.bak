@@ -70,6 +70,8 @@ mmMainCurrencyDialog::mmMainCurrencyDialog(
     ColName_[CURR_NAME]   = _("Name");
     ColName_[BASE_RATE]   = _("Base Rate");
 
+    currencyID_ = core_->currencyList_.GetBaseCurrencySettings();
+
     Create(parent, id, caption, pos, size, style);
 }
 
