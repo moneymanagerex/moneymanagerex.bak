@@ -82,7 +82,10 @@ std::shared_ptr<wxSQLite3Database> get_pDb();
 // Create a single access point for the main database, stored in memory.
 std::shared_ptr<mmCoreDB> pDb_core();
  
-void const displayTimeTaken(const wxString msg, const wxDateTime start_time);
+// Deprecated: Use displayTimeTaken(...) using wxStopWatch
+void const displayTimeTaken(const wxString& msg, const wxDateTime start_time);
+// Display a message string displaying time taken on a console
+void const displayTimeTaken(const wxString& msg, const wxStopWatch& start_time);
 
 void display_STD_IO_separation_line();
 void display_STD_IO_line();

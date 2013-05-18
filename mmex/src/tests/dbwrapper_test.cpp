@@ -70,7 +70,7 @@ TEST(HasSavepointSupport)
 
 TEST(ViewExists)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     wxSQLite3Database* pDb = get_pDb().get();
 
@@ -93,7 +93,7 @@ TEST(ViewExists)
 
 TEST(init_DB)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     mmCoreDB* pCore = pDb_core().get();
     CHECK(pCore->displayDatabaseError_ == true);
@@ -134,7 +134,7 @@ TEST(checkDBVersion)
 
 TEST(addBudgetYear)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
     
     int year_id = mmDBWrapper::getBudgetYearID(pDb, g_BudgetYear);
@@ -150,7 +150,7 @@ TEST(addBudgetYear)
 
 TEST(getBudgetYearID)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
 
     int year_id = mmDBWrapper::getBudgetYearID(pDb, "unknown_year");
@@ -164,7 +164,7 @@ TEST(getBudgetYearID)
 
 TEST(getBudgetYearForID)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
 
     int year_id = mmDBWrapper::getBudgetYearID(pDb, g_BudgetYear);
@@ -178,7 +178,7 @@ TEST(getBudgetYearForID)
 
 TEST(updateYearForID)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
 
     int year_id = mmDBWrapper::getBudgetYearID(pDb, g_BudgetYear);
@@ -201,7 +201,7 @@ TEST(updateYearForID)
 
 TEST(copyBudgetYear)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
 
     int base_year_id = mmDBWrapper::getBudgetYearID(pDb, g_BudgetYear);
@@ -230,7 +230,7 @@ TEST(copyBudgetYear)
 
 TEST(deleteBudgetYear)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
 
     bool deleted = mmDBWrapper::deleteBudgetYear(pDb, "wrong_year");
@@ -244,7 +244,7 @@ TEST(deleteBudgetYear)
 
 TEST(addCategory)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int cat_id = pCore->categoryList_.AddCategory(g_CategName);
@@ -258,7 +258,7 @@ TEST(addCategory)
 
 TEST(addSubCategory)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int cat_id = pCore->categoryList_.GetCategoryId(g_CategName);
@@ -274,7 +274,7 @@ TEST(addSubCategory)
 
 TEST(getCategoryID)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int cat_id = pCore->categoryList_.GetCategoryId(g_CategName);
@@ -288,7 +288,7 @@ TEST(getCategoryID)
 
 TEST(getSubCategoryID)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int cat_id = pCore->categoryList_.GetCategoryId(g_CategName);
@@ -305,7 +305,7 @@ TEST(getSubCategoryID)
 
 TEST(getCategoryName)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int cat_id = pCore->categoryList_.GetCategoryId(g_CategName);
@@ -322,7 +322,7 @@ TEST(getCategoryName)
 
 TEST(getSubCategoryName)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int cat_id = pCore->categoryList_.GetCategoryId(g_CategName);
@@ -342,7 +342,7 @@ TEST(getSubCategoryName)
 
 TEST(updateCategory)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int cat_id = pCore->categoryList_.GetCategoryId(g_CategName);
@@ -380,7 +380,7 @@ TEST(updateCategory)
 
 TEST(deleteSubCategoryWithConstraints)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
     mmCoreDB* pCore = pDb_core().get();
 
@@ -398,7 +398,7 @@ TEST(deleteSubCategoryWithConstraints)
 
 TEST(deleteCategoryWithConstraints)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
     mmCoreDB* pCore = pDb_core().get();
 
@@ -413,7 +413,7 @@ TEST(deleteCategoryWithConstraints)
 
 TEST(getCurrencyID)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
@@ -427,7 +427,7 @@ TEST(getCurrencyID)
 
 TEST(getCurrencyName)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
@@ -446,7 +446,7 @@ TEST(getCurrencyName)
 
 TEST(setBaseCurrencySettings)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
@@ -462,7 +462,7 @@ TEST(setBaseCurrencySettings)
 
 TEST(getBaseCurrencySettings)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int id = pCore->currencyList_.getCurrencyID(g_CurrencyName);
@@ -476,7 +476,7 @@ TEST(getBaseCurrencySettings)
 
 TEST(loadBaseCurrencySettings)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     pCore->currencyList_.LoadBaseCurrencySettings();
@@ -505,7 +505,7 @@ TEST(getCurrencyBaseConvRate)
 
 TEST(load_Currency_Settings)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     wxSQLite3Database* pDb = get_pDb().get();
     mmCoreDB* pCore = pDb_core().get();
 
@@ -519,7 +519,7 @@ TEST(load_Currency_Settings)
 
 TEST(setInfoSettingValue)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     const wxString name = "settings name";
@@ -536,7 +536,7 @@ TEST(setInfoSettingValue)
 
 TEST(getInfoSettingValue)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     const wxString name   = "wrong name";
@@ -557,7 +557,7 @@ TEST(getInfoSettingValue)
 
 TEST(addPayee)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int added = pCore->categoryList_.AddCategory(g_CategName);
@@ -587,7 +587,7 @@ TEST(addPayee)
 
 TEST(getPayeeID)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     mmCoreDB* pCore = pDb_core().get();
 
@@ -612,7 +612,7 @@ TEST(getPayeeID)
 
 TEST(getPayee)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     mmCoreDB* pCore = pDb_core().get();
 
@@ -633,7 +633,7 @@ TEST(getPayee)
 
 TEST(updatePayee)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int payee_id = pCore->payeeList_.GetPayeeId(g_PayeeName);
@@ -675,7 +675,7 @@ TEST(updatePayee)
 
 TEST(getAmountForPayee)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     mmCoreDB* pCore = pDb_core().get();
 
@@ -695,7 +695,7 @@ TEST(getAmountForPayee)
 
 TEST(delete_Payee)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     mmCoreDB* pCore = pDb_core().get();
 
@@ -718,7 +718,7 @@ TEST(delete_Payee)
 
 TEST(getNumAccounts)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int cnt = pCore->accountList_.getNumAccounts();
@@ -729,7 +729,7 @@ TEST(getNumAccounts)
 
 TEST(add_new_transactions)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int trans_list_size = pCore->bTransactionList_.transactions_.size();
@@ -816,7 +816,7 @@ TEST(add_new_transactions)
 
 TEST(copy_paste_transactions)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
     mmCoreDB* pCore = pDb_core().get();
 
     int account_id = 1;
@@ -864,7 +864,7 @@ SUITE(Inidb_test)
 #if 1
 TEST(New_INIDB_TEST_1)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
 	const wxString TEST_NAME_BOOL = "Test 1 BOOL";
 	const wxString TEST_NAME_INT  = "Test 1 INTEGER";
@@ -890,7 +890,7 @@ TEST(New_INIDB_TEST_1)
 #if 1
 TEST(New_INIDB_TEST_2)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     const wxString TEST_NAME_BOOL = "Test 2 BOOL";
 	const wxString TEST_NAME_INT  = "Test 2 INTEGER";
@@ -919,7 +919,7 @@ TEST(New_INIDB_TEST_2)
 #if 1
 TEST(New_INIDB_TEST_3)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
 	const wxString TEST_NAME_BOOL = "Test 3 BOOL";
 	const wxString TEST_NAME_INT  = "Test 3 INTEGER";
@@ -964,7 +964,7 @@ TEST(New_INIDB_TEST_3)
 #if 1
 TEST(New_INIDB_TEST_4)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     std::shared_ptr<wxSQLite3Database> pInidb = get_pInidb();
     MMEX_IniSettings* pSettings =  pSettingsList().get();
@@ -987,7 +987,7 @@ TEST(New_INIDB_TEST_4)
 #if 1
 TEST(New_INIDB_TEST_5)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     MMEX_IniSettings* pSettings =  pSettingsList().get();
     pSettings->Load();
@@ -1008,7 +1008,7 @@ TEST(New_INIDB_TEST_5)
 #if 1
 TEST(New_INFO_DB_TEST_1)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     //  Using the details from the master table database
     std::shared_ptr<wxSQLite3Database> pdb = get_pDb();
@@ -1034,7 +1034,7 @@ TEST(New_INFO_DB_TEST_1)
 #if 1
 TEST(New_INFO_DB_TEST_2)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     // Using the details from the global ini database
     std::shared_ptr<wxSQLite3Database> pdb = get_pInidb();
@@ -1060,7 +1060,7 @@ TEST(New_INFO_DB_TEST_2)
 #if 1
 TEST(New_INFO_DB_TEST_3)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    wxStopWatch start_time;
 
     //  Save the details in the main database
     std::shared_ptr<wxSQLite3Database> pdb = get_pDb();
