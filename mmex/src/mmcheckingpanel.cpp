@@ -128,7 +128,7 @@ public:
     void OnViewSplitTransaction(wxCommandEvent& event);
     long m_selectedIndex;
     long m_selectedForCopy;
-    void refreshVisualList(const int trans_id = -1, long topItemIndex = -1);
+    void refreshVisualList(const int trans_id = -1);
 
 private:
     DECLARE_NO_COPY_CLASS(TransactionListCtrl)
@@ -1151,7 +1151,7 @@ void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
 
     int transID = OnMarkTransactionDB(status);
 
-    refreshVisualList(transID, topItemIndex_);
+    refreshVisualList(transID);
     //TODO: blinkings may be avoided
     //m_cp->m_listCtrlAccount->RefreshItems(m_selectedIndex, m_selectedIndex);
     //m_cp->setAccountSummary();
@@ -1407,6 +1407,7 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
     std::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencySharedPtr(m_cp->m_AccountID);
     //pCopiedTrans->updateAllData(m_cp->core_, m_cp->m_AccountID, pCurrencyPtr, true);
     int transID = pCopiedTrans->transactionID();
+    topItemIndex_ = m_selectedIndex;
     refreshVisualList(transID);
 }
 //----------------------------------------------------------------------------
@@ -1469,25 +1470,29 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     if (GetSelectedItemCount() < 1) return;
 
     //ask if they really want to delete
-    wxMessageDialog msgDlg(this,_("Do you really want to delete the selected transaction?"),
-                                _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+    wxMessageDialog msgDlg(this
+        , _("Do you really want to delete the selected transaction?")
+        , _("Confirm Transaction Deletion")
+        , wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
 
-    if (msgDlg.ShowModal() != wxID_YES)
-        return;
-
-    if ((m_selectedForCopy > -1) && (m_selectedForCopy == m_cp->m_trans[m_selectedIndex]->transactionID()))
-        m_selectedForCopy = -1;
-
-    m_cp->core_->db_.get()->Begin();
-    for (size_t i=0; i<m_cp->m_trans.size(); ++i )
-    {
-        if (m_cp->m_listCtrlAccount->GetItemState(i, wxLIST_STATE_SELECTED) == wxLIST_STATE_SELECTED)
-            m_cp->core_->bTransactionList_.deleteTransaction(m_cp->m_AccountID, m_cp->m_trans[i]->transactionID());
+    if (msgDlg.ShowModal() == wxID_YES)
+    {    
+        m_cp->core_->db_.get()->Begin();
+        for (size_t i = 0; i < m_cp->m_trans.size(); ++i )
+        {
+            long transID = m_cp->m_trans[i]->transactionID();
+            if (m_cp->m_listCtrlAccount->GetItemState(i, wxLIST_STATE_SELECTED) == wxLIST_STATE_SELECTED)
+            {
+                m_cp->core_->bTransactionList_.deleteTransaction(m_cp->m_AccountID, transID);
+                if (i <= topItemIndex_) topItemIndex_--;
+                m_selectedIndex--;
+                if (m_selectedForCopy == transID) m_selectedForCopy = -1;
+            }
+        }
+        m_cp->core_->db_.get()->Commit();
+    
+        refreshVisualList();
     }
-    m_cp->core_->db_.get()->Commit();
-
-    int transID = m_cp->m_trans[m_selectedIndex]->transactionID();
-    refreshVisualList(transID, topItemIndex_);
 }
 //----------------------------------------------------------------------------
 
@@ -1532,12 +1537,12 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void TransactionListCtrl::refreshVisualList(const int trans_id, long topItemIndex)
+void TransactionListCtrl::refreshVisualList(const int trans_id)
 {
     m_cp->initVirtualListControl(trans_id);
 
-    if (topItemIndex >= (long)m_cp->m_trans.size())
-        topItemIndex = g_asc ? (long)m_cp->m_trans.size() - 1 : 0;
+    if (topItemIndex_ >= (long)m_cp->m_trans.size())
+        topItemIndex_ = g_asc ? (long)m_cp->m_trans.size() - 1 : 0;
 
     if (m_selectedIndex >= (long)m_cp->m_trans.size() || m_selectedIndex < 0)
         m_selectedIndex = g_asc ? (long)m_cp->m_trans.size() - 1 : 0;
@@ -1552,12 +1557,10 @@ void TransactionListCtrl::refreshVisualList(const int trans_id, long topItemInde
     {
         SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
         SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        if (topItemIndex > -1)
-            EnsureVisible(topItemIndex);
-        else
-            EnsureVisible(m_selectedIndex);
+        if (topItemIndex_ < 0) topItemIndex_ = m_selectedIndex;
     }
-
+    if (m_cp->m_trans.size() > 0) EnsureVisible(topItemIndex_);
+    
     m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 
