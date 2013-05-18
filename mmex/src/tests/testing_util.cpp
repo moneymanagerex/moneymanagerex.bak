@@ -138,7 +138,7 @@ std::shared_ptr<mmCoreDB> pDb_core()
 }
 /*****************************************************************************************/
  
-void const displayTimeTaken(const wxString msg, const wxDateTime start_time)
+void const displayTimeTaken(const wxString& msg, const wxDateTime start_time)
 {
     const wxDateTime end_time(wxDateTime::UNow());
     const wxString time_dif = (end_time - start_time).Format("%S%l");
@@ -146,6 +146,11 @@ void const displayTimeTaken(const wxString msg, const wxDateTime start_time)
     printf(wxString::Format("Time Taken: %s milliseconds - Test: %s \n", time_dif.c_str(), msg.c_str()).char_str());
 }
 /*****************************************************************************************/
+
+void const displayTimeTaken(const wxString& msg, const wxStopWatch& start_time)
+{
+    printf(wxString::Format("Time Taken: %.5d milliseconds - Test: %s \n", start_time.Time(), msg.c_str()).char_str());
+}
 
 void display_STD_IO_separation_line()
 {
