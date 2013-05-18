@@ -435,22 +435,17 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
 
     //Get Stock Investment Account Balance as Init Amount + sum (Value) - sum (Purchase Price)
     double total = mmDBWrapper::getStockInvestmentBalance(core_->db_.get(), accountID_, originalVal);
-    wxString balance;
-     CurrencyFormatter::formatDoubleToCurrency(total+initVal, balance);
-
-    wxString original;
-     CurrencyFormatter::formatDoubleToCurrency(originalVal, original);
-
-    //
-    wxString diffStr;
-     CurrencyFormatter::formatDoubleToCurrency((total > originalVal ? total - originalVal : originalVal - total), diffStr);
+    
+    wxString balance = CurrencyFormatter::float2String(total+initVal);
+    wxString original = CurrencyFormatter::float2String(originalVal);
+    wxString diffStr = CurrencyFormatter::float2String(total > originalVal ? total - originalVal : originalVal - total);
 
     wxString lbl;
     lbl << _("Total: ") << balance << "     " << _("Invested: ") << original;
 
     //Percent
     wxString diffStrPercents;
-    if (originalVal!= 0.0) {
+    if (originalVal != 0.0) {
         if (total > originalVal)
             lbl << "     " << _("Gain: ");
         else
