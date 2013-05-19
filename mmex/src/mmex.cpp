@@ -3832,6 +3832,7 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
         wxMessageBox(msgStr, _("Payee Relocation Result"));
         mmOptions::instance().databaseUpdated_ = true;
     }
+	delete dlg;
     homePanel_->Layout();
 }
 //----------------------------------------------------------------------------
