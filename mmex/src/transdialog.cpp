@@ -460,8 +460,8 @@ void mmTransDialog::CreateControls()
     flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Category")), flags);
     flex_sizer->Add(bCategory_, flags);
 
-    bCategory_->Connect(wxID_ANY, wxEVT_CHAR
-        , wxKeyEventHandler(mmTransDialog::OnCategoryKey), NULL, this);
+    bCategory_->Connect(ID_DIALOG_TRANS_BUTTONCATEGS, wxEVT_KEY_DOWN
+        , wxCharEventHandler(mmTransDialog::OnCategoryKey), NULL, this);
 
     // Number  ---------------------------------------------
     textNumber_ = new wxTextCtrl(this,
@@ -689,14 +689,24 @@ void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
 
 void mmTransDialog::OnCategoryKey(wxKeyEvent& event)
 {
-    categStrykes_ << event.GetUnicodeKey();
+    if ( !event.HasModifiers() )
+    {
+        //TODO: Get national (non Latin) keys
+        categStrykes_ << event.GetUnicodeKey();
+        wxString test = wxString()<<event.GetUnicodeKey();
 
-    if (!timer_->IsRunning ())
-        timer_->Start(INTERVAL, true);
-    core_->categoryList_.GetCategoryLikeString(categStrykes_, categID_, subcategID_);
+        if (!timer_->IsRunning ())
+            timer_->Start(INTERVAL, true);
+        core_->categoryList_.GetCategoryLikeString(categStrykes_, categID_, subcategID_);
 
-    //wxLogDebug(categStrykes_ + " | " + core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
-    bCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
+        wxLogDebug(categStrykes_ + " | " + core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
+        wxLogDebug(test);
+        bCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
+    }
+    else
+    {
+        event.Skip();
+    }
 }
 
 void mmTransDialog::ResetKeyStrikes(wxTimerEvent& /*event*/)
