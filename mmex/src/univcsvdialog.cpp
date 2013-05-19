@@ -25,7 +25,6 @@
 
 IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVDialog, wxDialog)
 
-
 BEGIN_EVENT_TABLE(mmUnivCSVDialog, wxDialog)
     EVT_BUTTON(wxID_ADD, mmUnivCSVDialog::OnAdd)
     EVT_BUTTON(ID_UNIVCSVBUTTON_IMPORT, mmUnivCSVDialog::OnImport)
@@ -44,30 +43,6 @@ BEGIN_EVENT_TABLE(mmUnivCSVDialog, wxDialog)
 END_EVENT_TABLE()
 
 //----------------------------------------------------------------------------
-
-namespace
-{
-
-enum EUnivCvs
-{
-    UNIV_CSV_DATE = 0,
-    UNIV_CSV_PAYEE,
-    UNIV_CSV_AMOUNT,
-    UNIV_CSV_CATEGORY,
-    UNIV_CSV_SUBCATEGORY,
-    UNIV_CSV_TRANSNUM,
-    UNIV_CSV_NOTES,
-    UNIV_CSV_DONTCARE,
-    UNIV_CSV_WITHDRAWAL,
-    UNIV_CSV_DEPOSIT,
-    UNIV_CSV_TOAMOUNT,
-    UNIV_CSV_LAST
-};
-
-} // namespace
-
-//----------------------------------------------------------------------------
-
 mmUnivCSVDialog::mmUnivCSVDialog()
 {
 }

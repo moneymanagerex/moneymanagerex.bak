@@ -53,6 +53,22 @@
 #define wxFIXED_MINSIZE 0
 #endif
 
+enum EUnivCvs
+{
+    UNIV_CSV_DATE = 0,
+    UNIV_CSV_PAYEE,
+    UNIV_CSV_AMOUNT,
+    UNIV_CSV_CATEGORY,
+    UNIV_CSV_SUBCATEGORY,
+    UNIV_CSV_TRANSNUM,
+    UNIV_CSV_NOTES,
+    UNIV_CSV_DONTCARE,
+    UNIV_CSV_WITHDRAWAL,
+    UNIV_CSV_DEPOSIT,
+    UNIV_CSV_TOAMOUNT,
+    UNIV_CSV_LAST
+};
+
 class mmUnivCSVDialog: public wxDialog
 {
     DECLARE_DYNAMIC_CLASS(mmUnivCSVDialog)
