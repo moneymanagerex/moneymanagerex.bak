@@ -40,17 +40,6 @@ BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
     EVT_DATAVIEW_ITEM_CONTEXT_MENU(wxID_ANY, mmMainCurrencyDialog::OnItemRightClick)
 END_EVENT_TABLE()
 
-namespace
-{
-    enum cols
-    {
-        CURR_BASE = 0,
-        CURR_SYMBOL,
-        CURR_NAME,
-        BASE_RATE
-    };
-}
-
 mmMainCurrencyDialog::mmMainCurrencyDialog(
     mmCoreDB* core,
     wxWindow* parent,
