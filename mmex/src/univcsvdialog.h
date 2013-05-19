@@ -53,22 +53,6 @@
 #define wxFIXED_MINSIZE 0
 #endif
 
-enum EUnivCvs
-{
-    UNIV_CSV_DATE = 0,
-    UNIV_CSV_PAYEE,
-    UNIV_CSV_AMOUNT,
-    UNIV_CSV_CATEGORY,
-    UNIV_CSV_SUBCATEGORY,
-    UNIV_CSV_TRANSNUM,
-    UNIV_CSV_NOTES,
-    UNIV_CSV_DONTCARE,
-    UNIV_CSV_WITHDRAWAL,
-    UNIV_CSV_DEPOSIT,
-    UNIV_CSV_TOAMOUNT,
-    UNIV_CSV_LAST
-};
-
 class mmUnivCSVDialog: public wxDialog
 {
     DECLARE_DYNAMIC_CLASS(mmUnivCSVDialog)
@@ -88,6 +72,21 @@ public:
     int ImportedAccountID()             { return fromAccountID_;    }
 
 private:
+    enum EUnivCvs
+    {
+        UNIV_CSV_DATE = 0,
+        UNIV_CSV_PAYEE,
+        UNIV_CSV_AMOUNT,
+        UNIV_CSV_CATEGORY,
+        UNIV_CSV_SUBCATEGORY,
+        UNIV_CSV_TRANSNUM,
+        UNIV_CSV_NOTES,
+        UNIV_CSV_DONTCARE,
+        UNIV_CSV_WITHDRAWAL,
+        UNIV_CSV_DEPOSIT,
+        UNIV_CSV_TOAMOUNT,
+        UNIV_CSV_LAST
+    };
     mmCoreDB* core_;
     bool is_importer_;
     wxString delimit_;
@@ -162,6 +161,6 @@ private:
     wxIcon GetIconResource(const wxString& name);
     static bool ShowToolTips();
 private:
-	void csv2tab_separated_values(wxString& line, const wxString& delimit);
+    void csv2tab_separated_values(wxString& line, const wxString& delimit);
 };
 #endif

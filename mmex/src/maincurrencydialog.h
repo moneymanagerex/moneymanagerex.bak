@@ -47,15 +47,6 @@
 #define wxFIXED_MINSIZE 0
 #endif
 
-enum cols
-{
-	CURR_BASE = 0,
-	CURR_SYMBOL,
-	CURR_NAME,
-	BASE_RATE
-};
-
-
 class mmMainCurrencyDialog: public wxDialog
 {
     DECLARE_DYNAMIC_CLASS( mmMainCurrencyDialog )
@@ -76,6 +67,14 @@ public:
     static bool Execute(mmCoreDB* core, wxWindow* parent, int& currencyID);
 
 private:
+    enum cols
+    {
+        CURR_BASE = 0,
+        CURR_SYMBOL,
+        CURR_NAME,
+        BASE_RATE
+    };
+
     mmCoreDB* core_;
     wxDataViewListCtrl* currencyListBox_;
     std::map<int, wxString> ColName_;
