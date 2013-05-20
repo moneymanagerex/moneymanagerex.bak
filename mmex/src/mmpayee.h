@@ -48,7 +48,7 @@ public:
     bool RemovePayee(int payeeID);
     int UpdatePayee(int payeeID, const wxString& payeeName);
     bool PayeeExists(const wxString& payeeName) const;
-    bool PayeeExists(const int payeeid) const;
+    bool PayeeExists(int payeeid) const;
     int GetPayeeId(const wxString& payeeName) const;
     wxString GetPayeeName(int id) const;
     std::shared_ptr<mmPayee> GetPayeeSharedPtr(int payeeID);
