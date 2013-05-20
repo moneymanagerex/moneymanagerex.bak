@@ -92,6 +92,38 @@ void mmHomePagePanel::createFrames()
         date_range_ = new mmCurrentMonth;
     vAccts_ = core_->iniSettings_->GetStringSetting("VIEWACCOUNTS", VIEW_ACCOUNTS_ALL_STR);
 
+
+    double tBalance = 0.0, termBalance = 0.0;
+    wxString acc, term ="", stocks="", assets="", grand_total="", curr="", top="", leftFrame="", rightFrame="";
+
+    acc = displayAccounts(tBalance);
+
+    if ( frame_->hasActiveTermAccounts())
+    {
+        term = displayAccounts(termBalance, ACCOUNT_TYPE_TERM);
+        tBalance += termBalance;
+    }
+
+    if (core_->accountList_.has_stock_account())
+         stocks = displayStocks(tBalance);
+
+    leftFrame << acc << term << stocks;
+    leftFrame << displayAssets(tBalance);
+    leftFrame << displayGrandTotals(tBalance);
+    leftFrame << displayCurrencies();
+    leftFrame << displayTopTransactions();
+
+    //Also displays the Income vs Expenses graph.
+    rightFrame << displayIncomeVsExpenses();
+    rightFrame << displayBillsAndDeposits();
+    rightFrame << getStatWidget();
+
+    wxString pageHTML = prepareTemplate(leftFrame, rightFrame);
+    htmlWindow_->SetPage(pageHTML);
+}
+
+wxString mmHomePagePanel::prepareTemplate(const wxString left, const wxString right)
+{
     mmHTMLBuilder hb;
     hb.init();
     hb.startCenter();
@@ -109,41 +141,18 @@ void mmHomePagePanel::createFrames()
 
     hb.startTableCell("50%\" valign=\"top\" align=\"center");
 
-    double tBalance = 0.0, termBalance = 0.0;
-    hb.addText(displayAccounts(tBalance));
+    hb.addText(left);
 
-    if ( frame_->hasActiveTermAccounts())
-    {
-        hb.addText(displayAccounts(termBalance, ACCOUNT_TYPE_TERM));
-        tBalance += termBalance;
-    }
-
-    if (core_->accountList_.has_stock_account())
-         hb.addText(displayStocks(tBalance));
-
-    hb.addText(displayAssets(tBalance));
-
-    hb.addText(displayGrandTotals(tBalance));
-
-    // Display Currencies summary if more than one currency is used.
-    hb.addParaText(displayCurrencies());
-
-    hb.addText(displayTopTransactions());
     hb.endTableCell();
-
     hb.startTableCell("50%\" valign=\"top\" align=\"center");
-    //Also displays the Income vs Expenses graph.
-    hb.addText(displayIncomeVsExpenses());
-    hb.addText(displayBillsAndDeposits());
-    hb.addText(getStatWidget());
+
+    hb.addText(right);
 
     hb.endTableCell();
     hb.endTableRow();
     hb.endTable();
     hb.end();
-
-    html_text_ = hb.getHTMLText();
-    htmlWindow_->SetPage(html_text_);
+    return hb.getHTMLText();
 }
 
 bool sortTransactionsByRemainingDaysHP(const mmBDTransactionHolder& elem1,
@@ -504,6 +513,7 @@ wxString mmHomePagePanel::displayIncomeVsExpenses()
 
             hb.startTableCell();
 
+            hb.startCenter();
             hb.startTable();
             hb.startTableRow();
             hb.addTableHeaderCell(_("Type"));
@@ -536,6 +546,7 @@ wxString mmHomePagePanel::displayIncomeVsExpenses()
                 hb.endTableRow();
             }
             hb.endTable();
+            hb.endCenter();
 
         hb.endTableCell();
         hb.endTableRow();
