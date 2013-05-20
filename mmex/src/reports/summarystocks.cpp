@@ -16,12 +16,22 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
-#include "summarystocks.h"
+//#define USING_NEW_CLASSES
 
-#include "../constants.h"
+#include "summarystocks.h"
 #include "../htmlbuilder.h"
+
+// TODO: Remove Switch Definitions when New Class activation completed.
+#ifdef USING_NEW_CLASSES
+#include "../db/account.h"    
+#include "../db/stocks.h"
+
+#else
+#include "../constants.h"
 #include "../stockspanel.h"
 #include "../util.h"
+#endif
+
 
 mmReportSummaryStocks::mmReportSummaryStocks(mmCoreDB* core)
 : mmPrintableBase(core)
@@ -52,6 +62,12 @@ wxString mmReportSummaryStocks::getHTMLText()
     double gain_loss_sum_total = 0.0;
     double stockBalance = 0.0;
 
+// TODO: Remove Switch Definitions when New Class activation completed.
+#ifdef USING_NEW_CLASSES
+    
+
+
+#else
     wxArrayString account_type;
     account_type.Add(ACCOUNT_TYPE_STOCK);
     const wxArrayInt accounts_id = core_->accountList_.getAccountsID(account_type);
@@ -117,7 +133,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         hb.addTotalRow(_("Total:"), 8, gain_loss_sum);
 		hb.addMoneyCell(stockBalance);
     }
-
+#endif
     core_->currencyList_.LoadBaseCurrencySettings();
 
     hb.addRowSeparator(9);
