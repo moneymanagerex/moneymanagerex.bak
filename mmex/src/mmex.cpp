@@ -3820,18 +3820,17 @@ void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 {
-    relocatePayeeDialog* dlg = new relocatePayeeDialog(m_core.get(), this);
-    if (dlg->ShowModal() == wxID_OK)
+    relocatePayeeDialog dlg(m_core.get(), this);
+    if (dlg.ShowModal() == wxID_OK)
     {
         wxString msgStr;
         msgStr << _("Payee Relocation Completed.") << "\n\n"
             << wxString::Format(_("Records have been updated in the database: %s"),
-                dlg->updatedPayeesCount())
+                dlg.updatedPayeesCount())
             << "\n\n";
         wxMessageBox(msgStr, _("Payee Relocation Result"));
         mmOptions::instance().databaseUpdated_ = true;
     }
-	delete dlg;
     homePanel_->Layout();
 }
 //----------------------------------------------------------------------------
@@ -3839,22 +3838,21 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
 {
     this->SetEvtHandlerEnabled(false);
-    //Use Shared pointer to ensure mmCustomSQLDialog object gets destroyed.
-    std::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, customReportSelectedItem, this ));
+    mmCustomSQLDialog dlg(custRepIndex_, customReportSelectedItem, this);
 
     int dialogStatus = wxID_MORE;
     while (dialogStatus == wxID_MORE)
     {
-        if (dlg->sScript() != "")
+        if (dlg.sScript() != "")
         {
             wxBeginBusyCursor(wxHOURGLASS_CURSOR);
             mmCustomReport* csr = new mmCustomReport(this,
-                m_core.get(), dlg->sReportTitle(), dlg->sScript(), dlg->sSctiptType());
+                m_core.get(), dlg.sReportTitle(), dlg.sScript(), dlg.sSctiptType());
             createReportsPage(csr);
 			delete csr; // CHECK
             wxEndBusyCursor();
         }
-        dialogStatus = dlg->ShowModal();
+        dialogStatus = dlg.ShowModal();
     }
     processPendingEvents();         // clear out pending events
     if (dialogStatus == wxID_OK) updateNavTreeControl();
