@@ -796,11 +796,8 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
 
         long numRecords = 0;
 
-        for(std::vector< std::shared_ptr<mmBankTransaction> >::const_iterator it = core_->bTransactionList_.transactions_.begin();
-                it != core_->bTransactionList_.transactions_.end();
-                ++ it)
+        for (const auto& pBankTransaction: core_->bTransactionList_.transactions_)
         {
-            const mmBankTransaction* pBankTransaction = it->get();
             if (pBankTransaction && (pBankTransaction->accountID_ == fromAccountID
                 || pBankTransaction->toAccountID_ == fromAccountID))
             {
