@@ -41,15 +41,15 @@ mmPayee::mmPayee(int id, const wxString& name)
 
 bool mmPayeeList::PayeeExists(const wxString& payeeName) const
 {
-    for (std::vector< std::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    for (const auto& payee: entries_)
     {
-        if (! (*it)->name_.CmpNoCase(payeeName)) return true;
+        if (payee->name_.CmpNoCase(payeeName)) return true;
     }
 
     return false;
 }
 
-bool mmPayeeList::PayeeExists(const int payeeid) const
+bool mmPayeeList::PayeeExists(int payeeid) const
 {
     for (std::vector< std::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
