@@ -2938,18 +2938,17 @@ void mmGUIFrame::OnExportToCSV(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnExportToQIF(wxCommandEvent& /*event*/)
 {
-    mmQIFExportDialog* dlg = new mmQIFExportDialog(m_core.get(), this);
-    dlg->ShowModal();
-    dlg->Destroy();
+    mmQIFExportDialog dlg(m_core.get(), this);
+    dlg.ShowModal();
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
 {
 
-    mmQIFImportDialog* dlg = new mmQIFImportDialog(m_core.get(), this);
-    dlg->ShowModal();
-    int account_id = dlg->get_last_imported_acc();
+    mmQIFImportDialog dlg(m_core.get(), this);
+    dlg.ShowModal();
+    int account_id = dlg.get_last_imported_acc();
     refreshRequested_ = true;
     updateNavTreeControl();
     if (account_id > 0)
@@ -2959,7 +2958,6 @@ void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
         this->GetEventHandler()->AddPendingEvent(evt);
     }
-    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
