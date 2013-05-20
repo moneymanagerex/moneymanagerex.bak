@@ -122,7 +122,7 @@ void mmHomePagePanel::createFrames()
     htmlWindow_->SetPage(pageHTML);
 }
 
-wxString mmHomePagePanel::prepareTemplate(const wxString left, const wxString right)
+wxString mmHomePagePanel::prepareTemplate(const wxString& left, const wxString& right)
 {
     mmHTMLBuilder hb;
     hb.init();
