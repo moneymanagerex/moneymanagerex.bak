@@ -39,6 +39,12 @@ mmPayee::mmPayee(int id, const wxString& name)
 , subcategoryId_(-1)
 {}
 
+bool mmPayee::operator < (const mmPayee& payee) const
+{
+    if (this->name_ < payee.name_) return true; else if (this->name_ > payee.name_) return false;
+    return this->id_ < payee.id_;
+}
+
 bool mmPayeeList::PayeeExists(const wxString& payeeName) const
 {
     for (const auto& payee: entries_)
@@ -51,9 +57,9 @@ bool mmPayeeList::PayeeExists(const wxString& payeeName) const
 
 bool mmPayeeList::PayeeExists(int payeeid) const
 {
-    for (std::vector< std::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    for (const auto& payee: entries_)
     {
-        if ((*it)->id_ == payeeid) return true;
+        if (payee->id_ == payeeid) return true;
     }
 
     return false;
@@ -79,15 +85,10 @@ wxString mmPayeeList::GetPayeeName(int id) const
     return wxEmptyString;
 }
 
-bool sortPayees(const std::shared_ptr<mmPayee>& elem1, const std::shared_ptr<mmPayee>& elem2 )
-{
-    return elem1->name_ < elem2->name_;
-}
-
 void mmPayeeList::SortList(void)
 {
     // sort the payee list alphabetically
-    std::sort(entries_.begin(), entries_.end(), sortPayees);
+    std::sort(entries_.begin(), entries_.end());
 }
 
 std::shared_ptr<mmPayee> mmPayeeList::GetPayeeSharedPtr(int payeeID)
