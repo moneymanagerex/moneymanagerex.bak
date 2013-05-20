@@ -34,6 +34,7 @@ public:
     mmPayee(wxSQLite3ResultSet q1);
     /// Constructor for adding a new payee to the database
     mmPayee(int id, const wxString& name);
+    bool operator < (const mmPayee& entry) const;
 };
 
 class mmPayeeList
