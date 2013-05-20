@@ -80,6 +80,7 @@ private:
     mmDateRange* date_range_;
     void CreateControls();
     void createFrames();
+    wxString prepareTemplate(const wxString left, const wxString right);
     wxString topCategories_;
     wxString html_text_;
     wxString vAccts_;
