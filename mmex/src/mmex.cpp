@@ -3682,7 +3682,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
 
     wxArrayString as;
     int num = (int)m_core->accountList_.accounts_.size();
-    int* arrAcctID = new int[num];
+    std::vector<int> arrAcctID;
 
     int idx = 0;
     for (const auto& account: m_core->accountList_.accounts_)
@@ -3709,7 +3709,6 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
             updateNavTreeControl();
         }
     }
-    delete[] arrAcctID;
     updateNavTreeControl();
     createHomePage();
 }
