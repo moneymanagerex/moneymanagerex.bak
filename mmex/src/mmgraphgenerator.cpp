@@ -22,9 +22,6 @@
 #include "singleton.h"
 //----------------------------------------------------------------------------
 
-namespace 
-{
-
 class Eraser
 {
 public:
@@ -77,10 +74,6 @@ Eraser& Eraser::instance()
 {
     return Singleton<Eraser>::instance();
 }
-//----------------------------------------------------------------------------
-
-} // namespace 
-
 //----------------------------------------------------------------------------
 
 mmGraphGenerator::mmGraphGenerator(EType type) :
