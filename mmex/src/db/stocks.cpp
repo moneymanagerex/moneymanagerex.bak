@@ -211,8 +211,8 @@ void TStockList::LoadEntriesUsing(const wxString& sql_statement)
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
-            std::shared_ptr<TStockEntry> pEntry(new TStockEntry(q1));
-            entrylist_.push_back(pEntry);
+            TStockEntry entry(q1);
+            entrylist_.push_back(entry);
         }
         q1.Finalize();
     }
@@ -224,16 +224,15 @@ void TStockList::LoadEntriesUsing(const wxString& sql_statement)
 
 int TStockList::AddEntry(TStockEntry* pStockEntry)
 {
-    std::shared_ptr<TStockEntry> pEntry(pStockEntry);
-    entrylist_.push_back(pEntry);
-    pEntry->Add(ListDatabase());
+    pStockEntry->Add(ListDatabase());
+    entrylist_.push_back(pStockEntry);
 
-    return pEntry->id_;
+    return pStockEntry->id_;
 }
 
 void TStockList::DeleteEntry(int stock_id)
 {
-    std::shared_ptr<TStockEntry> pEntry = GetEntryPtr(stock_id);
+    TStockEntry* pEntry = GetEntryPtr(stock_id);
     if (pEntry)
     {
         pEntry->Delete(ListDatabase());
@@ -241,17 +240,16 @@ void TStockList::DeleteEntry(int stock_id)
     }
 }
 
-std::shared_ptr<TStockEntry> TStockList::GetEntryPtr(int stock_id)
+TStockEntry* TStockList::GetEntryPtr(int stock_id)
 {
-    std::shared_ptr<TStockEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TStockEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->id_ == stock_id)
+        if (entrylist_[index].id_ == stock_id)
         {
-            pEntry = entrylist_[index];
+            pEntry = &entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -261,12 +259,12 @@ std::shared_ptr<TStockEntry> TStockList::GetEntryPtr(int stock_id)
     return pEntry;
 }
 
-std::shared_ptr<TStockEntry> TStockList::GetIndexedEntryPtr(unsigned int list_index)
+TStockEntry* TStockList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    std::shared_ptr<TStockEntry> pEntry;
+    TStockEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index];
+        pEntry = &entrylist_[list_index];
     }
 
     return pEntry;
@@ -282,7 +280,7 @@ double TStockList::GetStockBalance()
     double total_value = 0.0;
     for (size_t i = 0; i < entrylist_.size(); ++i)
     {
-        total_value = total_value + entrylist_[i]->value_;
+        total_value = total_value + entrylist_[i].value_;
     }
 
     return total_value;
