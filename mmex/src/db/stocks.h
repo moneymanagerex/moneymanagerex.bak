@@ -81,7 +81,7 @@ public:
     // Allows specialised list loading provided by SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
-    int AddEntry(TStockEntry* pStockEntry);
+    int AddEntry(TStockEntry& stock_entry);
     void DeleteEntry(int stock_id);
 
     TStockEntry* GetEntryPtr(int stock_id);

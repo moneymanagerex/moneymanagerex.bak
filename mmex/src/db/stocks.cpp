@@ -222,12 +222,12 @@ void TStockList::LoadEntriesUsing(const wxString& sql_statement)
     }
 }
 
-int TStockList::AddEntry(TStockEntry* pStockEntry)
+int TStockList::AddEntry(TStockEntry& stock_entry)
 {
-    pStockEntry->Add(ListDatabase());
-    entrylist_.push_back(pStockEntry);
+    stock_entry.Add(ListDatabase());
+    entrylist_.push_back(stock_entry);
 
-    return pStockEntry->id_;
+    return stock_entry.id_;
 }
 
 void TStockList::DeleteEntry(int stock_id)

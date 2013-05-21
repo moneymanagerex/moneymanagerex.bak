@@ -47,7 +47,7 @@
 // This is a way to prevent certain tests occuring during development testing
 //#define CENTRALL_DB_TESTS
 //#define CURRENCY_TESTS
-//#define ACCOUNT_TESTS
+#define ACCOUNT_TESTS
 #define CATEGORY_TESTS
 #define SUBCATEGORY_TESTS
 #define PAYEE_TESTS
@@ -1153,25 +1153,25 @@ TEST(TStockList_Test_Add)
     int account_id = 10;
 
     TStockList stock_list(get_pDb());
-    TStockEntry* stock_entry = new TStockEntry();
-    stock_entry->heldat_ = account_id;
-    stock_entry->name_ = "Stock Name - Should be in Account";
-    stock_entry->pur_date_ = date; // date of purchase
-    stock_entry->pur_price_ = 1.2275;
-    stock_entry->num_shares_ = 2000;
-    stock_entry->cur_price_ = 1.575;
-    stock_entry->value_ = 2000;
+    TStockEntry stock_entry;
+    stock_entry.heldat_ = account_id;
+    stock_entry.name_ = "Stock Name - Should be in Account";
+    stock_entry.pur_date_ = date; // date of purchase
+    stock_entry.pur_price_ = 1.2275;
+    stock_entry.num_shares_ = 2000;
+    stock_entry.cur_price_ = 1.575;
+    stock_entry.value_ = 2000;
     int id_1 = stock_list.AddEntry(stock_entry);
 
-    stock_entry = new TStockEntry();
-    stock_entry->heldat_ = account_id;
-    stock_entry->name_ = "Stock Name - Should be in Account";
-    stock_entry->pur_date_ = date; // date of purchase
-    stock_entry->pur_price_ = 1.7275;
-    stock_entry->num_shares_ = 1000;
-    stock_entry->cur_price_ = 1.575;
-    stock_entry->value_ = 1000;
-    int id_2 = stock_list.AddEntry(stock_entry);
+    TStockEntry stock_entry_1;
+    stock_entry_1.heldat_ = account_id;
+    stock_entry_1.name_ = "Stock Name - Should be in Account";
+    stock_entry_1.pur_date_ = date; // date of purchase
+    stock_entry_1.pur_price_ = 1.7275;
+    stock_entry_1.num_shares_ = 1000;
+    stock_entry_1.cur_price_ = 1.575;
+    stock_entry_1.value_ = 1000;
+    int id_2 = stock_list.AddEntry(stock_entry_1);
 
     CHECK(id_1 != id_2);
 
