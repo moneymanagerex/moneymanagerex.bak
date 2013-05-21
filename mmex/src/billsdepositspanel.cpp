@@ -49,16 +49,6 @@ BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
 END_EVENT_TABLE()
 /*******************************************************/
 
-namespace
-{
-
-inline bool sortTransactionsByRemainingDays(const mmBDTransactionHolder &p1, const mmBDTransactionHolder &p2)
-{
-    return p1.daysRemaining_ < p2.daysRemaining_;
-};
-
-} // namespace
-
 mmBillsDepositsPanel::mmBillsDepositsPanel(mmCoreDB* core,
     wxWindow *parent, wxWindowID winid,
     const wxPoint& pos, const wxSize& size, long style, const wxString& name)
@@ -365,7 +355,6 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
 
     q1.Finalize();
 
-    //std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
     listCtrlAccount_->SetItemCount(static_cast<long>(trans_.size()));
     return selected_item;
 }
