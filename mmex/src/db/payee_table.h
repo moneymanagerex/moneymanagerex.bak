@@ -66,7 +66,7 @@ public:
 
     /// Note: At this level, no checking is done for usage in other tables.
     void DeleteEntry(int payee_id);
-    void DeleteEntry(wxString payee_name);
+    void DeleteEntry(const wxString& payee_name);
 
     TPayeeEntry* GetEntryPtr(const wxString& name);
     TPayeeEntry* GetEntryPtr(int payee_id);

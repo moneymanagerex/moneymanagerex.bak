@@ -193,7 +193,7 @@ void TPayeeList::DeleteEntry(int payee_id)
     }
 }
 
-void TPayeeList::DeleteEntry(wxString payee_name)
+void TPayeeList::DeleteEntry(const wxString& payee_name)
 {
     DeleteEntry(GetPayeeId(payee_name));
 }
