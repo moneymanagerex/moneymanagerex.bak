@@ -172,8 +172,8 @@ void TAccountList::LoadEntriesUsing(const wxString& sql_statement)
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
-            std::shared_ptr<TAccountEntry> pEntry(new TAccountEntry(q1));
-            entrylist_.push_back(pEntry);
+            TAccountEntry entry(q1);
+            entrylist_.push_back(entry);
         }
         q1.Finalize();
     }
@@ -183,18 +183,17 @@ void TAccountList::LoadEntriesUsing(const wxString& sql_statement)
     }
 }
 
-int TAccountList::AddEntry(TAccountEntry* pAccountEntry)
+int TAccountList::AddEntry(TAccountEntry& account_entry)
 {
-    std::shared_ptr<TAccountEntry> pEntry(pAccountEntry);
-    entrylist_.push_back(pEntry);
-    pEntry->Add(ListDatabase());
+    account_entry.Add(ListDatabase());
+    entrylist_.push_back(account_entry);
 
-    return pEntry->id_;
+    return account_entry.id_;
 }
 
 void TAccountList::DeleteEntry(int account_id)
 {
-    std::shared_ptr<TAccountEntry> pEntry = GetEntryPtr(account_id);
+    TAccountEntry* pEntry = GetEntryPtr(account_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -209,17 +208,16 @@ void TAccountList::DeleteEntry(const wxString& account_name)
 
 //-----------------------------------------------------------------------------
 
-std::shared_ptr<TAccountEntry> TAccountList::GetEntryPtr(int account_id)
+TAccountEntry* TAccountList::GetEntryPtr(int account_id)
 {
-    std::shared_ptr<TAccountEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TAccountEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->id_ == account_id)
+        if (entrylist_[index].id_ == account_id)
         {
-            pEntry = entrylist_[index];
+            pEntry = &entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -229,17 +227,16 @@ std::shared_ptr<TAccountEntry> TAccountList::GetEntryPtr(int account_id)
     return pEntry;
 }
 
-std::shared_ptr<TAccountEntry> TAccountList::GetEntryPtr(const wxString& name)
+TAccountEntry* TAccountList::GetEntryPtr(const wxString& name)
 {
-    std::shared_ptr<TAccountEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TAccountEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->acc_name_ == name)
+        if (entrylist_[index].acc_name_ == name)
         {
-            pEntry = entrylist_[index];
+            pEntry = &entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -249,12 +246,12 @@ std::shared_ptr<TAccountEntry> TAccountList::GetEntryPtr(const wxString& name)
     return pEntry;
 }
 
-std::shared_ptr<TAccountEntry> TAccountList::GetIndexedEntryPtr(unsigned int list_index)
+TAccountEntry* TAccountList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    std::shared_ptr<TAccountEntry> pEntry;
+    TAccountEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index];
+        pEntry = &entrylist_[list_index];
     }
 
     return pEntry;
@@ -263,7 +260,7 @@ std::shared_ptr<TAccountEntry> TAccountList::GetIndexedEntryPtr(unsigned int lis
 int TAccountList::GetAccountId(const wxString& account_name)
 {
     int account_id = -1;
-    std::shared_ptr<TAccountEntry> pEntry = GetEntryPtr(account_name);
+    TAccountEntry* pEntry = GetEntryPtr(account_name);
     if (pEntry)
     {
         account_id = pEntry->GetId();
@@ -275,7 +272,7 @@ int TAccountList::GetAccountId(const wxString& account_name)
 wxString TAccountList::GetAccountName(int account_id)
 {
     wxString account_name;
-    std::shared_ptr<TAccountEntry> pEntry = GetEntryPtr(account_id);
+    TAccountEntry* pEntry = GetEntryPtr(account_id);
     if (pEntry)
     {
         account_name = pEntry->acc_name_;
@@ -296,13 +293,12 @@ bool TAccountList::AccountExists(const wxString& account_name)
 
 int TAccountList::NumberOfAccounts(int account_type)
 {
-    size_t list_size = entrylist_.size();
     size_t index = 0;
     int count = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->acc_type_ == ACCOUNT_TYPE_DEF[account_type])
+        if (entrylist_[index].acc_type_ == ACCOUNT_TYPE_DEF[account_type])
         {
             ++ count;
         }
