@@ -160,7 +160,6 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_splittransactionsdialog.o \
 	mmex_tests_stockdialog.o \
 	mmex_tests_stockspanel.o \
-	mmex_tests_transactionfilterdialog.o \
 	mmex_tests_transdialog.o \
 	mmex_tests_univcsvdialog.o \
 	mmex_tests_util.o \
@@ -589,9 +588,6 @@ mmex_tests_stockdialog.o: $(srcdir)/../../src/stockdialog.cpp
 
 mmex_tests_stockspanel.o: $(srcdir)/../../src/stockspanel.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/stockspanel.cpp
-
-mmex_tests_transactionfilterdialog.o: $(srcdir)/../../src/transactionfilterdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/transactionfilterdialog.cpp
 
 mmex_tests_transdialog.o: $(srcdir)/../../src/transdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/transdialog.cpp

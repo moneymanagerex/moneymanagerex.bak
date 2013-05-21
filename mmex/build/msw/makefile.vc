@@ -137,7 +137,6 @@ MMEX_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_splittransactionsdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_stockdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_stockspanel.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_transactionfilterdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_transdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_univcsvdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_util.obj \
@@ -755,9 +754,6 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_stockspanel.obj: ..\..\src\stockspanel.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\stockspanel.cpp
-
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_transactionfilterdialog.obj: ..\..\src\transactionfilterdialog.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\transactionfilterdialog.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_transdialog.obj: ..\..\src\transdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\transdialog.cpp

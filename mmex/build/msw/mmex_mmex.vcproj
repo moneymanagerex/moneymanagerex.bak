@@ -2288,9 +2288,6 @@
 				RelativePath="..\..\src\db\transactionbill.cpp">
 			</File>
 			<File
-				RelativePath="..\..\src\transactionfilterdialog.cpp">
-			</File>
-			<File
 				RelativePath="..\..\src\reports\transactions.cpp">
 			</File>
 			<File
@@ -2579,9 +2576,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\db\transactionbill.h">
-			</File>
-			<File
-				RelativePath="..\..\src\transactionfilterdialog.h">
 			</File>
 			<File
 				RelativePath="..\..\src\reports\transactions.h">
