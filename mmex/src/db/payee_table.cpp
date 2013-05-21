@@ -39,6 +39,13 @@ TPayeeEntry::TPayeeEntry(const wxString& name)
 , subcat_id_(-1)
 {}
 
+void TPayeeEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
+{
+    st.Bind(++db_index, name_);
+    st.Bind(++db_index, cat_id_);
+    st.Bind(++db_index, subcat_id_);
+}
+
 int TPayeeEntry::Add(wxSQLite3Database* db)
 {
     try
@@ -48,10 +55,8 @@ int TPayeeEntry::Add(wxSQLite3Database* db)
         " (PAYEENAME, CATEGID, SUBCATEGID) VALUES(?, ?, ?)";
     
         wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
-        st.Bind(1, name_);
-        st.Bind(2, cat_id_);
-        st.Bind(3, subcat_id_);
-
+        int db_index = 0;
+        SetDatabaseValues(st, db_index);
         FinaliseAdd(db, st);
     }
     catch(const wxSQLite3Exception& e)
@@ -77,12 +82,11 @@ void TPayeeEntry::Update(wxSQLite3Database* db)
         "WHERE PAYEEID = ?";
         
         wxSQLite3Statement st = db->PrepareStatement(SQL_STATEMENT);
-        st.Bind(1, name_);
-        st.Bind(2, cat_id_);
-        st.Bind(3, subcat_id_);
-        st.Bind(4, id_);
+        int db_index = 0;
+        SetDatabaseValues(st, db_index);
+        st.Bind(++db_index, id_);
 
-        this->FinaliseStatement(st);
+        FinaliseStatement(st);
     }
     catch(const wxSQLite3Exception& e)
     {
@@ -100,7 +104,7 @@ TPayeeList::TPayeeList(std::shared_ptr<wxSQLite3Database> db)
     LoadEntries();
 }
 
-void TPayeeList::LoadEntries()
+void TPayeeList::LoadEntries(bool load_entries)
 {
     try
     {
@@ -113,18 +117,10 @@ void TPayeeList::LoadEntries()
             db_->ExecuteUpdate(CREATE_TABLE_PAYEE_V1);
         }
 
-        const char SELECT_ALL_FROM_PAYEE_V1[] =
-        "SELECT PAYEEID, PAYEENAME, CATEGID, SUBCATEGID "
-        "FROM PAYEE_V1 "
-        "ORDER BY PAYEENAME";
-
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(SELECT_ALL_FROM_PAYEE_V1);
-        while (q1.NextRow())
+        if (load_entries)
         {
-            std::shared_ptr<TPayeeEntry> pEntry(new TPayeeEntry(q1));
-            entrylist_.push_back(pEntry);
+            LoadEntriesUsing("select * from PAYEE_V1 order by PAYEENAME");
         }
-        q1.Finalize();
     }
     catch (const wxSQLite3Exception& e)
     {
@@ -132,18 +128,30 @@ void TPayeeList::LoadEntries()
     }
 }
 
+void TPayeeList::LoadEntriesUsing(const wxString& sql_statement)
+{
+    entrylist_.clear();
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    while (q1.NextRow())
+    {
+        TPayeeEntry pEntry(q1);
+        entrylist_.push_back(pEntry);
+    }
+    q1.Finalize();
+}
+
 int TPayeeList::AddEntry(const wxString& name, wxString category, wxString subcategory)
 {
     int payee_id = -1;
     if (PayeeExists(name))
     {
-        payee_id = entrylist_[current_index_]->id_;
+        payee_id = entrylist_[current_index_].id_;
     }
     else
     {
-        std::shared_ptr<TPayeeEntry> pEntry(new TPayeeEntry(name));
+        TPayeeEntry pEntry(name);
+        payee_id = pEntry.Add(db_.get());
         entrylist_.push_back(pEntry);
-        payee_id = pEntry->Add(db_.get());
     }
 
     return payee_id;
@@ -151,16 +159,25 @@ int TPayeeList::AddEntry(const wxString& name, wxString category, wxString subca
 
 void TPayeeList::UpdateEntry(int payee_id, const wxString& new_payee_name, int cat_id, int subcat_id)
 {
-    std::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
+    //TODO: Associate category_list to get apropriate details.
+
+    TPayeeEntry* pEntry = GetEntryPtr(payee_id);
     pEntry->name_ = new_payee_name;
-    if (cat_id > 0) pEntry->cat_id_ = cat_id;
-    if (subcat_id > 0) pEntry->subcat_id_ = subcat_id;
+    if (cat_id > 0)
+    {
+        pEntry->cat_id_ = cat_id;
+    }
+
+    if (subcat_id > 0)
+    {
+        pEntry->subcat_id_ = subcat_id;
+    }
     pEntry->Update(db_.get());
 }
 
 void TPayeeList::UpdateEntry(const wxString& payee_name, int cat_id, int subcat_id)
 {
-    std::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_name);
+    TPayeeEntry* pEntry = GetEntryPtr(payee_name);
     pEntry->cat_id_ = cat_id;
     pEntry->subcat_id_ = subcat_id;
     pEntry->Update(db_.get());
@@ -168,7 +185,7 @@ void TPayeeList::UpdateEntry(const wxString& payee_name, int cat_id, int subcat_
 
 void TPayeeList::DeleteEntry(int payee_id)
 {
-    std::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
+    TPayeeEntry* pEntry = GetEntryPtr(payee_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -183,17 +200,16 @@ void TPayeeList::DeleteEntry(wxString payee_name)
 
 //-----------------------------------------------------------------------------
 
-std::shared_ptr<TPayeeEntry> TPayeeList::GetEntryPtr(int payee_id)
+TPayeeEntry* TPayeeList::GetEntryPtr(int payee_id)
 {
-    std::shared_ptr<TPayeeEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TPayeeEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->id_ == payee_id)
+        if (entrylist_[index].id_ == payee_id)
         {
-            pEntry = entrylist_[index];
+            pEntry = &entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -203,17 +219,16 @@ std::shared_ptr<TPayeeEntry> TPayeeList::GetEntryPtr(int payee_id)
     return pEntry;
 }
 
-std::shared_ptr<TPayeeEntry> TPayeeList::GetEntryPtr(const wxString& name)
+TPayeeEntry* TPayeeList::GetEntryPtr(const wxString& name)
 {
-    std::shared_ptr<TPayeeEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TPayeeEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->name_ == name)
+        if (entrylist_[index].name_ == name)
         {
-            pEntry = entrylist_[index];
+            pEntry = &entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -226,7 +241,7 @@ std::shared_ptr<TPayeeEntry> TPayeeList::GetEntryPtr(const wxString& name)
 int TPayeeList::GetPayeeId(const wxString& payee_name)
 {
     int payee_id = -1;
-    std::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_name);
+    TPayeeEntry* pEntry = GetEntryPtr(payee_name);
     if (pEntry)
     {
         payee_id = pEntry->GetId();
@@ -238,7 +253,7 @@ int TPayeeList::GetPayeeId(const wxString& payee_name)
 wxString TPayeeList::GetPayeeName(int payee_id)
 {
     wxString payee_name;
-    std::shared_ptr<TPayeeEntry> pEntry = GetEntryPtr(payee_id);
+    TPayeeEntry* pEntry = GetEntryPtr(payee_id);
     if (pEntry)
     {
         payee_name = pEntry->name_;
@@ -256,4 +271,3 @@ bool TPayeeList::PayeeExists(const wxString& payeeName)
     }
     return payee_result;
 }
-
