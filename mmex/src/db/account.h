@@ -82,7 +82,7 @@ private:
     int NumberOfAccounts(int account_type);
 
 public:
-    std::vector<std::shared_ptr<TAccountEntry> > entrylist_;
+    std::vector<TAccountEntry> entrylist_;
 
     TAccountList(std::shared_ptr<wxSQLite3Database> db,
     TCurrencyList& currency_list, bool load_entries = true);
@@ -90,15 +90,15 @@ public:
     /// Allows specialised list loading provided by SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
-    int AddEntry(TAccountEntry* pAccountEntry);
+    int AddEntry(TAccountEntry& account_entry);
 
     /// Note: At this level, no checking is done for usage in other tables.
     void DeleteEntry(int account_id);
     void DeleteEntry(const wxString& account_name);
 
-    std::shared_ptr<TAccountEntry> GetEntryPtr(int account_id);
-    std::shared_ptr<TAccountEntry> GetEntryPtr(const wxString& name);
-    std::shared_ptr<TAccountEntry> GetIndexedEntryPtr(unsigned int list_index);
+    TAccountEntry* GetEntryPtr(int account_id);
+    TAccountEntry* GetEntryPtr(const wxString& name);
+    TAccountEntry* GetIndexedEntryPtr(unsigned int list_index);
 
     int GetAccountId(const wxString& account_name);
     wxString GetAccountName(int account_id);
