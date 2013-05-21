@@ -155,12 +155,6 @@ wxString mmHomePagePanel::prepareTemplate(const wxString& left, const wxString& 
     return hb.getHTMLText();
 }
 
-bool sortTransactionsByRemainingDaysHP(const mmBDTransactionHolder& elem1,
-                                       const mmBDTransactionHolder& elem2)
-{
-    return elem1.daysRemaining_ < elem2.daysRemaining_;
-}
-
 wxString mmHomePagePanel::displaySummaryHeader(const wxString& summaryTitle)
 {
     mmHTMLBuilder hb;
@@ -641,7 +635,8 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
         trans_.push_back(th);
     }
     q1.Finalize();
-    std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDaysHP);
+    std::sort(trans_.begin(), trans_.end(), 
+        [](const mmBDTransactionHolder& x, const mmBDTransactionHolder& y){ return x.daysRemaining_ < y.daysRemaining_; });
 
     ////////////////////////////////////
     if ( visibleEntries )

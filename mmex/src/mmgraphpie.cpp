@@ -3,11 +3,6 @@
 #include "util.h"
 #include <algorithm>
 
-bool sortValueList(const ValuePair& elem1, const ValuePair& elem2)
-{
-    return fabs(elem1.amount) > fabs(elem2.amount);
-}
-
 mmGraphPie::mmGraphPie() : 
         mmGraphGenerator(PIE),
         chart(new PieChart(480, 320))
@@ -20,7 +15,7 @@ mmGraphPie::~mmGraphPie()
 
 void mmGraphPie::init(std::vector<ValuePair>& valueList)
 {
-    std::sort(valueList.begin(), valueList.end(), sortValueList);
+    std::sort(valueList.begin(), valueList.end(), [](const ValuePair& x, const ValuePair& y){ return fabs(x.amount) > fabs(y.amount);});
     size_t cnt = std::min(valueList.size(), size_t(14));
     int othersum=0;
     std::vector<ChartData> pieData;
