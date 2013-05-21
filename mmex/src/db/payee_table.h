@@ -29,6 +29,7 @@ private:
     
     int Add(wxSQLite3Database* db);
     void Delete(wxSQLite3Database* db);
+    void SetDatabaseValues(wxSQLite3Statement& st, int& db_index);
 
 public:
     wxString name_;
@@ -50,12 +51,14 @@ public:
 class TPayeeList : public TListBase
 {
 private:
-    void LoadEntries();
+    void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<std::shared_ptr<TPayeeEntry> > entrylist_;
+    std::vector<TPayeeEntry> entrylist_;
 
     TPayeeList(std::shared_ptr<wxSQLite3Database> db);
+    // Allows specialised loads by providing the required SQL statement
+    void LoadEntriesUsing(const wxString& sql_statement);
 
     int AddEntry(const wxString& name, wxString category = wxEmptyString, wxString subcategory = wxEmptyString);
     void UpdateEntry(int payee_id, const wxString& new_payee_name, int cat_id = -1, int subcat_id = -1);
@@ -65,9 +68,10 @@ public:
     void DeleteEntry(int payee_id);
     void DeleteEntry(wxString payee_name);
 
-    std::shared_ptr<TPayeeEntry> GetEntryPtr(const wxString& name);
-    std::shared_ptr<TPayeeEntry> GetEntryPtr(int payee_id);
+    TPayeeEntry* GetEntryPtr(const wxString& name);
+    TPayeeEntry* GetEntryPtr(int payee_id);
     int GetPayeeId(const wxString& name);
     wxString GetPayeeName(int payee_id);
     bool PayeeExists(const wxString& name);
 };
+

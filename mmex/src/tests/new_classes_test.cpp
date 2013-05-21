@@ -48,13 +48,13 @@
 //#define CENTRALL_DB_TESTS
 //#define CURRENCY_TESTS
 //#define ACCOUNT_TESTS
-//#define CATEGORY_TESTS
-//#define SUBCATEGORY_TESTS
-//#define PAYEE_TESTS
+#define CATEGORY_TESTS
+#define SUBCATEGORY_TESTS
+#define PAYEE_TESTS
 //#define TRANSACTION_TESTS
 //#define REPEAT_TRANSACTION_TESTS
 //#define SPLIT_TRANSACTION_TESTS
-#define ASSET_TESTS
+//#define ASSET_TESTS
 //#define STOCK_TESTS
 //#define BUDGET_TESTS
 
@@ -142,7 +142,8 @@ TEST(TCurrencyList_Add)
     printf("\nNew_Classes_Test: START");
     display_STD_IO_separation_line();
 
-    const wxDateTime start_time(wxDateTime::UNow());
+    const wxStopWatch start_time;
+
     TCurrencyList currency_list(get_pDb());
 
     TCurrencyEntry* pCurrencyEntry = new TCurrencyEntry();
@@ -174,7 +175,7 @@ TEST(TCurrencyList_Add)
  ****************************************************************************/
 TEST(TAccountList_Test_Add)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    const wxStopWatch start_time;
     TCurrencyList currency_list(get_pDb());
 
     TAccountList account_list(get_pDb(), currency_list);
@@ -204,7 +205,7 @@ TEST(TAccountList_Test_Add)
  ****************************************************************************/
 TEST(TCategoryList_Test)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    const wxStopWatch start_time;
 
     TCategoryList cat_list(get_pDb());
 
@@ -228,7 +229,7 @@ TEST(TCategoryList_Test)
     
     cat_list.ListDatabase()->Commit();
 
-    std::shared_ptr<TCategoryEntry> pCatEntry = cat_list.GetEntryPtr(2);
+    TCategoryEntry* pCatEntry = cat_list.GetEntryPtr(2);
     if (pCatEntry)
     {
         CHECK(true);
@@ -250,7 +251,7 @@ TEST(TCategoryList_Test)
  ****************************************************************************/
 TEST(TSubCategoryList_Test)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    const wxStopWatch start_time;
 
     TCategoryList cat_list(get_pDb());
     TSubCategoryList subcat_list(get_pDb());
@@ -294,7 +295,7 @@ TEST(TSubCategoryList_Test)
     }
     cat_list.ListDatabase()->Commit();
 
-    std::shared_ptr<TSubCategoryEntry> pSubCatEntry = subcat_list.GetEntryPtr(cat_id, "Insurance");
+    TSubCategoryEntry* pSubCatEntry = subcat_list.GetEntryPtr(cat_id, "Insurance");
 
     if (pSubCatEntry)
     {
@@ -319,7 +320,7 @@ TEST(TSubCategoryList_Test)
 
 TEST(TCategoryList_SubList_Test)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    const wxStopWatch start_time;
     TCategoryList cat_list(get_pDb());
 
     int cat_id = cat_list.GetCategoryId("Automobile");
@@ -343,51 +344,59 @@ TEST(TCategoryList_SubList_Test)
  ****************************************************************************/
 TEST(TPayeeList_Test_1)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    const wxStopWatch start_time;
 
     TPayeeList payee_list(get_pDb());
     int payee_id;
 
     payee_id = payee_list.AddEntry("Coles");
-    CHECK(payee_id > 0);
+    CHECK_EQUAL(1, payee_id);
 
     payee_id = payee_list.AddEntry("Woolworths");
-    CHECK(payee_id > 0);
+    CHECK_EQUAL(2, payee_id);
 
     payee_id = payee_list.AddEntry("ACTEW");
-    CHECK(payee_id > 0);
+    CHECK_EQUAL(3, payee_id);
 
     payee_id = payee_list.GetPayeeId("Woolworths");
-    CHECK_EQUAL("Woolworths", payee_list.GetPayeeName(payee_id));
+    CHECK_EQUAL(2, payee_id);
 
-    payee_list.UpdateEntry(payee_id, "Big W");
-    CHECK_EQUAL("Big W", payee_list.GetPayeeName(payee_id));
+    wxString Woolworths = payee_list.GetPayeeName(2);
+    CHECK_EQUAL("Woolworths", Woolworths);
 
-    payee_list.UpdateEntry("Coles", 1, 1);
+    payee_list.UpdateEntry("Woolworths", 1, 2);
+    payee_list.UpdateEntry("ACTEW", 3, 3);
 
-    std::shared_ptr<TPayeeEntry> pEntry = payee_list.GetEntryPtr("Coles");
-    CHECK_EQUAL("Coles", pEntry->name_);
-    CHECK_EQUAL(1, pEntry->subcat_id_);
-    CHECK_EQUAL(1, pEntry->cat_id_);
+    //std::shared_ptr<TPayeeEntry> pEntry = payee_list.GetEntryPtr("ACTEW");
+    TPayeeEntry* pEntry = payee_list.GetEntryPtr("ACTEW");
+    CHECK_EQUAL("ACTEW", pEntry->name_);
+    CHECK_EQUAL(3, pEntry->cat_id_);
+    CHECK_EQUAL(3, pEntry->subcat_id_);
+    CHECK_EQUAL(2, payee_list.GetCurrentIndex());
 
+    payee_list.AddEntry("Big W");
+    CHECK(payee_list.PayeeExists("Big W"));
     payee_list.DeleteEntry("Big W");
     CHECK(! payee_list.PayeeExists("Big W"));
+
+    payee_list.DeleteEntry("Big W");
+
 
     displayTimeTaken("TPayeeList_Test_1", start_time);
 }
 
 TEST(TPayeeList_Test_2)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    const wxStopWatch start_time;
 
     TPayeeList payee_list(get_pDb());
-    int payee_id;
 
-    payee_id = payee_list.AddEntry("Woolworths");
-    CHECK(payee_id > 0);
-
-    payee_id = payee_list.AddEntry("ACTEW");
-    CHECK(payee_id > 0);
+    //std::shared_ptr<TPayeeEntry> pEntry = payee_list.GetEntryPtr("Woolworths");
+    TPayeeEntry* pEntry = payee_list.GetEntryPtr("Woolworths");
+    CHECK_EQUAL("Woolworths", pEntry->name_);
+    CHECK_EQUAL(1, pEntry->cat_id_);
+    CHECK_EQUAL(2, pEntry->subcat_id_);
+    CHECK_EQUAL(2, payee_list.GetCurrentIndex());
 
     displayTimeTaken("TPayeeList_Test_2", start_time);
 }

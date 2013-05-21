@@ -90,7 +90,7 @@ TCategoryList::TCategoryList(std::shared_ptr<wxSQLite3Database> db)
     LoadEntries();
 }
 
-void TCategoryList::LoadEntries()
+void TCategoryList::LoadEntries(bool load_entries)
 {
     try
     {
@@ -103,14 +103,10 @@ void TCategoryList::LoadEntries()
             db_->ExecuteUpdate(CREATE_TABLE_CATEGORY_V1);
         }
 
-        wxString sql_statement = "select CATEGID, CATEGNAME from CATEGORY_V1";
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
-        while (q1.NextRow())
+        if (load_entries)
         {
-            std::shared_ptr<TCategoryEntry> pCategory(new TCategoryEntry(q1));
-            entrylist_.push_back(pCategory);
+            LoadEntriesUsing("select CATEGID, CATEGNAME from CATEGORY_V1 order by CATEGNAME");
         }
-        q1.Finalize();
     }
     catch (const wxSQLite3Exception& e)
     {
@@ -118,18 +114,30 @@ void TCategoryList::LoadEntries()
     }
 }
 
+    // Allows specialised loads by providing the required SQL statement
+void TCategoryList::LoadEntriesUsing(const wxString& sql_statement)
+{
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    while (q1.NextRow())
+    {
+        TCategoryEntry pCategory(q1);
+        entrylist_.push_back(pCategory);
+    }
+    q1.Finalize();
+}
+
 int TCategoryList::AddEntry(const wxString& name)
 {
     int cat_id = -1;
     if (CategoryExists(name))
     {
-        cat_id = entrylist_[current_index_]->id_;
+        cat_id = entrylist_[current_index_].id_;
     }
     else
     {
-        std::shared_ptr<TCategoryEntry> pEntry(new TCategoryEntry(name));
-        entrylist_.push_back(pEntry);
-        cat_id = pEntry->Add(db_.get());
+        TCategoryEntry entry(name);
+        cat_id = entry.Add(db_.get());
+        entrylist_.push_back(entry);
     }
 
     return cat_id;
@@ -137,7 +145,7 @@ int TCategoryList::AddEntry(const wxString& name)
 
 void TCategoryList::UpdateEntry(int cat_id, const wxString& new_category)
 {
-    std::shared_ptr<TCategoryEntry> pEntry = GetEntryPtr(cat_id);
+    TCategoryEntry* pEntry = GetEntryPtr(cat_id);
     pEntry->name_ = new_category;
     pEntry->Update(db_.get());
 }
@@ -145,25 +153,28 @@ void TCategoryList::UpdateEntry(int cat_id, const wxString& new_category)
 /// Note: At this level, no checking is done for usage in other tables.
 void TCategoryList::DeleteEntry(int cat_id)
 {
-    std::shared_ptr<TCategoryEntry> pEntry = GetEntryPtr(cat_id);
-    pEntry->Delete(db_.get());
-    entrylist_.erase(entrylist_.begin() + current_index_);
+    TCategoryEntry* pEntry = GetEntryPtr(cat_id);
+    if (pEntry)
+    {
+        pEntry->Delete(db_.get());
+        entrylist_.erase(entrylist_.begin() + current_index_);
+    }
 }
 
 //-----------------------------------------------------------------------------
 
-std::shared_ptr<TCategoryEntry> TCategoryList::GetEntryPtr(int cat_id)
+TCategoryEntry* TCategoryList::GetEntryPtr(int cat_id)
 {
-    std::shared_ptr<TCategoryEntry> pEntry;
+    TCategoryEntry* pEntry = 0;
     size_t index = 0;
-    bool searching = entrylist_.size() != 0;
-    while (searching && index < entrylist_.size())
+
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->id_ == cat_id)
+        if (entrylist_[index].id_ == cat_id)
         {
-            searching = false;
-            pEntry = entrylist_[index];
+            pEntry = &entrylist_[index];
             current_index_ = index;
+            break;
         }
         ++ index;
     }
@@ -171,18 +182,17 @@ std::shared_ptr<TCategoryEntry> TCategoryList::GetEntryPtr(int cat_id)
     return pEntry;
 }
 
-std::shared_ptr<TCategoryEntry> TCategoryList::GetEntryPtr(const wxString& name)
+TCategoryEntry* TCategoryList::GetEntryPtr(const wxString& name)
 {
-    std::shared_ptr<TCategoryEntry> pEntry;
+    TCategoryEntry* pEntry = 0;
     size_t index = 0;
-    bool searching = entrylist_.size() != 0;
-    while (searching && index < entrylist_.size())
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->name_ == name)
+        if (entrylist_[index].name_ == name)
         {
-            searching = false;
-            pEntry = entrylist_[index];
+            pEntry = &entrylist_[index];
             current_index_ = index;
+            break;
         }
         ++ index;
     }
@@ -193,7 +203,7 @@ std::shared_ptr<TCategoryEntry> TCategoryList::GetEntryPtr(const wxString& name)
 int TCategoryList::GetCategoryId(const wxString& name)
 {
     int cat_id = -1;
-    std::shared_ptr<TCategoryEntry> pEntry = GetEntryPtr(name);
+    TCategoryEntry* pEntry = GetEntryPtr(name);
     if (pEntry)
     {
         cat_id = pEntry->GetId();
@@ -205,7 +215,7 @@ int TCategoryList::GetCategoryId(const wxString& name)
 wxString TCategoryList::GetCategoryName(int cat_id)
 {
     wxString cat_name;
-    std::shared_ptr<TCategoryEntry> pEntry = GetEntryPtr(cat_id);
+    TCategoryEntry* pEntry = GetEntryPtr(cat_id);
     if (pEntry)
     {
         cat_name = pEntry->name_;

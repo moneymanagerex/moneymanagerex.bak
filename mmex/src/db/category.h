@@ -48,12 +48,15 @@ public:
 class TCategoryList : public TListBase
 {
 private:
-    std::vector<std::shared_ptr<TCategoryEntry> > entrylist_;
+    std::vector<TCategoryEntry> entrylist_;
 
-    void LoadEntries();
+    void LoadEntries(bool load_entries = true);
 
 public:
     TCategoryList(std::shared_ptr<wxSQLite3Database> db);
+
+    // Allows specialised loads by providing the required SQL statement
+    void LoadEntriesUsing(const wxString& sql_statement);
 
     /// Saves a new category name to the database and memory list
     int AddEntry(const wxString& name);
@@ -62,8 +65,8 @@ public:
     /// Note: At this level, no checking is done for usage in other tables.
     void DeleteEntry(int cat_id);
 
-    std::shared_ptr<TCategoryEntry> GetEntryPtr(const wxString& name);
-    std::shared_ptr<TCategoryEntry> GetEntryPtr(int cat_id);
+    TCategoryEntry* GetEntryPtr(const wxString& name);
+    TCategoryEntry* GetEntryPtr(int cat_id);
     int GetCategoryId(const wxString& name);
     wxString GetCategoryName(int cat_id);
     bool CategoryExists(const wxString& name);

@@ -29,6 +29,7 @@ private:
 
     int Add(wxSQLite3Database* db);
     void Delete(wxSQLite3Database* db);
+    void SetDatabaseValues(wxSQLite3Statement& st, int& db_index);
 
 public:
     int cat_id_;
@@ -49,12 +50,14 @@ public:
 class TSubCategoryList : public TListBase
 {
 private:
-    void LoadEntries(int subcat_id = -1);
+    void LoadEntries(int cat_id = -1, bool load_entries = true);
 
 public:
-    std::vector<std::shared_ptr<TSubCategoryEntry> > entrylist_;
+    std::vector<TSubCategoryEntry> entrylist_;
 
     TSubCategoryList(std::shared_ptr<wxSQLite3Database> db, int cat_id = -1);
+    // Allows specialised loads by providing the required SQL statement
+    void LoadEntriesUsing(const wxString& sql_statement);
 
     int AddEntry(int cat_id, const wxString& name);
     void UpdateEntry(int cat_id, int subcat_id, const wxString& new_category);
@@ -62,8 +65,8 @@ public:
     /// Note: At this level, no checking is done for usage in other tables.
     void DeleteEntry(int cat_id, int subcat_id);
 
-    std::shared_ptr<TSubCategoryEntry> GetEntryPtr(int cat_id, const wxString& name);
-    std::shared_ptr<TSubCategoryEntry> GetEntryPtr(int cat_id, int subcat_id);
+    TSubCategoryEntry* GetEntryPtr(int cat_id, const wxString& name);
+    TSubCategoryEntry* GetEntryPtr(int cat_id, int subcat_id);
     int GetSubCategoryId(int cat_id, const wxString& name);
     wxString GetSubCategoryName(int cat_id, int subcat_id);
     bool SubCategoryExists(int cat_id, const wxString& name);
