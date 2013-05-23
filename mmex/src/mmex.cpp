@@ -3679,7 +3679,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
     }
 
     wxArrayString as;
-    int num = (int)m_core->accountList_.accounts_.size();
+    //int num = (int)m_core->accountList_.accounts_.size();
     std::vector<int> arrAcctID;
 
     int idx = 0;
