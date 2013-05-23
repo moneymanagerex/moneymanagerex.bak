@@ -13,6 +13,7 @@ mmGraphTopCategories::mmGraphTopCategories() :
 
 mmGraphTopCategories::~mmGraphTopCategories()
 {
+    if (m_chart) delete m_chart;
 }
 //----------------------------------------------------------------------------
 
