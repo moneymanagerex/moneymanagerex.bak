@@ -4,6 +4,7 @@
 //----------------------------------------------------------------------------
 #include "defs.h"
 #include <vector>
+#include <wx/mstream.h>
 //----------------------------------------------------------------------------
 
 class ChartData
@@ -39,6 +40,7 @@ public:
     void ClearStrokeColour();
 
     bool Save( const wxString& file );
+    bool Save(wxMemoryOutputStream& stream);
 
     void SetData( const std::vector<ChartData> &aData, bool simpleValue = true );
     void SetData( const std::vector<ChartData> &aData, const std::vector<wxString> &aSerieLabel );

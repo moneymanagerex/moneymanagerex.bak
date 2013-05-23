@@ -143,6 +143,14 @@ bool AbstractChart::Save( const wxString& file )
     pic.SaveFile( file, wxBITMAP_TYPE_PNG );
     return true;
 }
+
+bool AbstractChart::Save(wxMemoryOutputStream& stream)
+{
+    wxImage pic = image_.ConvertToImage();
+    pic.SetMaskColour(255,255,255);
+    pic.SaveFile(stream, wxBITMAP_TYPE_PNG );
+    return true;
+}
 //----------------------------------------------------------------------------
 
 void AbstractChart::SetData( const std::vector<ChartData> &aData, bool simpleValue )
