@@ -76,7 +76,7 @@ public:
     void init();
 
     /** Clears the current HTML document */
-    virtual void clear() { html_ = wxGetEmptyString(); }
+    virtual void clear() { html_.clear(); }
 
     /** Create an HTML header and returns as a wxString */
     void addHeader(const int level, const wxString& header);
@@ -129,7 +129,7 @@ public:
         , const bool& numeric = false
         , const bool& italic = false
         , const bool& bold = false
-        , const wxString& fontColor = wxGetEmptyString());
+        , const wxString& fontColor = "");
 
     virtual void end() { html_+= tags::END; };
     virtual void endTable() { html_+= tags::TABLE_END; };
