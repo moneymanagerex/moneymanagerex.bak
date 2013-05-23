@@ -52,7 +52,6 @@ public:
     virtual wxListItemAttr *OnGetItemAttr(long item) const;
     virtual int OnGetItemImage(long item) const;
 
-    void OnItemRightClick(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
     void OnListItemActivated(wxListEvent& event);
 
@@ -140,9 +139,6 @@ private:
     void UpdateBudgetHeading();
 
     /* Event handlers for Buttons */
-    void OnNewTransaction(wxCommandEvent& event);
-    void OnDeleteTransaction(wxCommandEvent& event);
-    void OnEditTransaction(wxCommandEvent& event);
     void OnViewPopupSelected(wxCommandEvent& event);
     void OnMouseLeftDown( wxMouseEvent& event );
 };
