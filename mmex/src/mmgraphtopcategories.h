@@ -23,7 +23,6 @@
 #include "mmgraphgenerator.h"
 //----------------------------------------------------------------------------
 #include <vector>
-#include <wx/scopedptr.h>
 //----------------------------------------------------------------------------
 class BarChart;
 struct CategInfo;
@@ -39,7 +38,7 @@ public:
     bool Generate(const wxString& chartTitle);
 
 private:
-    wxScopedPtr<BarChart> m_chart;
+    BarChart* m_chart;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_GRAPHTOPCATEGORIES_H_
