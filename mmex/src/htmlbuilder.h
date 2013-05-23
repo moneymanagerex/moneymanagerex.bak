@@ -26,7 +26,12 @@ namespace tags
 {
 static const char HTML[] =
     "<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
-    "<title>%s - Report</title>\n""</head>";
+    "<title>%s - Report</title>\n""</head>"
+    "<body bgcolor=\"%s\" "
+    "\" text=\"%s\" "
+    "link=\"%s\" "
+    "vlink=\"%s\" "
+    "alink=\"%s\">";
 static const wxString TABLE_START = "<table cellspacing=\"1\" bgcolor=\"%s\" width=\"%s\" valign=\"%s\" border=\"%s\">\n";
 static const wxString TABLE_END = "</table>\n";
 static const wxString TABLE_ROW = "<tr bgcolor=\"%s\" >";
@@ -117,7 +122,7 @@ public:
         , const bool& numeric = false
         , const bool& italic = false
         , const bool& bold = false
-        , const wxString& fontColor = wxGetEmptyString());
+        , const wxString& fontColor = "");
 
     /** Add a Cell value */
     void addTableCellLink(const wxString& href, const wxString& value
@@ -128,8 +133,9 @@ public:
 
     virtual void end() { html_+= tags::END; };
     virtual void endTable() { html_+= tags::TABLE_END; };
-	virtual void startTableRow() { html_ += wxString::Format(tags::TABLE_ROW, (color_.bgswitch ? color_.color0 : color_.color1)); }
-	virtual void startTableRow(const wxString& custom_color) { html_ += wxString::Format(tags::TABLE_ROW, custom_color); }
+    virtual void addTableCellRightBI(const wxString& value) {html_+= wxString::Format(tags::TABLE_CELL_RIGHT_BI, font_size_, value); }
+    virtual void startTableRow() { html_ += wxString::Format(tags::TABLE_ROW, (color_.bgswitch ? color_.color0 : color_.color1)); }
+    virtual void startTableRow(const wxString& custom_color) { html_ += wxString::Format(tags::TABLE_ROW, custom_color); }
     virtual void endTableRow() { html_+= tags::TABLE_ROW_END;
         color_.bgswitch = !color_.bgswitch; }
 
@@ -165,6 +171,7 @@ private:
         wxString color0;
         wxString color1;
         wxString bgcolor;
+        wxString text;
         wxString table_header;
         wxString link;
         wxString vlink;
