@@ -67,9 +67,9 @@ bool mmPayeeList::PayeeExists(int payeeid) const
 
 int mmPayeeList::GetPayeeId(const wxString& payeeName) const
 {
-    for (std::vector< std::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    for (const auto& payee: entries_)
     {
-        if (! (*it)->name_.CmpNoCase(payeeName)) return (*it)->id_;
+        if (payee->name_.CmpNoCase(payeeName)) return payee->id_;
     }
 
     return -1;
@@ -77,9 +77,9 @@ int mmPayeeList::GetPayeeId(const wxString& payeeName) const
 
 wxString mmPayeeList::GetPayeeName(int id) const
 {
-    for (std::vector< std::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    for (const auto& payee: entries_)
     {
-        if ((*it)->id_ == id) return (*it)->name_;
+        if (payee->id_ == id) return payee->name_;
     }
 
     return wxEmptyString;

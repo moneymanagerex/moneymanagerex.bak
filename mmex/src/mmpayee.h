@@ -61,7 +61,6 @@ public:
     {
         return entries_.size();
     }
-    typedef std::vector< std::shared_ptr<mmPayee> >::const_iterator const_iterator;
 
     /// Loads database Payees into memory
     void LoadPayees();
