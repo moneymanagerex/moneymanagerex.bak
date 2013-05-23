@@ -5,12 +5,13 @@
 
 mmGraphPie::mmGraphPie() : 
         mmGraphGenerator(PIE),
-        chart(new PieChart(480, 320))
+        chart_(new PieChart(480, 320))
 {
 }
 
 mmGraphPie::~mmGraphPie()
 {
+    if (chart_) delete chart_;
 }
 
 void mmGraphPie::init(std::vector<ValuePair>& valueList)
@@ -30,12 +31,12 @@ void mmGraphPie::init(std::vector<ValuePair>& valueList)
         pieData.push_back(ChartData(_("All Others"), othersum));
     }
 
-    chart->SetData(pieData);
-    chart->Init(240, CHART_LEGEND_FIXED, PIE_CHART_ABSOLUT);
+    chart_->SetData(pieData);
+    chart_->Init(240, CHART_LEGEND_FIXED, PIE_CHART_ABSOLUT);
 }
 
 bool mmGraphPie::Generate(const wxString& chartTitle)
 {
-    chart->Render(chartTitle);
-    return chart->Save(getOutputFileName());
+    chart_->Render(chartTitle);
+    return chart_->Save(getOutputFileName());
 }
