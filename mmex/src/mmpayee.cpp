@@ -85,12 +85,6 @@ wxString mmPayeeList::GetPayeeName(int id) const
     return wxEmptyString;
 }
 
-void mmPayeeList::SortList(void)
-{
-    // sort the payee list alphabetically
-    std::sort(entries_.begin(), entries_.end());
-}
-
 std::shared_ptr<mmPayee> mmPayeeList::GetPayeeSharedPtr(int payeeID)
 {
     int numPayees = (int)entries_.size();
@@ -128,7 +122,7 @@ void mmPayeeList::LoadPayees()
     }
 
     q1.Finalize();
-    SortList();
+    std::sort(entries_.begin(), entries_.end());
 }
 
 bool mmPayeeList::RemovePayee(int payeeID)
