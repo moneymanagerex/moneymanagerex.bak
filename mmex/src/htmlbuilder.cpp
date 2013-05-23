@@ -28,6 +28,7 @@ mmHTMLBuilder::mmHTMLBuilder()
     color_.color1 = mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX);
     color_.color0 = mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
     color_.bgcolor = mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX);
+    color_.text = mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX);
     color_.link = "#0000cc";
     color_.vlink = "#551a8b";
     color_.alink = "#ff0000";
@@ -43,13 +44,14 @@ mmHTMLBuilder::mmHTMLBuilder()
 void mmHTMLBuilder::init()
 {
     color_.bgswitch = true;
-    html_ = wxString::Format(wxString::FromUTF8(tags::HTML), mmex::getProgramName());
-    html_+= wxString::Format("<body bgcolor=\"%s\" ", color_.bgcolor);
-    html_+= wxString::Format("\" text=\"%s\" "
-        , mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX));
-    html_+= wxString::Format("link=\"%s\" ", color_.link);
-    html_+= wxString::Format("vlink=\"%s\" ", color_.vlink);
-    html_+= wxString::Format("alink=\"%s\">", color_.alink);
+    html_ = wxString::Format(wxString::FromUTF8(tags::HTML)
+        , mmex::getProgramName()
+        , color_.bgcolor
+        , color_.text
+        , color_.link
+        , color_.vlink
+        , color_.alink
+    );
     this->font_size(font_size_);
 
     //Show user name if provided
@@ -128,23 +130,19 @@ void mmHTMLBuilder::addRowSeparator(const int cols)
 void mmHTMLBuilder::addTotalRow(const wxString& caption
     , const int cols, const wxString& value)
 {
-    html_+= wxString::Format(tags::TABLE_ROW, color_.bgcolor);
+    this->startTableRow(color_.bgcolor);
     html_+= wxString::Format(tags::TABLE_CELL_SPAN, cols - 1);
     this->font_size(font_size_);
     this->bold_italic(tags::NBSP + tags::NBSP + caption);
     this->font_end();
     this->endTableCell();
-    html_+= tags::TABLE_CELL_RIGHT;
-    this->font_size(font_size_);
-    this->bold_italic(value);
-    this->font_end();
-    this->endTableCell();
-	this->endTableRow();
+    this->addTableCellRightBI(value);
+    this->endTableRow();
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, double value)
 {
-	this->addTotalRow(caption, cols, CurrencyFormatter::float2Money(value));
+    this->addTotalRow(caption, cols, CurrencyFormatter::float2Money(value));
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, const int cols
