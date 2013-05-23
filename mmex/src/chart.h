@@ -75,7 +75,7 @@ public:
     PieChart( int aWidth, int aHeight );
 
     void Init( int aChartsize, EChartLegend aLegendMode = CHART_LEGEND_FIXED, EPieChartStyle aPieMode = PIE_CHART_PERCENT );
-    bool Render( const wxString& title = wxGetEmptyString() );
+    bool Render( const wxString& title = "" );
 
 private:
     int csize;
@@ -92,7 +92,7 @@ public:
     BarChart( int aWidth, int aHeight );
 
     void Init( int aChartsize, EChartLegend aLegendMode = CHART_LEGEND_FIXED, EBarChartStyle aMode = BAR_CHART_SIMPLE );
-    bool Render( const wxString& title = wxGetEmptyString() );
+    bool Render( const wxString& title = "" );
 
 private:
     int csize;
