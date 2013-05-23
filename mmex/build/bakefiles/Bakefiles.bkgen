@@ -21,7 +21,7 @@
     <!-- Output formats to generate for all .bkl -->
 
     <add-formats>
-        autoconf,mingw,msvc,msvs2003prj
+        autoconf,mingw,msvc
     </add-formats>
 
 
