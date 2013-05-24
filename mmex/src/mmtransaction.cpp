@@ -171,12 +171,12 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
     currencyPtr->loadCurrencySettings();
 
     dateStr_ = mmGetDateForDisplay(date_);
-     CurrencyFormatter::formatDoubleToCurrencyEdit(amt_, transAmtString_);
+    transAmtString_ = CurrencyFormatter::float2String(amt_);
 
     wxASSERT(toAmt_ >= 0);
     wxASSERT(amt_ >= 0);
     if (toAmt_ < 0) toAmt_ = amt_;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(toAmt_, transToAmtString_);
+    transToAmtString_ = CurrencyFormatter::float2String(toAmt_);
 
     if (transType_ != TRANS_TYPE_TRANSFER_STR)
     {

@@ -114,7 +114,7 @@ void mmBudgetEntryDialog::fillControls()
     else
         type_->SetSelection(DEF_TYPE_INCOME);
     
-     CurrencyFormatter::formatDoubleToCurrencyEdit(amt, displayAmtString);
+    displayAmtString = CurrencyFormatter::float2String(amt);
     textAmount_->SetValue(displayAmtString);
 }
 

@@ -79,23 +79,6 @@ CurrencyFormatter& CurrencyFormatter::instance()
     return Singleton<CurrencyFormatter>::instance();
 }
 
-void CurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata)
-{
-    rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
-    //TODO: Remove it with new wx release
-    rdata.Replace("-,", "-");
-}
-
-void CurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
-{
-    const CurrencyFormatter &fmt = CurrencyFormatter::instance();
-    rdata = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep
-    rdata.Prepend(fmt.getPrefix());
-    rdata.Append(fmt.getSuffix());
-    //TODO: Remove it with new wx release
-    rdata.Replace("-,", "-");
-}
-
 wxString CurrencyFormatter::float2String(double val)
 {
     wxString d2s = wxNumberFormatter::ToString(val, 0x02); // Style_WithThousandsSep

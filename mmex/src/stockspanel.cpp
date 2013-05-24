@@ -444,15 +444,13 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
     lbl << _("Total: ") << balance << "     " << _("Invested: ") << original;
 
     //Percent
-    wxString diffStrPercents;
     if (originalVal != 0.0) {
         if (total > originalVal)
             lbl << "     " << _("Gain: ");
         else
             lbl << "     " << _("Loss: ");
         double diffPercents = (total > originalVal ? total/originalVal*100.0-100.0 : -(total/originalVal*100.0-100.0));
-         CurrencyFormatter::formatDoubleToCurrencyEdit(diffPercents, diffStrPercents);
-        lbl << diffStr << "  ( " << diffStrPercents << " %)";
+        lbl << diffStr << "  ( " << CurrencyFormatter::float2String(diffPercents) << " %)";
     }
 
     header_total_->SetLabel(lbl);
@@ -492,13 +490,13 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
 
         if (th.id_ == id) selected_item = cnt;
         th.gainLoss_          = th.value_ - ((th.numShares_ * th.purchasePrice_) + th.commission_);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_)
-            + th.commission_)-1.0)*100.0 * 365.0 / th.stockDays_), th.sPercentagePerYear_);
+        th.sPercentagePerYear_ = CurrencyFormatter::float2String(((th.value_ / ((th.numShares_ * th.purchasePrice_)
+            + th.commission_)-1.0)*100.0 * 365.0 / th.stockDays_));
 
-        CurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(th.avgpurchasePrice_, th.avgPurchasePriceStr_);
+        th.gainLossStr_ = CurrencyFormatter::float2String(th.gainLoss_);
+        th.valueStr_ = CurrencyFormatter::float2String(th.value_);
+        th.cPriceStr_ = CurrencyFormatter::float2String(th.currentPrice_);
+        th.avgPurchasePriceStr_ = CurrencyFormatter::float2String(th.avgpurchasePrice_);
 
         //I wish see integer if it integer else double
         if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0)
@@ -507,7 +505,7 @@ int mmStocksPanel::initVirtualListControl(int id, int col, bool asc)
             th.numSharesStr_ <<  static_cast<long>(th.numShares_);
 
         if ((th.totalnumShares_ - static_cast<long>(th.totalnumShares_)) != 0.0)
-             CurrencyFormatter::formatDoubleToCurrencyEdit(th.totalnumShares_, th.totalnumSharesStr_);
+             th.totalnumSharesStr_ = CurrencyFormatter::float2String(th.totalnumShares_);
         else
             th.totalnumSharesStr_ <<  static_cast<long>(th.totalnumShares_);
 
@@ -762,16 +760,15 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
         double stocktotalnumShares = trans_[selectedIndex]->totalnumShares_;
         double stocktotalgainloss = stocktotalDifference * stocktotalnumShares;
 
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stockPurchasePrice, sPurchasePrice);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stockavgPurchasePrice, sAvgPurchasePrice);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stockCurrentPrice, sCurrentPrice);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stockDifference , sDifference);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalDifference , sTotalDifference);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stockPercentage, sPercentage);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stockPercentagePerYear, sPercentagePerYear);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalPercentage, sTotalPercentage);
-        CurrencyFormatter::formatDoubleToCurrencyEdit(stocktotalgainloss, sTotalGainLoss);
-        // CurrencyFormatter::formatDoubleToCurrencyEdit(stocknumShares, sNumShares);
+        sPurchasePrice = CurrencyFormatter::float2String(stockPurchasePrice);
+        sAvgPurchasePrice = CurrencyFormatter::float2String(stockavgPurchasePrice);
+        sCurrentPrice = CurrencyFormatter::float2String(stockCurrentPrice);
+        sDifference = CurrencyFormatter::float2String(stockDifference);
+        sTotalDifference = CurrencyFormatter::float2String(stocktotalDifference);
+        sPercentage = CurrencyFormatter::float2String(stockPercentage);
+        sPercentagePerYear = CurrencyFormatter::float2String(stockPercentagePerYear);
+        sTotalPercentage = CurrencyFormatter::float2String(stocktotalPercentage);
+        sTotalGainLoss = CurrencyFormatter::float2String(stocktotalgainloss);
 
         wxString miniInfo = "";
         if (trans_[selectedIndex]->stockSymbol_ != "")

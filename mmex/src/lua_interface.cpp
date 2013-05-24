@@ -474,11 +474,11 @@ void TLuaInterface::SetCurrencyFormat(lua_State* lua, double number, bool for_ed
 
     if (for_edit)
     {
-         CurrencyFormatter::formatDoubleToCurrencyEdit(number, number_string);
+         number_string = CurrencyFormatter::float2String(number);
     }
     else
     {
-         CurrencyFormatter::formatDoubleToCurrency(number, number_string);
+        number_string = CurrencyFormatter::float2Money(number);
     }
   
     lua_pushstring(lua, number_string.ToUTF8());

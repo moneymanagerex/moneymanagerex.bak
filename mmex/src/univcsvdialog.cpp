@@ -827,18 +827,17 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                         value = -value;
                     }
                     toamount = adjustedExportAmount(amtSeparator,wxString()<<tovalue);
-                     CurrencyFormatter::formatCurrencyToDouble(toamount, tovalue);
-                     CurrencyFormatter::formatDoubleToCurrencyEdit(tovalue, toamount);
+                    CurrencyFormatter::formatCurrencyToDouble(toamount, tovalue);
+					toamount = CurrencyFormatter::float2String(tovalue);
                 }
                 else if (type == "Withdrawal")
                     value = -value;
 
                 wxString amount = adjustedExportAmount(amtSeparator, wxString()<<value);
-                 CurrencyFormatter::formatCurrencyToDouble(amount, value);
-                 CurrencyFormatter::formatDoubleToCurrencyEdit(value, amount);
+                CurrencyFormatter::formatCurrencyToDouble(amount, value);
+				amount = CurrencyFormatter::float2String(value);
 
-                wxString amount_tmp;
-                 CurrencyFormatter::formatDoubleToCurrencyEdit(-value, amount_tmp);
+				wxString amount_tmp = CurrencyFormatter::float2String(-value);
 
                 buffer = "";
                 for (std::vector<int>::const_iterator sit = csvFieldOrder_.begin(); sit != csvFieldOrder_.end(); ++ sit)
@@ -1013,17 +1012,16 @@ void mmUnivCSVDialog::update_preview()
                         }
                         toamount = adjustedExportAmount(amtSeparator,wxString()<<tovalue);
                          CurrencyFormatter::formatCurrencyToDouble(toamount, tovalue);
-                         CurrencyFormatter::formatDoubleToCurrencyEdit(tovalue, toamount);
+						 toamount = CurrencyFormatter::float2String(tovalue);
                     }
                     else if (type == "Withdrawal")
                         value = -value;
 
                     wxString amount = adjustedExportAmount(amtSeparator, wxString()<<value);
-                     CurrencyFormatter::formatCurrencyToDouble(amount, value);
-                     CurrencyFormatter::formatDoubleToCurrencyEdit(value, amount);
+                    CurrencyFormatter::formatCurrencyToDouble(amount, value);
+                    amount = CurrencyFormatter::float2String(value);
 
-                    wxString amount_tmp;
-                     CurrencyFormatter::formatDoubleToCurrencyEdit(-value, amount_tmp);
+					wxString amount_tmp = CurrencyFormatter::float2String(-value);
 
                     int col = 0;
                     wxString buf;

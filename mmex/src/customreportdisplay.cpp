@@ -91,7 +91,7 @@ bool mmCustomReport::DisplaySQL_Results(mmHTMLBuilder& hb)
             wxString displayData = sqlQueryResult.GetAsString(index);
             if ( sqlQueryResult.GetColumnType(index) == WXSQLITE_FLOAT )
             {
-                 CurrencyFormatter::formatDoubleToCurrencyEdit(sqlQueryResult.GetDouble(index), displayData);
+                 displayData = CurrencyFormatter::float2String(sqlQueryResult.GetDouble(index));
             }
 
             //Right justify numeric data.
