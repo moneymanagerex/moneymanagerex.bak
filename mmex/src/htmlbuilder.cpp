@@ -170,9 +170,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const std::ve
     std::vector<wxString> data_str;
     for (const auto& value: data)
     {
-        wxString value_str;
-        CurrencyFormatter::formatDoubleToCurrency(value, value_str);
-        data_str.push_back(value_str);
+        data_str.push_back(CurrencyFormatter::float2Money(value));
     }
     this->addTotalRow(caption, cols, data_str);
 }
