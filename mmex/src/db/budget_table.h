@@ -46,7 +46,6 @@ public:
     TBudgetTableEntry();
 
     void Update(wxSQLite3Database* db);
-    wxString GetAmountCurrencyEditFormat();
 };
 
 /************************************************************************************

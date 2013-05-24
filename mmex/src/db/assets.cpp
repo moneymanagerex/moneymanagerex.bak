@@ -137,8 +137,8 @@ double TAssetEntry::GetDepreciatedValue(const wxDateTime& startDate, double valu
 
 bool TAssetEntry::operator < (const TAssetEntry& asset) const
 {
-	if (this->date_ < asset.date_) return true; else if (this->date_ > asset.date_) return false;
-	return this->GetId() < asset.GetId();
+    if (this->date_ < asset.date_) return true; else if (this->date_ > asset.date_) return false;
+    return this->GetId() < asset.GetId();
 }
 
 double TAssetEntry::GetValue()
@@ -161,8 +161,8 @@ double TAssetEntry::GetValue()
 wxString TAssetEntry::GetValueCurrencyEditFormat(bool initial_value)
 {
     wxString formatted_value;
-    if (initial_value)  CurrencyFormatter::formatDoubleToCurrencyEdit(value_, formatted_value);
-    else  CurrencyFormatter::formatDoubleToCurrencyEdit(GetValue(), formatted_value);
+    if (initial_value)  formatted_value = CurrencyFormatter::float2String(value_);
+    else  formatted_value = CurrencyFormatter::float2String(GetValue());
 
     return formatted_value;
 }
@@ -291,16 +291,9 @@ double TAssetList::GetAssetBalance(bool value_today)
 
 wxString TAssetList::GetAssetBalanceCurrencyFormat(bool value_today)
 {
-    wxString balance_str;
-     CurrencyFormatter::formatDoubleToCurrency(GetAssetBalance(value_today), balance_str);
-
-    return balance_str;
+    return CurrencyFormatter::float2Money(GetAssetBalance(value_today));
 }
-
 wxString TAssetList::GetAssetBalanceCurrencyEditFormat(bool value_today)
 {
-    wxString balance_str;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(GetAssetBalance(value_today), balance_str);
-
-    return balance_str;
-}
+    return CurrencyFormatter::float2Money(GetAssetBalance(value_today));
+} 

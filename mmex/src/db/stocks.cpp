@@ -153,17 +153,15 @@ double TStockEntry::GetValue()
 wxString TStockEntry::GetValueCurrencyEditFormat(bool initial_value)
 {
     wxString formatted_value;
-    if (initial_value)  CurrencyFormatter::formatDoubleToCurrencyEdit(value_, formatted_value);
-    else  CurrencyFormatter::formatDoubleToCurrencyEdit(GetValue(), formatted_value);
+    if (initial_value)  formatted_value = CurrencyFormatter::float2String(value_);
+    else  formatted_value = CurrencyFormatter::float2String(GetValue());
 
     return formatted_value;
 }
 
 wxString TStockEntry::CommissionCurrencyEditFormat()
 {
-    wxString formatted_value;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(value_, formatted_value);
-
+    wxString formatted_value = CurrencyFormatter::float2String(value_);
     return formatted_value;
 }
 
@@ -288,16 +286,10 @@ double TStockList::GetStockBalance()
 
 wxString TStockList::GetStockBalanceCurrencyFormat()
 {
-    wxString balance_str;
-    CurrencyFormatter::formatDoubleToCurrency(GetStockBalance(), balance_str);
-
-    return balance_str;
+    return CurrencyFormatter::float2Money(GetStockBalance());
 }
 
 wxString TStockList::GetStockBalanceCurrencyEditFormat()
 {
-    wxString balance_str;
-    CurrencyFormatter::formatDoubleToCurrencyEdit(GetStockBalance(), balance_str);
-
-    return balance_str;
+    return CurrencyFormatter::float2String(GetStockBalance());
 }
