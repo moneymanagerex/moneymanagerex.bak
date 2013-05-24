@@ -52,7 +52,6 @@ void mmHTMLBuilder::init()
         , color_.vlink
         , color_.alink
     );
-    this->font_size(font_size_);
 
     //Show user name if provided
     if (mmOptions::instance().userNameString_ != "")
@@ -132,9 +131,9 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption
 {
     this->startTableRow(color_.bgcolor);
     html_+= wxString::Format(tags::TABLE_CELL_SPAN, cols - 1);
-    this->font_size(font_size_);
+    this->font_settings(font_size_);
     this->bold_italic(tags::NBSP + tags::NBSP + caption);
-    this->font_end();
+	this->font_end();
     this->endTableCell();
     this->addTableCellRightBI(value);
     this->endTableRow();
@@ -149,16 +148,16 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, const int cols
     , const std::vector<wxString>& data)
 {
     html_+= wxString::Format(tags::TABLE_ROW, color_.bgcolor);
-    html_+= wxString::Format(tags::TABLE_CELL_SPAN, (long)cols - data.size());
-    this->font_size(font_size_);
+    html_+= wxString::Format(tags::TABLE_CELL_SPAN, cols - (int)data.size());
+    this->font_settings(font_size_);
     this->bold_italic(tags::NBSP + tags::NBSP + caption);
     this->font_end();
 
     for (unsigned long idx = 0; idx < data.size(); idx++)
     {
         this->endTableCell();
-        html_+= tags::TABLE_CELL_RIGHT;
-        this->font_size(font_size_);
+        html_+= wxString::Format(tags::TABLE_CELL_RIGHT);
+        this->font_settings(font_size_);
         this->bold_italic(data[idx]);
         this->font_end();
     }
@@ -182,7 +181,7 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, const int cols)
 {
     html_+= wxString::Format(tags::TABLE_ROW, color_.bgcolor);
     html_+= wxString::Format(tags::TABLE_HEADER, "left", color_.table_header, cols);
-    this->font_size(font_size_);
+    this->font_settings(font_size_);
     this->bold(tags::NBSP + value);
     this->font_end();
     html_+= tags::TABLE_HEADER_END;
@@ -194,7 +193,9 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value, const bool& numeri
 {
     wxString align = numeric ? "right" : "left";
     html_+= wxString::Format(tags::TABLE_HEADER, align, color_.table_header, 0);
+	this->font_settings(font_size_);
     this->bold(value);
+	this->font_end();
     html_+= tags::TABLE_HEADER_END;
     color_.bgswitch = false;
 }
@@ -222,17 +223,15 @@ void mmHTMLBuilder::addTableCell(const wxString& value
 {
     html_<< wxString::Format(tags::TABLE_CELL , (numeric ? "0%\" align=\"right" : "0%"));
 
-    if(!fontColor.empty())
-        html_+= wxString::Format(tags::FONT_COLOR, fontColor);
+    this->font_settings(font_size_, fontColor);
 
     if (!bold && !italic)    html_+= value;
     else if (bold && italic) this->bold_italic(value);
     else if (bold)           this->bold(value);
     else if (italic)         this->italic(value);
 
-    if(!fontColor.empty())
-        html_+= tags::FONT_END;
-    html_+= tags::TABLE_CELL_END;
+    this->font_end();
+    this->endTableCell();
 }
 
 void mmHTMLBuilder::addTableCellLink(const wxString& href
