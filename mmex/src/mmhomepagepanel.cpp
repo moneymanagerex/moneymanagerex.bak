@@ -128,15 +128,15 @@ wxString mmHomePagePanel::prepareTemplate(const wxString& left, const wxString& 
 {
     mmHTMLBuilder hb;
     hb.init();
+    hb.startCenter();
 
     hb.startTable("100%", "top");
     hb.startTableRow();
-    hb.startTableCell("100%\" colspan=\"2\" valign=\"top\" align=\"center");
+    hb.startTableCell("100%\" colspan=\"2\" valign=\"middle\" align=\"center");
     hb.addText(getCalendarWidget());
     hb.endTableCell();
     hb.endTableRow();
 
-    hb.startCenter();
     hb.startTableRow();
     hb.endTableRow();
     hb.startTableRow();
@@ -793,9 +793,9 @@ wxString mmHomePagePanel::getCalendarWidget()
     hb.startTableCell();
     hb.font_settings(hb.font_size());
     hb.bold(wxGetTranslation(wxDateTime::GetMonthName(today.GetMonth())));
-    hb.addText("&nbsp;");
     hb.font_end();
     hb.endTableCell();
+    hb.addTableCell("");
     wxDateTime selectedMonthDay = date_range_->start_date();
     for (int d = 1; d <= selectedMonthDay.GetLastMonthDay().GetDay(); d++)
     {
