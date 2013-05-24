@@ -26,22 +26,23 @@ namespace tags
 {
 static const char HTML[] =
     "<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
-    "<title>%s - Report</title>\n""</head>"
+    "<title>%s - Report</title>\n"
+    "</head>\n"
     "<body bgcolor=\"%s\" "
-    "\" text=\"%s\" "
+    "text=\"%s\" "
     "link=\"%s\" "
     "vlink=\"%s\" "
-    "alink=\"%s\">";
-static const wxString TABLE_START = "<table cellspacing=\"1\" bgcolor=\"%s\" width=\"%s\" valign=\"%s\" border=\"%s\">\n";
+    "alink=\"%s\">\n";
+static const wxString TABLE_START = "\n<table cellspacing=\"1\" bgcolor=\"%s\" width=\"%s\" valign=\"%s\" border=\"%s\">\n";
 static const wxString TABLE_END = "</table>\n";
 static const wxString TABLE_ROW = "<tr bgcolor=\"%s\" >";
 static const wxString TABLE_ROW_END = "</tr>";
 static const wxString TABLE_CELL = "<td width=\"%s\" >";
 static const wxString TABLE_CELL_RIGHT = "<td nowrap align=\"right\">";
-static const wxString TABLE_CELL_SPAN = "<td colspan=\"%d\" >";
+static const wxString TABLE_CELL_SPAN = "<td colspan=\"%i\" >";
 static const wxString TABLE_CELL_END = "</td>\n";
 static const wxString TABLE_CELL_LINK = "<a href=\"%s\">%s</a>\n";
-static const wxString TABLE_CELL_RIGHT_BI = "<td nowrap align=\"right\"><font size=\"%d\"><b><i>%s</i></b></font></td>\n";
+static const wxString TABLE_CELL_RIGHT_BI = "<td nowrap align=\"right\"><b><i>%s</i></b></td>\n";
 static const wxString TABLE_HEADER = "<th align=\"%s\" valign=\"center\" bgcolor=\"%s\" colspan=\"%i\">";
 static const wxString TABLE_HEADER_END = "</th>\n";
 static const wxString HEADER = "<font size=\"%i\"><b>%s</b></font><br>\n";
@@ -51,12 +52,11 @@ static const wxString LINK = "<a href=\"%s\">%s</a>\n";
 static const wxString BI = "<b><i>%s</i></b>";
 static const wxString BOLD = "<b>%s</b>";
 static const wxString ITALIC = "<i>%s</i>";
-static const wxString FONT_COLOR = "<font color=\"%s\">";
-static const wxString FONT_SIZE = "<font size=\"%i\">";
+static const wxString FONT = "<font size=\"%i\" color=\"%s\">";
 static const wxString FONT_END = "</font>";
-static const wxString HOR_LINE = "<hr size=\"%d\">\n";
+static const wxString HOR_LINE = "<hr size=\"%i\">\n";
 static const wxString IMAGE = "<img src=\"%s\" border=\"0\">";
-static const wxString END = "\n</font></body>\n</html>\n";
+static const wxString END = "\n</body>\n</html>\n";
 static const wxString BR = "<br>\n";
 static const wxString NBSP = "&nbsp;";
 static const wxString CENTER = "<center>";
@@ -133,7 +133,7 @@ public:
 
     virtual void end() { html_+= tags::END; };
     virtual void endTable() { html_+= tags::TABLE_END; };
-    virtual void addTableCellRightBI(const wxString& value) {html_+= wxString::Format(tags::TABLE_CELL_RIGHT_BI, font_size_, value); }
+    virtual void addTableCellRightBI(const wxString& value) {html_+= wxString::Format(tags::TABLE_CELL_RIGHT_BI, value); }
     virtual void startTableRow() { html_ += wxString::Format(tags::TABLE_ROW, (color_.bgswitch ? color_.color0 : color_.color1)); }
     virtual void startTableRow(const wxString& custom_color) { html_ += wxString::Format(tags::TABLE_ROW, custom_color); }
     virtual void endTableRow() { html_+= tags::TABLE_ROW_END;
@@ -156,9 +156,10 @@ public:
     virtual void bold_italic(const wxString value) { html_+= wxString::Format(tags::BI, value); }
     virtual void bold(const wxString value) { html_+= wxString::Format(tags::BOLD, value); }
     virtual void italic(const wxString value) { html_+= wxString::Format(tags::ITALIC, value); }
-    virtual void font_size(int size) { wxString::Format(tags::FONT_SIZE, size); }
+    virtual void font_settings(int size, const wxString& color = "") { html_+= wxString::Format(tags::FONT, size, color); }
     virtual void font_end() { html_+= tags::FONT_END; }
-    virtual wxString getHTMLText() const { return html_; }
+	virtual const int font_size() { return font_size_;}
+    virtual const wxString getHTMLText() const { return html_; }
     /** Centers the content from this point on */
     virtual void startCenter() { html_+= tags::CENTER; }
     virtual void endCenter() { html_+= tags::CENTER_END; }

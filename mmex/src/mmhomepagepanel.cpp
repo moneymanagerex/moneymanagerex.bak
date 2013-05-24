@@ -79,6 +79,7 @@ bool mmHomePagePanel::Create( wxWindow *parent,
 
     createFrames();
 
+
     return TRUE;
 }
 
@@ -120,13 +121,13 @@ void mmHomePagePanel::createFrames()
 
     wxString pageHTML = prepareTemplate(leftFrame, rightFrame);
     htmlWindow_->SetPage(pageHTML);
+
 }
 
 wxString mmHomePagePanel::prepareTemplate(const wxString& left, const wxString& right)
 {
     mmHTMLBuilder hb;
     hb.init();
-    hb.startCenter();
 
     hb.startTable("100%", "top");
     hb.startTableRow();
@@ -135,6 +136,7 @@ wxString mmHomePagePanel::prepareTemplate(const wxString& left, const wxString& 
     hb.endTableCell();
     hb.endTableRow();
 
+    hb.startCenter();
     hb.startTableRow();
     hb.endTableRow();
     hb.startTableRow();
@@ -635,7 +637,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
         trans_.push_back(th);
     }
     q1.Finalize();
-    std::sort(trans_.begin(), trans_.end(), 
+    std::sort(trans_.begin(), trans_.end(),
         [](const mmBDTransactionHolder& x, const mmBDTransactionHolder& y){ return x.daysRemaining_ < y.daysRemaining_; });
 
     ////////////////////////////////////
@@ -781,32 +783,32 @@ wxString mmHomePagePanel::displayTopTransactions()
 wxString mmHomePagePanel::getCalendarWidget()
 {
     const wxDateTime &today = date_range_->today();
-    int font_size = mmIniOptions::instance().html_font_size_;
     mmHTMLBuilder hb;
     hb.startTable("100%", "", "1");
     hb.startTableRow();
     hb.startTableCell();
-    hb.addText(wxString::Format("<font size=\"%i\">", font_size));
     hb.startTable("100%", "left\" cellpadding=\"1\" cellspacing=\"0", "0");
     hb.startTableRow();
     //hb.addTableCell(wxString()<<wxDateTime::Now().GetYear());
-    hb.startTableCell(wxString::Format("1"));
-    hb.addText( wxString("<b>")
-        << wxGetTranslation(wxDateTime::GetMonthName(today.GetMonth()))
-        << "</b>");
+    hb.startTableCell();
+    hb.font_settings(hb.font_size());
+    hb.bold(wxGetTranslation(wxDateTime::GetMonthName(today.GetMonth())));
+    hb.addText("&nbsp;");
+    hb.font_end();
     hb.endTableCell();
-    hb.addTableCell("");
     wxDateTime selectedMonthDay = date_range_->start_date();
     for (int d = 1; d <= selectedMonthDay.GetLastMonthDay().GetDay(); d++)
     {
         selectedMonthDay.SetDay(d);
         wxString sColor = "", sBgColor = "";
         if (d == today.GetDay()) sBgColor = "YELLOW";
-        hb.startTableCell(wxString::Format("1\" bgcolor=\"%s", sBgColor));
+        hb.startTableCell(wxString::Format("0\" bgcolor=\"%s", sBgColor));
         if (wxDateTime::GetWeekDayName(selectedMonthDay.GetWeekDay())=="Sunday") sColor = "#FF0000";
         else if (wxDateTime::GetWeekDayName(selectedMonthDay.GetWeekDay())=="Saturday") sColor = "#FF0000";
-        hb.addText(wxString::Format("<font color=\"%s\" > %d </font>"
-            , sColor, d));
+        hb.font_settings(hb.font_size(), sColor);
+        hb.addText(wxString()<<d);
+        hb.font_end();
+
         hb.endTableCell();
     }
     hb.addTableCell(wxString::Format(_("Week&nbsp;#%d")
@@ -816,7 +818,6 @@ wxString mmHomePagePanel::getCalendarWidget()
     hb.endTableRow();
     hb.endTable();
 
-    hb.addText("</font>");
     hb.endTableCell();
     hb.endTableRow();
     hb.endTable();
