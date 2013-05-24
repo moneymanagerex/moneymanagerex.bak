@@ -78,9 +78,7 @@ bool mmBillsDepositsPanel::Create( wxWindow *parent,
     transFilterDlg_    = new mmFilterTransactionsDialog(core_, this);
 
     initVirtualListControl();
-    if (trans_.size() > 1)
-        listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
-
+    
     windowsFreezeThaw(this);
 
     return TRUE;
