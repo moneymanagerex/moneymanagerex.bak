@@ -125,7 +125,7 @@ void mmCurrencyDialog::updateControls()
     double amount = 1000;
 
     core_->currencyList_.LoadBaseCurrencySettings();
-     CurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
+    dispAmount = CurrencyFormatter::float2Money(amount);
     dispAmount2 = wxString() << dispAmount << " " << _("Converted to:") << " ";
 
     mmDBWrapper::loadCurrencySettings(core_->db_.get(), pCurrency->currencyID_);
@@ -133,12 +133,11 @@ void mmCurrencyDialog::updateControls()
         amount = amount / pCurrency->baseConv_;
     else
         amount = 0.0;
-     CurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
+    dispAmount = CurrencyFormatter::float2Money(amount);
     baseRateSample_->SetLabel(dispAmount2 + dispAmount);
 
     amount = 123456.78;
-     CurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
-    dispAmount = wxString() << "123456.78 " << _("Shown As: ") << dispAmount;
+    dispAmount = wxString() << "123456.78 " << _("Shown As: ") << CurrencyFormatter::float2Money(amount);
     sampleText_->SetLabel(dispAmount);
 
     // resize the dialog window

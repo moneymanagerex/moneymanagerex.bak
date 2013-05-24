@@ -56,8 +56,6 @@ private:
     int m_scale;
 
 public:
-    static void formatDoubleToCurrency(double val, wxString& rdata );
-    static void formatDoubleToCurrencyEdit(double val, wxString& rdata );
     static wxString float2String(double val);
     static wxString float2Money(double val);
     static bool formatCurrencyToDouble(const wxString& str, double& val );

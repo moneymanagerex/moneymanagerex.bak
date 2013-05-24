@@ -611,7 +611,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
         th.amt_            = q1.GetDouble("TRANSAMOUNT");
         th.toAmt_          = q1.GetDouble("TOTRANSAMOUNT");
 
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+		th.transAmtString_ = CurrencyFormatter::float2String(th.amt_);
         //for Withdrawal amount should be negative
         if (th.transType_== TRANS_TYPE_WITHDRAWAL_STR)
         {
@@ -619,7 +619,7 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
             th.amt_ = -th.amt_;
         }
 
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+		th.transToAmtString_ = CurrencyFormatter::float2String(th.toAmt_);
 
         th.payeeStr_ = core_->payeeList_.GetPayeeName(th.payeeID_);
 
@@ -677,12 +677,9 @@ wxString mmHomePagePanel::displayBillsAndDeposits()
                 if (pCurrency)
                     pCurrency->loadCurrencySettings();
 
-                wxString displayBDAmtString;
-                 CurrencyFormatter::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
-
                 hb.startTableRow();
                 hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
-                hb.addTableCell(displayBDAmtString, true);
+                hb.addTableCell(CurrencyFormatter::float2Money(trans_[bdidx].amt_), true);
                 //Draw it as numeric that mean align right
                 hb.addTableCell(daysRemainingStr, true, false, false, colorStr);
                 hb.endTableRow();
@@ -754,7 +751,7 @@ wxString mmHomePagePanel::displayTopTransactions()
         double category_total = q1.GetDouble("AMOUNT");
         wxString category_total_str = wxEmptyString;
         core_->currencyList_.LoadBaseCurrencySettings();
-         CurrencyFormatter::formatDoubleToCurrency(category_total, category_total_str);
+		category_total_str = CurrencyFormatter::float2Money(category_total);
 
         hb.startTableRow();
         hb.addTableCell(q1.GetString("SUBCATEGORY"), false, true);
@@ -865,7 +862,7 @@ wxString mmHomePagePanel::displayGrandTotals(double& tBalance)
     //  Display the grand total from all sections
     wxString tBalanceStr;
     core_->currencyList_.LoadBaseCurrencySettings();
-     CurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+	tBalanceStr = CurrencyFormatter::float2Money(tBalance);
 
     hb.startTable("100%", "", "1");
     hb.startTableRow();

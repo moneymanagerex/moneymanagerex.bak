@@ -309,8 +309,8 @@ int mmBillsDepositsPanel::initVirtualListControl(int id)
                 th.daysRemainingStr_ = _("Inactive");
         }
 
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+        th.transAmtString_ = CurrencyFormatter::float2String(th.amt_);
+        th.transToAmtString_ = CurrencyFormatter::float2String(th.toAmt_);
 
         th.payeeStr_ = core_->payeeList_.GetPayeeName(th.payeeID_);
 

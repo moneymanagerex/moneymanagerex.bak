@@ -622,10 +622,16 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
         }
         sTemp.Replace(midBrackets, wxString()<<dAmount);
     }
-    if (sTemp.Contains("(")||sTemp.Contains(")")) bResult = false;
-    if (bResult)  CurrencyFormatter::formatDoubleToCurrencyEdit(dAmount, sOutput);
-
-    return bResult;
+    if (bResult)
+	{
+	    if (sTemp.Contains("(")||sTemp.Contains(")")) bResult = false;
+		else
+		{
+	        sOutput = CurrencyFormatter::float2String(dAmount);
+	        bResult = !sOutput.IsEmpty() && bResult;
+		}
+	}
+	return bResult;
 }
 
 wxDateTime getUserDefinedFinancialYear(bool prevDayRequired)

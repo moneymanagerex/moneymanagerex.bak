@@ -219,8 +219,7 @@ void mmBDDialog::dataToControls()
             transAmount = split_->getTotalSplits();
             textAmount_->Enable(false);
         }
-        wxString dispAmount;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(transAmount, dispAmount);
+        wxString dispAmount = CurrencyFormatter::float2String(transAmount);
         textAmount_->SetValue(dispAmount);
 
         wxString payeeString = core_->payeeList_.GetPayeeName(payeeID_);
@@ -1102,8 +1101,7 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     {
         bCategory_->SetLabel(_("Split Category"));
         textAmount_->Enable(false);
-        wxString dispAmount;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+        wxString dispAmount = CurrencyFormatter::float2String(split_->getTotalSplits());
         textAmount_->SetValue(dispAmount);
         activateSplitTransactionsDlg();
     }
@@ -1111,8 +1109,7 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     {
         bCategory_->SetLabel(_("Select Category"));
         textAmount_->Enable(true);
-        wxString dispAmount;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(0.0, dispAmount);
+        wxString dispAmount = CurrencyFormatter::float2String(0.0);
         textAmount_->SetValue(dispAmount);
     }
 }
@@ -1190,8 +1187,7 @@ void mmBDDialog::SetAdvancedTransferControls(bool advanced)
         // Display the transfer amount in the toTextAmount control.
         if (toTransAmount_ >= 0)
         {
-            wxString dispAmount;
-             CurrencyFormatter::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
+            wxString dispAmount = CurrencyFormatter::float2String(toTransAmount_);
             toTextAmount_->SetValue(dispAmount);
         }
         else
@@ -1334,8 +1330,7 @@ void mmBDDialog::activateSplitTransactionsDlg()
     {
         double amount = split_->getTotalSplits();
         if (transaction_type_->GetSelection() == DEF_TRANSFER && amount < 0) amount = - amount;
-        wxString dispAmount;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(amount, dispAmount);
+        wxString dispAmount = CurrencyFormatter::float2String(amount);
         textAmount_->SetValue(dispAmount);
      }
 }

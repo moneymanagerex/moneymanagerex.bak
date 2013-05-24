@@ -969,8 +969,8 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
             requireExecution = true;
         }
 
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+        th.transAmtString_ = CurrencyFormatter::float2String(th.amt_);
+        th.transToAmtString_ = CurrencyFormatter::float2String(th.toAmt_);
 
         th.payeeStr_ = m_core.get()->payeeList_.GetPayeeName(th.payeeID_);
 
@@ -987,7 +987,8 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
             if ( (repeats < 11) || (numRepeats > 0) || (repeats > 14) )
             {
                 continueExecution = true;
-                mmBDDialog repeatTransactionsDlg(m_core.get(), th.id_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
+                mmBDDialog repeatTransactionsDlg(m_core.get()
+					, th.id_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
                 if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
                 {
                     if (activeHomePage_)
@@ -3180,7 +3181,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
                     std::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencySharedPtr(tran->accountID_);
                     wxASSERT(pCurrencyPtr);
-                        CurrencyFormatter::formatDoubleToCurrency(tran->reportCategAmount_, tran->reportCategAmountStr_);
+                    tran->reportCategAmountStr_ = CurrencyFormatter::float2String(tran->reportCategAmount_);
                 }
                 else
                 {

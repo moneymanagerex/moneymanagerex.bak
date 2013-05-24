@@ -131,9 +131,7 @@ void mmNewAcctDialog::fillControlsWithData()
     currencyID_ = pCurrency->currencyID_;
 
     mmDBWrapper::loadCurrencySettings(core_->db_.get(), currencyID_);
-    wxString dispAmount;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(initBal, dispAmount);
-    textCtrl->SetValue(dispAmount);
+    textCtrl->SetValue(CurrencyFormatter::float2String(initBal));
 
     int selectedImage = mmIniOptions::instance().account_image_id(core_, accountID_);
     bitmaps_button_->SetBitmapLabel(navtree_images_list_()->GetBitmap(selectedImage));

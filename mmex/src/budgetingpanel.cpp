@@ -338,9 +338,9 @@ void mmBudgetingPanel::initVirtualListControl()
         else
             actIncome += th.actual_;
 
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.amtString_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
+        th.amtString_ = CurrencyFormatter::float2String(th.amt_);
+        th.estimatedStr_ = CurrencyFormatter::float2String(th.estimated_);
+        th.actualStr_ = CurrencyFormatter::float2String(th.actual_);
 
         /***************************************************************************
          Create a TOTALS entry for the category.
@@ -355,9 +355,9 @@ void mmBudgetingPanel::initVirtualListControl()
         catTotals.amt_       = th.amt_;
         catTotals.estimated_ = th.estimated_;
         catTotals.actual_    = th.actual_;
-         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.amt_, catTotals.amtString_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
-         CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.actual_, catTotals.actualStr_);
+        catTotals.amtString_ = CurrencyFormatter::float2String(catTotals.amt_);
+        catTotals.estimatedStr_ = CurrencyFormatter::float2String(catTotals.estimated_);
+        catTotals.actualStr_ = CurrencyFormatter::float2String(catTotals.actual_);
 
         if (DisplayEntryAllowed(th)) {
             trans_.push_back(th);
@@ -397,9 +397,9 @@ void mmBudgetingPanel::initVirtualListControl()
             else
                 actIncome += thsub.actual_;
 
-             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, thsub.amtString_);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
+            thsub.amtString_ = CurrencyFormatter::float2String(thsub.amt_);
+            thsub.estimatedStr_ = CurrencyFormatter::float2String(thsub.estimated_);
+            thsub.actualStr_ = CurrencyFormatter::float2String(thsub.actual_);
 
             /***************************************************************************
              Update the TOTALS entry for the subcategory.
@@ -407,8 +407,8 @@ void mmBudgetingPanel::initVirtualListControl()
             catTotals.estimated_    += thsub.estimated_;
             catTotals.actual_       += thsub.actual_;
             catTotals.amtString_ = wxEmptyString;
-             CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
-             CurrencyFormatter::formatDoubleToCurrencyEdit(catTotals.actual_,    catTotals.actualStr_);
+            catTotals.estimatedStr_ = CurrencyFormatter::float2String(catTotals.estimated_);
+            catTotals.actualStr_ = CurrencyFormatter::float2String(catTotals.actual_);
 
             if (DisplayEntryAllowed(thsub)) {
                 trans_.push_back(thsub);
@@ -426,9 +426,9 @@ void mmBudgetingPanel::initVirtualListControl()
     listCtrlBudget_->SetItemCount((int)trans_.size());
 
     wxString est_amount, act_amount, diff_amount;
-     CurrencyFormatter::formatDoubleToCurrency(estIncome, est_amount);
-     CurrencyFormatter::formatDoubleToCurrency(actIncome, act_amount);
-     CurrencyFormatter::formatDoubleToCurrency(estIncome - actIncome, diff_amount);
+    est_amount = CurrencyFormatter::float2Money(estIncome);
+    act_amount = CurrencyFormatter::float2Money(actIncome);
+    diff_amount = CurrencyFormatter::float2Money(estIncome - actIncome);
 
     income_estimated_->SetLabel(est_amount);
     income_actual_->SetLabel(act_amount);
@@ -436,9 +436,9 @@ void mmBudgetingPanel::initVirtualListControl()
 
     if (estExpenses < 0.0) estExpenses = -estExpenses;
     if (actExpenses < 0.0) actExpenses = -actExpenses;
-     CurrencyFormatter::formatDoubleToCurrency(estExpenses, est_amount);
-     CurrencyFormatter::formatDoubleToCurrency(actExpenses, act_amount);
-     CurrencyFormatter::formatDoubleToCurrency(estExpenses -actExpenses, diff_amount);
+    est_amount = CurrencyFormatter::float2Money(estExpenses);
+    act_amount = CurrencyFormatter::float2Money(actExpenses);
+    diff_amount = CurrencyFormatter::float2Money(estExpenses -actExpenses);
 
     expences_estimated_->SetLabel(est_amount);
     expences_actual_->SetLabel(act_amount);
