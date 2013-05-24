@@ -113,14 +113,6 @@ void TBudgetTableEntry::Update(wxSQLite3Database* db)
     }
 }
 
-wxString TBudgetTableEntry::GetAmountCurrencyEditFormat()
-{
-    wxString formatted_value;
-     CurrencyFormatter::formatDoubleToCurrencyEdit(amount_, formatted_value);
-
-    return formatted_value;
-}
-
 /************************************************************************************
  TBudgetTableList Methods
  ***********************************************************************************/

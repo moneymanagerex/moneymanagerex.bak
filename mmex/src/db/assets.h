@@ -52,7 +52,7 @@ private:
     double GetDepreciatedValue(const wxDateTime& startDate, double value, double rate);
 
 public:
-	bool operator <(const TAssetEntry& asset) const ;
+    bool operator <(const TAssetEntry& asset) const ;
 public:
     enum ASSET_RATE {
         RATE_NONE,
