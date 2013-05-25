@@ -114,8 +114,8 @@ wxString mmReportIncomeExpensesAllTime::getHTMLText()
 
     for (const auto &stats: incomeExpensesStats)
     {
-        total_expenses += stats.second.first;
-        total_income += stats.second.second;
+        total_expenses += stats.second.second;
+        total_income += stats.second.first;
 
         hb.startTableRow();
         hb.addTableCell(wxString()<< (int)(stats.first/100));
