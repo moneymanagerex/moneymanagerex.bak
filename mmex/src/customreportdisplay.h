@@ -35,8 +35,6 @@ private:
     wxString sScriptType_;
     wxWindow* parent_;
 
-    void DisplayReportHeader(mmHTMLBuilder& hb, const wxString reportTitle);
-
     bool DisplaySQL_Results(mmHTMLBuilder& hb);
     void DisplayLua_Results(mmHTMLBuilder& hb);
 

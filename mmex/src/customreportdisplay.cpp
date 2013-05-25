@@ -30,12 +30,6 @@ mmCustomReport::mmCustomReport(wxWindow* parent, mmCoreDB* core
 , sScriptType_(sScriptType)
 {}
 
-void mmCustomReport::DisplayReportHeader(mmHTMLBuilder& hb, const wxString reportTitle)
-{
-    hb.addHeader(2, reportTitle);
-    hb.addDateNow();
-}
-
 bool mmCustomReport::DisplaySQL_Results(mmHTMLBuilder& hb)
 {
     hb.startCenter();
@@ -123,7 +117,6 @@ wxString mmCustomReport::getHTMLText()
 {
     mmHTMLBuilder hb;
     hb.init();
-    DisplayReportHeader(hb, _("Custom Report: ") + reportTitle_ );
 
     if (sScriptType_ == "SQL")
     {
