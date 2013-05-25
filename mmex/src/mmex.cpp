@@ -988,7 +988,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
             {
                 continueExecution = true;
                 mmBDDialog repeatTransactionsDlg(m_core.get()
-					, th.id_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
+                    , th.id_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
                 if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
                 {
                     if (activeHomePage_)
@@ -1520,7 +1520,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     ///////////////////////////////////////////////////////////////////
 
     wxTreeItemId incexpOverTime = navTreeCtrl_->AppendItem(reports, _("Income vs Expenses"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData("Income vs Expenses", new mmReportIncomeExpensesAllTime(m_core.get())));
+    navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData("Income vs Expenses"
+        , new mmReportIncomeExpensesAllTime(m_core.get())));
 
     wxTreeItemId incexpOverTimeCalMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeCalMonth
@@ -1551,19 +1552,27 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     wxTreeItemId incexpOverTimeLastYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Year"), 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeLastYear
-        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Year") , new mmReportIncomeExpensesLastYear(m_core.get())));
+        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Year") 
+        , new mmReportIncomeExpensesLastYear(m_core.get())));
 
     wxTreeItemId incexpOverTimeCurrentYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Current Year"), 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeCurrentYear
-        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Year"), new mmReportIncomeExpensesCurrentYear(m_core.get())));
+        , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Year")
+        , new mmReportIncomeExpensesCurrentYear(m_core.get())));
 
     if (financialYearIsDifferent())
     {
-        wxTreeItemId incexpOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(incexpOverTimeLastFinancialYear, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Financial Year"), new mmReportIncomeExpensesLastFinancialYear(m_core.get(), day, month)));
+        wxTreeItemId incexpOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime
+            , _("Last Financial Year"), 4, 4);
+        navTreeCtrl_->SetItemData(incexpOverTimeLastFinancialYear
+            , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Last Financial Year")
+            , new mmReportIncomeExpensesLastFinancialYear(m_core.get(), day, month)));
 
-        wxTreeItemId incexpOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Current Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(incexpOverTimeCurrentFinancialYear, new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Financial Year"), new mmReportIncomeExpensesCurrentFinancialYear(m_core.get(), day, month)));
+        wxTreeItemId incexpOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime
+            , _("Current Financial Year"), 4, 4);
+        navTreeCtrl_->SetItemData(incexpOverTimeCurrentFinancialYear
+            , new mmTreeItemData(wxTRANSLATE("Income vs Expenses - Current Financial Year")
+            , new mmReportIncomeExpensesCurrentFinancialYear(m_core.get(), day, month)));
     }
 
     //////////////////////////////////////////////////////////////////
@@ -1726,7 +1735,7 @@ void mmGUIFrame::CreateCustomReport(int index)
                 , sScript
                 , custRepIndex_->CurrentReportFileType());
             createReportsPage(csr);
-			delete csr; // CEHCK
+            delete csr; // CEHCK
         }
     }
     processPendingEvents();         // clear out pending events
@@ -1811,13 +1820,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 int year = data;
                 mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), this, year);
                 createReportsPage(rs);
-				delete rs; // CHECK
+                delete rs; // CHECK
             }
             else if (iParentData->getString() == "Budget Setup Performance")
             {
                 mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, year);
                 createReportsPage(rs);
-				delete rs; // CHECK
+                delete rs; // CHECK
             }
             else
             {
@@ -2876,8 +2885,8 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 
     bool encrypt = dlg.GetFilterIndex() != 0; // emb -> Encrypted mMB
     wxFileName newFileName(dlg.GetPath());
-	wxString ext = encrypt ? "emb" : "mmb";
-	if (newFileName.GetExt().Lower() != ext) newFileName.SetExt(ext);
+    wxString ext = encrypt ? "emb" : "mmb";
+    if (newFileName.GetExt().Lower() != ext) newFileName.SetExt(ext);
 
     wxFileName oldFileName(fileName_); // opened db's file
 
@@ -3099,7 +3108,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
     mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(m_core.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
-		for (const auto& tran: m_core.get()->bTransactionList_.transactions_)
+        for (const auto& tran: m_core.get()->bTransactionList_.transactions_)
         {
             if (dlg->getAmountRangeCheckBox())
             {
@@ -3195,7 +3204,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
         mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->getAccountID(), dlg);
         createReportsPage(rs);
-		delete rs; // CHECK
+        delete rs; // CHECK
     }
 }
 
@@ -3847,7 +3856,7 @@ void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
             mmCustomReport* csr = new mmCustomReport(this,
                 m_core.get(), dlg.sReportTitle(), dlg.sScript(), dlg.sSctiptType());
             createReportsPage(csr);
-			delete csr; // CHECK
+            delete csr; // CHECK
             wxEndBusyCursor();
         }
         dialogStatus = dlg.ShowModal();
