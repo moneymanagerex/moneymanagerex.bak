@@ -133,7 +133,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption
     html_+= wxString::Format(tags::TABLE_CELL_SPAN, cols - 1);
     this->font_settings(font_size_);
     this->bold_italic(tags::NBSP + tags::NBSP + caption);
-	this->font_end();
+    this->font_end();
     this->endTableCell();
     this->addTableCellRightBI(value);
     this->endTableRow();
@@ -191,9 +191,9 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value, const bool& numeri
 {
     wxString align = numeric ? "right" : "left";
     html_+= wxString::Format(tags::TABLE_HEADER, align, color_.table_header, 0);
-	this->font_settings(font_size_);
+    this->font_settings(font_size_);
     this->bold(value);
-	this->font_end();
+    this->font_end();
     html_+= tags::TABLE_HEADER_END;
     color_.bgswitch = false;
 }
@@ -230,6 +230,11 @@ void mmHTMLBuilder::addTableCell(const wxString& value
 
     this->font_end();
     this->endTableCell();
+}
+
+void mmHTMLBuilder::addTableCellMonth(int month)
+{
+    this->addTableCell(wxGetTranslation(wxDateTime::GetMonthName((wxDateTime::Month)month)));
 }
 
 void mmHTMLBuilder::addTableCellLink(const wxString& href

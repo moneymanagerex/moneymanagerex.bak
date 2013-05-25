@@ -115,9 +115,10 @@ public:
 
     void addMoneyCell(double amount, bool color = true);
     void addMoneyCell(double amount, const wxString& color);
-    void addTableCell(const wxDateTime& date);
+    void addTableCellMonth(int month);
 
     /** Add a Cell value */
+    void addTableCell(const wxDateTime& date);
     void addTableCell(const wxString& value
         , const bool& numeric = false
         , const bool& italic = false
@@ -158,7 +159,7 @@ public:
     virtual void italic(const wxString value) { html_+= wxString::Format(tags::ITALIC, value); }
     virtual void font_settings(int size, const wxString& color = "") { html_+= wxString::Format(tags::FONT, size, color); }
     virtual void font_end() { html_+= tags::FONT_END; }
-	virtual const int font_size() { return font_size_;}
+    virtual const int font_size() { return font_size_;}
     virtual const wxString getHTMLText() const { return html_; }
     /** Centers the content from this point on */
     virtual void startCenter() { html_+= tags::CENTER; }

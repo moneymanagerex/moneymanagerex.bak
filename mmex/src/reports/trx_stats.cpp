@@ -42,7 +42,7 @@ wxString mmReportTransactionStats::getHTMLText()
         wxDateTime::Month month = month_stat.first;
         //
         hb.startTableRow();
-        hb.addTableCell(wxGetTranslation(wxDateTime::GetMonthName(month)), false, true);
+        hb.addTableCellMonth(month);
         // Totals for month
         for (const auto &y : month_stat.second )
         {

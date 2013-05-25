@@ -126,7 +126,7 @@ wxString mmReportIncomeExpensesMontly::getHTMLText()
 
         hb.startTableRow();
         hb.addTableCell(wxString()<< (int)(stats.first/100));
-        hb.addTableCell(wxGetTranslation(wxDateTime::GetMonthName(wxDateTime::Month(stats.first%100))));
+        hb.addTableCellMonth(stats.first%100);
         hb.addMoneyCell(stats.second.first);
         hb.addMoneyCell(stats.second.second);
         hb.addMoneyCell(stats.second.first - stats.second.second);
