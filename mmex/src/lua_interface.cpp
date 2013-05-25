@@ -155,14 +155,16 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmGetTextFromUser", cpp2lua_GetTextFromUser);
     lua_register(lua_, "mmGetSiteContent",  cpp2lua_GetSiteContent);
 
-    lua_register(lua_, "mmHTMLBuilder",     cpp2lua_HTMLBuilder);
-
     lua_register(lua_, "mmCurrencyFormat",     cpp2Lua_CurrencyFormat);
     lua_register(lua_, "mmBaseCurrencyFormat", cpp2Lua_BaseCurrencyFormat);
     lua_register(lua_, "mmDateFormat",         cpp2Lua_DateFormat);
     lua_register(lua_, "mmGetDocDir",          cpp2lua_GetDocDir);
     lua_register(lua_, "mmGetExeDir",          cpp2lua_GetExeDir);
     lua_register(lua_, "mmGetLuaDir",          cpp2lua_GetLuaDir);
+
+    //html builder functions
+    lua_register(lua_, "mmHTMLBuilder",        cpp2lua_HTMLBuilder);
+    lua_register(lua_, "mmHTMLTableCellMonth", cpp2lua_HTMLTableCellMonth);
 }
 
 /******************************************************************************
@@ -656,4 +658,12 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
     lua_pushstring(lua, hb.getHTMLText().ToUTF8());
 
     return 1;
+}
+
+int TLuaInterface::cpp2lua_HTMLTableCellMonth(lua_State* lua)
+{
+    mmHTMLBuilder hb;
+    hb.addTableCellMonth(GetLuaInteger(lua)-1);
+    lua_pushstring(lua, hb.getHTMLText().ToUTF8());
+    return 1;   
 }
