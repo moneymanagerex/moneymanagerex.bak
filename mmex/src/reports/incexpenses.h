@@ -25,7 +25,7 @@
 class mmReportIncomeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date_range = new mmAllTime());
+    mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date_range = new mmCurrentMonth());
     wxString getHTMLText();
 
 protected:
@@ -38,8 +38,7 @@ protected:
 class mmReportIncomeExpensesAllTime: public mmReportIncomeExpenses
 {
 public:
-//TODO: Can't use mmAllTime() here. fix me
-    mmReportIncomeExpensesAllTime(mmCoreDB* core): mmReportIncomeExpenses(core, new mmCurrentMonth())
+    mmReportIncomeExpensesAllTime(mmCoreDB* core): mmReportIncomeExpenses(core, new mmAllTime())
     {
     }
 };
@@ -83,14 +82,14 @@ public:
     mmReportIncomeExpensesMontly(mmCoreDB* core
         , int day_ = 1
         , int month_ = 1
-        , mmDateRange* date_range = new mmAllTime());
+        , mmDateRange* date_range = new mmCurrentMonth());
     wxString getHTMLText();
 protected:
     mmDateRange* date_range_;
     int day_;
     int month_;
     wxString title_;
-    virtual wxString title() const {return title_;}
+    virtual wxString title() const {return wxString::Format(title_, date_range_->title());}
 };
 
 class mmReportIncomeExpensesCurrentYear: public mmReportIncomeExpensesMontly
@@ -112,7 +111,9 @@ public:
 class mmReportIncomeExpensesCurrentFinancialYear: public mmReportIncomeExpensesMontly
 {
 public:
-    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpensesMontly(core, day, month, new mmCurrentFinancialYear(day_, month_))
+    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core
+        , const int day, const int month): mmReportIncomeExpensesMontly(core
+            , day, month, new mmCurrentFinancialYear(day, month))
     {
     }
 };
@@ -120,7 +121,9 @@ public:
 class mmReportIncomeExpensesLastFinancialYear: public mmReportIncomeExpensesMontly
 {
 public:
-    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpensesMontly(core, day, month, new mmLastFinancialYear(day_, month_))
+    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core
+        , const int day, const int month): mmReportIncomeExpensesMontly(core
+            , day, month, new mmLastFinancialYear(day, month))
     {
     }
 };

@@ -122,7 +122,7 @@ public:
 class mmCurrentFinancialYear: public mmDateRange
 {
 public:
-    mmCurrentFinancialYear(int day, int month): mmDateRange()
+    mmCurrentFinancialYear(const int day, const int month): mmDateRange()
     {
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
         this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
@@ -141,7 +141,7 @@ public:
 class mmLastFinancialYear: public mmDateRange
 {
 public:
-    mmLastFinancialYear(int day, int month): mmDateRange()
+    mmLastFinancialYear(const int day, const int month): mmDateRange()
     {
         this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan)
             .Add(wxDateSpan::Days(day-1))
@@ -149,8 +149,7 @@ public:
             .Subtract(wxDateSpan::Years(1));;
         this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec)
             .SetDay(31).Add(wxDateSpan::Days(day-1))
-            .Add(wxDateSpan::Months(month-1))
-            .Subtract(wxDateSpan::Years(1));
+            .Add(wxDateSpan::Months(month-1));
 
         if (today_ >= start_date_)
         {
