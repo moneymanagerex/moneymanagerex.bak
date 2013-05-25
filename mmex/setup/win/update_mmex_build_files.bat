@@ -16,8 +16,8 @@ REM - trunk\mmex_release\mmex_0.9.9.2_win32_portable
 REM - When creating actual releases, rename the directory to the correct version number
 
 set mmex_release_destination=..\..\..\mmex_release\mmex_0.9.9.2_win32_portable
-set mmex_build_location=..\..\build\msw-vc-2010e
-set mmex_release_type=vc-static-28u
+set mmex_build_location=..\..\build\msw-vc-2012e
+set mmex_release_type=vc-static-u
 set mmex_release_source=%mmex_build_location%\%mmex_release_type%
 
 @echo ------------------------------------------------------------------------
