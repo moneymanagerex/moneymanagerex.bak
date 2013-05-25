@@ -49,7 +49,7 @@ bool mmPayeeList::PayeeExists(const wxString& payeeName) const
 {
     for (const auto& payee: entries_)
     {
-        if (payee->name_.CmpNoCase(payeeName)) return true;
+        if (!payee->name_.CmpNoCase(payeeName)) return true;
     }
 
     return false;
@@ -69,7 +69,7 @@ int mmPayeeList::GetPayeeId(const wxString& payeeName) const
 {
     for (const auto& payee: entries_)
     {
-        if (payee->name_.CmpNoCase(payeeName)) return payee->id_;
+        if (!payee->name_.CmpNoCase(payeeName)) return payee->id_;
     }
 
     return -1;
