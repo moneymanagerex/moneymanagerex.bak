@@ -17,6 +17,7 @@
  ********************************************************/
 
 #include "currency.h"
+#include "../constants.h"
 #include "../mmCurrencyFormatter.h"
 
 /************************************************************************************
@@ -61,7 +62,7 @@ TCurrencyEntry::TCurrencyEntry(wxSQLite3ResultSet& q1)
 /// Constructor for creating a new currency entry
 TCurrencyEntry::TCurrencyEntry()
 : TEntryBase()
-, name_("US Dollar")
+, name_(CURRENCIES[TCurrencyEntry::NAME_USD])
 , pfxSymbol_('$')
 , sfxSymbol_()
 , dec_('.')
@@ -72,7 +73,7 @@ TCurrencyEntry::TCurrencyEntry()
 , baseConv_(1)
 , decChar_('\0')
 , grpChar_('\0')
-, currencySymbol_("USD")
+, currencySymbol_(CURRENCIES[TCurrencyEntry::SYMBOL_USD])
 {}
 
 void TCurrencyEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
@@ -212,7 +213,7 @@ int TCurrencyList::AddEntry(TCurrencyEntry* pCurrencyEntry)
 
 void TCurrencyList::SetBaseCurrency(int currency_id)
 {
-    std::shared_ptr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
+    TCurrencyEntry* pEntry = GetEntryPtr(currency_id);
     if (pEntry)
     {
         basecurrency_id_ = currency_id;
@@ -227,7 +228,7 @@ void TCurrencyList::SetBaseCurrency(int currency_id)
 
 void TCurrencyList::DeleteEntry(int currency_id)
 {
-    std::shared_ptr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
+    TCurrencyEntry* pEntry = GetEntryPtr(currency_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -242,17 +243,16 @@ void TCurrencyList::DeleteEntry(const wxString& name, bool is_symbol)
 
 //-----------------------------------------------------------------------------
 
-std::shared_ptr<TCurrencyEntry> TCurrencyList::GetEntryPtr(int currency_id)
+TCurrencyEntry* TCurrencyList::GetEntryPtr(int currency_id)
 {
-    std::shared_ptr<TCurrencyEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TCurrencyEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
         if (entrylist_[index]->id_ == currency_id)
         {
-            pEntry = entrylist_[index];
+            pEntry = entrylist_[index].get();
             current_index_ = index;
             break;
         }
@@ -262,13 +262,12 @@ std::shared_ptr<TCurrencyEntry> TCurrencyList::GetEntryPtr(int currency_id)
     return pEntry;
 }
 
-std::shared_ptr<TCurrencyEntry> TCurrencyList::GetEntryPtr(const wxString& name, bool is_symbol)
+TCurrencyEntry* TCurrencyList::GetEntryPtr(const wxString& name, bool is_symbol)
 {
-    std::shared_ptr<TCurrencyEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TCurrencyEntry* pEntry = 0;
     size_t index = 0;
     bool found = false;
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
         if (is_symbol)
         {
@@ -283,7 +282,7 @@ std::shared_ptr<TCurrencyEntry> TCurrencyList::GetEntryPtr(const wxString& name,
 
         if (found)
         {
-            pEntry = entrylist_[index];
+            pEntry = entrylist_[index].get();
             current_index_ = index;
             break;
         }
@@ -293,15 +292,15 @@ std::shared_ptr<TCurrencyEntry> TCurrencyList::GetEntryPtr(const wxString& name,
     return pEntry;
 }
 
-std::shared_ptr<TCurrencyEntry> TCurrencyList::GetIndexedEntryPtr(int index)
+TCurrencyEntry* TCurrencyList::GetIndexedEntryPtr(int index)
 {
-    return entrylist_[index];
+    return entrylist_[index].get();
 }
 
 int TCurrencyList::GetCurrencyId(const wxString& name, bool is_symbol)
 {
     int currency_id = -1;
-    std::shared_ptr<TCurrencyEntry> pEntry = GetEntryPtr(name, is_symbol);
+    TCurrencyEntry* pEntry = GetEntryPtr(name, is_symbol);
     if (pEntry)
     {
         currency_id = pEntry->GetId();
@@ -313,7 +312,7 @@ int TCurrencyList::GetCurrencyId(const wxString& name, bool is_symbol)
 wxString TCurrencyList::GetCurrencyName(int currency_id)
 {
     wxString currency_name;
-    std::shared_ptr<TCurrencyEntry> pEntry = GetEntryPtr(currency_id);
+    TCurrencyEntry* pEntry = GetEntryPtr(currency_id);
     if (pEntry)
     {
         currency_name = pEntry->name_;

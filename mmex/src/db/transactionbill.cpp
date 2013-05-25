@@ -170,7 +170,7 @@ TTransactionEntry* TTransactionBillEntry::GetTransaction()
     return pEntry;
 }
 
-void TTransactionBillEntry::SetTransaction(std::shared_ptr<TTransactionEntry> pEntry)
+void TTransactionBillEntry::SetTransaction(TTransactionEntry* pEntry)
 {
     id_from_account = pEntry->id_from_account;
     id_to_account_  = pEntry->id_to_account_;
@@ -390,9 +390,9 @@ int TTransactionBillList::AddEntry(TTransactionBillEntry* pTransBillEntry)
     return pEntry->id_;
 }
 
-void TTransactionBillList::DeleteEntry(int trans_bill_id)
+void TTransactionBillList::DeleteEntry(int bill_entry_id)
 {
-    std::shared_ptr<TTransactionBillEntry> pEntry = GetEntryPtr(trans_bill_id);
+    TTransactionBillEntry* pEntry = GetEntryPtr(bill_entry_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -400,15 +400,15 @@ void TTransactionBillList::DeleteEntry(int trans_bill_id)
     }
 }
 
-std::shared_ptr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int trans_bill_id)
+TTransactionBillEntry* TTransactionBillList::GetEntryPtr(int bill_entry_id)
 {
-    std::shared_ptr<TTransactionBillEntry> pEntry;
+    TTransactionBillEntry* pEntry = 0;
     size_t index = 0;
     while (index < entrylist_.size())
     {
-        if (entrylist_[index]->id_ == trans_bill_id)
+        if (entrylist_[index]->id_ == bill_entry_id)
         {
-            pEntry = entrylist_[index];
+            pEntry = entrylist_[index].get();
             current_index_ = index;
             break;
         }
@@ -418,12 +418,12 @@ std::shared_ptr<TTransactionBillEntry> TTransactionBillList::GetEntryPtr(int tra
     return pEntry;
 }
 
-std::shared_ptr<TTransactionBillEntry> TTransactionBillList::GetIndexedEntryPtr(unsigned int list_index)
+TTransactionBillEntry* TTransactionBillList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    std::shared_ptr<TTransactionBillEntry> pEntry;
+    TTransactionBillEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index];
+        pEntry = entrylist_[list_index].get();
     }
 
     return pEntry;

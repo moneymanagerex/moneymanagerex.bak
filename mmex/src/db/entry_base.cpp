@@ -63,7 +63,7 @@ bool TEntryBase::operator < (const TEntryBase& entry) const
  ***********************************************************************************/
 TListBase::TListBase(std::shared_ptr<wxSQLite3Database> db)
 : db_(db)
-, current_index_(0)
+, current_index_(-1)
 {}
 
 wxSQLite3Database* TListBase::ListDatabase()

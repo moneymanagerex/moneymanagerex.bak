@@ -53,6 +53,7 @@ private:
     wxDateTime trans_repeat_date_;
     
     int Add(wxSQLite3Database* db);
+    // remove the entry from the database.
     void Delete(wxSQLite3Database* db);
     void SetBillDatabaseValues(wxSQLite3Statement& st, int& db_index);
     int MultiplexedRepeatType();
@@ -98,7 +99,7 @@ public:
     // Get the transaction entry from the bill transaction entry
     TTransactionEntry* GetTransaction();
     // Set the bill transaction entry from a transaction
-    void SetTransaction(std::shared_ptr<TTransactionEntry> pEntry);
+    void SetTransaction(TTransactionEntry* pEntry);
 
     void AdjustNextOccuranceDate();
     bool RequiresExecution(int& remaining_days);
@@ -131,8 +132,8 @@ public:
     int AddEntry(TTransactionBillEntry* pTransBillsEntry);
     void DeleteEntry(int trans_bill_id);
 
-    std::shared_ptr<TTransactionBillEntry> GetEntryPtr(int trans_bill_id);
-    std::shared_ptr<TTransactionBillEntry> GetIndexedEntryPtr(unsigned int list_index);
+    TTransactionBillEntry* GetEntryPtr(int trans_bill_id);
+    TTransactionBillEntry* GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
 };
