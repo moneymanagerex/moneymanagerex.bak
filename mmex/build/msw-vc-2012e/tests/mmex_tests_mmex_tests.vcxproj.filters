@@ -237,9 +237,6 @@
     <ClCompile Include="..\..\..\src\reports\incexpenses.cpp">
       <Filter>Source Files\reports</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\reports\incexpensesfinancialperiod.cpp">
-      <Filter>Source Files\reports</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\reports\payee.cpp">
       <Filter>Source Files\reports</Filter>
     </ClCompile>
@@ -519,9 +516,6 @@
       <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\reports\incexpenses.h">
-      <Filter>Header Files\reports</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\reports\incexpensesfinancialperiod.h">
       <Filter>Header Files\reports</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\reports\payee.h">
