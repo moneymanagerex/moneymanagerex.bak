@@ -84,12 +84,20 @@ wxString mmReportIncomeExpenses::getHTMLText()
     return hb.getHTMLText();
 }
 
-wxString mmReportIncomeExpensesAllTime::getHTMLText()
+mmReportIncomeExpensesMontly::mmReportIncomeExpensesMontly(mmCoreDB* core, int day, int month, mmDateRange* date_range)
+: mmPrintableBase(core)
+, day_(day)
+, month_(month)
+, date_range_(date_range)
+, title_(_("Income vs Expenses: %s"))
+{
+}
+
+wxString mmReportIncomeExpensesMontly::getHTMLText()
 {
     double total_expenses = 0.0;
     double total_income = 0.0;
     std::map<int, std::pair<double, double> > incomeExpensesStats;
-    date_range_ = new mmLast12Months();
 
     mmHTMLBuilder hb;
     hb.init();

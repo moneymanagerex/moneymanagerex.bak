@@ -26,22 +26,22 @@ class mmReportIncomeExpenses : public mmPrintableBase
 {
 public:
     mmReportIncomeExpenses(mmCoreDB* core, mmDateRange* date_range = new mmAllTime());
-
     wxString getHTMLText();
 
 protected:
     mmDateRange* date_range_;
     wxString title_;
-	virtual wxString title() const;
+    virtual wxString title() const;
 
 };
 
 class mmReportIncomeExpensesAllTime: public mmReportIncomeExpenses
 {
 public:
-    mmReportIncomeExpensesAllTime(mmCoreDB* core): mmReportIncomeExpenses(core, new mmAllTime())
-    {}
-    wxString getHTMLText();
+//TODO: Can't use mmAllTime() here. fix me
+    mmReportIncomeExpensesAllTime(mmCoreDB* core): mmReportIncomeExpenses(core, new mmCurrentMonth())
+    {
+    }
 };
 
 class mmReportIncomeExpensesCurrentMonth: public mmReportIncomeExpenses
@@ -68,42 +68,59 @@ public:
     }
 };
 
-class mmReportIncomeExpensesCurrentYear: public mmReportIncomeExpenses
-{
-public:
-    mmReportIncomeExpensesCurrentYear(mmCoreDB* core): mmReportIncomeExpenses(core, new mmCurrentYear())
-    {
-    }
-};
-
-class mmReportIncomeExpensesLastYear: public mmReportIncomeExpenses
-{
-public:
-    mmReportIncomeExpensesLastYear(mmCoreDB* core): mmReportIncomeExpenses(core, new mmLastYear())
-    {
-    }
-};
-
-class mmReportIncomeExpensesCurrentFinancialYear: public mmReportIncomeExpenses
-{
-public:
-    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpenses(core, new mmCurrentFinancialYear(day, month))
-    {
-    }
-};
-
-class mmReportIncomeExpensesLastFinancialYear: public mmReportIncomeExpenses
-{
-public:
-    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpenses(core, new mmLastFinancialYear(day, month))
-    {
-    }
-};
-
 class mmReportIncomeExpensesLast30Days: public mmReportIncomeExpenses
 {
 public:
     mmReportIncomeExpensesLast30Days(mmCoreDB* core): mmReportIncomeExpenses(core, new mmLast30Days())
+    {
+    }
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+class mmReportIncomeExpensesMontly: public mmPrintableBase
+{
+public:
+    mmReportIncomeExpensesMontly(mmCoreDB* core
+        , int day_ = 1
+        , int month_ = 1
+        , mmDateRange* date_range = new mmAllTime());
+    wxString getHTMLText();
+protected:
+    mmDateRange* date_range_;
+    int day_;
+    int month_;
+    wxString title_;
+    virtual wxString title() const {return title_;}
+};
+
+class mmReportIncomeExpensesCurrentYear: public mmReportIncomeExpensesMontly
+{
+public:
+    mmReportIncomeExpensesCurrentYear(mmCoreDB* core): mmReportIncomeExpensesMontly(core, 1, 1, new mmCurrentYear())
+    {
+    }
+};
+
+class mmReportIncomeExpensesLastYear: public mmReportIncomeExpensesMontly
+{
+public:
+    mmReportIncomeExpensesLastYear(mmCoreDB* core): mmReportIncomeExpensesMontly(core, 1, 1, new mmLastYear())
+    {
+    }
+};
+
+class mmReportIncomeExpensesCurrentFinancialYear: public mmReportIncomeExpensesMontly
+{
+public:
+    mmReportIncomeExpensesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpensesMontly(core, day, month, new mmCurrentFinancialYear(day_, month_))
+    {
+    }
+};
+
+class mmReportIncomeExpensesLastFinancialYear: public mmReportIncomeExpensesMontly
+{
+public:
+    mmReportIncomeExpensesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportIncomeExpensesMontly(core, day, month, new mmLastFinancialYear(day_, month_))
     {
     }
 };
