@@ -80,8 +80,14 @@ private:
     static int cpp2lua_GetDocDir(lua_State* lua);
     static int cpp2lua_GetExeDir(lua_State* lua);
     static int cpp2lua_GetLuaDir(lua_State* lua);
+
+    static int cpp2lua_HTMLInit(lua_State* lua);
+    static int cpp2lua_HTMLOutput(lua_State* lua);
+    static int cpp2lua_HTMLReportHeader(lua_State* lua);
+    static int cpp2lua_HTMLStartTable(lua_State* lua);
     static int cpp2lua_HTMLBuilder(lua_State* lua);
     static int cpp2lua_HTMLTableCellMonth(lua_State* lua);
+    static int cpp2lua_HTMLTableCellInteger(lua_State* lua);
 };
 
 #endif // _MM_EX_LUA_INTERFACE_H_

@@ -165,6 +165,11 @@ void TLuaInterface::Open_MMEX_Library()
     //html builder functions
     lua_register(lua_, "mmHTMLBuilder",        cpp2lua_HTMLBuilder);
     lua_register(lua_, "mmHTMLTableCellMonth", cpp2lua_HTMLTableCellMonth);
+    lua_register(lua_, "mmHTMLTableCellInteger", cpp2lua_HTMLTableCellInteger);
+    lua_register(lua_, "mmHTMLInit", cpp2lua_HTMLInit);
+    lua_register(lua_, "mmHTMLOutput", cpp2lua_HTMLOutput);
+    lua_register(lua_, "mmHTMLReportHeader", cpp2lua_HTMLReportHeader);
+    lua_register(lua_, "mmHTMLStartTable", cpp2lua_HTMLStartTable);
 }
 
 /******************************************************************************
@@ -660,12 +665,65 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
     return 1;
 }
 
+int TLuaInterface::cpp2lua_HTMLInit(lua_State* lua)
+{
+    wxString html = "";
+    lua_pushstring(lua, html.ToUTF8() );
+    lua_setglobal(lua, "html_");
+    return 0;
+}
+
+int TLuaInterface::cpp2lua_HTMLOutput(lua_State* lua)
+{
+    lua_getglobal(lua, "html_");
+    wxString html = GetLuaString(lua);
+    lua_pushstring(lua, html.ToUTF8() );
+    return 1;
+}
+
+int TLuaInterface::cpp2lua_HTMLReportHeader(lua_State* lua)
+{
+    lua_getglobal(lua, "html_");
+    wxString html = GetLuaString(lua);
+    wxString report_name = GetLuaString(lua);
+    mmHTMLBuilder hb;
+    hb.addHeader(1, report_name);
+    html << hb.getHTMLText();
+    lua_pushstring(lua, html.ToUTF8() );
+    lua_setglobal(lua, "html_");
+    return 0;
+}
+
 int TLuaInterface::cpp2lua_HTMLTableCellMonth(lua_State* lua)
 {
     lua_getglobal(lua, "html_");
     wxString html = GetLuaString(lua);
     mmHTMLBuilder hb;
     hb.addTableCellMonth(GetLuaInteger(lua)-1);
+    html << hb.getHTMLText();
+    lua_pushstring(lua, html.ToUTF8() );
+    lua_setglobal(lua, "html_");
+    return 0;
+}
+
+int TLuaInterface::cpp2lua_HTMLTableCellInteger(lua_State* lua)
+{
+    lua_getglobal(lua, "html_");
+    wxString html = GetLuaString(lua);
+    mmHTMLBuilder hb;
+    hb.addTableCell(wxString()<<GetLuaInteger(lua), true);
+    html << hb.getHTMLText();
+    lua_pushstring(lua, html.ToUTF8() );
+    lua_setglobal(lua, "html_");
+    return 0;
+}
+
+int TLuaInterface::cpp2lua_HTMLStartTable(lua_State* lua)
+{
+    lua_getglobal(lua, "html_");
+    wxString html = GetLuaString(lua);
+    mmHTMLBuilder hb;
+    hb.startTable(GetLuaString(lua));
     html << hb.getHTMLText();
     lua_pushstring(lua, html.ToUTF8() );
     lua_setglobal(lua, "html_");
