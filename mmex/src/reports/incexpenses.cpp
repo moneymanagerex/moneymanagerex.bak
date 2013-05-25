@@ -101,9 +101,8 @@ wxString mmReportIncomeExpensesMontly::getHTMLText()
 
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(2, wxString::Format(_("Income vs Expenses: %s"), date_range_->title()) );
-    hb.addDateNow();
-
+    hb.addHeader(2, this->title());
+    hb.DisplayDateHeading(date_range_->start_date(), date_range_->end_date(), date_range_->is_with_date());
     hb.startCenter();
 
     hb.addHorizontalLine();

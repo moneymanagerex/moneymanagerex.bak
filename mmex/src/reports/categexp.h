@@ -108,16 +108,20 @@ public:
 class mmReportCategoryExpensesGoesLastFinancialYear: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesLastFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpensesGoes(core
-        , new mmLastFinancialYear(day, month), _("Where the Money Goes - Last Financial Year"))
+    mmReportCategoryExpensesGoesLastFinancialYear(mmCoreDB* core
+        , const int day, const int month): mmReportCategoryExpensesGoes(core
+            , new mmLastFinancialYear(day, month)
+            , _("Where the Money Goes - Last Financial Year"))
     {}
 };
 
 class mmReportCategoryExpensesGoesCurrentFinancialYear: public mmReportCategoryExpensesGoes
 {
 public:
-    mmReportCategoryExpensesGoesCurrentFinancialYear(mmCoreDB* core, int day, int month): mmReportCategoryExpensesGoes(core
-        , new mmCurrentFinancialYear(day, month), _("Where the Money Goes - Current Financial Year"))
+    mmReportCategoryExpensesGoesCurrentFinancialYear(mmCoreDB* core
+        , const int day, const int month): mmReportCategoryExpensesGoes(core
+            , new mmCurrentFinancialYear(day, month)
+            , _("Where the Money Goes - Current Financial Year"))
     {}
 };
 
