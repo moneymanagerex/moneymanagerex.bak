@@ -53,7 +53,6 @@
 #include "reports/categexp.h"
 #include "reports/categovertimeperf.h"
 #include "reports/incexpenses.h"
-#include "reports/incexpensesfinancialperiod.h"
 #include "reports/payee.h"
 #include "reports/summary.h"
 #include "reports/summaryassets.h"
