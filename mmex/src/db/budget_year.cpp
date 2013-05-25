@@ -152,7 +152,7 @@ int TBudgetYearList::AddEntry(wxString budget_year_name)
 
 void TBudgetYearList::DeleteEntry(int budget_year_id)
 {
-    std::shared_ptr<TBudgetYearEntry> pEntry = GetEntryPtr(budget_year_id);
+    TBudgetYearEntry* pEntry = GetEntryPtr(budget_year_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -160,17 +160,16 @@ void TBudgetYearList::DeleteEntry(int budget_year_id)
     }
 }
 
-std::shared_ptr<TBudgetYearEntry> TBudgetYearList::GetEntryPtr(int budget_year_id)
+TBudgetYearEntry* TBudgetYearList::GetEntryPtr(int budget_year_id)
 {
-    std::shared_ptr<TBudgetYearEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TBudgetYearEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
         if (entrylist_[index]->id_ == budget_year_id)
         {
-            pEntry = entrylist_[index];
+            pEntry = entrylist_[index].get();
             current_index_ = index;
             break;
         }
@@ -180,12 +179,12 @@ std::shared_ptr<TBudgetYearEntry> TBudgetYearList::GetEntryPtr(int budget_year_i
     return pEntry;
 }
 
-std::shared_ptr<TBudgetYearEntry> TBudgetYearList::GetIndexedEntryPtr(unsigned int list_index)
+TBudgetYearEntry* TBudgetYearList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    std::shared_ptr<TBudgetYearEntry> pEntry;
+    TBudgetYearEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index];
+        pEntry = entrylist_[list_index].get();
     }
 
     return pEntry;
