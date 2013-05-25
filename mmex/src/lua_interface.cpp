@@ -662,8 +662,12 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
 
 int TLuaInterface::cpp2lua_HTMLTableCellMonth(lua_State* lua)
 {
+    lua_getglobal(lua, "html_");
+    wxString html = GetLuaString(lua);
     mmHTMLBuilder hb;
     hb.addTableCellMonth(GetLuaInteger(lua)-1);
-    lua_pushstring(lua, hb.getHTMLText().ToUTF8());
-    return 1;   
+    html << hb.getHTMLText();
+    lua_pushstring(lua, html.ToUTF8() );
+    lua_setglobal(lua, "html_");
+    return 0;
 }
