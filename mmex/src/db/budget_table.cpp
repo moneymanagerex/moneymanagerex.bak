@@ -17,13 +17,12 @@
  ********************************************************/
 
 #include "budget_table.h"
-#include "../mmCurrencyFormatter.h"
 
 /************************************************************************************
  TBudgetTableEntry Methods
  ***********************************************************************************/
 /// Constructor used when loading assets from the database
-TBudgetTableEntry::TBudgetTableEntry(wxSQLite3ResultSet& q1)
+TBudgetEntry::TBudgetEntry(wxSQLite3ResultSet& q1)
 : TEntryBase()
 {
     id_             = q1.GetInt("BudgetEntryID");
@@ -35,7 +34,7 @@ TBudgetTableEntry::TBudgetTableEntry(wxSQLite3ResultSet& q1)
 }
 
 /// Copy constructor using a pointer
-TBudgetTableEntry::TBudgetTableEntry(TBudgetTableEntry* pEntry)
+TBudgetEntry::TBudgetEntry(TBudgetEntry* pEntry)
 : TEntryBase()
 {
     id_budget_year_ = pEntry->id_budget_year_;
@@ -45,7 +44,7 @@ TBudgetTableEntry::TBudgetTableEntry(TBudgetTableEntry* pEntry)
     amount_         = pEntry->amount_;
 }
 
-void TBudgetTableEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
+void TBudgetEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 {
     st.Bind(++db_index, id_budget_year_);
     st.Bind(++db_index, id_category_);
@@ -55,7 +54,7 @@ void TBudgetTableEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 }
 
 /// Constructor for creating a new asset entry.
-TBudgetTableEntry::TBudgetTableEntry()
+TBudgetEntry::TBudgetEntry()
 : TEntryBase()
 , id_budget_year_(-1)
 , id_category_(-1)
@@ -63,7 +62,7 @@ TBudgetTableEntry::TBudgetTableEntry()
 , amount_(0.0)
 {}
 
-int TBudgetTableEntry::Add(wxSQLite3Database* db)
+int TBudgetEntry::Add(wxSQLite3Database* db)
 {
     try
     {
@@ -85,12 +84,12 @@ int TBudgetTableEntry::Add(wxSQLite3Database* db)
     return id_;
 }
 
-void TBudgetTableEntry::Delete(wxSQLite3Database* db)
+void TBudgetEntry::Delete(wxSQLite3Database* db)
 {
     DeleteEntry(db, "delete from BUDGETTABLE_V1 where BUDGETENTRYID = ?");
 }
 
-void TBudgetTableEntry::Update(wxSQLite3Database* db)
+void TBudgetEntry::Update(wxSQLite3Database* db)
 {
     try
     {
@@ -117,13 +116,13 @@ void TBudgetTableEntry::Update(wxSQLite3Database* db)
  TBudgetTableList Methods
  ***********************************************************************************/
 /// Constructor
-TBudgetTableList::TBudgetTableList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TBudgetList::TBudgetList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
 }
 
-void TBudgetTableList::LoadEntries(bool load_entries)
+void TBudgetList::LoadEntries(bool load_entries)
 {
     try
     {
@@ -148,30 +147,30 @@ void TBudgetTableList::LoadEntries(bool load_entries)
     }
 }
 
-void TBudgetTableList::LoadEntriesUsing(const wxString& sql_statement)
+void TBudgetList::LoadEntriesUsing(const wxString& sql_statement)
 {
     entrylist_.clear();
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        std::shared_ptr<TBudgetTableEntry> pEntry(new TBudgetTableEntry(q1));
+        std::shared_ptr<TBudgetEntry> pEntry(new TBudgetEntry(q1));
         entrylist_.push_back(pEntry);
     }
     q1.Finalize();
 }
 
-int TBudgetTableList::AddEntry(TBudgetTableEntry* pBudgetTableEntry)
+int TBudgetList::AddEntry(TBudgetEntry* pBudgetEntry)
 {
-    std::shared_ptr<TBudgetTableEntry> pEntry(pBudgetTableEntry);
+    std::shared_ptr<TBudgetEntry> pEntry(pBudgetEntry);
+    pBudgetEntry->Add(db_.get());
     entrylist_.push_back(pEntry);
-    pEntry->Add(db_.get());
 
-    return pEntry->id_;
+    return pBudgetEntry->id_;
 }
 
-void TBudgetTableList::DeleteEntry(int asset_id)
+void TBudgetList::DeleteEntry(int budget_entry_id)
 {
-    std::shared_ptr<TBudgetTableEntry> pEntry = GetEntryPtr(asset_id);
+    TBudgetEntry* pEntry = GetEntryPtr(budget_entry_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -179,17 +178,16 @@ void TBudgetTableList::DeleteEntry(int asset_id)
     }
 }
 
-std::shared_ptr<TBudgetTableEntry> TBudgetTableList::GetEntryPtr(int asset_id)
+TBudgetEntry* TBudgetList::GetEntryPtr(int budget_entry_id)
 {
-    std::shared_ptr<TBudgetTableEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TBudgetEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
-        if (entrylist_[index]->id_ == asset_id)
+        if (entrylist_[index]->id_ == budget_entry_id)
         {
-            pEntry = entrylist_[index];
+            pEntry = entrylist_[index].get();
             current_index_ = index;
             break;
         }
@@ -199,48 +197,18 @@ std::shared_ptr<TBudgetTableEntry> TBudgetTableList::GetEntryPtr(int asset_id)
     return pEntry;
 }
 
-std::shared_ptr<TBudgetTableEntry> TBudgetTableList::GetIndexedEntryPtr(unsigned int list_index)
+TBudgetEntry* TBudgetList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    std::shared_ptr<TBudgetTableEntry> pEntry;
+    TBudgetEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index];
+        pEntry = entrylist_[list_index].get();
     }
 
     return pEntry;
 }
 
-int TBudgetTableList::CurrentListSize()
+int TBudgetList::CurrentListSize()
 {
     return entrylist_.size();
 }
-
-//double TBudgetTableList::GetAssetBalance(bool value_today)
-//{
-//    double total_value = 0.0;
-//    for (size_t i = 0; i < entrylist_.size(); ++i)
-//    {
-//        if (value_today)
-//            total_value = total_value + entrylist_[i]->GetValue();
-//        else
-//            total_value = total_value + entrylist_[i]->value_;
-//    }
-//
-//    return total_value;
-//}
-//
-//wxString TBudgetTableList::GetAssetBalanceCurrencyFormat(bool value_today)
-//{
-//    wxString balance_str;
-//     CurrencyFormatter::formatDoubleToCurrency(GetAssetBalance(value_today), balance_str);
-//
-//    return balance_str;
-//}
-//
-//wxString TBudgetTableList::GetAssetBalanceCurrencyEditFormat(bool value_today)
-//{
-//    wxString balance_str;
-//     CurrencyFormatter::formatDoubleToCurrencyEdit(GetAssetBalance(value_today), balance_str);
-//
-//    return balance_str;
-//}

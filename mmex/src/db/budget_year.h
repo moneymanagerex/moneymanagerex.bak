@@ -62,8 +62,8 @@ public:
     int AddEntry(wxString budget_year_name);
     void DeleteEntry(int budget_year_id);
     
-    std::shared_ptr<TBudgetYearEntry> GetEntryPtr(int budget_year_id);
-    std::shared_ptr<TBudgetYearEntry> GetIndexedEntryPtr(unsigned int list_index);
+    TBudgetYearEntry* GetEntryPtr(int budget_year_id);
+    TBudgetYearEntry* GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
 };

@@ -19,31 +19,65 @@
 #pragma once
 #include "entry_base.h"
 
+const wxString BUDGET_TYPE_DEF[] = {
+    _("Expense"),
+    _("Income")
+};
+
+const wxString BUDGET_PERIOD_DEF[] = {
+    wxTRANSLATE("None"),
+    wxTRANSLATE("Weekly"),
+    wxTRANSLATE("Bi-Weekly"),
+    wxTRANSLATE("Monthly"),
+    wxTRANSLATE("Bi-Monthly"),
+    wxTRANSLATE("Quarterly"),
+    wxTRANSLATE("Half-Yearly"),
+    wxTRANSLATE("Yearly"),
+    wxTRANSLATE("Daily")
+};
+
 /************************************************************************************
- Class TBudgetTableEntry
+ Class TBudgetEntry
  ***********************************************************************************/
-class TBudgetTableEntry : public TEntryBase
+class TBudgetEntry : public TEntryBase
 {
 private:
-    friend class TBudgetTableList;    // Allows TBudgetTableList access to private members
+    friend class TBudgetList;    // Allows TBudgetTableList access to private members
     
     int Add(wxSQLite3Database* db);
     void Delete(wxSQLite3Database* db);
     void SetDatabaseValues(wxSQLite3Statement& st, int& db_index);
 
 public:
+    enum BUDGET_TYPE {
+        TYPE_EXPENSE,
+        TYPE_INCOME
+    };
+
+    enum BUDGET_PERIOD {
+        PERIOD_NONE,
+        PERIOD_WEEKLY,
+        PERIOD_BI_WEEKLY,
+        PERIOD_MONTHLY,
+        PERIOD_BI_MONTHLY,
+        PERIOD_QUARTERLY,
+        PERIOD_HALF_YEARLY,
+        PERIOD_YEARLY,
+        PERIOD_DAILY
+    };
+
     int id_budget_year_;
     int id_category_;
     int id_subcategory_;
     wxString period_;
     double amount_;
 
-    /// Constructor used when loading assets from the database.
-    TBudgetTableEntry(wxSQLite3ResultSet& q1);
-    /// Copy constructor using a pointer
-    TBudgetTableEntry(TBudgetTableEntry* pEntry);
-    /// Constructor for creating a new asset entry.
-    TBudgetTableEntry();
+    // Constructor used when loading assets from the database.
+    TBudgetEntry(wxSQLite3ResultSet& q1);
+    // Copy constructor using a pointer
+    TBudgetEntry(TBudgetEntry* pEntry);
+    // Constructor for creating a new asset entry.
+    TBudgetEntry();
 
     void Update(wxSQLite3Database* db);
 };
@@ -51,27 +85,24 @@ public:
 /************************************************************************************
  Class TBudgetTableList
  ***********************************************************************************/
-class TBudgetTableList : public TListBase
+class TBudgetList : public TListBase
 {
 private:
     void LoadEntries(bool load_entries = true);
 
 public:
-    std::vector<std::shared_ptr<TBudgetTableEntry> >entrylist_;
+    std::vector<std::shared_ptr<TBudgetEntry> >entrylist_;
 
-    TBudgetTableList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TBudgetList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
 
-    /// Allows specialised loads by providing the required SQL statement
+    // Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
-    int AddEntry(TBudgetTableEntry* pAssetEntry);
-    void DeleteEntry(int asset_id);
+    int AddEntry(TBudgetEntry* budget_entry);
+    void DeleteEntry(int budget_entry_id);
 
-    std::shared_ptr<TBudgetTableEntry> GetEntryPtr(int asset_id);
-    std::shared_ptr<TBudgetTableEntry> GetIndexedEntryPtr(unsigned int list_index);
+    TBudgetEntry* GetEntryPtr(int budget_entry_id);
+    TBudgetEntry* GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
-    //double GetAssetBalance(bool value_today = true);
-    //wxString GetAssetBalanceCurrencyFormat(bool value_today = true);
-    //wxString GetAssetBalanceCurrencyEditFormat(bool value_today = true);
 };
