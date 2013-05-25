@@ -115,8 +115,8 @@ public:
     int AddEntry(TTransactionEntry* pTransEntry);
     void DeleteEntry(int trans_id);
 
-    std::shared_ptr<TTransactionEntry> GetEntryPtr(int trans_id);
-    std::shared_ptr<TTransactionEntry> GetIndexedEntryPtr(unsigned int list_index);
+    TTransactionEntry* GetEntryPtr(int trans_id);
+    TTransactionEntry* GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
 //    double GetBalance();

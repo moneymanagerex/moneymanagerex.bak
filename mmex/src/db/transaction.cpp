@@ -150,8 +150,11 @@ wxString TTransactionEntry::DisplayTransactionDate()
 
 bool TTransactionEntry::operator < (const TTransactionEntry& trans) const
 {
-    if (this->trans_date_ < trans.trans_date_) return true;
-    else if (this->trans_date_ > trans.trans_date_) return false;
+    if (this->trans_date_ < trans.trans_date_)
+        return true;
+    else if (this->trans_date_ > trans.trans_date_)
+        return false;
+
     return this->GetId() < trans.GetId();
 }
 
@@ -214,7 +217,7 @@ int TTransactionList::AddEntry(TTransactionEntry* pTransEntry)
 
 void TTransactionList::DeleteEntry(int trans_id)
 {
-    std::shared_ptr<TTransactionEntry> pEntry = GetEntryPtr(trans_id);
+    TTransactionEntry* pEntry = GetEntryPtr(trans_id);
     if (pEntry)
     {
         pEntry->Delete(db_.get());
@@ -222,17 +225,16 @@ void TTransactionList::DeleteEntry(int trans_id)
     }
 }
 
-std::shared_ptr<TTransactionEntry> TTransactionList::GetEntryPtr(int trans_id)
+TTransactionEntry* TTransactionList::GetEntryPtr(int trans_id)
 {
-    std::shared_ptr<TTransactionEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TTransactionEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
         if (entrylist_[index]->id_ == trans_id)
         {
-            pEntry = entrylist_[index];
+            pEntry = entrylist_[index].get();
             current_index_ = index;
             break;
         }
@@ -242,12 +244,12 @@ std::shared_ptr<TTransactionEntry> TTransactionList::GetEntryPtr(int trans_id)
     return pEntry;
 }
 
-std::shared_ptr<TTransactionEntry> TTransactionList::GetIndexedEntryPtr(unsigned int list_index)
+TTransactionEntry* TTransactionList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    std::shared_ptr<TTransactionEntry> pEntry;
+    TTransactionEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index];
+        pEntry = entrylist_[list_index].get();
     }
 
     return pEntry;

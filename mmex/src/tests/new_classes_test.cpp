@@ -46,17 +46,17 @@
 //----------------------------------------------------------------------------
 // This is a way to prevent certain tests occuring during development testing
 //#define CENTRALL_DB_TESTS
-//#define CURRENCY_TESTS
+#define CURRENCY_TESTS
 #define ACCOUNT_TESTS
 #define CATEGORY_TESTS
 #define SUBCATEGORY_TESTS
 #define PAYEE_TESTS
-//#define TRANSACTION_TESTS
-//#define REPEAT_TRANSACTION_TESTS
+#define TRANSACTION_TESTS
+#define REPEAT_TRANSACTION_TESTS
 //#define SPLIT_TRANSACTION_TESTS
 //#define ASSET_TESTS
 #define STOCK_TESTS
-//#define BUDGET_TESTS
+#define BUDGET_TESTS
 
 //----------------------------------------------------------------------------
 /// Central class holding all major components of the database
@@ -75,7 +75,7 @@ public:
     TStockList              stock_list_;
     TAssetList              asset_list_;
     TBudgetYearList         budget_year_list_;
-    TBudgetTableList        budget_table_list_;
+    TBudgetList             budget_entry_list_;
 
     TDatabase(std::shared_ptr<wxSQLite3Database> db)
     : info_settings_(db, true)
@@ -90,7 +90,7 @@ public:
     , stock_list_(db)
     , asset_list_(db)
     , budget_year_list_(db)
-    , budget_table_list_(db)
+    , budget_entry_list_(db)
     {}
 };
 
@@ -137,7 +137,7 @@ TEST(Central_Database_Test)
 /****************************************************************************
  Testing Currency
  ****************************************************************************/
-TEST(TCurrencyList_Add)
+TEST(TCurrencyList_Actions)
 {
     printf("\nNew_Classes_Test: START");
     display_STD_IO_separation_line();
@@ -146,26 +146,53 @@ TEST(TCurrencyList_Add)
 
     TCurrencyList currency_list(get_pDb());
 
-    TCurrencyEntry* pCurrencyEntry = new TCurrencyEntry();
+    TCurrencyEntry* pCurrencyEntry = new TCurrencyEntry();  // default = USD
     int id_first = currency_list.AddEntry(pCurrencyEntry);
-    CHECK(id_first == 1); // first entry
+    CHECK_EQUAL(1, id_first); // first entry
 
-    TCurrencyEntry* pCurrencyUSD = new TCurrencyEntry();
+    TCurrencyEntry* pCurrencyUSD = new TCurrencyEntry();    // default = USD
     int id_USD = currency_list.AddEntry(pCurrencyUSD);
-    CHECK(id_USD == id_first); // No duplicates allowed
-    delete pCurrencyUSD;
+    CHECK(id_USD == id_first);  // No duplicates allowed
+    delete pCurrencyUSD;        // Delete non stored entry
 
     TCurrencyEntry* pCurrencyAUD = new TCurrencyEntry();
-    pCurrencyAUD->currencySymbol_ = CURRENCIES[14];
-    pCurrencyAUD->name_           = CURRENCIES[15];
+    pCurrencyAUD->currencySymbol_ = CURRENCIES[TCurrencyEntry::SYMBOL_AUD];
+    pCurrencyAUD->name_           = CURRENCIES[TCurrencyEntry::NAME_AUD];
     int id_AUD = currency_list.AddEntry(pCurrencyAUD);
-    CHECK(id_first != id_AUD);
+    CHECK_EQUAL(2, id_AUD);
 
-    std::shared_ptr<TCurrencyEntry> pEntry = currency_list.GetEntryPtr(id_first);
+    pCurrencyAUD = new TCurrencyEntry();
+    pCurrencyAUD->currencySymbol_ = CURRENCIES[TCurrencyEntry::SYMBOL_AMD];
+    pCurrencyAUD->name_           = CURRENCIES[TCurrencyEntry::NAME_AMD];
+    int id_AMD = currency_list.AddEntry(pCurrencyAUD);
+    CHECK_EQUAL(3, id_AMD);
+
+    CHECK_EQUAL(3, (int)currency_list.entrylist_.size());
+    currency_list.DeleteEntry(id_AMD);
+    CHECK_EQUAL(2, (int)currency_list.entrylist_.size());
+
+    TCurrencyEntry* pEntry = currency_list.GetEntryPtr(id_first);
     pEntry->baseConv_ = 1.5;
     pEntry->Update(currency_list.ListDatabase());
 
-    displayTimeTaken("TCurrencyList_Add", start_time);
+    displayTimeTaken("TCurrencyList_Functions", start_time);
+}
+
+TEST(TCurrencyList_Load_Results)
+{
+    const wxStopWatch start_time;
+
+    TCurrencyList currency_list(get_pDb());
+
+    int id_AUD = currency_list.GetCurrencyId(CURRENCIES[TCurrencyEntry::SYMBOL_AUD], true);
+    TCurrencyEntry* pEntry_AUD = currency_list.GetEntryPtr(id_AUD); 
+    CHECK_EQUAL(CURRENCIES[TCurrencyEntry::NAME_AUD], pEntry_AUD->name_);
+
+    TCurrencyEntry* pEntry_USD = currency_list.GetEntryPtr(CURRENCIES[TCurrencyEntry::NAME_USD]);
+    CHECK_EQUAL(1.5, pEntry_USD->baseConv_);
+    CHECK_EQUAL(2, (int)currency_list.entrylist_.size());
+
+    displayTimeTaken("TCurrencyList_Load_Results", start_time);
 }
 #endif
 
@@ -408,13 +435,13 @@ TEST(TPayeeList_Test_2)
  ****************************************************************************/
 TEST(TTransactionList_Add)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
+    const wxStopWatch start_time;
 
     TTransactionList transactions(get_pDb());
     transactions.ListDatabase()->Begin();
 
     TTransactionEntry* pTransEntry_1 = new TTransactionEntry();
-    pTransEntry_1->trans_date_   = start_time.Subtract(wxDateSpan::Month());
+    pTransEntry_1->trans_date_   = wxDateTime::Now().Subtract(wxDateSpan::Month());
     pTransEntry_1->amount_from_  = 1000;
     pTransEntry_1->trans_status_ = TRANS_STATE_DEF[TTransactionEntry::STATE_NONE];
     pTransEntry_1->trans_type_   = TRANS_TYPE_DEF[TTransactionEntry::TYPE_DEPOSIT];
@@ -452,7 +479,7 @@ TEST(TTransactionList_Update)
     const wxStopWatch start_time;
 
     TTransactionList transactions(get_pDb());
-    TTransactionEntry* pTransEntry = transactions.GetEntryPtr(2).get();
+    TTransactionEntry* pTransEntry = transactions.GetEntryPtr(2);
 
     CHECK_EQUAL(2, pTransEntry->GetId());
     CHECK_EQUAL(500, pTransEntry->amount_from_);
@@ -471,9 +498,7 @@ TEST(TTransactionList_Update)
  ****************************************************************************/
 TEST(BillList_Add_first_four_entries)
 {
-    const wxDateTime start_time(wxDateTime::UNow());
-    wxString start_time_str = start_time.FormatISOTime();
-
+    const wxStopWatch start_time;
     TTransactionBillList repeat_transactions(get_pDb());
 
     TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
@@ -482,14 +507,18 @@ TEST(BillList_Add_first_four_entries)
     pBillEntry->trans_type_    = TRANS_TYPE_DEF[TTransactionEntry::TYPE_DEPOSIT];
     pBillEntry->trans_notes_   = "Repeat - weekly for 10 weeks. Start one month in future";
     pBillEntry->trans_date_    = wxDateTime::Now();
-    pBillEntry->SetNextOccurDate(start_time.Add(wxDateSpan::Month()));
+    pBillEntry->SetNextOccurDate(wxDateTime::Now().Add(wxDateSpan::Month()));
     pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_WEEKLY;
     pBillEntry->num_repeats_   = 10;
     int bill_id = repeat_transactions.AddEntry(pBillEntry);
     CHECK(bill_id > 0);
     pBillEntry->AdjustNextOccuranceDate();
-    CHECK_EQUAL(start_time.Add(wxDateSpan::Month().Add(wxDateSpan::Week())).FormatISODate(),
+
+    TTransactionBillEntry*  pbill_entry = repeat_transactions.GetEntryPtr(bill_id);
+    CHECK_EQUAL(wxDateTime::Now().Add(wxDateSpan::Month().Add(wxDateSpan::Week())).FormatISODate(),
                 pBillEntry->NextOccurDate().FormatISODate());
+    CHECK_EQUAL(pBillEntry->NextOccurDate().FormatISODate(), pbill_entry->NextOccurDate().FormatISODate());
+
 
     int days_remaining = -1;
     bool exec_required = pBillEntry->RequiresExecution(days_remaining);
@@ -498,7 +527,7 @@ TEST(BillList_Add_first_four_entries)
 
     TTransactionBillEntry* pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
     pBillEntry_1->trans_notes_   = "Repeat - every 10 days. Start one month in past";
-    pBillEntry_1->SetNextOccurDate(start_time.Subtract(wxDateSpan::Month()));
+    pBillEntry_1->SetNextOccurDate(wxDateTime::Now().Subtract(wxDateSpan::Month()));
     pBillEntry_1->repeat_type_   = TTransactionBillEntry::TYPE_EVERY_X_DAYS;
     pBillEntry_1->autoExecuteManual_ = true;
     bill_id = repeat_transactions.AddEntry(pBillEntry_1);
@@ -512,7 +541,7 @@ TEST(BillList_Add_first_four_entries)
     pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
     pBillEntry_1->autoExecuteManual_ = true;
     pBillEntry_1->autoExecuteSilent_ = true;
-    pBillEntry_1->SetNextOccurDate(start_time.Subtract(wxDateSpan::Weeks(2)));
+    pBillEntry_1->SetNextOccurDate(wxDateTime::Now().Subtract(wxDateSpan::Weeks(2)));
     pBillEntry_1->trans_notes_   = "Repeat in 10 days - auto-silent. Start two weeks in past";
     pBillEntry_1->repeat_type_ = TTransactionBillEntry::TYPE_IN_X_DAYS;
     bill_id = repeat_transactions.AddEntry(pBillEntry_1);
@@ -526,7 +555,7 @@ TEST(BillList_Add_first_four_entries)
     pBillEntry_1 = new TTransactionBillEntry(pBillEntry);
     pBillEntry_1->autoExecuteManual_ = true;
     pBillEntry_1->autoExecuteSilent_ = true;
-    pBillEntry_1->SetNextOccurDate(start_time.Subtract(wxDateSpan::Weeks(2)));
+    pBillEntry_1->SetNextOccurDate(wxDateTime::Now().Subtract(wxDateSpan::Weeks(2)));
     pBillEntry_1->trans_notes_   = "Repeat weekly - auto-silent. Start two weeks in past";
     pBillEntry_1->num_repeats_   = -1;    // repeat indefinately
     bill_id = repeat_transactions.AddEntry(pBillEntry_1);
@@ -552,7 +581,7 @@ TEST(BillList_Add_next_two_entries)
     pBillEntry->trans_status_  = TRANS_STATE_DEF[TTransactionBillEntry::STATE_RECONCILED];
     pBillEntry->trans_type_    = TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_DEPOSIT];
     pBillEntry->trans_notes_   = "Repeat Entry: Start- One Month ago, repeat every 10 days";
-    pBillEntry->SetNextOccurDate(start_time.Subtract(wxDateSpan::Month()));
+    pBillEntry->SetNextOccurDate(wxDateTime::Now().Subtract(wxDateSpan::Month()));
     pBillEntry->trans_date_    = pBillEntry->NextOccurDate();
     pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_EVERY_X_DAYS;
     pBillEntry->num_repeats_   = 10;
@@ -577,14 +606,14 @@ TEST(BillList_Create_entry_from_transaction)
     TTransactionList transactions(get_pDb());
     TTransactionBillList repeat_transactions(get_pDb());
 
-    std::shared_ptr<TTransactionEntry> pTransEntry = transactions.GetEntryPtr(2);
+    TTransactionEntry* pTransEntry = transactions.GetEntryPtr(2);
 
     CHECK_EQUAL(2, pTransEntry->GetId());
     CHECK_EQUAL(500, pTransEntry->amount_from_);
 
     TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
     pBillEntry->SetTransaction(pTransEntry);
-    pBillEntry->SetNextOccurDate(start_time.Subtract(wxDateSpan::Weeks(2)));
+    pBillEntry->SetNextOccurDate(wxDateTime::Now().Subtract(wxDateSpan::Weeks(2)));
     pBillEntry->repeat_type_   = TTransactionBillEntry::TYPE_BI_WEEKLY;
     repeat_transactions.AddEntry(pBillEntry);
 
