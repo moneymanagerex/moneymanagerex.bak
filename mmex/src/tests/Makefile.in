@@ -170,7 +170,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_categexp.o \
 	mmex_tests_categovertimeperf.o \
 	mmex_tests_incexpenses.o \
-	mmex_tests_incexpensesfinancialperiod.o \
+	mmex_tests_mmDateRange.o \
 	mmex_tests_mmRepeat.o \
 	mmex_tests_payee.o \
 	mmex_tests_summary.o \
@@ -619,8 +619,8 @@ mmex_tests_categovertimeperf.o: $(srcdir)/../../src/reports/categovertimeperf.cp
 mmex_tests_incexpenses.o: $(srcdir)/../../src/reports/incexpenses.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/incexpenses.cpp
 
-mmex_tests_incexpensesfinancialperiod.o: $(srcdir)/../../src/reports/incexpensesfinancialperiod.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/incexpensesfinancialperiod.cpp
+mmex_tests_mmDateRange.o: $(srcdir)/../../src/reports/mmDateRange.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/mmDateRange.cpp
 
 mmex_tests_mmRepeat.o: $(srcdir)/../../src/reports/mmRepeat.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reports/mmRepeat.cpp
