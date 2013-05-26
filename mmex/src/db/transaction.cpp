@@ -25,7 +25,7 @@
 /// Constructor for creating a new transaction entry
 TTransactionEntry::TTransactionEntry()
 : TEntryBase()
-, id_from_account(-1)
+, id_from_account_(-1)
 , id_to_account_(-1)
 , id_payee_(-1)
 , amount_from_(0.0)
@@ -39,19 +39,19 @@ TTransactionEntry::TTransactionEntry()
 TTransactionEntry::TTransactionEntry(TTransactionEntry* pEntry)
 : TEntryBase()  // id has not been set yet
 {
-    id_from_account = pEntry->id_from_account;
-    id_to_account_  = pEntry->id_to_account_;
-    id_payee_       = pEntry->id_payee_;
-    trans_type_     = pEntry->trans_type_;   // transcode in database
-    amount_from_    = pEntry->amount_from_;
-    trans_status_   = pEntry->trans_status_;
-    trans_num_      = pEntry->trans_num_;
-    trans_notes_    = pEntry->trans_notes_;
-    id_category_    = pEntry->id_category_;
-    id_subcategory_ = pEntry->id_subcategory_;
-    trans_date_     = pEntry->trans_date_;
-    id_followup_    = pEntry->id_followup_;
-    amount_to_      = pEntry->amount_to_;
+    id_from_account_ = pEntry->id_from_account_;
+    id_to_account_   = pEntry->id_to_account_;
+    id_payee_        = pEntry->id_payee_;
+    trans_type_      = pEntry->trans_type_;   // transcode in database
+    amount_from_     = pEntry->amount_from_;
+    trans_status_    = pEntry->trans_status_;
+    trans_num_       = pEntry->trans_num_;
+    trans_notes_     = pEntry->trans_notes_;
+    id_category_     = pEntry->id_category_;
+    id_subcategory_  = pEntry->id_subcategory_;
+    trans_date_      = pEntry->trans_date_;
+    id_followup_     = pEntry->id_followup_;
+    amount_to_       = pEntry->amount_to_;
 }
 
 /// Constructor used to load a transaction from the database.
@@ -64,24 +64,24 @@ TTransactionEntry::TTransactionEntry(wxSQLite3ResultSet& q1)
 
 void TTransactionEntry::GetDatabaseValues(wxSQLite3ResultSet& q1)
 {
-    id_from_account = q1.GetInt("ACCOUNTID");
-    id_to_account_  = q1.GetInt("TOACCOUNTID");
-    id_payee_       = q1.GetInt("PAYEEID");
-    trans_type_     = q1.GetString("TRANSCODE");
-    amount_from_    = q1.GetDouble("TRANSAMOUNT");
-    trans_status_   = q1.GetString("STATUS");
-    trans_num_      = q1.GetString("TRANSACTIONNUMBER");
-    trans_notes_    = q1.GetString("NOTES");
-    id_category_    = q1.GetInt("CATEGID");
-    id_subcategory_ = q1.GetInt("SUBCATEGID");
-    trans_date_     = q1.GetDate("TRANSDATE");
-    id_followup_    = q1.GetInt("FOLLOWUPID");
-    amount_to_      = q1.GetDouble("TOTRANSAMOUNT");
+    id_from_account_ = q1.GetInt("ACCOUNTID");
+    id_to_account_   = q1.GetInt("TOACCOUNTID");
+    id_payee_        = q1.GetInt("PAYEEID");
+    trans_type_      = q1.GetString("TRANSCODE");
+    amount_from_     = q1.GetDouble("TRANSAMOUNT");
+    trans_status_    = q1.GetString("STATUS");
+    trans_num_       = q1.GetString("TRANSACTIONNUMBER");
+    trans_notes_     = q1.GetString("NOTES");
+    id_category_     = q1.GetInt("CATEGID");
+    id_subcategory_  = q1.GetInt("SUBCATEGID");
+    trans_date_      = q1.GetDate("TRANSDATE");
+    id_followup_     = q1.GetInt("FOLLOWUPID");
+    amount_to_       = q1.GetDouble("TOTRANSAMOUNT");
 }
 
 void TTransactionEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 {
-    st.Bind(++db_index, id_from_account);   // ACCOUNTID
+    st.Bind(++db_index, id_from_account_);  // ACCOUNTID
     st.Bind(++db_index, id_to_account_);    // TOACCOUNTID
     st.Bind(++db_index, id_payee_);         // PAYEEID
     st.Bind(++db_index, trans_type_);       // TRANSCODE
@@ -156,6 +156,40 @@ bool TTransactionEntry::operator < (const TTransactionEntry& trans) const
         return false;
 
     return this->GetId() < trans.GetId();
+}
+
+double TTransactionEntry::AdjustedValue(int ref_account_id)
+{
+    double value = 0.0;
+    if (trans_type_ == TRANS_TYPE_DEF[TYPE_WITHDRAWAL])
+    {
+        value = -amount_from_;
+    }
+    else if (trans_type_ == TRANS_TYPE_DEF[TYPE_DEPOSIT])
+    {
+        value = amount_from_;
+    }
+    else if (trans_type_ == TRANS_TYPE_DEF[TYPE_TRANSFER])
+    {
+        if (ref_account_id == id_from_account_) value = -amount_from_;
+        if (ref_account_id == id_to_account_)   value = amount_to_;
+    }
+
+    return value;
+}
+
+bool TTransactionEntry::IsTransferTo(int ref_account_id)
+{
+    bool result = false;
+    if (trans_type_ == TRANS_TYPE_DEF[TYPE_TRANSFER])
+    {
+        if (ref_account_id == id_to_account_)
+        {
+            result = true;
+        }
+    }
+
+    return result;
 }
 
 /************************************************************************************

@@ -5,6 +5,7 @@
 #include "../mmex.h"
 
 class wxArrayString;
+class TTransactionBillEntry;
 
 class mmReportCashFlow : public mmPrintableBase 
 {
@@ -20,68 +21,53 @@ protected:
     void getSpecificAccounts();
 
 protected:
-   
-   struct mmRepeatForecast 
-   {
-      wxDateTime date;
-      double amount;
-   };
+    struct mmRepeatForecast
+    {
+        wxDateTime date;
+        double amount;
+    };
 
-   typedef std::vector<mmRepeatForecast> forecastVec;
-   std::vector<forecastVec> bdForecastVec;
+    typedef std::vector<mmRepeatForecast> forecastVec;
+    std::vector<forecastVec> bdForecastVec;
 
-   mmGUIFrame* frame_;
-   const wxArrayString* accountArray_;
-   bool activeTermAccounts_;
-   bool activeBankAccounts_;
-   int cashflowreporttype_;
+    void SetRepeatForecast(forecastVec& fvec, TTransactionBillEntry* repeat_entry, double& amount);
+
+    mmGUIFrame* frame_;
+    const wxArrayString* accountArray_;
+    bool activeTermAccounts_;
+    bool activeBankAccounts_;
+    int cashflowreporttype_;
 };
 
 class mmReportCashFlowAllAccounts : public mmReportCashFlow
 {
 public:
-    mmReportCashFlowAllAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0)
-    {
-        this->activateBankAccounts();
-        this->activateTermAccounts();
-    }
+    mmReportCashFlowAllAccounts(mmCoreDB* core, mmGUIFrame* frame);
 };
 
 class mmReportCashFlowBankAccounts : public mmReportCashFlow
 {
 public:
-    mmReportCashFlowBankAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0)
-    {
-        this->activateBankAccounts();
-    }
+    mmReportCashFlowBankAccounts(mmCoreDB* core, mmGUIFrame* frame);
 };
 
 class mmReportCashFlowTermAccounts: public mmReportCashFlow
 {
 public:
-    mmReportCashFlowTermAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0)
-    {
-        this->activateTermAccounts();
-    }
+    mmReportCashFlowTermAccounts(mmCoreDB* core, mmGUIFrame* frame);
 };
 
 class mmReportCashFlowSpecificAccounts: public mmReportCashFlow
 {
 public:
-    mmReportCashFlowSpecificAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlow(core, frame, 0)
-    {
-        this->cashflowreporttype_ = 0;
-    }
+    mmReportCashFlowSpecificAccounts(mmCoreDB* core, mmGUIFrame* frame);
     virtual wxString getHTMLText();
-
 };
 
 class mmReportDailyCashFlowSpecificAccounts: public mmReportCashFlowSpecificAccounts
 {
 public:
-    mmReportDailyCashFlowSpecificAccounts(mmCoreDB* core, mmGUIFrame* frame): mmReportCashFlowSpecificAccounts(core, frame)
-    {
-        this->cashflowreporttype_ = 1;
-    }
+    mmReportDailyCashFlowSpecificAccounts(mmCoreDB* core, mmGUIFrame* frame);
 };
+
 #endif // _MM_EX_REPORTCASHFLOW_H_

@@ -151,42 +151,42 @@ TTransactionEntry* TTransactionBillEntry::GetTransaction()
 {
     TTransactionEntry* pEntry(new TTransactionEntry());
     
-    pEntry->id_from_account = id_from_account;
-    pEntry->id_to_account_  = id_to_account_;
-    pEntry->id_payee_       = id_payee_;
-    pEntry->id_category_    = id_category_;
-    pEntry->id_subcategory_ = id_subcategory_;
-    pEntry->id_followup_    = id_followup_;
+    pEntry->id_from_account_ = id_from_account_;
+    pEntry->id_to_account_   = id_to_account_;
+    pEntry->id_payee_        = id_payee_;
+    pEntry->id_category_     = id_category_;
+    pEntry->id_subcategory_  = id_subcategory_;
+    pEntry->id_followup_     = id_followup_;
     
-    pEntry->amount_from_    = amount_from_;
-    pEntry->amount_to_      = amount_to_;
+    pEntry->amount_from_     = amount_from_;
+    pEntry->amount_to_       = amount_to_;
 
-    pEntry->trans_date_     = trans_date_;
-    pEntry->trans_num_      = trans_num_;
-    pEntry->trans_type_     = trans_type_;   // transcode in database
-    pEntry->trans_status_   = trans_status_;
-    pEntry->trans_notes_    = trans_notes_;
+    pEntry->trans_date_      = trans_date_;
+    pEntry->trans_num_       = trans_num_;
+    pEntry->trans_type_      = trans_type_;   // transcode in database
+    pEntry->trans_status_    = trans_status_;
+    pEntry->trans_notes_     = trans_notes_;
 
     return pEntry;
 }
 
 void TTransactionBillEntry::SetTransaction(TTransactionEntry* pEntry)
 {
-    id_from_account = pEntry->id_from_account;
-    id_to_account_  = pEntry->id_to_account_;
-    id_payee_       = pEntry->id_payee_;
-    id_category_    = pEntry->id_category_;
-    id_subcategory_ = pEntry->id_subcategory_;
-    id_followup_    = pEntry->id_followup_;
+    id_from_account_ = pEntry->id_from_account_;
+    id_to_account_   = pEntry->id_to_account_;
+    id_payee_        = pEntry->id_payee_;
+    id_category_     = pEntry->id_category_;
+    id_subcategory_  = pEntry->id_subcategory_;
+    id_followup_     = pEntry->id_followup_;
     
-    amount_from_    = pEntry->amount_from_;
-    amount_to_      = pEntry->amount_to_;
+    amount_from_     = pEntry->amount_from_;
+    amount_to_       = pEntry->amount_to_;
 
-    trans_date_     = pEntry->trans_date_;
-    trans_num_      = pEntry->trans_num_;
-    trans_type_     = pEntry->trans_type_;   // transcode in database
-    trans_status_   = pEntry->trans_status_;
-    trans_notes_    = pEntry->trans_notes_;
+    trans_date_      = pEntry->trans_date_;
+    trans_num_       = pEntry->trans_num_;
+    trans_type_      = pEntry->trans_type_;   // transcode in database
+    trans_status_    = pEntry->trans_status_;
+    trans_notes_     = pEntry->trans_notes_;
 }
 
 /*
@@ -303,10 +303,10 @@ bool TTransactionBillEntry::RequiresExecution(int& remaining_days)
     return execution_required;
 }
 
-bool TTransactionBillEntry::UsingIn_X_Processing(int repeat_type)
+bool TTransactionBillEntry::UsingIn_X_Processing()
 {
     bool result = false;
-    if ((repeat_type == TYPE_IN_X_DAYS) || (repeat_type_ == TYPE_IN_X_MONTHS))
+    if ((repeat_type_ == TYPE_IN_X_DAYS) || (repeat_type_ == TYPE_IN_X_MONTHS))
     {
         result = true;
     }
@@ -316,7 +316,7 @@ bool TTransactionBillEntry::UsingIn_X_Processing(int repeat_type)
 bool TTransactionBillEntry::UsingRepeatProcessing()
 {
     bool result = false;
-    if ((repeat_type_ < TYPE_IN_X_DAYS) || (repeat_type_ > TYPE_EVERY_X_MONTHS))
+    if ((repeat_type_ >= TYPE_IN_X_DAYS) || (repeat_type_ <= TYPE_EVERY_X_MONTHS))
     {
         if (num_repeats_ > 0)
         {

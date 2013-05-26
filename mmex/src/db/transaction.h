@@ -64,7 +64,7 @@ public:
         TYPE_TRANSFER
     };
 
-    int id_from_account;
+    int id_from_account_;
     int id_to_account_;
     int id_payee_;
     int id_category_;
@@ -94,6 +94,9 @@ public:
     void Update(wxSQLite3Database* db);
     // Display transaction date according to required user format
     wxString DisplayTransactionDate();
+
+    double AdjustedValue(int ref_account_id);
+    bool IsTransferTo(int ref_account_id);
 };
 
 /************************************************************************************
