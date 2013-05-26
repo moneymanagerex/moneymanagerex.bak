@@ -110,13 +110,13 @@ void mmCustomReport::DisplayLua_Results(mmHTMLBuilder& hb)
 {
     TLuaInterface lua_core;
     wxString lua_result = lua_core.RunLuaCode(sScript_);
-    hb.addParaText(lua_result);
+    hb.addText(lua_result);
 }
 
 wxString mmCustomReport::getHTMLText()
 {
     mmHTMLBuilder hb;
-    hb.init();
+    //hb.init();
 
     if (sScriptType_ == "SQL")
     {
@@ -131,6 +131,6 @@ wxString mmCustomReport::getHTMLText()
         hb.addParaText(_("Cannot execute unknown Script type"));
     }
 
-    hb.end();
+    //hb.end();
     return hb.getHTMLText();
 }
