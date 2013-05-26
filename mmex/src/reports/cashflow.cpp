@@ -46,6 +46,16 @@ void mmReportCashFlow::getSpecificAccounts()
     this->accountArray_ = selections;
 }
 
+void mmReportCashFlow::SetRepeatForecast(forecastVec& fvec, TTransactionBillEntry* repeat_entry, double& amount)
+{
+    mmRepeatForecast rf;
+    rf.date = repeat_entry->NextOccurDate();
+    rf.amount = amount;
+
+    fvec.push_back(rf);
+    repeat_entry->AdjustNextOccuranceDate();
+}
+
 wxString mmReportCashFlow::getHTMLText()
 {
     return this->getHTMLText_i();
@@ -144,7 +154,7 @@ wxString mmReportCashFlow::getHTMLText_i()
 /*  TODO: Activate code using TTransactionBillList
     when other sections are completed and tested.
 */
-//#define USING_NEW_DB_CLASSES  // Activation switch
+#define USING_NEW_DB_CLASSES  // Activation switch
 #ifdef USING_NEW_DB_CLASSES
     // load a fresh list of repeating transactions.
     TTransactionBillList repeat_trans_list(core_->db_);
@@ -154,7 +164,7 @@ wxString mmReportCashFlow::getHTMLText_i()
         bool from_account_found = true, to_account_found = true;
         if (accountArray_ != NULL)
         {
-            if (wxNOT_FOUND == accountArray_->Index(core_->accountList_.GetAccountName(repeat_entry->id_from_account))) //linear search
+            if (wxNOT_FOUND == accountArray_->Index(core_->accountList_.GetAccountName(repeat_entry->id_from_account_))) //linear search
                 from_account_found = false;
 
             if (wxNOT_FOUND == accountArray_->Index(core_->accountList_.GetAccountName(repeat_entry->id_to_account_))) //linear search
@@ -162,45 +172,33 @@ wxString mmReportCashFlow::getHTMLText_i()
         }
         if (!from_account_found && !to_account_found) continue; // skip account
 
-        double convRate = core_->accountList_.getAccountBaseCurrencyConvRate(repeat_entry->id_from_account);
-        double amount = 0.0;
-        if (repeat_entry->trans_type_ == TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_WITHDRAWAL])
-        {
-            amount = -repeat_entry->amount_from_ * convRate;
-        }
-        else if (repeat_entry->trans_type_ == TRANS_TYPE_DEF[TTransactionBillEntry::TYPE_DEPOSIT])
-        {
-            amount = +repeat_entry->amount_from_ * convRate;
-        }
-        else //if (transType == TRANS_TYPE_TRANSFER_STR)
+        double convRate = core_->accountList_.getAccountBaseCurrencyConvRate(repeat_entry->id_from_account_);
+        double amount = repeat_entry->AdjustedValue(repeat_entry->id_from_account_) * convRate;
+        if (to_account_found && repeat_entry->IsTransferTo(repeat_entry->id_to_account_))
         {
             double toConvRate = core_->accountList_.getAccountBaseCurrencyConvRate(repeat_entry->id_to_account_);
-            if (from_account_found) amount -= repeat_entry->amount_from_ * convRate;
-            if (to_account_found)   amount += repeat_entry->amount_to_ * toConvRate;
+            amount += repeat_entry->amount_to_ * toConvRate;
         }
 
         if (repeat_entry->UsingRepeatProcessing())
         {
-            while (repeat_entry->num_repeats_ > 0)
+            if (repeat_entry->UsingIn_X_Processing())
             {
-                mmRepeatForecast rf;
-                rf.date = repeat_entry->NextOccurDate();
-                rf.amount = amount;
-
-                fvec.push_back(rf);
-                repeat_entry->AdjustNextOccuranceDate();
+                SetRepeatForecast(fvec, repeat_entry.get(), amount);
+            }
+            else
+            {
+                while (repeat_entry->num_repeats_ > 0)
+                {
+                    SetRepeatForecast(fvec, repeat_entry.get(), amount);
+                }
             }
         }
         else
         {
             while((repeat_entry->NextOccurDate() < yearFromNow))
             {
-                mmRepeatForecast rf;
-                rf.date = repeat_entry->NextOccurDate();
-                rf.amount = amount;
-
-                fvec.push_back(rf);
-                repeat_entry->AdjustNextOccuranceDate();
+                SetRepeatForecast(fvec, repeat_entry.get(), amount);
             }
         }
     }
@@ -468,9 +466,47 @@ wxString mmReportCashFlow::getHTMLText_i()
     return hb.getHTMLText();
 }
 
+//-----------------------------------------------------------------------------
+mmReportCashFlowAllAccounts::mmReportCashFlowAllAccounts
+( mmCoreDB* core, mmGUIFrame* frame)
+: mmReportCashFlow(core, frame, 0)
+{
+    this->activateBankAccounts();
+    this->activateTermAccounts();
+}
+
+mmReportCashFlowBankAccounts::mmReportCashFlowBankAccounts
+( mmCoreDB* core, mmGUIFrame* frame)
+: mmReportCashFlow(core, frame, 0)
+{
+    this->activateBankAccounts();
+}
+
+mmReportCashFlowTermAccounts::mmReportCashFlowTermAccounts
+( mmCoreDB* core, mmGUIFrame* frame)
+: mmReportCashFlow(core, frame, 0)
+{
+    this->activateTermAccounts();
+}
+
+//-----------------------------------------------------------------------------
+mmReportCashFlowSpecificAccounts::mmReportCashFlowSpecificAccounts
+( mmCoreDB* core, mmGUIFrame* frame)
+: mmReportCashFlow(core, frame, 0)
+{
+    this->cashflowreporttype_ = 0;
+}
 
 wxString mmReportCashFlowSpecificAccounts::getHTMLText()
 {
     this->getSpecificAccounts();
     return this->getHTMLText_i();
+}
+
+//-----------------------------------------------------------------------------
+mmReportDailyCashFlowSpecificAccounts::mmReportDailyCashFlowSpecificAccounts
+( mmCoreDB* core, mmGUIFrame* frame)
+: mmReportCashFlowSpecificAccounts(core, frame)
+{
+    this->cashflowreporttype_ = 1;
 }
