@@ -8,167 +8,85 @@
 
 class mmDateRange
 {
-public:
-    mmDateRange(): today_(wxDateTime::Now().GetDateOnly())
-    {
-        start_date_ = today_;
-        end_date_ = today_;
-        title_ = "Date Range";
-    }
 protected:
     const wxDateTime today_;
     wxDateTime start_date_, end_date_;
     wxString title_;
 
 public:
-    const virtual wxDateTime start_date() const  { return this->start_date_; };
-    const virtual wxDateTime end_date() const  { return this->end_date_; };
-    const virtual wxDateTime today() const  { return this->today_; };
-    const virtual bool is_with_date() const { return true; }
-    const virtual wxString title() const { return title_;};
+    mmDateRange();
+    const virtual wxDateTime start_date() const;
+    const virtual wxDateTime end_date() const;
+    const virtual wxDateTime today() const;
+    const virtual bool is_with_date() const;
+    const virtual wxString title() const;
 };
 
 class mmCurrentMonth: public mmDateRange
 {
 public:
-    mmCurrentMonth(): mmDateRange()
-    {
-        this->start_date_ = wxDateTime(today_).SetDay(1);
-        this->end_date_ = today_.GetLastMonthDay();
-        this->title_ = _("Current Month");
-    }
+    mmCurrentMonth();
 };
 
 class mmCurrentMonthToDate: public mmDateRange
 {
 public:
-    mmCurrentMonthToDate(): mmDateRange()
-    {
-        this->start_date_ = wxDateTime(today_).SetDay(1);
-        // no change to end_date_
-        this->title_ = _("Current Month to Date");
-    }
+    mmCurrentMonthToDate();
 };
 
 class mmLastMonth: public mmDateRange
 {
 public:
-    mmLastMonth(): mmDateRange()
-    {
-        this->start_date_.Subtract(wxDateSpan::Months(1)).SetDay(1);
-        this->end_date_ = wxDateTime(this->start_date_).GetLastMonthDay();
-        this->title_ = _("Last Month");
-    }
+    mmLastMonth();
 };
 
 class mmLast30Days: public mmDateRange
 {
 public:
-    mmLast30Days(): mmDateRange()
-    {
-        this->start_date_ = wxDateTime(end_date_)
-            .Subtract(wxDateSpan::Months(1)).Add(wxDateSpan::Days(1));
-        // no change to end_date_
-        this->title_ = _("Last 30 Days");
-    }
+    mmLast30Days();
 };
 
 class mmLast12Months: public mmDateRange
 {
 public:
-    mmLast12Months(): mmDateRange()
-    {
-        this->start_date_ = wxDateTime(end_date_).SetDay(1)
-            .Add(wxDateSpan::Months(1)).Subtract(wxDateSpan::Years(1));
-        // no change to end_date_
-        this->title_ = _("Last 12 Months");
-    }
+    mmLast12Months();
 };
 
 class mmCurrentYear: public mmDateRange
 {
 public:
-    mmCurrentYear(): mmDateRange()
-    {
-        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
-        this->title_ = _("Current Year");
-    }
+    mmCurrentYear();
 };
 
 class mmCurrentYearToDate: public mmDateRange
 {
 public:
-    mmCurrentYearToDate(): mmDateRange()
-    {
-        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
-        // no change to end_date_
-        this->title_ = _("Current Year to Date");
-    }
+    mmCurrentYearToDate();
 };
 
 class mmLastYear: public mmDateRange
 {
 public:
-    mmLastYear(): mmDateRange()
-    {
-        this->start_date_.Subtract(wxDateSpan::Years(1))
-            .SetDay(1).SetMonth(wxDateTime::Jan);
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
-        this->title_ = _("Last Year");
-    }
+    mmLastYear();
 };
 
 class mmCurrentFinancialYear: public mmDateRange
 {
 public:
-    mmCurrentFinancialYear(const int day, const int month): mmDateRange()
-    {
-        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan);
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec).SetDay(31);
-        this->start_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1));
-        this->end_date_.Add(wxDateSpan::Days(day-1)).Add(wxDateSpan::Months(month-1));
-
-        if (today_ < start_date_)
-        {
-            start_date_.Subtract(wxDateSpan::Years(1));
-            end_date_.Subtract(wxDateSpan::Years(1));
-        }
-        this->title_ = _("Current Financial Year");
-    }
+    mmCurrentFinancialYear(const int day, const int month);
 };
 
 class mmLastFinancialYear: public mmDateRange
 {
 public:
-    mmLastFinancialYear(const int day, const int month): mmDateRange()
-    {
-        this->start_date_.SetDay(1).SetMonth(wxDateTime::Jan)
-            .Add(wxDateSpan::Days(day-1))
-            .Add(wxDateSpan::Months(month-1))
-            .Subtract(wxDateSpan::Years(1));;
-        this->end_date_ = wxDateTime(start_date_).SetMonth(wxDateTime::Dec)
-            .SetDay(31).Add(wxDateSpan::Days(day-1))
-            .Add(wxDateSpan::Months(month-1));
-
-        if (today_ >= start_date_)
-        {
-            this->start_date_.Subtract(wxDateSpan::Years(1));
-            this->end_date_.Subtract(wxDateSpan::Years(1));
-        }
-        this->title_ = _("Last Financial Year");
-    }
+    mmLastFinancialYear(const int day, const int month);
 };
 
 class mmAllTime: public mmDateRange
 {
 public:
-    mmAllTime(): mmDateRange()
-    {
-        this->title_ = _("Over Time");
-        this->start_date_.Subtract(today_);
-    }
-    const bool is_with_date() const { return false; }
+    mmAllTime();
+    const bool is_with_date() const;
 };
 
 #endif // _MM_EX_DATE_RANGE_H_
