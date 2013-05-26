@@ -364,7 +364,7 @@ void mmBDDialog::CreateControls()
     itemFlexGridSizer5->Add(staticTimesRepeat_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     textNumRepeats_ = new wxTextCtrl( this, ID_DIALOG_BD_TEXTCTRL_NUM_TIMES, "",
-                                      wxDefaultPosition, wxSize(110, -1), 0, wxFloatingPointValidator<double>() );
+                                      wxDefaultPosition, wxSize(110, -1), 0, wxIntegerValidator<int>() );
     itemFlexGridSizer5->Add(textNumRepeats_, flags);
     textNumRepeats_->SetMaxLength(12);
     setRepeatDetails();
