@@ -109,8 +109,10 @@ public:
     
     // Display next occurance date according to required user format
     wxString DisplayNextOccurDate();
-    // Used for cash flows to check for repeat transactions.
+    // Returns true when using any type of repeating transaction.
     bool UsingRepeatProcessing();
+    // Returns true when using In X Days/Months transaction.
+    bool UsingIn_X_Processing(int repeat_type);
 };
 
 /************************************************************************************

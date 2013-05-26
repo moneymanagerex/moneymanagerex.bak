@@ -303,6 +303,16 @@ bool TTransactionBillEntry::RequiresExecution(int& remaining_days)
     return execution_required;
 }
 
+bool TTransactionBillEntry::UsingIn_X_Processing(int repeat_type)
+{
+    bool result = false;
+    if ((repeat_type == TYPE_IN_X_DAYS) || (repeat_type_ == TYPE_IN_X_MONTHS))
+    {
+        result = true;
+    }
+    return result;
+}
+
 bool TTransactionBillEntry::UsingRepeatProcessing()
 {
     bool result = false;
