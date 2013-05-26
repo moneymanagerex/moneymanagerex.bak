@@ -306,6 +306,9 @@
     <ClCompile Include="..\..\..\src\reports\mmRepeat.cpp">
       <Filter>Source Files\reports</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\reports\mmDateRange.cpp">
+      <Filter>Source Files\reports</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\aboutdialog.h">

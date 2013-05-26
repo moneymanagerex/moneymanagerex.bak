@@ -288,6 +288,7 @@
     <ClCompile Include="..\..\..\src\reports\categexp.cpp" />
     <ClCompile Include="..\..\..\src\reports\categovertimeperf.cpp" />
     <ClCompile Include="..\..\..\src\reports\incexpenses.cpp" />
+    <ClCompile Include="..\..\..\src\reports\mmDateRange.cpp" />
     <ClCompile Include="..\..\..\src\reports\mmRepeat.cpp" />
     <ClCompile Include="..\..\..\src\reports\payee.cpp" />
     <ClCompile Include="..\..\..\src\reports\summary.cpp" />
