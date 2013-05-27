@@ -147,9 +147,10 @@ void mmReportsPanel::OnLinkClicked(wxHtmlLinkEvent& event)
         wxFileName LuaFile = sData;
         if (LuaFile.FileExists())
         {
-            TLuaInterface lua_core;
-            lua_result = lua_core.RunLuaFile(sData);
-            htmlWindow_->SetPage(lua_result);
+            mmHTMLBuilder hb;
+            TLuaInterface lua_core(&hb);
+            lua_core.RunLuaFile(sData);
+            htmlWindow_->SetPage(hb.getHTMLText());
         }
         else
             wxMessageBox(wxString::Format(_("File %s not found"), sData), "Lua Script", wxOK|wxICON_ERROR);

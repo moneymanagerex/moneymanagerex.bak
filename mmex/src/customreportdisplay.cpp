@@ -108,9 +108,8 @@ bool mmCustomReport::DisplaySQL_Results(mmHTMLBuilder& hb)
 
 void mmCustomReport::DisplayLua_Results(mmHTMLBuilder& hb)
 {
-    TLuaInterface lua_core;
-    wxString lua_result = lua_core.RunLuaCode(sScript_);
-    hb.addText(lua_result);
+    TLuaInterface lua_core(&hb);
+    lua_core.RunLuaCode(sScript_);
 }
 
 wxString mmCustomReport::getHTMLText()

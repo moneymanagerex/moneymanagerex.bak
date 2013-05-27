@@ -30,16 +30,18 @@ extern "C" {
 }
 
 static mmCurrencyList* g_static_currency_list;
-static mmHTMLBuilder* html_builder_;
 
 class TLuaInterface
 {
 public:
-    TLuaInterface();
+    TLuaInterface(mmHTMLBuilder* hb);
     ~TLuaInterface();
     
     wxString RunLuaCode(const wxString& lua_code);
     wxString RunLuaFile(const wxString& lua_filename);
+
+public:
+    static mmHTMLBuilder* html_builder_;
 
 private:
     lua_State* lua_;
