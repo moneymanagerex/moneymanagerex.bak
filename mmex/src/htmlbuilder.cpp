@@ -234,7 +234,10 @@ void mmHTMLBuilder::addTableCell(const wxString& value
 
 void mmHTMLBuilder::addTableCellMonth(int month)
 {
-    this->addTableCell(wxGetTranslation(wxDateTime::GetMonthName((wxDateTime::Month)month)));
+    if (month >= 0 && month < 12)
+        this->addTableCell(wxGetTranslation(wxDateTime::GetMonthName((wxDateTime::Month)month)));
+    else
+        this->addTableCell("");
 }
 
 void mmHTMLBuilder::addTableCellLink(const wxString& href

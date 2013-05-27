@@ -172,11 +172,13 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmHTMLBuilder",        cpp2lua_HTMLBuilder);
     lua_register(lua_, "mmHTMLTableCellMonth", cpp2lua_HTMLTableCellMonth);
     lua_register(lua_, "mmHTMLTableCellInteger", cpp2lua_HTMLTableCellInteger);
+    lua_register(lua_, "mmHTMLTableCell", cpp2lua_HTMLTableCell);
     lua_register(lua_, "mmHTMLReportHeader", cpp2lua_HTMLReportHeader);
     lua_register(lua_, "mmHTMLStartTable", cpp2lua_HTMLStartTable);
     lua_register(lua_, "mmHTMLEndTable", cpp2lua_HTMLEndTable);
     lua_register(lua_, "mmHTMLStartTableRow", cpp2lua_HTMLStartTableRow);
     lua_register(lua_, "mmHTMLEndTableRow", cpp2lua_HTMLEndTableRow);
+    lua_register(lua_, "mmHTMLTableHeaderCell", cpp2lua_mmHTMLTableHeaderCell);
 }
 
 /******************************************************************************
@@ -682,9 +684,21 @@ int TLuaInterface::cpp2lua_HTMLTableCellMonth(lua_State* lua)
     return 0;
 }
 
+int TLuaInterface::cpp2lua_HTMLTableCell(lua_State* lua)
+{
+    html_builder_->addTableCell(GetLuaString(lua));
+    return 0;
+}
+
 int TLuaInterface::cpp2lua_HTMLTableCellInteger(lua_State* lua)
 {
     html_builder_->addTableCell(wxString()<<GetLuaInteger(lua), true);
+    return 0;
+}
+
+int TLuaInterface::cpp2lua_mmHTMLTableHeaderCell(lua_State* lua)
+{
+    html_builder_->addTableHeaderCell(GetLuaString(lua));
     return 0;
 }
 
