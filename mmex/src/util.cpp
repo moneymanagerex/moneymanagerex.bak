@@ -151,7 +151,7 @@ wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
     dateFmt.Replace("%d", wxString::Format("%d", dt.GetDay()));
     dateFmt.Replace("%Y", wxString::Format("%d", dt.GetYear()));
     dateFmt.Replace("%y", wxString::Format("%d", dt.GetYear()).Mid(2,2));
-    dateFmt.Replace("%m", wxGetTranslation(wxDateTime::GetMonthName(dt.GetMonth())));
+    dateFmt.Replace("%m", wxGetTranslation(wxDateTime::GetEnglishMonthName(dt.GetMonth())));
 
     return dateFmt;
 }

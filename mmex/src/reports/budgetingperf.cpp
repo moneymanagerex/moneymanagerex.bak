@@ -99,7 +99,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     hb.addTableHeaderCell(_("Type"));
 
     for (wxDateTime::Month m = wxDateTime::Jan; m <= wxDateTime::Dec; m = wxDateTime::Month(m + 1))
-        hb.addTableHeaderCell(wxGetTranslation(wxDateTime::GetMonthName(m, wxDateTime::Name_Abbr)));
+        hb.addTableHeaderCell(wxGetTranslation(wxDateTime::GetEnglishMonthName(m, wxDateTime::Name_Abbr)));
     hb.addTableHeaderCell(_("Overall"));
     hb.addTableHeaderCell(_("%"));
     hb.endTableRow();

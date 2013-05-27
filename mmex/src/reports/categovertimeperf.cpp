@@ -61,7 +61,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     for (int i = 0; i < MONTHS_IN_PERIOD; i++)
     {
         wxDateTime d = wxDateTime(start_date).Add(wxDateSpan::Months(i));
-        hb.addTableHeaderCell(wxGetTranslation(wxDateTime::GetMonthName(d.GetMonth(), wxDateTime::Name_Abbr))
+        hb.addTableHeaderCell(wxGetTranslation(wxDateTime::GetEnglishMonthName(d.GetMonth(), wxDateTime::Name_Abbr))
             + wxString::Format("<br>%i", d.GetYear()));
     }
     hb.addTableHeaderCell(_("Overall"));

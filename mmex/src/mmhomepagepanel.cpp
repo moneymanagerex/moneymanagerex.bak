@@ -789,7 +789,7 @@ wxString mmHomePagePanel::getCalendarWidget()
     //hb.addTableCell(wxString()<<wxDateTime::Now().GetYear());
     hb.startTableCell();
     hb.font_settings(hb.font_size());
-    hb.bold(wxGetTranslation(wxDateTime::GetMonthName(today.GetMonth())));
+    hb.bold(wxGetTranslation(wxDateTime::GetEnglishMonthName(today.GetMonth())));
     hb.font_end();
     hb.endTableCell();
     hb.addTableCell("");
