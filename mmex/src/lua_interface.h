@@ -34,6 +34,16 @@ static mmCurrencyList* g_static_currency_list;
 class TLuaInterface
 {
 public:
+    struct Scriptable_HTMLBuilder
+    {
+       mmHTMLBuilder* hb_; 
+       Scriptable_HTMLBuilder(lua_State *L): hb_(0)
+       {}
+       ~Scriptable_HTMLBuilder()
+       {};
+    };
+
+public:
     TLuaInterface(mmHTMLBuilder* hb);
     ~TLuaInterface();
     
