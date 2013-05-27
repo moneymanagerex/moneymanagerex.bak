@@ -1258,7 +1258,7 @@ bool mmDBWrapper::deleteCurrency(wxSQLite3Database* db, int currencyID)
     return true;
 }
 
-bool mmDBWrapper::IsSelect(wxSQLite3Database* db, wxString sScript, int &rows)
+bool mmDBWrapper::IsSelect(wxSQLite3Database* db, const wxString& sScript, int &rows)
 {
     wxString sql_script_exception;
     wxString sql_modify;
@@ -1280,7 +1280,8 @@ bool mmDBWrapper::IsSelect(wxSQLite3Database* db, wxString sScript, int &rows)
     }
     return true;
 }
-int mmDBWrapper::mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxString> data, const wxString sql, long &lLastRowId)
+
+int mmDBWrapper::mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxString> data, const wxString& sql, long &lLastRowId)
 {
     int iError = 0;
     try

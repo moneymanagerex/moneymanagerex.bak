@@ -543,7 +543,7 @@ namespace mmDBWrapper
 std::shared_ptr<wxSQLite3Database> Open(const wxString &dbpath, const wxString &key = wxGetEmptyString());
 
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
-bool IsSelect(wxSQLite3Database* db, wxString sScript, int &rows);
+bool IsSelect(wxSQLite3Database* db, const wxString& sScript, int &rows);
 
 /* Creating new DBs */
 void initDB(wxSQLite3Database* db);
@@ -591,7 +591,7 @@ void completeBDInSeries(wxSQLite3Database* db, int bdID);
 void loadCurrencySettings(wxSQLite3Database* db, int currencyID);
 //double getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID);
 bool deleteCurrency(wxSQLite3Database* db, int currencyID);
-int mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxString> data, const wxString sql, long &lLastRowId);
+int mmSQLiteExecuteUpdate(wxSQLite3Database* db, std::vector<wxString> data, const wxString& sql, long &lLastRowId);
 
 wxString getLastDbPath(std::shared_ptr<MMEX_IniSettings> iniSettings, const wxString &defaultVal = wxGetEmptyString());
 
