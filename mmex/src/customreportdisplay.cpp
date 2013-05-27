@@ -116,7 +116,7 @@ void mmCustomReport::DisplayLua_Results(mmHTMLBuilder& hb)
 wxString mmCustomReport::getHTMLText()
 {
     mmHTMLBuilder hb;
-    //hb.init();
+    hb.clear();
 
     if (sScriptType_ == "SQL")
     {
@@ -131,6 +131,5 @@ wxString mmCustomReport::getHTMLText()
         hb.addParaText(_("Cannot execute unknown Script type"));
     }
 
-    //hb.end();
     return hb.getHTMLText();
 }

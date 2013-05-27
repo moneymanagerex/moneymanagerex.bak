@@ -22,6 +22,7 @@
 #include "defs.h"
 #include <iostream>
 #include "mmcoredb.h"
+#include "htmlbuilder.h"
 
 extern "C" {
 #include "lualib.h"
@@ -29,6 +30,7 @@ extern "C" {
 }
 
 static mmCurrencyList* g_static_currency_list;
+static mmHTMLBuilder* html_builder_;
 
 class TLuaInterface
 {
@@ -66,13 +68,13 @@ private:
     // All Lua functions provided by C++ for MMEX
     static int cpp2lua_Bell(lua_State* lua);
     static int cpp2lua_MessageBox(lua_State* lua);
-	static int cpp2lua_GetSQLResultSet(lua_State* lua);
-	static int cpp2lua_GetTableColumns(lua_State* lua);
-	static int cpp2lua_GetSingleChoice(lua_State* lua);
+    static int cpp2lua_GetSQLResultSet(lua_State* lua);
+    static int cpp2lua_GetTableColumns(lua_State* lua);
+    static int cpp2lua_GetSingleChoice(lua_State* lua);
     static int cpp2lua_GetColumnChoice(lua_State* lua);
     static int cpp2lua_GetTextFromUser(lua_State* lua);
     static int cpp2lua_GetTranslation(lua_State* lua);
-	static int cpp2lua_GetSiteContent(lua_State* lua);
+    static int cpp2lua_GetSiteContent(lua_State* lua);
 
     static int cpp2Lua_BaseCurrencyFormat(lua_State* lua);
     static int cpp2Lua_CurrencyFormat(lua_State* lua);

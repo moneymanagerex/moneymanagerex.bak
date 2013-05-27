@@ -32,6 +32,8 @@ TLuaInterface::TLuaInterface()
     g_static_currency_list = new mmCurrencyList(static_db_ptr());
     g_static_currency_list->SetInfoTable(info_table);
     g_static_currency_list->LoadCurrencies();
+    html_builder_ = new mmHTMLBuilder;
+    html_builder_->clear();
 
     lua_ = luaL_newstate();
     wxASSERT(lua_);
@@ -51,9 +53,7 @@ TLuaInterface::~TLuaInterface()
 // Passes Lua code in a string, to be run by Lua.
 wxString TLuaInterface::RunLuaCode(const wxString& lua_code)
 {
-    wxString html = "";
-    lua_pushstring(lua_, html.ToUTF8() );
-    lua_setglobal(lua_, "html_");
+    html_builder_->clear();
 
     lua_result_ = luaL_loadstring(lua_, lua_code.ToUTF8());
     if (lua_result_)
@@ -67,14 +67,14 @@ wxString TLuaInterface::RunLuaCode(const wxString& lua_code)
         return LuaErrorResult();
     }
 
-    lua_getglobal(lua_, "html_");
-    return GetLuaString(lua_);
+    return html_builder_->getHTMLText();
 
 }
 
 // Passes a filename containing Lua code, to be run by Lua.
 wxString TLuaInterface::RunLuaFile(const wxString& lua_filename)
 {
+    html_builder_->clear();
     lua_result_ = luaL_loadfile(lua_, lua_filename.ToUTF8());
     if (lua_result_)
     {
@@ -87,7 +87,7 @@ wxString TLuaInterface::RunLuaFile(const wxString& lua_filename)
         return LuaErrorResult();
     }
 
-    return wxString::FromUTF8(lua_tostring(lua_, -1));
+    return html_builder_->getHTMLText(); //wxString::FromUTF8(lua_tostring(lua_, -1));
 }
 
 // Decode the error into a literal string
@@ -610,9 +610,6 @@ int TLuaInterface::cpp2lua_GetLuaDir(lua_State* lua)
  *****************************************************************************/
 int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
 {
-    lua_getglobal(lua, "html_");
-    wxString html = GetLuaString(lua);
-
     wxString value_6;
     if (lua_gettop(lua) > 6 ) value_6 = GetLuaString(lua);
 
@@ -632,131 +629,85 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
     if (lua_gettop(lua) > 1 ) value_1 = GetLuaString(lua);
 
     wxString fn_name = GetLuaString(lua);
-
     wxString html_error = _("HTML_BUILDER: Syntax error function: %s");
-    mmHTMLBuilder hb;
+
     try
     {
-        if (fn_name == "Init") hb.init();
-        else if (fn_name == "StartTable") hb.startTable(value_1, value_2, value_3);
-        else if (fn_name == "EndTable") hb.endTable();
-        else if (fn_name == "StartTableRow") hb.startTableRow(value_1);
-        else if (fn_name == "EndTableRow") hb.endTableRow();
-        else if (fn_name == "StartTableCell") hb.startTableCell(value_1);
-        else if (fn_name == "EndTableCell") hb.endTableCell();
-        else if (fn_name == "AddTableHeaderCell") hb.addTableHeaderCell(value_1, !value_2.IsEmpty());
-        else if (fn_name == "AddTableHeaderRow") hb.addTableHeaderRow(value_1, wxAtoi(value_2));
-        else if (fn_name == "AddTableCell") hb.addTableCell(value_1, !value_2.IsEmpty()
+        if (fn_name == "Init") html_builder_->init();
+        else if (fn_name == "StartTable") html_builder_->startTable(value_1, value_2, value_3);
+        else if (fn_name == "EndTable") html_builder_->endTable();
+        else if (fn_name == "StartTableRow") html_builder_->startTableRow(value_1);
+        else if (fn_name == "EndTableRow") html_builder_->endTableRow();
+        else if (fn_name == "StartTableCell") html_builder_->startTableCell(value_1);
+        else if (fn_name == "EndTableCell") html_builder_->endTableCell();
+        else if (fn_name == "AddTableHeaderCell") html_builder_->addTableHeaderCell(value_1, !value_2.IsEmpty());
+        else if (fn_name == "AddTableHeaderRow") html_builder_->addTableHeaderRow(value_1, wxAtoi(value_2));
+        else if (fn_name == "AddTableCell") html_builder_->addTableCell(value_1, !value_2.IsEmpty()
             , !value_3.IsEmpty(), !value_4.IsEmpty(), value_5);
-        else if (fn_name == "AddTableCellLink") hb.addTableCellLink(value_1, value_2
+        else if (fn_name == "AddTableCellLink") html_builder_->addTableCellLink(value_1, value_2
             , !value_3.IsEmpty(), !value_4.IsEmpty()
             , !value_5.IsEmpty(), value_6);
-        else if (fn_name == "AddRowSeparator") hb.addRowSeparator(wxAtoi(value_1));
-        else if (fn_name == "AddTotalRow") hb.addTotalRow(value_1, wxAtoi(value_2), value_3);
-        else if (fn_name == "AddDateNow") hb.addDateNow();
-        else if (fn_name == "AddParaText") hb.addParaText(value_1);
-        else if (fn_name == "AddLineBreak") hb.addLineBreak();
-        else if (fn_name == "AddHorizontalLine") hb.addHorizontalLine(wxAtoi(value_1));
-        else if (fn_name == "StartCenter") hb.startCenter();
-        else if (fn_name == "EndCenter") hb.endCenter();
-        else if (fn_name == "End") hb.end();
+        else if (fn_name == "AddRowSeparator") html_builder_->addRowSeparator(wxAtoi(value_1));
+        else if (fn_name == "AddTotalRow") html_builder_->addTotalRow(value_1, wxAtoi(value_2), value_3);
+        else if (fn_name == "AddDateNow") html_builder_->addDateNow();
+        else if (fn_name == "AddParaText") html_builder_->addParaText(value_1);
+        else if (fn_name == "AddLineBreak") html_builder_->addLineBreak();
+        else if (fn_name == "AddHorizontalLine") html_builder_->addHorizontalLine(wxAtoi(value_1));
+        else if (fn_name == "StartCenter") html_builder_->startCenter();
+        else if (fn_name == "EndCenter") html_builder_->endCenter();
+        else if (fn_name == "End") html_builder_->end();
         else
         {
-            hb.addParaText(wxString::Format(html_error, fn_name));
+            html_builder_->addParaText(wxString::Format(html_error, fn_name));
         }
     }
     catch (...)
     {
-        hb.addParaText(wxString::Format(html_error, fn_name));
+        html_builder_->addParaText(wxString::Format(html_error, fn_name));
     }
 
-    html << hb.getHTMLText();
-    lua_pushstring(lua, html.ToUTF8() );
-    lua_setglobal(lua, "html_");
     return 0;
 }
 
 int TLuaInterface::cpp2lua_HTMLReportHeader(lua_State* lua)
 {
-    lua_getglobal(lua, "html_");
-    wxString html = GetLuaString(lua);
     wxString report_name = GetLuaString(lua);
-    mmHTMLBuilder hb;
-    hb.addHeader(1, report_name);
-    html << hb.getHTMLText();
-    lua_pushstring(lua, html.ToUTF8() );
-    lua_setglobal(lua, "html_");
+    html_builder_->addHeader(1, report_name);
     return 0;
 }
 
 int TLuaInterface::cpp2lua_HTMLTableCellMonth(lua_State* lua)
 {
-    lua_getglobal(lua, "html_");
-    wxString html = GetLuaString(lua);
-    mmHTMLBuilder hb;
-    hb.addTableCellMonth(GetLuaInteger(lua)-1);
-    html << hb.getHTMLText();
-    lua_pushstring(lua, html.ToUTF8() );
-    lua_setglobal(lua, "html_");
+    html_builder_->addTableCellMonth(GetLuaInteger(lua)-1);
     return 0;
 }
 
 int TLuaInterface::cpp2lua_HTMLTableCellInteger(lua_State* lua)
 {
-    lua_getglobal(lua, "html_");
-    wxString html = GetLuaString(lua);
-    mmHTMLBuilder hb;
-    hb.addTableCell(wxString()<<GetLuaInteger(lua), true);
-    html << hb.getHTMLText();
-    lua_pushstring(lua, html.ToUTF8() );
-    lua_setglobal(lua, "html_");
+    html_builder_->addTableCell(wxString()<<GetLuaInteger(lua), true);
     return 0;
 }
 
 int TLuaInterface::cpp2lua_HTMLStartTable(lua_State* lua)
 {
-    lua_getglobal(lua, "html_");
-    wxString html = GetLuaString(lua);
-    mmHTMLBuilder hb;
-    hb.startTable(GetLuaString(lua));
-    html << hb.getHTMLText();
-    lua_pushstring(lua, html.ToUTF8() );
-    lua_setglobal(lua, "html_");
+    html_builder_->startTable(GetLuaString(lua));
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLEndTable(lua_State* lua)
+int TLuaInterface::cpp2lua_HTMLEndTable(lua_State* /*lua*/)
 {
-    lua_getglobal(lua, "html_");
-    wxString html = GetLuaString(lua);
-    mmHTMLBuilder hb;
-    hb.endTable();
-    html << hb.getHTMLText();
-    lua_pushstring(lua, html.ToUTF8() );
-    lua_setglobal(lua, "html_");
+    html_builder_->endTable();
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLStartTableRow(lua_State* lua)
+int TLuaInterface::cpp2lua_HTMLStartTableRow(lua_State* /*lua*/)
 {
-    lua_getglobal(lua, "html_");
-    wxString html = GetLuaString(lua);
-    mmHTMLBuilder hb;
-    hb.startTableRow();
-    html << hb.getHTMLText();
-    lua_pushstring(lua, html.ToUTF8() );
-    lua_setglobal(lua, "html_");
+    html_builder_->startTableRow();
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLEndTableRow(lua_State* lua)
+int TLuaInterface::cpp2lua_HTMLEndTableRow(lua_State* /*lua*/)
 {
-    lua_getglobal(lua, "html_");
-    wxString html = GetLuaString(lua);
-    mmHTMLBuilder hb;
-    hb.endTableRow();
-    html << hb.getHTMLText();
-    lua_pushstring(lua, html.ToUTF8() );
-    lua_setglobal(lua, "html_");
+    html_builder_->endTableRow();
     return 0;
 }
