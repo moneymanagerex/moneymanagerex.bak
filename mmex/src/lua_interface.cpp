@@ -24,7 +24,8 @@
 #include <wx/stdpaths.h>
 
 // Constructor: Initialises Lua when an instant is created.
-TLuaInterface::TLuaInterface()
+mmHTMLBuilder* TLuaInterface::html_builder_ = 0;
+TLuaInterface::TLuaInterface(mmHTMLBuilder* hb)
 {
     std::shared_ptr<MMEX_IniSettings> info_table;
     info_table.reset(new MMEX_IniSettings(static_db_ptr(), true));
@@ -32,8 +33,6 @@ TLuaInterface::TLuaInterface()
     g_static_currency_list = new mmCurrencyList(static_db_ptr());
     g_static_currency_list->SetInfoTable(info_table);
     g_static_currency_list->LoadCurrencies();
-    html_builder_ = new mmHTMLBuilder;
-    html_builder_->clear();
 
     lua_ = luaL_newstate();
     wxASSERT(lua_);
@@ -53,8 +52,6 @@ TLuaInterface::~TLuaInterface()
 // Passes Lua code in a string, to be run by Lua.
 wxString TLuaInterface::RunLuaCode(const wxString& lua_code)
 {
-    html_builder_->clear();
-
     lua_result_ = luaL_loadstring(lua_, lua_code.ToUTF8());
     if (lua_result_)
     {
@@ -68,13 +65,11 @@ wxString TLuaInterface::RunLuaCode(const wxString& lua_code)
     }
 
     return html_builder_->getHTMLText();
-
 }
 
 // Passes a filename containing Lua code, to be run by Lua.
 wxString TLuaInterface::RunLuaFile(const wxString& lua_filename)
 {
-    html_builder_->clear();
     lua_result_ = luaL_loadfile(lua_, lua_filename.ToUTF8());
     if (lua_result_)
     {
