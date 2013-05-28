@@ -41,11 +41,6 @@
              But mmex_tests.cpp also defines main(). 
         -->
 
-        <if cond="TOOLSET=='unix'">
-            <define>IMPLEMENT_WXWIN_MAIN=</define>
-        </if>
-
-
     	<!-- relative to trunk/mmex -->
 
     	<set var="SRC">src/tests</set>
