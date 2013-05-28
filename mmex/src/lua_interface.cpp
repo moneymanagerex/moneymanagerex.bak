@@ -51,39 +51,41 @@ TLuaInterface::~TLuaInterface()
 }
 
 // Passes Lua code in a string, to be run by Lua.
-wxString TLuaInterface::RunLuaCode(const wxString& lua_code)
+bool TLuaInterface::RunLuaCode(const wxString& lua_code)
 {
     lua_result_ = luaL_loadstring(lua_, lua_code.ToUTF8());
     if (lua_result_)
     {
-        return LuaErrorResult();
+        this->html_builder_->addParaText(LuaErrorResult());
+        return false;
     }
 
     lua_result_ = lua_pcall(lua_, 0, LUA_MULTRET, 0);
     if (lua_result_)
     {
-        return LuaErrorResult();
+        this->html_builder_->addParaText(LuaErrorResult());
+        return false;
     }
-
-    return html_builder_->getHTMLText();
+    return true;
 }
 
 // Passes a filename containing Lua code, to be run by Lua.
-wxString TLuaInterface::RunLuaFile(const wxString& lua_filename)
+bool TLuaInterface::RunLuaFile(const wxString& lua_filename)
 {
     lua_result_ = luaL_loadfile(lua_, lua_filename.ToUTF8());
     if (lua_result_)
     {
-        return LuaErrorResult();
+        this->html_builder_->addParaText(LuaErrorResult());
+        return false;
     }
 
     lua_result_ = lua_pcall(lua_, 0, LUA_MULTRET, 0);
     if (lua_result_)
     {
-        return LuaErrorResult();
+        this->html_builder_->addParaText(LuaErrorResult());
+        return false;
     }
-
-    return html_builder_->getHTMLText(); //wxString::FromUTF8(lua_tostring(lua_, -1));
+    return true;
 }
 
 // Decode the error into a literal string
