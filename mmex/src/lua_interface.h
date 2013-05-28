@@ -47,8 +47,8 @@ public:
     TLuaInterface(mmHTMLBuilder* hb);
     ~TLuaInterface();
     
-    wxString RunLuaCode(const wxString& lua_code);
-    wxString RunLuaFile(const wxString& lua_filename);
+    bool RunLuaCode(const wxString& lua_code);
+    bool RunLuaFile(const wxString& lua_filename);
 
 public:
     static mmHTMLBuilder* html_builder_;
