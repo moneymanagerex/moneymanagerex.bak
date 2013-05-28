@@ -18,7 +18,7 @@ int ROUND( double x )
 
 float getFrequency(float vmax)
 {
-    const int max_steps = 5;
+    int max_steps = 5;
     float step = vmax/max_steps;
 
     const float base = 10;

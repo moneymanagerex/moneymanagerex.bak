@@ -922,8 +922,8 @@ wxDateTime mmBankTransactionList::getLastDate(int accountID) const
     return dt;
 }
 
-int mmBankTransactionList::getLastUsedCategoryID(const int accountID
-    , const int payeeID, const wxString sType, int& subcategID) const
+int mmBankTransactionList::getLastUsedCategoryID(int accountID
+    , int payeeID, const wxString sType, int& subcategID) const
 {
     int categ_id = -1;
     subcategID = -1;
@@ -952,7 +952,7 @@ int mmBankTransactionList::getLastUsedCategoryID(const int accountID
     return categ_id;
 }
 
-int mmBankTransactionList::getLastUsedPayeeID(const int accountID, wxString sType, int& categID, int& subcategID) const
+int mmBankTransactionList::getLastUsedPayeeID(int accountID, wxString sType, int& categID, int& subcategID) const
 {
     int payee_id = -1;
     int index = transactions_.size() - 1;
@@ -1208,7 +1208,7 @@ void mmBankTransactionList::deleteTransactions(int accountID)
     }
 }
 
-wxArrayString mmBankTransactionList::getTransactionNumber(const int accountID, const wxDateTime transaction_date) const
+wxArrayString mmBankTransactionList::getTransactionNumber(int accountID, const wxDateTime transaction_date) const
 {
     double trx_number, today_number = 1, max_number = 1;
     wxArrayString number_strings;
@@ -1236,7 +1236,7 @@ wxArrayString mmBankTransactionList::getTransactionNumber(const int accountID, c
     return number_strings;
 }
 
-int mmBankTransactionList::RelocatePayee(mmCoreDB* core, const int destPayeeID, const int sourcePayeeID, int& changedPayees_)
+int mmBankTransactionList::RelocatePayee(mmCoreDB* core, int destPayeeID, int sourcePayeeID, int& changedPayees_)
 {
 
     if (mmDBWrapper::relocatePayee(core_->db_.get(), destPayeeID, sourcePayeeID) == 0)
@@ -1259,7 +1259,7 @@ int mmBankTransactionList::RelocatePayee(mmCoreDB* core, const int destPayeeID, 
 }
 
 int mmBankTransactionList::RelocateCategory(mmCoreDB* core,
-    const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID,
+    int destCatID, int destSubCatID, int sourceCatID, int sourceSubCatID,
     int& changedCats, int& changedSubCats)
 {
     int err = mmDBWrapper::relocateCategory(core_->db_.get(),
@@ -1311,7 +1311,7 @@ void mmBankTransactionList::ChangeDateFormat()
     }
 }
 
-bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID, bool& bIncome, bool bIgnor_subcat) const
+bool mmBankTransactionList::IsCategoryUsed(int iCatID, int iSubCatID, bool& bIncome, bool bIgnor_subcat) const
 {
     int index = transactions_.size() - 1;
     double sum = 0;
@@ -1354,7 +1354,7 @@ bool mmBankTransactionList::IsCategoryUsed(const int iCatID, const int iSubCatID
     return bTrxUsed;
 }
 
-bool mmBankTransactionList::IsPayeeUsed(const int iPayeeID) const
+bool mmBankTransactionList::IsPayeeUsed(int iPayeeID) const
 {
     int index = transactions_.size() - 1;
     bool searching = false;

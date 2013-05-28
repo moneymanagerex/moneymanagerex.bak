@@ -100,7 +100,7 @@ public:
 
     /* updates the checking panel data */
     void initVirtualListControl();
-    void save_column_width(const int width);
+    void save_column_width(int width);
 
     /* Getter for Virtual List Control */
     wxString getItem(long item, long column);

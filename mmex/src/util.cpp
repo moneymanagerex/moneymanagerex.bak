@@ -480,7 +480,7 @@ int mmIniOptions::account_image_id(mmCoreDB* core, int account_id)
     selectedImage = 9;
     int t = 0, s = 0;
     const wxString acctType = core->accountList_.getAccountType(account_id);
-    const int acctStatus = core->accountList_.getAccountStatus(account_id);
+    int acctStatus = core->accountList_.getAccountStatus(account_id);
     bool favorite = core->accountList_.getAccountFavorite(account_id);
 
     if (acctStatus == mmAccount::MMEX_Closed)

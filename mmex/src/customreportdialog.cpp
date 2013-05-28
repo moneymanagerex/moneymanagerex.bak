@@ -21,8 +21,8 @@
 #include "paths.h"
 #include "util.h"
 
-const int titleTextWidth   = 200; // Determines width of Headings Textbox.
-const int sourceTextHeight = 200; // Determines height of Source Textbox.
+int titleTextWidth   = 200; // Determines width of Headings Textbox.
+int sourceTextHeight = 200; // Determines height of Source Textbox.
 
 IMPLEMENT_DYNAMIC_CLASS( mmCustomSQLDialog, wxDialog )
 

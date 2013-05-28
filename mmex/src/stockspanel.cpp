@@ -290,7 +290,7 @@ mmStocksPanel::~mmStocksPanel()
     if (m_imageList) delete m_imageList;
 }
 
-void mmStocksPanel::save_column_width(const int width)
+void mmStocksPanel::save_column_width(int width)
 {
     int i = width;
     int col_x = listCtrlAccount_->GetColumnWidth(i);
@@ -810,7 +810,7 @@ void mmStocksPanel::enableEditDeleteButtons(bool en)
     bM->Enable(en);
 }
 
-void mmStocksPanel::call_dialog(const int selectedIndex)
+void mmStocksPanel::call_dialog(int selectedIndex)
 {
     mmStockDialog dlg(core_, trans_[selectedIndex], true, accountID_, this);
     if (dlg.ShowModal() == wxID_OK)

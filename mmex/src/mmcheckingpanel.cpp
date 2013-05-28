@@ -128,7 +128,7 @@ public:
     void OnViewSplitTransaction(wxCommandEvent& event);
     long m_selectedIndex;
     long m_selectedForCopy;
-    void refreshVisualList(const int trans_id = -1);
+    void refreshVisualList(int trans_id = -1);
 
 private:
     DECLARE_NO_COPY_CLASS(TransactionListCtrl)
@@ -677,7 +677,7 @@ void mmCheckingPanel::setAccountSummary()
 }
 //----------------------------------------------------------------------------
 
-void mmCheckingPanel::initVirtualListControl(const int trans_id)
+void mmCheckingPanel::initVirtualListControl(int trans_id)
 {
     // clear everything
     m_trans.clear();
@@ -1540,7 +1540,7 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void TransactionListCtrl::refreshVisualList(const int trans_id)
+void TransactionListCtrl::refreshVisualList(int trans_id)
 {
     m_cp->initVirtualListControl(trans_id);
 

@@ -434,7 +434,7 @@ void mmNewAcctDialog::OnImageButton(wxCommandEvent& /*event*/)
     ev.SetEventObject( this );
 
     //Skip all images before custom images
-    const int k = 18;
+    int k = 18;
     wxMenu* mainMenu = new wxMenu;
     mainMenu->Append(new wxMenuItem(mainMenu, 0, "-=======-"));
 

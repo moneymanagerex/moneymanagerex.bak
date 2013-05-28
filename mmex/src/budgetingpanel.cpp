@@ -74,7 +74,7 @@ mmBudgetingPanel::~mmBudgetingPanel()
     mainFrame_->SetBudgetingPageInactive();
 }
 
-void mmBudgetingPanel::save_column_width(const int width)
+void mmBudgetingPanel::save_column_width(int width)
 {
     int col_x = listCtrlBudget_->GetColumnWidth(width);
     core_->iniSettings_->SetIntSetting(wxString::Format("BUDGET_COL%d_WIDTH", width), col_x);
@@ -169,7 +169,7 @@ void mmBudgetingPanel::CreateControls()
 
     budgetReportHeading_ = new wxStaticText(itemPanel3, wxID_ANY, "");
 
-    const int font_size = this->GetFont().GetPointSize();
+    int font_size = this->GetFont().GetPointSize();
     budgetReportHeading_->SetFont(wxFont(font_size+2, wxSWISS, wxNORMAL, wxBOLD, FALSE, ""));
 
     wxBoxSizer* budgetReportHeadingSizer = new wxBoxSizer(wxHORIZONTAL);

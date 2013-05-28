@@ -325,7 +325,7 @@ void mmTransDialog::SetTransferControls(bool transfer)
 
 void mmTransDialog::CreateControls()
 {
-    const int border = 5;
+    int border = 5;
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
     flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxEXPAND).Border(wxALL, border).Proportion(1);

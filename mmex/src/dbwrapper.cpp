@@ -654,7 +654,7 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
     }
 }
 
-int mmDBWrapper::relocatePayee(wxSQLite3Database* db, const int destPayeeID, const int sourcePayeeID)
+int mmDBWrapper::relocatePayee(wxSQLite3Database* db, int destPayeeID, int sourcePayeeID)
 {
     int changedPayees_, err = SQLITE_OK;
     //static const char SET_PAYEEID_CHECKINGACCOUNT_V1[] = "UPDATE CHECKINGACCOUNT_V1 SET PAYEEID = ? WHERE PAYEEID = ? ";
@@ -677,7 +677,7 @@ int mmDBWrapper::relocatePayee(wxSQLite3Database* db, const int destPayeeID, con
 }
 
 int mmDBWrapper::relocateCategory(wxSQLite3Database* db,
-    const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID)
+    int destCatID, int destSubCatID, int sourceCatID, int sourceSubCatID)
 {
     int err = SQLITE_OK;
     static const char sqlCat[] = "update checkingaccount_v1 set categid= ?, subcategid= ? "
@@ -773,7 +773,7 @@ int mmDBWrapper::getBudgetYearID(wxSQLite3Database* db, const wxString &year_nam
     return budgetYearID;
 }
 
-wxString mmDBWrapper::getBudgetYearForID(wxSQLite3Database* db, const int &year_id)
+wxString mmDBWrapper::getBudgetYearForID(wxSQLite3Database* db, int &year_id)
 {
      wxString year_name = "";
 
