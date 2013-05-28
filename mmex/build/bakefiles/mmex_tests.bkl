@@ -22,8 +22,8 @@
     </if>
     
     
-    <include file="../../build/bakefiles/common.bkl"/>
-    <include file="../../build/bakefiles/UnitTest++.bkl"/>
+    <include file="common.bkl"/>
+    <include file="UnitTest++.bkl"/>
 
 
     <!-- unit tests console application -->
