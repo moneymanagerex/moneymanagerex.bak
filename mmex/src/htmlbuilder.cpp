@@ -75,14 +75,14 @@ void mmHTMLBuilder::init()
     }
 }
 
-void mmHTMLBuilder::addHeader(const int level, const wxString& header)
+void mmHTMLBuilder::addHeader(int level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
     html_+= wxString::Format(tags::HEADER, header_font_size, header);
 }
 
-void mmHTMLBuilder::addHeaderItalic(const int level, const wxString& header)
+void mmHTMLBuilder::addHeaderItalic(int level, const wxString& header)
 {
     int header_font_size = level + font_size_;
     if (header_font_size > 7) header_font_size = 7;
@@ -110,7 +110,7 @@ void mmHTMLBuilder::startTable(const wxString& width
     color_.bgswitch = true;
 }
 
-void mmHTMLBuilder::addRowSeparator(const int cols)
+void mmHTMLBuilder::addRowSeparator(int cols)
 {
     color_.bgswitch = true;
 
@@ -127,7 +127,7 @@ void mmHTMLBuilder::addRowSeparator(const int cols)
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption
-    , const int cols, const wxString& value)
+    , int cols, const wxString& value)
 {
     this->startTableRow(color_.bgcolor);
     html_+= wxString::Format(tags::TABLE_CELL_SPAN, cols - 1);
@@ -144,7 +144,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, double value)
     this->addTotalRow(caption, cols, CurrencyFormatter::float2Money(value));
 }
 
-void mmHTMLBuilder::addTotalRow(const wxString& caption, const int cols
+void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols
     , const std::vector<wxString>& data)
 {
     html_+= wxString::Format(tags::TABLE_ROW, color_.bgcolor);
@@ -175,7 +175,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const std::ve
     this->addTotalRow(caption, cols, data_str);
 }
 
-void mmHTMLBuilder::addTableHeaderRow(const wxString& value, const int cols)
+void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols)
 {
     html_+= wxString::Format(tags::TABLE_ROW, color_.bgcolor);
     html_+= wxString::Format(tags::TABLE_HEADER, "left", color_.table_header, cols);
@@ -254,7 +254,7 @@ void mmHTMLBuilder::addTableHeaderCellLink(const wxString& href, const wxString&
 }
 
 void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href
-    , const wxString& value, const int cols)
+    , const wxString& value, int cols)
 {
     addTableHeaderRow(wxString::Format(tags::LINK, href, value ), cols);
 }

@@ -79,8 +79,8 @@ public:
     virtual void clear() { html_.clear(); }
 
     /** Create an HTML header and returns as a wxString */
-    void addHeader(const int level, const wxString& header);
-    void addHeaderItalic(const int level, const wxString& header);
+    void addHeader(int level, const wxString& header);
+    void addHeaderItalic(int level, const wxString& header);
     void addDateNow();
 
     /** Create an HTML Image tag */
@@ -91,14 +91,14 @@ public:
         , const wxString& valign = "left", const wxString& border = "0");
 
     /** Add a special row that is a separator, cols is the number of columns the row has to spread along */
-    void addRowSeparator(const int cols);
+    void addRowSeparator(int cols);
 
     /** Add a special row that will format total values */
-    void addTotalRow(const wxString& caption, const int cols, const wxString& value);
+    void addTotalRow(const wxString& caption, int cols, const wxString& value);
     void addTotalRow(const wxString& caption, int cols, double value);
 
     /** Add a special row that will format total values */
-    void addTotalRow(const wxString& caption, const int cols, const std::vector<wxString>& data);
+    void addTotalRow(const wxString& caption, int cols, const std::vector<wxString>& data);
     void addTotalRow(const wxString& caption, int cols, const std::vector<double>& data);
 
     /** Add a Table header cell */
@@ -108,10 +108,10 @@ public:
     void addTableHeaderCellLink(const wxString& href, const wxString& value);
 
     /** Add a Table header row */
-    void addTableHeaderRow(const wxString& value, const int cols = 0);
+    void addTableHeaderRow(const wxString& value, int cols = 0);
 
     /** Add a Table header row with link */
-    void addTableHeaderRowLink(const wxString& href, const wxString& value, const int cols = 0);
+    void addTableHeaderRowLink(const wxString& href, const wxString& value, int cols = 0);
 
     void addMoneyCell(double amount, bool color = true);
     void addMoneyCell(double amount, const wxString& color);
@@ -148,7 +148,7 @@ public:
     virtual void addLineBreak() { html_+= tags::BR; }
 
     /** Create an HTML HorizontalLine */
-    virtual void addHorizontalLine(const int size = 0) { html_+= wxString::Format(tags::HOR_LINE, size); }
+    virtual void addHorizontalLine(int size = 0) { html_+= wxString::Format(tags::HOR_LINE, size); }
 
     /** Starts a table cell (use only if want to nest other elements inside */
     virtual void startTableCell(const wxString& width = "0") { html_+= wxString::Format(tags::TABLE_CELL, width); }
@@ -159,7 +159,7 @@ public:
     virtual void italic(const wxString value) { html_+= wxString::Format(tags::ITALIC, value); }
     virtual void font_settings(int size, const wxString& color = "") { html_+= wxString::Format(tags::FONT, size, color); }
     virtual void font_end() { html_+= tags::FONT_END; }
-    virtual const int font_size() { return font_size_;}
+    virtual int font_size() { return font_size_;}
     virtual const wxString getHTMLText() const { return html_; }
     /** Centers the content from this point on */
     virtual void startCenter() { html_+= tags::CENTER; }
