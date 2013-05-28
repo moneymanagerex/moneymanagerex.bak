@@ -27,6 +27,7 @@
 mmHTMLBuilder* TLuaInterface::html_builder_ = 0;
 TLuaInterface::TLuaInterface(mmHTMLBuilder* hb)
 {
+    this->html_builder_ = hb;
     std::shared_ptr<MMEX_IniSettings> info_table;
     info_table.reset(new MMEX_IniSettings(static_db_ptr(), true));
 
