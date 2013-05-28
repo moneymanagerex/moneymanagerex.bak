@@ -66,6 +66,11 @@ bool TLuaInterface::RunLuaCode(const wxString& lua_code)
         this->html_builder_->addParaText(LuaErrorResult());
         return false;
     }
+
+    //Output Lua stack as html if not empty
+    if (lua_gettop(lua_) > 1)
+        this->html_builder_->addText(GetLuaString(lua_));
+
     return true;
 }
 
