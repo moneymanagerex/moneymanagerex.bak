@@ -5,6 +5,7 @@ local function get_stats()
     for m = 1, 12, 1 do m_stat[m] = (y_stat) end
     --test end
 
+    mmHTMLStartTable("50%")
     for m = 0, 12 , 1 do
         mmHTMLStartTableRow()
         mmHTMLTableCellMonth(m)
@@ -17,11 +18,12 @@ local function get_stats()
         end
         mmHTMLEndTableRow()
     end
+    mmHTMLEndTable()
 end
 -----------------------------------------------------------
 --Main function
 -----------------------------------------------------------
 mmHTMLReportHeader(_("Transaction Statistics"))
-mmHTMLStartTable("50%")
+--mmHTMLhr
 get_stats()
-mmHTMLEndTable()
+

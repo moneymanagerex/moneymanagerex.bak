@@ -95,16 +95,17 @@ private:
     static int cpp2lua_GetExeDir(lua_State* lua);
     static int cpp2lua_GetLuaDir(lua_State* lua);
 
-    static int cpp2lua_HTMLReportHeader(lua_State* lua);
-    static int cpp2lua_HTMLStartTable(lua_State* lua);
-    static int cpp2lua_HTMLEndTable(lua_State* lua);
-    static int cpp2lua_HTMLStartTableRow(lua_State* lua);
-    static int cpp2lua_HTMLEndTableRow(lua_State* lua);
-    static int cpp2lua_HTMLBuilder(lua_State* lua);
-    static int cpp2lua_HTMLTableCellMonth(lua_State* lua);
-    static int cpp2lua_HTMLTableCellInteger(lua_State* lua);
-    static int cpp2lua_HTMLTableCell(lua_State* lua);
-    static int cpp2lua_mmHTMLTableHeaderCell(lua_State* lua);
+    static int mmHTMLBuilderUni(lua_State* lua);
+    static int mmHTMLReportHeader(lua_State* lua);
+    static int mmHTMLStartTable(lua_State* lua);
+    static int mmHTMLEndTable(lua_State* lua);
+    static int mmHTMLStartTableRow(lua_State* lua);
+    static int mmHTMLEndTableRow(lua_State* lua);
+    static int mmHTMLTableCellMonth(lua_State* lua);
+    static int mmHTMLTableCellInteger(lua_State* lua);
+    static int mmHTMLTableCell(lua_State* lua);
+    static int mmHTMLTableHeaderCell(lua_State* lua);
+    static int mmHTMLhr(lua_State* lua);
 };
 
 #endif // _MM_EX_LUA_INTERFACE_H_
