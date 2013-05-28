@@ -43,49 +43,49 @@ WXSQLITE_CXXFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
 	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
 	-I..\..\lib\sqlite -I..\..\lib\wxsqlite $(CPPFLAGS) $(CXXFLAGS)
 WXSQLITE_OBJECTS =  \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\wxsqlite_wxsqlite3.o
+	wxsqlite_wxsqlite3.o
 SQLITE_CFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
 	$(__DEBUG_DEFINE_p) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
 SQLITE_OBJECTS =  \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\sqlite_sqlite3secure.o
+	sqlite_sqlite3secure.o
 LUA_CFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
 	$(__DEBUG_DEFINE_p) $(CPPFLAGS) $(CFLAGS)
 LUA_OBJECTS =  \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lapi.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lauxlib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lbaselib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lbitlib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lcode.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lcorolib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lctype.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ldblib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ldebug.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ldo.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ldump.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lfunc.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lgc.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_linit.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_liolib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_llex.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lmathlib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lmem.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_loadlib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lobject.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lopcodes.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_loslib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lparser.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lstate.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lstring.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lstrlib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ltable.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ltablib.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ltm.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lua.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_luac.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lundump.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lvm.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lzio.o
+	lua_lapi.o \
+	lua_lauxlib.o \
+	lua_lbaselib.o \
+	lua_lbitlib.o \
+	lua_lcode.o \
+	lua_lcorolib.o \
+	lua_lctype.o \
+	lua_ldblib.o \
+	lua_ldebug.o \
+	lua_ldo.o \
+	lua_ldump.o \
+	lua_lfunc.o \
+	lua_lgc.o \
+	lua_linit.o \
+	lua_liolib.o \
+	lua_llex.o \
+	lua_lmathlib.o \
+	lua_lmem.o \
+	lua_loadlib.o \
+	lua_lobject.o \
+	lua_lopcodes.o \
+	lua_loslib.o \
+	lua_lparser.o \
+	lua_lstate.o \
+	lua_lstring.o \
+	lua_lstrlib.o \
+	lua_ltable.o \
+	lua_ltablib.o \
+	lua_ltm.o \
+	lua_lua.o \
+	lua_luac.o \
+	lua_lundump.o \
+	lua_lvm.o \
+	lua_lzio.o
 MMEX_CXXFLAGS = -DHAVE_W32API_H $(____WX_SHARED) $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include -mthreads -W \
@@ -93,105 +93,99 @@ MMEX_CXXFLAGS = -DHAVE_W32API_H $(____WX_SHARED) $(__WXUNICODE_DEFINE_p) \
 	-I..\..\lib\sqlite -I..\..\lib\wxsqlite -I..\..\lib\lua\src -DNOPCH \
 	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_aboutdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_appstartdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_assetdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_assetspanel.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_billsdepositsdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_billsdepositspanel.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetentrydialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetingpanel.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetyeardialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetyearentrydialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_categdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_chart.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_constants.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_currencydialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_customreportdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_customreportdisplay.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_customreportindex.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_dbwrapper.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_fileviewerdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_filtertransdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_htmlbuilder.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_lua_interface.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_maincurrencydialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmCurrencyFormatter.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmOption.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmaccount.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmcategory.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmcheckingpanel.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmcoredb.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmcurrency.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmex.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmex_settings.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmgraphgenerator.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmgraphincexpensesmonth.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmgraphpie.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmgraphtopcategories.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmhelppanel.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmhomepagepanel.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmpayee.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmreportspanel.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmtransaction.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_newacctdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_optionsdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_paths.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_payeedialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_qif_export.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_qif_import.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_recentfiles.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_relocatecategorydialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_relocatepayeedialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_splitdetailsdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_splittransactionsdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_stockdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_stockspanel.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_transdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_univcsvdialog.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_util.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budget.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetcategorysummary.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetingperf.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_cashflow.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_categexp.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_categovertimeperf.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_incexpenses.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmDateRange.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmRepeat.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_payee.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_summary.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_summaryassets.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_summarystocks.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_transactions.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_trx_stats.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_account.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_assets.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budget_table.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budget_year.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_category.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_currency.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_entry_base.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_payee_table.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_settings.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_splittransaction.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_stocks.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_subcategory.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_transaction.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_transactionbill.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_platfdep.o \
-	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_resources_mmex_rc.o
+	mmex_aboutdialog.o \
+	mmex_appstartdialog.o \
+	mmex_assetdialog.o \
+	mmex_assetspanel.o \
+	mmex_billsdepositsdialog.o \
+	mmex_billsdepositspanel.o \
+	mmex_budgetentrydialog.o \
+	mmex_budgetingpanel.o \
+	mmex_budgetyeardialog.o \
+	mmex_budgetyearentrydialog.o \
+	mmex_categdialog.o \
+	mmex_chart.o \
+	mmex_constants.o \
+	mmex_currencydialog.o \
+	mmex_customreportdialog.o \
+	mmex_customreportdisplay.o \
+	mmex_customreportindex.o \
+	mmex_dbwrapper.o \
+	mmex_fileviewerdialog.o \
+	mmex_filtertransdialog.o \
+	mmex_htmlbuilder.o \
+	mmex_lua_interface.o \
+	mmex_maincurrencydialog.o \
+	mmex_mmCurrencyFormatter.o \
+	mmex_mmOption.o \
+	mmex_mmaccount.o \
+	mmex_mmcategory.o \
+	mmex_mmcheckingpanel.o \
+	mmex_mmcoredb.o \
+	mmex_mmcurrency.o \
+	mmex_mmex.o \
+	mmex_mmex_settings.o \
+	mmex_mmgraphgenerator.o \
+	mmex_mmgraphincexpensesmonth.o \
+	mmex_mmgraphpie.o \
+	mmex_mmgraphtopcategories.o \
+	mmex_mmhelppanel.o \
+	mmex_mmhomepagepanel.o \
+	mmex_mmpayee.o \
+	mmex_mmreportspanel.o \
+	mmex_mmtransaction.o \
+	mmex_newacctdialog.o \
+	mmex_optionsdialog.o \
+	mmex_paths.o \
+	mmex_payeedialog.o \
+	mmex_qif_export.o \
+	mmex_qif_import.o \
+	mmex_recentfiles.o \
+	mmex_relocatecategorydialog.o \
+	mmex_relocatepayeedialog.o \
+	mmex_splitdetailsdialog.o \
+	mmex_splittransactionsdialog.o \
+	mmex_stockdialog.o \
+	mmex_stockspanel.o \
+	mmex_transdialog.o \
+	mmex_univcsvdialog.o \
+	mmex_util.o \
+	mmex_budget.o \
+	mmex_budgetcategorysummary.o \
+	mmex_budgetingperf.o \
+	mmex_cashflow.o \
+	mmex_categexp.o \
+	mmex_categovertimeperf.o \
+	mmex_incexpenses.o \
+	mmex_mmDateRange.o \
+	mmex_mmRepeat.o \
+	mmex_payee.o \
+	mmex_summary.o \
+	mmex_summaryassets.o \
+	mmex_summarystocks.o \
+	mmex_transactions.o \
+	mmex_trx_stats.o \
+	mmex_account.o \
+	mmex_assets.o \
+	mmex_budget_table.o \
+	mmex_budget_year.o \
+	mmex_category.o \
+	mmex_currency.o \
+	mmex_entry_base.o \
+	mmex_payee_table.o \
+	mmex_settings.o \
+	mmex_splittransaction.o \
+	mmex_stocks.o \
+	mmex_subcategory.o \
+	mmex_transaction.o \
+	mmex_transactionbill.o \
+	mmex_platfdep.o \
+	mmex_resources_mmex_rc.o
 
 ### Conditionally set variables: ###
 
-ifeq ($(WX_SHARED),0)
-SHAREDBUILDPOSTFIX = static
-endif
-ifeq ($(WX_SHARED),1)
-SHAREDBUILDPOSTFIX = shared
-endif
-ifeq ($(WX_UNICODE),1)
-UNICODEBUILDPOSTFIX = u
+ifeq ($(WX_DEBUG),1)
+WX3RDPARTYLIBPOSTFIX = d
 endif
 ifeq ($(WX_SHARED),0)
 ____mmex_LIB_SUF_FILENAMES = _lib
@@ -259,9 +253,6 @@ endif
 ifeq ($(WX_DEBUG),1)
 __setup_DEBUG = -debug
 endif
-ifeq ($(WX_DEBUG),1)
-POSTFIX = d
-endif
 ifeq ($(WX_SHARED),0)
 ____WX_SHARED = 
 endif
@@ -315,13 +306,9 @@ __DEBUGINFO = -g
 endif
 
 
-all: gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-x86
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-x86:
-	-if not exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-x86 mkdir gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-x86
-
 ### Targets: ###
 
-all: test_for_selected_wxbuild gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libwxsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\liblua.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex.exe po
+all: test_for_selected_wxbuild libwxsqlite.a libsqlite.a liblua.a mmex.exe po
 
 install: install_mmex
 	-mkdir $(PREFIX)\mmex
@@ -349,12 +336,12 @@ uninstall: uninstall_mmex
 	-if exist $(PREFIX)\mmex\po\*.mo -del *.mo
 
 clean: 
-	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\*.o del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\*.o
-	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\*.d del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\*.d
-	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libwxsqlite.a del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libwxsqlite.a
-	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libsqlite.a del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libsqlite.a
-	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\liblua.a del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\liblua.a
-	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex.exe del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex.exe
+	-if exist .\*.o del .\*.o
+	-if exist .\*.d del .\*.d
+	-if exist libwxsqlite.a del libwxsqlite.a
+	-if exist libsqlite.a del libsqlite.a
+	-if exist liblua.a del liblua.a
+	-if exist mmex.exe del mmex.exe
 	$(MAKE) -C ..\..\po -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C ..\..\setup\win -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) clean
@@ -371,27 +358,27 @@ test_for_selected_wxbuild:
 	@if not exist $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX)\wx\setup.h \
 	exit 1
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libwxsqlite.a: $(WXSQLITE_OBJECTS)
+libwxsqlite.a: $(WXSQLITE_OBJECTS)
 	if exist $@ del $@
 	ar rcu $@ $(WXSQLITE_OBJECTS)
 	ranlib $@
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libsqlite.a: $(SQLITE_OBJECTS)
+libsqlite.a: $(SQLITE_OBJECTS)
 	if exist $@ del $@
 	ar rcu $@ $(SQLITE_OBJECTS)
 	ranlib $@
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\liblua.a: $(LUA_OBJECTS)
+liblua.a: $(LUA_OBJECTS)
 	if exist $@ del $@
 	ar rcu $@ $(LUA_OBJECTS)
 	ranlib $@
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex.exe: $(MMEX_OBJECTS) gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libwxsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\liblua.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_resources_mmex_rc.o
-	$(CXX) -o $@ $(MMEX_OBJECTS)  -L$(WX_DIR)\lib\gcc$(____mmex_LIB_SUF_FILENAMES) -mthreads -L$(WX_DIR)$(WXLIBPATH)  -mthreads $(__DEBUGINFO) -Wl,--subsystem,windows -mwindows $(LDFLAGS)  gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libwxsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\libsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\liblua.a $(__WXLIB_CORE_NAME_p) $(__WXLIB_QA_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) -lwxtiff$(POSTFIX) -lwxjpeg$(POSTFIX) -lwxpng$(POSTFIX) -lwxzlib$(POSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(POSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32
+mmex.exe: $(MMEX_OBJECTS) libwxsqlite.a libsqlite.a liblua.a mmex_resources_mmex_rc.o
+	$(CXX) -o $@ $(MMEX_OBJECTS)  -L$(WX_DIR)\lib\gcc$(____mmex_LIB_SUF_FILENAMES) -mthreads -L$(WX_DIR)$(WXLIBPATH)  -mthreads $(__DEBUGINFO) -Wl,--subsystem,windows -mwindows $(LDFLAGS)  libwxsqlite.a libsqlite.a liblua.a $(__WXLIB_CORE_NAME_p) $(__WXLIB_QA_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32
 
-install_mmex: gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex.exe
+install_mmex: mmex.exe
 	-mkdir $(PREFIX)\mmex\bin
-	copy /Y gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex.exe $(PREFIX)\mmex\bin
+	copy /Y mmex.exe $(PREFIX)\mmex\bin
 
 uninstall_mmex: 
 	-del $(PREFIX)\mmex\bin\mmex.exe
@@ -400,381 +387,381 @@ po:
 	$(MAKE) -C ..\..\po -f makefile.gcc $(MAKEARGS) all
 
 setup: all
-	$(MAKE) -C ..\..\setup\win -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="..\..\build\msw\gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)-x86" CPU_ARCH="x86" CRT_DLLS="$(MINGWDIR)\bin\libgcc_s_*.dll" FORMAT="mingw" all
+	$(MAKE) -C ..\..\setup\win -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="..\..\build\msw\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)-x86" CPU_ARCH="x86" CRT_DLLS="$(MINGWDIR)\bin\libgcc_s_*.dll" FORMAT="mingw" all
 
 check: 
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) check
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\wxsqlite_wxsqlite3.o: ../../lib/wxsqlite/wxsqlite3.cpp
+wxsqlite_wxsqlite3.o: ../../lib/wxsqlite/wxsqlite3.cpp
 	$(CXX) -c -o $@ $(WXSQLITE_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\sqlite_sqlite3secure.o: ../../lib/sqlite/sqlite3secure.c
+sqlite_sqlite3secure.o: ../../lib/sqlite/sqlite3secure.c
 	$(CC) -c -o $@ $(SQLITE_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lapi.o: ../../lib/lua/src/lapi.c
+lua_lapi.o: ../../lib/lua/src/lapi.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lauxlib.o: ../../lib/lua/src/lauxlib.c
+lua_lauxlib.o: ../../lib/lua/src/lauxlib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lbaselib.o: ../../lib/lua/src/lbaselib.c
+lua_lbaselib.o: ../../lib/lua/src/lbaselib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lbitlib.o: ../../lib/lua/src/lbitlib.c
+lua_lbitlib.o: ../../lib/lua/src/lbitlib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lcode.o: ../../lib/lua/src/lcode.c
+lua_lcode.o: ../../lib/lua/src/lcode.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lcorolib.o: ../../lib/lua/src/lcorolib.c
+lua_lcorolib.o: ../../lib/lua/src/lcorolib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lctype.o: ../../lib/lua/src/lctype.c
+lua_lctype.o: ../../lib/lua/src/lctype.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ldblib.o: ../../lib/lua/src/ldblib.c
+lua_ldblib.o: ../../lib/lua/src/ldblib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ldebug.o: ../../lib/lua/src/ldebug.c
+lua_ldebug.o: ../../lib/lua/src/ldebug.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ldo.o: ../../lib/lua/src/ldo.c
+lua_ldo.o: ../../lib/lua/src/ldo.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ldump.o: ../../lib/lua/src/ldump.c
+lua_ldump.o: ../../lib/lua/src/ldump.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lfunc.o: ../../lib/lua/src/lfunc.c
+lua_lfunc.o: ../../lib/lua/src/lfunc.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lgc.o: ../../lib/lua/src/lgc.c
+lua_lgc.o: ../../lib/lua/src/lgc.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_linit.o: ../../lib/lua/src/linit.c
+lua_linit.o: ../../lib/lua/src/linit.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_liolib.o: ../../lib/lua/src/liolib.c
+lua_liolib.o: ../../lib/lua/src/liolib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_llex.o: ../../lib/lua/src/llex.c
+lua_llex.o: ../../lib/lua/src/llex.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lmathlib.o: ../../lib/lua/src/lmathlib.c
+lua_lmathlib.o: ../../lib/lua/src/lmathlib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lmem.o: ../../lib/lua/src/lmem.c
+lua_lmem.o: ../../lib/lua/src/lmem.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_loadlib.o: ../../lib/lua/src/loadlib.c
+lua_loadlib.o: ../../lib/lua/src/loadlib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lobject.o: ../../lib/lua/src/lobject.c
+lua_lobject.o: ../../lib/lua/src/lobject.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lopcodes.o: ../../lib/lua/src/lopcodes.c
+lua_lopcodes.o: ../../lib/lua/src/lopcodes.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_loslib.o: ../../lib/lua/src/loslib.c
+lua_loslib.o: ../../lib/lua/src/loslib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lparser.o: ../../lib/lua/src/lparser.c
+lua_lparser.o: ../../lib/lua/src/lparser.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lstate.o: ../../lib/lua/src/lstate.c
+lua_lstate.o: ../../lib/lua/src/lstate.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lstring.o: ../../lib/lua/src/lstring.c
+lua_lstring.o: ../../lib/lua/src/lstring.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lstrlib.o: ../../lib/lua/src/lstrlib.c
+lua_lstrlib.o: ../../lib/lua/src/lstrlib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ltable.o: ../../lib/lua/src/ltable.c
+lua_ltable.o: ../../lib/lua/src/ltable.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ltablib.o: ../../lib/lua/src/ltablib.c
+lua_ltablib.o: ../../lib/lua/src/ltablib.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_ltm.o: ../../lib/lua/src/ltm.c
+lua_ltm.o: ../../lib/lua/src/ltm.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lua.o: ../../lib/lua/src/lua.c
+lua_lua.o: ../../lib/lua/src/lua.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_luac.o: ../../lib/lua/src/luac.c
+lua_luac.o: ../../lib/lua/src/luac.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lundump.o: ../../lib/lua/src/lundump.c
+lua_lundump.o: ../../lib/lua/src/lundump.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lvm.o: ../../lib/lua/src/lvm.c
+lua_lvm.o: ../../lib/lua/src/lvm.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\lua_lzio.o: ../../lib/lua/src/lzio.c
+lua_lzio.o: ../../lib/lua/src/lzio.c
 	$(CC) -c -o $@ $(LUA_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_aboutdialog.o: ../../src/aboutdialog.cpp
+mmex_aboutdialog.o: ../../src/aboutdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_appstartdialog.o: ../../src/appstartdialog.cpp
+mmex_appstartdialog.o: ../../src/appstartdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_assetdialog.o: ../../src/assetdialog.cpp
+mmex_assetdialog.o: ../../src/assetdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_assetspanel.o: ../../src/assetspanel.cpp
+mmex_assetspanel.o: ../../src/assetspanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_billsdepositsdialog.o: ../../src/billsdepositsdialog.cpp
+mmex_billsdepositsdialog.o: ../../src/billsdepositsdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_billsdepositspanel.o: ../../src/billsdepositspanel.cpp
+mmex_billsdepositspanel.o: ../../src/billsdepositspanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetentrydialog.o: ../../src/budgetentrydialog.cpp
+mmex_budgetentrydialog.o: ../../src/budgetentrydialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetingpanel.o: ../../src/budgetingpanel.cpp
+mmex_budgetingpanel.o: ../../src/budgetingpanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetyeardialog.o: ../../src/budgetyeardialog.cpp
+mmex_budgetyeardialog.o: ../../src/budgetyeardialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetyearentrydialog.o: ../../src/budgetyearentrydialog.cpp
+mmex_budgetyearentrydialog.o: ../../src/budgetyearentrydialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_categdialog.o: ../../src/categdialog.cpp
+mmex_categdialog.o: ../../src/categdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_chart.o: ../../src/chart.cpp
+mmex_chart.o: ../../src/chart.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_constants.o: ../../src/constants.cpp
+mmex_constants.o: ../../src/constants.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_currencydialog.o: ../../src/currencydialog.cpp
+mmex_currencydialog.o: ../../src/currencydialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_customreportdialog.o: ../../src/customreportdialog.cpp
+mmex_customreportdialog.o: ../../src/customreportdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_customreportdisplay.o: ../../src/customreportdisplay.cpp
+mmex_customreportdisplay.o: ../../src/customreportdisplay.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_customreportindex.o: ../../src/customreportindex.cpp
+mmex_customreportindex.o: ../../src/customreportindex.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_dbwrapper.o: ../../src/dbwrapper.cpp
+mmex_dbwrapper.o: ../../src/dbwrapper.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_fileviewerdialog.o: ../../src/fileviewerdialog.cpp
+mmex_fileviewerdialog.o: ../../src/fileviewerdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_filtertransdialog.o: ../../src/filtertransdialog.cpp
+mmex_filtertransdialog.o: ../../src/filtertransdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_htmlbuilder.o: ../../src/htmlbuilder.cpp
+mmex_htmlbuilder.o: ../../src/htmlbuilder.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_lua_interface.o: ../../src/lua_interface.cpp
+mmex_lua_interface.o: ../../src/lua_interface.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_maincurrencydialog.o: ../../src/maincurrencydialog.cpp
+mmex_maincurrencydialog.o: ../../src/maincurrencydialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmCurrencyFormatter.o: ../../src/mmCurrencyFormatter.cpp
+mmex_mmCurrencyFormatter.o: ../../src/mmCurrencyFormatter.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmOption.o: ../../src/mmOption.cpp
+mmex_mmOption.o: ../../src/mmOption.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmaccount.o: ../../src/mmaccount.cpp
+mmex_mmaccount.o: ../../src/mmaccount.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmcategory.o: ../../src/mmcategory.cpp
+mmex_mmcategory.o: ../../src/mmcategory.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmcheckingpanel.o: ../../src/mmcheckingpanel.cpp
+mmex_mmcheckingpanel.o: ../../src/mmcheckingpanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmcoredb.o: ../../src/mmcoredb.cpp
+mmex_mmcoredb.o: ../../src/mmcoredb.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmcurrency.o: ../../src/mmcurrency.cpp
+mmex_mmcurrency.o: ../../src/mmcurrency.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmex.o: ../../src/mmex.cpp
+mmex_mmex.o: ../../src/mmex.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmex_settings.o: ../../src/mmex_settings.cpp
+mmex_mmex_settings.o: ../../src/mmex_settings.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmgraphgenerator.o: ../../src/mmgraphgenerator.cpp
+mmex_mmgraphgenerator.o: ../../src/mmgraphgenerator.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmgraphincexpensesmonth.o: ../../src/mmgraphincexpensesmonth.cpp
+mmex_mmgraphincexpensesmonth.o: ../../src/mmgraphincexpensesmonth.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmgraphpie.o: ../../src/mmgraphpie.cpp
+mmex_mmgraphpie.o: ../../src/mmgraphpie.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmgraphtopcategories.o: ../../src/mmgraphtopcategories.cpp
+mmex_mmgraphtopcategories.o: ../../src/mmgraphtopcategories.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmhelppanel.o: ../../src/mmhelppanel.cpp
+mmex_mmhelppanel.o: ../../src/mmhelppanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmhomepagepanel.o: ../../src/mmhomepagepanel.cpp
+mmex_mmhomepagepanel.o: ../../src/mmhomepagepanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmpayee.o: ../../src/mmpayee.cpp
+mmex_mmpayee.o: ../../src/mmpayee.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmreportspanel.o: ../../src/mmreportspanel.cpp
+mmex_mmreportspanel.o: ../../src/mmreportspanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmtransaction.o: ../../src/mmtransaction.cpp
+mmex_mmtransaction.o: ../../src/mmtransaction.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_newacctdialog.o: ../../src/newacctdialog.cpp
+mmex_newacctdialog.o: ../../src/newacctdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_optionsdialog.o: ../../src/optionsdialog.cpp
+mmex_optionsdialog.o: ../../src/optionsdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_paths.o: ../../src/paths.cpp
+mmex_paths.o: ../../src/paths.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_payeedialog.o: ../../src/payeedialog.cpp
+mmex_payeedialog.o: ../../src/payeedialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_qif_export.o: ../../src/qif_export.cpp
+mmex_qif_export.o: ../../src/qif_export.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_qif_import.o: ../../src/qif_import.cpp
+mmex_qif_import.o: ../../src/qif_import.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_recentfiles.o: ../../src/recentfiles.cpp
+mmex_recentfiles.o: ../../src/recentfiles.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_relocatecategorydialog.o: ../../src/relocatecategorydialog.cpp
+mmex_relocatecategorydialog.o: ../../src/relocatecategorydialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_relocatepayeedialog.o: ../../src/relocatepayeedialog.cpp
+mmex_relocatepayeedialog.o: ../../src/relocatepayeedialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_splitdetailsdialog.o: ../../src/splitdetailsdialog.cpp
+mmex_splitdetailsdialog.o: ../../src/splitdetailsdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_splittransactionsdialog.o: ../../src/splittransactionsdialog.cpp
+mmex_splittransactionsdialog.o: ../../src/splittransactionsdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_stockdialog.o: ../../src/stockdialog.cpp
+mmex_stockdialog.o: ../../src/stockdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_stockspanel.o: ../../src/stockspanel.cpp
+mmex_stockspanel.o: ../../src/stockspanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_transdialog.o: ../../src/transdialog.cpp
+mmex_transdialog.o: ../../src/transdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_univcsvdialog.o: ../../src/univcsvdialog.cpp
+mmex_univcsvdialog.o: ../../src/univcsvdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_util.o: ../../src/util.cpp
+mmex_util.o: ../../src/util.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budget.o: ../../src/reports/budget.cpp
+mmex_budget.o: ../../src/reports/budget.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetcategorysummary.o: ../../src/reports/budgetcategorysummary.cpp
+mmex_budgetcategorysummary.o: ../../src/reports/budgetcategorysummary.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budgetingperf.o: ../../src/reports/budgetingperf.cpp
+mmex_budgetingperf.o: ../../src/reports/budgetingperf.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_cashflow.o: ../../src/reports/cashflow.cpp
+mmex_cashflow.o: ../../src/reports/cashflow.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_categexp.o: ../../src/reports/categexp.cpp
+mmex_categexp.o: ../../src/reports/categexp.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_categovertimeperf.o: ../../src/reports/categovertimeperf.cpp
+mmex_categovertimeperf.o: ../../src/reports/categovertimeperf.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_incexpenses.o: ../../src/reports/incexpenses.cpp
+mmex_incexpenses.o: ../../src/reports/incexpenses.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmDateRange.o: ../../src/reports/mmDateRange.cpp
+mmex_mmDateRange.o: ../../src/reports/mmDateRange.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_mmRepeat.o: ../../src/reports/mmRepeat.cpp
+mmex_mmRepeat.o: ../../src/reports/mmRepeat.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_payee.o: ../../src/reports/payee.cpp
+mmex_payee.o: ../../src/reports/payee.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_summary.o: ../../src/reports/summary.cpp
+mmex_summary.o: ../../src/reports/summary.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_summaryassets.o: ../../src/reports/summaryassets.cpp
+mmex_summaryassets.o: ../../src/reports/summaryassets.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_summarystocks.o: ../../src/reports/summarystocks.cpp
+mmex_summarystocks.o: ../../src/reports/summarystocks.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_transactions.o: ../../src/reports/transactions.cpp
+mmex_transactions.o: ../../src/reports/transactions.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_trx_stats.o: ../../src/reports/trx_stats.cpp
+mmex_trx_stats.o: ../../src/reports/trx_stats.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_account.o: ../../src/db/account.cpp
+mmex_account.o: ../../src/db/account.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_assets.o: ../../src/db/assets.cpp
+mmex_assets.o: ../../src/db/assets.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budget_table.o: ../../src/db/budget_table.cpp
+mmex_budget_table.o: ../../src/db/budget_table.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_budget_year.o: ../../src/db/budget_year.cpp
+mmex_budget_year.o: ../../src/db/budget_year.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_category.o: ../../src/db/category.cpp
+mmex_category.o: ../../src/db/category.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_currency.o: ../../src/db/currency.cpp
+mmex_currency.o: ../../src/db/currency.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_entry_base.o: ../../src/db/entry_base.cpp
+mmex_entry_base.o: ../../src/db/entry_base.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_payee_table.o: ../../src/db/payee_table.cpp
+mmex_payee_table.o: ../../src/db/payee_table.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_settings.o: ../../src/db/settings.cpp
+mmex_settings.o: ../../src/db/settings.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_splittransaction.o: ../../src/db/splittransaction.cpp
+mmex_splittransaction.o: ../../src/db/splittransaction.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_stocks.o: ../../src/db/stocks.cpp
+mmex_stocks.o: ../../src/db/stocks.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_subcategory.o: ../../src/db/subcategory.cpp
+mmex_subcategory.o: ../../src/db/subcategory.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_transaction.o: ../../src/db/transaction.cpp
+mmex_transaction.o: ../../src/db/transaction.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_transactionbill.o: ../../src/db/transactionbill.cpp
+mmex_transactionbill.o: ../../src/db/transactionbill.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_platfdep.o: ../../src/win/platfdep.cpp
+mmex_platfdep.o: ../../src/win/platfdep.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_resources_mmex_rc.o: ../../resources/mmex.rc
+mmex_resources_mmex_rc.o: ../../resources/mmex.rc
 	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(____WX_SHARED_26_p_1) $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_4) --include-dir ../../lib/sqlite --include-dir ../../lib/wxsqlite --include-dir ../../lib/lua/src --define NOPCH
 
 .PHONY: all install uninstall clean install_mmex uninstall_mmex po setup check
@@ -783,4 +770,4 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(POSTFIX)-x86\mmex_resources_mm
 SHELL := $(COMSPEC)
 
 # Dependencies tracking:
--include gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-x86/*.d
+-include ./*.d
