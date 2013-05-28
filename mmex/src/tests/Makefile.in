@@ -256,7 +256,7 @@ $(LIBPREFIX)UnitTestPP$(LIBEXT): $(UNITTESTPP_OBJECTS)
 	$(RANLIB) $@
 
 mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)lua$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) $(__mmex_tests___win32rc)
-	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L. -L. -L.   $(WX_LIBS)  $(LDFLAGS)  -lwxsqlite -lsqlite -llua -lUnitTestPP $(LIBS)
+	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L. -L. -L.    $(LDFLAGS)  -lwxsqlite -lsqlite -llua $(WX_LIBS) -lUnitTestPP $(LIBS)
 	
 	$(__mmex_tests___mac_setfilecmd)
 

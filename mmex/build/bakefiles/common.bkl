@@ -14,6 +14,7 @@
 
 
     <include file="presets/wx.bkl"/>
+    <include file="config.bkl"/>
 
 
     <set var="CAN_CONFIG">
@@ -57,19 +58,6 @@
 
         <!-- except VC++ IDE projects -->
         <if cond="not FORMAT.endswith('prj')">
-
-            <option name="TARGET_CPU">
-
-                <default-value>$(DOLLAR)(CPU)</default-value>
-
-                <description>
-The target processor architecture must be specified when it is not X86.
-This does not affect the compiler output, so you still need to make sure
-your environment is set up appropriately with the correct compiler in the
-PATH. Accepted values: AMD64, IA64.
-                </description>
-
-            </option>
 
             <set var="CPU_ARCH">
                 <if cond="TARGET_CPU==''">x86</if>
