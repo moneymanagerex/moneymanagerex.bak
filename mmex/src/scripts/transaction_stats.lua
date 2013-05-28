@@ -24,6 +24,6 @@ end
 --Main function
 -----------------------------------------------------------
 mmHTMLReportHeader(_("Transaction Statistics"))
---mmHTMLhr
+mmHTMLhr()
 get_stats()
 

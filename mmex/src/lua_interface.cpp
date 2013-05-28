@@ -725,6 +725,6 @@ int TLuaInterface::mmHTMLEndTableRow(lua_State* /*lua*/)
 
 int TLuaInterface::mmHTMLhr(lua_State* /*lua*/)
 {
-    html_builder_->addHorizontalLine();
+    html_builder_->addHorizontalLine(1);
     return 0;
 }
