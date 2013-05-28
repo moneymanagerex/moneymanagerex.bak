@@ -165,16 +165,17 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmGetLuaDir",          cpp2lua_GetLuaDir);
 
     //html builder functions
-    lua_register(lua_, "mmHTMLBuilder",        cpp2lua_HTMLBuilder);
-    lua_register(lua_, "mmHTMLTableCellMonth", cpp2lua_HTMLTableCellMonth);
-    lua_register(lua_, "mmHTMLTableCellInteger", cpp2lua_HTMLTableCellInteger);
-    lua_register(lua_, "mmHTMLTableCell", cpp2lua_HTMLTableCell);
-    lua_register(lua_, "mmHTMLReportHeader", cpp2lua_HTMLReportHeader);
-    lua_register(lua_, "mmHTMLStartTable", cpp2lua_HTMLStartTable);
-    lua_register(lua_, "mmHTMLEndTable", cpp2lua_HTMLEndTable);
-    lua_register(lua_, "mmHTMLStartTableRow", cpp2lua_HTMLStartTableRow);
-    lua_register(lua_, "mmHTMLEndTableRow", cpp2lua_HTMLEndTableRow);
-    lua_register(lua_, "mmHTMLTableHeaderCell", cpp2lua_mmHTMLTableHeaderCell);
+    lua_register(lua_, "mmHTMLBuilder",        mmHTMLBuilderUni);
+    lua_register(lua_, "mmHTMLTableCellMonth", mmHTMLTableCellMonth);
+    lua_register(lua_, "mmHTMLTableCellInteger", mmHTMLTableCellInteger);
+    lua_register(lua_, "mmHTMLTableCell", mmHTMLTableCell);
+    lua_register(lua_, "mmHTMLReportHeader", mmHTMLReportHeader);
+    lua_register(lua_, "mmHTMLStartTable", mmHTMLStartTable);
+    lua_register(lua_, "mmHTMLEndTable", mmHTMLEndTable);
+    lua_register(lua_, "mmHTMLStartTableRow", mmHTMLStartTableRow);
+    lua_register(lua_, "mmHTMLEndTableRow", mmHTMLEndTableRow);
+    lua_register(lua_, "mmHTMLTableHeaderCell", mmHTMLTableHeaderCell);
+    lua_register(lua_, "mmHTMLhr", mmHTMLhr);
 }
 
 /******************************************************************************
@@ -606,7 +607,7 @@ int TLuaInterface::cpp2lua_GetLuaDir(lua_State* lua)
 /******************************************************************************
  html = mmHTMLBuilder("function[, value_1][, value_2][, value_3][, value_4]")
  *****************************************************************************/
-int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
+int TLuaInterface::mmHTMLBuilderUni(lua_State* lua)
 {
     wxString value_6;
     if (lua_gettop(lua) > 6 ) value_6 = GetLuaString(lua);
@@ -667,57 +668,63 @@ int TLuaInterface::cpp2lua_HTMLBuilder(lua_State* lua)
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLReportHeader(lua_State* lua)
+int TLuaInterface::mmHTMLReportHeader(lua_State* lua)
 {
     wxString report_name = GetLuaString(lua);
     html_builder_->addHeader(1, report_name);
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLTableCellMonth(lua_State* lua)
+int TLuaInterface::mmHTMLTableCellMonth(lua_State* lua)
 {
     html_builder_->addTableCellMonth(GetLuaInteger(lua)-1);
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLTableCell(lua_State* lua)
+int TLuaInterface::mmHTMLTableCell(lua_State* lua)
 {
     html_builder_->addTableCell(GetLuaString(lua));
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLTableCellInteger(lua_State* lua)
+int TLuaInterface::mmHTMLTableCellInteger(lua_State* lua)
 {
     html_builder_->addTableCell(wxString()<<GetLuaInteger(lua), true);
     return 0;
 }
 
-int TLuaInterface::cpp2lua_mmHTMLTableHeaderCell(lua_State* lua)
+int TLuaInterface::mmHTMLTableHeaderCell(lua_State* lua)
 {
     html_builder_->addTableHeaderCell(GetLuaString(lua));
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLStartTable(lua_State* lua)
+int TLuaInterface::mmHTMLStartTable(lua_State* lua)
 {
     html_builder_->startTable(GetLuaString(lua));
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLEndTable(lua_State* /*lua*/)
+int TLuaInterface::mmHTMLEndTable(lua_State* /*lua*/)
 {
     html_builder_->endTable();
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLStartTableRow(lua_State* /*lua*/)
+int TLuaInterface::mmHTMLStartTableRow(lua_State* /*lua*/)
 {
     html_builder_->startTableRow();
     return 0;
 }
 
-int TLuaInterface::cpp2lua_HTMLEndTableRow(lua_State* /*lua*/)
+int TLuaInterface::mmHTMLEndTableRow(lua_State* /*lua*/)
 {
     html_builder_->endTableRow();
+    return 0;
+}
+
+int TLuaInterface::mmHTMLhr(lua_State* /*lua*/)
+{
+    html_builder_->addHorizontalLine();
     return 0;
 }
