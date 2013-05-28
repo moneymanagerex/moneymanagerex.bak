@@ -66,8 +66,6 @@
                 <if cond="TARGET_CPU=='IA64'">ia64</if>
             </set>
 
-            <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
-
             <set var="TARGETCPUPOSTFIX">-$(CPU_ARCH)</set>
 
         </if>
@@ -90,31 +88,18 @@
             <if cond="WX_DEBUG=='0'">speed</if>
         </set>
 
-
-        <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
-
     <set var="SHAREDBUILDPOSTFIX">
             <if cond="WX_SHARED=='0'">static</if>
             <if cond="WX_SHARED=='1'">shared</if>
     </set>
 
-
-    <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
-
     <set var="UNICODEBUILDPOSTFIX">
             <if cond="WX_UNICODE=='1'">u</if>
     </set>
 
-
-        <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
-
-        <set var="DEBUGBUILDPOSTFIX">
+    <set var="DEBUGBUILDPOSTFIX">
         <if cond="WX_DEBUG=='1'">d</if>
     </set>
-
-
-        <!-- set bakefile's predefined variable BUILDDIR -->
-        <include file="presets/setbuilddir.bkl"/>
 
     </if>
 
