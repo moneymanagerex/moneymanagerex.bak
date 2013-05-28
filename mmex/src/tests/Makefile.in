@@ -103,8 +103,8 @@ UNITTESTPP_OBJECTS =  \
 	UnitTestPP_TimeHelpers.o
 MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../lib/sqlite \
 	-I$(srcdir)/../../lib/wxsqlite -I$(srcdir)/../../lib/lua/src -DNOPCH \
-	-I$(srcdir)/../../src -I$(srcdir)/../../lib/UnitTest++ \
-	-DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+	-I$(srcdir)/../../src -I$(srcdir)/../../lib/UnitTest++ $(WX_CXXFLAGS) \
+	$(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
@@ -707,7 +707,7 @@ mmex_tests_util_test.o: $(srcdir)/../../src/tests/util_test.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/util_test.cpp
 
 mmex_tests_mmex_tests_rc.o: $(srcdir)/../../src/tests/mmex_tests.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../lib/sqlite --include-dir $(srcdir)/../../lib/wxsqlite --include-dir $(srcdir)/../../lib/lua/src --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../lib/UnitTest++ --define IMPLEMENT_WXWIN_MAIN=
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../lib/sqlite --include-dir $(srcdir)/../../lib/wxsqlite --include-dir $(srcdir)/../../lib/lua/src --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../lib/UnitTest++
 
 
 # Include dependency info, if present:
