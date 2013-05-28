@@ -587,6 +587,9 @@ PACKAGE_URL=''
 ac_unique_file="src/mmex.cpp"
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+COND_WX_DEBUG_1_WX_UNICODE_1
+COND_WX_DEBUG_1_WX_UNICODE_0
+COND_WX_DEBUG_0_WX_UNICODE_1
 COND_PLATFORM_WIN32_1
 COND_PLATFORM_OS2_1
 COND_PLATFORM_MAC_1
@@ -9883,6 +9886,21 @@ BAKEFILE_AUTOCONF_INC_M4_VERSION="0.2.9"
     COND_PLATFORM_WIN32_1="#"
     if test "x$PLATFORM_WIN32" = "x1" ; then
         COND_PLATFORM_WIN32_1=""
+    fi
+
+    COND_WX_DEBUG_0_WX_UNICODE_1="#"
+    if test "x$WX_DEBUG" = "x0" -a "x$WX_UNICODE" = "x1" ; then
+        COND_WX_DEBUG_0_WX_UNICODE_1=""
+    fi
+
+    COND_WX_DEBUG_1_WX_UNICODE_0="#"
+    if test "x$WX_DEBUG" = "x1" -a "x$WX_UNICODE" = "x0" ; then
+        COND_WX_DEBUG_1_WX_UNICODE_0=""
+    fi
+
+    COND_WX_DEBUG_1_WX_UNICODE_1="#"
+    if test "x$WX_DEBUG" = "x1" -a "x$WX_UNICODE" = "x1" ; then
+        COND_WX_DEBUG_1_WX_UNICODE_1=""
     fi
 
 

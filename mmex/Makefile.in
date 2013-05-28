@@ -279,7 +279,7 @@ $(LIBPREFIX)lua$(LIBEXT): $(LUA_OBJECTS)
 	$(RANLIB) $@
 
 mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)lua$(LIBEXT) $(__mmex___win32rc)
-	$(CXX) -o $@ $(MMEX_OBJECTS) -L. -L. -L.   $(WX_LIBS) $(LDFLAGS_GUI) $(LDFLAGS)  -lwxsqlite -lsqlite -llua $(LIBS)
+	$(CXX) -o $@ $(MMEX_OBJECTS) -L. -L. -L.   $(LDFLAGS_GUI) $(LDFLAGS)  -lwxsqlite -lsqlite -llua $(WX_LIBS) $(LIBS)
 	
 	$(__mmex___mac_setfilecmd)
 	$(__mmex___os2_emxbindcmd)
