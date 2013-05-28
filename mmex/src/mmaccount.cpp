@@ -145,7 +145,7 @@ wxString mmAccountList::GetAccountName(int accountID) const
     return wxEmptyString;
 }
 
-wxArrayInt mmAccountList::getAccountsID(const wxArrayString accounts_type, const int except_id) const
+wxArrayInt mmAccountList::getAccountsID(const wxArrayString accounts_type, int except_id) const
 {
     wxArrayInt accounts_id;
     for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
@@ -164,7 +164,7 @@ wxArrayInt mmAccountList::getAccountsID(const wxArrayString accounts_type, const
     return accounts_id;
 }
 //TODO: Deprecated function. Use getAccountsID
-wxArrayString mmAccountList::getAccountsName(const int except_id) const
+wxArrayString mmAccountList::getAccountsName(int except_id) const
 {
     wxArrayString as;
     for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)

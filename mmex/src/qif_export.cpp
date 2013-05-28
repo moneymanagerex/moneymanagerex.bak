@@ -60,8 +60,8 @@ void mmQIFExportDialog::fillControls()
 
 void mmQIFExportDialog::CreateControls()
 {
-    const int border = 5;
-    const int fieldWidth = 180;
+    int border = 5;
+    int fieldWidth = 180;
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
     flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand().Proportion(1);
@@ -405,7 +405,7 @@ void mmQIFExportDialog::mmExportQIF()
 
         for (size_t a = 0; a < selected_accounts_id.Count(); ++a)
         {
-            const int fromAccountID = selected_accounts_id[a];
+            int fromAccountID = selected_accounts_id[a];
             wxString acctName = core_->accountList_.GetAccountName(fromAccountID);
 
             buffer << writeAccHeader(fromAccountID, qif_csv);
@@ -427,10 +427,10 @@ void mmQIFExportDialog::mmExportQIF()
                 wxString payee = core_->payeeList_.GetPayeeName(pBankTransaction->payeeID_);
                 wxString type = pBankTransaction->transType_;
 
-                const int trans_id = pBankTransaction->transactionID();
-                const int fAccountID = pBankTransaction->accountID_;
+                int trans_id = pBankTransaction->transactionID();
+                int fAccountID = pBankTransaction->accountID_;
                 const wxString fromAccount = core_->accountList_.GetAccountName(fAccountID);
-                const int tAccountID = pBankTransaction->toAccountID_;
+                int tAccountID = pBankTransaction->toAccountID_;
 
                 wxString transNum = pBankTransaction->transNum_;
                 wxString categ = "";

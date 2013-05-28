@@ -149,8 +149,8 @@ public:
     void OnRefreshQuotes(wxCommandEvent& event);
     void enableEditDeleteButtons(bool en);
     void updateExtraStocksData(int selIndex);
-    void save_column_width(const int width);
-    void call_dialog(const int selectedIndex);
+    void save_column_width(int width);
+    void call_dialog(int selectedIndex);
     //void OnViewPopupSelected(wxCommandEvent& event);
 
     /* Helper Functions/data */

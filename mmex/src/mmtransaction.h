@@ -165,9 +165,9 @@ public:
     bool removeTransaction(int accountID, int transactionID);
     bool deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
-    int RelocatePayee(mmCoreDB* core, const int destPayeeID, const int sourcePayeeID, int& changedPayees_);
+    int RelocatePayee(mmCoreDB* core, int destPayeeID, int sourcePayeeID, int& changedPayees_);
     int RelocateCategory(mmCoreDB* core,
-        const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID,
+        int destCatID, int destSubCatID, int sourceCatID, int sourceSubCatID,
         int& changedCats, int& changedSubCats);
     void ChangeDateFormat();
 
@@ -193,11 +193,11 @@ public:
     bool getDailyBalance(const mmCoreDB* core, int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false) const;
     double getReconciledBalance(int accountID, bool ignoreFuture = false) const;
     int countFollowupTransactions() const;
-    int getLastUsedCategoryID(const int accountID, const int payeeID, const wxString sType, int& subcategID) const;
-    int getLastUsedPayeeID(const int accountID, wxString sType, int& categID, int& subcategID) const;
-    wxArrayString getTransactionNumber(const int accountID, const wxDateTime transaction_date) const;
-    bool IsCategoryUsed(const int iCatID, const int iSubCatID, bool& bIncome, bool bIgnor_subcat = true) const;
-    bool IsPayeeUsed(const int iPayeeID) const;
+    int getLastUsedCategoryID(int accountID, int payeeID, const wxString sType, int& subcategID) const;
+    int getLastUsedPayeeID(int accountID, wxString sType, int& categID, int& subcategID) const;
+    wxArrayString getTransactionNumber(int accountID, const wxDateTime transaction_date) const;
+    bool IsCategoryUsed(int iCatID, int iSubCatID, bool& bIncome, bool bIgnor_subcat = true) const;
+    bool IsPayeeUsed(int iPayeeID) const;
 
     /* Data */
     typedef std::vector< std::shared_ptr<mmBankTransaction> >::const_iterator const_iterator;

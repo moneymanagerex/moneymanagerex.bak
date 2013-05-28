@@ -69,7 +69,7 @@
 #include <wx/debugrpt.h>
 //----------------------------------------------------------------------------
 
-const int REPEAT_TRANS_DELAY_TIME = 7000; // 7 seconds
+int REPEAT_TRANS_DELAY_TIME = 7000; // 7 seconds
 //----------------------------------------------------------------------------
 
 /*
@@ -1317,8 +1317,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         , new mmTreeItemData(wxTRANSLATE("Where the Money Goes - Current Year")
         , new mmReportCategoryExpensesGoesCurrentYear(m_core.get())));
 
-    const int day = m_core->dbInfoSettings_->GetIntSetting("FINANCIAL_YEAR_START_DAY", 1);
-    const int month = m_core->dbInfoSettings_->GetIntSetting("FINANCIAL_YEAR_START_MONTH", 7);
+    int day = m_core->dbInfoSettings_->GetIntSetting("FINANCIAL_YEAR_START_DAY", 1);
+    int month = m_core->dbInfoSettings_->GetIntSetting("FINANCIAL_YEAR_START_MONTH", 7);
     if (financialYearIsDifferent())
     {
         wxTreeItemId categsOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(categsOverTime

@@ -557,7 +557,7 @@ bool checkDBVersion(wxSQLite3Database* db);
 void addBudgetYear(wxSQLite3Database* db, const wxString &year);
 bool copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYear);
 int getBudgetYearID(wxSQLite3Database* db, const wxString &year_name);
-wxString getBudgetYearForID(wxSQLite3Database* db, const int &year_id);
+wxString getBudgetYearForID(wxSQLite3Database* db, int &year_id);
 void updateYearForID(wxSQLite3Database* db, const wxString& yearName, int yearid);
 bool deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName);
 
@@ -580,8 +580,8 @@ bool addSubCategory(wxSQLite3Database* db, int categID, const wxString &newName)
 /* Transactions API */
 bool updateTransactionWithStatus(wxSQLite3Database &db, int transID, const wxString& status);
 bool deleteTransaction(wxSQLite3Database* db, int transID);
-int relocatePayee(wxSQLite3Database* db, const int destPayeeID, const int sourcePayeeID);
-int relocateCategory(wxSQLite3Database* db, const int destCatID, const int destSubCatID, const int sourceCatID, const int sourceSubCatID);
+int relocatePayee(wxSQLite3Database* db, int destPayeeID, int sourcePayeeID);
+int relocateCategory(wxSQLite3Database* db, int destCatID, int destSubCatID, int sourceCatID, int sourceSubCatID);
 
 /* Bills & Deposits API */
 void deleteBDSeries(wxSQLite3Database* db, int bdID);

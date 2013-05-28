@@ -249,7 +249,7 @@ void mmBDDialog::dataToControls()
 
 void mmBDDialog::CreateControls()
 {
-    const int border = 5;
+    int border = 5;
     wxSizerFlags flags, flagsExpand;
     flags.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border);
     flagsExpand.Align(wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL).Border(wxALL, border).Expand();

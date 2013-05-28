@@ -22,7 +22,7 @@
 
 //----------------------------------------------------------------------------
 const wxChar g_def_decimal_point = '.';
-const int g_def_scale = 100;
+int g_def_scale = 100;
 
 
 CurrencyFormatter::CurrencyFormatter()
