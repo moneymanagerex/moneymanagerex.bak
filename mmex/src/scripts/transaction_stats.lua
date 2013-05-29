@@ -1,9 +1,4 @@
-local function get_stats(t)
-    --test table
-    local m_stat = {} -- TODO: provide c++ function to get stats
-    local y_stat = {1,2,3,4,5,6,7,8,9,10}
-    for m = 1, 12, 1 do m_stat[m] = (y_stat) end
-    --test end
+local function get_stats(m_stat)
     local total = 0
     mmHTMLStartTable("50%")
     for m = 0, 12 , 1 do
@@ -25,12 +20,17 @@ end
 -----------------------------------------------------------
 --Main function
 -----------------------------------------------------------
-local function main()
+local function main(m_stat)
     mmHTMLReportHeader(_("Transaction Statistics"))
     mmHTMLhr()
-    total = get_stats()
+    total = get_stats(m_stat)
     mmHTMLhr()
     mmHTMLaddText("Total transactions:" .. total)
 end
 
-main()
+--test table
+local m_stat = {}
+local y_stat = {1,2,3,4,5,6,7,8,9,10}
+for m = 1, 12, 1 do m_stat[m] = (y_stat) end
+--test end
+main(m_stat)
