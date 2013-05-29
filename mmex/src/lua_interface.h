@@ -105,6 +105,7 @@ private:
     static int mmHTMLTableCellInteger(lua_State* lua);
     static int mmHTMLTableCell(lua_State* lua);
     static int mmHTMLTableHeaderCell(lua_State* lua);
+    static int mmHTMLaddText(lua_State* lua);
     static int mmHTMLhr(lua_State* lua);
 };
 

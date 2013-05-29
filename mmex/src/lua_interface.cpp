@@ -182,6 +182,7 @@ void TLuaInterface::Open_MMEX_Library()
     lua_register(lua_, "mmHTMLStartTableRow", mmHTMLStartTableRow);
     lua_register(lua_, "mmHTMLEndTableRow", mmHTMLEndTableRow);
     lua_register(lua_, "mmHTMLTableHeaderCell", mmHTMLTableHeaderCell);
+    lua_register(lua_, "mmHTMLaddText", mmHTMLaddText);
     lua_register(lua_, "mmHTMLhr", mmHTMLhr);
 }
 
@@ -727,6 +728,12 @@ int TLuaInterface::mmHTMLStartTableRow(lua_State* /*lua*/)
 int TLuaInterface::mmHTMLEndTableRow(lua_State* /*lua*/)
 {
     html_builder_->endTableRow();
+    return 0;
+}
+
+int TLuaInterface::mmHTMLaddText(lua_State* lua)
+{
+    html_builder_->addText(GetLuaString(lua));
     return 0;
 }
 
