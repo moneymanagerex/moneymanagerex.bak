@@ -1,16 +1,19 @@
+local function add_header(m_stat)
+    mmHTMLTableHeaderCell(_("Month/Year"))
+    for y,v in pairs(m_stat[1]) do
+        mmHTMLTableHeaderCell(y) 
+    end
+end
 local function get_stats(m_stat)
     local total = 0
     mmHTMLStartTable("50%")
-    for m = 0, 12 , 1 do
+    add_header(m_stat)
+    for m, data in pairs(m_stat) do
         mmHTMLStartTableRow()
         mmHTMLTableCellMonth(m)
-        for y = 1, 10, 1 do
-            if m > 0 then
-                total = total + m_stat[m][y]
-                mmHTMLTableCellInteger(m_stat[m][y])
-            else
-                mmHTMLTableHeaderCell(2014-y)
-            end
+        for y,val in pairs(data) do
+            total = total + val
+            mmHTMLTableCellInteger(val)
         end
         mmHTMLEndTableRow()
     end
@@ -30,7 +33,8 @@ end
 
 --test table
 local m_stat = {}
-local y_stat = {1,2,3,4,5,6,7,8,9,10}
+local y_stat = {[2014]=1,[2013]=2,[2012]=3,[2011]=4,[2010]=5,[2009]=6,[2008]=7,[2007]=8,[2006]=9,[2005]=10}
+table.sort(y_stat)
 for m = 1, 12, 1 do m_stat[m] = (y_stat) end
 --test end
 main(m_stat)
