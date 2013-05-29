@@ -11,7 +11,7 @@ local function get_stats(m_stat)
     for m, data in pairs(m_stat) do
         mmHTMLStartTableRow()
         mmHTMLTableCellMonth(m)
-        for y,val in pairs(data) do
+        for y, val in pairs(data) do
             total = total + val
             mmHTMLTableCellInteger(val)
         end
@@ -28,7 +28,7 @@ local function main(m_stat)
     mmHTMLhr()
     total = get_stats(m_stat)
     mmHTMLhr()
-    mmHTMLaddText("Total transactions:" .. total)
+    mmHTMLaddText(_("Total Transactions: ") .. total)
 end
 
 --test table
