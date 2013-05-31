@@ -313,6 +313,16 @@ bool TTransactionBillEntry::UsingIn_X_Processing()
     return result;
 }
 
+bool TTransactionBillEntry::UsingEvery_X_Processing()
+{
+    bool result = false;
+    if ((repeat_type_ == TYPE_EVERY_X_DAYS) || (repeat_type_ == TYPE_EVERY_X_MONTHS))
+    {
+        result = true;
+    }
+    return result;
+}
+
 bool TTransactionBillEntry::UsingRepeatProcessing()
 {
     bool result = false;

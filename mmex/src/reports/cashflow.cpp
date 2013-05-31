@@ -46,7 +46,8 @@ void mmReportCashFlow::getSpecificAccounts()
     this->accountArray_ = selections;
 }
 
-void mmReportCashFlow::SetRepeatForecast(forecastVec& fvec, TTransactionBillEntry* repeat_entry, double& amount)
+void mmReportCashFlow::SetRepeatForecast(forecastVec& fvec
+, TTransactionBillEntry* repeat_entry, double& amount)
 {
     mmRepeatForecast rf;
     rf.date = repeat_entry->NextOccurDate();
@@ -54,6 +55,15 @@ void mmReportCashFlow::SetRepeatForecast(forecastVec& fvec, TTransactionBillEntr
 
     fvec.push_back(rf);
     repeat_entry->AdjustNextOccuranceDate();
+}
+
+void mmReportCashFlow::SetYearsRepeatForecast(forecastVec& fvec
+, TTransactionBillEntry* repeat_entry, double& amount, const wxDateTime& future_year)
+{
+    while((repeat_entry->NextOccurDate() < future_year))
+    {
+        SetRepeatForecast(fvec, repeat_entry, amount);
+    }
 }
 
 wxString mmReportCashFlow::getHTMLText()
@@ -186,6 +196,10 @@ wxString mmReportCashFlow::getHTMLText_i()
             {
                 SetRepeatForecast(fvec, repeat_entry.get(), amount);
             }
+            else if (repeat_entry->UsingEvery_X_Processing())
+            {
+                SetYearsRepeatForecast(fvec, repeat_entry.get(), amount, yearFromNow);
+            }
             else
             {
                 while (repeat_entry->num_repeats_ > 0)
@@ -196,10 +210,7 @@ wxString mmReportCashFlow::getHTMLText_i()
         }
         else
         {
-            while((repeat_entry->NextOccurDate() < yearFromNow))
-            {
-                SetRepeatForecast(fvec, repeat_entry.get(), amount);
-            }
+            SetYearsRepeatForecast(fvec, repeat_entry.get(), amount, yearFromNow);
         }
     }
 

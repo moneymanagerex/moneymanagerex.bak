@@ -113,6 +113,8 @@ public:
     bool UsingRepeatProcessing();
     // Returns true when using In X Days/Months transaction.
     bool UsingIn_X_Processing();
+    // Returns true when using Every X Days/Months transaction.
+    bool UsingEvery_X_Processing();
 };
 
 /************************************************************************************
