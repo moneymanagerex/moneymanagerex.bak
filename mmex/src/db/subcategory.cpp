@@ -91,7 +91,7 @@ void TSubCategoryEntry::Update(wxSQLite3Database* db)
  TSubCategoryList Methods
  ***********************************************************************************/
 /// Constructor
-TSubCategoryList::TSubCategoryList(std::shared_ptr<wxSQLite3Database> db, int cat_id)
+TSubCategoryList::TSubCategoryList(wxSQLite3Database* db, int cat_id)
 : TListBase(db)
 {
     LoadEntries(cat_id);
@@ -101,13 +101,13 @@ void TSubCategoryList::LoadEntries(int cat_id, bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("SUBCATEGORY_V1"))
+        if (!ListDatabase()->TableExists("SUBCATEGORY_V1"))
         {
             const char CREATE_TABLE_SUBCATEGORY_V1[]=
             "CREATE TABLE SUBCATEGORY_V1(SUBCATEGID integer primary key, "
             "SUBCATEGNAME TEXT NOT NULL, CATEGID integer NOT NULL)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_SUBCATEGORY_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_SUBCATEGORY_V1);
         }
 
         if (load_entries)
@@ -130,7 +130,7 @@ void TSubCategoryList::LoadEntries(int cat_id, bool load_entries)
 void TSubCategoryList::LoadEntriesUsing(const wxString& sql_statement)
 {
     entrylist_.clear();
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
         TSubCategoryEntry entry(q1);
@@ -149,7 +149,7 @@ int TSubCategoryList::AddEntry(int cat_id, const wxString& name)
     else
     {
         TSubCategoryEntry entry(cat_id, name);
-        subcat_id = entry.Add(db_.get());
+        subcat_id = entry.Add(ListDatabase());
         entrylist_.push_back(entry);
     }
 
@@ -160,15 +160,15 @@ void TSubCategoryList::UpdateEntry(int cat_id, int subcat_id, const wxString& ne
 {
     TSubCategoryEntry* pSubCategory = GetEntryPtr(cat_id, subcat_id);
     pSubCategory->name_ = new_category;
-    pSubCategory->Update(db_.get());
+    pSubCategory->Update(ListDatabase());
 }
 
 /// Note: At this level, no checking is done for usage in other tables.
 void TSubCategoryList::DeleteEntry(int cat_id, int subcat_id)
 {
     TSubCategoryEntry* pSubCatEntry = GetEntryPtr(cat_id, subcat_id);
-    pSubCatEntry->Delete(db_.get());
-    entrylist_.erase(entrylist_.begin() + current_index_);    
+    pSubCatEntry->Delete(ListDatabase());
+    entrylist_.erase(entrylist_.begin() + current_index_);
 }
 
 TSubCategoryEntry* TSubCategoryList::GetEntryPtr(int cat_id, int subcat_id)

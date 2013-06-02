@@ -200,7 +200,7 @@ void mmAssetsListCtrl::OnDuplicateAsset(wxCommandEvent& /*event*/)
     int original_index = selectedIndex_;
 
     // Duplicate the asset entry
-    TAssetEntry* pNewEntry = new TAssetEntry(cp_->AssetList().entrylist_[selectedIndex_].get());
+    TAssetEntry* pNewEntry = new TAssetEntry(cp_->AssetList().entrylist_[selectedIndex_]);
     int new_asset_id = cp_->AssetList().AddEntry(pNewEntry);
     // Locate new entry in the visual list.
     cp_->AssetList().GetEntryPtr(new_asset_id);
@@ -218,7 +218,7 @@ void mmAssetsListCtrl::OnDuplicateAsset(wxCommandEvent& /*event*/)
 void mmAssetsListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-    EditAsset(cp_->AssetList().entrylist_[selectedIndex_].get());
+    EditAsset(cp_->AssetList().entrylist_[selectedIndex_]);
 }
 
 bool mmAssetsListCtrl::EditAsset(TAssetEntry* pEntry)
@@ -268,7 +268,7 @@ END_EVENT_TABLE()
 
 mmAssetsPanel::mmAssetsPanel(wxWindow *parent, mmCoreDB* core)
 : mmPanelBase(core)
-, asset_list_(core->db_, false) // don't load entries at this point.
+, asset_list_(core->db_.get(), false) // don't load entries at this point.
 {
     Create(parent, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxPanelNameStr);
 }
@@ -441,7 +441,7 @@ int mmAssetsPanel::initVirtualListControl(int id, int col, bool asc)
         + wxString::Format(" where ASSETTYPE in ( %s ) ", filter_)
         + " order by " + (wxString() << col + 1)
         + (!asc ? " desc" : " ");
-    asset_list_.LoadAssetEntriesUsing(sql);
+    asset_list_.LoadEntriesUsing(sql);
 
     m_listCtrlAssets->SetItemCount(asset_list_.entrylist_.size());
     header_text_->SetLabel(wxString::Format(_("Total: %s")

@@ -68,7 +68,7 @@ private:
     void LoadSplitEntries();
 
 public:
-    TSplitEntriesList(std::shared_ptr<wxSQLite3Database> db, wxString db_table = SPLIT_TRANS_TABLE);
+    TSplitEntriesList(wxSQLite3Database* db, wxString db_table = SPLIT_TRANS_TABLE);
 };
 
 /***********************************************************************************
@@ -112,5 +112,4 @@ public:
     int GetListSize();
     std::shared_ptr<TSplitEntry> GetEntryPtr(int id_split_trans);
     std::shared_ptr<TSplitEntry> GetIndexedEntryPtr(int index);
-
 };

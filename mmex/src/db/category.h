@@ -48,12 +48,15 @@ public:
 class TCategoryList : public TListBase
 {
 private:
-    std::vector<TCategoryEntry> entrylist_;
+    std::vector<TCategoryEntry*> entrylist_;
 
     void LoadEntries(bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
 public:
-    TCategoryList(std::shared_ptr<wxSQLite3Database> db);
+    TCategoryList(wxSQLite3Database* db);
+    ~TCategoryList();
 
     // Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);

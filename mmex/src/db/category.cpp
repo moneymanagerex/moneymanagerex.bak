@@ -84,23 +84,28 @@ void TCategoryEntry::Update(wxSQLite3Database* db)
  TCategoryList Methods
  ***********************************************************************************/
 /// Constructor
-TCategoryList::TCategoryList(std::shared_ptr<wxSQLite3Database> db)
+TCategoryList::TCategoryList(wxSQLite3Database* db)
 : TListBase(db)
 {
     LoadEntries();
+}
+
+TCategoryList::~TCategoryList()
+{
+    DestroyEntryList();
 }
 
 void TCategoryList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("CATEGORY_V1"))
+        if (!ListDatabase()->TableExists("CATEGORY_V1"))
         {
             const char CREATE_TABLE_CATEGORY_V1[]=
             "CREATE TABLE CATEGORY_V1(CATEGID integer primary key, "
             "CATEGNAME TEXT NOT NULL)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_CATEGORY_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_CATEGORY_V1);
         }
 
         if (load_entries)
@@ -114,16 +119,25 @@ void TCategoryList::LoadEntries(bool load_entries)
     }
 }
 
-    // Allows specialised loads by providing the required SQL statement
+// Allows specialised loads by providing the required SQL statement
 void TCategoryList::LoadEntriesUsing(const wxString& sql_statement)
 {
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    DestroyEntryList();
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        TCategoryEntry pCategory(q1);
-        entrylist_.push_back(pCategory);
+        entrylist_.push_back(new TCategoryEntry(q1));
     }
     q1.Finalize();
+}
+// delete all the objects in the list and clear the list.
+void TCategoryList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
 }
 
 int TCategoryList::AddEntry(const wxString& name)
@@ -131,13 +145,13 @@ int TCategoryList::AddEntry(const wxString& name)
     int cat_id = -1;
     if (CategoryExists(name))
     {
-        cat_id = entrylist_[current_index_].id_;
+        cat_id = entrylist_[current_index_]->id_;
     }
     else
     {
-        TCategoryEntry entry(name);
-        cat_id = entry.Add(db_.get());
-        entrylist_.push_back(entry);
+        TCategoryEntry* pEntry = new TCategoryEntry(name);
+        cat_id = pEntry->Add(ListDatabase());
+        entrylist_.push_back(pEntry);
     }
 
     return cat_id;
@@ -147,7 +161,7 @@ void TCategoryList::UpdateEntry(int cat_id, const wxString& new_category)
 {
     TCategoryEntry* pEntry = GetEntryPtr(cat_id);
     pEntry->name_ = new_category;
-    pEntry->Update(db_.get());
+    pEntry->Update(ListDatabase());
 }
 
 /// Note: At this level, no checking is done for usage in other tables.
@@ -156,8 +170,9 @@ void TCategoryList::DeleteEntry(int cat_id)
     TCategoryEntry* pEntry = GetEntryPtr(cat_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
+        delete pEntry;
     }
 }
 
@@ -170,9 +185,9 @@ TCategoryEntry* TCategoryList::GetEntryPtr(int cat_id)
 
     while (index < entrylist_.size())
     {
-        if (entrylist_[index].id_ == cat_id)
+        if (entrylist_[index]->id_ == cat_id)
         {
-            pEntry = &entrylist_[index];
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -188,9 +203,9 @@ TCategoryEntry* TCategoryList::GetEntryPtr(const wxString& name)
     size_t index = 0;
     while (index < entrylist_.size())
     {
-        if (entrylist_[index].name_ == name)
+        if (entrylist_[index]->name_ == name)
         {
-            pEntry = &entrylist_[index];
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }

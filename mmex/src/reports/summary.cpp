@@ -132,7 +132,7 @@ wxString mmReportSummary::getHTMLText()
     hb.addRowSeparator(2);
 
     /* Assets */
-    TAssetList asset_list(core_->db_);
+    TAssetList asset_list(core_->db_.get());
 
     hb.startTableRow();
     hb.addTableCellLink("Assets", _("Assets"), false, true);

@@ -42,7 +42,9 @@ class TTransactionEntry : public TEntryBase
 private:
     friend class TTransactionList;
 
+    // Add the entry to the database
     int Add(wxSQLite3Database* db);
+    // Delete the entry from the dataase
     void Delete(wxSQLite3Database* db);
 
 protected:
@@ -106,16 +108,21 @@ class TTransactionList : public TListBase
 {
 private:
     void LoadEntries(bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
 public:
-    std::vector<std::shared_ptr<TTransactionEntry> > entrylist_;
+    std::vector<TTransactionEntry*> entrylist_;
 
-    TTransactionList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TTransactionList(wxSQLite3Database* db, bool load_entries = true);
+    ~TTransactionList();
 
     // Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
+    // Add the entry to the current list and the database
     int AddEntry(TTransactionEntry* pTransEntry);
+    // Add the entry from the current list and the database
     void DeleteEntry(int trans_id);
 
     TTransactionEntry* GetEntryPtr(int trans_id);

@@ -118,7 +118,7 @@ void TSettingsEntry::Save(wxSQLite3Database* db)
 /****************************************************************************
  TSettingsList Class methods
  ****************************************************************************/
-TSettingsList::TSettingsList(std::shared_ptr<wxSQLite3Database> db, bool main_db)
+TSettingsList::TSettingsList(wxSQLite3Database* db, bool main_db)
 : TListBase(db)
 , main_db_(main_db)
 {
@@ -150,8 +150,8 @@ TSettingsList::~TSettingsList()
 void TSettingsList::Load()
 {
     wxSQLite3ResultSet q1;
-    if (main_db_) q1 = db_->ExecuteQuery(SELECT_INFO_RECORD);
-    else          q1 = db_->ExecuteQuery(SELECT_INI_RECORD);
+    if (main_db_) q1 = ListDatabase()->ExecuteQuery(SELECT_INFO_RECORD);
+    else          q1 = ListDatabase()->ExecuteQuery(SELECT_INI_RECORD);
     while (q1.NextRow())
     {
         std::shared_ptr<TSettingsEntry> pRecord(new TSettingsEntry(main_db_, q1));
@@ -165,13 +165,13 @@ void TSettingsList::Save()
     size_t list_size = ini_records_.size();
     size_t element = 0;
 
-    db_->Begin();
+    ListDatabase()->Begin();
     while (element < list_size)
     {
         ini_records_[element]->Save(ListDatabase());
         ++ element;
     }
-    db_->Commit();
+    ListDatabase()->Commit();
 }
 
 TSettingsEntry* TSettingsList::GetRecord(const wxString& name)

@@ -356,17 +356,22 @@ wxString TTransactionBillEntry::DisplayNextOccurDate()
  TTransactionBillList Methods
  ***********************************************************************************/
 /// Constructor
-TTransactionBillList::TTransactionBillList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TTransactionBillList::TTransactionBillList(wxSQLite3Database* db, bool load_entries)
 : TTransactionList(db, false)
 {
     LoadEntries(load_entries);
+}
+
+TTransactionBillList::~TTransactionBillList()
+{
+    DestroyEntryList();
 }
 
 void TTransactionBillList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("BILLSDEPOSITS_V1"))
+        if (!ListDatabase()->TableExists("BILLSDEPOSITS_V1"))
         {
             const char CREATE_TABLE_BILLSDEPOSITS_V1[] =
             "CREATE TABLE BILLSDEPOSITS_V1 (BDID INTEGER PRIMARY KEY, "
@@ -375,7 +380,7 @@ void TTransactionBillList::LoadEntries(bool load_entries)
             "CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric, "
             "REPEATS numeric, NEXTOCCURRENCEDATE TEXT, NUMOCCURRENCES numeric)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_BILLSDEPOSITS_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_BILLSDEPOSITS_V1);
         }
 
         if (load_entries)
@@ -391,23 +396,31 @@ void TTransactionBillList::LoadEntries(bool load_entries)
 
 void TTransactionBillList::LoadEntriesUsing(const wxString& sql_statement)
 {
-    entrylist_.clear();
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    DestroyEntryList();
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        std::shared_ptr<TTransactionBillEntry> pEntry(new TTransactionBillEntry(q1));
-        entrylist_.push_back(pEntry);
+        entrylist_.push_back(new TTransactionBillEntry(q1));
     }
     q1.Finalize();
 }
 
+// delete all the objects in the list and clear the list.
+void TTransactionBillList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
+}
+
 int TTransactionBillList::AddEntry(TTransactionBillEntry* pTransBillEntry)
 {
-    std::shared_ptr<TTransactionBillEntry> pEntry(pTransBillEntry);
-    entrylist_.push_back(pEntry);
-    pEntry->Add(db_.get());
+    entrylist_.push_back(pTransBillEntry);
+    pTransBillEntry->Add(ListDatabase());
 
-    return pEntry->id_;
+    return pTransBillEntry->id_;
 }
 
 void TTransactionBillList::DeleteEntry(int bill_entry_id)
@@ -415,8 +428,9 @@ void TTransactionBillList::DeleteEntry(int bill_entry_id)
     TTransactionBillEntry* pEntry = GetEntryPtr(bill_entry_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
+        delete pEntry;
     }
 }
 
@@ -428,7 +442,7 @@ TTransactionBillEntry* TTransactionBillList::GetEntryPtr(int bill_entry_id)
     {
         if (entrylist_[index]->id_ == bill_entry_id)
         {
-            pEntry = entrylist_[index].get();
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -443,7 +457,7 @@ TTransactionBillEntry* TTransactionBillList::GetIndexedEntryPtr(unsigned int lis
     TTransactionBillEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index].get();
+        pEntry = entrylist_[list_index];
     }
 
     return pEntry;

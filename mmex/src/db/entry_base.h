@@ -36,7 +36,7 @@ protected:
 
     /// This will finalise the sql statement.
     void FinaliseStatement(wxSQLite3Statement& st);
-
+    // Delete the entry from the database
     void DeleteEntry(wxSQLite3Database* db, const wxString& sql_statement);
 
 public:
@@ -54,13 +54,14 @@ public:
  ***********************************************************************************/
 class TListBase
 {
+private:
+    wxSQLite3Database* db_;
+
 protected:
-    std::shared_ptr<wxSQLite3Database> db_;
     int current_index_;
 
 public:
-    TListBase(std::shared_ptr<wxSQLite3Database> db);
+    TListBase(wxSQLite3Database* db);
     wxSQLite3Database* ListDatabase();
     int GetCurrentIndex();
-
 };

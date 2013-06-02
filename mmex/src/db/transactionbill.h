@@ -124,11 +124,14 @@ class TTransactionBillList : public TTransactionList
 {
 private:
     void LoadEntries(bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
 public:
-    std::vector<std::shared_ptr<TTransactionBillEntry> > entrylist_;
+    std::vector<TTransactionBillEntry*> entrylist_;
 
-    TTransactionBillList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TTransactionBillList(wxSQLite3Database* db, bool load_entries = true);
+    ~TTransactionBillList();
 
     /// Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);

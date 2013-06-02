@@ -84,7 +84,7 @@ private:
 public:
     std::vector<TAccountEntry> entrylist_;
 
-    TAccountList(std::shared_ptr<wxSQLite3Database> db,
+    TAccountList(wxSQLite3Database* db,
     TCurrencyList& currency_list, bool load_entries = true);
 
     /// Allows specialised list loading provided by SQL statement

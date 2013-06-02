@@ -55,7 +55,7 @@ private:
 public:
     std::vector<TSubCategoryEntry> entrylist_;
 
-    TSubCategoryList(std::shared_ptr<wxSQLite3Database> db, int cat_id = -1);
+    TSubCategoryList(wxSQLite3Database* db, int cat_id = -1);
     // Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 

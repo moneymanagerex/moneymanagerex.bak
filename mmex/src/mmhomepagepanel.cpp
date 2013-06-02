@@ -336,7 +336,7 @@ wxString mmHomePagePanel::displayAssets(double& tBalance)
 {
     mmHTMLBuilder hb;
     core_->currencyList_.LoadBaseCurrencySettings();
-    TAssetList asset_list(core_->db_);
+    TAssetList asset_list(core_->db_.get());
 
     if (mmIniOptions::instance().enableAssets_)
     {

@@ -116,7 +116,7 @@ void TBudgetEntry::Update(wxSQLite3Database* db)
  TBudgetTableList Methods
  ***********************************************************************************/
 /// Constructor
-TBudgetList::TBudgetList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TBudgetList::TBudgetList(wxSQLite3Database* db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
@@ -126,14 +126,14 @@ void TBudgetList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("BUDGETTABLE_V1"))
+        if (!ListDatabase()->TableExists("BUDGETTABLE_V1"))
         {
             const char CREATE_TABLE_BUDGETTABLE_V1[] =
             "CREATE TABLE BUDGETTABLE_V1(BUDGETENTRYID integer primary key, "
             "BUDGETYEARID integer, CATEGID integer, SUBCATEGID integer, "
             "PERIOD TEXT NOT NULL, AMOUNT numeric NOT NULL)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_BUDGETTABLE_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_BUDGETTABLE_V1);
         }
 
         if (load_entries)
@@ -150,7 +150,7 @@ void TBudgetList::LoadEntries(bool load_entries)
 void TBudgetList::LoadEntriesUsing(const wxString& sql_statement)
 {
     entrylist_.clear();
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
         std::shared_ptr<TBudgetEntry> pEntry(new TBudgetEntry(q1));
@@ -162,7 +162,7 @@ void TBudgetList::LoadEntriesUsing(const wxString& sql_statement)
 int TBudgetList::AddEntry(TBudgetEntry* pBudgetEntry)
 {
     std::shared_ptr<TBudgetEntry> pEntry(pBudgetEntry);
-    pBudgetEntry->Add(db_.get());
+    pBudgetEntry->Add(ListDatabase());
     entrylist_.push_back(pEntry);
 
     return pBudgetEntry->id_;
@@ -173,7 +173,7 @@ void TBudgetList::DeleteEntry(int budget_entry_id)
     TBudgetEntry* pEntry = GetEntryPtr(budget_entry_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
     }
 }

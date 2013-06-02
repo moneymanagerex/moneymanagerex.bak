@@ -76,7 +76,7 @@ private:
 public:
     std::vector<TStockEntry> entrylist_;
 
-    TStockList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TStockList(wxSQLite3Database* db, bool load_entries = true);
 
     // Allows specialised list loading provided by SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);

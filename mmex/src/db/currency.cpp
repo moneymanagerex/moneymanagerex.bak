@@ -152,7 +152,7 @@ void TCurrencyEntry::SetCurrencySettings()
  TCurrencyList Methods
  ***********************************************************************************/
 /// Constructor
-TCurrencyList::TCurrencyList(std::shared_ptr<wxSQLite3Database> db)
+TCurrencyList::TCurrencyList(wxSQLite3Database* db)
 : TListBase(db)
 , basecurrency_id_(-1)
 {
@@ -164,7 +164,7 @@ void TCurrencyList::LoadEntries()
 {
     try
     {
-        if (!db_->TableExists("CURRENCYFORMATS_V1"))
+        if (!ListDatabase()->TableExists("CURRENCYFORMATS_V1"))
         {
             const char SQL_CREATE_TABLE_CURRENCYFORMATS_V1[] =
             "create table CURRENCYFORMATS_V1 "
@@ -172,13 +172,13 @@ void TCurrencyList::LoadEntries()
             " PFX_SYMBOL TEXT, SFX_SYMBOL TEXT, DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT,"
             " UNIT_NAME TEXT, CENT_NAME TEXT, SCALE numeric, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT)";
             
-            db_->ExecuteUpdate(SQL_CREATE_TABLE_CURRENCYFORMATS_V1);
+            ListDatabase()->ExecuteUpdate(SQL_CREATE_TABLE_CURRENCYFORMATS_V1);
         }
 
         const char SQL_SELECT_CURRENCYFORMAT[] =
         "select * from CURRENCYFORMATS_V1 "
         "order by CURRENCYNAME";
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(SQL_SELECT_CURRENCYFORMAT);
+        wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(SQL_SELECT_CURRENCYFORMAT);
         while (q1.NextRow())
         {
             std::shared_ptr<TCurrencyEntry> pEntry(new TCurrencyEntry(q1));
@@ -231,7 +231,7 @@ void TCurrencyList::DeleteEntry(int currency_id)
     TCurrencyEntry* pEntry = GetEntryPtr(currency_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
     }
 }

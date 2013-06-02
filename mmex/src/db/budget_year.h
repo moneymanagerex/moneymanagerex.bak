@@ -49,11 +49,14 @@ class TBudgetYearList : public TListBase
 {
 private:
     void LoadEntries(bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
 public:
-    std::vector<std::shared_ptr<TBudgetYearEntry> >entrylist_;
+    std::vector<TBudgetYearEntry*> entrylist_;
 
-    TBudgetYearList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TBudgetYearList(wxSQLite3Database* db, bool load_entries = true);
+    ~TBudgetYearList();
 
     /// Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
