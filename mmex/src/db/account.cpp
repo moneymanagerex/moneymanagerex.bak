@@ -43,6 +43,24 @@ TAccountEntry::TAccountEntry(wxSQLite3ResultSet& q1)
     currency_id_    = q1.GetDouble("CURRENCYID");
 }
 
+// Copy constructor using a pointer
+TAccountEntry::TAccountEntry(TAccountEntry* pEntry)
+: TEntryBase()
+{
+    acc_name_       = pEntry->acc_name_;
+    acc_type_       = pEntry->acc_type_;
+    acc_number_     = pEntry->acc_number_;
+    acc_state_      = pEntry->acc_type_;
+    notes_          = pEntry->notes_;
+    held_at_        = pEntry->held_at_;
+    website_        = pEntry->website_;
+    contact_info_   = pEntry->contact_info_;
+    access_info_    = pEntry->access_info_;
+    init_balance_   = pEntry->init_balance_;
+    favoriteAcct_   = pEntry->favoriteAcct_;
+    currency_id_    = pEntry->currency_id_;
+}
+
 void TAccountEntry::SetDatabaseValues(wxSQLite3Statement& st, int& db_index)
 {
     st.Bind(++db_index, acc_name_);
@@ -135,6 +153,11 @@ TAccountList::TAccountList(wxSQLite3Database* db
     LoadEntries(load_entries);
 }
 
+TAccountList::~TAccountList()
+{
+    DestroyEntryList();
+}
+
 void TAccountList::LoadEntries(bool load_entries)
 {
     try
@@ -163,17 +186,16 @@ void TAccountList::LoadEntries(bool load_entries)
     }
 }
 
-/// Allows specialised list loading provided by SQL statement
+// Allows specialised list loading provided by SQL statement
 void TAccountList::LoadEntriesUsing(const wxString& sql_statement)
 {
     try
     {
-        entrylist_.clear();
+        DestroyEntryList();
         wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
-            TAccountEntry entry(q1);
-            entrylist_.push_back(entry);
+            entrylist_.push_back(new TAccountEntry(q1));
         }
         q1.Finalize();
     }
@@ -182,13 +204,22 @@ void TAccountList::LoadEntriesUsing(const wxString& sql_statement)
         wxLogError("TAccountList:LoadEntriesUsing: %s", e.GetMessage().c_str());
     }
 }
-
-int TAccountList::AddEntry(TAccountEntry& account_entry)
+// delete all the objects in the list and clear the list.
+void TAccountList::DestroyEntryList()
 {
-    account_entry.Add(ListDatabase());
-    entrylist_.push_back(account_entry);
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
+}
 
-    return account_entry.id_;
+int TAccountList::AddEntry(TAccountEntry* pAccountEntry)
+{
+    pAccountEntry->Add(ListDatabase());
+    entrylist_.push_back(pAccountEntry);
+
+    return pAccountEntry->id_;
 }
 
 void TAccountList::DeleteEntry(int account_id)
@@ -198,6 +229,7 @@ void TAccountList::DeleteEntry(int account_id)
     {
         pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
+        delete pEntry;
     }
 }
 
@@ -215,9 +247,9 @@ TAccountEntry* TAccountList::GetEntryPtr(int account_id)
 
     while (index < entrylist_.size())
     {
-        if (entrylist_[index].id_ == account_id)
+        if (entrylist_[index]->id_ == account_id)
         {
-            pEntry = &entrylist_[index];
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -234,9 +266,9 @@ TAccountEntry* TAccountList::GetEntryPtr(const wxString& name)
 
     while (index < entrylist_.size())
     {
-        if (entrylist_[index].acc_name_ == name)
+        if (entrylist_[index]->acc_name_ == name)
         {
-            pEntry = &entrylist_[index];
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -251,7 +283,7 @@ TAccountEntry* TAccountList::GetIndexedEntryPtr(unsigned int list_index)
     TAccountEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = &entrylist_[list_index];
+        pEntry = entrylist_[list_index];
     }
 
     return pEntry;
@@ -291,6 +323,11 @@ bool TAccountList::AccountExists(const wxString& account_name)
     return result;
 }
 
+int TAccountList::CurrentListSize()
+{
+    return entrylist_.size();
+}
+
 int TAccountList::NumberOfAccounts(int account_type)
 {
     size_t index = 0;
@@ -298,7 +335,7 @@ int TAccountList::NumberOfAccounts(int account_type)
 
     while (index < entrylist_.size())
     {
-        if (entrylist_[index].acc_type_ == ACCOUNT_TYPE_DEF[account_type])
+        if (entrylist_[index]->acc_type_ == ACCOUNT_TYPE_DEF[account_type])
         {
             ++ count;
         }

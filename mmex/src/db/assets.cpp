@@ -36,7 +36,7 @@ TAssetEntry::TAssetEntry(wxSQLite3ResultSet& q1)
     type_       = q1.GetString("ASSETTYPE");
 }
 
-/// Copy constructor using a pointer
+// Copy constructor using a pointer
 TAssetEntry::TAssetEntry(TAssetEntry* pEntry)
 : TEntryBase()
 {

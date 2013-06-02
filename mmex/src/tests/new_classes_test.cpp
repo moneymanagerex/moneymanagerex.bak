@@ -208,23 +208,67 @@ TEST(TAccountList_Test_Add)
     TCurrencyList currency_list(get_pDb().get());
 
     TAccountList account_list(get_pDb().get(), currency_list);
-    TAccountEntry account_entry;
-    account_entry.acc_name_    = "Savings";
-    account_entry.acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_OPEN];
-    account_entry.acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TYPE_BANK];
-    account_entry.currency_id_ = currency_list.GetCurrencyId("AUD", true);
-    int id_1 = account_list.AddEntry(account_entry);
+    TAccountEntry* pAaccountEntry = new TAccountEntry();
+    pAaccountEntry->acc_name_    = "Savings";
+    pAaccountEntry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_OPEN];
+    pAaccountEntry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TYPE_BANK];
+    pAaccountEntry->currency_id_ = currency_list.GetCurrencyId("AUD", true);
+    int id_1 = account_list.AddEntry(pAaccountEntry);
 
-    TAccountEntry account_entry_1;
-    account_entry_1.acc_name_    = "Cheque";
-    account_entry_1.acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_CLOSED];
-    account_entry_1.acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TYPE_TERM];
-    account_entry_1.currency_id_ = currency_list.GetCurrencyId("USD", true);
-    int id_2 = account_list.AddEntry(account_entry_1);
+    pAaccountEntry = new TAccountEntry(pAaccountEntry);
+    pAaccountEntry->acc_name_    = "Cheque";
+    pAaccountEntry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_CLOSED];
+    pAaccountEntry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TYPE_TERM];
+    pAaccountEntry->currency_id_ = currency_list.GetCurrencyId("USD", true);
+    int id_2 = account_list.AddEntry(pAaccountEntry);
 
-    CHECK(id_1 != id_2);
+    CHECK_EQUAL(1, id_1);
+    CHECK_EQUAL(2, id_2);
 
     displayTimeTaken("TAccountList_Test_Add", start_time);
+}
+
+TEST(TAccountList_Test_Update)
+{
+    const wxStopWatch start_time;
+    TCurrencyList currency_list(get_pDb().get());
+
+    TAccountList account_list(get_pDb().get(), currency_list);
+    TAccountEntry* pAaccountEntry = new TAccountEntry();
+    pAaccountEntry->acc_name_    = "Mastercard";
+    pAaccountEntry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_OPEN];
+    pAaccountEntry->acc_type_    = ACCOUNT_TYPE_DEF[TAccountEntry::TYPE_BANK];
+    pAaccountEntry->currency_id_ = currency_list.GetCurrencyId("AUD", true);
+    int id_1 = account_list.AddEntry(pAaccountEntry);
+
+    pAaccountEntry = new TAccountEntry(pAaccountEntry);
+    pAaccountEntry->acc_name_    = "Visa";
+    pAaccountEntry->acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_CLOSED];
+    int id_2 = account_list.AddEntry(pAaccountEntry);
+
+    CHECK_EQUAL(3, id_1);
+    CHECK_EQUAL(4, id_2);
+
+    pAaccountEntry->acc_state_ = ACCOUNT_STATE_DEF[TAccountEntry::STATE_OPEN];
+    pAaccountEntry->Update(account_list.ListDatabase());
+
+    displayTimeTaken("TAccountList_Test_Update", start_time);
+}
+
+TEST(TAccountList_Test_Delete)
+{
+    const wxStopWatch start_time;
+    TCurrencyList currency_list(get_pDb().get());
+    TAccountList account_list(get_pDb().get(), currency_list);
+
+    TAccountEntry* pAaccountEntry = account_list.GetEntryPtr("Visa");
+    CHECK_EQUAL(4, pAaccountEntry->GetId());
+    CHECK_EQUAL("Open", pAaccountEntry->acc_state_);
+
+    account_list.DeleteEntry(pAaccountEntry->GetId());
+    CHECK_EQUAL(3, account_list.CurrentListSize());
+
+    displayTimeTaken("TAccountList_Test_Delete", start_time);
 }
 #endif
 
