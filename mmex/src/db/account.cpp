@@ -127,7 +127,7 @@ void TAccountEntry::Update(wxSQLite3Database* db)
  TAccountList Methods
  ***********************************************************************************/
 /// Constructor
-TAccountList::TAccountList(std::shared_ptr<wxSQLite3Database> db
+TAccountList::TAccountList(wxSQLite3Database* db
 , TCurrencyList& currency_list, bool load_entries)
 : TListBase(db)
 , currency_list_(currency_list)
@@ -139,7 +139,7 @@ void TAccountList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("ACCOUNTLIST_V1"))
+        if (!ListDatabase()->TableExists("ACCOUNTLIST_V1"))
         {
             const char CREATE_TABLE_ACCOUNTLIST_V1[] =
             "CREATE TABLE ACCOUNTLIST_V1(ACCOUNTID integer primary key, "
@@ -149,7 +149,7 @@ void TAccountList::LoadEntries(bool load_entries)
             "ACCESSINFO TEXT, INITIALBAL numeric, FAVORITEACCT TEXT NOT NULL, "
             "CURRENCYID integer NOT NULL)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_ACCOUNTLIST_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_ACCOUNTLIST_V1);
         }
 
         if (load_entries)
@@ -169,7 +169,7 @@ void TAccountList::LoadEntriesUsing(const wxString& sql_statement)
     try
     {
         entrylist_.clear();
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+        wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
             TAccountEntry entry(q1);
@@ -196,7 +196,7 @@ void TAccountList::DeleteEntry(int account_id)
     TAccountEntry* pEntry = GetEntryPtr(account_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
     }
 }

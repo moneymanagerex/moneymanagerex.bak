@@ -85,7 +85,7 @@ void TSplitEntry::Delete(wxSQLite3Database* db, wxString db_table)
 /***********************************************************************************
  TSplitEntriesList
  **********************************************************************************/
-TSplitEntriesList::TSplitEntriesList(std::shared_ptr<wxSQLite3Database> db, wxString db_table)
+TSplitEntriesList::TSplitEntriesList(wxSQLite3Database* db, wxString db_table)
 : TListBase(db)
 , db_table_(db_table)
 , global_entries_()
@@ -97,14 +97,14 @@ void TSplitEntriesList::LoadSplitEntries()
 {
     try
     {
-        if (! db_->TableExists(db_table_))
+        if (! ListDatabase()->TableExists(db_table_))
         {
             wxString sql_statement;
             sql_statement << "CREATE TABLE " << db_table_
                           << "(SPLITTRANSID integer primary key, "
                           << " TRANSID numeric NOT NULL, "
                           << " CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric)";
-            db_->ExecuteUpdate(sql_statement);
+            ListDatabase()->ExecuteUpdate(sql_statement);
         }
 
         wxString sql_statement;
@@ -112,7 +112,7 @@ void TSplitEntriesList::LoadSplitEntries()
                       << "       CATEGID, SUBCATEGID,"
                       << "       SPLITTRANSAMOUNT "
                       << "from " << db_table_ << " order by SPLITTRANSID";
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+        wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
             std::shared_ptr<TSplitEntry> pEntry(new TSplitEntry(q1));
@@ -178,14 +178,14 @@ void TSplitTransactionList::AddLocalEntry(int cat_id, int subcat_id, double amou
 void TSplitTransactionList::SaveListforTransaction(int id_transaction)
 {
     id_transaction_ = id_transaction;
-    entries_List_.db_->Begin();
+    entries_List_.ListDatabase()->Begin();
 
     for (size_t i = 0; i < entries_.size(); ++i)
     {
         entries_List_.global_entries_.push_back(entries_[i]);   // Add to global list
-        entries_[i]->Add(entries_List_.db_.get(), entries_List_.db_table_);
+        entries_[i]->Add(entries_List_.ListDatabase(), entries_List_.db_table_);
     }
-    entries_List_.db_->Commit();
+    entries_List_.ListDatabase()->Commit();
 }
 
 double TSplitTransactionList::TotalAmount()
@@ -198,7 +198,7 @@ void TSplitTransactionList::AddEntry(std::shared_ptr<TSplitEntry> pEntry)
     total_ += pEntry->amount_;
     entries_.push_back(pEntry);                 // Add to local list
     entries_List_.global_entries_.push_back(pEntry);   // Add to global list
-    pEntry->Add(entries_List_.db_.get(), entries_List_.db_table_);
+    pEntry->Add(entries_List_.ListDatabase(), entries_List_.db_table_);
 }
 
 int TSplitTransactionList::AddEntry(int cat_id, int subcat_id, double amount)
@@ -215,13 +215,13 @@ int TSplitTransactionList::AddEntry(int cat_id, int subcat_id, double amount)
 
 void TSplitTransactionList::UpdateEntry(std::shared_ptr<TSplitEntry> split_entry)
 {
-    split_entry->Update(entries_List_.db_.get(), entries_List_.db_table_);
+    split_entry->Update(entries_List_.ListDatabase(), entries_List_.db_table_);
     ReEvaluateTotal();
 }
 
 void TSplitTransactionList::DeleteEntry(std::shared_ptr<TSplitEntry> split_entry)
 {
-    split_entry->Delete(entries_List_.db_.get(), entries_List_.db_table_);
+    split_entry->Delete(entries_List_.ListDatabase(), entries_List_.db_table_);
     entries_.clear();
     RemoveGlobalEntry(split_entry->id_);
     total_ = 0.0;

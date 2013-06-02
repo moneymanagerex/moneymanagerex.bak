@@ -176,17 +176,22 @@ wxString TAssetEntry::DisplayDate()
  TAssetList Methods
  ***********************************************************************************/
 /// Constructor
-TAssetList::TAssetList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TAssetList::TAssetList(wxSQLite3Database* db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
+}
+
+TAssetList::~TAssetList()
+{
+    DestroyEntryList();
 }
 
 void TAssetList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("ASSETS_V1"))
+        if (!ListDatabase()->TableExists("ASSETS_V1"))
         {
             const char CREATE_TABLE_ASSETS_V1[] =
             "CREATE TABLE ASSETS_V1 (ASSETID integer primary key, "
@@ -194,12 +199,12 @@ void TAssetList::LoadEntries(bool load_entries)
             "VALUE numeric, VALUECHANGE TEXT, NOTES TEXT, VALUECHANGERATE numeric, "
             "ASSETTYPE TEXT)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_ASSETS_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_ASSETS_V1);
         }
 
         if (load_entries)
         {
-            LoadAssetEntriesUsing("select * from assets_v1");
+            LoadEntriesUsing("select * from assets_v1");
         }
     }
     catch (const wxSQLite3Exception& e)
@@ -208,44 +213,51 @@ void TAssetList::LoadEntries(bool load_entries)
     }
 }
 
-void TAssetList::LoadAssetEntriesUsing(const wxString& sql_statement)
+void TAssetList::LoadEntriesUsing(const wxString& sql_statement)
 {
-    entrylist_.clear();
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    DestroyEntryList();
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        std::shared_ptr<TAssetEntry> pEntry(new TAssetEntry(q1));
-        entrylist_.push_back(pEntry);
+        entrylist_.push_back(new TAssetEntry(q1));
     }
     q1.Finalize();
 }
 
+void TAssetList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
+}
+
 int TAssetList::AddEntry(TAssetEntry* pAssetEntry)
 {
-    std::shared_ptr<TAssetEntry> pEntry(pAssetEntry);
-    entrylist_.push_back(pEntry);
-    pEntry->Add(db_.get());
+    entrylist_.push_back(pAssetEntry);
+    pAssetEntry->Add(ListDatabase());
 
-    return pEntry->id_;
+    return pAssetEntry->id_;
 }
 
 void TAssetList::DeleteEntry(int asset_id)
 {
-    std::shared_ptr<TAssetEntry> pEntry = GetEntryPtr(asset_id);
+    TAssetEntry* pEntry = GetEntryPtr(asset_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
+        delete pEntry;
     }
 }
 
-std::shared_ptr<TAssetEntry> TAssetList::GetEntryPtr(int asset_id)
+TAssetEntry* TAssetList::GetEntryPtr(int asset_id)
 {
-    std::shared_ptr<TAssetEntry> pEntry;
-    size_t list_size = entrylist_.size();
+    TAssetEntry* pEntry = 0;
     size_t index = 0;
 
-    while (index < list_size)
+    while (index < entrylist_.size())
     {
         if (entrylist_[index]->id_ == asset_id)
         {
@@ -259,9 +271,9 @@ std::shared_ptr<TAssetEntry> TAssetList::GetEntryPtr(int asset_id)
     return pEntry;
 }
 
-std::shared_ptr<TAssetEntry> TAssetList::GetIndexedEntryPtr(unsigned int list_index)
+TAssetEntry* TAssetList::GetIndexedEntryPtr(unsigned int list_index)
 {
-    std::shared_ptr<TAssetEntry> pEntry;
+    TAssetEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
         pEntry = entrylist_[list_index];

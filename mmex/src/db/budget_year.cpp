@@ -90,24 +90,29 @@ void TBudgetYearEntry::Update(wxSQLite3Database* db)
 /************************************************************************************
  TBudgetYearList Methods
  ***********************************************************************************/
-/// Constructor
-TBudgetYearList::TBudgetYearList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
+// Constructor
+TBudgetYearList::TBudgetYearList(wxSQLite3Database* db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
+}
+
+TBudgetYearList::~TBudgetYearList()
+{
+    DestroyEntryList();
 }
 
 void TBudgetYearList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("BUDGETYEAR_V1"))
+        if (!ListDatabase()->TableExists("BUDGETYEAR_V1"))
         {
             const char CREATE_TABLE_BUDGETYEAR_V1[] =
             "CREATE TABLE BUDGETYEAR_V1(BUDGETYEARID integer primary key, "
             "BUDGETYEARNAME TEXT NOT NULL UNIQUE)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_BUDGETYEAR_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_BUDGETYEAR_V1);
         }
 
         if (load_entries)
@@ -123,23 +128,30 @@ void TBudgetYearList::LoadEntries(bool load_entries)
 
 void TBudgetYearList::LoadEntriesUsing(const wxString& sql_statement)
 {
-    entrylist_.clear();
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    DestroyEntryList();
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        std::shared_ptr<TBudgetYearEntry> pEntry(new TBudgetYearEntry(q1));
-        entrylist_.push_back(pEntry);
+        entrylist_.push_back(new TBudgetYearEntry(q1));
     }
     q1.Finalize();
 }
 
+void TBudgetYearList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
+}
+
 int TBudgetYearList::AddEntry(TBudgetYearEntry* pBudgetYearEntry)
 {
-    std::shared_ptr<TBudgetYearEntry> pEntry(pBudgetYearEntry);
-    entrylist_.push_back(pEntry);
-    pEntry->Add(db_.get());
+    entrylist_.push_back(pBudgetYearEntry);
+    pBudgetYearEntry->Add(ListDatabase());
 
-    return pEntry->id_;
+    return pBudgetYearEntry->id_;
 }
 
 int TBudgetYearList::AddEntry(wxString budget_year_name)
@@ -155,7 +167,7 @@ void TBudgetYearList::DeleteEntry(int budget_year_id)
     TBudgetYearEntry* pEntry = GetEntryPtr(budget_year_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
     }
 }
@@ -169,7 +181,7 @@ TBudgetYearEntry* TBudgetYearList::GetEntryPtr(int budget_year_id)
     {
         if (entrylist_[index]->id_ == budget_year_id)
         {
-            pEntry = entrylist_[index].get();
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -184,7 +196,7 @@ TBudgetYearEntry* TBudgetYearList::GetIndexedEntryPtr(unsigned int list_index)
     TBudgetYearEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index].get();
+        pEntry = entrylist_[list_index];
     }
 
     return pEntry;

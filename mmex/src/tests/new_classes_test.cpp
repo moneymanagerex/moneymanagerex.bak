@@ -45,7 +45,7 @@
 
 //----------------------------------------------------------------------------
 // This is a way to prevent certain tests occuring during development testing
-//#define CENTRALL_DB_TESTS
+#define CENTRALL_DB_TESTS
 #define CURRENCY_TESTS
 #define ACCOUNT_TESTS
 #define CATEGORY_TESTS
@@ -53,10 +53,12 @@
 #define PAYEE_TESTS
 #define TRANSACTION_TESTS
 #define REPEAT_TRANSACTION_TESTS
-//#define SPLIT_TRANSACTION_TESTS
-//#define ASSET_TESTS
+#define SPLIT_TRANSACTION_TESTS
+#define ASSET_TESTS
 #define STOCK_TESTS
 #define BUDGET_TESTS
+
+//#define PAUSE_DISPLAY_CLOSING
 
 //----------------------------------------------------------------------------
 /// Central class holding all major components of the database
@@ -77,7 +79,7 @@ public:
     TBudgetYearList         budget_year_list_;
     TBudgetList             budget_entry_list_;
 
-    TDatabase(std::shared_ptr<wxSQLite3Database> db)
+    TDatabase(wxSQLite3Database* db)
     : info_settings_(db, true)
     , currency_list_(db)
     , account_list_(db, currency_list_)
@@ -97,7 +99,7 @@ public:
 // Create a single access point for the main database, stored in memory.
 std::shared_ptr<TDatabase> main_db()
 {
-    static std::shared_ptr<TDatabase> pCore(new TDatabase(get_pDb()));
+    static std::shared_ptr<TDatabase> pCore(new TDatabase(get_pDb().get()));
 
     return pCore;
 }
@@ -144,7 +146,7 @@ TEST(TCurrencyList_Actions)
 
     const wxStopWatch start_time;
 
-    TCurrencyList currency_list(get_pDb());
+    TCurrencyList currency_list(get_pDb().get());
 
     TCurrencyEntry* pCurrencyEntry = new TCurrencyEntry();  // default = USD
     int id_first = currency_list.AddEntry(pCurrencyEntry);
@@ -182,7 +184,7 @@ TEST(TCurrencyList_Load_Results)
 {
     const wxStopWatch start_time;
 
-    TCurrencyList currency_list(get_pDb());
+    TCurrencyList currency_list(get_pDb().get());
 
     int id_AUD = currency_list.GetCurrencyId(CURRENCIES[TCurrencyEntry::SYMBOL_AUD], true);
     TCurrencyEntry* pEntry_AUD = currency_list.GetEntryPtr(id_AUD); 
@@ -203,9 +205,9 @@ TEST(TCurrencyList_Load_Results)
 TEST(TAccountList_Test_Add)
 {
     const wxStopWatch start_time;
-    TCurrencyList currency_list(get_pDb());
+    TCurrencyList currency_list(get_pDb().get());
 
-    TAccountList account_list(get_pDb(), currency_list);
+    TAccountList account_list(get_pDb().get(), currency_list);
     TAccountEntry account_entry;
     account_entry.acc_name_    = "Savings";
     account_entry.acc_state_   = ACCOUNT_STATE_DEF[TAccountEntry::STATE_OPEN];
@@ -234,7 +236,7 @@ TEST(TCategoryList_Test)
 {
     const wxStopWatch start_time;
 
-    TCategoryList cat_list(get_pDb());
+    TCategoryList cat_list(get_pDb().get());
 
     int cat_id; 
     cat_list.ListDatabase()->Begin();
@@ -280,8 +282,8 @@ TEST(TSubCategoryList_Test)
 {
     const wxStopWatch start_time;
 
-    TCategoryList cat_list(get_pDb());
-    TSubCategoryList subcat_list(get_pDb());
+    TCategoryList cat_list(get_pDb().get());
+    TSubCategoryList subcat_list(get_pDb().get());
 
     cat_list.ListDatabase()->Begin();
     int cat_id = -1;
@@ -348,10 +350,10 @@ TEST(TSubCategoryList_Test)
 TEST(TCategoryList_SubList_Test)
 {
     const wxStopWatch start_time;
-    TCategoryList cat_list(get_pDb());
+    TCategoryList cat_list(get_pDb().get());
 
     int cat_id = cat_list.GetCategoryId("Automobile");
-    TSubCategoryList subcat_sublist(get_pDb(), cat_id);
+    TSubCategoryList subcat_sublist(get_pDb().get(), cat_id);
 
     int subcat_id = subcat_sublist.GetSubCategoryId(cat_id, "Registration");
 
@@ -373,7 +375,7 @@ TEST(TPayeeList_Test_1)
 {
     const wxStopWatch start_time;
 
-    TPayeeList payee_list(get_pDb());
+    TPayeeList payee_list(get_pDb().get());
     int payee_id;
 
     payee_id = payee_list.AddEntry("Coles");
@@ -416,7 +418,7 @@ TEST(TPayeeList_Test_2)
 {
     const wxStopWatch start_time;
 
-    TPayeeList payee_list(get_pDb());
+    TPayeeList payee_list(get_pDb().get());
 
     //std::shared_ptr<TPayeeEntry> pEntry = payee_list.GetEntryPtr("Woolworths");
     TPayeeEntry* pEntry = payee_list.GetEntryPtr("Woolworths");
@@ -437,7 +439,7 @@ TEST(TTransactionList_Add)
 {
     const wxStopWatch start_time;
 
-    TTransactionList transactions(get_pDb());
+    TTransactionList transactions(get_pDb().get());
     transactions.ListDatabase()->Begin();
 
     TTransactionEntry* pTransEntry_1 = new TTransactionEntry();
@@ -478,7 +480,7 @@ TEST(TTransactionList_Update)
 {
     const wxStopWatch start_time;
 
-    TTransactionList transactions(get_pDb());
+    TTransactionList transactions(get_pDb().get());
     TTransactionEntry* pTransEntry = transactions.GetEntryPtr(2);
 
     CHECK_EQUAL(2, pTransEntry->GetId());
@@ -499,7 +501,7 @@ TEST(TTransactionList_Update)
 TEST(BillList_Add_first_four_entries)
 {
     const wxStopWatch start_time;
-    TTransactionBillList repeat_transactions(get_pDb());
+    TTransactionBillList repeat_transactions(get_pDb().get());
 
     TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
     pBillEntry->amount_from_   = 1000;
@@ -573,8 +575,8 @@ TEST(BillList_Add_next_two_entries)
 {
     const wxStopWatch start_time;
 
-    TTransactionList transactions(get_pDb());
-    TTransactionBillList repeat_transactions(get_pDb());
+    TTransactionList transactions(get_pDb().get());
+    TTransactionBillList repeat_transactions(get_pDb().get());
 
     TTransactionBillEntry* pBillEntry = new TTransactionBillEntry();
     pBillEntry->amount_from_   = 1000;
@@ -603,8 +605,8 @@ TEST(BillList_Create_entry_from_transaction)
 {
     const wxDateTime start_time(wxDateTime::UNow());
 
-    TTransactionList transactions(get_pDb());
-    TTransactionBillList repeat_transactions(get_pDb());
+    TTransactionList transactions(get_pDb().get());
+    TTransactionBillList repeat_transactions(get_pDb().get());
 
     TTransactionEntry* pTransEntry = transactions.GetEntryPtr(2);
 
@@ -625,8 +627,8 @@ TEST(BillList_Executing_Entries)
 {
     const wxStopWatch start_time;
 
-    TTransactionList transactions(get_pDb());
-    TTransactionBillList repeat_transactions(get_pDb());
+    TTransactionList transactions(get_pDb().get());
+    TTransactionBillList repeat_transactions(get_pDb().get());
 
     int days_remaining;
     bool continue_Execution = false;
@@ -676,7 +678,7 @@ TEST(BillList_Executing_Entries)
 TEST(BillList_Deleting_First_Entry)
 {
     const wxStopWatch start_time;
-    TTransactionBillList repeat_transactions(get_pDb());
+    TTransactionBillList repeat_transactions(get_pDb().get());
 
     int currentsize = repeat_transactions.CurrentListSize();
     if ( currentsize > 0)
@@ -687,7 +689,7 @@ TEST(BillList_Deleting_First_Entry)
         // removed from memory
         CHECK(currentsize != repeat_transactions.CurrentListSize());
 
-        TTransactionBillList bill_transactions(get_pDb());
+        TTransactionBillList bill_transactions(get_pDb().get());
         // removed from database
         CHECK(currentsize != bill_transactions.CurrentListSize());
     }
@@ -706,7 +708,7 @@ TEST(TSplitTransactionList_Test_Create)
 {
     const wxStopWatch start_time;
 
-    TSplitEntriesList global_splits(get_pDb());
+    TSplitEntriesList global_splits(get_pDb().get());
 
     int trans_id = 9;
     TSplitTransactionList split_list_9(trans_id, global_splits);
@@ -745,7 +747,7 @@ TEST(TSplitTransactionList_Test_update)
 {
     const wxStopWatch start_time;
 
-    TSplitEntriesList global_splits(get_pDb());
+    TSplitEntriesList global_splits(get_pDb().get());
 
     int trans_id = 10;
     TSplitTransactionList split_list(trans_id, global_splits);
@@ -767,7 +769,7 @@ TEST(TSplitTransactionList_Test_delete)
 {
     const wxStopWatch start_time;
 
-    TSplitEntriesList global_splits(get_pDb());
+    TSplitEntriesList global_splits(get_pDb().get());
 
     int trans_id = 10;
     TSplitTransactionList split_list(trans_id, global_splits);
@@ -798,7 +800,7 @@ TEST(TSplitTransactionList_Test_add_after_delete)
 {
     const wxStopWatch start_time;
 
-    TSplitEntriesList global_splits(get_pDb());
+    TSplitEntriesList global_splits(get_pDb().get());
 
     int trans_id = 10;
     TSplitTransactionList split_list(trans_id, global_splits);
@@ -831,7 +833,7 @@ TEST(TAssetList_Add_Update_Entry)
     asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::TYPE_AUTO];
     asset_entry->value_ = 2000;
 
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
     int asset_id = asset_list.AddEntry(asset_entry);
     CHECK(asset_id > 0);
 
@@ -839,7 +841,7 @@ TEST(TAssetList_Add_Update_Entry)
     asset_entry->rate_value_ = 50;
     asset_entry->Update(asset_list.ListDatabase());
 
-    std::shared_ptr<TAssetEntry> listed_asset_entry = asset_list.GetEntryPtr(asset_id);
+    TAssetEntry* listed_asset_entry = asset_list.GetEntryPtr(asset_id);
     CHECK(listed_asset_entry->name_ == asset_entry->name_);
 
     displayTimeTaken("TAssetList_Add_Update_Entry", start_time);
@@ -850,10 +852,10 @@ TEST(TAssetList_Test_Values)
     const wxStopWatch start_time;
 
 	wxDateTime date = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
     CHECK_EQUAL(1, asset_list.CurrentListSize());
 
-    std::shared_ptr<TAssetEntry> pEntry = asset_list.GetIndexedEntryPtr(0);
+    TAssetEntry* pEntry = asset_list.GetIndexedEntryPtr(0);
     if (pEntry)
     {
         CHECK_EQUAL(date.FormatISODate(), pEntry->date_.FormatISODate());
@@ -893,7 +895,7 @@ TEST(TAssetList_Test_Balance)
 
     wxDateTime date = wxDateTime::Now().Subtract(wxDateSpan::Years(2));
 
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
     TAssetEntry* asset_entry = new TAssetEntry();
 	asset_entry->date_ = date;
     asset_entry->name_ = ASSET_TYPE_DEF[TAssetEntry::TYPE_HOUSE];
@@ -920,8 +922,8 @@ TEST(TAssetList_Delete_entries)
 {
     const wxStopWatch start_time;
 
-    TAssetList asset_list(get_pDb());
-    std::shared_ptr<TAssetEntry> listed_asset_entry;
+    TAssetList asset_list(get_pDb().get());
+    TAssetEntry* listed_asset_entry;
 
     while (asset_list.CurrentListSize() > 0)
     {
@@ -936,7 +938,7 @@ TEST(TAssetList_Add_5_years_of_entries)
 {
     const wxStopWatch start_time;
     mmOptions::instance().dateFormat_ = wxT("%d-%m-%y");
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
     TAssetEntry* new_entry = new TAssetEntry();
     new_entry->name_       = ASSET_TYPE_DEF[TAssetEntry::TYPE_AUTO];
@@ -965,7 +967,7 @@ TEST(TAssetList_Add_5_years_of_entries)
 TEST(TAssetList_Depreciate_Daily)
 {
     const wxStopWatch start_time;
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
     const double init_value = 20000;
     double new_value = init_value;
@@ -994,7 +996,7 @@ TEST(TAssetList_Depreciate_Daily)
 TEST(TAssetList_Change_Entries_Apreciate)
 {
     const wxDateTime start_time(wxDateTime::UNow());
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
     get_pDb()->Begin();
     for (const auto& pEntry:asset_list.entrylist_)
     {
@@ -1009,7 +1011,7 @@ TEST(TAssetList_Change_Entries_Apreciate)
 TEST(TAssetList_Apreciate_Daily)
 {
     const wxStopWatch start_time;
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
     const double init_value = 20000;
     double new_value = init_value;
@@ -1031,53 +1033,15 @@ TEST(TAssetList_Apreciate_Daily)
     displayTimeTaken("TAssetList_Apreciate_Daily", start_time);
 }
 
-
-#if 0
-TEST(TAssetList_Test_Depreciate_Monthly)
-{
-    const wxDateTime start_time(wxDateTime::UNow());
-    TAssetList asset_list(get_pDb());
-
-    const wxString line_feed = "\n";
-    const double init_value = 20000;
-    double new_value = init_value;
-    double dep_rate = (init_value/12) * 0.2; // 20% pa
-    int months = 0;
-    std::shared_ptr<TAssetEntry> pEntry;
-    for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
-    {
-        pEntry = asset_list.GetIndexedEntryPtr(i);
-        CHECK_EQUAL(init_value, pEntry->value_);
-
-        new_value = init_value - (dep_rate*months);
-        if (new_value < 0) new_value = 0;
-
-//        CHECK_EQUAL(new_value, pEntry->GetValue());
-
-        wxString str_value = line_feed;
-        str_value << "Date: " << pEntry->date_;
-        str_value << "   Expected Value: " << wxString::Format("%.2f", new_value);
-        str_value << "   Value: " << wxString::Format("%.2f", pEntry->GetValue());
-        printf(str_value.char_str());
-
-        months ++;
-    }
-
-    printf(line_feed.char_str());
-    displayTimeTaken("TAssetList_Test_Depreciate_Monthly", start_time);
-    display_STD_IO_separation_line();
-}
-#endif
-
 TEST(TAssetList_GetIndexedEntryPtr_Test)
 {
     printf("\nTesting speed of Iterators vs indexing...");
     display_STD_IO_separation_line();
 
     const wxStopWatch start_time;
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
-    std::shared_ptr<TAssetEntry> pEntry;
+    TAssetEntry* pEntry = 0;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -1091,12 +1055,12 @@ TEST(TAssetList_GetIndexedEntryPtr_Test)
 TEST(TAssetList_const_iterator_Test)
 {
     const wxStopWatch start_time;
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
-    for (std::vector<std::shared_ptr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
+    for (std::vector<TAssetEntry*>::const_iterator it = asset_list.entrylist_.begin();
         it != asset_list.entrylist_.end(); ++ it)
     {
-        const std::shared_ptr<TAssetEntry> pEntry = *it;
+        const TAssetEntry* pEntry = *it;
 
         CHECK_EQUAL(20000, pEntry->value_);
     }
@@ -1107,12 +1071,12 @@ TEST(TAssetList_const_iterator_Test)
 TEST(TAssetList_const_iterator_Retest)
 {
     const wxStopWatch start_time;
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
-    for (std::vector<std::shared_ptr<TAssetEntry> >::const_iterator it = asset_list.entrylist_.begin();
+    for (std::vector<TAssetEntry*>::const_iterator it = asset_list.entrylist_.begin();
         it != asset_list.entrylist_.end(); ++ it)
     {
-        const std::shared_ptr<TAssetEntry> pEntry = *it;
+        const TAssetEntry* pEntry = *it;
 
         CHECK_EQUAL(20000, pEntry->value_);
     }
@@ -1123,9 +1087,9 @@ TEST(TAssetList_const_iterator_Retest)
 TEST(TAssetList_GetIndexedEntryPtr_Retest)
 {
     const wxStopWatch start_time;
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
-    std::shared_ptr<TAssetEntry> pEntry;
+    TAssetEntry* pEntry = 0;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -1139,7 +1103,7 @@ TEST(TAssetList_GetIndexedEntryPtr_Retest)
 TEST(TAssetList_Smart_const_iterator)
 {
     const wxStopWatch start_time;
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
     for (const auto& pEntry:asset_list.entrylist_)
     {
@@ -1149,13 +1113,12 @@ TEST(TAssetList_Smart_const_iterator)
     displayTimeTaken("TAssetList_Smart_const_iterator", start_time);
 }
 
-
 TEST(TAssetList_Test_GetEntryPtr)
 {
     const wxStopWatch start_time;
-    TAssetList asset_list(get_pDb());
+    TAssetList asset_list(get_pDb().get());
 
-    std::shared_ptr<TAssetEntry> pEntry;
+    TAssetEntry* pEntry = 0;
     for (unsigned int i = 0; i < asset_list.entrylist_.size(); ++i)
     {
         pEntry = asset_list.GetIndexedEntryPtr(i);
@@ -1167,7 +1130,7 @@ TEST(TAssetList_Test_GetEntryPtr)
     displayTimeTaken("TAssetList_Test_GetEntryPtr", start_time);
     display_STD_IO_separation_line();
 }
-#endif
+#endif // def ASSETS_TESTS
 
 #ifdef STOCK_TESTS
 /****************************************************************************
@@ -1181,7 +1144,7 @@ TEST(TStockList_Test_Add)
 
     int account_id = 10;
 
-    TStockList stock_list(get_pDb());
+    TStockList stock_list(get_pDb().get());
     TStockEntry stock_entry;
     stock_entry.heldat_ = account_id;
     stock_entry.name_ = "Stock Name - Should be in Account";
@@ -1214,7 +1177,7 @@ TEST(TStockList_Test_Update)
 {
     const wxStopWatch start_time;
 
-    TStockList stock_list(get_pDb());
+    TStockList stock_list(get_pDb().get());
     int stock_id = 2;        // 2nd entry from test 1
     stock_list.GetEntryPtr(stock_id);   // test setting current index
     TStockEntry* stock_entry = stock_list.GetIndexedEntryPtr(stock_list.GetCurrentIndex());
@@ -1243,7 +1206,7 @@ TEST(TStockList_Test_Delete)
 {
     const wxStopWatch start_time;
 
-    TStockList stock_list(get_pDb());
+    TStockList stock_list(get_pDb().get());
     stock_list.DeleteEntry(1);          // 1st entry from test 1
     double value = stock_list.GetStockBalance();
     CHECK_EQUAL(3000, value);
@@ -1259,7 +1222,7 @@ TEST(TStockList_Test_Delete)
 TEST(TBudgetYearList_Add)
 {
     const wxDateTime start_time(wxDateTime::UNow());
-    TBudgetYearList budget_year(get_pDb());
+    TBudgetYearList budget_year(get_pDb().get());
 
     int year_id = budget_year.AddEntry("2011");
 
@@ -1269,8 +1232,15 @@ TEST(TBudgetYearList_Add)
 
 #endif
 
-} // End of SUITE: mmex_new_classes_test
+#ifdef PAUSE_DISPLAY_CLOSING
+TEST(Pause_screen)
+{
+    std::cout << "Press ENTER to continue... ";
+    std::cin.get();
+}
+#endif
 
+} // End of SUITE: mmex_new_classes_test
 
 //----------------------------------------------------------------------------
 #endif // NEW_CLASSES_TEST_INCLUDED_IN_BUILD

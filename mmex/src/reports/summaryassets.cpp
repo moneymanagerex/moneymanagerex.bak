@@ -44,7 +44,7 @@ wxString mmReportSummaryAssets::getHTMLText()
 
     core_->currencyList_.LoadBaseCurrencySettings();
 
-    TAssetList asset_list_(core_->db_);
+    TAssetList asset_list_(core_->db_.get());
 	for (const auto & pEntry: asset_list_.entrylist_)
 	{
         hb.startTableRow();

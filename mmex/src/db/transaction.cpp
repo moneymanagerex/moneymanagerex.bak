@@ -196,17 +196,22 @@ bool TTransactionEntry::IsTransferTo(int ref_account_id)
  TTransactionList Methods
  ***********************************************************************************/
 /// Constructor
-TTransactionList::TTransactionList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TTransactionList::TTransactionList(wxSQLite3Database* db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
+}
+
+TTransactionList::~TTransactionList()
+{
+    DestroyEntryList();
 }
 
 void TTransactionList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("CHECKINGACCOUNT_V1"))
+        if (!ListDatabase()->TableExists("CHECKINGACCOUNT_V1"))
         {
             const char CREATE_TABLE_CHECKINGACCOUNT_V1[]=
             "CREATE TABLE CHECKINGACCOUNT_V1(TRANSID integer primary key, "
@@ -214,7 +219,7 @@ void TTransactionList::LoadEntries(bool load_entries)
             "TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT, "
             "CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_CHECKINGACCOUNT_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_CHECKINGACCOUNT_V1);
         }
 
         if (load_entries)
@@ -230,23 +235,30 @@ void TTransactionList::LoadEntries(bool load_entries)
 
 void TTransactionList::LoadEntriesUsing(const wxString& sql_statement)
 {
-    entrylist_.clear();
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    DestroyEntryList();
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        std::shared_ptr<TTransactionEntry> pEntry(new TTransactionEntry(q1));
-        entrylist_.push_back(pEntry);
+        entrylist_.push_back(new TTransactionEntry(q1));
     }
     q1.Finalize();
 }
 
+void TTransactionList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
+}
+
 int TTransactionList::AddEntry(TTransactionEntry* pTransEntry)
 {
-    std::shared_ptr<TTransactionEntry> pEntry(pTransEntry);
-    entrylist_.push_back(pEntry);
-    pEntry->Add(db_.get());
+    entrylist_.push_back(pTransEntry);
+    pTransEntry->Add(ListDatabase());
 
-    return pEntry->id_;
+    return pTransEntry->id_;
 }
 
 void TTransactionList::DeleteEntry(int trans_id)
@@ -254,8 +266,9 @@ void TTransactionList::DeleteEntry(int trans_id)
     TTransactionEntry* pEntry = GetEntryPtr(trans_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
+        delete pEntry;
     }
 }
 
@@ -268,7 +281,7 @@ TTransactionEntry* TTransactionList::GetEntryPtr(int trans_id)
     {
         if (entrylist_[index]->id_ == trans_id)
         {
-            pEntry = entrylist_[index].get();
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -283,7 +296,7 @@ TTransactionEntry* TTransactionList::GetIndexedEntryPtr(unsigned int list_index)
     TTransactionEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index].get();
+        pEntry = entrylist_[list_index];
     }
 
     return pEntry;
@@ -293,4 +306,3 @@ int TTransactionList::CurrentListSize()
 {
     return entrylist_.size();
 }
-

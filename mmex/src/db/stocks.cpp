@@ -169,7 +169,7 @@ wxString TStockEntry::CommissionCurrencyEditFormat()
  TStockList Methods
  ***********************************************************************************/
 /// Constructor
-TStockList::TStockList(std::shared_ptr<wxSQLite3Database> db, bool load_entries)
+TStockList::TStockList(wxSQLite3Database* db, bool load_entries)
 : TListBase(db)
 {
     LoadEntries(load_entries);
@@ -179,7 +179,7 @@ void TStockList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("STOCK_V1"))
+        if (!ListDatabase()->TableExists("STOCK_V1"))
         {
             const char CREATE_TABLE_STOCK_V1[] =
             "CREATE TABLE STOCK_V1(STOCKID integer primary key, "
@@ -187,7 +187,7 @@ void TStockList::LoadEntries(bool load_entries)
             "NUMSHARES numeric, PURCHASEPRICE numeric NOT NULL, NOTES TEXT, CURRENTPRICE numeric NOT NULL, "
             "VALUE numeric, COMMISSION numeric)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_STOCK_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_STOCK_V1);
         }
 
         if (load_entries)
@@ -206,7 +206,7 @@ void TStockList::LoadEntriesUsing(const wxString& sql_statement)
     try
     {
         entrylist_.clear();
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+        wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
         while (q1.NextRow())
         {
             TStockEntry entry(q1);

@@ -167,7 +167,7 @@ wxString mmReportCashFlow::getHTMLText_i()
 #define USING_NEW_DB_CLASSES  // Activation switch
 #ifdef USING_NEW_DB_CLASSES
     // load a fresh list of repeating transactions.
-    TTransactionBillList repeat_trans_list(core_->db_);
+    TTransactionBillList repeat_trans_list(core_->db_.get());
 
     for (const auto& repeat_entry:repeat_trans_list.entrylist_)
     {
@@ -194,23 +194,23 @@ wxString mmReportCashFlow::getHTMLText_i()
         {
             if (repeat_entry->UsingIn_X_Processing())
             {
-                SetRepeatForecast(fvec, repeat_entry.get(), amount);
+                SetRepeatForecast(fvec, repeat_entry, amount);
             }
             else if (repeat_entry->UsingEvery_X_Processing())
             {
-                SetYearsRepeatForecast(fvec, repeat_entry.get(), amount, yearFromNow);
+                SetYearsRepeatForecast(fvec, repeat_entry, amount, yearFromNow);
             }
             else
             {
                 while (repeat_entry->num_repeats_ > 0)
                 {
-                    SetRepeatForecast(fvec, repeat_entry.get(), amount);
+                    SetRepeatForecast(fvec, repeat_entry, amount);
                 }
             }
         }
         else
         {
-            SetYearsRepeatForecast(fvec, repeat_entry.get(), amount, yearFromNow);
+            SetYearsRepeatForecast(fvec, repeat_entry, amount, yearFromNow);
         }
     }
 

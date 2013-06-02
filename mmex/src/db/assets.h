@@ -97,20 +97,23 @@ class TAssetList : public TListBase
 {
 private:
     void LoadEntries(bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
 public:
-    std::vector<std::shared_ptr<TAssetEntry> >entrylist_;
+    std::vector<TAssetEntry*> entrylist_;
 
-    TAssetList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TAssetList(wxSQLite3Database* db, bool load_entries = true);
+    ~TAssetList();
 
     /// Allows specialised loads by providing the required SQL statement
-    void LoadAssetEntriesUsing(const wxString& sql_statement);
+    void LoadEntriesUsing(const wxString& sql_statement);
 
     int AddEntry(TAssetEntry* pAssetEntry);
     void DeleteEntry(int asset_id);
 
-    std::shared_ptr<TAssetEntry> GetEntryPtr(int asset_id);
-    std::shared_ptr<TAssetEntry> GetIndexedEntryPtr(unsigned int list_index);
+    TAssetEntry* GetEntryPtr(int asset_id);
+    TAssetEntry* GetIndexedEntryPtr(unsigned int list_index);
 
     int CurrentListSize();
     double GetAssetBalance(bool value_today = true);

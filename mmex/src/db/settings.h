@@ -54,7 +54,7 @@ class TSettingsList : public TListBase
 {
 public:
     /// Constructor
-    TSettingsList(std::shared_ptr<wxSQLite3Database> db, bool main_db = false);
+    TSettingsList(wxSQLite3Database* db, bool main_db = false);
     ~TSettingsList();
 
     bool GetBoolSetting(const wxString& name, bool default_value);

@@ -93,7 +93,7 @@ private:
 public:
     std::vector<std::shared_ptr<TBudgetEntry> >entrylist_;
 
-    TBudgetList(std::shared_ptr<wxSQLite3Database> db, bool load_entries = true);
+    TBudgetList(wxSQLite3Database* db, bool load_entries = true);
 
     // Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);

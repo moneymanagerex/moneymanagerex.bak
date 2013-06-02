@@ -98,23 +98,28 @@ void TPayeeEntry::Update(wxSQLite3Database* db)
  TPayeeList Methods
  ***********************************************************************************/
 /// Constructor
-TPayeeList::TPayeeList(std::shared_ptr<wxSQLite3Database> db)
+TPayeeList::TPayeeList(wxSQLite3Database* db)
 : TListBase(db)
 {
     LoadEntries();
+}
+
+TPayeeList::~TPayeeList()
+{
+    DestroyEntryList();
 }
 
 void TPayeeList::LoadEntries(bool load_entries)
 {
     try
     {
-        if (!db_->TableExists("PAYEE_V1"))
+        if (!ListDatabase()->TableExists("PAYEE_V1"))
         {
             const char CREATE_TABLE_PAYEE_V1[]=
             "CREATE TABLE PAYEE_V1(PAYEEID integer primary key, "
             "PAYEENAME TEXT NOT NULL UNIQUE, CATEGID integer, SUBCATEGID integer)";
 
-            db_->ExecuteUpdate(CREATE_TABLE_PAYEE_V1);
+            ListDatabase()->ExecuteUpdate(CREATE_TABLE_PAYEE_V1);
         }
 
         if (load_entries)
@@ -130,14 +135,22 @@ void TPayeeList::LoadEntries(bool load_entries)
 
 void TPayeeList::LoadEntriesUsing(const wxString& sql_statement)
 {
-    entrylist_.clear();
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql_statement);
+    DestroyEntryList();
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        TPayeeEntry pEntry(q1);
-        entrylist_.push_back(pEntry);
+        entrylist_.push_back(new TPayeeEntry(q1));
     }
     q1.Finalize();
+}
+
+void TPayeeList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
 }
 
 int TPayeeList::AddEntry(const wxString& name, wxString category, wxString subcategory)
@@ -145,13 +158,13 @@ int TPayeeList::AddEntry(const wxString& name, wxString category, wxString subca
     int payee_id = -1;
     if (PayeeExists(name))
     {
-        payee_id = entrylist_[current_index_].id_;
+        payee_id = entrylist_[current_index_]->GetId();
     }
     else
     {
-        TPayeeEntry pEntry(name);
-        payee_id = pEntry.Add(db_.get());
+        TPayeeEntry* pEntry = new TPayeeEntry(name);
         entrylist_.push_back(pEntry);
+        payee_id = pEntry->Add(ListDatabase());
     }
 
     return payee_id;
@@ -172,7 +185,7 @@ void TPayeeList::UpdateEntry(int payee_id, const wxString& new_payee_name, int c
     {
         pEntry->subcat_id_ = subcat_id;
     }
-    pEntry->Update(db_.get());
+    pEntry->Update(ListDatabase());
 }
 
 void TPayeeList::UpdateEntry(const wxString& payee_name, int cat_id, int subcat_id)
@@ -180,7 +193,7 @@ void TPayeeList::UpdateEntry(const wxString& payee_name, int cat_id, int subcat_
     TPayeeEntry* pEntry = GetEntryPtr(payee_name);
     pEntry->cat_id_ = cat_id;
     pEntry->subcat_id_ = subcat_id;
-    pEntry->Update(db_.get());
+    pEntry->Update(ListDatabase());
 }
 
 void TPayeeList::DeleteEntry(int payee_id)
@@ -188,8 +201,9 @@ void TPayeeList::DeleteEntry(int payee_id)
     TPayeeEntry* pEntry = GetEntryPtr(payee_id);
     if (pEntry)
     {
-        pEntry->Delete(db_.get());
+        pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
+        delete pEntry;
     }
 }
 
@@ -207,9 +221,9 @@ TPayeeEntry* TPayeeList::GetEntryPtr(int payee_id)
 
     while (index < entrylist_.size())
     {
-        if (entrylist_[index].id_ == payee_id)
+        if (entrylist_[index]->GetId() == payee_id)
         {
-            pEntry = &entrylist_[index];
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -226,9 +240,9 @@ TPayeeEntry* TPayeeList::GetEntryPtr(const wxString& name)
 
     while (index < entrylist_.size())
     {
-        if (entrylist_[index].name_ == name)
+        if (entrylist_[index]->name_ == name)
         {
-            pEntry = &entrylist_[index];
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }

@@ -235,7 +235,7 @@ private:
 public:
     std::vector<std::shared_ptr<TCurrencyEntry> > entrylist_;
 
-    TCurrencyList(std::shared_ptr<wxSQLite3Database> db);
+    TCurrencyList(wxSQLite3Database* db);
 
     int AddEntry(TCurrencyEntry* pCurrencyEntry);
     void SetBaseCurrency(int currency_id);
