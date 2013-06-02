@@ -61,10 +61,11 @@ public:
     double init_balance_;
     int currency_id_;
 
-    /// Constructor used when loading payees from the database
+    // Constructor used when loading payees from the database
     TAccountEntry(wxSQLite3ResultSet& q1);
-    
-    /// Constructor for creating a new account entry
+    // Copy constructor using a pointer
+    TAccountEntry(TAccountEntry* pEntry);
+    // Constructor for creating a new account entry
     TAccountEntry();
 
     void Update(wxSQLite3Database* db);
@@ -78,19 +79,22 @@ class TAccountList : public TListBase
 private:
     TCurrencyList& currency_list_;
     void LoadEntries(bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
     int NumberOfAccounts(int account_type);
 
 public:
-    std::vector<TAccountEntry> entrylist_;
+    std::vector<TAccountEntry*> entrylist_;
 
-    TAccountList(wxSQLite3Database* db,
-    TCurrencyList& currency_list, bool load_entries = true);
+    TAccountList(wxSQLite3Database* db
+    , TCurrencyList& currency_list, bool load_entries = true);
+    ~TAccountList();
 
     /// Allows specialised list loading provided by SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
-    int AddEntry(TAccountEntry& account_entry);
+    int AddEntry(TAccountEntry* pAccountEntry);
 
     /// Note: At this level, no checking is done for usage in other tables.
     void DeleteEntry(int account_id);
@@ -103,6 +107,7 @@ public:
     int GetAccountId(const wxString& account_name);
     wxString GetAccountName(int account_id);
     bool AccountExists(const wxString& account_name);
+    int CurrentListSize();
 
     int NumberOfBankAccounts();
     int NumberOfTermAccounts();
