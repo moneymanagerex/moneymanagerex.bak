@@ -88,6 +88,7 @@ public:
     double GetValue();
     wxString GetValueCurrencyEditFormat(bool initial_value = false);
     wxString DisplayDate();
+    void destroy() { delete this; }
 };
 
 /************************************************************************************

@@ -16,6 +16,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+#include <algorithm>    // std::for_each
+#include <functional>   // std::mem_fn
 #include "assets.h"
 #include "../mmCurrencyFormatter.h"
 
@@ -226,10 +228,7 @@ void TAssetList::LoadEntriesUsing(const wxString& sql_statement)
 
 void TAssetList::DestroyEntryList()
 {
-    for (size_t i = 0; i < entrylist_.size(); ++i)
-    {
-        delete entrylist_[i];
-    }
+    for_each(entrylist_.begin(), entrylist_.end(), std::mem_fn(&TAssetEntry::destroy));
     entrylist_.clear();
 }
 
