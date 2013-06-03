@@ -16,6 +16,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+#include <numeric>
 #include "stocks.h"
 #include "../mmCurrencyFormatter.h"
 
@@ -289,13 +290,7 @@ int TStockList::CurrentListSize()
 
 double TStockList::GetStockBalance()
 {
-    double total_value = 0.0;
-    for (size_t i = 0; i < entrylist_.size(); ++i)
-    {
-        total_value = total_value + entrylist_[i]->value_;
-    }
-
-    return total_value;
+    return accumulate(entrylist_.begin(), entrylist_.end(), 0.0f, [](double init, const TStockEntry* stock) { return init + stock->value_; });
 }
 
 wxString TStockList::GetStockBalanceCurrencyFormat()
