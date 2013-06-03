@@ -106,10 +106,10 @@ public:
     double TotalAmount();
 
     int AddEntry(int cat_id, int subcat_id, double amount);
-    void UpdateEntry(std::shared_ptr<TSplitEntry> split_entry);
-    void DeleteEntry(std::shared_ptr<TSplitEntry> split_entry);
+    void UpdateEntry(TSplitEntry* split_entry);
+    void DeleteEntry(TSplitEntry* split_entry);
     
     int GetListSize();
-    std::shared_ptr<TSplitEntry> GetEntryPtr(int id_split_trans);
-    std::shared_ptr<TSplitEntry> GetIndexedEntryPtr(int index);
+    TSplitEntry* GetEntryPtr(int id_split_trans);
+    TSplitEntry* GetIndexedEntryPtr(int index);
 };

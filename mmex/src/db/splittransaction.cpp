@@ -213,13 +213,13 @@ int TSplitTransactionList::AddEntry(int cat_id, int subcat_id, double amount)
     return pEntry->id_;
 }
 
-void TSplitTransactionList::UpdateEntry(std::shared_ptr<TSplitEntry> split_entry)
+void TSplitTransactionList::UpdateEntry(TSplitEntry* split_entry)
 {
     split_entry->Update(entries_List_.ListDatabase(), entries_List_.db_table_);
     ReEvaluateTotal();
 }
 
-void TSplitTransactionList::DeleteEntry(std::shared_ptr<TSplitEntry> split_entry)
+void TSplitTransactionList::DeleteEntry(TSplitEntry* split_entry)
 {
     split_entry->Delete(entries_List_.ListDatabase(), entries_List_.db_table_);
     entries_.clear();
@@ -245,14 +245,14 @@ int TSplitTransactionList::GetListSize()
     return entries_.size();
 }
 
-std::shared_ptr<TSplitEntry> TSplitTransactionList::GetEntryPtr(int id_split_trans)
+TSplitEntry* TSplitTransactionList::GetEntryPtr(int id_split_trans)
 {
-    std::shared_ptr<TSplitEntry> entry_ptr;
+    TSplitEntry* entry_ptr = 0;
     for (size_t i = 0; i < entries_.size(); ++i)
     {
         if (entries_[i]->id_ == id_split_trans)
         {
-            entry_ptr = entries_[i];
+            entry_ptr = entries_[i].get();
             break;
         }
     }
@@ -260,9 +260,9 @@ std::shared_ptr<TSplitEntry> TSplitTransactionList::GetEntryPtr(int id_split_tra
     return entry_ptr;
 }
 
-std::shared_ptr<TSplitEntry> TSplitTransactionList::GetIndexedEntryPtr(int index)
+TSplitEntry* TSplitTransactionList::GetIndexedEntryPtr(int index)
 {
-    return entries_[index];
+    return entries_[index].get();
 }
 
 void TSplitTransactionList::ReEvaluateTotal()

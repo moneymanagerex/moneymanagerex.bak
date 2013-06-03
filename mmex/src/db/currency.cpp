@@ -160,7 +160,12 @@ TCurrencyList::TCurrencyList(wxSQLite3Database* db)
     LoadEntries();
 }
 
-void TCurrencyList::LoadEntries()
+TCurrencyList::~TCurrencyList()
+{
+    DestroyEntryList();
+}
+
+void TCurrencyList::LoadEntries(bool load_entries)
 {
     try
     {
@@ -175,21 +180,35 @@ void TCurrencyList::LoadEntries()
             ListDatabase()->ExecuteUpdate(SQL_CREATE_TABLE_CURRENCYFORMATS_V1);
         }
 
-        const char SQL_SELECT_CURRENCYFORMAT[] =
-        "select * from CURRENCYFORMATS_V1 "
-        "order by CURRENCYNAME";
-        wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(SQL_SELECT_CURRENCYFORMAT);
-        while (q1.NextRow())
+        if (load_entries)
         {
-            std::shared_ptr<TCurrencyEntry> pEntry(new TCurrencyEntry(q1));
-            entrylist_.push_back(pEntry);
+            LoadEntriesUsing("select * from CURRENCYFORMATS_V1 order by CURRENCYNAME");
         }
-        q1.Finalize();
     }
     catch (const wxSQLite3Exception& e)
     {
         wxLogError("TCurrencyList:LoadEntries: %s", e.GetMessage().c_str());
     }
+}
+
+void TCurrencyList::LoadEntriesUsing(const wxString& sql_statement)
+{
+    DestroyEntryList();
+    wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
+    while (q1.NextRow())
+    {
+        entrylist_.push_back(new TCurrencyEntry(q1));
+    }
+    q1.Finalize();
+}
+
+void TCurrencyList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
 }
 
 int TCurrencyList::AddEntry(TCurrencyEntry* pCurrencyEntry)
@@ -201,11 +220,10 @@ int TCurrencyList::AddEntry(TCurrencyEntry* pCurrencyEntry)
     }
     else
     {
-        std::shared_ptr<TCurrencyEntry> pEntry(pCurrencyEntry);
-        entrylist_.push_back(pEntry);
-        pEntry->Add(ListDatabase());
+        entrylist_.push_back(pCurrencyEntry);
+        pCurrencyEntry->Add(ListDatabase());
 
-        currency_id = pEntry->id_;
+        currency_id = pCurrencyEntry->id_;
     }
 
     return currency_id;
@@ -233,6 +251,7 @@ void TCurrencyList::DeleteEntry(int currency_id)
     {
         pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
+        delete pEntry;
     }
 }
 
@@ -252,7 +271,7 @@ TCurrencyEntry* TCurrencyList::GetEntryPtr(int currency_id)
     {
         if (entrylist_[index]->id_ == currency_id)
         {
-            pEntry = entrylist_[index].get();
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -282,7 +301,7 @@ TCurrencyEntry* TCurrencyList::GetEntryPtr(const wxString& name, bool is_symbol)
 
         if (found)
         {
-            pEntry = entrylist_[index].get();
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -294,7 +313,7 @@ TCurrencyEntry* TCurrencyList::GetEntryPtr(const wxString& name, bool is_symbol)
 
 TCurrencyEntry* TCurrencyList::GetIndexedEntryPtr(int index)
 {
-    return entrylist_[index].get();
+    return entrylist_[index];
 }
 
 int TCurrencyList::GetCurrencyId(const wxString& name, bool is_symbol)

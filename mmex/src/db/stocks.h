@@ -72,16 +72,19 @@ class TStockList : public TListBase
 {
 private:
     void LoadEntries(bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
 public:
-    std::vector<TStockEntry> entrylist_;
+    std::vector<TStockEntry*> entrylist_;
 
     TStockList(wxSQLite3Database* db, bool load_entries = true);
+    ~TStockList();
 
     // Allows specialised list loading provided by SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
-    int AddEntry(TStockEntry& stock_entry);
+    int AddEntry(TStockEntry* pEntry);
     void DeleteEntry(int stock_id);
 
     TStockEntry* GetEntryPtr(int stock_id);

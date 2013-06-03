@@ -122,6 +122,11 @@ TBudgetList::TBudgetList(wxSQLite3Database* db, bool load_entries)
     LoadEntries(load_entries);
 }
 
+TBudgetList::~TBudgetList()
+{
+    DestroyEntryList();
+}
+
 void TBudgetList::LoadEntries(bool load_entries)
 {
     try
@@ -149,21 +154,28 @@ void TBudgetList::LoadEntries(bool load_entries)
 
 void TBudgetList::LoadEntriesUsing(const wxString& sql_statement)
 {
-    entrylist_.clear();
+    DestroyEntryList();
     wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        std::shared_ptr<TBudgetEntry> pEntry(new TBudgetEntry(q1));
-        entrylist_.push_back(pEntry);
+        entrylist_.push_back(new TBudgetEntry(q1));
     }
     q1.Finalize();
 }
 
+void TBudgetList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
+}
+
 int TBudgetList::AddEntry(TBudgetEntry* pBudgetEntry)
 {
-    std::shared_ptr<TBudgetEntry> pEntry(pBudgetEntry);
     pBudgetEntry->Add(ListDatabase());
-    entrylist_.push_back(pEntry);
+    entrylist_.push_back(pBudgetEntry);
 
     return pBudgetEntry->id_;
 }
@@ -175,6 +187,7 @@ void TBudgetList::DeleteEntry(int budget_entry_id)
     {
         pEntry->Delete(ListDatabase());
         entrylist_.erase(entrylist_.begin() + current_index_);
+        delete pEntry;
     }
 }
 
@@ -187,7 +200,7 @@ TBudgetEntry* TBudgetList::GetEntryPtr(int budget_entry_id)
     {
         if (entrylist_[index]->id_ == budget_entry_id)
         {
-            pEntry = entrylist_[index].get();
+            pEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -202,7 +215,7 @@ TBudgetEntry* TBudgetList::GetIndexedEntryPtr(unsigned int list_index)
     TBudgetEntry* pEntry = 0;
     if (list_index < entrylist_.size())
     {
-        pEntry = entrylist_[list_index].get();
+        pEntry = entrylist_[list_index];
     }
 
     return pEntry;

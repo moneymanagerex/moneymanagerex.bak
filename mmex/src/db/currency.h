@@ -230,12 +230,19 @@ class TCurrencyList : public TListBase
 {
 private:
     int basecurrency_id_;
-    void LoadEntries();
+
+    void LoadEntries(bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
 public:
-    std::vector<std::shared_ptr<TCurrencyEntry> > entrylist_;
+    std::vector<TCurrencyEntry*> entrylist_;
 
     TCurrencyList(wxSQLite3Database* db);
+    ~TCurrencyList();
+
+    // Allows specialised loads by providing the required SQL statement
+    void LoadEntriesUsing(const wxString& sql_statement);
 
     int AddEntry(TCurrencyEntry* pCurrencyEntry);
     void SetBaseCurrency(int currency_id);
