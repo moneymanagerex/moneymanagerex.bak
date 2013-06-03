@@ -800,7 +800,7 @@ TEST(TSplitTransactionList_Test_update)
     int list_size = split_list.GetListSize();
     CHECK_EQUAL(4, list_size);
     // record_id = 3, list_index = 2
-    std::shared_ptr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
+    TSplitEntry* pEntry = split_list.GetIndexedEntryPtr(2);
 
     pEntry->amount_ = 500;
     split_list.UpdateEntry(pEntry);
@@ -821,7 +821,7 @@ TEST(TSplitTransactionList_Test_delete)
 
     int list_size = split_list.GetListSize();
     CHECK_EQUAL(4, list_size);
-    std::shared_ptr<TSplitEntry> pEntry = split_list.GetIndexedEntryPtr(2);
+    TSplitEntry* pEntry = split_list.GetIndexedEntryPtr(2);
     split_list.DeleteEntry(pEntry);
     CHECK_EQUAL(700, split_list.TotalAmount());
     list_size = split_list.GetListSize();
@@ -1189,27 +1189,28 @@ TEST(TStockList_Test_Add)
     int account_id = 10;
 
     TStockList stock_list(get_pDb().get());
-    TStockEntry stock_entry;
-    stock_entry.heldat_ = account_id;
-    stock_entry.name_ = "Stock Name - Should be in Account";
-    stock_entry.pur_date_ = date; // date of purchase
-    stock_entry.pur_price_ = 1.2275;
-    stock_entry.num_shares_ = 2000;
-    stock_entry.cur_price_ = 1.575;
-    stock_entry.value_ = 2000;
+    TStockEntry* stock_entry = new TStockEntry();
+    stock_entry->heldat_ = account_id;
+    stock_entry->name_ = "Stock Name - Should be in Account";
+    stock_entry->pur_date_ = date; // date of purchase
+    stock_entry->pur_price_ = 1.2275;
+    stock_entry->num_shares_ = 2000;
+    stock_entry->cur_price_ = 1.575;
+    stock_entry->value_ = 2000;
     int id_1 = stock_list.AddEntry(stock_entry);
 
-    TStockEntry stock_entry_1;
-    stock_entry_1.heldat_ = account_id;
-    stock_entry_1.name_ = "Stock Name - Should be in Account";
-    stock_entry_1.pur_date_ = date; // date of purchase
-    stock_entry_1.pur_price_ = 1.7275;
-    stock_entry_1.num_shares_ = 1000;
-    stock_entry_1.cur_price_ = 1.575;
-    stock_entry_1.value_ = 1000;
-    int id_2 = stock_list.AddEntry(stock_entry_1);
+    stock_entry = new TStockEntry(stock_entry);
+    stock_entry->heldat_ = account_id;
+//    stock_entry->name_ = "Stock Name - Should be in Account";
+    stock_entry->pur_date_ = date; // date of purchase
+    stock_entry->pur_price_ = 1.7275;
+    stock_entry->num_shares_ = 1000;
+    stock_entry->cur_price_ = 1.575;
+    stock_entry->value_ = 1000;
+    int id_2 = stock_list.AddEntry(stock_entry);
 
-    CHECK(id_1 != id_2);
+    CHECK_EQUAL(1, id_1);
+    CHECK_EQUAL(2, id_2);
 
     double value = stock_list.GetStockBalance();
     CHECK_EQUAL(3000, value);
@@ -1254,6 +1255,7 @@ TEST(TStockList_Test_Delete)
     stock_list.DeleteEntry(1);          // 1st entry from test 1
     double value = stock_list.GetStockBalance();
     CHECK_EQUAL(3000, value);
+    CHECK_EQUAL(1, stock_list.CurrentListSize());
 
     displayTimeTaken("TStockList_Test_Delete", start_time);
 }

@@ -97,6 +97,11 @@ TSubCategoryList::TSubCategoryList(wxSQLite3Database* db, int cat_id)
     LoadEntries(cat_id);
 }
 
+TSubCategoryList::~TSubCategoryList()
+{
+    DestroyEntryList();
+}
+
 void TSubCategoryList::LoadEntries(int cat_id, bool load_entries)
 {
     try
@@ -129,14 +134,22 @@ void TSubCategoryList::LoadEntries(int cat_id, bool load_entries)
 
 void TSubCategoryList::LoadEntriesUsing(const wxString& sql_statement)
 {
-    entrylist_.clear();
+    DestroyEntryList();
     wxSQLite3ResultSet q1 = ListDatabase()->ExecuteQuery(sql_statement);
     while (q1.NextRow())
     {
-        TSubCategoryEntry entry(q1);
-        entrylist_.push_back(entry);
+        entrylist_.push_back(new TSubCategoryEntry(q1));
     }
     q1.Finalize();
+}
+
+void TSubCategoryList::DestroyEntryList()
+{
+    for (size_t i = 0; i < entrylist_.size(); ++i)
+    {
+        delete entrylist_[i];
+    }
+    entrylist_.clear();
 }
 
 int TSubCategoryList::AddEntry(int cat_id, const wxString& name)
@@ -144,13 +157,13 @@ int TSubCategoryList::AddEntry(int cat_id, const wxString& name)
     int subcat_id;
     if (SubCategoryExists(cat_id, name))
     {
-        subcat_id = entrylist_[current_index_].id_;
+        subcat_id = entrylist_[current_index_]->GetId();
     }
     else
     {
-        TSubCategoryEntry entry(cat_id, name);
-        subcat_id = entry.Add(ListDatabase());
-        entrylist_.push_back(entry);
+        TSubCategoryEntry* pEntry = new TSubCategoryEntry(cat_id, name);
+        subcat_id = pEntry->Add(ListDatabase());
+        entrylist_.push_back(pEntry);
     }
 
     return subcat_id;
@@ -169,6 +182,7 @@ void TSubCategoryList::DeleteEntry(int cat_id, int subcat_id)
     TSubCategoryEntry* pSubCatEntry = GetEntryPtr(cat_id, subcat_id);
     pSubCatEntry->Delete(ListDatabase());
     entrylist_.erase(entrylist_.begin() + current_index_);
+    delete pSubCatEntry;
 }
 
 TSubCategoryEntry* TSubCategoryList::GetEntryPtr(int cat_id, int subcat_id)
@@ -177,9 +191,9 @@ TSubCategoryEntry* TSubCategoryList::GetEntryPtr(int cat_id, int subcat_id)
     size_t index = 0;
     while (index < entrylist_.size())
     {
-        if ((entrylist_[index].id_ == subcat_id) && (entrylist_[index].cat_id_ == cat_id))
+        if ((entrylist_[index]->GetId() == subcat_id) && (entrylist_[index]->cat_id_ == cat_id))
         {
-            pSubCatEntry = &entrylist_[index];
+            pSubCatEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -195,9 +209,9 @@ TSubCategoryEntry* TSubCategoryList::GetEntryPtr(int cat_id, const wxString& nam
     size_t index = 0;
     while (index < entrylist_.size())
     {
-        if ((entrylist_[index].cat_id_ == cat_id) && (entrylist_[index].name_ == name))
+        if ((entrylist_[index]->cat_id_ == cat_id) && (entrylist_[index]->name_ == name))
         {
-            pSubCatEntry = &entrylist_[index];
+            pSubCatEntry = entrylist_[index];
             current_index_ = index;
             break;
         }
@@ -218,7 +232,6 @@ int TSubCategoryList::GetSubCategoryId(int cat_id, const wxString& name)
 
     return subcat_id;
 }
-
 
 wxString TSubCategoryList::GetSubCategoryName(int cat_id, int subcat_id)
 {

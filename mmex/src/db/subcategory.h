@@ -51,11 +51,15 @@ class TSubCategoryList : public TListBase
 {
 private:
     void LoadEntries(int cat_id = -1, bool load_entries = true);
+    // delete all the objects in the list and clear the list.
+    void DestroyEntryList();
 
 public:
-    std::vector<TSubCategoryEntry> entrylist_;
+    std::vector<TSubCategoryEntry*> entrylist_;
 
     TSubCategoryList(wxSQLite3Database* db, int cat_id = -1);
+    ~TSubCategoryList();
+
     // Allows specialised loads by providing the required SQL statement
     void LoadEntriesUsing(const wxString& sql_statement);
 
