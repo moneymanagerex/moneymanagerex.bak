@@ -290,7 +290,7 @@ int TStockList::CurrentListSize()
 
 double TStockList::GetStockBalance()
 {
-    return accumulate(entrylist_.begin(), entrylist_.end(), 0.0f, [](double init, const TStockEntry* stock) { return init + stock->value_; });
+    return accumulate(entrylist_.begin(), entrylist_.end(), 0, [](double init, const TStockEntry* stock) { return init + stock->value_; });
 }
 
 wxString TStockList::GetStockBalanceCurrencyFormat()
