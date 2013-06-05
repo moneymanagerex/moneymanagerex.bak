@@ -859,29 +859,29 @@ void mmBankTransactionList::getCategoryStats
 void mmBankTransactionList::getTransactionStats(std::map<wxDateTime::Month, std::map<int, int> > &stats, int start_year) const
 {
     //Initialization
-	for (wxDateTime::Month m = wxDateTime::Jan; m != wxDateTime::Inv_Month; m = wxDateTime::Month(m + 1))
-	{
-		std::map<int, int> month_stat;
-        for (int y = start_year; y <= wxDateTime::Now().GetYear(); y++)
+    int end_year = wxDateTime::Now().GetYear();
+    for (wxDateTime::Month m = wxDateTime::Jan; m != wxDateTime::Inv_Month; m = wxDateTime::Month(m + 1))
+    {
+        std::map<int, int> month_stat;
+        for (int y = start_year; y <= end_year; y++)
         {
             month_stat[y] = 0;
         }
-		stats[m] = month_stat;
-	}
+        stats[m] = month_stat;
+    }
 
     //Calculations
-    for (const auto &pBankTransaction : transactions_)
+    for (const auto &trxs : transactions_)
     {
-        if (pBankTransaction->date_.GetYear() < start_year) continue;
-        if (pBankTransaction->status_ == "V") continue; // skip
+        if (trxs->status_ == "V")
+            continue; // skip
 
-        if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()
-            .SetMonth(wxDateTime::Dec).GetLastMonthDay().GetDateOnly()))
-            continue; //skip future dated transactions
+        if (trxs->date_.GetYear() < start_year)
+            continue;
+        if (trxs->date_.GetYear() > end_year)
+            continue; //skip future dated transactions for next years
 
-        int year = pBankTransaction->date_.GetYear();
-        wxDateTime::Month month = pBankTransaction->date_.GetMonth();
-        stats[month][year] += 1;
+        stats[trxs->date_.GetMonth()][trxs->date_.GetYear()] += 1;
     }
 }
 
