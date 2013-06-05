@@ -89,8 +89,8 @@ LUA_OBJECTS =  \
 	lua_lvm.o \
 	lua_lzio.o
 MMEX_CXXFLAGS = -I$(srcdir)/lib/sqlite -I$(srcdir)/lib/wxsqlite \
-	-I$(srcdir)/lib/lua/src -DNOPCH $(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	-I$(srcdir)/lib/lua/src -I$(srcdir)/lib -DNOPCH $(WX_CXXFLAGS) $(PIC_FLAG) \
+	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
 	mmex_appstartdialog.o \
@@ -667,7 +667,7 @@ mmex_platfdep.o: $(srcdir)/src/unix/platfdep.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/unix/platfdep.cpp
 
 mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/lib/sqlite --include-dir $(srcdir)/lib/wxsqlite --include-dir $(srcdir)/lib/lua/src --define NOPCH
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/lib/sqlite --include-dir $(srcdir)/lib/wxsqlite --include-dir $(srcdir)/lib/lua/src --include-dir $(srcdir)/lib --define NOPCH
 
 
 # Include dependency info, if present:
