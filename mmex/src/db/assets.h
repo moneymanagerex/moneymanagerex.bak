@@ -20,9 +20,9 @@
 #include "entry_base.h"
 
 const wxString ASSET_RATE_DEF[] = {
-    "None",
-    "Appreciates",
-    "Depreciates"
+    wxTRANSLATE("None"),
+    wxTRANSLATE("Appreciates"),
+    wxTRANSLATE("Depreciates")
 };
 
 const wxString ASSET_TYPE_DEF[] = {
