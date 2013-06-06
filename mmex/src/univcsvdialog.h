@@ -120,6 +120,7 @@ private:
     double val_;
     wxDateTime dtdt_;
     wxChoice* choiceDateFormat_;
+    wxString date_format_;
 
     int fromAccountID_;
     bool importSuccessful_;
