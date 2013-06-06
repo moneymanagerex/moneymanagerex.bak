@@ -343,20 +343,17 @@ void mmMainCurrencyDialog::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     }
     else
     {
-        wxMessageDialog msgDlg(this, sMsg, _("Error"), wxICON_ERROR);
+        wxMessageDialog msgDlg(this, sMsg, _("Error"), wxOK|wxICON_ERROR);
         msgDlg.ShowModal();
     }
 }
 
 void mmMainCurrencyDialog::OnMenuSelected(wxCommandEvent& event)
 {
-    //currencyID_ = currencyListBox_->GetItemData(selectedIndex_);
-//    int baseCurrencyID = core_->currencyList_.getBaseCurrencySettings();
     int baseCurrencyID = core_->dbInfoSettings_->GetIntSetting("BASECURRENCYID", -1);
 
     if (baseCurrencyID == currencyID_) return;
 
-//    core_->currencyList_.setBaseCurrencySettings(currencyID_);
     core_->dbInfoSettings_->SetIntSetting("BASECURRENCYID", currencyID_);
     core_->dbInfoSettings_->Save();
 
