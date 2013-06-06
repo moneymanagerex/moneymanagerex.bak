@@ -236,14 +236,13 @@ void mmUnivCSVDialog::CreateControls()
     itemStaticText66->SetFont(staticBoxFontSetting);
     //itemStaticText66->Enable(!this->is_importer_);
 
-    wxString default_date_format = core_->dbInfoSettings_->GetStringSetting("DATEFORMAT", mmex::DEFDATEFORMAT);
+    date_format_ = mmOptions::instance().dateFormat_;
     choiceDateFormat_ = new wxChoice(itemPanel7, ID_DIALOG_OPTIONS_DATE_FORMAT);
     for (const auto& i : date_formats_map())
     {
         choiceDateFormat_->Append(i.second, new wxStringClientData(i.first));
-        if (default_date_format == i.second) choiceDateFormat_->SetStringSelection(i.second);
+        if (date_format_ == i.first) choiceDateFormat_->SetStringSelection(i.second);
     }
-
     itemBoxSizer8->Add(choiceDateFormat_, flags);
 
     // CSV Delimiter
@@ -776,8 +775,6 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
     wxString delimit = this->delimit_;
     wxString acctName = m_choice_account_->GetStringSelection();
     int fromAccountID = core_->accountList_.GetAccountId(acctName);
-    wxString date_format = DisplayDate2FormatDate(choiceDateFormat_->GetStringSelection());
-    *log_field_ << date_format << "\n";
 
     if (fromAccountID > 0)
     {
@@ -846,7 +843,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                     {
                         case UNIV_CSV_DATE:
                             trx_date = pBankTransaction->date_;
-                            buffer << inQuotes(trx_date.Format(date_format), delimit);
+                            buffer << inQuotes(trx_date.Format(date_format_), delimit);
                             break;
                         case UNIV_CSV_PAYEE:
                             buffer << inQuotes(payee, delimit);
@@ -1239,12 +1236,11 @@ void mmUnivCSVDialog::OnCheckOrRadioBox(wxCommandEvent& event)
 void mmUnivCSVDialog::parseToken(int index, wxString& token)
 {
     if (token.Trim().IsEmpty()) return;
-    wxString date_format = DisplayDate2FormatDate(choiceDateFormat_->GetStringSelection());
 
     switch (index)
     {
         case UNIV_CSV_DATE:
-            mmParseDisplayStringToDate(dtdt_, token, date_format);
+            mmParseDisplayStringToDate(dtdt_, token, date_format_);
             dt_ = dtdt_.GetDateOnly().FormatISODate();
             break;
 
@@ -1361,4 +1357,7 @@ void mmUnivCSVDialog::OnFileNameEntered(wxCommandEvent& event)
 void mmUnivCSVDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 {
     this->update_preview();
+    wxStringClientData* data = (wxStringClientData*)(choiceDateFormat_->GetClientObject(choiceDateFormat_->GetSelection()));
+    if (data) date_format_ = data->GetData();
+    *log_field_ << date_format_ << "\n";
 }

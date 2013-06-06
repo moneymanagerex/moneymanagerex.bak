@@ -172,10 +172,15 @@ void mmQIFImportDialog::CreateControls()
     box_sizer1->Add(flex_sizer, flagsExpand);
 
     // Date Format Settings
+    dateFormat_ = mmOptions::instance().dateFormat_;
+
     wxStaticText* dateFormat = new wxStaticText(this, wxID_STATIC, _("Date Format"));
     choiceDateFormat_ = new wxComboBox(this, wxID_ANY);
     for (const auto& i : date_formats_map())
+    {
         choiceDateFormat_->Append(i.second, new wxStringClientData(i.first));
+        if (dateFormat_ == i.first) choiceDateFormat_->SetStringSelection(i.second);
+    }
     choiceDateFormat_->Connect(wxID_ANY, wxEVT_COMMAND_COMBOBOX_SELECTED,
         wxCommandEventHandler(mmQIFImportDialog::OnDateMaskChange), NULL, this);
 
@@ -237,9 +242,6 @@ void mmQIFImportDialog::CreateControls()
 
 void mmQIFImportDialog::fillControls()
 {
-    dateFormat_ = core_->dbInfoSettings_->GetStringSetting("DATEFORMAT", mmex::DEFDATEFORMAT);
-    choiceDateFormat_->SetStringSelection(FormatDate2DisplayDate(dateFormat_));
-
     wxArrayString accounts_type;
     accounts_type.Add(ACCOUNT_TYPE_BANK);
     accounts_type.Add(ACCOUNT_TYPE_TERM);
@@ -971,7 +973,8 @@ bool mmQIFImportDialog::checkQIFFile(wxString fileName)
 
 void mmQIFImportDialog::OnDateMaskChange(wxCommandEvent& /*event*/)
 {
-    dateFormat_ = DisplayDate2FormatDate(choiceDateFormat_->GetValue());
+    wxStringClientData* data = (wxStringClientData*)(choiceDateFormat_->GetClientObject(choiceDateFormat_->GetSelection()));
+    if (data) dateFormat_ = data->GetData();
     checkQIFFile(sFileName_);
 }
 
