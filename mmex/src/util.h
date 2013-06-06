@@ -93,8 +93,9 @@ bool mmParseDisplayStringToDate(wxDateTime& date, const wxString sDate, wxString
 wxString mmGetNiceDateSimpleString( const wxDateTime &dt );
 wxString DisplayDate2FormatDate(const wxString strDate);
 wxString FormatDate2DisplayDate(const wxString strDate);
-const wxArrayString date_format();
-const wxArrayString date_format_mask();
+//const wxArrayString date_format();
+//const wxArrayString date_format_mask();
+std::map<wxString,wxString> date_formats_map();
 
 wxString inQuotes(wxString label, wxString& delimiter);
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);

@@ -173,8 +173,9 @@ void mmQIFImportDialog::CreateControls()
 
     // Date Format Settings
     wxStaticText* dateFormat = new wxStaticText(this, wxID_STATIC, _("Date Format"));
-    choiceDateFormat_ = new wxComboBox(this, wxID_ANY, "",
-        wxDefaultPosition, wxDefaultSize, date_format());
+    choiceDateFormat_ = new wxComboBox(this, wxID_ANY);
+    for (const auto& i : date_formats_map())
+        choiceDateFormat_->Append(i.second, new wxStringClientData(i.first));
     choiceDateFormat_->Connect(wxID_ANY, wxEVT_COMMAND_COMBOBOX_SELECTED,
         wxCommandEventHandler(mmQIFImportDialog::OnDateMaskChange), NULL, this);
 
@@ -978,7 +979,6 @@ void mmQIFImportDialog::OnCheckboxClick( wxCommandEvent& /*event*/ )
 {
     fromDateCtrl_->Enable(dateFromCheckBox_->GetValue());
     toDateCtrl_->Enable(dateToCheckBox_->GetValue());
-
 }
 
 void mmQIFImportDialog::OnOk(wxCommandEvent& /*event*/)

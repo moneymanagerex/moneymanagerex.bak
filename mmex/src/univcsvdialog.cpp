@@ -129,8 +129,8 @@ void mmUnivCSVDialog::CreateControls()
     csvFieldCandicate_ = new wxListBox(this, ID_LISTBOX_CANDICATE,
         wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
     itemBoxSizer3->Add(csvFieldCandicate_, 1, wxGROW|wxALL, 1);
-    for(std::map<int, wxString>::const_iterator it = CSVFieldName_.begin(); it != CSVFieldName_.end(); it ++)
-        csvFieldCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
+    for (const auto& it : CSVFieldName_)
+        csvFieldCandicate_->Append(it.second, new mmListBoxItem(it.first, it.second));
 
      //Add Remove Area
     wxPanel* itemPanel_AddRemove = new wxPanel(this, ID_PANEL10,
@@ -238,10 +238,10 @@ void mmUnivCSVDialog::CreateControls()
 
     wxString default_date_format = core_->dbInfoSettings_->GetStringSetting("DATEFORMAT", mmex::DEFDATEFORMAT);
     choiceDateFormat_ = new wxChoice(itemPanel7, ID_DIALOG_OPTIONS_DATE_FORMAT);
-    for(size_t i = 0; i < date_format_mask().Count(); ++i)
+    for (const auto& i : date_formats_map())
     {
-        choiceDateFormat_->Append(date_format()[i], new wxStringClientData(date_format_mask()[i]));
-        if (default_date_format == date_format_mask()[i]) choiceDateFormat_->SetSelection(i);
+        choiceDateFormat_->Append(i.second, new wxStringClientData(i.first));
+        if (default_date_format == i.second) choiceDateFormat_->SetStringSelection(i.second);
     }
 
     itemBoxSizer8->Add(choiceDateFormat_, flags);
@@ -335,7 +335,7 @@ bool mmUnivCSVDialog::ShowToolTips()
 
 void mmUnivCSVDialog::csv2tab_separated_values(wxString& line, const wxString& delimit)
 {
-	  //csv line example:
+    //csv line example:
     //12.02.2010,Payee,-1105.08,Category,Subcategory,,"Fuel ""95"", 42.31 l (24.20) 212366"
     int i=0;
     //Single quotes will be used instead double quotes
@@ -828,16 +828,16 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                     }
                     toamount = adjustedExportAmount(amtSeparator,wxString()<<tovalue);
                     CurrencyFormatter::formatCurrencyToDouble(toamount, tovalue);
-					toamount = CurrencyFormatter::float2String(tovalue);
+                    toamount = CurrencyFormatter::float2String(tovalue);
                 }
                 else if (type == "Withdrawal")
                     value = -value;
 
                 wxString amount = adjustedExportAmount(amtSeparator, wxString()<<value);
                 CurrencyFormatter::formatCurrencyToDouble(amount, value);
-				amount = CurrencyFormatter::float2String(value);
+                amount = CurrencyFormatter::float2String(value);
 
-				wxString amount_tmp = CurrencyFormatter::float2String(-value);
+                wxString amount_tmp = CurrencyFormatter::float2String(-value);
 
                 buffer = "";
                 for (std::vector<int>::const_iterator sit = csvFieldOrder_.begin(); sit != csvFieldOrder_.end(); ++ sit)
@@ -1012,7 +1012,7 @@ void mmUnivCSVDialog::update_preview()
                         }
                         toamount = adjustedExportAmount(amtSeparator,wxString()<<tovalue);
                          CurrencyFormatter::formatCurrencyToDouble(toamount, tovalue);
-						 toamount = CurrencyFormatter::float2String(tovalue);
+                         toamount = CurrencyFormatter::float2String(tovalue);
                     }
                     else if (type == "Withdrawal")
                         value = -value;
@@ -1021,7 +1021,7 @@ void mmUnivCSVDialog::update_preview()
                     CurrencyFormatter::formatCurrencyToDouble(amount, value);
                     amount = CurrencyFormatter::float2String(value);
 
-					wxString amount_tmp = CurrencyFormatter::float2String(-value);
+                    wxString amount_tmp = CurrencyFormatter::float2String(-value);
 
                     int col = 0;
                     wxString buf;
