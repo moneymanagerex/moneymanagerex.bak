@@ -165,11 +165,8 @@ void mmTransDialog::dataToControls()
     if (transAmount_ > 0.0)
         edit_currency_rate = toTransAmount_ / transAmount_;
 
-    for(size_t i = 0; i < sizeof(TRANSACTION_TYPE)/sizeof(wxString); ++i)
-    {
-        transaction_type_->Append(wxGetTranslation(TRANSACTION_TYPE[i]),
-        new wxStringClientData(TRANSACTION_TYPE[i]));
-    }
+    for(const auto& i : TRANSACTION_TYPE)
+        transaction_type_->Append(wxGetTranslation(i), new wxStringClientData(i));
     transaction_type_->SetStringSelection(wxGetTranslation(sTransaction_type_));
 
     wxString categString = _("Select Category");
@@ -367,9 +364,8 @@ void mmTransDialog::CreateControls()
     choiceStatus_ = new wxChoice(this, ID_DIALOG_TRANS_STATUS,
         wxDefaultPosition, wxSize(110, -1));
 
-    for(size_t i = 0; i < sizeof(TRANSACTION_STATUS)/sizeof(wxString); ++i)
-        choiceStatus_->Append(wxGetTranslation(TRANSACTION_STATUS[i]),
-        new wxStringClientData(TRANSACTION_STATUS[i]));
+    for(const auto& i : TRANSACTION_STATUS)
+        choiceStatus_->Append(wxGetTranslation(i), new wxStringClientData(i));
 
     flex_sizer->Add(new wxStaticText(this, wxID_STATIC, _("Status")), flags);
     flex_sizer->Add(choiceStatus_, flags);
