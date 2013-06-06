@@ -3369,7 +3369,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     }
     else
     {
-        wxMessageDialog msgDlg(this, sMsg, _("Error"), wxICON_ERROR);
+        wxMessageDialog msgDlg(this, sMsg, _("Error"), wxOK|wxICON_ERROR);
         msgDlg.ShowModal();
     }
     wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_ACCOUNT_LIST);
