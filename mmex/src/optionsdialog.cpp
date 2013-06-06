@@ -204,8 +204,9 @@ void mmOptionsDialog::CreateControls()
     generalPanelSizer->Add(dateFormatStaticBoxSizer, flagsExpand);
     dateFormatStaticBoxSizer->Add(flex_sizer);
 
-    choiceDateFormat_ = new wxComboBox(generalPanel, wxID_STATIC, "",
-        wxDefaultPosition, wxDefaultSize, date_format());
+    choiceDateFormat_ = new wxComboBox(generalPanel, wxID_STATIC);
+    for (const auto& i : date_formats_map())
+        choiceDateFormat_->Append(i.second, new wxStringClientData(i.first));
     flex_sizer->Add(choiceDateFormat_, flags);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
     choiceDateFormat_->SetValue(FormatDate2DisplayDate(dateFormat_));

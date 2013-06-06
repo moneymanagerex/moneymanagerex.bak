@@ -400,26 +400,6 @@ wxString FormatDate2DisplayDate(const wxString sDateMask)
     return date_formats_map()[sDateMask];
 }
 
-const wxArrayString date_format_mask()
-{
-    wxArrayString mask;
-    for (const auto& date_mask: date_formats_map())
-    {
-        mask.Add(date_mask.first);
-    };
-    return mask;
-}
-
-const wxArrayString date_format()
-{
-    wxArrayString format;
-    for (const auto& date_mask: date_formats_map())
-    {
-        format.Add(date_mask.second);
-    };
-    return format;
-
-}
 //*--------------------------------------------------------------------------*//
 
 // FIXME: Freeze - Thaw is ok for wx2.8.x but not for wx2.9.x
@@ -623,15 +603,15 @@ bool mmCalculator(wxString sInput, wxString& sOutput)
         sTemp.Replace(midBrackets, wxString()<<dAmount);
     }
     if (bResult)
-	{
-	    if (sTemp.Contains("(")||sTemp.Contains(")")) bResult = false;
-		else
-		{
-	        sOutput = CurrencyFormatter::float2String(dAmount);
-	        bResult = !sOutput.IsEmpty() && bResult;
-		}
-	}
-	return bResult;
+    {
+        if (sTemp.Contains("(")||sTemp.Contains(")")) bResult = false;
+        else
+        {
+            sOutput = CurrencyFormatter::float2String(dAmount);
+            bResult = !sOutput.IsEmpty() && bResult;
+        }
+    }
+    return bResult;
 }
 
 wxDateTime getUserDefinedFinancialYear(bool prevDayRequired)
