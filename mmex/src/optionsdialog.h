@@ -61,7 +61,7 @@ private:
 
     /// Dialog specific controls
     wxImageList* m_imageList;
-    wxComboBox* choiceDateFormat_;
+    wxChoice* choiceDateFormat_;
     wxChoice* choiceVisible_;
     wxChoice* choiceTransVisible_;
     wxChoice* choiceFontSize_;

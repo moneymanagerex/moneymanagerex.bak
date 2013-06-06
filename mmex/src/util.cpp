@@ -385,21 +385,6 @@ std::map<wxString,wxString> date_formats_map()
     return date_formats;
 }
 
-wxString DisplayDate2FormatDate(const wxString sDateMask)
-{
-    for (const auto& date_mask: date_formats_map())
-    {
-        if (date_mask.second == sDateMask) return date_mask.first;
-    };
-    wxASSERT(false);
-    return mmex::DEFDATEFORMAT;
-}
-
-wxString FormatDate2DisplayDate(const wxString sDateMask)
-{
-    return date_formats_map()[sDateMask];
-}
-
 //*--------------------------------------------------------------------------*//
 
 // FIXME: Freeze - Thaw is ok for wx2.8.x but not for wx2.9.x
