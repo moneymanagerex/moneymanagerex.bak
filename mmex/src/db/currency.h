@@ -33,6 +33,7 @@ private:
 
 public:
 
+    std::map<wxString, wxString> CURRENCIES_MAP();
     //TODO:  Complete the enum list
     enum CURRENCY_SYMBOL {
         SYMBOL_AFN, NAME_AFN,   //"AFN",  "Afghanistan Afghani",
