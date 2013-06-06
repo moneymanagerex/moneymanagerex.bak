@@ -97,8 +97,8 @@ void mmAssetDialog::dataToControls()
     m_valueChangeRate->SetValue(valueChangeRate);
 
     wxString valueChangeTypeStr = pAssetEntry_->rate_type_;
-	m_valueChange->SetStringSelection(wxGetTranslation(valueChangeTypeStr));
-	enableDisableRate(valueChangeTypeStr != ASSET_RATE_DEF[TAssetEntry::RATE_NONE]);
+    m_valueChange->SetStringSelection(wxGetTranslation(valueChangeTypeStr));
+    enableDisableRate(valueChangeTypeStr != ASSET_RATE_DEF[TAssetEntry::RATE_NONE]);
     m_assetType->SetStringSelection(wxGetTranslation(pAssetEntry_->type_));
 }
 
@@ -142,10 +142,8 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Asset Type")), flags);
 
     m_assetType = new wxChoice( itemPanel5, wxID_STATIC, wxDefaultPosition, wxSize(150,-1));
-    size_t size = sizeof(ASSET_TYPE_DEF)/sizeof(wxString);
-    for(size_t i = 0; i < size; ++i)
-        m_assetType->Append(wxGetTranslation(ASSET_TYPE_DEF[i]),
-            new wxStringClientData(ASSET_TYPE_DEF[i]));
+    for (const auto& a : ASSET_TYPE_DEF)
+        m_assetType->Append(wxGetTranslation(a), new wxStringClientData(a));
 
     m_assetType->SetToolTip(_("Select type of asset"));
     m_assetType->SetSelection(TAssetEntry::TYPE_PROPERTY);
@@ -161,12 +159,8 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(new wxStaticText( itemPanel5, wxID_STATIC, _("Change in Value")), flags);
 
     m_valueChange = new wxChoice( itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1));
-    size = sizeof(ASSET_RATE_DEF)/sizeof(wxString);
-    for(size_t i = 0; i < size; ++i)
-    {
-        m_valueChange->Append(wxGetTranslation(ASSET_RATE_DEF[i]),
-        new wxStringClientData(ASSET_RATE_DEF[i]));
-    }
+    for(const auto& a : ASSET_RATE_DEF)
+        m_valueChange->Append(wxGetTranslation(a), new wxStringClientData(a));
 
     m_valueChange->SetToolTip(_("Specify if the value of the asset changes over time"));
     m_valueChange->SetSelection(TAssetEntry::RATE_NONE);
@@ -300,8 +294,5 @@ void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 void mmAssetDialog::changeFocus(wxChildFocusEvent& event)
 {
     wxWindow *w = event.GetWindow();
-    if ( w )
-    {
-        assetRichText = (w->GetId() == IDC_NOTES ? true : false);
-    }
+    if ( w ) assetRichText = (w->GetId() == IDC_NOTES ? true : false);
 }
