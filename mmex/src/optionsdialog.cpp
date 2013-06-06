@@ -204,13 +204,14 @@ void mmOptionsDialog::CreateControls()
     generalPanelSizer->Add(dateFormatStaticBoxSizer, flagsExpand);
     dateFormatStaticBoxSizer->Add(flex_sizer);
 
-    choiceDateFormat_ = new wxComboBox(generalPanel, wxID_STATIC);
+    choiceDateFormat_ = new wxChoice(generalPanel, wxID_STATIC);
     for (const auto& i : date_formats_map())
+    {
         choiceDateFormat_->Append(i.second, new wxStringClientData(i.first));
+        if (dateFormat_ == i.first) choiceDateFormat_->SetStringSelection(i.second);
+    }
     flex_sizer->Add(choiceDateFormat_, flags);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
-    choiceDateFormat_->SetValue(FormatDate2DisplayDate(dateFormat_));
-    //choiceDateFormat_->AutoComplete(date_format());
 
     wxButton* setFormatButton = new wxButton(generalPanel, wxID_APPLY, _("Set"));
     flex_sizer->Add(setFormatButton, flags);
@@ -758,29 +759,16 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 {
-    wxString newFormat = choiceDateFormat_->GetValue().Upper();
-    if (newFormat == DisplayDate2FormatDate(newFormat)) // Not a predefined format
+    wxStringClientData* data = (wxStringClientData*)(choiceDateFormat_->GetClientObject(choiceDateFormat_->GetSelection()));
+    if (data)
     {
-        //choiceDateFormat_->SetValue(FormatDate2DisplayDate(mmex::DEFDATEFORMAT));
+        dateFormat_ = data->GetData();
+        mmOptions::instance().dateFormat_ = dateFormat_;
+        sampleDateText_->SetLabel(wxDateTime::Now().Format(dateFormat_));
+        core_->bTransactionList_.ChangeDateFormat();
+    }
+    else
         return;
-    }
-
-    try // setting the date to the new format to ensure it works.
-    {
-        wxDateTime::Now().Format(DisplayDate2FormatDate(newFormat));
-    }
-    catch(...)
-    {
-        choiceDateFormat_->SetValue(FormatDate2DisplayDate(mmex::DEFDATEFORMAT));
-        return;
-    }
-
-    dateFormat_ = DisplayDate2FormatDate(newFormat);
-    mmOptions::instance().dateFormat_ = dateFormat_;
-
-    sampleDateText_->SetLabel(wxDateTime::Now().Format(dateFormat_));
-    core_->bTransactionList_.ChangeDateFormat();
-    choiceDateFormat_->SetValue(newFormat);
 }
 
 void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& event)
