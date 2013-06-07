@@ -101,6 +101,16 @@ void mmCurrencyDialog::fillControls()
        currencyNameCombo_->SetSelection(0);
     }
 
+    for(const auto& i : ce_->CURRENCIES_MAP())
+    {
+        currency_symbols_.Add(i.first);
+        currency_names_.Add(i.second);
+        currencyNameCombo_->Append(i.second);
+        currencySymbolCombo_->Append(i.first);
+    }
+    currencyNameCombo_->AutoComplete(currency_names_);
+    currencySymbolCombo_->AutoComplete(currency_symbols_);
+
     updateControls();
 }
 
@@ -159,17 +169,9 @@ void mmCurrencyDialog::CreateControls()
     itemBoxSizer2->Add(itemFlexGridSizer3, flags);
 
     //--------------------------
-
-    for(size_t i = 0; i < sizeof(CURRENCIES)/sizeof(wxString); ++i)
-    {
-       currency_symbols_.Add(CURRENCIES[i]);
-       currency_names_.Add(CURRENCIES[++i]);
-    }
-
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Currency Name")), flags);
 
-    currencyNameCombo_ = new wxComboBox( this, ID_DIALOG_CURRENCY_CHOICE, "",
-        wxDefaultPosition, size, currency_names_);
+    currencyNameCombo_ = new wxComboBox( this, ID_DIALOG_CURRENCY_CHOICE);
     itemFlexGridSizer3->Add(currencyNameCombo_, flags);
 
     currencyNameCombo_->Connect(ID_DIALOG_CURRENCY_CHOICE, wxEVT_COMMAND_COMBOBOX_SELECTED,
@@ -177,8 +179,7 @@ void mmCurrencyDialog::CreateControls()
 
     itemFlexGridSizer3->Add(new wxStaticText( this, wxID_STATIC, _("Currency Symbol")), flags);
 
-    currencySymbolCombo_ = new wxComboBox( this, wxID_ANY, "",
-        wxDefaultPosition, wxDefaultSize, currency_symbols_);
+    currencySymbolCombo_ = new wxComboBox( this, wxID_ANY);
     itemFlexGridSizer3->Add(currencySymbolCombo_, flagsExpand);
 
     currencyNameCombo_->AutoComplete(currency_symbols_);
@@ -279,12 +280,12 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
 
 void mmCurrencyDialog::OnCurrencyNameSelected(wxCommandEvent& /*event*/)
 {
-    wxString currency_name = currencyNameCombo_->GetValue();
-    int index = currency_names_.Index(currency_name);
-    wxString currency_symbol;
-    if (index != wxNOT_FOUND)
+    for (const auto& i : ce_->CURRENCIES_MAP())
     {
-        currency_symbol = currency_symbols_[index];
-        currencySymbolCombo_->SetValue(currency_symbol);
+        if (i.second == currencyNameCombo_->GetValue())
+        {
+            currencySymbolCombo_->SetValue(i.first);
+            break;
+        }
     }
 }
