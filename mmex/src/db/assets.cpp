@@ -148,6 +148,7 @@ bool TAssetEntry::operator < (const TAssetEntry& asset) const
 
 int TAssetEntry::to_json(json::Object& o) const
 {
+	o["id"] = json::Number(this->id_);
     return 0;
 }
 
