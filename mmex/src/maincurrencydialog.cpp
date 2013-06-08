@@ -278,7 +278,7 @@ void mmMainCurrencyDialog::OnListItemSelected(wxDataViewEvent& event)
 {
     wxDataViewItem item = event.GetItem();
     selectedIndex_ = currencyListBox_->ItemToRow(item);
-    currencyID_ = currencyListBox_->GetItemData(item);
+    currencyID_ = (int)currencyListBox_->GetItemData(item);
     wxString currency_name = core_->currencyList_.getCurrencyName(currencyID_);
     std::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyID_);
     curr_rate_ = pCurrency->baseConv_;
@@ -294,7 +294,6 @@ void mmMainCurrencyDialog::OnListItemActivated(wxDataViewEvent& event)
 {
     wxDataViewItem item = event.GetItem();
     selectedIndex_ = currencyListBox_->ItemToRow(item);
-    currencyID_ = currencyListBox_->GetItemData(item);
     wxString currency_name = core_->currencyList_.getCurrencyName(currencyID_);
     wxLogDebug(wxString::Format("activated item:%i currency:%s", selectedIndex_, currency_name));
 
