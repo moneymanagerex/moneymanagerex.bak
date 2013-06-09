@@ -424,6 +424,9 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
 {
     mmCategDialog dlg(core_, this);
 
+    dlg.setTreeSelection(core_->categoryList_.GetCategoryName(categID_)
+    , core_->categoryList_.GetSubCategoryName(categID_,subcategID_));
+
     if (dlg.ShowModal() == wxID_OK)
     {
         categID_ = dlg.getCategId();
@@ -431,7 +434,6 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
         btnCategory_->SetLabel(core_->categoryList_.GetFullCategoryString(categID_, subcategID_));
         bExpandStaus_ = dlg.getExpandStatus();
     }
-
 }
 
 bool mmFilterTransactionsDialog::somethingSelected()
