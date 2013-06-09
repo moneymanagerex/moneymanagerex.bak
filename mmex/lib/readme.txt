@@ -1,25 +1,29 @@
 External libraries' sources here.
 
-wxSQLite3 and sqlite3 sources from wxSQLite3
+wxSQLite3 and sqlite3 sources from:
+http://svn.code.sf.net/p/wxcode/code/trunk/wxCode/components/wxsqlite3/
+
 (ensures wxSQLite3 and sqlite3 are in sync)
 --------------------------------------------
 
-Current versions: wxSQLite3 Version: 3.0.2
-                  SQLite Version: 3.7.16
+Current versions: wxSQLite3 Version: 3.0.3
+                  SQLite Version: 3.7.17
 ===============================================================================                
-Copy all files From: wxsqlite3\src
-               to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite
+Copy file
+from: wxsqlite3\Readme.txt
+to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite\Readme.txt 
 
-Copy all files From: wxsqlite3\include\wx
-               to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite\wx 
+Copy all files
+From: wxsqlite3\src
+to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite
 
-Copy all files from: wxsqlite3\sqlite3\secure\src
-               to  : MoneyManagerEX\trunk\mmex\lib\sqlite
+From: wxsqlite3\include\wx
+to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite\wx 
 
-Copy file from: wxsqlite3\Readme.txt
-          to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite\Readme.txt 
+from: wxsqlite3\sqlite3\secure\src
+to  : MoneyManagerEX\trunk\mmex\lib\sqlite
 ===============================================================================                
-Source files for: wxSQLite3 Version 3.0.2
+Source files for: wxSQLite3 Version 3.0.3
   wxsqlite3.cpp
 
 Headers of for: wxSQLite3 - wx:
@@ -40,7 +44,7 @@ Source files for: wxSQLite3 - sqlite3 interface
   sqlite3secure.c
   sqlite3.def
 
-Source files for: sqlite3 Version 3.7.16
+Source files for: sqlite3 Version 3.7.17
   sqlite3.c
   sqlite3.h
   sqlite3ext.h
