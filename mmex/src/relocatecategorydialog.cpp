@@ -124,8 +124,8 @@ void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
 {
     mmCategDialog* sourceCat = new mmCategDialog(core_ , this, true, false);
 
-    sourceCat->setTreeSelection(core_->categoryList_.GetCategoryName(sourceCatID_),
-        core_->categoryList_.GetSubCategoryName(sourceCatID_, sourceSubCatID_));
+    sourceCat->setTreeSelection(core_->categoryList_.GetCategoryName(sourceCatID_)
+    , core_->categoryList_.GetSubCategoryName(sourceCatID_, sourceSubCatID_));
 
     if (sourceCat->ShowModal() == wxID_OK)
     {
@@ -139,6 +139,10 @@ void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
 void relocateCategoryDialog::OnSelectDest(wxCommandEvent& /*event*/)
 {
     mmCategDialog* destCat = new mmCategDialog(core_ , this, true, false);
+
+    destCat->setTreeSelection(core_->categoryList_.GetCategoryName(destCatID_)
+    , core_->categoryList_.GetSubCategoryName(destCatID_, destSubCatID_));
+
     if (destCat->ShowModal() == wxID_OK)
     {
         destCatID_    = destCat->getCategId();
@@ -155,7 +159,6 @@ wxString relocateCategoryDialog::updatedCategoriesCount()
     countStr << (changedCats_ + changedSubCats_);
     return countStr;
 }
-
 
 void relocateCategoryDialog::OnOk(wxCommandEvent& /*event*/)
 {
@@ -174,4 +177,3 @@ void relocateCategoryDialog::OnOk(wxCommandEvent& /*event*/)
         }
     }
 }
-
