@@ -102,7 +102,7 @@ wxString mmex::getProgramDescription()
                 << wxVERSION_STRING << "\n"
                 << "SQLite3 " << wxSQLite3Database::GetVersion() << "\n"
                 << "wxSQLite 3.0.2"<< "\n"
-                << "Lua 5.2.1";
+                << "Lua 5.2.2";
     return description;
 }
 
