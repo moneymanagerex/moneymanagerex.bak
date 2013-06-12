@@ -205,7 +205,7 @@ void mmAssetsListCtrl::OnDuplicateAsset(wxCommandEvent& /*event*/)
     // Locate new entry in the visual list.
     cp_->AssetList().GetEntryPtr(new_asset_id);
     selectedIndex_ = cp_->AssetList().GetCurrentIndex();
-    
+
     if (! EditAsset(pNewEntry))
     {
         // remove the duplicate asset canceled by user.
@@ -349,7 +349,7 @@ void mmAssetsPanel::CreateControls()
     m_imageList->Add(wxBitmap(wxImage(coin_xpm).Scale(16, 16)));    // Cash
     m_imageList->Add(wxBitmap(wxImage(rubik_cube_xpm).Scale(16, 16)));          // Other
     m_imageList->Add(wxBitmap(wxImage(uparrow_xpm).Scale(16, 16)));
-    m_imageList->Add(wxBitmap(wxImage(downarrow_xpm).Scale(16, 16))); 
+    m_imageList->Add(wxBitmap(wxImage(downarrow_xpm).Scale(16, 16)));
 
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"));
@@ -477,13 +477,14 @@ void mmAssetsPanel::OnEditAsset(wxCommandEvent& event)
 
 wxString mmAssetsPanel::getItem(long item, long column)
 {
-    if (column == COL_NAME)  return asset_list_.entrylist_[item]->name_;
-    if (column == COL_TYPE)  return wxGetTranslation(asset_list_.entrylist_[item]->type_);
-    if (column == COL_VALUE) return wxString() << asset_list_.entrylist_[item]->GetValueCurrencyEditFormat();
-    if (column == COL_DATE)  return asset_list_.entrylist_[item]->DisplayDate();
-    if (column == COL_NOTES) return asset_list_.entrylist_[item]->notes_;
+    wxString item_data = wxGetEmptyString();
+    if (column == COL_NAME)  item_data = asset_list_.entrylist_[item]->name_;
+    else if (column == COL_TYPE)  item_data = wxGetTranslation(asset_list_.entrylist_[item]->type_);
+    else if (column == COL_VALUE) item_data = wxString() << asset_list_.entrylist_[item]->GetValueCurrencyEditFormat();
+    else if (column == COL_DATE)  item_data = asset_list_.entrylist_[item]->DisplayDate();
+    else if (column == COL_NOTES) item_data = asset_list_.entrylist_[item]->notes_;
 
-    return wxGetEmptyString();
+    return item_data;
 }
 
 void mmAssetsPanel::SetFilter(wxString filter)
