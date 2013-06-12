@@ -210,9 +210,6 @@ void StocksListCtrl::OnColClick(wxListEvent& event)
 
     m_selected_col = event.GetColumn();
 
-    item.SetImage(m_asc ? 3 : 2);
-    SetColumn(m_selected_col, item);
-
     int trx_id = -1;
     if (selectedIndex_>=0) trx_id = cp_->trans_[selectedIndex_]->id_;
     doRefreshItems(trx_id);
