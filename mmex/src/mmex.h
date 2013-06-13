@@ -252,7 +252,7 @@ private:
     wxMenuItem* menuItemOnlineUpdateCurRate_; // Menu Item for Disabling Item
 
     wxTreeItemId getTreeItemfor(wxTreeItemId itemID, const wxString& accountName) const;
-    bool setAccountInSection(wxString sectionName, wxString accountName);
+    bool setAccountInSection(const wxString& sectionName, const wxString& accountName);
 
     /* Custom Reports */
     CustomReportIndex* custRepIndex_;

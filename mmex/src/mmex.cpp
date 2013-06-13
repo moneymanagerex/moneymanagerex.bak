@@ -769,7 +769,7 @@ wxTreeItemId mmGUIFrame::getTreeItemfor(wxTreeItemId itemID, const wxString& acc
 }
 
 //----------------------------------------------------------------------------
-bool mmGUIFrame::setAccountInSection(wxString sectionName, wxString accountName)
+bool mmGUIFrame::setAccountInSection(const wxString& sectionName, const wxString& accountName)
 {
     bool accountNotFound = true;
     wxTreeItemId rootItem = getTreeItemfor(navTreeCtrl_->GetRootItem(), sectionName );
