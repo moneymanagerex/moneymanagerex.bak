@@ -113,4 +113,7 @@ private:
 
     void OnViewPopupSelected(wxCommandEvent& event);
     void sortTable();
+
+private:
+    wxString tips_;
 };
