@@ -808,7 +808,7 @@ bool mmGUIFrame::setNavTreeSection( wxString sectionName)
 }
 
 //----------------------------------------------------------------------------
-void mmGUIFrame::setAccountNavTreeSection(wxString accountName)
+void mmGUIFrame::setAccountNavTreeSection(const wxString& accountName)
 {
     if ( setAccountInSection(_("Bank Accounts"), accountName))
         if (setAccountInSection(_("Term Accounts"), accountName))
@@ -3253,7 +3253,7 @@ void mmGUIFrame::OnHelp(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-bool mmGUIFrame::IsUpdateAvailable(wxString page)
+bool mmGUIFrame::IsUpdateAvailable(const wxString& page)
 {
     wxStringTokenizer tkz(page, '.', wxTOKEN_RET_EMPTY_ALL);
     int numTokens = (int)tkz.CountTokens();
@@ -3841,7 +3841,7 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::RunCustomSqlDialog(wxString customReportSelectedItem)
+void mmGUIFrame::RunCustomSqlDialog(const wxString& customReportSelectedItem)
 {
     this->SetEvtHandlerEnabled(false);
     mmCustomSQLDialog dlg(custRepIndex_, customReportSelectedItem, this);
