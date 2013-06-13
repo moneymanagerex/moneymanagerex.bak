@@ -210,7 +210,7 @@ public:
         return helpFileIndex_;
     }
 
-    void setAccountNavTreeSection(wxString accountName);
+    void setAccountNavTreeSection(const wxString& accountName);
     bool setNavTreeSection( wxString sectionName);
     void SetCheckingAccountPageInactive();
     void SetBudgetingPageInactive();
@@ -368,7 +368,7 @@ private:
     /* Custom Report*/
     bool IsCustomReportSelected(int& customSqlReportID, mmTreeItemData* iData );
     void CreateCustomReport(int index);
-    void RunCustomSqlDialog(wxString customSqlReportSelectedItem = "");
+    void RunCustomSqlDialog(const wxString& customSqlReportSelectedItem = "");
     bool expandedCustomSqlReportNavTree_;
 
     bool expandedBudgetingNavTree_;
@@ -379,7 +379,7 @@ private:
 
     void OnEditCustomSqlReport(wxCommandEvent& event);
 
-    bool IsUpdateAvailable(wxString page);
+    bool IsUpdateAvailable(const wxString& page);
     void processPendingEvents();
 
     /* Recent Files */
