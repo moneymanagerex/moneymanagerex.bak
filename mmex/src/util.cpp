@@ -332,15 +332,7 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 wxString Tips(wxString type)
 {
     wxString tipsStr = wxEmptyString;
-    if (type == TIPS_ASSETS)
-    {
-        tipsStr = _("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth.");
-    }
-    else if (type == TIPS_STOCK)
-    {
-        tipsStr = _("Using MMEX it is possible to track stocks/mutual funds investments.");
-    }
-    else if (type == TIPS_BILLS)
+    if (type == TIPS_BILLS)
     {
         wxArrayString tips;
         tips.Add(_("MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "));

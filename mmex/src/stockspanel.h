@@ -178,6 +178,9 @@ private:
     wxString strLastUpdate_;
     bool StocksRefreshStatus_;
     wxDateTime LastRefreshDT_;
+
+private:
+    wxString tips_;
 };
 
 #endif

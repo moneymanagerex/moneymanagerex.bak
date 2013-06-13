@@ -270,6 +270,7 @@ mmAssetsPanel::mmAssetsPanel(wxWindow *parent, mmCoreDB* core)
 : mmPanelBase(core)
 , asset_list_(core->db_.get(), false) // don't load entries at this point.
 {
+    this->tips_ = _("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth.");
     Create(parent, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxPanelNameStr);
 }
 
@@ -523,7 +524,7 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
     else
     {
         stm -> SetLabel("");
-        st->SetLabel(Tips(TIPS_ASSETS));
+        st->SetLabel(this->tips_);
         enableEditDeleteButtons(false);
     }
 }

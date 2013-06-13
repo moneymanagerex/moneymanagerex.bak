@@ -257,6 +257,7 @@ mmStocksPanel::mmStocksPanel(mmCoreDB* core,
 , m_imageList(0)
 , accountID_(accountID)
 {
+    this->tips_ = _("Using MMEX it is possible to track stocks/mutual funds investments.");
     Create(parent, winid, pos, size, style, name);
 }
 
@@ -724,7 +725,7 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex)
 {
     if (selectedIndex == -1)
     {
-        stock_details_->SetLabel(Tips(TIPS_STOCK));
+        stock_details_->SetLabel(this->tips_);
         stock_details_short_->SetLabel(wxString::Format(_("Last updated %s"), strLastUpdate_));
     }
     else
