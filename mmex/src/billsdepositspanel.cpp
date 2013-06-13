@@ -56,6 +56,9 @@ mmBillsDepositsPanel::mmBillsDepositsPanel(mmCoreDB* core,
 , m_imageList()
 , listCtrlAccount_()
 {
+    this->tips_.Add(_("MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "));
+    this->tips_.Add(_("Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."));
+
     Create(parent, winid, pos, size, style, name);
 }
 
@@ -551,7 +554,7 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
     }
     else
     {
-        st-> SetLabel(Tips(TIPS_BILLS));
+        st-> SetLabel(this->tips());
         stm-> SetLabel("");
     }
 }
@@ -566,6 +569,16 @@ void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
     bD->Enable(en);
     bN->Enable(en);
     bS->Enable(en);
+}
+
+void mmBillsDepositsPanel::sortTable()
+{
+    // TODO
+}
+
+wxString mmBillsDepositsPanel::tips()
+{
+    return this->tips_[rand() % this->tips_.GetCount()];
 }
 
 void billsDepositsListCtrl::refreshVisualList(int selected_index)

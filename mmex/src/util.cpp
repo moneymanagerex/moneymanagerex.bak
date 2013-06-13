@@ -331,21 +331,7 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 
 wxString Tips(wxString type)
 {
-    wxString tipsStr = wxEmptyString;
-    if (type == TIPS_BILLS)
-    {
-        wxArrayString tips;
-        tips.Add(_("MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "));
-        tips.Add(_("Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."));
-
-        tipsStr = tips[rand() % tips.GetCount()];
-    }
-    else
-    {
-        tipsStr = wxGetTranslation(TIPS[rand() % sizeof(TIPS)/sizeof(wxString)]);
-    }
-
-    return tipsStr;
+    return wxGetTranslation(TIPS[rand() % sizeof(TIPS)/sizeof(wxString)]);
 }
 
 //*--------------------------------------------------------------------------*//
