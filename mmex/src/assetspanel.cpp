@@ -488,7 +488,7 @@ wxString mmAssetsPanel::getItem(long item, long column)
     return item_data;
 }
 
-void mmAssetsPanel::SetFilter(wxString filter)
+void mmAssetsPanel::SetFilter(const wxString& filter)
 {
     filter_ = filter;
 }
