@@ -691,7 +691,7 @@ void mmCheckingPanel::initVirtualListControl(int trans_id)
     header_text_->SetLabel(wxString::Format(_("Account View : %s"), pAccount->name_));
 
     filteredBalance_ = 0.0;
-    
+
     //TODO: Stages 1-4 go away to proper place (TTransactionList)
     /**********************************************************************************
      Stage 1
@@ -1479,21 +1479,23 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
         , wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
 
     if (msgDlg.ShowModal() == wxID_YES)
-    {    
+    {
         m_cp->core_->db_.get()->Begin();
-        for (size_t i = 0; i < m_cp->m_trans.size(); ++i )
+        long x = 0;
+        for (const auto& i : m_cp->m_trans)
         {
-            long transID = m_cp->m_trans[i]->transactionID();
-            if (m_cp->m_listCtrlAccount->GetItemState(i, wxLIST_STATE_SELECTED) == wxLIST_STATE_SELECTED)
+            long transID = i->transactionID();
+            if (m_cp->m_listCtrlAccount->GetItemState(x, wxLIST_STATE_SELECTED) == wxLIST_STATE_SELECTED)
             {
                 m_cp->core_->bTransactionList_.deleteTransaction(m_cp->m_AccountID, transID);
-                if (i <= topItemIndex_) topItemIndex_--;
+                if (x <= topItemIndex_) topItemIndex_--;
                 m_selectedIndex--;
                 if (m_selectedForCopy == transID) m_selectedForCopy = -1;
             }
+        x++;
         }
         m_cp->core_->db_.get()->Commit();
-    
+
         refreshVisualList();
     }
 }
@@ -1568,7 +1570,7 @@ void TransactionListCtrl::refreshVisualList(int trans_id)
         if (topItemIndex_ < 0) topItemIndex_ = m_selectedIndex;
     }
     if (m_cp->m_trans.size() > 0) EnsureVisible(topItemIndex_);
-    
+
     m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 
