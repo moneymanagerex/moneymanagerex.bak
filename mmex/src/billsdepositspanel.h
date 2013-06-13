@@ -156,7 +156,9 @@ private:
     void OnViewPopupSelected(wxCommandEvent& event);
 
     void sortTable();
+    wxString tips();
 
+private:
     wxImageList* m_imageList;
     billsDepositsListCtrl* listCtrlAccount_;
 
@@ -164,6 +166,8 @@ private:
     void OnFilterTransactions(wxMouseEvent& event);
     mmFilterTransactionsDialog* transFilterDlg_;
     wxStaticBitmap* bitmapTransFilter_;
+
+    wxArrayString tips_;
 };
 #endif
 
