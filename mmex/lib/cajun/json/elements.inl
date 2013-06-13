@@ -68,12 +68,12 @@ private:
 
 class UnknownElement::ConstCastVisitor : public ConstVisitor
 {
-   virtual void Visit(const Array& array) {}
-   virtual void Visit(const Object& object) {}
-   virtual void Visit(const Number& number) {}
-   virtual void Visit(const String& string) {}
-   virtual void Visit(const Boolean& boolean) {}
-   virtual void Visit(const Null& null) {}
+   virtual void Visit(const Array& /*array*/) {}
+   virtual void Visit(const Object& /*object*/) {}
+   virtual void Visit(const Number& /*number*/) {}
+   virtual void Visit(const String& /*string*/) {}
+   virtual void Visit(const Boolean& /*boolean*/) {}
+   virtual void Visit(const Null& /*null*/) {}
 };
 
 template <typename ElementTypeT>
@@ -88,12 +88,12 @@ public:
 
 class UnknownElement::CastVisitor : public Visitor
 {
-   virtual void Visit(Array& array) {}
-   virtual void Visit(Object& object) {}
-   virtual void Visit(Number& number) {}
-   virtual void Visit(String& string) {}
-   virtual void Visit(Boolean& boolean) {}
-   virtual void Visit(Null& null) {}
+   virtual void Visit(Array& /*array*/) {}
+   virtual void Visit(Object& /*object*/) {}
+   virtual void Visit(Number& /*number*/) {}
+   virtual void Visit(String& /*string*/) {}
+   virtual void Visit(Boolean& /*boolean*/) {}
+   virtual void Visit(Null& /*null*/) {}
 };
 
 template <typename ElementTypeT>
@@ -402,7 +402,7 @@ bool TrivialType_T<DataTypeT>::operator == (const TrivialType_T<DataTypeT>& triv
 //////////////////
 // Null members
 
-inline bool Null::operator == (const Null& trivial) const
+inline bool Null::operator == (const Null& /*trivial*/) const
 {
    return true;
 }
