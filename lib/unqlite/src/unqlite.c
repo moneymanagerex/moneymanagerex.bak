@@ -50338,7 +50338,7 @@ static int lhRecordOverwrite(
 			rc = lhAllocateSpace(pPage,L_HASH_CELL_SZ + pCell->nKey + nByte,&iOfft);
 			if( rc != UNQLITE_OK ){
 				/* Transfer the payload to an overflow page */
-				rc = lhCellWriteOvflPayload(pCell,&pPage->pRaw->zData[pCell->iStart + L_HASH_CELL_SZ],pCell->nKey,pData,nByte,0);
+				rc = lhCellWriteOvflPayload(pCell,&pPage->pRaw->zData[pCell->iStart + L_HASH_CELL_SZ],pCell->nKey,pData,nByte,(const void *)0);
 				if( rc != UNQLITE_OK ){
 					return rc;
 				}
@@ -50477,7 +50477,7 @@ static int lhRecordAppend(
 				&pPage->pRaw->zData[pCell->iStart + L_HASH_CELL_SZ],pCell->nKey,
 				(const void *)&pPage->pRaw->zData[pCell->iStart + L_HASH_CELL_SZ + pCell->nKey],pCell->nData,
 				pData,nByte,
-				0);
+				(const void *)0);
 			if( rc != UNQLITE_OK ){
 				return rc;
 			}
@@ -50703,7 +50703,7 @@ static int lhStoreCell(
 	}
 	/* Write the payload */
 	if( iNeedOvfl ){
-		rc = lhCellWriteOvflPayload(pCell,pKey,nKeyLen,pData,nDataLen,0);
+		rc = lhCellWriteOvflPayload(pCell,pKey,nKeyLen,pData,nDataLen,(const void *)0);
 		if( rc != UNQLITE_OK ){
 			lhCellDiscard(pCell);
 			return rc;
